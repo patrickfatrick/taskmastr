@@ -1,6 +1,8 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+	.container#four-oh-four
+		h1= error.status
+		h2= message
+		br/
+		iframe(src="https://www.youtube.com/embed/t3otBjVZzT0?autohide=1&autoplay=1&showinfo=0", frameborder="0" allowfullscreen)

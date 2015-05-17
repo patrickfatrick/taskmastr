@@ -8,6 +8,21 @@
 	}
 }
 
+.container#four-oh-four {
+	h1 {
+		padding-bottom: 0.6rem !important;
+		font-size: 2rem;
+	}
+	iframe {
+		width: 384px;
+		height: 216px;
+		@include susy-breakpoint($large) {
+			width: 560px;
+			height: 315px;
+		}
+	}
+}
+
 #todo-prompt {
 	margin-bottom: 10px;
 	font-size: 2rem;
@@ -15,13 +30,14 @@
 		float: right;
 		font-size: 1.2rem;
 		cursor: pointer;
+		margin-right: 0.5rem;
 	}
 }
 
 #create-todo {
 	width: 95%;
 	border: 1px solid $deepBlue;
-	@include single-box-shadow($gray, 4px, 4px, 0);
+	@include single-box-shadow(4px, 4px, 0, null, $gray);
 }
 
 #todo-list {

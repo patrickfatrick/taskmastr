@@ -2,7 +2,7 @@ body {
 	text-align: center;
 	color: $black;
 	font-family: $merriweather;
-	font-size: 1rem;
+	font-size: 1.5rem;
 	@include susy-breakpoint($large) {
 		font-size: 1.2rem;
 	}

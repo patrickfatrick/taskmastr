@@ -40,16 +40,16 @@
 			margin-right: auto;
 			cursor: pointer;
 			@include border-radius(20px);
-			@include single-box-shadow($orchid * 0.8, 2px, 2px, 0);
+			@include single-box-shadow(2px, 2px, 0, null, $orchid * 0.8);
 			&:hover {
 				top: -2px;
 				left: -2px;
-				@include single-box-shadow($orchid * 0.8, 4px, 4px, 0);
+				@include single-box-shadow(4px, 4px, 0, null, $orchid * 0.8);
 			}
 			&:active {
 				top: 0;
 				left: 0;
-				@include single-box-shadow($orchid * 0.8, 2px, 2px, 0);
+				@include single-box-shadow(2px, 2px, 0, null, $orchid * 0.8);
 			}
 		}
 		.fine-print {
