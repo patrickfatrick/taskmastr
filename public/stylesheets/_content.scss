@@ -1,0 +1,56 @@
+.container {
+	padding-top: 10%;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	@include susy-breakpoint($medium) {
+		width: 60%;
+	}
+}
+
+#todo-prompt {
+	margin-bottom: 10px;
+	font-size: 2rem;
+	.fa-plug {
+		float: right;
+		font-size: 1.2rem;
+		cursor: pointer;
+	}
+}
+
+#create-todo {
+	width: 95%;
+	border: 1px solid $deepBlue;
+	@include single-box-shadow($gray, 4px, 4px, 0);
+}
+
+#todo-list {
+	margin-top: 30px;
+	margin-left: 0.6rem;
+	text-align: left;
+	li {
+		padding-top: 0.2rem;
+		padding-bottom: 0.2rem;
+		.check {
+			left: -2000px;
+			position: absolute;
+		}
+		i[class$="circle-o"] {
+			margin-right: 0.5rem;
+			cursor: pointer;
+		}
+		i.fa-trash-o {
+			margin-left: 3rem;
+			cursor: pointer;
+		}
+		input.rename {
+			line-height: 1.4rem;
+			font-size: 1rem;
+		}
+	}
+	li.complete {
+		text-decoration: line-through;
+		color: $gray;
+		font-style: italic;
+	}
+}

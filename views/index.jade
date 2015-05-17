@@ -1,0 +1,40 @@
+extends layout
+
+block content
+	#mask
+	.modal#key-modal
+		.modal-header
+			h1#headline Taskmastr
+		.modal-body#key-ask
+			| Do you have a key? 
+			br/
+			br/
+			| If so, input it below, and if not go ahead and create one!
+			br/
+			br/
+			input#key(type='text')
+			br/
+			br/
+			#tips-button
+				| Tips:
+			.fine-print
+				br/
+				| &rarr; Make your key unique and preferably nonsensical. This is how we store your tasks for the future!
+				br/
+				| &rarr; If you do not wish to save your data, simply don't input a key.
+				br/
+				| &rarr; Use the return key to save text fields.
+				br/
+				| &rarr; There is no undo if you delete a task.
+				br/
+				| &rarr; You can rename a task by double-clicking it.
+				br/
+				| &rarr; You can reorder todos by dragging and dropping.
+				br/
+				| &rarr; The plug icon toggles dark mode, which is also stored for future visits.
+	.container
+		#todo-prompt 
+			| What needs doing?
+			i#dark-mode.fa.fa-plug(value='off')
+		input#create-todo(type='text')
+		ul#todo-list

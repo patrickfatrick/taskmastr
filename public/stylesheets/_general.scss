@@ -1,0 +1,28 @@
+body {
+	text-align: center;
+	color: $black;
+	font-family: $merriweather;
+	font-size: 1rem;
+	@include susy-breakpoint($large) {
+		font-size: 1.2rem;
+	}
+}
+
+body.dark-mode {
+	background: dimgray;
+	color: $white;
+}
+
+input[type='text'] {
+	width: 60%;
+	line-height: 3rem;
+	outline: none;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	font-family: $lora;
+	font-size: 2rem;
+}
+
+strong {
+	font-weight: bold;
+}

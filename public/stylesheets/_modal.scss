@@ -1,0 +1,77 @@
+.modal {
+	height: auto;
+	width: 100%;
+	max-width: 100%;
+	position: absolute;
+	@include border-radius(15px);
+	border: 10px solid $white;
+	background: $white;
+	@include susy-breakpoint($medium) {
+		width: 50%;
+	}
+	.modal-header {
+		background: $deepBlue;
+		color: $white;
+		height: 50px;
+		font-family: $josefin;
+		@include border-radius(15px 15px 0 0);
+		h1 {
+			font-size: 1.5em;
+			text-transform: lowercase;
+			padding: 10px;
+			@include susy-breakpoint($large) {
+				font-size: 2em;
+			}
+		}
+	}
+	.modal-body {
+		padding: 30px;
+		#tips-button {
+			background: $orchid;
+			color: $white;
+			font-family: $josefin;
+			font-size: 2rem;
+			text-transform: lowercase;
+			position: relative;
+			width: 100px;
+			height: 2.5rem;
+			padding: 5px 4px 5px 9px;
+			margin-left: auto;
+			margin-right: auto;
+			cursor: pointer;
+			@include border-radius(20px);
+			@include single-box-shadow($orchid * 0.8, 2px, 2px, 0);
+			&:hover {
+				top: -2px;
+				left: -2px;
+				@include single-box-shadow($orchid * 0.8, 4px, 4px, 0);
+			}
+			&:active {
+				top: 0;
+				left: 0;
+				@include single-box-shadow($orchid * 0.8, 2px, 2px, 0);
+			}
+		}
+		.fine-print {
+			font-size: 0.5rem;
+			display: none;
+			@include susy-breakpoint($large) {
+				font-size: 0.8rem;
+			}
+		}
+	}
+}
+
+#key-modal {
+	top: -1000px;
+	z-index: 3;
+}
+
+#mask {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 3;
+	position: absolute;
+	cursor: pointer;
+}
