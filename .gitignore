@@ -7,3 +7,6 @@ public/bower
 
 #data
 data
+
+#sass-cache
+.sass-cache
