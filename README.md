@@ -9,8 +9,8 @@ _features:_
 - White mode for those of us who are afraid of the dark.
 
 _todo:_
--Angularize.
--Deploy to Heroku.
+- Angularize.
+- Deploy to Heroku.
 
 _screenshots:_
 ![taskmastr screenshot](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot.png)
