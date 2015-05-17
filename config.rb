@@ -1,6 +1,6 @@
 require 'susy'
 require 'breakpoint'
-css_dir = 'styles'
-sass_dir = 'working_files/styles'
-javascripts_dir = "scripts"
+css_dir = './public/stylesheets'
+sass_dir = './public/stylesheets'
+javascripts_dir = "./public/javascripts"
 output_style = :expanded
