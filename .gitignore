@@ -4,3 +4,6 @@ node_modules
 
 #Bower dependencies
 public/bower
+
+#data
+data
