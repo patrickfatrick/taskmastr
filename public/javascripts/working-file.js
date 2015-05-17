@@ -39,51 +39,7 @@ function loadData(key) {
 		}
 	});
 }
-	/*$.post('/users/login', {
-		key: key
-	}, function (user) {
-		userObj = user;
-		user.todos.forEach(function (val, i) {
-			var todo = val.item;
-			var complete = val.status;
-			var icon = complete ? 'fa fa-check-circle-o' : 'fa fa-circle-o';
-			var checked = complete ? 'checked' : '';
-			$('#todo-list').append(
-				'<li class="todo ' + complete + '" value="' + todo + '"><input type="checkbox" class="check" ' + checked + '></input><i class="' + icon + '"></i><input type="text" class="rename" style="display: none;" value="' + todo + '"></input><span class="name">' + todo + '</span><i class="fa fa-trash-o"></i></li>'
-			);
-		})
-	})*/
 
-/*function loadData() {
-	$.ajax({
-		dataType: "json",
-		//url: './data/todos.json',
-		url: '/users/login',
-		cache: false,
-		success: function (data) {
-			if (data.hasOwnProperty(userKey)) {
-				_.forIn(data[userKey], function (val, key) {
-					if (!isNaN(key)) {
-						var todo = val.item;
-						var complete = val.status;
-						var icon = complete ? 'fa fa-check-circle-o' : 'fa fa-circle-o';
-						var checked = complete ? 'checked' : '';
-						$('#todo-list').append(
-							'<li class="todo ' + complete + '" value="' + todo + '"><input type="checkbox" class="check" ' + checked + '></input><i class="' + icon + '"></i><input type="text" class="rename" style="display: none;" value="' + todo + '"></input><span class="name">' + todo + '</span><i class="fa fa-trash-o"></i></li>'
-						);
-					} else if (key === 'darkmode') {
-						$('#dark-mode').attr('value', val);
-						var darkVal = $('#dark-mode').attr('value');
-						if (darkVal === 'on') {
-							$('#dark-mode').addClass('dark');
-							$('body').addClass('dark-mode')
-						}
-					}
-				});
-			}
-		}
-	});
-}*/
 
 function keyModal() {
 	var width = windowWidth();
@@ -129,7 +85,7 @@ function keyModal() {
 		if (key === 13) {
 			userKey = $(this).val();
 			removeModal();
-			loadData(userKey);
+			if (userKey) loadData(userKey);
 			$('#create-todo').focus();
 		}
 	})
@@ -232,21 +188,25 @@ function writeData() {
 	//desktop write to db
 	window.addEventListener('beforeunload', function (e) {
 		var obj = (userKey.length > 0) ? createObj() : null;
-		$.post("/users/write", {
+		if (userKey) {
+			$.post("/users/write", {
 				json: JSON.stringify(obj),
 			}, function (result) {
 				console.log(result);
 			});
+		}
 	});
-	
+
 	//mobile Safari write to db (doesn't support unload)
 	window.addEventListener('pagehide', function (e) {
 		var obj = (userKey.length > 0) ? createObj() : null;
-		$.post("/users/write", {
+		if (userKey) {
+			$.post("/users/write", {
 				json: JSON.stringify(obj),
 			}, function (result) {
 				console.log(result);
 			});
+		}
 	});
 }
 
