@@ -1,5 +1,5 @@
 var config = {};
 
-config.mongoUri = 'mongodb://localhost:27017/rtr';
+config.mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr';
 
 module.exports = config;

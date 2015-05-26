@@ -30,5 +30,35 @@ column-width: 4em);
 $small: 480px;
 $medsmall: 650px;
 $medium: 768px;
-$medlarge: 1100px;
+$medlarge: 1000px;
 $large: 1200px;
+
+/* ---------- Mixins ---------- */
+
+@mixin text-effect($color) {
+	@include single-text-shadow(2px, 2px, 0, null, $color * 0.8);
+	&:hover {
+		top: 7px;
+		left: 14px;
+		@include single-text-shadow(4px, 4px, 0, null, $color * 0.8);
+	}
+	&:active {
+		top: 0.6rem !important;
+		left: 1rem !important;
+		@include single-text-shadow(2px, 2px, 0, null, $color * 0.8);
+	}
+}
+
+@mixin button-effect($color) {
+	@include single-box-shadow(2px, 2px, 0, null, $color * 0.8);
+	&:hover {
+		top: -2px;
+		left: -2px;
+		@include single-box-shadow(4px, 4px, 0, null, $color * 0.8);
+	}
+	&:active {
+		top: 0;
+		left: 0;
+		@include single-box-shadow(2px, 2px, 0, null, $color * 0.8);
+	}
+}

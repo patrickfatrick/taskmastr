@@ -27,6 +27,7 @@ router.post('/login', function (req, res, next) {
 
 router.post('/write', function (req, res, next) {
 	var user = JSON.parse(req.body.json);
+	console.log(user);
 	userService.updateUser(user, function (err, user) {
 		if (err) return next(err);
 		console.log('Saving user... OK');

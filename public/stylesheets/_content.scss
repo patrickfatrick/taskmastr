@@ -1,5 +1,6 @@
 .container {
 	padding-top: 10%;
+	padding-bottom: 10%;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -25,7 +26,10 @@
 
 #todo-prompt {
 	margin-bottom: 10px;
-	font-size: 2rem;
+	font-size: 1.8rem;
+	@include susy-breakpoint($medium) {
+		font-size: 2.3rem;
+	}
 	.fa-plug {
 		float: right;
 		font-size: 1.2rem;
@@ -35,38 +39,87 @@
 }
 
 #create-todo {
-	width: 95%;
 	border: 1px solid $deepBlue;
-	@include single-box-shadow(4px, 4px, 0, null, $gray);
+	width: 70%;
+	@include single-box-shadow(2px, 2px, 0, null, $gray);
+	@include susy-breakpoint($medium) {
+		width: 89%;
+	}
 }
 
-#todo-list {
-	margin-top: 30px;
-	margin-left: 0.6rem;
-	text-align: left;
-	li {
-		padding-top: 0.2rem;
-		padding-bottom: 0.2rem;
-		.check {
-			left: -2000px;
-			position: absolute;
-		}
-		i[class$="circle-o"] {
-			margin-right: 0.5rem;
-			cursor: pointer;
-		}
-		i.fa-trash-o {
-			margin-left: 3rem;
-			cursor: pointer;
-		}
-		input.rename {
-			line-height: 1.4rem;
-			font-size: 1rem;
-		}
+#todo-button {
+	background: $deepBlue;
+	@include button-effect($deepBlue);
+}
+
+#save-button {
+	display: none;
+	padding: 5px 4px 5px 7px;
+	background-color: $deepBlue;
+	margin-top: 1rem;
+	@include button-effect($deepBlue);
+}
+
+#save-button.toggled {
+	display: block;
+}
+
+table {
+	table-layout: auto;
+	margin-top: 1rem;
+	width: 100%;
+	margin-right: 1rem;
+	thead {
+		display: none;
 	}
-	li.complete {
-		text-decoration: line-through;
-		color: $gray;
-		font-style: italic;
+	tbody {
+		td, th {
+			padding: 0.5rem;
+		}
+		th {
+			width: 3rem;
+		}
+		td.todo-cell {
+			@include susy-breakpoint($medium) {
+				padding-right: 6rem;
+			}
+			input.rename {
+				line-height: 1.4rem;
+				font-size: 1rem;
+				width: 100%
+			}
+		}
+		i {
+			cursor: pointer;
+			font-size: 1.8rem !important;
+			padding: 0.2rem;
+			@include susy-breakpoint($medium) {
+				font-size: 1.2rem !important;
+			}
+		}
+		td.toggle {
+			display: table-cell;
+			text-align: right;
+			@include susy-breakpoint($medium) {
+				display: none;
+			}
+		}
+		td.utils {
+			width: 6.9rem;
+			display: none;
+			@include susy-breakpoint($medium) {
+				width: 5.4rem;
+				display: table-cell;
+			}
+		}
+		tr.hoverover {
+			background-color: $deepBlue;
+		}
+		tr.complete {
+			text-decoration: line-through;
+			color: $gray;
+			background-color: transparent;
+			font-style: italic;
+		}
 	}
 }
