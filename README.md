@@ -1,5 +1,5 @@
 ## taskmastr
-Yet another todo list web app built with Node.js and MongoDB. This is a testing ground for the MEAN stack, just without any A at the moment (coming soon).
+Yet another todo list web app built with the MEAN stack.
 
 _features:_
 - Uses a single key instead of a user/password login to store and retrieve information from the database.
@@ -9,7 +9,7 @@ _features:_
 - White mode for those of us who are afraid of the dark.
 
 _todo:_
-- Revisit for bugs.
+- Revisit for bugs/quirkiness.
 
 _screenshots:_
 ![taskmastr screenshot](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot.png)
