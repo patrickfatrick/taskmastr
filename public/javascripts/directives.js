@@ -1,6 +1,6 @@
 (function () {
 	var app = angular.module('taskmastrDirectives', []);
-	
+
 	app.directive('complete', function () {
 		return {
 			restrict: "E",
@@ -9,19 +9,54 @@
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					scope.$apply(function () {
-						var checked = element.prop('checked');
 						var item = element.parents('.todo');
-						var list = element.parents('tbody');
-						var firstComplete = item.siblings('.complete').first();
-						/*if (checked) {
-							firstComplete.length > 0 ? firstComplete.before(item) : list.append(item);
-							list.removeAttr('ui-sortable');
-							list.attr('ui-sortable', 'sortableOptions');
-						} else {
-							firstComplete.length > 0 ? firstComplete.before(item) : list.append(item);
-							list.removeAttr('ui-sortable');
-							list.attr('ui-sortable', 'sortableOptions');
-						}*/
+						var itemVal = item.find('td.todo-cell span').text();
+						var todos = scope.user.todos;
+						var oldIndex;
+						var newIndex;
+						$.each(todos, function (i, val) {
+							if (val.item === itemVal) {
+								oldIndex = i;
+								return false;
+							}
+						});
+						var splicedTodo = todos.splice(oldIndex, 1);
+						$.each(todos, function (i, val) {
+							if (val.complete === true) {
+								newIndex = i;
+								return false;
+							}
+						});
+						todos.splice(newIndex, 0, splicedTodo[0]);
+					});
+				});
+			}
+		}
+	});
+	
+	app.directive('delete', function () {
+		return {
+			restrict: "E",
+			template: '<i class="fa fa-trash-o")></i>',
+			scope: false,
+			link: function (scope, element, attrs) {
+				element.bind('click', function () {
+					scope.$apply(function () {
+						var todos = scope.user.todos;
+						var item = element.parents('.todo');
+						var itemVal = item.find('td.todo-cell span').text();
+						var itemIndex;
+						$.each(todos, function (i, val) {
+							if (val.item === itemVal) {
+								itemIndex = i;
+								return false;
+							}
+						});
+						console.log('Deleted the following item');
+						console.log(itemVal);
+						item.toggle('fade', 250, function() {
+							todos.splice(itemIndex, 1);
+						});
 					});
 				});
 			}

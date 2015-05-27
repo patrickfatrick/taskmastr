@@ -4,7 +4,8 @@
 	
 	var app = angular.module('taskmastrApp', [
 		'ngTouch',
-		'ui.sortable',
-		'taskmastrControllers'
+		'ng-sortable',
+		'taskmastrControllers',
+		'taskmastrDirectives'
 	]);
 })();

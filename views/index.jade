@@ -50,10 +50,10 @@ block content
 					th name
 					th toggle
 					th utils
-			tbody(ui-sortable="sortableOptions", ng-model="user.todos")
-				tr.todo(ng-repeat="todo in user.todos | orderBy: '+complete'", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
+			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
+				tr.todo(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
 					th
-						input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", ng-click="complete($event)")
+						complete
 						i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'")
 					td.todo-cell
 						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
@@ -63,5 +63,6 @@ block content
 					td.utils
 						i.fa.fa-bars
 						i.fa.fa-pencil
-						i.fa.fa-trash-o(ng-click="delete(todo)")
+						//i.fa.fa-trash-o(ng-click="delete(todo)")
+						delete
 		#save-button.button(ng-click="write(user.key)", ng-class="{'toggled': saveButton}") Save

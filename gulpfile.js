@@ -21,13 +21,15 @@ var jsSources = [
 	//Uncomment the following for production
 	'./public/bower/jquery/dist/jquery.min.js',
 	'./public/bower/jquery-ui/jquery-ui.min.js',
-	'./public/bower/jquery-ui-touch-punch/jquery-ui-touch-punch.js',
-	//'./public/bower/lodash/lodash.min.js',
+	'./public/bower/lodash/lodash.min.js',
 	'./public/bower/angular/angular.min.js',
 	'./public/bower/angular-touch/angular-touch.min.js',
-	'./public/bower/angular-ui-sortable/sortable.min.js',
+	'./public/bower/Sortable/Sortable.js',
+	'./public/bower/Sortable/ng-sortable.js',
 	'./public/javascripts/app.js',
 	'./public/javascripts/controllers.js',
+	'./public/javascripts/directives.js',
+	'./public/bower/jquery.ui.touch-punch.dk/jquery.ui.touch-punch.dk.js',
 	'./public/javascripts/working-file.js'
 	
 ];

@@ -13,15 +13,14 @@
 			$scope.user.darkmode = false;
 			$scope.saveButton = false;
 			$scope.sortableOptions = {
-				axis: "y",
 				handle: '.fa-bars',
-				opacity: 0.8,
-				helper: function (e, ui) {
-					ui.children().each(function () {
-						$(this).width($(this).width());
-					});
-					return ui;
-				}
+				sort: true,
+				animation: 150,
+				ghostClass: 'ghost',
+				filter: ".complete",
+				scroll: true,
+				scrollSensitivity: 30,
+    		scrollSpeed: 10
 			};
 			$scope.lookup = function (key) {
 				$http.post('/users/login', {
@@ -44,11 +43,6 @@
 					complete: false
 				});
 			};
-			$scope.delete = function (item) {
-				$log.log('Deleted the following item');
-				$log.log(item);
-				$scope.user.todos.splice($scope.user.todos.indexOf(item), 1);
-			};
 			$scope.write = function (key) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
@@ -66,11 +60,6 @@
 						$log.log('Error writing data!');
 					});
 			};
-			/*$scope.checkChanges = function() {
-				var equality = angular.equals($scope.user, $scope.master);
-				$scope.master = angular.copy($scope.user);	
-				return equality;
-			}*/
 			$scope.$watch('user.todos', function (newValue, oldValue) {
 				if (newValue === oldValue) {
 					return

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:600italic,400");
 @import url("https://fonts.googleapis.com/css?family=Merriweather:400,700");
 @import url("https://fonts.googleapis.com/css?family=Lora:400,400italic");
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+@import url("../bower/font-awesome/css/font-awesome.min.css");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -407,6 +407,11 @@ table tbody tr.complete {
   color: #A3A3A3;
   background-color: transparent;
   font-style: italic;
+}
+
+.ghost {
+  opacity: .5;
+  background-color: #00B0FF;
 }
 
 /*# sourceMappingURL=styles.css.map */
