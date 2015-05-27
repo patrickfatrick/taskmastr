@@ -145,7 +145,7 @@ function mobileButtons() {
 		}, 250);
 	})
 
-	$('table tbody').on('click', '.fa-bars', function () {
+	$('body').on('click', '#save-button', function () {
 		if (width < 768) {
 			$('table tbody td.utils').toggle('fade', 100);
 			setTimeout(function () {
