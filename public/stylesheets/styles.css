@@ -73,7 +73,12 @@ body {
   text-align: center;
   color: #000;
   font-family: "Merriweather", serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+}
+@media (min-width: 768px) {
+  body {
+    font-size: 1.4rem;
+  }
 }
 
 body.dark-mode {

@@ -2,7 +2,10 @@ body {
 	text-align: center;
 	color: $black;
 	font-family: $merriweather;
-	font-size: 1.4rem;
+	font-size: 1.2rem;
+	@include susy-breakpoint($medium) {
+		font-size: 1.4rem;
+	}
 }
 
 body.dark-mode {

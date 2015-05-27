@@ -8,7 +8,6 @@
 		function ($http, $scope, $log) {
 			$scope.newTodo = '';
 			$scope.user = {};
-			$scope.master = angular.copy($scope.user);
 			$scope.user.todos = [];
 			$scope.user.darkmode = false;
 			$scope.saveButton = false;
@@ -17,7 +16,6 @@
 				sort: true,
 				animation: 150,
 				ghostClass: 'ghost',
-				filter: ".complete",
 				scroll: true,
 				scrollSensitivity: 30,
     		scrollSpeed: 10
