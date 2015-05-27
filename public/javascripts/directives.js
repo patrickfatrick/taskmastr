@@ -13,7 +13,7 @@
 						var itemVal = item.find('td.todo-cell span').text();
 						var todos = scope.user.todos;
 						var oldIndex;
-						var newIndex;
+						var newIndex = todos.length;
 						$.each(todos, function (i, val) {
 							if (val.item === itemVal) {
 								oldIndex = i;
