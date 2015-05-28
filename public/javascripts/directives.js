@@ -37,11 +37,12 @@
 	app.directive('delete', function () {
 		return {
 			restrict: "E",
-			template: '<i class="fa fa-trash-o")></i>',
+			template: '<i class="fa fa-trash-o"></i>',
 			scope: false,
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					scope.$apply(function () {
+						scope.saveButton = true;
 						var todos = scope.user.todos;
 						var item = element.parents('.todo');
 						var itemVal = item.find('td.todo-cell span').text();
@@ -54,7 +55,7 @@
 						});
 						console.log('Deleted the following item');
 						console.log(itemVal);
-						item.toggle('fade', 250, function() {
+						item.hide('fade', 250, function() {
 							todos.splice(itemIndex, 1);
 						});
 					});

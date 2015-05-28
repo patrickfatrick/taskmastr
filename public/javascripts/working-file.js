@@ -139,17 +139,17 @@ function saveButton() {
 function mobileButtons() {
 	var width = windowWidth();
 	$('table tbody').on('click', '.fa-bullseye', function () {
-		$('table tbody td.toggle').toggle('fade', 100);
+		$('table tbody td.toggle').hide('fade', 100);
 		setTimeout(function () {
-			$('table tbody td.utils').toggle('fade', 100);
+			$('table tbody td.utils').show('fade', 100);
 		}, 250);
 	})
 
 	$('body').on('click', '#save-button', function () {
 		if (width < 768) {
-			$('table tbody td.utils').toggle('fade', 100);
+			$('table tbody td.utils').hide('fade', 100);
 			setTimeout(function () {
-				$('table tbody td.toggle').toggle('fade', 100);
+				$('table tbody td.toggle').show('fade', 100);
 			}, 250);
 		}
 	})
