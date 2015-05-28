@@ -58,17 +58,13 @@
 						$log.log('Error writing data!');
 					});
 			};
-			$scope.$watchCollection('user.todos', function (newValue, oldValue) {
-				if (newValue === oldValue) {
-					return
-				}
+			$scope.$watch('user.todos', function (newValue, oldValue) {
+				if (newValue === oldValue) return;
 				$scope.saveButton = true;
 				$log.log('saveButton = ' + $scope.saveButton);
 			}, true);
-			$scope.$watchCollection('user.darkmode', function (newValue, oldValue) {
-				if (newValue === oldValue) {
-					return
-				}
+			$scope.$watch('user.darkmode', function (newValue, oldValue) {
+				if (newValue === oldValue) return;
 				$scope.saveButton = true;
 				$log.log('saveButton = ' + $scope.saveButton);
 			}, true);

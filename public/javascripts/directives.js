@@ -42,7 +42,6 @@
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					scope.$apply(function () {
-						scope.saveButton = true;
 						var todos = scope.user.todos;
 						var item = element.parents('.todo');
 						var itemVal = item.find('td.todo-cell span').text();
@@ -55,9 +54,7 @@
 						});
 						console.log('Deleted the following item');
 						console.log(itemVal);
-						item.hide('fade', 250, function() {
-							todos.splice(itemIndex, 1);
-						});
+						todos.splice(itemIndex, 1);
 					});
 				});
 			}
