@@ -8,8 +8,8 @@
 		function ($http, $scope, $log) {
 			$scope.newTodo = '';
 			$scope.user = {};
-			$scope.user.todos = [];
-			$scope.user.darkmode = false;
+			$scope.user.todos = null;
+			$scope.user.darkmode = null;
 			$scope.saveButton = false;
 			$scope.sortableOptions = {
 				handle: '.fa-bars',
@@ -20,14 +20,15 @@
 				scrollSensitivity: 30,
     		scrollSpeed: 10
 			};
+			var counter = 0;
 			$scope.lookup = function (key) {
 				$http.post('/users/login', {
 						key: key
 					})
 					.success(function (data) {
-						if (data.hasOwnProperty('todos')) $scope.user.todos = data.todos;
+						$scope.user.todos = (data.hasOwnProperty('todos')) ? data.todos : [];
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
-						if (data.hasOwnProperty('darkmode')) $scope.user.darkmode = data.darkmode;
+						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						$log.log('User profile mounted...');
 						$log.log($scope.user);
 					})
@@ -58,15 +59,22 @@
 						$log.log('Error writing data!');
 					});
 			};
+			$scope.delete = function(index) {
+				$scope.user.todos.splice(index, 1);
+			};
 			$scope.$watch('user.todos', function (newValue, oldValue) {
 				if (newValue === oldValue) return;
-				$scope.saveButton = true;
+				if (counter >= 2) $scope.saveButton = true;
 				$log.log('saveButton = ' + $scope.saveButton);
+				counter += 1;
+				console.log('todo counter = ' + counter);
 			}, true);
 			$scope.$watch('user.darkmode', function (newValue, oldValue) {
 				if (newValue === oldValue) return;
-				$scope.saveButton = true;
+				if (counter >= 2) $scope.saveButton = true;
 				$log.log('saveButton = ' + $scope.saveButton);
+				counter += 1;
+				console.log('darkmode counter = ' + counter);
 			}, true);
 		}
 	]);

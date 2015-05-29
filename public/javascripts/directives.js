@@ -31,13 +31,12 @@
 					});
 				});
 			}
-		}
+		};
 	});
-	
-	app.directive('delete', function () {
+
+	/*app.directive('delete', function () {
 		return {
-			restrict: "E",
-			template: '<i class="fa fa-trash-o"></i>',
+			restrict: "A",
 			scope: false,
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
@@ -52,12 +51,17 @@
 								return false;
 							}
 						});
+						todos.splice(itemIndex, 1);
 						console.log('Deleted the following item');
 						console.log(itemVal);
-						todos.splice(itemIndex, 1);
 					});
 				});
 			}
-		}
-	});
+			controller: function(scope) {
+				scope.delete = function(index) {
+					scope.user.todos.splice(index, 1);
+				}
+			}
+		};
+	});*/
 })();

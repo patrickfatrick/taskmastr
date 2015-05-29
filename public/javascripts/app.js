@@ -4,6 +4,7 @@
 	
 	var app = angular.module('taskmastrApp', [
 		'ngTouch',
+		'ngAnimate',
 		'ng-sortable',
 		'taskmastrControllers',
 		'taskmastrDirectives'

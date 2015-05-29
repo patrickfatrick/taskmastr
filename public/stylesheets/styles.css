@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:600italic,400");
 @import url("https://fonts.googleapis.com/css?family=Merriweather:400,700");
 @import url("https://fonts.googleapis.com/css?family=Lora:400,400italic");
-@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+@import url("../fonts/font-awesome/css/font-awesome.min.css");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -74,6 +74,10 @@ body {
   color: #000;
   font-family: "Merriweather", serif;
   font-size: 1.2rem;
+  -moz-transition: all 200ms linear;
+  -o-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
 }
 @media (min-width: 768px) {
   body {
@@ -327,6 +331,10 @@ input[type='password'] {
   padding: 5px 4px 5px 7px;
   background-color: #00B0FF;
   margin-top: 1rem;
+  -moz-transition: all 200ms linear;
+  -o-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
   -moz-box-shadow: 2px 2px 0 #008ccc;
   -webkit-box-shadow: 2px 2px 0 #008ccc;
   box-shadow: 2px 2px 0 #008ccc;
@@ -404,14 +412,27 @@ table tbody td.utils {
     display: table-cell;
   }
 }
-table tbody tr.hoverover {
-  background-color: #00B0FF;
-}
 table tbody tr.complete {
   text-decoration: line-through;
   color: #A3A3A3;
   background-color: transparent;
   font-style: italic;
+}
+table tbody tr.repeat-animation.ng-enter,
+table tbody tr.repeat-animation.ng-leave {
+  position: relative;
+  -moz-transition: all 200ms linear;
+  -o-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+table tbody tr.repeat-animation.ng-enter,
+table tbody tr.repeat-animation.ng-leave-active {
+  opacity: 0 !important;
+}
+table tbody tr.repeat-animation.ng-enter-active,
+table tbody tr.repeat-animation.ng-leave {
+  opacity: 1 !important;
 }
 
 .ghost {

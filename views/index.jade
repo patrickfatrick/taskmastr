@@ -23,15 +23,11 @@ block content
 				br/
 				| &rarr; Make your key unique and preferably nonsensical. This is how we store your tasks for the future!
 				br/
-				| &rarr; If you do not wish to save your data, simply don't input a key.
-				br/
 				| &rarr; Use the return key to save text fields.
 				br/
 				| &rarr; There is no undo if you delete a task.
 				br/
 				| &rarr; You can rename a task by double-clicking it.
-				br/
-				| &rarr; You can reorder todos by dragging and dropping.
 				br/
 				| &rarr; The plug icon toggles dark mode, which is also stored for future visits.
 				br/
@@ -51,7 +47,7 @@ block content
 					th toggle
 					th utils
 			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
-				tr.todo(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
+				tr.todo.repeat-animation(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
 					th
 						complete
 						i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'")
@@ -63,5 +59,5 @@ block content
 					td.utils
 						i.fa.fa-bars
 						i.fa.fa-pencil
-						delete
+						i.fa.fa-trash-o(ng-click="delete($index)")
 		#save-button.button(ng-click="write(user.key)", ng-class="{'toggled': saveButton}") Save

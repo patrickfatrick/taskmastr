@@ -17,8 +17,8 @@ function keyModal() {
 	var modalHeight = modal.height();
 
 	function removeModal() {
-		mask.fadeOut(500);
-		modal.removeClass('active-modal').animate({
+		mask.velocity('fadeOut', {duration: 500});
+		modal.removeClass('active-modal').velocity({
 			top: '-1000px'
 		}, 500);
 	}
@@ -26,7 +26,7 @@ function keyModal() {
 	modal.addClass('active-modal').css({
 		left: width / 2 - (modalWidth / 2) - 10 + 'px'
 	});
-	modal.animate({
+	modal.velocity({
 		top: '10%'
 	}, 500);
 	if (windowWidth() < 768) {
@@ -42,15 +42,13 @@ function keyModal() {
 	})();
 
 	$('#key').focus();
-	mask.click(function () {
-		removeModal();
-		$('#create-todo').focus();
-	});
 
 	$('#key-button').click(function () {
 		userKey = $('#key').val();
-		removeModal();
-		$('#create-todo').focus();
+		if (userKey) {
+			removeModal();
+			$('#create-todo').focus();
+		}
 	});
 
 	$('#key').keydown(function () {
@@ -139,28 +137,24 @@ function saveButton() {
 function mobileButtons() {
 	var width = windowWidth();
 	$('table tbody').on('click', '.fa-bullseye', function () {
-		$('table tbody td.toggle').hide('fade', 100);
-		setTimeout(function () {
-			$('table tbody td.utils').show('fade', 100);
-		}, 250);
+		$('table tbody td.toggle').velocity('fadeOut', {duration: 100});
+		$('table tbody td.utils').velocity('fadeIn', {delay: 100, duration: 100});
 	})
 
 	$('body').on('click', '#save-button', function () {
 		if (width < 768) {
-			$('table tbody td.utils').hide('fade', 100);
-			setTimeout(function () {
-				$('table tbody td.toggle').show('fade', 100);
-			}, 250);
+			$('table tbody td.utils').velocity('fadeOut', {duration: 100});
+			$('table tbody td.toggle').velocity('fadeIn', {delay: 100, duration: 100});
 		}
 	})
 }
 
 function todoHover() {
-	$('table tbody').on('mouseenter', 'tr', function () {
-		$(this).addClass('hoverover');
+	$('table tbody').on('mouseenter', 'tr:not(".complete")', function () {
+		$(this).velocity({backgroundColor: '#00B0FF', backgroundColorAlpha: 1}, {duration: 0});
 	})
 	$('table tbody').on('mouseleave', 'tr', function () {
-		$(this).removeClass('hoverover', 750);
+		$(this).velocity({backgroundColorAlpha: 0}, {duration: 500});
 	})
 }
 
