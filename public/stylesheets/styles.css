@@ -419,20 +419,25 @@ table tbody tr.complete {
   font-style: italic;
 }
 table tbody tr.repeat-animation.ng-enter,
-table tbody tr.repeat-animation.ng-leave {
-  position: relative;
+table tbody tr.repeat-animation.ng-enter-active,
+table tbody tr.repeat-animation.ng-leave,
+table tbody tr.repeat-animation.ng-leave-active {
   -moz-transition: all 200ms linear;
   -o-transition: all 200ms linear;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
-table tbody tr.repeat-animation.ng-enter,
-table tbody tr.repeat-animation.ng-leave-active {
-  opacity: 0 !important;
+table tbody tr.repeat-animation.ng-enter {
+  opacity: 0;
 }
-table tbody tr.repeat-animation.ng-enter-active,
+table tbody tr.repeat-animation.ng-enter-active {
+  opacity: 1;
+}
 table tbody tr.repeat-animation.ng-leave {
-  opacity: 1 !important;
+  opacity: 1;
+}
+table tbody tr.repeat-animation.ng-leave-active {
+  opacity: 0;
 }
 
 .ghost {
