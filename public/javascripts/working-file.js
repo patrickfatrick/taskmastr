@@ -17,7 +17,9 @@ function keyModal() {
 	var modalHeight = modal.height();
 
 	function removeModal() {
-		mask.velocity('fadeOut', {duration: 500});
+		mask.velocity('fadeOut', {
+			duration: 500
+		});
 		modal.removeClass('active-modal').velocity({
 			top: '-1000px'
 		}, 500);
@@ -35,11 +37,24 @@ function keyModal() {
 		});
 	}
 
-	(function () {
-		$('#tips-button').click(function () {
-			$('.fine-print').slideToggle(250);
-		})
-	})();
+
+	$('#tips-button').not('.toggled').click(function () {
+		if ($('#tips-button').hasClass('toggled')) {
+			$('.fine-print').velocity('slideUp', {
+				duration: 250,
+				complete: function () {
+					$('#tips-button').removeClass('toggled');
+				}
+			});
+		} else {
+			$('.fine-print').velocity('slideDown', {
+				duration: 250,
+				complete: function () {
+					$('#tips-button').addClass('toggled');
+				}
+			});
+		}
+	});
 
 	$('#key').focus();
 
@@ -51,33 +66,11 @@ function keyModal() {
 		}
 	});
 
-	$('#key').keydown(function () {
-		var key = event.which;
+	$('#key').keydown(function (e) {
+		var key = e.which;
 		if (key === 13) {
 			$('#key-button').click();
 		}
-	});
-}
-
-function createTodo() {
-	$('#create-todo').keydown(function () {
-		var key = event.which;
-		if (key === 13) {
-			$('#create-todo').val('');
-			$('#todo-button').click();
-		}
-		$('#todo-button').click(function() {
-			$('#create-todo').val('');
-		})
-	});
-}
-
-function completeItem() {
-	$('table').on('click', '.fa-circle-o', function () {
-		$(this).siblings('complete').children('.check').click();
-	});
-	$('table').on('click', '.fa-check-circle-o', function () {
-		$(this).siblings('complete').children('.check').click();
 	});
 }
 
@@ -94,18 +87,12 @@ function renameItem() {
 		rename.show().select();
 	});
 
-	$('table tbody').on('keydown', '.rename', function () {
-		var key = event.which;
+	$('table tbody').on('keydown', '.rename', function (e) {
+		var key = e.which;
 		if (key === 13) {
 			$(this).siblings('.name').show()
 			$(this).hide()
 		}
-	});
-}
-
-function darkMode() {
-	$('#dark-mode').click(function () {
-		$(this).siblings('.check').click();
 	});
 }
 
@@ -128,41 +115,27 @@ function saveButton() {
 			map[e.which] = false;
 		}
 	});
-
-	$('#save-button').click(function () {
-		$(this).removeClass('toggled');
-	})
-}
-
-function mobileButtons() {
-	var width = windowWidth();
-	$('table tbody').on('click', '.fa-bullseye', function () {
-		$('table tbody td.toggle').velocity('fadeOut', {duration: 100});
-		$('table tbody td.utils').velocity('fadeIn', {delay: 100, display: 'table-cell', duration: 100});
-	})
-	
-	$('#save-button').click(function() {
-		if (width < 768) {
-			$('table tbody td.utils').velocity('fadeOut', {duration: 100});
-			$('table tbody td.toggle').velocity('fadeIn', {delay: 100, display: 'table-cell', duration: 100});
-		}
-	})
 }
 
 function todoHover() {
 	$('table tbody').on('mouseenter', 'tr:not(".complete")', function () {
-		$(this).velocity({backgroundColor: '#00B0FF', backgroundColorAlpha: 1}, {duration: 0});
+		$(this).velocity({
+			backgroundColor: '#00B0FF',
+			backgroundColorAlpha: 1
+		}, {
+			duration: 0
+		});
 	})
 	$('table tbody').on('mouseleave', 'tr', function () {
-		$(this).velocity({backgroundColorAlpha: 0}, {duration: 500});
+		$(this).velocity({
+			backgroundColorAlpha: 0
+		}, {
+			duration: 500
+		});
 	})
 }
 
 $(keyModal);
-$(createTodo);
-$(completeItem);
 $(renameItem);
-$(darkMode);
 $(saveButton);
-$(mobileButtons);
 $(todoHover);

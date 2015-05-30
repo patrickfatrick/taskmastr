@@ -35,10 +35,10 @@ block content
 	.container
 		#todo-prompt What needs doing?
 			input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
-			i#dark-mode.fa.fa-plug(value="{{user.darkmode}}")
+			i#dark-mode.fa.fa-plug(value="{{user.darkmode}}", check-button)
 		.prompt-line#todo-line
-			input.prompt#create-todo(type="text", ng-model="newTodo")
-			i.fa.fa-arrow-down.submit#todo-button(ng-click="create(newTodo)")
+			input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
+			i.fa.fa-arrow-down.submit#todo-button(todo-button)
 		table#todo-list
 			thead
 				tr
@@ -49,15 +49,15 @@ block content
 			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
 				tr.todo.repeat-animation(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
 					th
-						complete
-						i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'")
+						input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete)
+						i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
 					td.todo-cell
 						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 						span.name {{todo.item}}
 					td.toggle
-						i.fa.fa-bullseye
+						i.fa.fa-bullseye(mobile-button)
 					td.utils
 						i.fa.fa-bars
 						i.fa.fa-pencil
 						i.fa.fa-trash-o(ng-click="delete($index)")
-		#save-button.button(ng-click="write(user.key)", ng-class="{'toggled': saveButton}") Save
+		#save-button.button(ng-class="{'toggled': saveButton}", save) Save

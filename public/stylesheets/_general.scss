@@ -2,7 +2,7 @@ body {
 	text-align: center;
 	color: $black;
 	font-family: $merriweather;
-	font-size: 1.2rem;
+	font-size: 1rem;
 	@include single-transition(all, 200ms, linear);
 	@include susy-breakpoint($medium) {
 		font-size: 1.4rem;
@@ -38,7 +38,6 @@ input[type='password'] {
 	i.submit {
 		font-size: 1.8rem;
 		position: relative;
-		//top: 0.6rem;
 		margin-left: 0.5rem;
 		cursor: pointer;
 		color: $white;

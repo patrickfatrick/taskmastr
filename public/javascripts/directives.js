@@ -3,8 +3,7 @@
 
 	app.directive('complete', function () {
 		return {
-			restrict: "E",
-			template: '<input class="check" type="checkbox" ng-checked="todo.complete" ng-model="todo.complete"></input>',
+			restrict: "A",
 			scope: false,
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
@@ -33,35 +32,85 @@
 			}
 		};
 	});
-
-	/*app.directive('delete', function () {
+	app.directive('save', function () {
 		return {
-			restrict: "A",
+			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attrs) {
+			link: function (scope, element, attr) {
 				element.bind('click', function () {
-					scope.$apply(function () {
-						var todos = scope.user.todos;
-						var item = element.parents('.todo');
-						var itemVal = item.find('td.todo-cell span').text();
-						var itemIndex;
-						$.each(todos, function (i, val) {
-							if (val.item === itemVal) {
-								itemIndex = i;
-								return false;
-							}
+					scope.write(scope.user.key);
+
+					var width = $(window).width();
+					if (width < 768) {
+						$('table tbody td.utils').velocity('fadeOut', {
+							duration: 100
 						});
-						todos.splice(itemIndex, 1);
-						console.log('Deleted the following item');
-						console.log(itemVal);
+						$('table tbody td.toggle').velocity('fadeIn', {
+							delay: 100,
+							display: 'table-cell',
+							duration: 100
+						});
+					}
+					element.removeClass('toggled');
+				});
+			}
+		}
+	});
+	app.directive('checkButton', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('click', function () {
+					element.siblings('.check').click();
+				});
+			}
+		}
+	});
+	app.directive('mobileButton', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('click', function () {
+					$('table tbody td.toggle').velocity('fadeOut', {
+						duration: 100
+					});
+					$('table tbody td.utils').velocity('fadeIn', {
+						delay: 100,
+						display: 'table-cell',
+						duration: 100
 					});
 				});
 			}
-			controller: function(scope) {
-				scope.delete = function(index) {
-					scope.user.todos.splice(index, 1);
-				}
+		}
+	});
+	app.directive('createTodo', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('keydown', function (e) {
+					var key = e.which;
+					if (key === 13) {
+						$('#todo-button').click();
+						$('#create-todo').val('');
+					}
+				});
 			}
-		};
-	});*/
+		}
+	});
+	app.directive('todoButton', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('click', function (e) {
+					scope.$apply(function() {
+						scope.create(scope.newTodo);
+					});
+				});
+			}
+		}
+	});
 })();

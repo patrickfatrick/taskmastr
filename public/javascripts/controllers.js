@@ -41,6 +41,7 @@
 					item: item,
 					complete: false
 				});
+				$log.log('Creating todo... OK');
 			};
 			$scope.write = function (key) {
 				var now = new Date();
