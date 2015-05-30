@@ -138,13 +138,13 @@ function mobileButtons() {
 	var width = windowWidth();
 	$('table tbody').on('click', '.fa-bullseye', function () {
 		$('table tbody td.toggle').velocity('fadeOut', {duration: 100});
-		$('table tbody td.utils').velocity('fadeIn', {delay: 100, duration: 100});
+		$('table tbody td.utils').velocity('fadeIn', {delay: 100, display: 'table-cell', duration: 100});
 	})
-
-	$('body').on('click', '#save-button', function () {
+	
+	$('#save-button').click(function() {
 		if (width < 768) {
 			$('table tbody td.utils').velocity('fadeOut', {duration: 100});
-			$('table tbody td.toggle').velocity('fadeIn', {delay: 100, duration: 100});
+			$('table tbody td.toggle').velocity('fadeIn', {delay: 100, display: 'table-cell', duration: 100});
 		}
 	})
 }

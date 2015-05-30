@@ -439,8 +439,7 @@ table tbody tr.repeat-animation.ng-leave {
 table tbody tr.repeat-animation.ng-leave-active {
   opacity: 0;
 }
-
-.ghost {
+table tbody tr.ghost {
   opacity: .5;
   background-color: #00B0FF;
 }

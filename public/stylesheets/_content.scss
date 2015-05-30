@@ -128,7 +128,7 @@ table {
 		tr.repeat-animation.ng-enter {
 			opacity: 0;
 		}
-		tr.repeat-animation.ng-enter-active{
+		tr.repeat-animation.ng-enter-active {
 			opacity: 1;
 		}
 		tr.repeat-animation.ng-leave {
@@ -137,10 +137,9 @@ table {
 		tr.repeat-animation.ng-leave-active {
 			opacity: 0;
 		}
+		tr.ghost {
+			opacity: .5;
+			background-color: $deepBlue;
+		}
 	}
-}
-
-.ghost {
-	opacity: .5;
-	background-color: $deepBlue;
 }
