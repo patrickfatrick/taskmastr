@@ -1,4 +1,5 @@
 var userKey;
+var tap = ("ontouchstart" in document.documentElement);
 
 function windowWidth() {
 	return $(window).width();
@@ -118,21 +119,24 @@ function saveButton() {
 }
 
 function todoHover() {
-	$('table tbody').on('mouseenter', 'tr:not(".complete")', function () {
-		$(this).velocity({
-			backgroundColor: '#00B0FF',
-			backgroundColorAlpha: 1
-		}, {
-			duration: 0
+	if (!tap) {
+		$('table tbody').on('mouseenter', 'tr:not(".complete")', function () {
+			$(this).velocity({
+				backgroundColor: '#00B0FF',
+				backgroundColorAlpha: 1
+			}, {
+				duration: 0
+			});
 		});
-	})
-	$('table tbody').on('mouseleave', 'tr', function () {
-		$(this).velocity({
-			backgroundColorAlpha: 0
-		}, {
-			duration: 500
+
+		$('table tbody').on('mouseleave', 'tr', function () {
+			$(this).velocity({
+				backgroundColorAlpha: 0
+			}, {
+				duration: 500
+			});
 		});
-	})
+	}
 }
 
 $(keyModal);
