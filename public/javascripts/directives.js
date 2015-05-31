@@ -107,7 +107,10 @@
 			link: function (scope, element, attr) {
 				element.bind('click', function (e) {
 					scope.$apply(function() {
-						scope.create(scope.newTodo);
+						if (scope.newTodo) {
+							scope.create(scope.newTodo);
+							scope.newTodo = '';
+						}
 					});
 				});
 			}
