@@ -1,5 +1,5 @@
 ## taskmastr
-Yet another todo list web app built with the MEAN stack. You can find a hosted version of this at [taskmastr.co](www.taskmastr.co)
+Yet another todo list web app built with the MEAN stack. You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
 _features:_
 - Uses a single key instead of a user/password login to store and retrieve information from the database.
