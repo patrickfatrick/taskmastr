@@ -25,6 +25,7 @@
     "angular-touch": "~1.4.0",
     "Sortable": "~1.2.0",
     "velocity": "~1.2.2",
-    "angular-animate": "~1.4.0"
+    "angular-animate": "~1.4.0",
+    "lodash": "~3.9.3"
   }
 }

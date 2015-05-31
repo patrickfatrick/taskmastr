@@ -20,6 +20,7 @@ var nodeSources = [
 var jsSources = [
 	//Uncomment the following for production
 	'./public/bower/jquery/dist/jquery.min.js',
+	'./public/bower/lodash/lodash.min.js',
 	'./public/bower/velocity/velocity.min.js',
 	'./public/bower/angular/angular.min.js',
 	'./public/bower/angular-touch/angular-touch.min.js',
