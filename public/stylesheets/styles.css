@@ -266,10 +266,16 @@ input[type='password'] {
   font-size: 2rem;
 }
 .container#four-oh-four iframe {
-  width: 384px;
-  height: 216px;
+  width: 320px;
+  height: 180px;
 }
-@media (min-width: 1200px) {
+@media (min-width: 480px) {
+  .container#four-oh-four iframe {
+    width: 384px;
+    height: 216px;
+  }
+}
+@media (min-width: 768px) {
   .container#four-oh-four iframe {
     width: 560px;
     height: 315px;

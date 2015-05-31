@@ -15,9 +15,13 @@
 		font-size: 2rem;
 	}
 	iframe {
-		width: 384px;
-		height: 216px;
-		@include susy-breakpoint($large) {
+		width: 320px;
+		height: 180px;
+		@include susy-breakpoint($small) {
+			width: 384px;
+			height: 216px;
+		}
+		@include susy-breakpoint($medium) {
 			width: 560px;
 			height: 315px;
 		}
