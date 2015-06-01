@@ -29,7 +29,7 @@ function keyModal() {
 		});
 	}
 
-	$('#tips-button').not('.toggled').click(function () {
+	$('#tips-button').click(function () {
 		if ($('#tips-button').hasClass('toggled')) {
 			$('.fine-print').velocity('slideUp', {
 				duration: 250,
