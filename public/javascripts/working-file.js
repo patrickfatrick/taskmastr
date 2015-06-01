@@ -17,15 +17,6 @@ function keyModal() {
 	var modalWidth = modal.width();
 	var modalHeight = modal.height();
 
-	function removeModal() {
-		mask.velocity('fadeOut', {
-			duration: 500
-		});
-		modal.removeClass('active-modal').velocity({
-			top: '-1000px'
-		}, 500);
-	}
-
 	modal.addClass('active-modal').css({
 		left: width / 2 - (modalWidth / 2) - 10 + 'px'
 	});
@@ -37,7 +28,6 @@ function keyModal() {
 			width: width + 'px'
 		});
 	}
-
 
 	$('#tips-button').not('.toggled').click(function () {
 		if ($('#tips-button').hasClass('toggled')) {
@@ -58,21 +48,6 @@ function keyModal() {
 	});
 
 	$('#key').focus();
-
-	$('#key-button').click(function () {
-		userKey = $('#key').val();
-		if (userKey) {
-			removeModal();
-			$('#create-todo').focus();
-		}
-	});
-
-	$('#key').keydown(function (e) {
-		var key = e.which;
-		if (key === 13) {
-			$('#key-button').click();
-		}
-	});
 }
 
 function renameItem() {

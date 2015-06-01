@@ -13,8 +13,8 @@ block content
 			br/
 			br/
 			.prompt-line#key-line
-				input.prompt#key(type="password", name="key", ng-model="user.key")
-				i.fa.fa-arrow-right.submit#key-button(ng-click="lookup(user.key)")
+				input.prompt#key(type="password", name="key", ng-model="user.key", input-key)
+				i.fa.fa-arrow-right.submit#key-button(key-button)
 			br/
 			br/
 			#tips-button.button

@@ -106,11 +106,54 @@
 			scope: false,
 			link: function (scope, element, attr) {
 				element.bind('click', function (e) {
-					scope.$apply(function() {
+					scope.$apply(function () {
 						if (scope.newTodo) {
 							scope.create(scope.newTodo);
 							scope.newTodo = '';
 						}
+					});
+				});
+			}
+		}
+	});
+	app.directive('inputKey', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('keydown', function (e) {
+					var key = e.which;
+					if (key === 13) {
+						$('#key-button').click();
+					}
+				});
+			}
+		}
+	});
+	app.directive('keyButton', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('click', function (e) {
+					var userKey = scope.user.key;
+					scope.lookup(userKey);
+					scope.$apply(function () {
+						var modal = $('#key-modal');
+						var mask = $('#mask');
+						var modalWidth = modal.width();
+						var modalHeight = modal.height();
+						var width = $(window).width();
+						if (userKey) {
+							mask.velocity('fadeOut', {
+								duration: 500
+							});
+							modal.removeClass('active-modal').velocity({
+								top: '-1000px'
+							}, 500);
+						}
+
+						$('#create-todo').focus();
 					});
 				});
 			}
