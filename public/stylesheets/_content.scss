@@ -123,27 +123,15 @@ table {
 			background-color: transparent;
 			font-style: italic;
 		}
-		tr.repeat-animation.ng-enter,
-		tr.repeat-animation.ng-enter-active,
-		tr.repeat-animation.ng-leave,
-		tr.repeat-animation.ng-leave-active {
-			@include single-transition(all, 200ms, linear);
-		}
-		tr.repeat-animation.ng-enter {
-			opacity: 0;
-		}
-		tr.repeat-animation.ng-enter-active {
-			opacity: 1;
-		}
-		tr.repeat-animation.ng-leave {
-			opacity: 1;
-		}
-		tr.repeat-animation.ng-leave-active {
-			opacity: 0;
-		}
 		tr.ghost {
 			opacity: .5;
 			background-color: $deepBlue;
+		}
+		tr.ng-enter {
+			@include animation(slideInLeft 200ms)
+		}
+		tr.ng-leave {
+			@include animation(slideOutLeft 200ms)
 		}
 	}
 }

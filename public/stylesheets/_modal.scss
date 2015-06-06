@@ -1,11 +1,17 @@
 .modal {
 	height: auto;
 	width: 100%;
-	max-width: 100%;
+	max-width: 768px;
 	position: absolute;
-	@include border-radius(15px);
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	top: 10%;
+	z-index: 3;
 	border: 10px solid $white;
 	background: $white;
+	@include border-radius(15px);
 	@include susy-breakpoint($medium) {
 		width: 50%;
 	}
@@ -41,9 +47,11 @@
 	}
 }
 
-#key-modal {
-	top: -1000px;
-	z-index: 3;
+.active-modal {
+	@include animation(flipInX 750ms);
+}
+.inactive-modal {
+	@include animation(flipOutX 750ms);
 }
 
 #mask {
@@ -52,4 +60,8 @@
 	background: rgba(0, 0, 0, 0.8);
 	z-index: 3;
 	position: absolute;
+}
+
+.inactive-mask {
+	@include animation(fadeOut 750ms);
 }

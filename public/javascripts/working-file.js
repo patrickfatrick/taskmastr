@@ -17,17 +17,7 @@ function keyModal() {
 	var modalWidth = modal.width();
 	var modalHeight = modal.height();
 
-	modal.addClass('active-modal').css({
-		left: width / 2 - (modalWidth / 2) - 10 + 'px'
-	});
-	modal.velocity({
-		top: '10%'
-	}, 500);
-	if (windowWidth() < 768) {
-		modal.css({
-			width: width + 'px'
-		});
-	}
+	modal.addClass('active-modal').removeClass('inactive-modal');
 
 	$('#tips-button').click(function () {
 		if ($('#tips-button').hasClass('toggled')) {

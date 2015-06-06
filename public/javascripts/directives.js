@@ -145,12 +145,12 @@
 						var modalHeight = modal.height();
 						var width = $(window).width();
 						if (userKey) {
-							mask.velocity('fadeOut', {
-								duration: 500
-							});
-							modal.removeClass('active-modal').velocity({
-								top: '-1000px'
-							}, 500);
+							mask.addClass('inactive-mask');
+							modal.removeClass('active-modal').addClass('inactive-modal');
+							setTimeout(function() {
+								modal.css('display', 'none');
+								mask.css('display', 'none');
+							}, 750);
 						}
 
 						$('#create-todo').focus();
