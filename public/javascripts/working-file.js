@@ -53,13 +53,24 @@ function renameItem() {
 		rename.show().select();
 	});
 
-	$('table tbody').on('keydown', '.rename', function (e) {
-		var key = e.which;
-		if (key === 13) {
-			$(this).siblings('.name').show()
-			$(this).hide()
-		}
-	});
+	var renameHandler = function (el) {
+		el.siblings('.name').show();
+		el.hide();
+	}
+
+	$('table tbody').on({
+			keydown: function (e) {
+				var key = e.which;
+				if (key === 13) {
+					renameHandler($(this));
+				}
+			},
+			blur: function () {
+				renameHandler($(this));
+			}
+		},
+		'.rename'
+	);
 }
 
 function saveButton() {
