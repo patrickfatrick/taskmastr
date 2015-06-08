@@ -1,6 +1,20 @@
 (function () {
 	var app = angular.module('taskmastrDirectives', []);
 
+	var mobileButtons = function () {
+		var width = $(window).width();
+		if (width < 768) {
+			$('table tbody td.utils').velocity('fadeOut', {
+				duration: 100
+			});
+			$('table tbody td.toggle').velocity('fadeIn', {
+				delay: 100,
+				display: 'table-cell',
+				duration: 100
+			});
+		}
+	}
+
 	app.directive('complete', function () {
 		return {
 			restrict: "A",
@@ -39,18 +53,7 @@
 			link: function (scope, element, attr) {
 				element.bind('click', function () {
 					scope.write(scope.user.key);
-
-					var width = $(window).width();
-					if (width < 768) {
-						$('table tbody td.utils').velocity('fadeOut', {
-							duration: 100
-						});
-						$('table tbody td.toggle').velocity('fadeIn', {
-							delay: 100,
-							display: 'table-cell',
-							duration: 100
-						});
-					}
+					mobileButtons();
 					element.removeClass('toggled');
 				});
 			}
@@ -109,6 +112,7 @@
 					scope.$apply(function () {
 						if (scope.newTodo) {
 							scope.create(scope.newTodo);
+							mobileButtons();
 							scope.newTodo = '';
 						}
 					});
@@ -147,7 +151,7 @@
 						if (userKey) {
 							mask.addClass('inactive-mask');
 							modal.removeClass('active-modal').addClass('inactive-modal');
-							setTimeout(function() {
+							setTimeout(function () {
 								modal.css('display', 'none');
 								mask.css('display', 'none');
 							}, 750);
