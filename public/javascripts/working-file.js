@@ -17,8 +17,6 @@ function keyModal() {
 	var modalWidth = modal.width();
 	var modalHeight = modal.height();
 
-	modal.addClass('active-modal').removeClass('inactive-modal');
-
 	$('#tips-button').click(function () {
 		if ($('#tips-button').hasClass('toggled')) {
 			$('.fine-print').velocity('slideUp', {
