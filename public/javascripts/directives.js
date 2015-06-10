@@ -152,8 +152,8 @@
 							mask.addClass('inactive-mask');
 							modal.removeClass('active-modal').addClass('inactive-modal');
 							setTimeout(function () {
-								modal.css('display', 'none');
-								mask.css('display', 'none');
+								modal.remove();
+								mask.remove();
 							}, 750);
 						}
 
