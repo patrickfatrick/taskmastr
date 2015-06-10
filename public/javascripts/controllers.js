@@ -12,7 +12,7 @@
 			$scope.user.darkmode = null;
 			$scope.saveButton = false;
 			$scope.sortableOptions = {
-				handle: '.fa-bars',
+				handle: '.sort',
 				sort: true,
 				animation: 150,
 				ghostClass: 'ghost',

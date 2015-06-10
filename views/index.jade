@@ -25,7 +25,7 @@ block content
 				br/
 				| &rarr; Use the return key (&#8617;) to save text fields.
 				br/
-				| &rarr; There is no undo but simply don't save your changes.
+				| &rarr; There is no undo when deleting a task, simply refresh without saving.
 				br/
 				| &rarr; You can rename a task by double-clicking it.
 				br/
@@ -55,9 +55,9 @@ block content
 						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 						span.name {{todo.item}}
 					td.toggle
-						i.fa.fa-bullseye(mobile-button)
+						i.fa.fa-bars(mobile-button)
 					td.utils
-						i.fa.fa-bars
+						i.fa.fa-arrows-v.sort
 						i.fa.fa-pencil
 						i.fa.fa-trash-o(ng-click="delete($index)")
 		#save-button.button(ng-class="{'toggled': saveButton}", save) Save
