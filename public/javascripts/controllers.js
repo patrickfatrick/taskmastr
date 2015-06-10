@@ -26,7 +26,7 @@
 						key: key
 					})
 					.success(function (data) {
-						$scope.user.todos = (data.hasOwnProperty('todos')) ? data.todos : [];
+						$scope.user.todos = (data.todos) ? data.todos : [];
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						$log.log('User profile mounted...');
