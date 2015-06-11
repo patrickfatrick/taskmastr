@@ -14,6 +14,20 @@
 			});
 		}
 	}
+	var getIndex = function (scope, element) {
+		var item = element.parents('.todo');
+		var itemVal = item.find('td.todo-cell span').text();
+		var todos = scope.user.todos;
+		var index;
+		_.each(todos, function (val, i) {
+			if (val.item === itemVal) {
+				index = i;
+				return false;
+			}
+		});
+		return index;
+	}
+	var timeoutID;
 
 	app.directive('complete', function () {
 		return {
@@ -22,17 +36,9 @@
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					scope.$apply(function () {
-						var item = element.parents('.todo');
-						var itemVal = item.find('td.todo-cell span').text();
 						var todos = scope.user.todos;
-						var oldIndex;
+						var oldIndex = getIndex(scope, element);
 						var newIndex = todos.length;
-						_.each(todos, function (val, i) {
-							if (val.item === itemVal) {
-								oldIndex = i;
-								return false;
-							}
-						});
 						var splicedTodo = todos.splice(oldIndex, 1);
 						_.each(todos, function (val, i) {
 							if (val.complete === true) {
@@ -158,6 +164,32 @@
 						}
 
 						$('#create-todo').focus();
+					});
+				});
+			}
+		}
+	});
+	app.directive('deleteButton', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attr) {
+				element.bind('click', function (e) {
+					scope.$apply(function () {
+						var index = getIndex(scope, element);
+						var todo = element.parents('.todo');
+						if (!todo.hasClass('deleting')) {
+							element.removeClass('fa-trash-o').addClass('fa-undo');
+							todo.addClass('deleting');
+							timeoutID = setTimeout(function () {
+								scope.delete(index);
+								scope.$apply();
+							}, 5000);
+						} else {
+							clearTimeout(timeoutID);
+							element.removeClass('fa-undo').addClass('fa-trash-o');
+							todo.removeClass('deleting');
+						}
 					});
 				});
 			}

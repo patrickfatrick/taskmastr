@@ -122,8 +122,11 @@ table {
 		tr.complete {
 			text-decoration: line-through;
 			color: $gray;
-			background-color: transparent;
+			background: transparent !important;
 			font-style: italic;
+		}
+		tr.deleting {
+			background: $red !important;
 		}
 		tr.ghost {
 			opacity: .5;

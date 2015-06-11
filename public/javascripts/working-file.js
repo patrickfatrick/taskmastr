@@ -94,7 +94,7 @@ function saveButton() {
 
 function todoHover() {
 	if (!tap) {
-		$('table tbody').on('mouseenter', 'tr:not(".complete")', function () {
+		$('table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
 			$(this).velocity({
 				backgroundColor: '#00B0FF',
 				backgroundColorAlpha: 1
