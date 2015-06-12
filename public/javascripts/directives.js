@@ -176,12 +176,12 @@
 			link: function (scope, element, attr) {
 				element.bind('click', function (e) {
 					scope.$apply(function () {
-						var index = getIndex(scope, element);
 						var todo = element.parents('.todo');
 						if (!todo.hasClass('deleting')) {
 							element.removeClass('fa-trash-o').addClass('fa-undo');
 							todo.addClass('deleting');
 							timeoutID = setTimeout(function () {
+								var index = getIndex(scope, element);
 								scope.delete(index);
 								scope.$apply();
 							}, 5000);
