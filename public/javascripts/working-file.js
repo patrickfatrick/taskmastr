@@ -52,8 +52,10 @@ function renameItem() {
 	});
 
 	var renameHandler = function (el) {
-		el.siblings('.name').show();
-		el.hide();
+		if ($('.rename').val()) {
+			el.siblings('.name').show();
+			el.hide();
+		}
 	}
 
 	$('table tbody').on({

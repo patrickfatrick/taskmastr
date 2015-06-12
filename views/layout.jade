@@ -4,17 +4,6 @@ html(ng-app="taskmastrApp")
 		title= title
 		meta(name="viewport", content="initial-scale=1, maximum-scale=1")
 		link(rel="stylesheet", href="/stylesheets/styles.css")
-		// Comment out libraries for production
-			script(type="text/javascript", src="/bower/jquery/dist/jquery.min.js")
-			script(type="text/javascript", src="/bower/velocity/velocity.min.js")
-			script(type="text/javascript", src="/bower/angular/angular.min.js")
-			script(type="text/javascript", src="/bower/angular-touch/angular-touch.min.js")
-			script(type="text/javascript", src="/bower/angular-animate/angular-animate.min.js")
-			script(type="text/javascript", src="/bower/Sortable/Sortable.js")
-			script(type="text/javascript", src="/bower/Sortable/ng-sortable.js")
-			script(type="text/javascript", src="/javascripts/app.js")
-			script(type="text/javascript", src="/javascripts/controllers.js")
-			script(type="text/javascript", src="/javascripts/directives.js")
 		script(type="text/javascript", src="/javascripts/script.js")
 	body(ng-controller="UserController as user", ng-class="{'dark-mode': user.darkmode}")
 		block content
