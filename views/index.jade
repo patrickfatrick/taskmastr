@@ -39,7 +39,8 @@ block content
 		.prompt-line#todo-line
 			input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
 			i.fa.fa-arrow-down.submit#todo-button(todo-button)
-		table#todo-list
+		i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
+		table#todo-list(ng-class="{hidden: !user.todos}")
 			thead
 				tr
 					th checkbox

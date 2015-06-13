@@ -68,6 +68,15 @@
 	display: block;
 }
 
+#loading {
+	margin-top: 3rem;
+	font-size: 3rem;
+}
+
+.hidden {
+	display: none !important;
+}
+
 table {
 	table-layout: auto;
 	margin-top: 1rem;
