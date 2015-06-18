@@ -29,11 +29,11 @@
 						$scope.user.todos = (data.todos) ? data.todos : [];
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
-						$log.log('User profile mounted...');
-						$log.log($scope.user);
+						//$log.log('User profile mounted...');
+						//$log.log($scope.user);
 					})
 					.error(function () {
-						$log.log('Error connecting to db!');
+						//$log.log('Error connecting to db!');
 					});
 			};
 			$scope.create = function (item) {
@@ -41,15 +41,15 @@
 					item: item,
 					complete: false
 				});
-				$log.log('Creating todo... OK');
+				//$log.log('Creating todo... OK');
 			};
 			$scope.write = function (key) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
-				$log.log('Saving to db...')
-				$log.log($scope.user);
+				//$log.log('Saving to db...')
+				//$log.log($scope.user);
 				$scope.saveButton = false;
-				$log.log('saveButton = ' + $scope.saveButton);
+				//$log.log('saveButton = ' + $scope.saveButton);
 				$http.post('/users/write', {
 						json: angular.toJson($scope.user)
 					})
@@ -66,16 +66,16 @@
 			$scope.$watch('user.todos', function (newValue, oldValue) {
 				if (newValue === oldValue) return;
 				if (counter >= 2) $scope.saveButton = true;
-				$log.log('saveButton = ' + $scope.saveButton);
+				//$log.log('saveButton = ' + $scope.saveButton);
 				counter += 1;
-				console.log('todo counter = ' + counter);
+				//$.log('todo counter = ' + counter);
 			}, true);
 			$scope.$watch('user.darkmode', function (newValue, oldValue) {
 				if (newValue === oldValue) return;
 				if (counter >= 2) $scope.saveButton = true;
-				$log.log('saveButton = ' + $scope.saveButton);
+				//$log.log('saveButton = ' + $scope.saveButton);
 				counter += 1;
-				console.log('darkmode counter = ' + counter);
+				//$.log('darkmode counter = ' + counter);
 			}, true);
 		}
 	]);

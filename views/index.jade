@@ -35,7 +35,7 @@ block content
 	.container
 		#todo-prompt What needs doing?
 			input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
-			i#dark-mode.fa.fa-plug(value="{{user.darkmode}}", check-button)
+			i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 		.prompt-line#todo-line
 			input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
 			i.fa.fa-arrow-down.submit#todo-button(todo-button)

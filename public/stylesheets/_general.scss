@@ -1,16 +1,24 @@
+html {
+	height: 100%;
+	width: 100%;
+}
+
 body {
 	text-align: center;
 	color: $black;
 	font-family: $merriweather;
 	font-size: 1rem;
-	@include single-transition(all, 200ms, linear);
+	@include single-transition(all, 1s, ease-out);
+	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight));
+	background-size: 300%;
+	background-position: bottom;
 	@include susy-breakpoint($medium) {
 		font-size: 1.4rem;
 	}
 }
 
 body.dark-mode {
-	background: dimgray;
+	background-position: top;
 	color: $white;
 }
 
