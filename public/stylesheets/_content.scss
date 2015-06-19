@@ -54,7 +54,7 @@
 
 #todo-button {
 	background: $deepBlue;
-	@include button-effect($deepBlue);
+	@include button-effect($deepBlue, 2px, 0);
 }
 
 #save-button {
@@ -66,7 +66,7 @@
   left: 0;
   right: 0;
   bottom: 20px;
-	@include button-effect($deepBlue);
+	@include button-effect($deepBlue, 22px, 20px);
 }
 
 #save-button.toggled {

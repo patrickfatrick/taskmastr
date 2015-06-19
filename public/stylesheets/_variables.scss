@@ -47,15 +47,15 @@ $large: 1200px;
 	}
 }
 
-@mixin button-effect($color) {
+@mixin button-effect($color, $bottomHover, $bottomActive) {
 	@include single-box-shadow(2px, 2px, 0, null, $color * 0.8);
 	&:hover {
-		top: -2px;
+		bottom: $bottomHover;
 		left: -2px;
 		@include single-box-shadow(4px, 4px, 0, null, $color * 0.8);
 	}
 	&:active {
-		top: 0;
+		bottom: $bottomActive;
 		left: 0;
 		@include single-box-shadow(2px, 2px, 0, null, $color * 0.8);
 	}
