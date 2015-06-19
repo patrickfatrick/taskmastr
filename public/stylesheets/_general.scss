@@ -1,10 +1,10 @@
 html {
-	height: 100%;
 	width: 100%;
+	height: auto;
 }
 
 body {
-	height: 100%;
+	@extend html;
 	text-align: center;
 	color: $black;
 	font-family: $merriweather;
