@@ -81,13 +81,18 @@ function saveButton() {
 	};
 
 	$(document).keydown(function (e) {
+		//console.log('Keydown on ' + e.which);
 		if (e.which in map) {
 			map[e.which] = true;
 			if (map[91] && map[40]) {
 				$('#save-button.toggled').click();
+				map[91] = false;
+				map[40] = false;
 			}
 		}
-	}).keyup(function (e) {
+	});
+	$(document).keyup(function (e) {
+		//console.log('Keyup on ' + e.which);
 		if (e.which in map) {
 			map[e.which] = false;
 		}
