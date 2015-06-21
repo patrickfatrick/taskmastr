@@ -19,23 +19,27 @@
 				scroll: true,
 				scrollSensitivity: 30,
 				scrollSpeed: 10,
-				filter: '.complete',
 				onUpdate: function (evt) {
-					var itemEl = evt.item;
-
+					var itemEl = evt.model.item;
+					var itemComplete = evt.model.complete;
 					var completeIndex;
+					$log.log(itemEl);
 					$scope.user.todos.every(function (val, i) {
-						if (val.complete === true) {
+						if (val.complete === true && val.item != itemEl) {
 							completeIndex = i;
 							return false;
 						}
 						return true;
 					});
-					//$log.log(completeIndex);
-					//$log.log(evt.newIndex);
-					if (evt.newIndex > completeIndex) {
-						var spliced = $scope.user.todos.splice(evt.newIndex, 1);
+					$log.log(completeIndex);
+					$log.log(evt.newIndex);
+					var spliced;
+					if (evt.newIndex > completeIndex && !itemComplete) {
+						spliced = $scope.user.todos.splice(evt.newIndex, 1);
 						$scope.user.todos.splice(completeIndex, 0, spliced[0]);
+					} else if (evt.newIndex < completeIndex && itemComplete) {
+						spliced = $scope.user.todos.splice(evt.newIndex, 1);
+						$scope.user.todos.splice(completeIndex - 1, 0, spliced[0]);
 					}
 				}
 			};
