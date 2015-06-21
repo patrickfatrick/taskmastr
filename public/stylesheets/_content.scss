@@ -140,15 +140,14 @@ table {
 				padding: 0 8px 0 8px;
 			}
 		}
-		tr.ghost {
-			opacity: .5;
-			background-color: $deepBlue !important;
-		}
-
 		tr.complete {
 			color: #919191;
 			background: transparent !important;
 			font-style: italic;
+		}
+		tr.ghost {
+			opacity: .5;
+			background-color: $deepBlue !important;
 		}
 		tr.deleting {
 			background: $red !important;
