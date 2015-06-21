@@ -18,7 +18,26 @@
 				ghostClass: 'ghost',
 				scroll: true,
 				scrollSensitivity: 30,
-    		scrollSpeed: 10
+				scrollSpeed: 10,
+				filter: '.complete',
+				onUpdate: function (evt) {
+					var itemEl = evt.item;
+
+					var completeIndex;
+					$scope.user.todos.every(function (val, i) {
+						if (val.complete === true) {
+							completeIndex = i;
+							return false;
+						}
+						return true;
+					});
+					//$log.log(completeIndex);
+					//$log.log(evt.newIndex);
+					if (evt.newIndex > completeIndex) {
+						var spliced = $scope.user.todos.splice(evt.newIndex, 1);
+						$scope.user.todos.splice(completeIndex, 0, spliced[0]);
+					}
+				}
 			};
 			var counter = 0;
 			$scope.lookup = function (key) {
@@ -60,7 +79,7 @@
 						$log.log('Error writing data!');
 					});
 			};
-			$scope.delete = function(index) {
+			$scope.delete = function (index) {
 				$scope.user.todos.splice(index, 1);
 			};
 			$scope.$watch('user.todos', function (newValue, oldValue) {

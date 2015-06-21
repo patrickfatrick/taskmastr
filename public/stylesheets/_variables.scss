@@ -4,6 +4,8 @@
 $white: #FFF;
 $black: #000;
 $gray: #A3A3A3;
+$azure: #C1CDCD;
+$astroTurf: #48A85C;
 $red: #E84D49;
 $orchid: #DA70D6;
 $deepBlue: #00B0FF;
@@ -13,17 +15,16 @@ $brightDark: #51B4D3;
 $brightLight: #E4F3F6;
 /* ---------- Fonts ---------- */
 
-$josefin: "Josefin Sans",
-sans-serif;
-$merriweather: "Merriweather",
-serif;
-$lora: "Lora",
-serif;
+$josefin: "Josefin Sans", sans-serif;
+$radley: "Radley", serif;
+$raleway: "Raleway", sans-serif;
 /* ---------- Susy Settings ---------- */
 
-$susy: (columns: 12,
-gutters: 0.25,
-column-width: 4em);
+$susy: (
+	columns: 12,
+	gutters: 0.25,
+	column-width: 4em
+);
 @include border-box-sizing;
 $small: 480px;
 $medsmall: 650px;

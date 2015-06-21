@@ -28,9 +28,9 @@
 
 #todo-prompt {
 	margin-bottom: 10px;
-	font-size: 1.8rem;
+	font-size: 2rem;
 	@include susy-breakpoint($medium) {
-		font-size: 2.3rem;
+		font-size: 2.5rem;
 		width: 60%;
 		@include center;
 	}
@@ -64,9 +64,7 @@
 
 #save-button {
 	display: none;
-	padding: 5px 4px 5px 7px;
 	background-color: $deepBlue;
-	margin-top: 1rem;
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -142,18 +140,18 @@ table {
 				padding: 0 8px 0 8px;
 			}
 		}
+		tr.ghost {
+			opacity: .5;
+			background-color: $deepBlue !important;
+		}
+
 		tr.complete {
-			text-decoration: line-through;
-			color: $gray;
+			color: #919191;
 			background: transparent !important;
 			font-style: italic;
 		}
 		tr.deleting {
 			background: $red !important;
-		}
-		tr.ghost {
-			opacity: .5;
-			background-color: $deepBlue;
 		}
 		tr.ng-enter {
 			@include animation(slideInLeft 200ms)
