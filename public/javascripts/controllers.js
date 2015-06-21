@@ -23,7 +23,7 @@
 					var itemEl = evt.model.item;
 					var itemComplete = evt.model.complete;
 					var completeIndex;
-					$log.log(itemEl);
+					//$log.log(itemEl);
 					$scope.user.todos.every(function (val, i) {
 						if (val.complete === true && val.item != itemEl) {
 							completeIndex = i;
@@ -31,8 +31,8 @@
 						}
 						return true;
 					});
-					$log.log(completeIndex);
-					$log.log(evt.newIndex);
+					//$log.log(completeIndex);
+					//$log.log(evt.newIndex);
 					var spliced;
 					if (evt.newIndex > completeIndex && !itemComplete) {
 						spliced = $scope.user.todos.splice(evt.newIndex, 1);
