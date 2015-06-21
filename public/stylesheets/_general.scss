@@ -7,7 +7,7 @@ body {
 	@extend html;
 	text-align: center;
 	color: $black;
-	font-family: $radley;
+	font-family: $cardo;
 	font-size: 1rem;
 	@include single-transition(all, 1s, ease-out);
 	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight));
