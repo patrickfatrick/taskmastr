@@ -146,10 +146,11 @@
 			scope: false,
 			link: function (scope, element, attr) {
 				element.bind('click', function (e) {
+					var username = scope.user.username;
 					var userKey = scope.user.key;
 					var rememberMe = scope.rememberMe;
-					console.log(rememberMe);
-					scope.lookup(userKey, rememberMe);
+					//console.log(rememberMe);
+					scope.lookup(username, userKey, rememberMe);
 					scope.$apply(function () {
 						var modal = $('#key-modal');
 						var mask = $('#mask');

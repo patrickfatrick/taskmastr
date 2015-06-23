@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
+	user: {type: String},
 	key: {type: String},
   darkmode: {type: Boolean},
   todos: {type: Array},

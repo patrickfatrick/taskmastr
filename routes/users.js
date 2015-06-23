@@ -11,14 +11,16 @@ router.post('/login',
 		next();
 	},
 	function (req, res, next) {
+		var username = req.body.username;
 		var key = req.body.key;
 		//console.log(req.body);
-		userService.findUser(key, function (err, user) {
+		userService.findUser(username, function (err, user) {
 			if (err) {
 				return next(err);
 			}
 			if (!user) {
 				userService.addUser({
+					username: username,
 					key: key
 				}, function (err, user) {
 					if (err) console.log(err);

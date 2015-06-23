@@ -11,6 +11,7 @@ exports.addUser = function (user, next) {
 		if (err) return next(err);
 		user.key = hash.toString('hex');
 		var newUser = new User({
+			username: user.username,
 			key: user.key,
 			todos: user.todos,
 			darkmode: user.darkmode
@@ -24,26 +25,24 @@ exports.addUser = function (user, next) {
 	});
 };
 
-exports.findUser = function (key, next) {
-	crypto.pbkdf2(key, salt, iterations, len, hash, function (err, hash) {
-		User.findOne({
-			key: hash.toString('hex')
-		}, function (err, user) {
-			next(err, user);
-		});
-	})
+exports.findUser = function (user, next) {
+	User.findOne({
+		user: user.username
+	}, function (err, user) {
+		next(err, user);
+	});
 };
 
-exports.updateUser = function(user, next) {
-	User.update(
-		{key: user.key},
-		{
-			$set: {
-				todos: user.todos,
-				darkmode: user.darkmode,
-				dateModified: user.dateModified
-			}
-		}, function (err, user) {
+exports.updateUser = function (user, next) {
+	User.update({
+		user: user.username
+	}, {
+		$set: {
+			todos: user.todos,
+			darkmode: user.darkmode,
+			dateModified: user.dateModified
+		}
+	}, function (err, user) {
 		next(err, user);
 	});
 };

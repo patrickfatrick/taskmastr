@@ -10,9 +10,9 @@ block content
 			br/
 			br/
 			| If so, input it below, and if not go ahead and create one!
-			form(id="user-form" formaction="/users/login")
+			form(id="user-form")
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="user", ng-model="user.user", placeholder="Username", required)
+					input.prompt#user(type="text", name="user", ng-model="user.username", placeholder="Username", required)
 				.prompt-line#key-line
 					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", required, input-key)
 					button.fa.fa-arrow-right.submit#key-button(type="submit",key-button)

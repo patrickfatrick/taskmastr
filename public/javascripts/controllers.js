@@ -44,8 +44,9 @@
 				}
 			};
 			var counter = 0;
-			$scope.lookup = function (key, rememberMe) {
+			$scope.lookup = function (user, key, rememberMe) {
 				$http.post('/users/login', {
+						user: user,
 						key: key,
 						rememberMe: rememberMe
 					})
