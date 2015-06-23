@@ -36,6 +36,18 @@
 	}
 	.modal-body {
 		padding: 30px;
+		.prompt-line {
+			margin-top: 2rem;
+			span {
+				display: block;
+				text-align: left;
+				font-size: 0.8rem;
+				margin-left: 0;
+			}
+		}
+		.prompt-line#key-line {
+			margin-top: 0.5rem;
+		}
 		.fine-print {
 			font-size: 1rem;
 			display: none;
@@ -46,6 +58,22 @@
 		}
 		#key-button {
 			padding: 4px 6px 5px 7px;
+		}
+		#remember {
+			width: 80%;
+			margin-left: 10%;
+			text-align: left;
+			margin-top: 0.5rem;
+			font-size: 0.8rem;
+			.check {
+				width: 0.8rem;
+			}
+			label {
+				margin-left: 1rem;
+			}
+		}
+		#tips-button {
+			margin-top: 2rem;
 		}
 	}
 }

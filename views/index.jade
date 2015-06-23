@@ -10,13 +10,16 @@ block content
 			br/
 			br/
 			| If so, input it below, and if not go ahead and create one!
-			br/
-			br/
-			.prompt-line#key-line
-				input.prompt#key(type="password", name="key", ng-model="user.key", input-key)
-				i.fa.fa-arrow-right.submit#key-button(key-button)
-			br/
-			br/
+			form(id="user-form" formaction="/users/login")
+				.prompt-line#user-line
+					input.prompt#user(type="text", name="user", ng-model="user.user", placeholder="Username", required)
+				.prompt-line#key-line
+					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", required, input-key)
+					button.fa.fa-arrow-right.submit#key-button(type="submit",key-button)
+				#remember
+					input.check#remember-me(type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
+					i.fa(ng-class="rememberMe ? 'fa-check-square-o' : 'fa-square-o'", check-button)
+					label(for="remember-me") Remember me
 			#tips-button.button
 				| Tips:
 			.fine-print
@@ -38,7 +41,7 @@ block content
 			i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 		.prompt-line#todo-line
 			input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
-			i.fa.fa-arrow-down.submit#todo-button(todo-button)
+			button.fa.fa-arrow-down.submit#todo-button(todo-button)
 		i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
 		table#todo-list(ng-class="{hidden: !user.todos}")
 			thead
@@ -61,4 +64,8 @@ block content
 						i.fa.fa-arrows-v.sort
 						i.fa.fa-pencil
 						i.fa.fa-trash-o(delete-button)
+		#logout-container
+			#logout(ng-show="user.todos")
+				i.fa.fa-power-off#power-off(ng-click="logout()")
+				label(for="power-off") Logout
 		#save-button.button(ng-class="{'toggled': saveButton}", save) Save

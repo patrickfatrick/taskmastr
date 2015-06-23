@@ -44,9 +44,10 @@
 				}
 			};
 			var counter = 0;
-			$scope.lookup = function (key) {
+			$scope.lookup = function (key, rememberMe) {
 				$http.post('/users/login', {
-						key: key
+						key: key,
+						rememberMe: rememberMe
 					})
 					.success(function (data) {
 						$scope.user.todos = (data.todos) ? data.todos : [];
@@ -56,7 +57,7 @@
 						//$log.log($scope.user);
 					})
 					.error(function () {
-						//$log.log('Error connecting to db!');
+						$log.log('Error connecting to db!');
 					});
 			};
 			$scope.create = function (item) {
@@ -81,6 +82,15 @@
 					})
 					.error(function (data) {
 						$log.log('Error writing data!');
+					});
+			};
+			$scope.logout = function() {
+				$http.get('/users/logout')
+					.success(function() {
+						$log.log('Logged out');
+					})
+					.error(function (data) {
+						$log.log('Error logging out! ' + data);
 					});
 			};
 			$scope.delete = function (index) {

@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession({
-	secret: 'getting hungry',
+	secret: 'suzy eats a suzy snack',
 	saveUninitialized: false,
 	resave: false,
 	store: new MongoStore({

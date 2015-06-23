@@ -35,7 +35,7 @@ function keyModal() {
 		}
 	});
 
-	$('#key').focus();
+	$('#user').focus();
 }
 
 function renameItem() {

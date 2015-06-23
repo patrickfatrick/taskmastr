@@ -147,7 +147,9 @@
 			link: function (scope, element, attr) {
 				element.bind('click', function (e) {
 					var userKey = scope.user.key;
-					scope.lookup(userKey);
+					var rememberMe = scope.rememberMe;
+					console.log(rememberMe);
+					scope.lookup(userKey, rememberMe);
 					scope.$apply(function () {
 						var modal = $('#key-modal');
 						var mask = $('#mask');
