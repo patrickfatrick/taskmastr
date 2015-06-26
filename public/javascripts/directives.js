@@ -157,16 +157,17 @@
 						var modalWidth = modal.width();
 						var modalHeight = modal.height();
 						var width = $(window).width();
-						if (userKey) {
+						if (scope.user.todos) {
 							mask.addClass('inactive-mask');
 							modal.removeClass('active-modal').addClass('inactive-modal');
 							setTimeout(function () {
 								modal.remove();
 								mask.remove();
 							}, 750);
+							$('#create-todo').focus();
+						} else {
+							scope.confirmPassword = true;
 						}
-
-						$('#create-todo').focus();
 					});
 				});
 			}

@@ -15,7 +15,13 @@ block content
 					input.prompt#user(type="text", name="user", ng-model="user.username", placeholder="Username", required)
 				.prompt-line#key-line
 					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", required, input-key)
-					button.fa.fa-arrow-right.submit#key-button(type="submit",key-button)
+					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword", key-button)
+				#confirm-text
+					label(for="confirm", ng-show="confirmPassword") 
+						| No user found. Please confirm your password.
+				.prompt-line#confirm-line(ng-show="confirmPassword")
+					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", required, input-key)
+					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
 				#remember
 					input.check#remember-me(type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
 					i.fa(ng-class="rememberMe ? 'fa-check-square-o' : 'fa-square-o'", check-button)
