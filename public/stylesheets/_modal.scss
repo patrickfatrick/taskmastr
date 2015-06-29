@@ -5,7 +5,7 @@
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 0;
+	top: 10%;
 	z-index: 3;
 	border: 10px solid $white;
 	background: $white;
@@ -13,7 +13,6 @@
 	@include border-radius(15px);
 	@include susy-breakpoint($medium) {
 		width: 50%;
-		top: 10%;
 	}
 	.modal-header {
 		background: $deepBlue;
