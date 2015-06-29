@@ -34,9 +34,8 @@ input[type='password'] {
 
 .prompt-line {
 	width: 80%;
-	margin-left: auto;
-	margin-right: auto;
 	white-space: nowrap;
+	@include center;
 	.prompt {
 		width: 100%;
 		line-height: 3rem;
@@ -71,9 +70,8 @@ input[type='password'] {
 	width: 100px;
 	height: 2.5rem;
 	padding: 3px 4px 3px 9px;
-	margin-left: auto;
-	margin-right: auto;
 	cursor: pointer;
+	@include center;
 	@include border-radius(20px);
 	@include button-effect($orchid, 2px, 0);
 }

@@ -170,6 +170,25 @@
 			}
 		}
 	});
+	app.directive('pwCheck', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				var firstPassword = '#' + attrs.pwCheck;
+				$('#user-form').on('submit', function (e) {
+					if (scope.confirmPassword) {
+						var valid;
+						scope.$apply(function () {
+							valid = element.val() === $(firstPassword).val();
+							ctrl.$setValidity('pwmatch', valid);
+						});
+					}
+				});
+			}
+		}
+	});
 	app.directive('deleteButton', function () {
 		return {
 			restrict: 'A',
@@ -192,25 +211,6 @@
 							todo.removeClass('deleting');
 						}
 					});
-				});
-			}
-		}
-	});
-	app.directive('pwCheck', function () {
-		return {
-			restrict: 'A',
-			scope: false,
-			require: 'ngModel',
-			link: function (scope, element, attrs, ctrl) {
-				var firstPassword = '#' + attrs.pwCheck;
-				$('#user-form').on('submit', function (e) {
-					if (scope.confirmPassword) {
-						var valid;
-						scope.$apply(function () {
-							valid = element.val() === $(firstPassword).val();
-							ctrl.$setValidity('pwmatch', valid);
-						});
-					}
 				});
 			}
 		}

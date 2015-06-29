@@ -22,7 +22,7 @@ block content
 				#confirm-text
 					label(for="confirm", ng-show="confirmPassword") 
 						| No user found. Please confirm your password.
-				.prompt-line#confirm-line(ng-show="confirmPassword")
+				.prompt-line#confirm-line(ng-show="confirmPassword", confirm-password)
 					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", pw-check="key")
 					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
 				#confirm-error(ng-show="userForm.$error")
@@ -35,7 +35,7 @@ block content
 			#tips-button.button
 				| Tips:
 			ul.fine-print
-				li &rarr; Make your key unique and preferably nonsensical. This is how we store your tasks for the future!
+				li &rarr; Sessions are not stored unless you use the Remember Me toggle (which stores them for 30 days).
 				li &rarr; Use the return key (&#8617;) to save text fields.
 				li &rarr; When deleting, you have five seconds to undo.
 				li &rarr; You can rename a task by double-clicking it.

@@ -2,9 +2,8 @@
 	@extend html;
 	padding-top: 10%;
 	padding-bottom: 20%;
-	margin-left: auto;
-	margin-right: auto;
 	overflow: scroll;
+	@include center;
 }
 
 .container#four-oh-four {
@@ -77,15 +76,21 @@
 	text-transform: lowercase;
 	height: 2.5rem;
 	border-radius: 20px;
+	background-color: $red;
+	color: $white;
+	@include susy-breakpoint($medium) {
+		background: transparent;
+		color: inherit;
+		&:hover {
+		background-color: $red;
+		color: $white;
+		}
+	}
 	i {
 		margin-right: 1rem;
 	}
 	label {
 		cursor: pointer;
-	}
-	&:hover {
-		background-color: $red;
-		color: $white;
 	}
 }
 
@@ -178,6 +183,7 @@ table {
 		}
 		tr.deleting {
 			background: $red !important;
+			color: $white;
 		}
 		tr.ng-enter {
 			@include animation(slideInLeft 200ms)
