@@ -4,8 +4,7 @@ var gulp = require('gulp'),
 	compass = require('gulp-compass'),
 	concat = require('gulp-concat'),
 	livereload = require('gulp-livereload'),
-	sourcemaps = require('gulp-sourcemaps'),
-	exec = require('child_process').exec;
+	sourcemaps = require('gulp-sourcemaps');
 
 var jadeSources = './views/*.jade';
 
@@ -18,7 +17,6 @@ var nodeSources = [
 ];
 
 var jsSources = [
-	//Uncomment the following for production
 	'./public/bower/jquery/dist/jquery.min.js',
 	'./public/bower/lodash/lodash.min.js',
 	'./public/bower/velocity/velocity.min.js',
@@ -37,28 +35,10 @@ var sassSources = [
 	'./public/stylesheets/*.scss'
 ];
 
-/*gulp.task('server', function (cb) {
-  exec('DEBUG=taskmastr-mean bin/www', function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
-  exec('mongod --dbpath ./data', function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
-});*/
-
 gulp.task('jade', function() {
 	gulp.src(jadeSources)
 		.pipe(livereload());
 });
-
-/*gulp.task('node', function() {
-	gulp.src(nodeSources)
-		.pipe(livereload());
-});*/
 
 gulp.task('js', function () {
 	gulp.src(jsSources)
@@ -88,7 +68,6 @@ gulp.task('watch', function () {
 	gulp.watch('styles/*.css');
 	gulp.watch(sassSources, ['compass']);
 	gulp.watch(jadeSources, ['jade']);
-	//gulp.watch(nodeSources, ['node']);
 	livereload.listen();
 });
 

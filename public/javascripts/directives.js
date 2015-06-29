@@ -56,9 +56,9 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('click', function () {
-					scope.write(scope.user.key);
+					scope.write(scope.user.username);
 					mobileButtons();
 					element.removeClass('toggled');
 				});
@@ -69,7 +69,7 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					element.siblings('.check').click();
 				});
@@ -80,7 +80,7 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					$('table tbody td.toggle').velocity('fadeOut', {
 						duration: 100
@@ -98,7 +98,7 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('keydown', function (e) {
 					var key = e.which;
 					if (key === 13) {
@@ -113,7 +113,7 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('click', function (e) {
 					scope.$apply(function () {
 						if (scope.newTodo) {
@@ -130,43 +130,40 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('keydown', function (e) {
 					var key = e.which;
+
 					if (key === 13) {
-						$('#key-button').click();
+						if (attrs.inputKey === 'key') {
+							$('#key-button').click();
+						}
+						if (attrs.inputKey === 'confirm') {
+							$('#confirm-button').click();
+						}
 					}
 				});
 			}
 		}
 	});
-	app.directive('keyButton', function () {
+	app.directive('loginForm', function () {
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
-				element.bind('click', function (e) {
-					var username = scope.user.username;
-					var userKey = scope.user.key;
-					var rememberMe = scope.rememberMe;
-					//console.log(rememberMe);
-					scope.lookup(username, userKey, rememberMe);
+			link: function (scope, element, attrs) {
+				element.bind('submit', function (e) {
 					scope.$apply(function () {
-						var modal = $('#key-modal');
-						var mask = $('#mask');
-						var modalWidth = modal.width();
-						var modalHeight = modal.height();
-						var width = $(window).width();
-						if (scope.user.todos) {
-							mask.addClass('inactive-mask');
-							modal.removeClass('active-modal').addClass('inactive-modal');
-							setTimeout(function () {
-								modal.remove();
-								mask.remove();
-							}, 750);
-							$('#create-todo').focus();
-						} else {
-							scope.confirmPassword = true;
+						var username = scope.user.username;
+						var userKey = scope.user.key;
+						var confirmKey = scope.user.confirm;
+						var rememberMe = scope.rememberMe;
+						//console.log(rememberMe);
+						if (!scope.confirmPassword) {
+							scope.lookup(username, userKey, rememberMe);
+							//console.log('lookup');
+						}
+						if (scope.confirmPassword && !scope.userForm.confirm.$error.pwmatch) {
+							scope.addUser(username, confirmKey, rememberMe);
 						}
 					});
 				});
@@ -177,7 +174,7 @@
 		return {
 			restrict: 'A',
 			scope: false,
-			link: function (scope, element, attr) {
+			link: function (scope, element, attrs) {
 				element.bind('click', function (e) {
 					scope.$apply(function () {
 						var todo = element.parents('.todo');
@@ -195,6 +192,25 @@
 							todo.removeClass('deleting');
 						}
 					});
+				});
+			}
+		}
+	});
+	app.directive('pwCheck', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				var firstPassword = '#' + attrs.pwCheck;
+				$('#user-form').on('submit', function (e) {
+					if (scope.confirmPassword) {
+						var valid;
+						scope.$apply(function () {
+							valid = element.val() === $(firstPassword).val();
+							ctrl.$setValidity('pwmatch', valid);
+						});
+					}
 				});
 			}
 		}

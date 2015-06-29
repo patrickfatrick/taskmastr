@@ -11,6 +11,9 @@ var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
 
 var MongoStore = connectMongo(expressSession);
+var passportConfig = require('./auth/passport-config');
+var restrict = require('./auth/restrict');
+passportConfig();
 
 var config = require('./config');
 var routes = require('./routes/index');
@@ -29,10 +32,12 @@ app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser("suzy eats a suzy snack"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession({
+	cookie: {maxAge: null},
+	name: 'connect.sid',
 	secret: 'suzy eats a suzy snack',
 	saveUninitialized: false,
 	resave: false,
@@ -42,9 +47,12 @@ app.use(expressSession({
 }));
 
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
+app.use(restrict);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

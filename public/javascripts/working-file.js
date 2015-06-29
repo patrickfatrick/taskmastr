@@ -1,22 +1,6 @@
-var userKey;
 var tap = ("ontouchstart" in document.documentElement);
 
-function windowWidth() {
-	return $(window).width();
-}
-
-function windowHeight() {
-	return $(window).height();
-}
-
 function keyModal() {
-	var width = windowWidth();
-	var height = windowHeight();
-	var modal = $('#key-modal');
-	var mask = $('#mask');
-	var modalWidth = modal.width();
-	var modalHeight = modal.height();
-
 	$('#tips-button').click(function () {
 		if ($('#tips-button').hasClass('toggled')) {
 			$('.fine-print').velocity('slideUp', {

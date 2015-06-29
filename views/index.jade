@@ -1,46 +1,46 @@
 extends layout
 
 block content
-	#mask
-	.modal#key-modal.animated.active-modal
+	#mask(ng-if="!user.todos")
+	.modal#key-modal.animated(ng-if="!user.todos")
 		.modal-header
 			h1#headline Taskmastr
 		.modal-body#key-ask
-			| Do you have a key? 
+			| Do you have an account? 
 			br/
 			br/
-			| If so, input it below, and if not go ahead and create one!
-			form(id="user-form")
+			| Log in to your existing account, or create an account below!
+			form(id="user-form", name="userForm", login-form)
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="user", ng-model="user.username", placeholder="Username", required)
+					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Username", ng-required="true")
+				#invalid-text
+					label(for="key", ng-show="invalidPassword")
+						| Invalid password
 				.prompt-line#key-line
-					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", required, input-key)
-					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword", key-button)
+					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true")
+					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
 				#confirm-text
 					label(for="confirm", ng-show="confirmPassword") 
 						| No user found. Please confirm your password.
 				.prompt-line#confirm-line(ng-show="confirmPassword")
-					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", required, input-key)
+					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", pw-check="key")
 					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
+				#confirm-error(ng-show="userForm.$error")
+					label(ng-show="userForm.confirm.$error.pwmatch")
+						| Passwords don't match.
 				#remember
 					input.check#remember-me(type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
 					i.fa(ng-class="rememberMe ? 'fa-check-square-o' : 'fa-square-o'", check-button)
 					label(for="remember-me") Remember me
 			#tips-button.button
 				| Tips:
-			.fine-print
-				br/
-				| &rarr; Make your key unique and preferably nonsensical. This is how we store your tasks for the future!
-				br/
-				| &rarr; Use the return key (&#8617;) to save text fields.
-				br/
-				| &rarr; When deleting, you have five seconds to undo.
-				br/
-				| &rarr; You can rename a task by double-clicking it.
-				br/
-				| &rarr; The plug icon toggles dark mode, which is also stored for future visits.
-				br/
-				| &rarr; CMD+Down Arrow (&#8984;&darr;) acts as a shortcut for saving your data.
+			ul.fine-print
+				li &rarr; Make your key unique and preferably nonsensical. This is how we store your tasks for the future!
+				li &rarr; Use the return key (&#8617;) to save text fields.
+				li &rarr; When deleting, you have five seconds to undo.
+				li &rarr; You can rename a task by double-clicking it.
+				li &rarr; The plug icon toggles dark mode, which is also stored for future visits.
+				li &rarr; CMD+Down Arrow (&#8984;&darr;) acts as a shortcut for saving your data.
 	.container
 		#todo-prompt What needs doing?
 			input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
@@ -71,7 +71,7 @@ block content
 						i.fa.fa-pencil
 						i.fa.fa-trash-o(delete-button)
 		#logout-container
-			#logout(ng-show="user.todos")
-				i.fa.fa-power-off#power-off(ng-click="logout()")
+			#logout(ng-show="user.todos", ng-click="logout()")
+				i.fa.fa-power-off#power-off
 				label(for="power-off") Logout
 		#save-button.button(ng-class="{'toggled': saveButton}", save) Save

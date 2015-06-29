@@ -1,17 +1,12 @@
-var crypto = require('crypto');
+var bcrypt = require('bcrypt');
 var User = require('../models/user').User;
 
-var salt = 'dRiPPInGniGhTM4RE1~';
-var iterations = 4096;
-var len = 512;
-var hash = 'sha256';
-
 exports.addUser = function (user, next) {
-	crypto.pbkdf2(user.key, salt, iterations, len, hash, function (err, hash) {
+	bcrypt.hash(user.key, 10, function (err, hash) {
 		if (err) return next(err);
-		user.key = hash.toString('hex');
+		user.key = hash;
 		var newUser = new User({
-			username: user.username,
+			username: user.username.toLowerCase(),
 			key: user.key,
 			todos: user.todos,
 			darkmode: user.darkmode
@@ -25,9 +20,9 @@ exports.addUser = function (user, next) {
 	});
 };
 
-exports.findUser = function (user, next) {
+exports.findUser = function (username, next) {
 	User.findOne({
-		user: user.username
+		username: username.toLowerCase()
 	}, function (err, user) {
 		next(err, user);
 	});
@@ -35,7 +30,7 @@ exports.findUser = function (user, next) {
 
 exports.updateUser = function (user, next) {
 	User.update({
-		user: user.username
+		username: user.username.toLowerCase()
 	}, {
 		$set: {
 			todos: user.todos,

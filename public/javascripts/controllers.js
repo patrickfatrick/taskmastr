@@ -6,11 +6,18 @@
 
 	app.controller('UserController', ['$http', '$scope', '$log',
 		function ($http, $scope, $log) {
-			$scope.newTodo = '';
-			$scope.user = {};
-			$scope.user.todos = null;
-			$scope.user.darkmode = null;
-			$scope.saveButton = false;
+			$http.get('/session-data')
+				.success(function(data) {
+					//$log.log('Get successful');
+					//$log.log(data);
+					if (data) {
+						$scope.user = data;
+					}
+				})
+				.error(function(err) {
+					$log.log('Get fail');
+					$log.log(err);
+			})
 			$scope.sortableOptions = {
 				handle: '.sort',
 				sort: true,
@@ -44,13 +51,42 @@
 				}
 			};
 			var counter = 0;
-			$scope.lookup = function (user, key, rememberMe) {
+			$scope.lookup = function (username, key, rememberMe) {
 				$http.post('/users/login', {
-						user: user,
+						username: username,
 						key: key,
 						rememberMe: rememberMe
 					})
 					.success(function (data) {
+						//$log.log(data);
+						if (data) {
+							$scope.user.todos = (data.todos) ? data.todos : [];
+							if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+							$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+							$log.log('User profile mounted...');
+							$log.log($scope.user);
+						} else {
+							$scope.confirmPassword = true;
+							$scope.invalidPassword = false;
+						}
+					})
+					.error(function (data, status) {
+						//$log.log('Error connecting to db!');
+						//$log.log(err);
+						if (status === 401) {
+							$scope.invalidPassword = true;
+							$scope.confirmPassword = false;
+						}
+					});
+			};
+			$scope.addUser = function (user, key, rememberMe) {
+				$http.post('/users/create', {
+						username: user,
+						key: key,
+						rememberMe: rememberMe
+					})
+					.success(function (data) {
+						//$log.log(data);
 						$scope.user.todos = (data.todos) ? data.todos : [];
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
@@ -68,7 +104,7 @@
 				});
 				//$log.log('Creating todo... OK');
 			};
-			$scope.write = function (key) {
+			$scope.write = function (username) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
 				//$log.log('Saving to db...')
@@ -76,7 +112,13 @@
 				$scope.saveButton = false;
 				//$log.log('saveButton = ' + $scope.saveButton);
 				$http.post('/users/write', {
-						json: angular.toJson($scope.user)
+						//json: angular.toJson($scope.user)
+						user: {
+							username: $scope.user.username,
+							todos: $scope.user.todos,
+							darkmode: $scope.user.darkmode,
+							dateModified: now
+						}
 					})
 					.success(function (data) {
 						$log.log('Writing data... OK');
@@ -85,13 +127,15 @@
 						$log.log('Error writing data!');
 					});
 			};
-			$scope.logout = function() {
+			$scope.logout = function () {
 				$http.get('/users/logout')
-					.success(function() {
-						$log.log('Logged out');
+					.success(function (data) {
+						//$log.log('Logged out');
+						window.location.href = '/';
 					})
-					.error(function (data) {
-						$log.log('Error logging out! ' + data);
+					.error(function (err) {
+						$log.log('Error logging out! ');
+						$log.log(err);
 					});
 			};
 			$scope.delete = function (index) {
