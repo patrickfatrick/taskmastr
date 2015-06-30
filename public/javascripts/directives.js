@@ -207,7 +207,7 @@
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
 				var firstPassword = '#' + attrs.pwCheck;
-				$('#user-form').on('submit', function (e) {
+				$('.submit').on('click', function (e) {
 					if (scope.confirmPassword) {
 						var valid;
 						scope.$apply(function () {
