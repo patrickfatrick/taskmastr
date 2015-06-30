@@ -1,24 +1,6 @@
 var tap = ("ontouchstart" in document.documentElement);
 
 function keyModal() {
-	$('#tips-button').click(function () {
-		if ($('#tips-button').hasClass('toggled')) {
-			$('.fine-print').velocity('slideUp', {
-				duration: 250,
-				complete: function () {
-					$('#tips-button').removeClass('toggled');
-				}
-			});
-		} else {
-			$('.fine-print').velocity('slideDown', {
-				duration: 250,
-				complete: function () {
-					$('#tips-button').addClass('toggled');
-				}
-			});
-		}
-	});
-
 	$('#user').focus();
 }
 

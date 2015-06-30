@@ -47,7 +47,6 @@
 		width: 60%;
 	}
 	#create-todo {
-		border: 1px solid $deepBlue;
 		width: 70%;
 		@include single-box-shadow(2px, 2px, 0, null, $gray);
 		@include susy-breakpoint($medium) {

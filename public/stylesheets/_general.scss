@@ -43,6 +43,10 @@ input[type='password'] {
 		padding-right: 0.5rem;
 		font-family: $raleway;
 		font-size: 2rem;
+		border: 1px solid $deepBlue;
+	}
+	.prompt.ng-invalid.tried, .prompt.invalid-password {
+		border: 1px solid $red;
 	}
 	button.submit {
 		font-size: 1.8rem;

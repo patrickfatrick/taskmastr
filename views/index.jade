@@ -10,29 +10,33 @@ block content
 			br/
 			br/
 			| Log in to your existing account, or create an account below!
-			form(id="user-form", name="userForm", login-form)
+			form(id="user-form", name="userForm", novalidate, login-form)
+				.error-text
+					label(for="user", ng-show="userForm.username.$invalid && formAttempt")
+						| Username required
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Username", ng-required="true")
-				#invalid-text
+					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Username", ng-required="true", ng-class="{tried: formAttempt}")
+				.error-text
+					label(for="key", ng-show="userForm.key.$invalid && formAttempt && !invalidPassword")
+						| Password required
 					label(for="key", ng-show="invalidPassword")
 						| Invalid password
 				.prompt-line#key-line
-					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true")
-					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
-				#confirm-text
-					label(for="confirm", ng-show="confirmPassword") 
+					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt, 'invalid-password': invalidPassword}")
+					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword", ng-click="formAttempt = true")
+				.error-text
+					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pwmatch") 
 						| No user found. Please confirm your password.
-				.prompt-line#confirm-line(ng-show="confirmPassword", confirm-password)
-					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", pw-check="key")
-					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
-				#confirm-error(ng-show="userForm.$error")
 					label(ng-show="userForm.confirm.$error.pwmatch")
 						| Passwords don't match.
+				.prompt-line#confirm-line(ng-show="confirmPassword", confirm-password)
+					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", pw-check="key", ng-class="{tried: userForm.confirm.$error.pwmatch, 'invalid-password': userForm.confirm.$error.pwmatch}")
+					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
 				#remember
 					input.check#remember-me(type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
 					i.fa(ng-class="rememberMe ? 'fa-check-square-o' : 'fa-square-o'", check-button)
 					label(for="remember-me") Remember me
-			#tips-button.button
+			#tips-button.button(tips-button)
 				| Tips:
 			ul.fine-print
 				li &rarr; Sessions are not stored unless you use the Remember Me toggle (which stores them for 30 days).

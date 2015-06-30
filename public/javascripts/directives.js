@@ -123,6 +123,19 @@
 						}
 					});
 				});
+				element.bind('mousedown', function (e) {
+					if ($('#create-todo').val()) {
+						$(this).removeClass('fa-arrow-down');
+						$(this).addClass('fa-smile-o');
+					} else {
+						$(this).removeClass('fa-arrow-down');
+						$(this).addClass('fa-meh-o');
+					}
+				});
+				element.bind('mouseup', function (e) {
+					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+					$(this).addClass('fa-arrow-down');
+				});
 			}
 		}
 	});
@@ -166,6 +179,23 @@
 							scope.addUser(username, confirmKey, rememberMe);
 						}
 					});
+				});
+				$('.submit').bind('mousedown', function (e) {
+					$(this).removeClass('fa-arrow-right');
+					if (!scope.userForm.$invalid) {
+						$(this).addClass('fa-smile-o');
+					} else {
+						$(this).addClass('fa-meh-o');
+					}
+				});
+				$('.submit').bind('mouseup', function (e) {
+					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+					$(this).addClass('fa-arrow-right');
+				})
+				$('.submit').bind('click', function (e) {
+					if (scope.userForm.$invalid) {
+						e.preventDefault();
+					}
 				});
 			}
 		}
@@ -211,6 +241,31 @@
 							todo.removeClass('deleting');
 						}
 					});
+				});
+			}
+		}
+	});
+	app.directive('tipsButton', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attrs) {
+				element.bind('click', function (e) {
+					if ($('#tips-button').hasClass('toggled')) {
+						$('.fine-print').velocity('slideUp', {
+							duration: 250,
+							complete: function () {
+								$('#tips-button').removeClass('toggled');
+							}
+						});
+					} else {
+						$('.fine-print').velocity('slideDown', {
+							duration: 250,
+							complete: function () {
+								$('#tips-button').addClass('toggled');
+							}
+						});
+					}
 				});
 			}
 		}
