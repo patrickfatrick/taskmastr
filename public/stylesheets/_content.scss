@@ -1,9 +1,22 @@
+#content {
+	height: 100%;
+	@include single-transition(margin-left, 200ms, ease-out);
+}
+#content.menued {
+	@include susy-breakpoint($medlarge) {
+		margin-left: 250px;
+	}
+}
 .container {
 	@extend html;
+	position: initial;
 	padding-top: 10%;
 	padding-bottom: 20%;
 	overflow: scroll;
 	@include center;
+	@include susy-breakpoint($medlarge) {
+		position: relative;
+	}
 }
 
 .container#four-oh-four {
@@ -25,6 +38,29 @@
 	}
 }
 
+#icon-menu {
+	position: fixed;
+	left: 0;
+	top: 12%;
+	width: 3rem;
+	height: auto;
+	background: $orchid;
+	padding: 20px 0 20px 0;
+	border-radius: 0 20px 20px 0;
+	z-index: 3;
+	font-size: 1.4rem;
+	color: $white;
+	@include single-transition(all, 200ms, ease-out);
+	@include susy-breakpoint($medlarge) {
+		top: 100px;
+	}
+}
+#icon-menu.toggled {
+	margin-left: 250px;
+	@include susy-breakpoint($medlarge) {
+		left: 0;
+	}
+}
 #todo-prompt {
 	margin-bottom: 10px;
 	font-size: 2rem;
@@ -61,7 +97,7 @@
 }
 
 #logout {
-	position: absolute;
+	position: fixed;
 	bottom: 20px;
 	left: 0;
 	right: 0;
@@ -96,7 +132,7 @@
 #save-button {
 	display: none;
 	background-color: $deepBlue;
-	position: absolute;
+	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 20px;

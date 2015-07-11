@@ -35,7 +35,11 @@ input[type='password'] {
 .prompt-line {
 	width: 80%;
 	white-space: nowrap;
+	text-align: right;
 	@include center;
+	@include susy-breakpoint($medium) {
+		text-align: center;
+	}
 	.prompt {
 		width: 100%;
 		line-height: 3rem;

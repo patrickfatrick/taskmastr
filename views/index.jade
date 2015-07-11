@@ -45,37 +45,48 @@ block content
 				li &rarr; You can rename a task by double-clicking it.
 				li &rarr; The plug icon toggles dark mode, which is also stored for future visits.
 				li &rarr; CMD+Down Arrow (&#8984;&darr;) acts as a shortcut for saving your data.
-	.container
-		#todo-prompt What needs doing?
-			input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
-			i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
-		.prompt-line#todo-line
-			input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
-			button.fa.fa-arrow-down.submit#todo-button(todo-button)
-		i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
-		table#todo-list(ng-class="{hidden: !user.todos}")
-			thead
-				tr
-					th checkbox
-					th name
-					th toggle
-					th utils
-			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
-				tr.todo.repeat-animation(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
-					th
-						input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete)
-						i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
-					td.todo-cell
-						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
-						span.name {{todo.item}}
-					td.toggle
-						i.fa.fa-bars(mobile-button)
-					td.utils
-						i.fa.fa-arrows-v.sort
-						i.fa.fa-pencil
-						i.fa.fa-trash-o(delete-button)
-		#logout-container
-			#logout(ng-show="user.todos", ng-click="logout()")
-				i.fa.fa-power-off#power-off
-				label(for="power-off") Logout
-		#save-button.button(ng-class="{'toggled': saveButton}", save) Save
+	#menu
+		#list-headline Lists
+		.prompt-line#list-line
+			input.prompt#create-list(type="text", ng-model="newList", create-list)
+			button.fa.fa-plus.submit#list-button(list-button)
+		ul.todo-lists
+			li.list List 1
+			li.list List 2
+	#content
+		.container
+			#icon-menu
+				i.fa.fa-bars
+			#todo-prompt What needs doing?
+				input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
+				i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
+			.prompt-line#todo-line
+				input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
+				button.fa.fa-arrow-down.submit#todo-button(todo-button)
+			i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
+			table#todo-list(ng-class="{hidden: !user.todos}")
+				thead
+					tr
+						th checkbox
+						th name
+						th toggle
+						th utils
+				tbody(ng-sortable="sortableOptions", ng-model="user.todos")
+					tr.todo.repeat-animation(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
+						th
+							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete)
+							i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
+						td.todo-cell
+							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
+							span.name {{todo.item}}
+						td.toggle
+							i.fa.fa-bars(mobile-button)
+						td.utils
+							i.fa.fa-arrows-v.sort
+							i.fa.fa-pencil
+							i.fa.fa-trash-o(delete-button)
+			#logout-container
+				#logout(ng-show="user.todos", ng-click="logout()")
+					i.fa.fa-power-off#power-off
+					label(for="power-off") Logout
+			#save-button.button(ng-class="{'toggled': saveButton}", save) Save

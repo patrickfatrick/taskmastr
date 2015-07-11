@@ -1,0 +1,36 @@
+#menu {
+	height: 100%;
+	width: 250px;
+	top: 0;
+	left: 0;
+	position: fixed;
+	background: $orchid;
+	z-index: 3;
+	left: -250px;
+	color: $white;
+	padding: 2rem 0 2rem 0;
+	@include single-transition(all, 200ms, ease-out);
+}
+
+#menu.toggled {
+	left: 0;
+}
+
+#list-headline {
+	font-family: $cardo;
+	font-size: 2rem;
+}
+
+#create-list {
+	width: 80%;
+}
+
+#list-button {
+	background: $deepBlue;
+	@include button-effect($deepBlue, 2px, 0);
+}
+
+.todo-lists {
+	text-align: left;
+	padding: 2rem 1rem 2rem 1rem;
+}

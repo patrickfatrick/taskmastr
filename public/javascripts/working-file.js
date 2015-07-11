@@ -86,6 +86,23 @@ function todoHover() {
 	}
 }
 
+function menuToggle () {
+	$('#icon-menu').click(function () {
+		if (!$('#menu').hasClass('toggled')) {
+			$('#content').addClass('menued');
+			$('#icon-menu').addClass('toggled');
+			$('#icon-menu .fa-bars').removeClass('fa-bars').addClass('fa-times');
+			$('#menu').addClass('toggled');
+		} else {
+			$('#content').removeClass('menued');
+			$('#icon-menu').removeClass('toggled');
+			$('#icon-menu .fa-times').removeClass('fa-times').addClass('fa-bars');
+			$('#menu').removeClass('toggled');
+		}
+	});
+};
+
+$(menuToggle);
 $(keyModal);
 $(renameItem);
 $(saveButton);
