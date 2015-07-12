@@ -63,7 +63,7 @@ router.post('/create',
 
 router.post('/write', function (req, res, next) {
 	var user = req.body.user;
-	//console.log(user);
+	console.log(user);
 	userService.updateUser(user, function (err, user) {
 		if (err) return next(err);
 		console.log('Saving user... OK');

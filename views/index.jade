@@ -48,11 +48,23 @@ block content
 	#menu
 		#list-headline Lists
 		.prompt-line#list-line
-			input.prompt#create-list(type="text", ng-model="newList", create-list)
-			button.fa.fa-plus.submit#list-button(list-button)
-		ul.todo-lists
-			li.list List 1
-			li.list List 2
+			input.prompt#create-list(type="text", ng-model="newList", create-todo)
+			button.fa.fa-plus.submit#list-button(todo-button="user.todos", todo-model="newList")
+		table#lists-list
+			thead
+				tr
+					th name
+					th utils
+			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
+				tr.repeat-animation(ng-repeat="list in user.todos", ng-class="{current: user.current.list === list.list}", ng-click="setCurrent($index)")
+					th
+					td.list-cell
+						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="list.list")
+						span.name {{list.list}}
+					td.utils
+						i.fa.fa-arrows-v.sort
+						i.fa.fa-pencil
+						i.fa.fa-trash-o(delete-button="user.todos", delete-index="$index")
 	#content
 		.container
 			#icon-menu
@@ -62,7 +74,7 @@ block content
 				i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 			.prompt-line#todo-line
 				input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
-				button.fa.fa-arrow-down.submit#todo-button(todo-button)
+				button.fa.fa-arrow-down.submit#todo-button(todo-button="user.current.items", todo-model="newTodo")
 			i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
 			table#todo-list(ng-class="{hidden: !user.todos}")
 				thead
@@ -71,20 +83,18 @@ block content
 						th name
 						th toggle
 						th utils
-				tbody(ng-sortable="sortableOptions", ng-model="user.todos")
-					tr.todo.repeat-animation(ng-repeat="todo in user.todos", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
+				tbody(ng-sortable="sortableOptions", ng-model="user.current.items")
+					tr.todo.repeat-animation(ng-repeat="todo in user.current.items", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
 						th
-							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete)
+							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete="user.current.items", complete-index="$index")
 							i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
 						td.todo-cell
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
-						td.toggle
-							i.fa.fa-bars(mobile-button)
 						td.utils
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
-							i.fa.fa-trash-o(delete-button)
+							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="$index")
 			#logout-container
 				#logout(ng-show="user.todos", ng-click="logout()")
 					i.fa.fa-power-off#power-off

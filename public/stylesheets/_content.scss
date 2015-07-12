@@ -189,19 +189,10 @@ table {
 				font-size: 1.2rem !important;
 			}
 		}
-		td.toggle {
-			display: table-cell;
-			text-align: right;
-			@include susy-breakpoint($medium) {
-				display: none;
-			}
-		}
 		td.utils {
 			width: 6.9rem;
-			display: none;
 			@include susy-breakpoint($medium) {
 				width: 5.4rem;
-				display: table-cell;
 			}
 			.sort {
 				padding: 0 8px 0 8px;

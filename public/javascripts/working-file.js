@@ -67,7 +67,7 @@ function saveButton() {
 
 function todoHover() {
 	if (!tap) {
-		$('table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
+		$('#content table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
 			$(this).velocity({
 				backgroundColor: '#00B0FF',
 				backgroundColorAlpha: 1
@@ -76,7 +76,7 @@ function todoHover() {
 			});
 		});
 
-		$('table tbody').on('mouseleave', 'tr', function () {
+		$('#content table tbody').on('mouseleave', 'tr', function () {
 			$(this).velocity({
 				backgroundColorAlpha: 0
 			}, {

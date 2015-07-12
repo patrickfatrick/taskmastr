@@ -23,6 +23,8 @@
 
 #create-list {
 	width: 80%;
+	line-height: 2rem;
+	font-size: 1.4rem;
 }
 
 #list-button {
@@ -30,7 +32,13 @@
 	@include button-effect($deepBlue, 2px, 0);
 }
 
-.todo-lists {
-	text-align: left;
-	padding: 2rem 1rem 2rem 1rem;
+#lists-list {
+	font-size: 1.4rem;
+	width: 100%;
+	tbody th {
+		display: none;
+	}
+	tbody tr.current {
+		background: $deepBlue;
+	}
 }

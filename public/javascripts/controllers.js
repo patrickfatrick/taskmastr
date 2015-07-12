@@ -8,10 +8,23 @@
 		function ($http, $scope, $log) {
 			$http.get('/session-data')
 				.success(function(data) {
-					//$log.log('Get successful');
-					//$log.log(data);
+					$log.log('Get successful');
+					$log.log(data);
 					if (data) {
-						$scope.user = data;
+						$scope.user.username = data.username;
+						$scope.user.key = data.key;
+						$scope.user.todos = data.todos;
+						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+							list: "List 1",
+							current: true,
+							items: []
+						};
+						//$log.log($scope.user.current);
+						//$scope.user.todos = $scope.user.current.items;
+						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+						//$log.log('User profile mounted...');
+						//$log.log($scope.user);
 					}
 				})
 				.error(function(err) {
@@ -31,7 +44,7 @@
 					var itemComplete = evt.model.complete;
 					var completeIndex;
 					//$log.log(itemEl);
-					$scope.user.todos.every(function (val, i) {
+					$scope.user.current.items.every(function (val, i) {
 						if (val.complete === true && val.item != itemEl) {
 							completeIndex = i;
 							return false;
@@ -42,11 +55,11 @@
 					//$log.log(evt.newIndex);
 					var spliced;
 					if (evt.newIndex > completeIndex && !itemComplete) {
-						spliced = $scope.user.todos.splice(evt.newIndex, 1);
-						$scope.user.todos.splice(completeIndex, 0, spliced[0]);
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.splice(completeIndex, 0, spliced[0]);
 					} else if (evt.newIndex < completeIndex && itemComplete) {
-						spliced = $scope.user.todos.splice(evt.newIndex, 1);
-						$scope.user.todos.splice(completeIndex - 1, 0, spliced[0]);
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.splice(completeIndex - 1, 0, spliced[0]);
 					}
 				}
 			};
@@ -60,7 +73,14 @@
 					.success(function (data) {
 						//$log.log(data);
 						if (data) {
-							$scope.user.todos = (data.todos) ? data.todos : [];
+							$scope.user.todos = data.todos;
+							$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+								list: "List 1",
+								current: true,
+								items: []
+							};
+							//$log.log($scope.user.current);
+							//$scope.user.todos = $scope.user.current.items;
 							if (data.hasOwnProperty('key')) $scope.user.key = data.key;
 							$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 							//$log.log('User profile mounted...');
@@ -88,6 +108,11 @@
 					.success(function (data) {
 						//$log.log(data);
 						$scope.user.todos = (data.todos) ? data.todos : [];
+						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+							list: "List 1",
+							current: true,
+							items: []
+						};
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						//$log.log('User profile mounted...');
@@ -97,18 +122,27 @@
 						$log.log('Error connecting to db!');
 					});
 			};
-			$scope.create = function (item) {
-				$scope.user.todos.unshift({
-					item: item,
-					complete: false
-				});
+			$scope.create = function (arr, item) {
+				if (arr === $scope.user.todos) {
+					arr.unshift({
+						list: item,
+						current: false,
+						items: []
+					});
+				} else {
+					arr.unshift({
+						item: item,
+						complete: false
+					});
+				}
 				//$log.log('Creating todo... OK');
 			};
 			$scope.write = function (username) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
-				//$log.log('Saving to db...')
-				//$log.log($scope.user);
+				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
+				$log.log('Saving to db...')
+				$log.log($scope.user);
 				$scope.saveButton = false;
 				//$log.log('saveButton = ' + $scope.saveButton);
 				$http.post('/users/write', {
@@ -138,9 +172,6 @@
 						$log.log(err);
 					});
 			};
-			$scope.delete = function (index) {
-				$scope.user.todos.splice(index, 1);
-			};
 			$scope.$watch('user.todos', function (newValue, oldValue) {
 				if (newValue === oldValue) return;
 				if (counter >= 2) $scope.saveButton = true;
@@ -155,6 +186,13 @@
 				counter += 1;
 				//$.log('darkmode counter = ' + counter);
 			}, true);
+			$scope.setCurrent = function(index) {
+				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
+				_.set(_.find($scope.user.todos, _.matchesProperty('current', true)), 'current', false);
+				$scope.user.current = $scope.user.todos[index];
+				_.set($scope.user.todos[index], 'current', true);
+				$log.log($scope.user.todos);
+			}
 		}
 	]);
 })();

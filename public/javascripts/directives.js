@@ -1,45 +1,20 @@
 (function () {
 	var app = angular.module('taskmastrDirectives', []);
-
-	var mobileButtons = function () {
-		var width = $(window).width();
-		if (width < 768) {
-			$('table tbody td.utils').velocity('fadeOut', {
-				duration: 100
-			});
-			$('table tbody td.toggle').velocity('fadeIn', {
-				delay: 100,
-				display: 'table-cell',
-				duration: 100
-			});
-		}
-	}
-	var getIndex = function (scope, element) {
-		var item = element.parents('.todo');
-		var itemVal = item.find('td.todo-cell span').text();
-		var todos = scope.user.todos;
-		var index;
-		_.each(todos, function (val, i) {
-			if (val.item === itemVal) {
-				index = i;
-				return false;
-			}
-		});
-		return index;
-	}
 	var timeoutID;
 
 	app.directive('complete', function () {
 		return {
 			restrict: "A",
-			scope: false,
+			scope: {
+				complete: '=',
+				completeIndex: '='
+			},
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					scope.$apply(function () {
-						var todos = scope.user.todos;
-						var oldIndex = getIndex(scope, element);
+						var todos = scope.complete;
 						var newIndex = todos.length;
-						var splicedTodo = todos.splice(oldIndex, 1);
+						var splicedTodo = todos.splice(scope.completeIndex, 1);
 						_.each(todos, function (val, i) {
 							if (val.complete === true) {
 								newIndex = i;
@@ -59,7 +34,6 @@
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					scope.write(scope.user.username);
-					mobileButtons();
 					element.removeClass('toggled');
 				});
 			}
@@ -76,24 +50,6 @@
 			}
 		}
 	});
-	app.directive('mobileButton', function () {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function (scope, element, attrs) {
-				element.bind('click', function () {
-					$('table tbody td.toggle').velocity('fadeOut', {
-						duration: 100
-					});
-					$('table tbody td.utils').velocity('fadeIn', {
-						delay: 100,
-						display: 'table-cell',
-						duration: 100
-					});
-				});
-			}
-		}
-	});
 	app.directive('createTodo', function () {
 		return {
 			restrict: 'A',
@@ -102,8 +58,8 @@
 				element.bind('keydown', function (e) {
 					var key = e.which;
 					if (key === 13) {
-						$('#todo-button').click();
-						$('#create-todo').val('');
+						element.siblings('.submit').click();
+						element.val('');
 					}
 				});
 			}
@@ -112,19 +68,22 @@
 	app.directive('todoButton', function () {
 		return {
 			restrict: 'A',
-			scope: false,
+			scope: {
+				todoButton: '=',
+				todoModel: '='
+			},
 			link: function (scope, element, attrs) {
 				element.bind('click', function (e) {
 					scope.$apply(function () {
-						if (scope.newTodo) {
-							scope.create(scope.newTodo);
-							mobileButtons();
-							scope.newTodo = '';
+						//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
+						if (scope.todoModel) {
+							scope.$parent.create(scope.todoButton, scope.todoModel);
+							scope.todoModel = '';
 						}
 					});
 				});
 				element.bind('mousedown', function (e) {
-					if ($('#create-todo').val()) {
+					if (element.siblings('input:text').val()) {
 						$(this).removeClass('fa-arrow-down');
 						$(this).addClass('fa-smile-o');
 					} else {
@@ -180,7 +139,7 @@
 						}
 					});
 				});
-				$('.submit').bind('mousedown', function (e) {
+				$('#user-form .submit').bind('mousedown', function (e) {
 					$(this).removeClass('fa-arrow-right');
 					if (!scope.userForm.$invalid) {
 						$(this).addClass('fa-smile-o');
@@ -188,11 +147,11 @@
 						$(this).addClass('fa-meh-o');
 					}
 				});
-				$('.submit').bind('mouseup', function (e) {
+				$('#user-form .submit').bind('mouseup', function (e) {
 					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
 					$(this).addClass('fa-arrow-right');
 				})
-				$('.submit').bind('click', function (e) {
+				$('#user-form .submit').bind('click', function (e) {
 					if (scope.userForm.$invalid) {
 						e.preventDefault();
 					}
@@ -222,23 +181,33 @@
 	app.directive('deleteButton', function () {
 		return {
 			restrict: 'A',
-			scope: false,
+			scope: {
+				deleteButton: '=',
+				deleteIndex: '='
+			},
 			link: function (scope, element, attrs) {
 				element.bind('click', function (e) {
 					scope.$apply(function () {
-						var todo = element.parents('.todo');
-						if (!todo.hasClass('deleting')) {
+						var item = element.parents('tr');
+						if (!item.hasClass('deleting')) {
 							element.removeClass('fa-trash-o').addClass('fa-undo');
-							todo.addClass('deleting');
+							item.addClass('deleting');
 							timeoutID = setTimeout(function () {
-								var index = getIndex(scope, element);
-								scope.delete(index);
+								var index = scope.deleteIndex;
+								var arr = scope.deleteButton;
+								var arrLength = arr.length;
+								var spliced = arr.splice(index, 1);
+								if (spliced[0].current && index === (arrLength - 1)) {
+									scope.$parent.setCurrent(0);
+								} else if (spliced[0].current) {
+									scope.$parent.setCurrent(index);
+								}
 								scope.$apply();
 							}, 5000);
 						} else {
 							clearTimeout(timeoutID);
 							element.removeClass('fa-undo').addClass('fa-trash-o');
-							todo.removeClass('deleting');
+							item.removeClass('deleting');
 						}
 					});
 				});
