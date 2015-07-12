@@ -1,5 +1,6 @@
 (function () {
 	var app = angular.module('taskmastrDirectives', []);
+	// timoutID set for 'delete' directive timer
 	var timeoutID;
 
 	app.directive('complete', function () {
@@ -15,6 +16,7 @@
 						var todos = scope.complete;
 						var newIndex = todos.length;
 						var splicedTodo = todos.splice(scope.completeIndex, 1);
+						// If there's a complete todo present, set newIndex to that index, not the end of the list
 						_.each(todos, function (val, i) {
 							if (val.complete === true) {
 								newIndex = i;
@@ -50,6 +52,7 @@
 			}
 		}
 	});
+	// 'createTodo' is actually also used for the Lists text input
 	app.directive('createTodo', function () {
 		return {
 			restrict: 'A',
@@ -82,6 +85,7 @@
 						}
 					});
 				});
+				//Emoticon handlers
 				element.bind('mousedown', function (e) {
 					if (element.siblings('input:text').val()) {
 						$(this).removeClass('fa-arrow-down');
@@ -130,15 +134,18 @@
 						var confirmKey = scope.user.confirm;
 						var rememberMe = scope.rememberMe;
 						//console.log(rememberMe);
+						// Do lookup if confirm password is null
 						if (!scope.confirmPassword) {
 							scope.lookup(username, userKey, rememberMe);
 							//console.log('lookup');
 						}
+						//Add user if confirm password is not null and passwords match
 						if (scope.confirmPassword && !scope.userForm.confirm.$error.pwmatch) {
 							scope.addUser(username, confirmKey, rememberMe);
 						}
 					});
 				});
+				//Emoticon handlers
 				$('#user-form .submit').bind('mousedown', function (e) {
 					$(this).removeClass('fa-arrow-right');
 					if (!scope.userForm.$invalid) {
@@ -151,6 +158,7 @@
 					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
 					$(this).addClass('fa-arrow-right');
 				})
+				//Prevent submission if form is invalid
 				$('#user-form .submit').bind('click', function (e) {
 					if (scope.userForm.$invalid) {
 						e.preventDefault();
@@ -197,7 +205,15 @@
 								var arr = scope.deleteButton;
 								var arrLength = arr.length;
 								var spliced = arr.splice(index, 1);
-								if (spliced[0].current && index === (arrLength - 1)) {
+								// Current list handlers: 
+								// 1) Check if user is deleting the only list: do not allow
+								// 2) Check if deleted list is the last list: set current to first list
+								// 3) By default if current list is deleted: set current to next list
+								if (spliced[0].current && arrLength === 1) {
+									arr.splice(0, 1, spliced[0]);
+									element.removeClass('fa-undo').addClass('fa-trash-o');
+									item.removeClass('deleting');
+								} else if (spliced[0].current && index === (arrLength - 1)) {
 									scope.$parent.setCurrent(0);
 								} else if (spliced[0].current) {
 									scope.$parent.setCurrent(index);
@@ -234,6 +250,29 @@
 								$('#tips-button').addClass('toggled');
 							}
 						});
+					}
+				});
+			}
+		}
+	});
+	app.directive('menuToggle', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attrs) {
+				element.bind('click', function (e) {
+					if (!$('#menu').hasClass('toggled')) {
+						$('#content').addClass('menued');
+						element.addClass('toggled');
+						element.find('.fa-bars').removeClass('fa-bars').addClass('fa-times');
+						$('#menu').addClass('toggled');
+						$('#create-list').focus();
+					} else {
+						$('#content').removeClass('menued');
+						element.removeClass('toggled');
+						element.find('.fa-times').removeClass('fa-times').addClass('fa-bars');
+						$('#menu').removeClass('toggled');
+						$('#create-todo').focus();
 					}
 				});
 			}

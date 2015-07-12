@@ -8,8 +8,11 @@
 	z-index: 3;
 	left: -250px;
 	color: $white;
-	padding: 2rem 0 2rem 0;
+	padding: 3.1rem 0 2rem 0;
 	@include single-transition(all, 200ms, ease-out);
+	@include susy-breakpoint($medlarge) {
+		padding: 4.7rem 0 2rem 0;
+	}
 }
 
 #menu.toggled {

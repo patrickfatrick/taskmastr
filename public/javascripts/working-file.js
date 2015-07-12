@@ -39,21 +39,19 @@ function renameItem() {
 	);
 }
 
-function saveButton() {
-
-	var map = {
-		91: false,
-		40: false
-	};
+function shortcut(key1, key2, el) {
+	var map = {};
+	map[key1] = false;
+	map[key2] = false;
 
 	$(document).keydown(function (e) {
-		//console.log('Keydown on ' + e.which);
+		console.log('Keydown on ' + e.which);
 		if (e.which in map) {
 			map[e.which] = true;
-			if (map[91] && map[40]) {
-				$('#save-button.toggled').click();
-				map[91] = false;
-				map[40] = false;
+			if (map[key1] && map[key2]) {
+				$(el).click();
+				map[key1] = false;
+				map[key2] = false;
 			}
 		}
 	});
@@ -68,7 +66,7 @@ function saveButton() {
 function todoHover() {
 	if (!tap) {
 		$('#content table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
-			$(this).velocity({
+			$(this).stop().velocity({
 				backgroundColor: '#00B0FF',
 				backgroundColorAlpha: 1
 			}, {
@@ -86,24 +84,10 @@ function todoHover() {
 	}
 }
 
-function menuToggle () {
-	$('#icon-menu').click(function () {
-		if (!$('#menu').hasClass('toggled')) {
-			$('#content').addClass('menued');
-			$('#icon-menu').addClass('toggled');
-			$('#icon-menu .fa-bars').removeClass('fa-bars').addClass('fa-times');
-			$('#menu').addClass('toggled');
-		} else {
-			$('#content').removeClass('menued');
-			$('#icon-menu').removeClass('toggled');
-			$('#icon-menu .fa-times').removeClass('fa-times').addClass('fa-bars');
-			$('#menu').removeClass('toggled');
-		}
-	});
-};
-
-$(menuToggle);
 $(keyModal);
 $(renameItem);
-$(saveButton);
+$(shortcut(91, 40, '#save-button.toggled'));
+$(shortcut(91, 39, '#icon-menu'));
+$(shortcut(91, 37, '#icon-menu.toggled'));
+$(shortcut(91, 38, '#dark-mode'));
 $(todoHover);

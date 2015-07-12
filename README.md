@@ -1,33 +1,39 @@
 ## taskmastr
 Yet another todo list web app built with the MEAN stack (not mean.io or mean.js, though...). You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
+##New in v4.0.0
+Lists! You can now maintain multiple lists in taskmastr, with all the fixins included: Deleting, reordering, renaming.
+
+We also store the list that's currently being viewed so if you switch lists and save, when you come back you'll be looking at the same list.
+
+We also added more keyboard shortcuts to control the Lists menu, and also to control Night Mode.
+
+Last and probably least, we said "No." to the mobile button next to each task that was designed to better use space on small devices. The experience just wasn't quite there, and the space saved didn't justify the extra clicks.
+
 ## New in v3.0.0
 Authentication has been rewritten to use a standard username/password authentication via Passport and bcrypt hashing.
 
 Session storage for up to 30 days. This also means you can now log out whenever you want.
 
-## New in v2.3.0
-Night Mode/Bright Mode (formerly Dark Mode/Light Mode) has been revamped on the client side of things, being both more intuitive and beautiful now. 
-
-## New in v2.2.0
-Undo! There's now a five-second delay when deleting a todo, which can be cancelled.
-
 _features:_
 - Username/Password authentication.
 - Remember me to store your session for up to 30 days.
-- Delete, reorder, and rename todos.
-- 5-second undo when deleting a todo.
+- Delete, reorder, and rename tasks or lists.
+- 5-second undo when deleting a task or list.
 - Night mode for those of us who work when we should be sleeping.
 - Bright mode for those of us who are afraid of the dark.
 - Now with COOL animations! More fun guaranteed!
+- Keyboard shortcuts allow you to control several aspects of the site.
 - Mobile-friendly.
 
-_todo:_
-- Lists
+_Tasks for the future:_
+- Drag and drop a task onto a list to move it.
+- Swipe the list menu out on mobile.
 - Revisit for bugs always.
 
 _screenshots:_
-![taskmastr screenshot](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot.png)
-![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot2.png)
-![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot3.png)
+![taskmastr](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot.png)
+![taskmastr list](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot2.png)
+![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot3.png)
+![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot4.png)
 

@@ -8,8 +8,8 @@
 		function ($http, $scope, $log) {
 			$http.get('/session-data')
 				.success(function(data) {
-					$log.log('Get successful');
-					$log.log(data);
+					//$log.log('Get successful');
+					//$log.log(data);
 					if (data) {
 						$scope.user.username = data.username;
 						$scope.user.key = data.key;
@@ -27,7 +27,7 @@
 						//$log.log($scope.user);
 					}
 				})
-				.error(function(err) {
+				.error(function(data, err) {
 					$log.log('Get fail');
 					$log.log(err);
 			})
@@ -107,7 +107,11 @@
 					})
 					.success(function (data) {
 						//$log.log(data);
-						$scope.user.todos = (data.todos) ? data.todos : [];
+						$scope.user.todos = (data.todos) ? data.todos : [{
+							list: "List 1",
+							current: true,
+							items: []
+						}];
 						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
 							list: "List 1",
 							current: true,
@@ -118,8 +122,9 @@
 						//$log.log('User profile mounted...');
 						//$log.log($scope.user);
 					})
-					.error(function () {
+					.error(function (data, err) {
 						$log.log('Error connecting to db!');
+						$log.log(err);
 					});
 			};
 			$scope.create = function (arr, item) {
@@ -141,8 +146,8 @@
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
 				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
-				$log.log('Saving to db...')
-				$log.log($scope.user);
+				//$log.log('Saving to db...')
+				//$log.log($scope.user);
 				$scope.saveButton = false;
 				//$log.log('saveButton = ' + $scope.saveButton);
 				$http.post('/users/write', {
@@ -157,8 +162,9 @@
 					.success(function (data) {
 						$log.log('Writing data... OK');
 					})
-					.error(function (data) {
+					.error(function (data, err) {
 						$log.log('Error writing data!');
+						$log.log(err);
 					});
 			};
 			$scope.logout = function () {
@@ -167,7 +173,7 @@
 						//$log.log('Logged out');
 						window.location.href = '/';
 					})
-					.error(function (err) {
+					.error(function (data, err) {
 						$log.log('Error logging out! ');
 						$log.log(err);
 					});
@@ -191,7 +197,7 @@
 				_.set(_.find($scope.user.todos, _.matchesProperty('current', true)), 'current', false);
 				$scope.user.current = $scope.user.todos[index];
 				_.set($scope.user.todos[index], 'current', true);
-				$log.log($scope.user.todos);
+				//$log.log($scope.user.todos);
 			}
 		}
 	]);
