@@ -94,7 +94,7 @@ function todoHover() {
 $(keyModal);
 $(renameItem);
 $(shortcut(91, 40, '#save-button.toggled'));
-$(shortcut(91, 39, '#icon-menu'));
+$(shortcut(91, 39, '#icon-menu:not(".toggled")'));
 $(shortcut(91, 37, '#icon-menu.toggled'));
 $(shortcut(91, 38, '#dark-mode'));
 $(todoHover);
