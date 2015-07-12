@@ -32,8 +32,8 @@ _Tasks for the future:_
 - Revisit for bugs always.
 
 _screenshots:_
-![taskmastr](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot.png)
-![taskmastr list](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot2.png)
-![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot3.png)
-![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot4.png)
+![taskmastr](https://raw.githubusercontent.com/patrickfatrick/taskmastr/lists/screenshot.png)
+![taskmastr list](https://raw.githubusercontent.com/patrickfatrick/taskmastr/lists/screenshot2.png)
+![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/lists/screenshot3.png)
+![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/lists/screenshot4.png)
 
