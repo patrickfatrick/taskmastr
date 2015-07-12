@@ -1,7 +1,14 @@
 var tap = ("ontouchstart" in document.documentElement);
 
+// Handler to prevent auto-focuses on text inputs for mobile
+function windowWidth() {
+	return ($(window).width() > 768) ? true : false;
+}
+
 function keyModal() {
-	$('#user').focus();
+	if (windowWidth()) {
+		$('#user').focus();
+	}
 }
 
 function renameItem() {

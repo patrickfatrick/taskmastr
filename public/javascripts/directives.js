@@ -2,6 +2,11 @@
 	var app = angular.module('taskmastrDirectives', []);
 	// timoutID set for 'delete' directive timer
 	var timeoutID;
+	
+	// Handler to prevent auto-focuses on text inputs for mobile
+	function windowWidth() {
+		return ($(window).width() > 768) ? true : false;
+	}
 
 	app.directive('complete', function () {
 		return {
@@ -267,13 +272,17 @@
 						element.addClass('toggled');
 						element.find('.fa-bars').removeClass('fa-bars').addClass('fa-times');
 						$('#menu').addClass('toggled');
-						$('#create-list').focus();
+						if (windowWidth()) {
+							$('#create-list').focus();
+						}
 					} else {
 						$('#content').removeClass('menued');
 						element.removeClass('toggled');
 						element.find('.fa-times').removeClass('fa-times').addClass('fa-bars');
 						$('#menu').removeClass('toggled');
-						$('#create-todo').focus();
+						if (windowWidth()) {
+							$('#create-todo').focus();
+						}
 					}
 				});
 			}
