@@ -211,6 +211,10 @@ table {
 			background: $red !important;
 			color: $white;
 		}
+		/* Reset the #content transition on table rows */
+		tr, tr.ng-enter, tr.ng-leave {
+			@include single-transition(all, 0, ease-out);
+		}
 		tr.ng-enter {
 			@include animation(slideInLeft 200ms)
 		}
