@@ -23,7 +23,7 @@ block content
 						| Invalid password
 				.prompt-line#key-line
 					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt, 'invalid-password': invalidPassword}")
-					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword", ng-click="formAttempt = true")
+					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
 				.error-text
 					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pwmatch") 
 						| No user found. Please confirm your password.
@@ -57,9 +57,9 @@ block content
 					th name
 					th utils
 			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
-				tr.repeat-animation(ng-repeat="list in user.todos", ng-class="{current: user.current.list === list.list}", ng-click="setCurrent($index)")
+				tr.repeat-animation(ng-repeat="list in user.todos", ng-class="{current: user.current.list === list.list}")
 					th
-					td.list-cell
+					td.todo-cell(ng-click="setCurrent($index)")
 						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="list.list")
 						span.name {{list.list}}
 					td.utils

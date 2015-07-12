@@ -121,6 +121,7 @@
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						//$log.log('User profile mounted...');
 						//$log.log($scope.user);
+						$scope.write(user);
 					})
 					.error(function (data, err) {
 						$log.log('Error connecting to db!');

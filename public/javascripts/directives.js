@@ -148,6 +148,7 @@
 				//Emoticon handlers
 				$('#user-form .submit').bind('mousedown', function (e) {
 					$(this).removeClass('fa-arrow-right');
+					scope.formAttempt = true;
 					if (!scope.userForm.$invalid) {
 						$(this).addClass('fa-smile-o');
 					} else {
