@@ -151,23 +151,26 @@
 					});
 				});
 				//Emoticon handlers
-				$('#user-form .submit').bind('mousedown', function (e) {
-					$(this).removeClass('fa-arrow-right');
-					scope.formAttempt = true;
-					if (!scope.userForm.$invalid) {
-						$(this).addClass('fa-smile-o');
-					} else {
-						$(this).addClass('fa-meh-o');
-					}
-				});
-				$('#user-form .submit').bind('mouseup', function (e) {
-					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
-					$(this).addClass('fa-arrow-right');
-				})
-				//Prevent submission if form is invalid
-				$('#user-form .submit').bind('click', function (e) {
-					if (scope.userForm.$invalid) {
-						e.preventDefault();
+				$('#user-form .submit').on({
+					mousedown: function (e) {
+						$(this).removeClass('fa-arrow-right');
+						if (!scope.userForm.$invalid) {
+							$(this).addClass('fa-smile-o');
+						} else {
+							$(this).addClass('fa-meh-o');
+						}
+					},
+					mouseup: function (e) {
+						$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+						$(this).addClass('fa-arrow-right');
+					},
+					click: function (e) {
+						scope.$apply(function() {
+							scope.formAttempt = true;
+						});
+						if (scope.userForm.$invalid) {
+							e.preventDefault();
+						}
 					}
 				});
 			}
@@ -180,7 +183,7 @@
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
 				var firstPassword = '#' + attrs.pwCheck;
-				$('.submit').on('click', function (e) {
+				$('.submit').on('mousedown', function (e) {
 					if (scope.confirmPassword) {
 						var valid;
 						scope.$apply(function () {

@@ -9,13 +9,15 @@ block content
 			| Do you have an account? 
 			br/
 			br/
-			| Log in to your existing account, or create an account below!
+			| Log in to your existing account, or create one below!
 			form(id="user-form", name="userForm", novalidate, login-form)
 				.error-text
-					label(for="user", ng-show="userForm.username.$invalid && formAttempt")
+					label(for="user", ng-show="userForm.username.$error.required && !userForm.username.$error.pattern && formAttempt")
 						| Username required
+					label(for="user", ng-show="userForm.username.$error.pattern && !userForm.username.$error.required && formAttempt")
+						| Invalid email address
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Username", ng-required="true", ng-class="{tried: formAttempt}")
+					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt}", ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/")
 				.error-text
 					label(for="key", ng-show="userForm.key.$invalid && formAttempt && !invalidPassword")
 						| Password required
