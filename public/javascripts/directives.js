@@ -176,7 +176,7 @@
 			}
 		}
 	});
-	app.directive('pwCheck', function () {
+	/*app.directive('pwCheck', function () {
 		return {
 			restrict: 'A',
 			scope: false,
@@ -194,7 +194,7 @@
 				});
 			}
 		}
-	});
+	});*/
 	app.directive('deleteButton', function () {
 		return {
 			restrict: 'A',

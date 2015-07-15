@@ -13,11 +13,11 @@ block content
 			form(id="user-form", name="userForm", novalidate, login-form)
 				.error-text
 					label(for="user", ng-show="userForm.username.$error.required && !userForm.username.$error.pattern && formAttempt")
-						| Username required
+						| Email address required
 					label(for="user", ng-show="userForm.username.$error.pattern && !userForm.username.$error.required && formAttempt")
 						| Invalid email address
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt}", ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/")
+					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt}", ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/")
 				.error-text
 					label(for="key", ng-show="userForm.key.$invalid && formAttempt && !invalidPassword")
 						| Password required
@@ -29,10 +29,13 @@ block content
 				.error-text
 					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pwmatch") 
 						| No user found. Please confirm your password.
-					label(ng-show="userForm.confirm.$error.pwmatch")
+					//label(ng-show="userForm.confirm.$error.pwmatch")
+						| Passwords don't match.
+					label(ng-show="userForm.confirm.$error.pattern")
 						| Passwords don't match.
 				.prompt-line#confirm-line(ng-show="confirmPassword", confirm-password)
-					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", pw-check="key", ng-class="{tried: userForm.confirm.$error.pwmatch, 'invalid-password': userForm.confirm.$error.pwmatch}")
+					//input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", pw-check="key", ng-class="{tried: userForm.confirm.$error.pwmatch, 'invalid-password': userForm.confirm.$error.pwmatch}")
+					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", ng-pattern="user.key", ng-class="{tried: userForm.confirm.$error.pattern, 'invalid-password': userForm.confirm.$error.pattern}")
 					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
 				#remember
 					input.check#remember-me(type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
@@ -46,7 +49,7 @@ block content
 				li &rarr; You <span style="font-style: italic">cannot</span> delete a list if it's your only list. Try renaming it or adding another list first.
 				li &rarr; We do store which list is currently being viewed, so feel free to save on changing lists.
 				li &rarr; You can rename a task or list by double-clicking it.
-				li &rarr; The plug icon toggles dark mode, which is also stored for future visits.
+				li &rarr; The sun and moon icons toggle dark mode, which is also stored for future visits.
 				li &rarr; <span style="font-weight: bold; font-style: italic; text-decoration: underline">KEYBOARD SHORTCUTS:</span> Return (&#8617;) saves text fields; CMD+Down (&#8984;&darr;) saves your data; CMD+Right & CMD+Left (&#8984;&rarr; & &#8984;&larr;) toggle the Lists menu; CMD+Up (&#8984;&uarr;) toggles Night Mode.
 	#menu
 		#list-headline Lists
