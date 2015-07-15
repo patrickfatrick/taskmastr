@@ -17,7 +17,7 @@ block content
 					label(for="user", ng-show="userForm.username.$error.pattern && !userForm.username.$error.required && formAttempt")
 						| Invalid email address
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt}", ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/")
+					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt}", ng-pattern="/^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$/")
 				.error-text
 					label(for="key", ng-show="userForm.key.$invalid && formAttempt && !invalidPassword")
 						| Password required
