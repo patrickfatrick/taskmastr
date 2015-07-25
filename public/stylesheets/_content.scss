@@ -213,10 +213,10 @@ table {
 			@include single-transition(all, 0, ease-out);
 		}
 		tr.ng-enter {
-			@include animation(slideInLeft 200ms)
+			@include animation(bounceInLeft 400ms)
 		}
 		tr.ng-leave {
-			@include animation(slideOutLeft 200ms)
+			@include animation(bounceOutLeft 400ms)
 		}
 	}
 }

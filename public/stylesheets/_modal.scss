@@ -79,11 +79,11 @@
 }
 
 .modal.ng-enter {
-	@include animation(flipInX 750ms);
+	@include animation(fadeInDown 750ms);
 }
 
 .modal.ng-leave {
-	@include animation(flipOutX 750ms);
+	@include animation(bounceOutUp 750ms);
 }
 
 #mask {

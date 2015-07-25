@@ -52,7 +52,6 @@ router.post('/create',
 			if (err) console.log(err);
 			console.log('No user found.');
 			console.log('Creating user... OK');
-			//res.send(user);
 			req.login(user, function (err) {
 				if (err) return next(err);
 				return res.send(user);
@@ -69,13 +68,6 @@ router.post('/write', function (req, res, next) {
 		console.log('Saving user... OK');
 	});
 });
-
-/*router.get('/logout', function (req, res, next) {
-	req.logout();
-	req.session.destroy();
-	res.clearCookie('cookiename')
-	res.redirect('index');
-});*/
 
 router.get('/logout', function (req, res) {
 	req.logout();
