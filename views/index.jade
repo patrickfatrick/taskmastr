@@ -22,13 +22,14 @@ block content
 						| Check your email for instructions on how to reset your password.
 				.prompt-line#user-line
 					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt, 'invalid-user': emailSent === false && forgot}", ng-pattern="/^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$/")
-				.error-text(ng-if="!forgot")
+					button.fa.fa-arrow-right.submit#forgot-button(type="submit", ng-show="forgot")
+				.error-text(ng-show="!forgot")
 					label(for="key", ng-show="userForm.key.$invalid && formAttempt && !invalidPassword && !forgot")
 						| Password required
 					label(for="key", ng-show="invalidPassword")
 						| Invalid password
-				.prompt-line#key-line
-					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt && !forgot, 'invalid-password': invalidPassword, disabled: forgot}", ng-disabled="forgot")
+				.prompt-line#key-line(ng-show="!forgot")
+					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt && !forgot, 'invalid-password': invalidPassword, disabled: forgot}")
 					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
 				.error-text
 					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pwmatch") 
