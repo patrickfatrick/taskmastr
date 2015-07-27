@@ -48,6 +48,9 @@ input[type='password'] {
 	.prompt.ng-invalid.tried, .prompt.invalid-password, .prompt.invalid-user {
 		border: 1px solid $red;
 	}
+	.prompt.disabled {
+		background-color: $azure;
+	}
 	button.submit {
 		font-size: 1.8rem;
 		width: 2.4rem;
