@@ -45,7 +45,7 @@ input[type='password'] {
 		font-size: 2rem;
 		border: 1px solid $deepBlue;
 	}
-	.prompt.ng-invalid.tried, .prompt.invalid-password {
+	.prompt.ng-invalid.tried, .prompt.invalid-password, .prompt.invalid-user {
 		border: 1px solid $red;
 	}
 	button.submit {

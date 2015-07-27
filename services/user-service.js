@@ -1,4 +1,5 @@
 var bcrypt = require('bcrypt');
+var hat = require('hat');
 var User = require('../models/user').User;
 
 exports.addUser = function (user, next) {
@@ -39,5 +40,49 @@ exports.updateUser = function (user, next) {
 		}
 	}, function (err, user) {
 		next(err, user);
+	});
+};
+
+exports.setToken = function (user, next) {
+	User.findOneAndUpdate({
+		username: user.username.toLowerCase()
+	}, {
+		$set: {
+			resetToken: hat(),
+			resetDate: Date.now() + 3600000
+		}
+	}, {
+		new: true
+	}, function (err, user) {
+		next(err, user);
+	});
+};
+
+exports.resetPassword = function (user, next) {
+	bcrypt.hash(user.newKey, 10, function (err, hash) {
+		if (err) return next(err);
+		User.findOne({
+			resetToken: user.token
+		}, function (err, user) {
+			if (err) return next(err, err);
+			if (!user) return next(null, null)
+			var username = user.username
+			var newKey = hash;
+			if (err) return next(err);
+			if (Date.now() > user.resetDate) {
+				return next(err, null)
+			}
+			User.update({
+				username: username
+			}, {
+				$set: {
+					key: newKey,
+					resetToken: null
+				}
+			}, function (err, user) {
+				console.log('User updated');
+			});
+			next(err, user);
+		});
 	});
 };

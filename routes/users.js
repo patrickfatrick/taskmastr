@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var config = require('../config');
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
 var userService = require('../services/user-service');
 
 router.post('/login',
@@ -56,6 +58,58 @@ router.post('/create',
 				if (err) return next(err);
 				return res.send(user);
 			});
+		});
+	}
+);
+
+router.post('/forgot', 
+	function (req, res, next) {
+		var username = req.body.username;
+		userService.findUser(username, function (err, user) {
+			if (err) return next(err);
+			if (!user) {
+				console.log('No user');
+				return next(null, null);
+			}
+			userService.setToken(user, function (err, user) {
+				if (err) return next(err);
+				//console.log(user);
+				var options = {
+					auth: {
+						api_key: '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'
+					}
+				}
+				var mailer = nodemailer.createTransport(sgTransport(options));
+				var email = {
+					to: user.username,
+					from: 'taskmastr <do-not-reply@taskmastr.co>',
+					subject: 'Taskmastr Password Reset',
+					text: 'Hi there,\n\n' + 'You\'ve received this email because you or someone else requested to reset the password for your account.\n\n' + 'Please click on the following link to create a new password:\n\n' + 'http://' + req.headers.host + '?reset=true&token=' + user.resetToken + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged. This link becomes invalid once you reset your password, or after one hour; whichever comes first.\n\n' + 'Sincerely,\n\ntaskmastr\n'
+				};
+				mailer.sendMail(email, function(err, info) {
+					//req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+					console.log('Email sent to ' + user.username);
+					res.send({emailSent: true});
+				});
+			});
+		});
+	}
+);
+
+router.post('/reset',
+	function (req, res, next) {
+		var token = req.body.token;
+		var newKey = req.body.newKey;
+		console.log('Token: ' + token);
+		console.log('New Key: ' + newKey);
+		userService.resetPassword({
+			token: token,
+			newKey: newKey
+		}, function (err, user) {
+			if (err) return next(err);
+			//console.log(user);
+			if (!user) res.status(401);
+			res.send(user);
 		});
 	}
 );

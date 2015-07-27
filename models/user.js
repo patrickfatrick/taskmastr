@@ -7,7 +7,9 @@ var userSchema = new Schema({
   darkmode: {type: Boolean},
   todos: {type: Array},
 	dateCreated: {type: Date, default: Date.now},
-	dateModified: {type: Date, default: Date.now}
+	dateModified: {type: Date, default: Date.now},
+	resetToken: {type: String},
+	resetDate: {type: Date}
 });
 
 var User = mongoose.model('User', userSchema);

@@ -1,6 +1,11 @@
 ## taskmastr
 Yet another todo list web app built with the MEAN stack (not mean.io or mean.js, though...). You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
+##New in v4.1.0
+We now have a pathway for resetting user passwords. Put in your email, check "Forgot your password?" and submit the form to receive a link that will allow you to create a new password.
+
+Also changed up the animations for more bounciness.
+
 ##New in v4.0.0
 Lists! You can now maintain multiple lists in taskmastr, with all the fixins included: Deleting, reordering, renaming.
 

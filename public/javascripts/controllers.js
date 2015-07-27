@@ -3,9 +3,13 @@
 	/* Controllers */
 
 	var app = angular.module('taskmastrControllers', []);
+	
+	app.config(['$locationProvider', function($locationProvider){
+    $locationProvider.html5Mode(true);    
+	}]);
 
-	app.controller('UserController', ['$http', '$scope', '$log',
-		function ($http, $scope, $log) {
+	app.controller('UserController', ['$http', '$scope', '$log', '$location',
+		function ($http, $scope, $log, $location) {
 			$http.get('/session-data')
 				.success(function(data) {
 					//$log.log('Get successful');
@@ -27,10 +31,10 @@
 						//$log.log($scope.user);
 					}
 				})
-				.error(function(data, err) {
+				.error(function(data, status) {
 					$log.log('Get fail');
-					$log.log(err);
-			})
+					$log.log(status);
+			});
 			$scope.sortableOptions = {
 				handle: '.sort',
 				sort: true,
@@ -64,6 +68,13 @@
 				}
 			};
 			var counter = 0;
+			
+			var reset = $location.search().reset;
+			if (reset) {
+				//$log.log('Reset');
+				$scope.resetForm = true;
+				$scope.resetToken = $location.search().token;
+			}
 			$scope.lookup = function (username, key, rememberMe) {
 				$http.post('/users/login', {
 						username: username,
@@ -92,12 +103,53 @@
 					})
 					.error(function (data, status) {
 						//$log.log('Error connecting to db!');
-						//$log.log(err);
+						$log.log(status);
 						if (status === 401) {
 							$scope.invalidPassword = true;
 							$scope.confirmPassword = false;
 						}
 					});
+			};
+			$scope.setToken = function (user) {
+				$http.post('users/forgot', {
+					username: user
+				})
+				.success(function (data) {
+					$log.log(data);
+					$scope.emailSent = true;
+				})
+				.error(function (data, status) {
+					$log.log(status);
+					$scope.emailSent = false;
+				});
+			};
+			$scope.resetPassword = function (token, newKey) {
+				$http.post('/users/reset', {
+					token: token,
+					newKey: newKey
+				})
+				.success(function (data) {
+					if (data) {
+						$scope.user.todos = data.todos;
+						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+							list: "List 1",
+							current: true,
+							items: []
+						};
+						//$log.log($scope.user.current);
+						//$scope.user.todos = $scope.user.current.items;
+						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+						//$log.log('User profile mounted...');
+						//$log.log($scope.user);
+						$location.path('/');
+						//$log.log($location.path());
+					}
+				})
+				.error(function (data, status) {
+					$scope.resetFail = true;
+					$log.log(status);
+				});
 			};
 			$scope.addUser = function (user, key, rememberMe) {
 				$http.post('/users/create', {
@@ -123,9 +175,9 @@
 						//$log.log($scope.user);
 						$scope.write(user);
 					})
-					.error(function (data, err) {
+					.error(function (data, status) {
 						$log.log('Error connecting to db!');
-						$log.log(err);
+						$log.log(status);
 					});
 			};
 			$scope.create = function (arr, item) {
@@ -163,9 +215,9 @@
 					.success(function (data) {
 						$log.log('Writing data... OK');
 					})
-					.error(function (data, err) {
+					.error(function (data, status) {
 						$log.log('Error writing data!');
-						$log.log(err);
+						$log.log(status);
 					});
 			};
 			$scope.logout = function () {
@@ -174,9 +226,9 @@
 						//$log.log('Logged out');
 						window.location.href = '/';
 					})
-					.error(function (data, err) {
+					.error(function (data, status) {
 						$log.log('Error logging out! ');
-						$log.log(err);
+						$log.log(status);
 					});
 			};
 			$scope.$watch('user.todos', function (newValue, oldValue) {

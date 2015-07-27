@@ -138,14 +138,13 @@
 						var userKey = scope.user.key;
 						var confirmKey = scope.user.confirm;
 						var rememberMe = scope.rememberMe;
-						//console.log(rememberMe);
 						// Do lookup if confirm password is null
 						if (!scope.confirmPassword) {
 							scope.lookup(username, userKey, rememberMe);
 							//console.log('lookup');
 						}
 						//Add user if confirm password is not null and passwords match
-						if (scope.confirmPassword && !scope.userForm.confirm.$error.pwmatch) {
+						if (scope.confirmPassword && !scope.userForm.confirm.$error.pattern) {
 							scope.addUser(username, confirmKey, rememberMe);
 						}
 					});
@@ -168,6 +167,10 @@
 						scope.$apply(function() {
 							scope.formAttempt = true;
 						});
+						if (scope.forgot) {
+							scope.setToken(scope.user.username);
+							return false;
+						}
 						if (scope.userForm.$invalid) {
 							e.preventDefault();
 						}
@@ -176,25 +179,46 @@
 			}
 		}
 	});
-	/*app.directive('pwCheck', function () {
+	app.directive('resetForm', function () {
 		return {
 			restrict: 'A',
 			scope: false,
-			require: 'ngModel',
-			link: function (scope, element, attrs, ctrl) {
-				var firstPassword = '#' + attrs.pwCheck;
-				$('.submit').on('mousedown', function (e) {
-					if (scope.confirmPassword) {
-						var valid;
-						scope.$apply(function () {
-							valid = element.val() === $(firstPassword).val();
-							ctrl.$setValidity('pwmatch', valid);
+			link: function (scope, element, attrs) {
+				element.bind('submit', function (e) {
+					scope.$apply(function ($location) {
+						var token = scope.resetToken;
+						var newKey = scope.user.newKey;
+						if (!scope.resetForm.confirmReset.$error.pattern) {
+							scope.resetPassword(token, newKey);
+						}
+					});
+				});
+				//Emoticon handlers
+				$('#user-form .submit').on({
+					mousedown: function (e) {
+						$(this).removeClass('fa-arrow-right');
+						if (!scope.userForm.$invalid) {
+							$(this).addClass('fa-smile-o');
+						} else {
+							$(this).addClass('fa-meh-o');
+						}
+					},
+					mouseup: function (e) {
+						$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+						$(this).addClass('fa-arrow-right');
+					},
+					click: function (e) {
+						scope.$apply(function() {
+							scope.formAttempt = true;
 						});
+						if (scope.resetForm.$invalid) {
+							e.preventDefault();
+						}
 					}
 				});
 			}
 		}
-	});*/
+	});
 	app.directive('deleteButton', function () {
 		return {
 			restrict: 'A',

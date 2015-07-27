@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "A simple web-based todo list using MongoDB, Express, Angular, and Node (MEAN)",
   "homepage": "https://github.com/patrickfatrick/taskmastr",
   "authors": [
@@ -24,9 +24,12 @@
     "debug": "~2.1.1",
     "express": "~4.12.2",
     "express-session": "^1.11.2",
+    "hat": "0.0.3",
     "jade": "~1.9.2",
     "mongoose": "^4.0.3",
     "morgan": "^1.5.3",
+    "nodemailer": "^1.4.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.2.0"
