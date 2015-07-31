@@ -2,11 +2,13 @@
 	height: 100%;
 	@include single-transition(margin-left, 200ms, ease-out);
 }
+
 #content.menued {
 	@include susy-breakpoint($medlarge) {
 		margin-left: 250px;
 	}
 }
+
 .container {
 	@extend html;
 	position: initial;
@@ -55,12 +57,14 @@
 		top: 100px;
 	}
 }
+
 #icon-menu.toggled {
 	margin-left: 250px;
 	@include susy-breakpoint($medlarge) {
 		left: 0;
 	}
 }
+
 #todo-prompt {
 	margin-bottom: 10px;
 	font-size: 2rem;
@@ -117,8 +121,8 @@
 		background: transparent;
 		color: inherit;
 		&:hover {
-		background-color: $red;
-		color: $white;
+			background-color: $red;
+			color: $white;
 		}
 	}
 	i {
@@ -209,7 +213,10 @@ table {
 			color: $white;
 		}
 		/* Reset the #content transition on table rows */
-		tr, tr.ng-enter, tr.ng-leave {
+		
+		tr,
+		tr.ng-enter,
+		tr.ng-leave {
 			@include single-transition(all, 0, ease-out);
 		}
 		tr.ng-enter {
@@ -219,4 +226,42 @@ table {
 			@include animation(bounceOutLeft 400ms)
 		}
 	}
+}
+
+.datepicker.dropdown-menu {
+	width: 250px;
+	height: 270px;
+	background: #fff;
+	font-family: $raleway;
+}
+
+.datepicker.dropdown-menu button {
+	outline: 0;
+	border: 0
+}
+
+.datepicker.dropdown-menu tbody {
+	height: 180px
+}
+
+.datepicker .dropdown-menu tbody tr,
+.datepicker .dropdown-menu tbody td {
+	margin: 0;
+	padding: 0;
+}
+
+.datepicker.dropdown-menu tbody button {
+	padding: 6px;
+	padding-right: 20px;
+	margin: -5px;
+	background-color: $white;
+	border: 1px solid $azure;
+	&:hover {
+		background-color: $azure;
+	}
+}
+
+.datepicker.dropdown-menu.datepicker-mode-1 tbody button,
+.datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+	height: 65px;
 }

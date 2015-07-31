@@ -23,6 +23,8 @@ var jsSources = [
 	'./public/bower/angular/angular.min.js',
 	'./public/bower/angular-touch/angular-touch.min.js',
 	'./public/bower/angular-animate/angular-animate.js',
+	'./public/bower/angular-strap/dist/angular-strap.min.js',
+	'./public/bower/angular-strap/dist/angular-strap.tpl.js',
 	'./public/bower/Sortable/Sortable.js',
 	'./public/bower/Sortable/ng-sortable.js',
 	'./public/javascripts/app.js',

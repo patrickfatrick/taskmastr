@@ -103,7 +103,7 @@ block content
 				input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
 				i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 			.prompt-line#todo-line
-				input.prompt#create-todo(type="text", ng-model="newTodo", create-todo)
+				input.prompt#create-todo(type="text", create-todo, ng-model="newTodo")
 				button.fa.fa-arrow-down.submit#todo-button(todo-button="user.current.items", todo-model="newTodo")
 			i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
 			table#todo-list(ng-class="{hidden: !user.todos}")
@@ -122,6 +122,7 @@ block content
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils
+							input.fa.fa-calendar(type="text", name="datepicker", ng-model="dueDate", data-container="body", bs-datepicker)
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
 							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="$index")
