@@ -227,11 +227,10 @@ table {
 		}
 	}
 }
-
-.datepicker.dropdown-menu {
+/*.datepicker.dropdown-menu {
 	width: 250px;
 	height: 270px;
-	background: #fff;
+	background: $white;
 	font-family: $raleway;
 }
 
@@ -264,4 +263,33 @@ table {
 .datepicker.dropdown-menu.datepicker-mode-1 tbody button,
 .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
 	height: 65px;
+}*/
+
+#ui-datepicker-div {
+	@include animation(slideInDown 200ms);
+	background: $white;
+	font-family: $raleway;
+	@include border-radius(15px);
+	.ui-datepicker-header {
+		background: $orchid;
+		@include border-radius(15px 15px 0 0);
+	}
+	.ui-state-default,
+	.ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
+		background: $white;
+		&:hover {
+			background: $deepBlue;
+		}
+	}
+	.ui-state-highlight,
+	.ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight,
+	.ui-state-active,
+	.ui-widget-content .ui-state-active,
+	.ui-widget-header .ui-state-active {
+		background: $deepBlue;
+		border: none;
+		color: $white;
+	}
 }

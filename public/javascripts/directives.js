@@ -315,4 +315,19 @@
 			}
 		}
 	});
+	app.directive('dateToggle', function () {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function (scope, element, attrs) {
+				$('.datepicker').hide();
+				element.bind('click', function (e) {
+					element.siblings('.datepicker').show().focus();
+				});
+				element.siblings('.datepicker').on('blur', function() {
+					$(this).hide();
+				})
+			}
+		}
+	});
 })();

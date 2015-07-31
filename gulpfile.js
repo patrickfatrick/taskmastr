@@ -18,13 +18,13 @@ var nodeSources = [
 
 var jsSources = [
 	'./public/bower/jquery/dist/jquery.min.js',
+	'./public/bower/jquery-ui/jquery-ui.min.js',
 	'./public/bower/lodash/lodash.min.js',
 	'./public/bower/velocity/velocity.min.js',
 	'./public/bower/angular/angular.min.js',
 	'./public/bower/angular-touch/angular-touch.min.js',
 	'./public/bower/angular-animate/angular-animate.js',
-	'./public/bower/angular-strap/dist/angular-strap.min.js',
-	'./public/bower/angular-strap/dist/angular-strap.tpl.js',
+	'./public/bower/angular-ui-date/src/date.js',
 	'./public/bower/Sortable/Sortable.js',
 	'./public/bower/Sortable/ng-sortable.js',
 	'./public/javascripts/app.js',

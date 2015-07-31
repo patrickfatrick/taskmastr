@@ -67,6 +67,11 @@
 					}
 				}
 			};
+			$scope.datepickerOptions = {
+				//showAnim: 'slideDown',
+				nextText: '<i class="fa fa-arrow-circle-right"></>'
+			};
+			
 			var counter = 0;
 			
 			var reset = $location.search().reset;

@@ -10,3 +10,9 @@ data
 
 #sass-cache
 .sass-cache
+
+#DS_Store
+.DS_Store
+
+#debug
+npm-debug.log
