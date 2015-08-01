@@ -122,7 +122,8 @@ block content
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils
-							input.fa.fa-calendar(type="text", name="datepicker", ng-model="dueDate", data-container="body", bs-datepicker)
+							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions")
+							i.fa.fa-calendar-check-o.datepicker-toggle(ng-class="{active: todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index")
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
 							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="$index")

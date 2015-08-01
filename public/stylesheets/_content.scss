@@ -156,7 +156,8 @@
 	display: none !important;
 }
 
-table {
+#todo-list,
+#lists-list {
 	table-layout: auto;
 	margin-top: 1rem;
 	width: 100%;
@@ -191,12 +192,15 @@ table {
 			}
 		}
 		td.utils {
-			width: 6.9rem;
+			width: 8.9rem;
 			@include susy-breakpoint($medium) {
-				width: 5.4rem;
+				width: 7.1rem;
 			}
 			.sort {
 				padding: 0 8px 0 8px;
+			}
+			.datepicker-toggle.active {
+				color: $orchid;
 			}
 		}
 		tr.complete {
@@ -228,19 +232,85 @@ table {
 	}
 }
 
+#ui-datepicker-div {
+	background: $white;
+	font-family: $raleway;
+	font-size: 1rem;
+	margin-top: 20px;
+	@include border-radius(15px);
+	@include animation(slideInDown 200ms);
+	@include susy-breakpoint($medium) {
+		margin-left: -165px;
+	}
+	.ui-datepicker-header {
+		background: $orchid;
+		border: 0;
+		@include border-radius(15px 15px 0 0);
+	}
+	.ui-datepicker-prev,
+	.ui-datepicker-next {
+		&:hover {
+			background: transparent;
+			color: $deepBlue;
+			border: 0;
+		}
+		i {
+			font-size: 1.4rem;
+			padding-top: 0.3rem;
+		}
+	}
+	.ui-icon-circle-triangle-w {
+		background-image: none;
+		&:before {
+			content: '\f0a8';
+		}
+	}
+	.ui-datepicker-calendar th {
+		width: 1rem;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+	.ui-state-default,
+	.ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
+		background: $white;
+		border: 0;
+		&:hover {
+			background: $deepBlue;
+			color: $white;
+		}
+	}
+	.ui-state-highlight,
+	.ui-widget-content .ui-state-highlight {
+		background: $deepBlue;
+	}
+	.ui-state-active,
+	.ui-widget-content .ui-state-active,
+	.ui-widget-header .ui-state-active {
+		background: $astroTurf;
+		color: $black;
+	}
+
+}
+
+.datepicker-input {
+	background: transparent;
+	color: transparent;
+	border: none;
+	box-shadow: none;
+	width: 1px;
+	height: 1px;
+}
+
 .datepicker.dropdown-menu {
-	width: 250px;
-	height: 270px;
-	background: #fff;
 	font-family: $raleway;
 }
 
 .datepicker.dropdown-menu button {
 	outline: 0;
-	border: 0
+	border: 0;
 }
-
-.datepicker.dropdown-menu tbody {
+/*.datepicker.dropdown-menu tbody {
 	height: 180px
 }
 
@@ -264,4 +334,4 @@ table {
 .datepicker.dropdown-menu.datepicker-mode-1 tbody button,
 .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
 	height: 65px;
-}
+}*/

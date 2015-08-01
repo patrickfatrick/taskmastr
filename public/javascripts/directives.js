@@ -2,7 +2,7 @@
 	var app = angular.module('taskmastrDirectives', []);
 	// timoutID set for 'delete' directive timer
 	var timeoutID;
-	
+
 	// Handler to prevent auto-focuses on text inputs for mobile
 	function windowWidth() {
 		return ($(window).width() > 768) ? true : false;
@@ -164,7 +164,7 @@
 						$(this).addClass('fa-arrow-right');
 					},
 					click: function (e) {
-						scope.$apply(function() {
+						scope.$apply(function () {
 							scope.formAttempt = true;
 						});
 						if (scope.forgot) {
@@ -208,7 +208,7 @@
 						$(this).addClass('fa-arrow-right');
 					},
 					click: function (e) {
-						scope.$apply(function() {
+						scope.$apply(function () {
 							scope.formAttempt = true;
 						});
 						if (scope.resetForm.$invalid) {
@@ -311,6 +311,38 @@
 							$('#create-todo').focus();
 						}
 					}
+				});
+			}
+		}
+	});
+	app.directive('datepickerToggle', function () {
+		return {
+			restrict: 'A',
+			scope: {
+				datepickerToggle: '=',
+				datepickerIndex: '='
+			},
+			link: function (scope, element, attrs) {
+				element.bind('click', function (e) {
+					var todos = scope.datepickerToggle;
+					var index = scope.datepickerIndex;
+					scope.$apply(function () {
+						element.siblings('.datepicker-input').focus();
+						//console.log(todos[index].dueDate);
+						$('.ui-datepicker-prev').html('<i class="fa fa-arrow-circle-left"></i>');
+						$('.ui-datepicker-next').html('<i class="fa fa-arrow-circle-right"></i>');
+					});
+				});
+				$('body').on('click', '.ui-datepicker-close', function () {
+					var todos = scope.datepickerToggle;
+					var index = scope.datepickerIndex;
+					todos[index].dueDate = null;
+					scope.$apply();
+					//console.log(todos[index].dueDate);
+				});
+				$('body').on('click', function () {
+					$('.ui-datepicker-prev').html('<i class="fa fa-arrow-circle-left"></i>');
+					$('.ui-datepicker-next').html('<i class="fa fa-arrow-circle-right"></i>');
 				});
 			}
 		}
