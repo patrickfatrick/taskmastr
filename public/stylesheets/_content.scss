@@ -68,7 +68,7 @@
 #todo-prompt {
 	margin-bottom: 10px;
 	font-size: 2rem;
-	@include susy-breakpoint($medium) {
+	@include susy-breakpoint($medsmall) {
 		font-size: 2.5rem;
 		width: 60%;
 		@include center;
@@ -117,13 +117,11 @@
 	border-radius: 20px;
 	background-color: $red;
 	color: $white;
-	@include susy-breakpoint($medium) {
-		background: transparent;
-		color: inherit;
-		&:hover {
-			background-color: $red;
-			color: $white;
-		}
+	&:hover {
+		@include background(linear-gradient(($red * 0.9), $red));
+	}
+	&:active {
+		background: $red * 0.9;
 	}
 	i {
 		margin-right: 1rem;
@@ -192,9 +190,9 @@
 			}
 		}
 		td.utils {
-			width: 8.9rem;
+			width: 9rem;
 			@include susy-breakpoint($medium) {
-				width: 7.1rem;
+				width: 7.2rem;
 			}
 			.sort {
 				padding: 0 8px 0 8px;
@@ -202,11 +200,22 @@
 			.datepicker-toggle.active {
 				color: $orchid;
 			}
+			.datepicker-input {
+				background: transparent;
+				color: transparent;
+				border: none;
+				box-shadow: none;
+				width: 1px;
+				height: 1px;
+			}
 		}
 		tr.complete {
 			color: #919191;
 			background: transparent !important;
 			font-style: italic;
+			.datepicker-toggle.active {
+				color: #919191;
+			}
 		}
 		tr.ghost {
 			opacity: .5;
@@ -214,7 +223,10 @@
 		}
 		tr.deleting {
 			background: $red !important;
-			color: $white;
+			color: $white !important;
+			.datepicker-toggle.active {
+				color: $white;
+			}
 		}
 		/* Reset the #content transition on table rows */
 		
@@ -237,6 +249,7 @@
 	font-family: $raleway;
 	font-size: 1rem;
 	margin-top: 20px;
+	text-transform: lowercase;
 	@include border-radius(15px);
 	@include animation(slideInDown 200ms);
 	@include susy-breakpoint($medium) {
@@ -244,7 +257,8 @@
 	}
 	.ui-datepicker-header {
 		background: $orchid;
-		border: 0;
+		font-weight: normal;
+		border: none;
 		@include border-radius(15px 15px 0 0);
 	}
 	.ui-datepicker-prev,
@@ -252,17 +266,11 @@
 		&:hover {
 			background: transparent;
 			color: $deepBlue;
-			border: 0;
+			border: none;
 		}
 		i {
 			font-size: 1.4rem;
 			padding-top: 0.3rem;
-		}
-	}
-	.ui-icon-circle-triangle-w {
-		background-image: none;
-		&:before {
-			content: '\f0a8';
 		}
 	}
 	.ui-datepicker-calendar th {
@@ -274,7 +282,10 @@
 	.ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default {
 		background: $white;
-		border: 0;
+		border: none;
+		outline: none;
+		text-transform: lowercase;
+		font-weight: normal;
 		&:hover {
 			background: $deepBlue;
 			color: $white;
@@ -290,48 +301,14 @@
 		background: $astroTurf;
 		color: $black;
 	}
-
-}
-
-.datepicker-input {
-	background: transparent;
-	color: transparent;
-	border: none;
-	box-shadow: none;
-	width: 1px;
-	height: 1px;
-}
-
-.datepicker.dropdown-menu {
-	font-family: $raleway;
-}
-
-.datepicker.dropdown-menu button {
-	outline: 0;
-	border: 0;
-}
-/*.datepicker.dropdown-menu tbody {
-	height: 180px
-}
-
-.datepicker .dropdown-menu tbody tr,
-.datepicker .dropdown-menu tbody td {
-	margin: 0;
-	padding: 0;
-}
-
-.datepicker.dropdown-menu tbody button {
-	padding: 6px;
-	padding-right: 20px;
-	margin: -5px;
-	background-color: $white;
-	border: 1px solid $azure;
-	&:hover {
-		background-color: $azure;
+	.ui-state-hover,
+	.ui-widget-content .ui-state-hover,
+	.ui-state-focus,
+	.ui-widget-content .ui-state-focus, {
+		color: $oceanBlue;
+	}
+	.ui-datepicker-days-cell-over a {
+		color: $white;
+		background: $deepBlue;
 	}
 }
-
-.datepicker.dropdown-menu.datepicker-mode-1 tbody button,
-.datepicker.dropdown-menu.datepicker-mode-2 tbody button {
-	height: 65px;
-}*/

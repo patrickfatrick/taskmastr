@@ -30,7 +30,7 @@ exports.findUser = function (username, next) {
 };
 
 exports.updateUser = function (user, next) {
-	User.update({
+	User.findOneAndUpdate({
 		username: user.username.toLowerCase()
 	}, {
 		$set: {
@@ -38,6 +38,8 @@ exports.updateUser = function (user, next) {
 			darkmode: user.darkmode,
 			dateModified: user.dateModified
 		}
+	}, {
+		new: true
 	}, function (err, user) {
 		next(err, user);
 	});

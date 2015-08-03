@@ -13,7 +13,7 @@ body {
 	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight));
 	@include background-size(auto 300%);
 	background-position: bottom;
-	@include susy-breakpoint($medium) {
+	@include susy-breakpoint($small) {
 		font-size: 1.4rem;
 	}
 }
@@ -34,7 +34,7 @@ input[type='password'] {
 	white-space: nowrap;
 	text-align: right;
 	@include center;
-	@include susy-breakpoint($medium) {
+	@include susy-breakpoint($small) {
 		text-align: center;
 	}
 	.prompt {
@@ -78,6 +78,8 @@ input[type='password'] {
 	height: 2.5rem;
 	padding: 3px 4px 3px 9px;
 	cursor: pointer;
+	border: 0;
+	outline: 0;
 	@include center;
 	@include border-radius(20px);
 	@include button-effect($orchid, 2px, 0);

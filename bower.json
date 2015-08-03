@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "homepage": "https://github.com/patrickfatrick/taskmastr",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
@@ -28,8 +28,6 @@
     "angular-animate": "~1.4.0",
     "lodash": "~3.9.3",
     "animate.css": "~3.3.0",
-    "angular-strap": "~2.3.1",
-    "bootstrap-sass": "~3.3.5",
     "angular-ui-date": "~0.0.8"
   }
 }

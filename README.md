@@ -1,6 +1,9 @@
 ## taskmastr
 Yet another todo list web app built with the MEAN stack (not mean.io or mean.js, though...). You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
+##New in v5.0.0
+Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
+
 ##New in v4.1.0
 We now have a pathway for resetting user passwords. Put in your email, check "Forgot your password?" and submit the form to receive a link that will allow you to create a new password.
 
@@ -22,6 +25,7 @@ Session storage for up to 30 days. This also means you can now log out whenever 
 
 _features:_
 - Username/Password authentication.
+- Email notifications when assigning a task a due date.
 - Remember me to store your session for up to 30 days.
 - Delete, reorder, and rename tasks or lists.
 - 5-second undo when deleting a task or list.

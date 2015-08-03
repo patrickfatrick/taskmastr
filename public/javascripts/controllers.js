@@ -68,9 +68,24 @@
 				}
 			};
 			
+			$scope.setDatepickerIndex = function(index) {
+				$scope.datepickerIndex = index;
+			}
+			$scope.setDatepickerClear = function(bool) {
+				$scope.datepickerClear = bool;
+			}
 			$scope.datepickerOptions = {
 				showButtonPanel: true,
-				closeText: 'Clear'
+				closeText: 'Clear',
+				minDate: 1,
+				onClose : function (dateText, inst) {
+					//$log.log($scope.datepickerClear);
+					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
+					if ($scope.datepickerClear) {
+						$scope.user.current.items[$scope.datepickerIndex].dueDate = '';
+						$scope.$apply();
+					}
+				}
 			};
 			var counter = 0;
 			
@@ -185,7 +200,7 @@
 						$log.log(status);
 					});
 			};
-			$scope.create = function (arr, item) {
+			$scope.create = function (arr, item, agendaID) {
 				if (arr === $scope.user.todos) {
 					arr.unshift({
 						list: item,
@@ -195,7 +210,8 @@
 				} else {
 					arr.unshift({
 						item: item,
-						complete: false
+						complete: false,
+						agendaID: agendaID
 					});
 				}
 				//$log.log('Creating todo... OK');
@@ -215,10 +231,12 @@
 							todos: $scope.user.todos,
 							darkmode: $scope.user.darkmode,
 							dateModified: now
-						}
+						},
+						deleteAgendas: $scope.deleteAgendas
 					})
 					.success(function (data) {
-						$log.log('Writing data... OK');
+						//$log.log('Writing data... OK');
+						return true;
 					})
 					.error(function (data, status) {
 						$log.log('Error writing data!');
@@ -235,6 +253,10 @@
 						$log.log('Error logging out! ');
 						$log.log(status);
 					});
+			};
+			$scope.deleteAgendas = [];
+			$scope.setDeleteAgendas = function (agendaID) {
+				$scope.deleteAgendas.push(agendaID);
 			};
 			$scope.$watch('user.todos', function (newValue, oldValue) {
 				if (newValue === oldValue) return;

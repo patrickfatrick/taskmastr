@@ -7,6 +7,13 @@
 	function windowWidth() {
 		return ($(window).width() > 768) ? true : false;
 	}
+	
+	function rand () {
+		return Math.random().toString(36).substr(2);
+	}
+	function token () {
+		return rand() + rand() + rand();
+	}
 
 	app.directive('complete', function () {
 		return {
@@ -85,7 +92,8 @@
 					scope.$apply(function () {
 						//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
 						if (scope.todoModel) {
-							scope.$parent.create(scope.todoButton, scope.todoModel);
+							scope.$parent.create(scope.todoButton, scope.todoModel, token());
+							//console.log(scope.$parent.user.todos);
 							scope.todoModel = '';
 						}
 					});
@@ -251,6 +259,8 @@
 								} else if (spliced[0].current) {
 									scope.$parent.setCurrent(index);
 								}
+								//If deleted, delete associated agendas
+								scope.$parent.setDeleteAgendas(spliced[0].agendaID);
 								scope.$apply();
 							}, 5000);
 						} else {
@@ -323,22 +333,21 @@
 				datepickerIndex: '='
 			},
 			link: function (scope, element, attrs) {
+				var todos = scope.datepickerToggle;
 				element.bind('click', function (e) {
-					var todos = scope.datepickerToggle;
-					var index = scope.datepickerIndex;
 					scope.$apply(function () {
+						scope.$parent.setDatepickerIndex(scope.datepickerIndex);
+						scope.$parent.setDatepickerClear(false);
+						if (!todos[scope.$parent.datepickerIndex].agendaID) todos[scope.$parent.datepickerIndex].agendaID = token();
 						element.siblings('.datepicker-input').focus();
-						//console.log(todos[index].dueDate);
 						$('.ui-datepicker-prev').html('<i class="fa fa-arrow-circle-left"></i>');
 						$('.ui-datepicker-next').html('<i class="fa fa-arrow-circle-right"></i>');
 					});
 				});
-				$('body').on('click', '.ui-datepicker-close', function () {
-					var todos = scope.datepickerToggle;
-					var index = scope.datepickerIndex;
-					todos[index].dueDate = null;
-					scope.$apply();
-					//console.log(todos[index].dueDate);
+				$('body').on('mousedown', '.ui-datepicker-close', function () {
+					scope.$apply(function() {
+						scope.$parent.setDatepickerClear(true);
+					});
 				});
 				$('body').on('click', function () {
 					$('.ui-datepicker-prev').html('<i class="fa fa-arrow-circle-left"></i>');
