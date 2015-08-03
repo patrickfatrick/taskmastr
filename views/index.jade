@@ -50,6 +50,7 @@ block content
 			#tips-button.button(tips-button)
 				| Tips:
 			ul.fine-print
+				li &rarr; Use the datepicker to send yourself a notification at 6am the day of.
 				li &rarr; Your session is not stored unless you use the Remember Me toggle (which stores it for 30 days).
 				li &rarr; If you forget your password, input your username, check "Forgot Password?", and submit.
 				li &rarr; When deleting, you have <span style="font-style: italic">five seconds</span> to undo.
@@ -114,7 +115,7 @@ block content
 						th toggle
 						th utils
 				tbody(ng-sortable="sortableOptions", ng-model="user.current.items")
-					tr.todo.repeat-animation(ng-repeat="todo in user.current.items", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}")
+					tr.todo.repeat-animation(ng-repeat="todo in user.current.items", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}", data-agenda-id="{{todo.agendaID}}")
 						th
 							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete="user.current.items", complete-index="$index")
 							i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
@@ -122,10 +123,15 @@ block content
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils
+<<<<<<< HEAD
 							//input.bs-datepicker(type="text", name="datepicker", ng-model="dueDate", data-container="body", data-placement="bottom-center", data-minView="1", bs-datepicker)
 							//i.fa.fa-calendar(date-toggle)
 							input.datepicker(type="text", ui-date="datepickerOptions")
 							i.fa.fa-calendar(date-toggle)
+=======
+							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete")
+							i.fa.fa-calendar-check-o.datepicker-toggle(ng-class="{active: todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index")
+>>>>>>> 7cff275e76fafc292713d649909a7086f44d3ac1
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
 							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="$index")

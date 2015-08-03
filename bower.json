@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "homepage": "https://github.com/patrickfatrick/taskmastr",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.0",
-    "font-awesome": "~4.3.0",
+    "font-awesome": "~4.4.0",
     "jquery": "~2.1.4",
     "angular-touch": "~1.4.0",
     "Sortable": "~1.2.0",

@@ -2,10 +2,17 @@
 	var app = angular.module('taskmastrDirectives', []);
 	// timoutID set for 'delete' directive timer
 	var timeoutID;
-	
+
 	// Handler to prevent auto-focuses on text inputs for mobile
 	function windowWidth() {
 		return ($(window).width() > 768) ? true : false;
+	}
+	
+	function rand () {
+		return Math.random().toString(36).substr(2);
+	}
+	function token () {
+		return rand() + rand() + rand();
 	}
 
 	app.directive('complete', function () {
@@ -85,7 +92,8 @@
 					scope.$apply(function () {
 						//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
 						if (scope.todoModel) {
-							scope.$parent.create(scope.todoButton, scope.todoModel);
+							scope.$parent.create(scope.todoButton, scope.todoModel, token());
+							//console.log(scope.$parent.user.todos);
 							scope.todoModel = '';
 						}
 					});
@@ -164,7 +172,7 @@
 						$(this).addClass('fa-arrow-right');
 					},
 					click: function (e) {
-						scope.$apply(function() {
+						scope.$apply(function () {
 							scope.formAttempt = true;
 						});
 						if (scope.forgot) {
@@ -208,7 +216,7 @@
 						$(this).addClass('fa-arrow-right');
 					},
 					click: function (e) {
-						scope.$apply(function() {
+						scope.$apply(function () {
 							scope.formAttempt = true;
 						});
 						if (scope.resetForm.$invalid) {
@@ -251,6 +259,8 @@
 								} else if (spliced[0].current) {
 									scope.$parent.setCurrent(index);
 								}
+								//If deleted, delete associated agendas
+								scope.$parent.setDeleteAgendas(spliced[0].agendaID);
 								scope.$apply();
 							}, 5000);
 						} else {
@@ -315,6 +325,7 @@
 			}
 		}
 	});
+<<<<<<< HEAD
 	app.directive('dateToggle', function () {
 		return {
 			restrict: 'A',
@@ -327,6 +338,36 @@
 				element.siblings('.datepicker').on('blur', function() {
 					$(this).hide();
 				})
+=======
+	app.directive('datepickerToggle', function () {
+		return {
+			restrict: 'A',
+			scope: {
+				datepickerToggle: '=',
+				datepickerIndex: '='
+			},
+			link: function (scope, element, attrs) {
+				var todos = scope.datepickerToggle;
+				element.bind('click', function (e) {
+					scope.$apply(function () {
+						scope.$parent.setDatepickerIndex(scope.datepickerIndex);
+						scope.$parent.setDatepickerClear(false);
+						if (!todos[scope.$parent.datepickerIndex].agendaID) todos[scope.$parent.datepickerIndex].agendaID = token();
+						element.siblings('.datepicker-input').focus();
+						$('.ui-datepicker-prev').html('<i class="fa fa-arrow-circle-left"></i>');
+						$('.ui-datepicker-next').html('<i class="fa fa-arrow-circle-right"></i>');
+					});
+				});
+				$('body').on('mousedown', '.ui-datepicker-close', function () {
+					scope.$apply(function() {
+						scope.$parent.setDatepickerClear(true);
+					});
+				});
+				$('body').on('click', function () {
+					$('.ui-datepicker-prev').html('<i class="fa fa-arrow-circle-left"></i>');
+					$('.ui-datepicker-next').html('<i class="fa fa-arrow-circle-right"></i>');
+				});
+>>>>>>> 7cff275e76fafc292713d649909a7086f44d3ac1
 			}
 		}
 	});

@@ -91,6 +91,12 @@ function todoHover() {
 	}
 }
 
+$(function() {
+	$('body').on('click', '.ui-datepicker-close', function() {
+		$('.datepicker-input').val('');
+	});
+});
+
 $(keyModal);
 $(renameItem);
 $(shortcut(91, 40, '#save-button.toggled'));
