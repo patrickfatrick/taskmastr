@@ -12,7 +12,7 @@ exports.greetEmail = function (user, host, next) {
 		to: user.username,
 		from: 'taskmastr <do-not-reply@taskmastr.co>',
 		subject: 'Greetings from taskmastr',
-		text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + 'http://' + host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the tips at the login screen.\n'
+		text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + 'http://' + host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the tips at the login screen.\n'
 	};
 	mailer.sendMail(email, function (err, info) {
 		console.log('Email sent to ' + user.username);
