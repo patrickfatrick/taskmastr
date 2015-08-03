@@ -11,5 +11,12 @@ data
 #sass-cache
 .sass-cache
 
+<<<<<<< HEAD
 #npm-debug
+=======
+#DS_Store
+.DS_Store
+
+#debug
+>>>>>>> 63c706c834a877b0cb7f2aafe3dddab103c0ea70
 npm-debug.log

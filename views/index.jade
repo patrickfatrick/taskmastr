@@ -120,7 +120,7 @@ block content
 							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete="user.current.items", complete-index="$index")
 							i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
 						td.todo-cell
-							input.rename(type="date", style="display:none", value="{{todo.item}}", ng-model="todo.item")
+							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils
 							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete")

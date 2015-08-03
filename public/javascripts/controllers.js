@@ -67,7 +67,6 @@
 					}
 				}
 			};
-			
 			$scope.setDatepickerIndex = function(index) {
 				$scope.datepickerIndex = index;
 			}
@@ -76,6 +75,7 @@
 			}
 			$scope.datepickerOptions = {
 				showButtonPanel: true,
+				dateFormat: 'yy-mm-dd',
 				closeText: 'Clear',
 				minDate: 1,
 				onClose : function (dateText, inst) {
