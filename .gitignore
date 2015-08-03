@@ -10,3 +10,6 @@ data
 
 #sass-cache
 .sass-cache
+
+#npm-debug
+npm-debug.log
