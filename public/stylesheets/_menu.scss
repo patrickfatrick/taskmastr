@@ -44,4 +44,10 @@
 	tbody tr.current {
 		background: $deepBlue;
 	}
+	td.utils {
+		width:6.3rem;
+		@include susy-breakpoint($medium) {
+			width: 5.5rem;
+		}
+	}
 }
