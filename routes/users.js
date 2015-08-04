@@ -134,7 +134,7 @@ router.post('/write', function (req, res, next) {
 			if (itemVal.dueDate) {
 				//itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000;
 				//Use the following for testing.
-				itemVal.dueDate = Date.now() + 5000;
+				itemVal.dueDate = Date.now() + 3600000;
 				//console.log(itemVal.dueDate);
 				agenda.define(itemVal.agendaID, function (job, done) {
 					var data = job.attrs.data;
