@@ -75,6 +75,7 @@
 			}
 			$scope.datepickerOptions = {
 				showButtonPanel: true,
+				showAnim: '',
 				dateFormat: 'yy-mm-dd',
 				closeText: 'Clear',
 				minDate: 1,

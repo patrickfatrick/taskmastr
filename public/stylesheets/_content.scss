@@ -251,7 +251,7 @@
 	margin-top: 20px;
 	text-transform: lowercase;
 	@include border-radius(15px);
-	@include animation(slideInDown 200ms);
+	@include animation(bounceInDown 300ms);
 	@include susy-breakpoint($medium) {
 		margin-left: -165px;
 	}
