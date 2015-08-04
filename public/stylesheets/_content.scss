@@ -190,7 +190,7 @@
 			}
 		}
 		td.utils {
-			width: 8.5rem;
+			width: 8.2rem;
 			@include susy-breakpoint($medium) {
 				width: 7.2rem;
 			}
@@ -295,12 +295,6 @@
 	.ui-widget-content .ui-state-highlight {
 		background: $deepBlue;
 	}
-	.ui-state-active,
-	.ui-widget-content .ui-state-active,
-	.ui-widget-header .ui-state-active {
-		background: $astroTurf;
-		color: $black;
-	}
 	.ui-state-hover,
 	.ui-widget-content .ui-state-hover,
 	.ui-state-focus,
@@ -308,7 +302,13 @@
 		color: $oceanBlue;
 	}
 	.ui-datepicker-days-cell-over a {
-		color: $white;
-		background: $deepBlue;
+		color: $oceanBlue;
+		background: $white;
+	}
+	.ui-state-active,
+	.ui-widget-content .ui-state-active,
+	.ui-widget-header .ui-state-active {
+		background: $astroTurf !important;
+		color: $black !important;
 	}
 }
