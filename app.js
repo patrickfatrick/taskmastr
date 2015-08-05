@@ -9,6 +9,8 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
+var Agenda = require('agenda');
+var agenda = require('./services/agenda');
 
 var MongoStore = connectMongo(expressSession);
 var passportConfig = require('./auth/passport-config');
@@ -20,7 +22,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 mongoose.connect(config.mongoUri);
-
+agenda.start();
 var app = express();
 
 // view engine setup

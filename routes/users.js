@@ -3,8 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var hat = require('hat');
 var config = require('../config');
-var Agenda = require('agenda');
-var agenda = new Agenda(config.agendaOptions);
+var agenda = require('../services/agenda');
 var emailService = require('../services/email-service');
 var userService = require('../services/user-service');
 
@@ -132,9 +131,9 @@ router.post('/write', function (req, res, next) {
 				console.log('Agenda removed: ' + itemVal.agendaID);
 			});
 			if (itemVal.dueDate) {
-				itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000;
+				//itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000;
 				//Use the following for testing.
-				//itemVal.dueDate = Date.now() + 3600000;
+				itemVal.dueDate = Date.now() + 3600000;
 				//console.log(itemVal.dueDate);
 				agenda.define(itemVal.agendaID, function (job, done) {
 					var data = job.attrs.data;
@@ -165,5 +164,4 @@ router.get('/logout', function (req, res) {
 	});
 });
 
-agenda.start();
 module.exports = router;
