@@ -142,7 +142,7 @@ router.post('/write', function (req, res, next) {
 			if (itemVal.dueDate) {
 				var milliseconds = Math.floor(Math.random() * 150000);
 				itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000 + milliseconds;
-
+				if (itemVal.dueDate <= Date.now()) return true;
 				//Use the following for testing.
 				//itemVal.dueDate = Date.now() + 3600000;
 				console.log(new Date(itemVal.dueDate));
