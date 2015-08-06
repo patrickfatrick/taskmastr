@@ -43,7 +43,7 @@ router.post('/create',
 		next();
 	},
 	function (req, res, next) {
-		console.log(req.body);
+		//console.log(req.body);
 		var username = req.body.username;
 		var key = req.body.key;
 		var rememberMe = req.body.rememberMe;
@@ -53,14 +53,18 @@ router.post('/create',
 			rememberMe: rememberMe
 		}, function (err, user) {
 			if (err) console.log(err);
-			console.log('No user found.');
-			console.log('Creating user... OK');
+			console.log(username + ' not found.');
+			console.log('Creating user ' + username + ' ... OK');
 			req.login(user, function (err) {
 				if (err) return next(err);
-				emailService.greetEmail(user, req.headers.host, function (err, next) {
-					if (err) return next(err);
-					return res.send(user);
-				})
+				agenda.define('greet ' + user.username, function (job, done) {
+					var data = job.attrs.data;
+					emailService.greetEmail(data.username, data.host, function (err, next) {
+						if (err) return next(err);
+						return res.send(user);
+					});
+				});
+				agenda.now('greet ' + user.username, {username: user.username, host: req.headers.host});
 			});
 		});
 	}
@@ -78,12 +82,23 @@ router.post('/forgot',
 			userService.setToken(user, function (err, user) {
 				if (err) return next(err);
 				//console.log(user);
-				emailService.resetEmail(user, req.headers.host, function (err, next) {
+				agenda.define('reset ' + user.username, function (job, done) {
+					var data = job.attrs.data;
+					emailService.resetEmail(data.username, data.resetToken, data.host, function (err, next) {
+						if (err) return next(err);
+						res.send({
+							emailSent: true
+						});
+						done();
+					});
+				});
+				agenda.now('reset ' + user.username, {username: user.username, resetToken: user.resetToken, host: req.headers.host});
+				/*emailService.resetEmail(user.username, user.resetToken req.headers.host, function (err, next) {
 					if (err) return next(err);
 					res.send({
 						emailSent: true
 					});
-				});
+				});*/
 			});
 		});
 	}
@@ -131,10 +146,12 @@ router.post('/write', function (req, res, next) {
 				console.log('Agenda removed: ' + itemVal.agendaID);
 			});
 			if (itemVal.dueDate) {
-				//itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000;
+				var milliseconds = Math.floor(Math.random() * 600000);
+				itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000 + milliseconds;
+				
 				//Use the following for testing.
-				itemVal.dueDate = Date.now() + 3600000;
-				//console.log(itemVal.dueDate);
+				//itemVal.dueDate = Date.now() + 3600000;
+				console.log(new Date(itemVal.dueDate));
 				agenda.define(itemVal.agendaID, function (job, done) {
 					var data = job.attrs.data;
 					emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
@@ -144,7 +161,6 @@ router.post('/write', function (req, res, next) {
 					});
 				});
 				agenda.schedule(new Date(itemVal.dueDate), itemVal.agendaID, {username: user.username, item: itemVal.item, host: req.headers.host, date: new Date(itemVal.dueDate)});
-				//agenda.now(itemVal.agendaID);
 			}
 		});
 	});

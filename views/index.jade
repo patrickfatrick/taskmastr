@@ -132,4 +132,4 @@ block content
 				#logout(ng-show="user.todos", ng-click="logout()")
 					i.fa.fa-power-off#power-off
 					label(for="power-off") Logout
-			#save-button.button(ng-class="{'toggled': saveButton}", save) Save
+			#save-button.button(ng-if="saveButton", save) Save

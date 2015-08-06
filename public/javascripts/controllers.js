@@ -78,10 +78,11 @@
 				showAnim: '',
 				dateFormat: 'yy-mm-dd',
 				closeText: 'Clear',
-				minDate: 1,
+				minDate: 0,
 				onClose : function (dateText, inst) {
 					//$log.log($scope.datepickerClear);
 					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
+					//$log.log($scope.user.todos);
 					if ($scope.datepickerClear) {
 						$scope.user.current.items[$scope.datepickerIndex].dueDate = '';
 						$scope.$apply();

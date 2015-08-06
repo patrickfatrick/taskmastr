@@ -132,17 +132,19 @@
 }
 
 #save-button {
-	display: none;
+	display: block;
 	background-color: $deepBlue;
 	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 20px;
 	@include button-effect($deepBlue, 22px, 20px);
-}
-
-#save-button.toggled {
-	display: block;
+	&.ng-enter {
+		@include animation(bounceIn 300ms);
+	}
+	&.ng-leave {
+		@include animation(bounceOut 300ms);
+	}
 }
 
 #loading {
@@ -272,11 +274,6 @@ table {
 			padding-top: 0.3rem;
 		}
 	}
-	.ui-datepicker-calendar th {
-		width: 1rem;
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-	}
 	.ui-state-default,
 	.ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default {
@@ -286,28 +283,31 @@ table {
 		text-transform: lowercase;
 		font-weight: normal;
 		&:hover {
-			background: $deepBlue;
-			color: $white;
+			background: $deepBlue !important;
+			color: $white !important;
 		}
 	}
-	.ui-state-highlight,
-	.ui-widget-content .ui-state-highlight {
-		background: $deepBlue;
-	}
-	.ui-state-hover,
-	.ui-widget-content .ui-state-hover,
-	.ui-state-focus,
-	.ui-widget-content .ui-state-focus, {
-		color: $oceanBlue;
-	}
-	.ui-datepicker-days-cell-over a {
-		color: $oceanBlue;
-		background: $white;
-	}
-	.ui-state-active,
-	.ui-widget-content .ui-state-active,
-	.ui-widget-header .ui-state-active {
-		background: $astroTurf !important;
-		color: $black !important;
+	.ui-datepicker-calendar {
+		margin-top: 0.4em;
+		th {
+			width: 1rem;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+		td {
+			padding: 0;
+		}
+		.ui-datepicker-unselectable a {
+			color: $oceanBlue;
+			background: $white;
+		}
+		.ui-datepicker-today a {
+			color: $white;
+			background: $deepBlue;
+		}
+		.ui-datepicker-current-day a {
+			background: $astroTurf;
+			color: $black;
+		}
 	}
 }
