@@ -78,7 +78,7 @@
 				showAnim: '',
 				dateFormat: 'yy-mm-dd',
 				closeText: 'Clear',
-				minDate: 0,
+				minDate: 1,
 				onClose : function (dateText, inst) {
 					//$log.log($scope.datepickerClear);
 					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
