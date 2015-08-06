@@ -123,7 +123,7 @@ block content
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils
-							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete", ng-readonly="true")
+							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete", ng-readonly="true", ng-if="user.username === 'patrick.fricano@icloud.com'")
 							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index", ng-if="user.username === 'patrick.fricano@icloud.com'")
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
