@@ -93,12 +93,6 @@ router.post('/forgot',
 					});
 				});
 				agenda.now('reset ' + user.username, {username: user.username, resetToken: user.resetToken, host: req.headers.host});
-				/*emailService.resetEmail(user.username, user.resetToken req.headers.host, function (err, next) {
-					if (err) return next(err);
-					res.send({
-						emailSent: true
-					});
-				});*/
 			});
 		});
 	}
@@ -146,9 +140,9 @@ router.post('/write', function (req, res, next) {
 				console.log('Agenda removed: ' + itemVal.agendaID);
 			});
 			if (itemVal.dueDate) {
-				var milliseconds = Math.floor(Math.random() * 600000);
+				var milliseconds = Math.floor(Math.random() * 150000);
 				itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000 + milliseconds;
-				
+
 				//Use the following for testing.
 				//itemVal.dueDate = Date.now() + 3600000;
 				console.log(new Date(itemVal.dueDate));
