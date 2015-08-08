@@ -18,6 +18,8 @@ Try:
 
 This feature really does not and should not work for every single imaginable date format so it's up to you to stay sensible about it. It also does not work for dates in the past. Use the datepicker for that. And while we're on the subject of the datepicker, while you can set up a date in the past you will of course not receive any notification for it. The idea here is really more for allowing you to see when the task was due, after the fact.
 
+_One more note about shortcuts:_ If today is Saturday, putting in 'next saturday' will not work, use 'next week' when you mean one week from today. Same goes for 'next month' for one month from today, and 'next year' for... well, you know.
+
 ##New in v5.0.0
 Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
 
