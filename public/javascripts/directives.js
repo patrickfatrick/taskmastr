@@ -51,7 +51,7 @@
 						_.each(val.items, function(itemVal, j) {
 							if (itemVal.dueDate) {
 								//console.log(new Date(itemVal.dueDate).getHours());
-								itemVal.dueDate = new Date(itemVal.dueDate).setHours(0);
+								itemVal.dueDate = new Date(itemVal.dueDate).setHours(0).setMinutes(0);
 								itemVal.dueDate = new Date(itemVal.dueDate);
 								//console.log(new Date(itemVal.dueDate).getHours());
 							}
