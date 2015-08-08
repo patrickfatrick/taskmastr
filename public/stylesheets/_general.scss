@@ -44,12 +44,14 @@ input[type='password'] {
 		padding-right: 0.5rem;
 		font-size: 2rem;
 		border: 1px solid $deepBlue;
-	}
-	.prompt.ng-invalid.tried, .prompt.invalid-password, .prompt.invalid-user {
-		border: 1px solid $red;
-	}
-	.prompt.disabled {
-		background-color: $azure;
+		&.ng-invalid.tried,
+		&.invalid-password,
+		&.invalid-user {
+			border: 1px solid $red;
+		}
+		&.disabled {
+			background-color: $azure;
+		}
 	}
 	button.submit {
 		font-size: 1.8rem;

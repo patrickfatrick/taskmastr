@@ -1,6 +1,23 @@
 ## taskmastr
 Yet another todo list web app built with the MEAN stack (not mean.io or mean.js, though...). You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
+##New in v5.1.0
+Notification scheduling _actually_ works! Hooray!
+
+We've also added in the ability to shortcut your due date when creating the task itself.
+
+Try:
+- `Remind me to wash the dishes tomorrow` 'Remind me to' signals taskmastr to look out for a date.
+- `/r Meet with that person I know on 9/15/2015` So does '/r'.
+- `/r Do that thing I said I'd do on oct 10` You can use an actual date or something a little easier to type.
+- `/r Eat food and sleep next Tuesday` You can also use relative dates.
+- `/y come up with a New Year's Resolution` '/y' sets the date to January 1st of next year.
+- `/t Wake up at some point` '/t' sets the date to tomorrow.
+- `/w Go to work` '/w' sets the date to next Monday.
+- `/m pay rent` '/m' sets the date to the 1st of next month.
+
+This feature really does not and should not work for every single imaginable date format so it's up to you to stay sensible about it. It also does not work for dates in the past. Use the datepicker for that. And while we're on the subject of the datepicker, while you can set up a date in the past you will of course not receive any notification for it. The idea here is really more for allowing you to see when the task was due, after the fact.
+
 ##New in v5.0.0
 Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
 
@@ -17,11 +34,6 @@ We also store the list that's currently being viewed so if you switch lists and 
 We also added more keyboard shortcuts to control the Lists menu, and also to control Night Mode.
 
 Last and probably least, we said "No." to the mobile button next to each task that was designed to better use space on small devices. The experience just wasn't quite there, and the space saved didn't justify the extra clicks.
-
-## New in v3.0.0
-Authentication has been rewritten to use a standard username/password authentication via Passport and bcrypt hashing.
-
-Session storage for up to 30 days. This also means you can now log out whenever you want.
 
 _features:_
 - Username/Password authentication.

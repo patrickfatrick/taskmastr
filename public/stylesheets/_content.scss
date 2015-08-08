@@ -218,29 +218,29 @@ table {
 				color: #919191;
 			}
 		}
-		tr.ghost {
-			opacity: .5;
-			background-color: $deepBlue !important;
-		}
-		tr.deleting {
-			background: $red !important;
-			color: $white !important;
-			.datepicker-toggle.active {
-				color: $white;
-			}
-		}
-		/* Reset the #content transition on table rows */
-		
-		tr,
-		tr.ng-enter,
-		tr.ng-leave {
+		tr {
 			@include single-transition(all, 0, ease-out);
-		}
-		tr.ng-enter {
-			@include animation(bounceInLeft 400ms)
-		}
-		tr.ng-leave {
-			@include animation(bounceOutLeft 400ms)
+			&.ghost {
+				opacity: .5;
+				background-color: $deepBlue !important;
+			}
+			&.deleting {
+				background: $red !important;
+				color: $white !important;
+				.datepicker-toggle.active {
+					color: $white;
+				}
+			}
+			&.ng-enter,
+			&.ng-leave {
+				@include single-transition(all, 0, ease-out);
+			}
+			&.ng-enter {
+				@include animation(bounceInLeft 400ms);
+			}
+			&.ng-leave {
+				@include animation(bounceOutLeft 400ms)
+			}
 		}
 	}
 }
@@ -253,6 +253,10 @@ table {
 	text-transform: lowercase;
 	@include border-radius(15px);
 	@include animation(bounceInDown 300ms);
+	@include susy-breakpoint(0px $small) {
+		width: 100%;
+		left: 0 !important;
+	}
 	@include susy-breakpoint($medium) {
 		margin-left: -165px;
 	}
@@ -289,6 +293,9 @@ table {
 	}
 	.ui-datepicker-calendar {
 		margin-top: 0.4em;
+		@include susy-breakpoint(0px $small) {
+			height: 150px;
+		}
 		th {
 			width: 1rem;
 			padding-left: 0 !important;

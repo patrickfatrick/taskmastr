@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "A simple web-based todo list using MongoDB, Express, Angular, and Node (MEAN)",
   "homepage": "https://github.com/patrickfatrick/taskmastr",
   "authors": [

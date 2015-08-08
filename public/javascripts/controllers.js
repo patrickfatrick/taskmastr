@@ -204,15 +204,44 @@
 			$scope.create = function (arr, item, agendaID) {
 				if (arr === $scope.user.todos) {
 					arr.unshift({
-						list: item,
+						list: item.trim(),
 						current: false,
 						items: []
 					});
 				} else {
+					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {
+						var char = (item.indexOf('Remind me to ') !== -1) ? 13 : 3;
+						var shortcut = (item.substring(0, char - 1));
+						var dateObj;
+						item = item.substring(char, item.length);
+						switch (shortcut) {
+							case '/t':
+								dateObj = date('tomorrow');
+								item = dateStrs(item).item;
+								break;
+							case '/w':
+								dateObj = date('next Monday');								
+								item = dateStrs(item).item;
+								break;
+							case '/m':
+								dateObj = moment().startOf('month').add(1, 'M')._d;								
+								item = dateStrs(item).item;
+								break;
+							case '/y':
+								dateObj = moment().startOf('year').add(1, 'y')._d;								
+								item = dateStrs(item).item;
+								break;
+							default:
+								dateObj = dateStrs(item).dateObj;
+								item = dateStrs(item).item;
+								break;
+						}
+					}
 					arr.unshift({
-						item: item,
+						item: item.trim(),
 						complete: false,
-						agendaID: agendaID
+						agendaID: agendaID,
+						dueDate: dateObj
 					});
 				}
 				//$log.log('Creating todo... OK');

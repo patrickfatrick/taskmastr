@@ -50,7 +50,7 @@ block content
 			#tips-button.button(tips-button)
 				| Tips:
 			ul.fine-print
-				li &rarr; Use the datepicker to send yourself a notification at 6am the day of.
+				li &rarr; If you set a due date for sometime in the future, we will send an email notification at 6am the day of.
 				li &rarr; Your session is not stored unless you use the Remember Me toggle (which stores it for 30 days).
 				li &rarr; If you forget your password, input your username, check "Forgot Password?", and submit.
 				li &rarr; When deleting, you have <span style="font-style: italic">five seconds</span> to undo.
@@ -123,8 +123,8 @@ block content
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils
-							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete", ng-readonly="true", ng-if="user.username === 'patrick.fricano@icloud.com'")
-							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index", ng-if="user.username === 'patrick.fricano@icloud.com'")
+							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete", ng-readonly="true")
+							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index")
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
 							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="$index")
