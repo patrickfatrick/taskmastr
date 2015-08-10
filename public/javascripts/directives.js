@@ -285,9 +285,9 @@
 							timeoutID = setTimeout(function () {
 								scope.$apply(function () {
 									var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
-									console.log(spliced);
-									console.log(arr)
-									console.log(scope.$parent.user.todos)
+									//console.log(spliced);
+									//console.log(arr)
+									//console.log(scope.$parent.user.todos)
 									//If deleted, delete associated agendas
 									scope.$parent.setDeleteAgendas(spliced[0].agendaID);
 								});
