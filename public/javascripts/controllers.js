@@ -324,11 +324,11 @@
 				//$.log('darkmode counter = ' + counter);
 			}, true);
 			$scope.setCurrent = function(index) {
-				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
-				_.set(_.find($scope.user.todos, _.matchesProperty('current', true)), 'current', false);
-				$scope.user.current = $scope.user.todos[index];
+				//$log.log('setCurrent index: ' + index);
+				_.set(_.find($scope.user.todos, 'current', true), $scope.user.current);
+				_.set(_.find($scope.user.todos, 'current', true), 'current', false);
+				_.set($scope.user, 'current', $scope.user.todos[index]);
 				_.set($scope.user.todos[index], 'current', true);
-				//$log.log($scope.user.todos);
 			}
 		}
 	]);

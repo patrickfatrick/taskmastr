@@ -252,10 +252,11 @@
 						// 1) Deleting a list
 						// 2) Deleting a task
 						if (arr === scope.$parent.user.todos) {
-							index = _.findIndex(scope.$parent.user.current.items, 'agendaID', scope.deleteIndex);
+							index = _.findIndex(scope.$parent.user.todos, 'agendaID', scope.deleteIndex);
 							timeoutID = setTimeout(function () {
 								scope.$apply(function () {
 									var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
+									//console.log(spliced[0]);
 									// Current list handlers: 
 									// 1) Check if user is deleting the only list: do not allow
 									// 2) Check if deleted list is the last list: set current to first list
