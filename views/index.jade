@@ -87,7 +87,7 @@ block content
 					th name
 					th utils
 			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
-				tr.repeat-animation(ng-repeat="list in user.todos", ng-class="{current: user.current.list === list.list}")
+				tr.repeat-animation(ng-repeat="list in user.todos", ng-class="{current: user.current.list === list.list}", data-agenda-id="{{list.agendaID}}")
 					th
 					td.todo-cell(ng-click="setCurrent($index)")
 						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="list.list")
@@ -95,7 +95,7 @@ block content
 					td.utils
 						i.fa.fa-arrows-v.sort
 						i.fa.fa-pencil
-						i.fa.fa-trash-o(delete-button="user.todos", delete-index="$index")
+						i.fa.fa-trash-o(delete-button="user.todos", delete-index="list.agendaID")
 	#content
 		.container
 			#icon-menu(menu-toggle)
@@ -127,7 +127,7 @@ block content
 							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index")
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
-							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="$index")
+							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="todo.agendaID")
 			#logout-container
 				#logout(ng-show="user.todos", ng-click="logout()")
 					i.fa.fa-power-off#power-off

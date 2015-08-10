@@ -7,7 +7,8 @@ function dateStrs(item) {
 		'january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
 		' Jan ', ' Feb ', ' Mar ', ' Apr ', ' May ', ' Jun ', ' Jul ', ' Aug ', ' Sept ', ' Oct ', ' Nov ', ' Dec ',
 		' jan ', ' feb ', ' mar ', ' apr ', ' may ', ' jun ', ' jul ', ' aug ', ' sept ', ' oct ', ' nov ', ' dec ',
-		' 01', ' 02', ' 03', ' 04', ' 05', ' 06', ' 07', ' 08', ' 09', ' 10', ' 11', ' 12'
+		'1/', '2/', '3/', '4/', '5/', '6/', '7/', '8/', '9/',
+		'01/', '02/', '03/', '04/', '05/', '06/', '07/', '08/', '09/', '10/', '11/', '12/'
 	];
 	var dateFormats = ['MM-DD-YYYY', 'M-DD-YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD', 'MMM D', 'MMM Do', 'MMM Do, YYYY', 'MMMM D', 'MMMM Do', 'MMMM Do, YYYY'];
 	

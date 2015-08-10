@@ -29,12 +29,26 @@
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						//$log.log('User profile mounted...');
 						//$log.log($scope.user);
+						_.each($scope.user.todos, function(val, i) {
+							if (!val.agendaID) val.agendaID = $scope.token();
+							_.each(val.items, function(itemVal, j) {
+								if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
+							});
+						}); 
 					}
 				})
 				.error(function(data, status) {
 					$log.log('Get fail');
 					$log.log(status);
 			});
+			
+			$scope.rand = function () {
+				return Math.random().toString(36).substr(2);
+			}
+
+			$scope.token = function () {
+				return $scope.rand() + $scope.rand() + $scope.rand();
+			}
 			$scope.sortableOptions = {
 				handle: '.sort',
 				sort: true,
@@ -117,6 +131,12 @@
 							$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 							//$log.log('User profile mounted...');
 							//$log.log($scope.user);
+							_.each($scope.user.todos, function(val, i) {
+								if (!val.agendaID) val.agendaID = $scope.token();
+								_.each(val.items, function(itemVal, j) {
+									if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
+								});
+							});
 						} else {
 							$scope.confirmPassword = true;
 							$scope.invalidPassword = false;
@@ -206,7 +226,8 @@
 					arr.unshift({
 						list: item.trim(),
 						current: false,
-						items: []
+						items: [],
+						agendaID: agendaID
 					});
 				} else {
 					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {

@@ -19,6 +19,7 @@ var userSchema = new Schema({
 			],
 			current: {type: Boolean},
 			list: {type: String},
+			agendaID: {type: String},
 			_id: false
 		}
 	],
