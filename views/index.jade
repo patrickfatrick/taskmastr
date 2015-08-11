@@ -50,15 +50,18 @@ block content
 			#tips-button.button(tips-button)
 				| Tips:
 			ul.fine-print
-				li &rarr; If you set a due date for sometime in the future, we will send an email notification at 6am the day of.
-				li &rarr; Your session is not stored unless you use the Remember Me toggle (which stores it for 30 days).
-				li &rarr; If you forget your password, input your username, check "Forgot Password?", and submit.
-				li &rarr; When deleting, you have <span style="font-style: italic">five seconds</span> to undo.
-				li &rarr; You <span style="font-style: italic">cannot</span> delete a list if it's your only list. Try renaming it or adding another list first.
-				li &rarr; We do store which list is currently being viewed, so feel free to save on changing lists.
-				li &rarr; You can rename a task or list by double-clicking it.
-				li &rarr; The sun and moon icons toggle dark mode, which is also stored for future visits.
-				li &rarr; <span style="font-weight: bold; font-style: italic; text-decoration: underline">KEYBOARD SHORTCUTS:</span> Return (&#8617;) saves text fields; CMD+Down (&#8984;&darr;) saves your data; CMD+Right & CMD+Left (&#8984;&rarr; & &#8984;&larr;) toggle the Lists menu; CMD+Up (&#8984;&uarr;) toggles Night Mode.
+				| The tips have been replaced with a wiki, located&nbsp;
+				a(href="https://github.com/patrickfatrick/taskmastr/wiki" target="_blank") here
+				//
+					li &rarr; If you set a due date for sometime in the future, we will send an email notification at 6am the day of.
+					li &rarr; Your session is not stored unless you use the Remember Me toggle (which stores it for 30 days).
+					li &rarr; If you forget your password, input your username, check "Forgot Password?", and submit.
+					li &rarr; When deleting, you have <span style="font-style: italic">five seconds</span> to undo.
+					li &rarr; You <span style="font-style: italic">cannot</span> delete a list if it's your only list. Try renaming it or adding another list first.
+					li &rarr; We do store which list is currently being viewed, so feel free to save on changing lists.
+					li &rarr; You can rename a task or list by double-clicking it.
+					li &rarr; The sun and moon icons toggle dark mode, which is also stored for future visits.
+					li &rarr; <span style="font-weight: bold; font-style: italic; text-decoration: underline">KEYBOARD SHORTCUTS:</span> Return (&#8617;) saves text fields; CMD+Down (&#8984;&darr;) saves your data; CMD+Right & CMD+Left (&#8984;&rarr; & &#8984;&larr;) toggle the Lists menu; CMD+Up (&#8984;&uarr;) toggles Night Mode.
 		.modal-body#reset-form(ng-if="resetForm")
 			| Go ahead and create your new password below
 			form(id="reset-form", name="resetForm", novalidate, reset-Form)
@@ -77,6 +80,8 @@ block content
 			ul.fine-print
 				li &rarr; Hey next time store your password somewhere, guy.
 	#menu
+		input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
+		i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 		#list-headline Lists
 		.prompt-line#list-line
 			input.prompt#create-list(type="text", ng-model="newList", create-todo)
@@ -96,13 +101,15 @@ block content
 						i.fa.fa-arrows-v.sort
 						i.fa.fa-pencil
 						i.fa.fa-trash-o(delete-button="user.todos", delete-index="list.agendaID")
+		#logout-container
+				#logout(ng-show="user.todos", ng-click="logout()")
+					i.fa.fa-power-off#power-off
+					label(for="power-off") Logout
 	#content
 		.container
 			#icon-menu(menu-toggle)
 				i.fa.fa-bars
 			#todo-prompt What needs doing?
-				input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
-				i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 			.prompt-line#todo-line
 				input.prompt#create-todo(type="text", create-todo, ng-model="newTodo")
 				button.fa.fa-arrow-down.submit#todo-button(todo-button="user.current.items", todo-model="newTodo")
@@ -128,8 +135,4 @@ block content
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil
 							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="todo.agendaID")
-			#logout-container
-				#logout(ng-show="user.todos", ng-click="logout()")
-					i.fa.fa-power-off#power-off
-					label(for="power-off") Logout
 			#save-button.button(ng-if="saveButton", save) Save

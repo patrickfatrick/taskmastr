@@ -19,6 +19,16 @@
 	left: 0;
 }
 
+#dark-mode {
+	position: absolute;
+	font-size: 1.2rem;
+	width: 1.2rem;
+	cursor: pointer;
+	//margin-right: 0.5rem;
+	top: 10px;
+	left: 220px;
+}
+
 #list-headline {
 	font-family: $cardo;
 	font-size: 2rem;
@@ -49,5 +59,36 @@
 		@include susy-breakpoint($medium) {
 			width: 5.5rem;
 		}
+	}
+}
+
+#logout {
+	position: absolute;
+	bottom: 20px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	font-family: $josefin;
+	padding: 11px 4px 0px 8px;
+	width: 100px;
+	cursor: pointer;
+	text-transform: lowercase;
+	height: 2.5rem;
+	border-radius: 20px;
+	background-color: $red;
+	color: $white;
+	&:hover {
+		@include background(linear-gradient(($red * 0.9), $red));
+	}
+	&:active {
+		background: $red * 0.9;
+	}
+	i {
+		margin-right: 1rem;
+	}
+	label {
+		cursor: pointer;
 	}
 }

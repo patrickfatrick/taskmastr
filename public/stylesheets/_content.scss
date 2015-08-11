@@ -73,13 +73,6 @@
 		width: 60%;
 		@include center;
 	}
-	#dark-mode {
-		float: right;
-		font-size: 1.2rem;
-		width: 1.2rem;
-		cursor: pointer;
-		margin-right: 0.5rem;
-	}
 }
 
 #todo-line {
@@ -98,37 +91,6 @@
 #todo-button {
 	background: $deepBlue;
 	@include button-effect($deepBlue, 2px, 0);
-}
-
-#logout {
-	position: fixed;
-	bottom: 20px;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
-	font-size: 1rem;
-	font-family: $josefin;
-	padding: 11px 4px 0px 8px;
-	width: 100px;
-	cursor: pointer;
-	text-transform: lowercase;
-	height: 2.5rem;
-	border-radius: 20px;
-	background-color: $red;
-	color: $white;
-	&:hover {
-		@include background(linear-gradient(($red * 0.9), $red));
-	}
-	&:active {
-		background: $red * 0.9;
-	}
-	i {
-		margin-right: 1rem;
-	}
-	label {
-		cursor: pointer;
-	}
 }
 
 #save-button {

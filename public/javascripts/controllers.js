@@ -211,7 +211,7 @@
 							items: []
 						};
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
-						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : true;
 						//$log.log('User profile mounted...');
 						//$log.log($scope.user);
 						$scope.write(user);
