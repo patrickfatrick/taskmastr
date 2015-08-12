@@ -52,7 +52,7 @@ function shortcut(key1, key2, el) {
 	map[key2] = false;
 
 	$(document).keydown(function (e) {
-		console.log('Keydown on ' + e.which);
+		//console.log('Keydown on ' + e.which);
 		if (e.which in map) {
 			map[e.which] = true;
 			if (map[key1] && map[key2]) {
