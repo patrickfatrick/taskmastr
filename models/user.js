@@ -5,7 +5,6 @@ var userSchema = new Schema({
 	username: {type: String},
 	key: {type: String},
   darkmode: {type: Boolean},
-  //todos: {type: Array},
 	todos: [
 		{
 			items: [
@@ -14,6 +13,7 @@ var userSchema = new Schema({
 					complete: {type: Boolean},
 					dueDate: {type: Date},
 					agendaID: {type: String},
+					current: {type: Boolean},
 					_id: false
 				}
 			],

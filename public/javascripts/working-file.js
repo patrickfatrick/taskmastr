@@ -71,6 +71,31 @@ function shortcut(key1, key2, el) {
 	});
 }
 
+function shortcutNav(key1, key2, el) {
+	var map = {};
+	map[key1] = false;
+	map[key2] = false;
+
+	$(document).keydown(function (e) {
+		console.log('Keydown on ' + e.which);
+		if (e.which in map) {
+			map[e.which] = true;
+			if (map[key1] && map[key2]) {
+				console.log(el);
+				el.next().click();
+				map[key1] = false;
+				map[key2] = false;
+			}
+		}
+	});
+	$(document).keyup(function (e) {
+		//console.log('Keyup on ' + e.which);
+		if (e.which in map) {
+			map[e.which] = false;
+		}
+	});
+}
+
 function todoHover() {
 	if (!tap) {
 		$('#content table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
@@ -94,10 +119,11 @@ function todoHover() {
 
 $(keyModal);
 $(renameItem);
-$(shortcut(91, 40, '#save-button'));
-$(shortcut(91, 39, '#icon-menu:not(".toggled")'));
-$(shortcut(91, 37, '#icon-menu.toggled'));
-$(shortcut(91, 38, '#dark-mode'));
-$(shortcut(17, 84, '#create-todo'));
-$(shortcut(17, 76, '#create-list'));
+//$(shortcut.ctrl(91, 40, '#save-button'));
+//$(shortcut.ctrl(91, 39, '#icon-menu:not(".toggled")'));
+//$(shortcut.ctrl(91, 37, '#icon-menu.toggled'));
+//$(shortcut.ctrl(91, 38, '#dark-mode'));
+//$(shortcut.ctrl(17, 84, '#create-todo'));
+//$(shortcut.ctrl(17, 76, '#create-list'));
+//$(shortcut.nav(18, 40, $('#todo-list .active')));
 $(todoHover);

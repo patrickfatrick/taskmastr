@@ -141,6 +141,14 @@ table {
 					color: #919191;
 				}
 			}
+			&.active {
+				background-color: $astroTurf !important;
+				color: $black;
+				&:hover {
+					background-color: $deepBlue !important;
+					color: inherit;
+				}
+			}
 			&.ghost {
 				opacity: .5;
 				background-color: $deepBlue !important;
@@ -148,6 +156,9 @@ table {
 			&.deleting {
 				background: $red !important;
 				color: $white !important;
+				&:hover {
+					background: $red !important;
+				}
 				.datepicker-toggle.active {
 					color: $white;
 				}
@@ -284,4 +295,8 @@ table {
 			color: $black;
 		}
 	}
+}
+
+.cfp-hotkeys-container {
+	font-family: $raleway;
 }

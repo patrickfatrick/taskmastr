@@ -94,7 +94,7 @@ block content
 			tbody(ng-sortable="sortableOptions", ng-model="user.todos")
 				tr.repeat-animation(ng-repeat="list in user.todos", ng-class="{current: user.current.list === list.list}", data-agenda-id="{{list.agendaID}}")
 					th
-					td.todo-cell(ng-click="setCurrent($index)")
+					td.todo-cell(ng-click="setCurrent(user.todos, $index)")
 						input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="list.list")
 						span.name {{list.list}}
 					td.utils
@@ -122,11 +122,11 @@ block content
 						th toggle
 						th utils
 				tbody(ng-sortable="sortableOptions", ng-model="user.current.items")
-					tr.todo.repeat-animation(ng-repeat="todo in user.current.items", ng-class="{complete: todo.complete}", value="{{todo.item}}" name="todo{{$index + 1}}", data-agenda-id="{{todo.agendaID}}")
+					tr.todo.repeat-animation(ng-repeat="todo in user.current.items", ng-class="{complete: todo.complete, active: todo.current}", value="{{todo.item}}" name="todo{{$index + 1}}", data-agenda-id="{{todo.agendaID}}")
 						th
-							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete="user.current.items", complete-index="$index")
-							i.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
-						td.todo-cell
+							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", ng-click="complete(user.current.items, $index)")
+							i.complete.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
+						td.todo-cell(ng-click="setCurrent(user.current.items, $index)")
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
 							span.name {{todo.item}}
 						td.utils

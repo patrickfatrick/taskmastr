@@ -30,6 +30,7 @@ var jsSources = [
 	'./public/bower/angular-ui-date/src/date.js',
 	'./public/bower/Sortable/Sortable.js',
 	'./public/bower/Sortable/ng-sortable.js',
+	'./public/bower/angular-hotkeys/build/hotkeys.min.js',
 	'./public/javascripts/app.js',
 	'./public/javascripts/controllers.js',
 	'./public/javascripts/directives.js',

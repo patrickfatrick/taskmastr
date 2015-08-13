@@ -8,8 +8,8 @@
     $locationProvider.html5Mode(true);    
 	}]);
 
-	app.controller('UserController', ['$http', '$scope', '$log', '$location',
-		function ($http, $scope, $log, $location) {
+	app.controller('UserController', ['$http', '$scope', '$log', '$location', 'hotkeys',
+		function ($http, $scope, $log, $location, hotkeys) {
 			$http.get('/session-data')
 				.success(function(data) {
 					//$log.log('Get successful');
@@ -18,13 +18,17 @@
 						$scope.user.username = data.username;
 						$scope.user.key = data.key;
 						$scope.user.todos = data.todos;
+						_.each($scope.user.todos, function (val, i) {
+							if (!(_.find(val.items, 'current', true))) {
+								_.set(val.items[0], 'current', true);
+							}
+						});
 						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
 							list: "List 1",
 							current: true,
 							items: []
 						};
 						//$log.log($scope.user.current);
-						//$scope.user.todos = $scope.user.current.items;
 						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						//$log.log('User profile mounted...');
@@ -120,6 +124,11 @@
 						//$log.log(data);
 						if (data) {
 							$scope.user.todos = data.todos;
+							_.each($scope.user.todos, function (val, i) {
+								if (!(_.find(val.items, 'current', true))) {
+									_.set(val.items[0], 'current', true);
+								}
+							});
 							$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
 								list: "List 1",
 								current: true,
@@ -267,6 +276,19 @@
 				}
 				//$log.log('Creating todo... OK');
 			};
+			$scope.complete = function (arr, oldIndex) {
+				var todos = arr;
+				var newIndex = todos.length;
+				// If there's a complete todo present, set newIndex to that index, not the end of the list
+				_.each(todos, function (val, i) {
+					if (val.complete === true) {
+						newIndex = i;
+						return false;
+					}
+				});
+				var splicedTodo = arr.splice(oldIndex, 1);
+				arr.splice(newIndex, 0, splicedTodo[0]);
+			}
 			$scope.write = function (username) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
@@ -323,13 +345,86 @@
 				counter += 1;
 				//$.log('darkmode counter = ' + counter);
 			}, true);
-			$scope.setCurrent = function(index) {
+			$scope.setCurrent = function(arr, index) {
 				//$log.log('setCurrent index: ' + index);
-				_.set(_.find($scope.user.todos, 'current', true), $scope.user.current);
-				_.set(_.find($scope.user.todos, 'current', true), 'current', false);
-				_.set($scope.user, 'current', $scope.user.todos[index]);
-				_.set($scope.user.todos[index], 'current', true);
+				if (index >= arr.length) {
+					index = 0;
+				}
+				if (index === -1) {
+					index = arr.length - 1;
+				}
+				if (arr === $scope.user.todos) {
+					_.set(_.find(arr, 'current', true), $scope.user.current);
+					_.set($scope.user, 'current', arr[index]);
+				}
+				_.set(_.find(arr, 'current', true), 'current', false);
+				_.set(arr[index], 'current', true);
 			}
+			hotkeys.bindTo($scope).add({
+				combo: 'command+up',
+				description: 'Toggle Night Mode/Bright Mode',
+				callback: function () {
+					$scope.user.darkmode = ($scope.user.darkmode) ? false : true;
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+down',
+				description: 'Save your data',
+				callback: function () {
+					$('#save-button').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+right',
+				description: 'Show the lists menu',
+				callback: function () {
+					$('#icon-menu:not(".toggled")').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+left',
+				description: 'Hide the lists menu',
+				callback: function () {
+					$('#icon-menu.toggled').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+t',
+				description: 'Focus on the task creation input',
+				callback: function () {
+					$('#create-todo').focus();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+l',
+				description: 'Focus on the list creation input',
+				callback: function () {
+					$('#create-list').focus();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'down',
+				description: 'Select the next task',
+				callback: function () {
+					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) + 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'up',
+				description: 'Select the previous task',
+				callback: function () {
+					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) - 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+c',
+				description: 'Complete the selected task',
+				callback: function () {
+					//$scope.complete($scope.user.current.items, (_.findIndex($scope.user.current.items, 'current', true)));
+					$('#todo-list').find('tr.active .complete').click();
+				},
+				allowIn: ['input']
+			});
 		}
 	]);
 })();

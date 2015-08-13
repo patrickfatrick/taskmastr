@@ -18,19 +18,9 @@
 			},
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
-					scope.$apply(function () {
-						var todos = scope.complete;
-						var newIndex = todos.length;
-						var splicedTodo = todos.splice(scope.completeIndex, 1);
-						// If there's a complete todo present, set newIndex to that index, not the end of the list
-						_.each(todos, function (val, i) {
-							if (val.complete === true) {
-								newIndex = i;
-								return false;
-							}
-						});
-						todos.splice(newIndex, 0, splicedTodo[0]);
-					});
+					//scope.$apply(function () {
+						scope.$parent.complete(scope.complete, scope.completeIndex);
+					//});
 				});
 			}
 		};
@@ -52,9 +42,8 @@
 							}
 						});
 					});
-					scope.$apply();
+					//scope.$apply();
 					scope.write(scope.user.username);
-					//element.removeClass('toggled');
 				});
 			}
 		}
