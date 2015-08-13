@@ -24,6 +24,7 @@ var jsSources = [
 	'./public/bower/moment/min/moment.min.js',
 	'./public/libraries/date.js/dist/date.min.js',
 	'./public/javascripts/dates.js',
+	'./public/javascripts/shortcuts.js',
 	'./public/bower/angular/angular.min.js',
 	'./public/bower/angular-touch/angular-touch.min.js',
 	'./public/bower/angular-animate/angular-animate.js',

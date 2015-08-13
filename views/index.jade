@@ -124,7 +124,7 @@ block content
 				tbody(ng-sortable="sortableOptions", ng-model="user.current.items")
 					tr.todo.repeat-animation(ng-repeat="todo in user.current.items", ng-class="{complete: todo.complete, active: todo.current}", value="{{todo.item}}" name="todo{{$index + 1}}", data-agenda-id="{{todo.agendaID}}")
 						th
-							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", ng-click="complete(user.current.items, $index)")
+							input.check(type="checkbox", ng-checked="todo.complete", ng-model="todo.complete", complete="user.current.items", complete-index="$index")
 							i.complete.fa(ng-class="todo.complete ? 'fa-check-circle-o' : 'fa-circle-o'", check-button)
 						td.todo-cell(ng-click="setCurrent(user.current.items, $index)")
 							input.rename(type="text", style="display:none", value="{{todo.item}}", ng-model="todo.item")
@@ -133,6 +133,6 @@ block content
 							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete", ng-readonly="true")
 							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index")
 							i.fa.fa-arrows-v.sort
-							i.fa.fa-pencil
-							i.fa.fa-trash-o(delete-button="user.current.items", delete-index="todo.agendaID")
+							i.fa.fa-pencil.rename-button
+							i.fa.fa-trash-o.delete-button(delete-button="user.current.items", delete-index="todo.agendaID")
 			#save-button.button(ng-if="saveButton", save) Save

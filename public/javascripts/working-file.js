@@ -119,11 +119,10 @@ function todoHover() {
 
 $(keyModal);
 $(renameItem);
-//$(shortcut.ctrl(91, 40, '#save-button'));
-//$(shortcut.ctrl(91, 39, '#icon-menu:not(".toggled")'));
-//$(shortcut.ctrl(91, 37, '#icon-menu.toggled'));
-//$(shortcut.ctrl(91, 38, '#dark-mode'));
-//$(shortcut.ctrl(17, 84, '#create-todo'));
-//$(shortcut.ctrl(17, 76, '#create-list'));
-//$(shortcut.nav(18, 40, $('#todo-list .active')));
 $(todoHover);
+Mousetrap.bind('ctrl+c', function() {
+	$('#todo-list .active .complete').click();
+})
+Mousetrap.bind('ctrl+-', function() {
+	$('#todo-list .active .delete-button').click();
+})

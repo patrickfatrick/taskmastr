@@ -144,7 +144,7 @@ table {
 			&.active {
 				background-color: $astroTurf !important;
 				color: $black;
-				&:hover {
+				&:hover:not(.complete) {
 					background-color: $deepBlue !important;
 					color: inherit;
 				}

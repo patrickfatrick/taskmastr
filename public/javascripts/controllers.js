@@ -3,15 +3,15 @@
 	/* Controllers */
 
 	var app = angular.module('taskmastrControllers', []);
-	
-	app.config(['$locationProvider', function($locationProvider){
-    $locationProvider.html5Mode(true);    
+
+	app.config(['$locationProvider', function ($locationProvider) {
+		$locationProvider.html5Mode(true);
 	}]);
 
 	app.controller('UserController', ['$http', '$scope', '$log', '$location', 'hotkeys',
 		function ($http, $scope, $log, $location, hotkeys) {
 			$http.get('/session-data')
-				.success(function(data) {
+				.success(function (data) {
 					//$log.log('Get successful');
 					//$log.log(data);
 					if (data) {
@@ -33,19 +33,19 @@
 						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 						//$log.log('User profile mounted...');
 						//$log.log($scope.user);
-						_.each($scope.user.todos, function(val, i) {
+						_.each($scope.user.todos, function (val, i) {
 							if (!val.agendaID) val.agendaID = $scope.token();
-							_.each(val.items, function(itemVal, j) {
+							_.each(val.items, function (itemVal, j) {
 								if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
 							});
-						}); 
+						});
 					}
 				})
-				.error(function(data, status) {
+				.error(function (data, status) {
 					$log.log('Get fail');
 					$log.log(status);
-			});
-			
+				});
+
 			$scope.rand = function () {
 				return Math.random().toString(36).substr(2);
 			}
@@ -85,10 +85,10 @@
 					}
 				}
 			};
-			$scope.setDatepickerIndex = function(index) {
+			$scope.setDatepickerIndex = function (index) {
 				$scope.datepickerIndex = index;
 			}
-			$scope.setDatepickerClear = function(bool) {
+			$scope.setDatepickerClear = function (bool) {
 				$scope.datepickerClear = bool;
 			}
 			$scope.datepickerOptions = {
@@ -96,7 +96,7 @@
 				showAnim: '',
 				dateFormat: 'yy-mm-dd',
 				closeText: 'Clear',
-				onClose : function (dateText, inst) {
+				onClose: function (dateText, inst) {
 					//$log.log($scope.datepickerClear);
 					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
 					//$log.log($scope.user.todos);
@@ -107,7 +107,7 @@
 				}
 			};
 			var counter = 0;
-			
+
 			var reset = $location.search().reset;
 			if (reset) {
 				//$log.log('Reset');
@@ -140,9 +140,9 @@
 							$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
 							//$log.log('User profile mounted...');
 							//$log.log($scope.user);
-							_.each($scope.user.todos, function(val, i) {
+							_.each($scope.user.todos, function (val, i) {
 								if (!val.agendaID) val.agendaID = $scope.token();
-								_.each(val.items, function(itemVal, j) {
+								_.each(val.items, function (itemVal, j) {
 									if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
 								});
 							});
@@ -162,44 +162,44 @@
 			};
 			$scope.setToken = function (user) {
 				$http.post('users/forgot', {
-					username: user
-				})
-				.success(function (data) {
-					$log.log(data);
-					$scope.emailSent = true;
-				})
-				.error(function (data, status) {
-					$log.log(status);
-					$scope.emailSent = false;
-				});
+						username: user
+					})
+					.success(function (data) {
+						$log.log(data);
+						$scope.emailSent = true;
+					})
+					.error(function (data, status) {
+						$log.log(status);
+						$scope.emailSent = false;
+					});
 			};
 			$scope.resetPassword = function (token, newKey) {
 				$http.post('/users/reset', {
-					token: token,
-					newKey: newKey
-				})
-				.success(function (data) {
-					if (data) {
-						$scope.user.todos = data.todos;
-						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-							list: "List 1",
-							current: true,
-							items: []
-						};
-						//$log.log($scope.user.current);
-						//$scope.user.todos = $scope.user.current.items;
-						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
-						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
-						//$log.log('User profile mounted...');
-						//$log.log($scope.user);
-						$location.path('/');
-						//$log.log($location.path());
-					}
-				})
-				.error(function (data, status) {
-					$scope.resetFail = true;
-					$log.log(status);
-				});
+						token: token,
+						newKey: newKey
+					})
+					.success(function (data) {
+						if (data) {
+							$scope.user.todos = data.todos;
+							$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+								list: "List 1",
+								current: true,
+								items: []
+							};
+							//$log.log($scope.user.current);
+							//$scope.user.todos = $scope.user.current.items;
+							if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+							$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+							//$log.log('User profile mounted...');
+							//$log.log($scope.user);
+							$location.path('/');
+							//$log.log($location.path());
+						}
+					})
+					.error(function (data, status) {
+						$scope.resetFail = true;
+						$log.log(status);
+					});
 			};
 			$scope.addUser = function (user, key, rememberMe) {
 				$http.post('/users/create', {
@@ -245,26 +245,26 @@
 						var dateObj;
 						item = item.substring(char, item.length);
 						switch (shortcut) {
-							case '/t':
-								dateObj = date('tomorrow');
-								item = dateStrs(item).item;
-								break;
-							case '/w':
-								dateObj = date('next Monday');								
-								item = dateStrs(item).item;
-								break;
-							case '/m':
-								dateObj = moment().startOf('month').add(1, 'M')._d;								
-								item = dateStrs(item).item;
-								break;
-							case '/y':
-								dateObj = moment().startOf('year').add(1, 'y')._d;								
-								item = dateStrs(item).item;
-								break;
-							default:
-								dateObj = dateStrs(item).dateObj;
-								item = dateStrs(item).item;
-								break;
+						case '/t':
+							dateObj = date('tomorrow');
+							item = dateStrs(item).item;
+							break;
+						case '/w':
+							dateObj = date('next Monday');
+							item = dateStrs(item).item;
+							break;
+						case '/m':
+							dateObj = moment().startOf('month').add(1, 'M')._d;
+							item = dateStrs(item).item;
+							break;
+						case '/y':
+							dateObj = moment().startOf('year').add(1, 'y')._d;
+							item = dateStrs(item).item;
+							break;
+						default:
+							dateObj = dateStrs(item).dateObj;
+							item = dateStrs(item).item;
+							break;
 						}
 					}
 					arr.unshift({
@@ -276,7 +276,7 @@
 				}
 				//$log.log('Creating todo... OK');
 			};
-			$scope.complete = function (arr, oldIndex) {
+			/*$scope.complete = function (arr, oldIndex) {
 				var todos = arr;
 				var newIndex = todos.length;
 				// If there's a complete todo present, set newIndex to that index, not the end of the list
@@ -287,8 +287,10 @@
 					}
 				});
 				var splicedTodo = arr.splice(oldIndex, 1);
-				arr.splice(newIndex, 0, splicedTodo[0]);
-			}
+				$log.log('OldIndex: ' + oldIndex + '//NewIndex: ' + newIndex);
+				$log.log(splicedTodo);
+				todos.splice(newIndex, 0, splicedTodo[0]);
+			}*/
 			$scope.write = function (username) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
@@ -345,7 +347,7 @@
 				counter += 1;
 				//$.log('darkmode counter = ' + counter);
 			}, true);
-			$scope.setCurrent = function(arr, index) {
+			$scope.setCurrent = function (arr, index) {
 				//$log.log('setCurrent index: ' + index);
 				if (index >= arr.length) {
 					index = 0;
@@ -361,28 +363,28 @@
 				_.set(arr[index], 'current', true);
 			}
 			hotkeys.bindTo($scope).add({
-				combo: 'command+up',
+				combo: 'ctrl+d',
 				description: 'Toggle Night Mode/Bright Mode',
 				callback: function () {
 					$scope.user.darkmode = ($scope.user.darkmode) ? false : true;
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'command+down',
+				combo: 'ctrl+s',
 				description: 'Save your data',
 				callback: function () {
 					$('#save-button').click();
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'command+right',
+				combo: 'alt+right',
 				description: 'Show the lists menu',
 				callback: function () {
 					$('#icon-menu:not(".toggled")').click();
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'command+left',
+				combo: 'alt+left',
 				description: 'Hide the lists menu',
 				callback: function () {
 					$('#icon-menu.toggled').click();
@@ -417,11 +419,55 @@
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'ctrl+c',
-				description: 'Complete the selected task',
+				combo: 'alt+down',
+				description: 'Select the next list',
 				callback: function () {
-					//$scope.complete($scope.user.current.items, (_.findIndex($scope.user.current.items, 'current', true)));
-					$('#todo-list').find('tr.active .complete').click();
+					$scope.setCurrent($scope.user.todos, _.findIndex($scope.user.todos, 'current', true) + 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+up',
+				description: 'Select the previous list',
+				callback: function () {
+					$scope.setCurrent($scope.user.todos, _.findIndex($scope.user.todos, 'current', true) - 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+r',
+				description: 'Rename the selected task',
+				callback: function () {
+					$('#todo-list .active .rename-button').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+r',
+				description: 'Rename the selected list',
+				callback: function () {
+					$('#lists-list .active .rename-button').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+down',
+				description: 'Move selected task down',
+				callback: function () {
+					var index = _.findIndex($scope.user.current.items, 'current', true);
+					if (index === $scope.user.current.items.length) {
+						return false;
+					}
+					var splicedTodo = _.remove($scope.user.current.items, 'current', true);
+					$scope.user.current.items.splice(index + 1, 0, splicedTodo[0]);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+up',
+				description: 'Move selected task up',
+				callback: function () {
+					var index = _.findIndex($scope.user.current.items, 'current', true);
+					if (index === 0) {
+						return false;
+					}
+					var splicedTodo = _.remove($scope.user.current.items, 'current', true);
+					$scope.user.current.items.splice(index - 1, 0, splicedTodo[0]);
 				},
 				allowIn: ['input']
 			});
