@@ -126,3 +126,6 @@ Mousetrap.bind('ctrl+c', function() {
 Mousetrap.bind('ctrl+-', function() {
 	$('#todo-list .active .delete-button').click();
 })
+Mousetrap.bind('alt+-', function() {
+	$('#lists-list .current .delete-button').click();
+})

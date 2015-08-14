@@ -99,8 +99,8 @@ block content
 						span.name {{list.list}}
 					td.utils
 						i.fa.fa-arrows-v.sort
-						i.fa.fa-pencil
-						i.fa.fa-trash-o(delete-button="user.todos", delete-index="list.agendaID")
+						i.fa.fa-pencil.rename-button
+						i.fa.fa-trash-o.delete-button(delete-button="user.todos", delete-index="list.agendaID")
 		#logout-container
 				#logout(ng-show="user.todos", ng-click="logout()")
 					i.fa.fa-power-off#power-off

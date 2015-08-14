@@ -144,6 +144,14 @@ table {
 			&.active {
 				background-color: $astroTurf !important;
 				color: $black;
+				&.complete {
+					background-color: $grassStain !important;
+					//color: #606060 !important;
+					color: #919191 * 0.7;
+					.datepicker-toggle.active {
+						color: $orchid * 0.7;
+					}
+				}
 				&:hover:not(.complete) {
 					background-color: $deepBlue !important;
 					color: inherit;

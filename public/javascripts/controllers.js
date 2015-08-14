@@ -4,8 +4,9 @@
 
 	var app = angular.module('taskmastrControllers', []);
 
-	app.config(['$locationProvider', function ($locationProvider) {
+	app.config(['$locationProvider', 'hotkeysProvider', function ($locationProvider, hotkeysProvider) {
 		$locationProvider.html5Mode(true);
+    hotkeysProvider.includeCheatSheet = false;
 	}]);
 
 	app.controller('UserController', ['$http', '$scope', '$log', '$location', 'hotkeys',
@@ -377,14 +378,14 @@
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'alt+right',
+				combo: 'right',
 				description: 'Show the lists menu',
 				callback: function () {
 					$('#icon-menu:not(".toggled")').click();
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'alt+left',
+				combo: 'left',
 				description: 'Hide the lists menu',
 				callback: function () {
 					$('#icon-menu.toggled').click();
@@ -442,8 +443,9 @@
 			}).add({
 				combo: 'alt+r',
 				description: 'Rename the selected list',
-				callback: function () {
-					$('#lists-list .active .rename-button').click();
+				callback: function (e, keypress) {
+					e.preventDefault();
+					$('#lists-list .current .rename-button').click();
 				},
 				allowIn: ['input']
 			}).add({
@@ -468,6 +470,30 @@
 					}
 					var splicedTodo = _.remove($scope.user.current.items, 'current', true);
 					$scope.user.current.items.splice(index - 1, 0, splicedTodo[0]);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+command+down',
+				description: 'Move selected list down',
+				callback: function () {
+					var index = _.findIndex($scope.user.todos, 'current', true);
+					if (index === $scope.user.todos.length) {
+						return false;
+					}
+					var splicedTodo = _.remove($scope.user.todos, 'current', true);
+					$scope.user.todos.splice(index + 1, 0, splicedTodo[0]);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+command+up',
+				description: 'Move selected list up',
+				callback: function () {
+					var index = _.findIndex($scope.user.todos, 'current', true);
+					if (index === $scope.user.todos.length) {
+						return false;
+					}
+					var splicedTodo = _.remove($scope.user.todos, 'current', true);
+					$scope.user.todos.splice(index - 1, 0, splicedTodo[0]);
 				},
 				allowIn: ['input']
 			});
