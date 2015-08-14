@@ -63,7 +63,7 @@ exports.notificationEmail = function (username, item, host, date, next) {
 		auth: {
 			api_key: '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'
 		}
-	}
+	};
 	var mailer = nodemailer.createTransport(sgTransport(options));
 	var email = {
 		to: username,
@@ -72,7 +72,11 @@ exports.notificationEmail = function (username, item, host, date, next) {
 		text: 'Good morning!\n\n' + 'It is currently the morning of ' + monthArr[date.getMonth()] + ' ' + dateStr + ', and we just wanted to let you know that you have a task due today:\n\n "' + item + '"\n\n' + 'If you\'d like to check out your tasks please click this link! ' + 'http://' + host + '\n\n' + 'Sincerely,\n\ntaskmastr\n'
 	};
 	mailer.sendMail(email, function (err, info) {
-		console.log('Email sent to ' + username);
-		next(err, info)
+		//console.log('Email sent to ' + username);
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('Message sent: ' + info);
+		}
 	});
 }
