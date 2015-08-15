@@ -55,3 +55,6 @@ Mousetrap.bind('ctrl+backspace', function() {
 Mousetrap.bind('alt+backspace', function() {
 	$('#lists-list .current .delete-button').click();
 })
+Mousetrap.bind('command+escape', function() {
+	$('#logout').click();
+})
