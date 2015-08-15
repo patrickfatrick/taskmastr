@@ -386,14 +386,14 @@
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'right',
+				combo: 'alt+right',
 				description: 'Show the lists menu',
 				callback: function () {
 					$('#icon-menu:not(".toggled")').click();
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'left',
+				combo: 'alt+left',
 				description: 'Hide the lists menu',
 				callback: function () {
 					$('#icon-menu.toggled').click();

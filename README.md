@@ -1,6 +1,11 @@
 ## taskmastr
 Yet another todo list web app built with the MEAN stack (not mean.io or mean.js, though...). You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
+##New in v5.2.0
+The entire app can now be controlled with the keyboard. See [this page](https://github.com/patrickfatrick/taskmastr/wiki/Keyboard-shortcuts) for details.
+
+This entails a pretty big shift in functionality. In the same way that lists have behaved where one is active at any given moment, now individual tasks can also be active. The active task is highlighted in green, and you can select the next or previous task in the list using the up and down arrow keys. Once a task is selected you can do all the usual stuff to it using the keyboard: complete it, rename it, move it, set a due date, and delete it.
+
 ##New in v5.1.0
 Notification scheduling _actually_ works! Hooray!
 
@@ -46,7 +51,7 @@ _features:_
 - Night mode for those of us who work when we should be sleeping.
 - Bright mode for those of us who are afraid of the dark.
 - Now with COOL animations! More fun guaranteed!
-- Keyboard shortcuts allow you to control several aspects of the site.
+- Keyboard shortcuts allow you to control basically everything.
 - Mobile-friendly.
 
 _Tasks for the future:_
