@@ -372,16 +372,18 @@
 				arr.splice(index - 1, 0, splicedTodo[0]);
 			}
 			hotkeys.bindTo($scope).add({
-				combo: 'ctrl+n',
+				combo: 'command+m',
 				description: 'Toggle Night Mode/Bright Mode',
-				callback: function () {
+				callback: function (e, keypress) {
+					e.preventDefault();
 					$scope.user.darkmode = ($scope.user.darkmode) ? false : true;
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'ctrl+s',
+				combo: 'command+s',
 				description: 'Save your data',
-				callback: function () {
+				callback: function (e, keypress) {
+					e.preventDefault();
 					$('#save-button').click();
 				},
 				allowIn: ['input']
