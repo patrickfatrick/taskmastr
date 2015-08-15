@@ -54,8 +54,11 @@
 	tbody tr.current {
 		background: $deepBlue;
 	}
+	tbody tr:hover:not(.current) {
+		background: inherit;
+	}
 	td.utils {
-		width:6.3rem;
+		width: 6.3rem;
 		@include susy-breakpoint($medium) {
 			width: 5.5rem;
 		}

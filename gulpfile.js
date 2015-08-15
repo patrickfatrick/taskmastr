@@ -18,7 +18,7 @@ var nodeSources = [
 
 var jsSources = [
 	'./public/bower/jquery/dist/jquery.min.js',
-	'./public/libraries/jquery-ui/jquery-ui.min.js',
+	'./public/libraries/jquery-ui/jquery-ui.js',
 	'./public/bower/lodash/lodash.min.js',
 	'./public/bower/velocity/velocity.min.js',
 	'./public/bower/moment/min/moment.min.js',

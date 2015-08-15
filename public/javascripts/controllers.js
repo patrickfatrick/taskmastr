@@ -6,7 +6,7 @@
 
 	app.config(['$locationProvider', 'hotkeysProvider', function ($locationProvider, hotkeysProvider) {
 		$locationProvider.html5Mode(true);
-    hotkeysProvider.includeCheatSheet = false;
+		hotkeysProvider.includeCheatSheet = false;
 	}]);
 
 	app.controller('UserController', ['$http', '$scope', '$log', '$location', 'hotkeys',
@@ -97,12 +97,14 @@
 				showAnim: '',
 				dateFormat: 'yy-mm-dd',
 				closeText: 'Clear',
+				prevText: '',
+				nextText: '',
 				onClose: function (dateText, inst) {
 					//$log.log($scope.datepickerClear);
 					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
 					//$log.log($scope.user.todos);
 					if ($scope.datepickerClear) {
-						$scope.user.current.items[$scope.datepickerIndex].dueDate = '';
+						delete $scope.user.current.items[$scope.datepickerIndex].dueDate;
 						$scope.$apply();
 					}
 				}
@@ -277,29 +279,12 @@
 				}
 				//$log.log('Creating todo... OK');
 			};
-			/*$scope.complete = function (arr, oldIndex) {
-				var todos = arr;
-				var newIndex = todos.length;
-				// If there's a complete todo present, set newIndex to that index, not the end of the list
-				_.each(todos, function (val, i) {
-					if (val.complete === true) {
-						newIndex = i;
-						return false;
-					}
-				});
-				var splicedTodo = arr.splice(oldIndex, 1);
-				$log.log('OldIndex: ' + oldIndex + '//NewIndex: ' + newIndex);
-				$log.log(splicedTodo);
-				todos.splice(newIndex, 0, splicedTodo[0]);
-			}*/
 			$scope.write = function (username) {
 				var now = new Date();
 				$scope.user.dateModified = now.toISOString();
 				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
 				//$log.log('Saving to db...')
 				//$log.log($scope.user);
-				$scope.saveButton = false;
-				//$log.log('saveButton = ' + $scope.saveButton);
 				$http.post('/users/write', {
 						//json: angular.toJson($scope.user)
 						user: {
@@ -312,6 +297,9 @@
 					})
 					.success(function (data) {
 						//$log.log('Writing data... OK');
+						//$log.log('saveButton = ' + $scope.saveButton);
+						$scope.saveButton = false;
+						$scope.deleteAgendas = [];
 						return true;
 					})
 					.error(function (data, status) {
@@ -363,8 +351,28 @@
 				_.set(_.find(arr, 'current', true), 'current', false);
 				_.set(arr[index], 'current', true);
 			}
+			$scope.shiftCurrentDown = function (arr, index) {
+				if (!index) {
+					var index = _.findIndex(arr, 'current', true);
+				}
+				if (index === arr.length) {
+					return false;
+				}
+				var splicedTodo = _.remove(arr, 'current', true);
+				arr.splice(index + 1, 0, splicedTodo[0]);
+			}
+			$scope.shiftCurrentUp = function (arr, index) {
+				if (!index) {
+					var index = _.findIndex(arr, 'current', true);
+				}
+				if (index === 0) {
+					return false;
+				}
+				var splicedTodo = _.remove(arr, 'current', true);
+				arr.splice(index - 1, 0, splicedTodo[0]);
+			}
 			hotkeys.bindTo($scope).add({
-				combo: 'ctrl+d',
+				combo: 'ctrl+n',
 				description: 'Toggle Night Mode/Bright Mode',
 				callback: function () {
 					$scope.user.darkmode = ($scope.user.darkmode) ? false : true;
@@ -392,16 +400,18 @@
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'ctrl+t',
+				combo: 'ctrl+f',
 				description: 'Focus on the task creation input',
-				callback: function () {
+				callback: function (e, keypress) {
+					e.preventDefault();
 					$('#create-todo').focus();
 				},
 				allowIn: ['input']
 			}).add({
-				combo: 'ctrl+l',
+				combo: 'alt+f',
 				description: 'Focus on the list creation input',
-				callback: function () {
+				callback: function (e, keypress) {
+					e.preventDefault();
 					$('#create-list').focus();
 				},
 				allowIn: ['input']
@@ -449,51 +459,45 @@
 				},
 				allowIn: ['input']
 			}).add({
+				combo: 'ctrl+d',
+				description: 'Toggle the active task\'s datepicker',
+				callback: function (e, keypress) {
+					$('#todo-list .active .datepicker-input').focus();
+				},
+				allowIn: ['input']
+			}).add({
 				combo: 'command+down',
 				description: 'Move selected task down',
-				callback: function () {
-					var index = _.findIndex($scope.user.current.items, 'current', true);
-					if (index === $scope.user.current.items.length) {
-						return false;
-					}
-					var splicedTodo = _.remove($scope.user.current.items, 'current', true);
-					$scope.user.current.items.splice(index + 1, 0, splicedTodo[0]);
+				callback: function (e, keypress) {
+					$scope.shiftCurrentDown($scope.user.current.items);
 				},
 				allowIn: ['input']
 			}).add({
 				combo: 'command+up',
 				description: 'Move selected task up',
 				callback: function () {
-					var index = _.findIndex($scope.user.current.items, 'current', true);
-					if (index === 0) {
-						return false;
-					}
-					var splicedTodo = _.remove($scope.user.current.items, 'current', true);
-					$scope.user.current.items.splice(index - 1, 0, splicedTodo[0]);
+					$scope.shiftCurrentUp($scope.user.current.items);
 				},
 				allowIn: ['input']
 			}).add({
 				combo: 'alt+command+down',
 				description: 'Move selected list down',
-				callback: function () {
-					var index = _.findIndex($scope.user.todos, 'current', true);
-					if (index === $scope.user.todos.length) {
-						return false;
-					}
-					var splicedTodo = _.remove($scope.user.todos, 'current', true);
-					$scope.user.todos.splice(index + 1, 0, splicedTodo[0]);
+				callback: function (e, keypress) {
+					$scope.shiftCurrentDown($scope.user.todos);
 				},
 				allowIn: ['input']
 			}).add({
 				combo: 'alt+command+up',
 				description: 'Move selected list up',
 				callback: function () {
-					var index = _.findIndex($scope.user.todos, 'current', true);
-					if (index === $scope.user.todos.length) {
-						return false;
-					}
-					var splicedTodo = _.remove($scope.user.todos, 'current', true);
-					$scope.user.todos.splice(index - 1, 0, splicedTodo[0]);
+					$scope.shiftCurrentUp($scope.user.todos);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+backspace',
+				description: 'Remove selected task\'s due date',
+				callback: function () {
+					delete _.find($scope.user.current.items, 'current', true).dueDate;
 				},
 				allowIn: ['input']
 			});

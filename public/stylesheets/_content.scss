@@ -157,6 +157,15 @@ table {
 					color: inherit;
 				}
 			}
+			&:hover {
+				background-color: $deepBlue;
+			}
+			/*&:not(.active) {
+				@include single-transition(all, 0s);
+			}
+			&:not(:hover) {
+				@include single-transition(all, 100ms, ease-out);
+			}*/
 			&.ghost {
 				opacity: .5;
 				background-color: $deepBlue !important;
@@ -164,7 +173,10 @@ table {
 			&.deleting {
 				background: $red !important;
 				color: $white !important;
-				&:hover {
+				&:hover:not(.complete) {
+					background: $red !important;
+				}
+				&.active {
 					background: $red !important;
 				}
 				.datepicker-toggle.active {
@@ -297,6 +309,10 @@ table {
 		.ui-datepicker-today a {
 			color: $white;
 			background: $deepBlue;
+		}
+		.ui-datepicker-days-cell-over a {
+			background: $grassStain;
+			color: $white;
 		}
 		.ui-datepicker-current-day a {
 			background: $astroTurf;

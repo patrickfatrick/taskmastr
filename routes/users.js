@@ -64,7 +64,10 @@ router.post('/create',
 						return res.send(user);
 					});
 				});
-				agenda.now('greet ' + user.username, {username: user.username, host: req.headers.host});
+				agenda.now('greet ' + user.username, {
+					username: user.username,
+					host: req.headers.host
+				});
 			});
 		});
 	}
@@ -76,7 +79,7 @@ router.post('/forgot',
 		userService.findUser(username, function (err, user) {
 			if (err) return next(err);
 			if (!user) {
-				console.log('No user');
+				console.log('No user: ' + username);
 				return next(null, null);
 			}
 			userService.setToken(user, function (err, user) {
@@ -92,7 +95,11 @@ router.post('/forgot',
 						done();
 					});
 				});
-				agenda.now('reset ' + user.username, {username: user.username, resetToken: user.resetToken, host: req.headers.host});
+				agenda.now('reset ' + user.username, {
+					username: user.username,
+					resetToken: user.resetToken,
+					host: req.headers.host
+				});
 			});
 		});
 	}
@@ -102,7 +109,7 @@ router.post('/reset',
 	function (req, res, next) {
 		var token = req.body.token;
 		var newKey = req.body.newKey;
-		console.log('Token: ' + token);
+		console.log('Reset token: ' + token);
 		console.log('New Key: ' + newKey);
 		userService.resetPassword({
 			token: token,
@@ -121,12 +128,12 @@ router.post('/write', function (req, res, next) {
 	var deleteAgendas = req.body.deleteAgendas;
 	//console.log(user);
 	//Workaround to cancel agendas for deleted todos
-	deleteAgendas.forEach(function(val, i) {
+	deleteAgendas.forEach(function (val, i) {
 		agenda.cancel({
 			name: val
 		}, function (err, numRemoved) {
 			if (err) return next(err);
-			console.log('Agenda removed: ' + val);
+			console.log(user.username + ' => Agenda removed: ' + val);
 		})
 	});
 	//Cancel current agendas and make new ones
@@ -137,25 +144,30 @@ router.post('/write', function (req, res, next) {
 				name: itemVal.agendaID
 			}, function (err, numRemoved) {
 				if (err) return next(err);
-				console.log('Agenda removed: ' + itemVal.agendaID);
-			});
-			if (itemVal.dueDate) {
-				var milliseconds = Math.floor(Math.random() * 150000);
-				itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000 + milliseconds;
-				if (itemVal.dueDate <= Date.now()) return true;
-				//Use the following for testing.
-				//itemVal.dueDate = Date.now() + 5000;
-				console.log(new Date(itemVal.dueDate));
-				agenda.define(itemVal.agendaID, function (job, done) {
-					var data = job.attrs.data;
-					emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
-						if (err) return next(err);
-						console.log('Notification sent');
-						done();
+				console.log(user.username + ' => Agenda removed: ' + itemVal.agendaID);
+				if (itemVal.dueDate) {
+					var milliseconds = Math.floor(Math.random() * 150000);
+					itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000 + milliseconds;
+					if (itemVal.dueDate <= Date.now()) return true;
+					//Use the following for testing.
+					//itemVal.dueDate = Date.now() + 5000;
+					console.log(user.username + ' => Scheduled task => ' + 'Agenda: ' + itemVal.agendaID + ' ' + new Date(itemVal.dueDate));
+					agenda.define(itemVal.agendaID, function (job, done) {
+						var data = job.attrs.data;
+						emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
+							if (err) return next(err);
+							console.log('Notification sent');
+							done();
+						});
 					});
-				});
-				agenda.schedule(new Date(itemVal.dueDate), itemVal.agendaID, {username: user.username, item: itemVal.item, host: req.headers.host, date: new Date(itemVal.dueDate)});
-			}
+					agenda.schedule(new Date(itemVal.dueDate), itemVal.agendaID, {
+						username: user.username,
+						item: itemVal.item,
+						host: req.headers.host,
+						date: new Date(itemVal.dueDate)
+					});
+				}
+			});
 		});
 	});
 	userService.updateUser(user, function (err, user) {

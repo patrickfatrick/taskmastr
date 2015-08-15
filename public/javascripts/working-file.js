@@ -1,5 +1,3 @@
-var tap = ("ontouchstart" in document.documentElement);
-
 // Handler to prevent auto-focuses on text inputs for mobile
 function windowWidth() {
 	return ($(window).width() > 768) ? true : false;
@@ -46,86 +44,14 @@ function renameItem() {
 	);
 }
 
-function shortcut(key1, key2, el) {
-	var map = {};
-	map[key1] = false;
-	map[key2] = false;
-
-	$(document).keydown(function (e) {
-		//console.log('Keydown on ' + e.which);
-		if (e.which in map) {
-			map[e.which] = true;
-			if (map[key1] && map[key2]) {
-				$(el).click();
-				$(el).focus();
-				map[key1] = false;
-				map[key2] = false;
-			}
-		}
-	});
-	$(document).keyup(function (e) {
-		//console.log('Keyup on ' + e.which);
-		if (e.which in map) {
-			map[e.which] = false;
-		}
-	});
-}
-
-function shortcutNav(key1, key2, el) {
-	var map = {};
-	map[key1] = false;
-	map[key2] = false;
-
-	$(document).keydown(function (e) {
-		console.log('Keydown on ' + e.which);
-		if (e.which in map) {
-			map[e.which] = true;
-			if (map[key1] && map[key2]) {
-				console.log(el);
-				el.next().click();
-				map[key1] = false;
-				map[key2] = false;
-			}
-		}
-	});
-	$(document).keyup(function (e) {
-		//console.log('Keyup on ' + e.which);
-		if (e.which in map) {
-			map[e.which] = false;
-		}
-	});
-}
-
-function todoHover() {
-	if (!tap) {
-		$('#content table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
-			$(this).stop().velocity({
-				backgroundColor: '#00B0FF',
-				backgroundColorAlpha: 1
-			}, {
-				duration: 0
-			});
-		});
-
-		$('#content table tbody').on('mouseleave', 'tr', function () {
-			$(this).velocity({
-				backgroundColorAlpha: 0
-			}, {
-				duration: 500
-			});
-		});
-	}
-}
-
 $(keyModal);
 $(renameItem);
-$(todoHover);
 Mousetrap.bind('ctrl+c', function() {
 	$('#todo-list .active .complete').click();
 })
-Mousetrap.bind('ctrl+-', function() {
+Mousetrap.bind('ctrl+backspace', function() {
 	$('#todo-list .active .delete-button').click();
 })
-Mousetrap.bind('alt+-', function() {
+Mousetrap.bind('alt+backspace', function() {
 	$('#lists-list .current .delete-button').click();
 })
