@@ -152,20 +152,18 @@ table {
 						color: $orchid * 0.7;
 					}
 				}
-				&:hover:not(.complete) {
-					background-color: $deepBlue !important;
-					color: inherit;
+				@include susy-breakpoint($medium) {
+					&:hover:not(.complete) {
+						background-color: $deepBlue !important;
+						color: inherit;
+					}
 				}
 			}
-			&:hover {
-				background-color: $deepBlue;
+			@include susy-breakpoint($medium) {
+				&:hover {
+					background-color: $deepBlue;
+				}
 			}
-			/*&:not(.active) {
-				@include single-transition(all, 0s);
-			}
-			&:not(:hover) {
-				@include single-transition(all, 100ms, ease-out);
-			}*/
 			&.ghost {
 				opacity: .5;
 				background-color: $deepBlue !important;
