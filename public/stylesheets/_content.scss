@@ -147,22 +147,22 @@ table {
 				&.complete {
 					background-color: $grassStain !important;
 					color: $completeGray * 0.7;
-					td.utils i.datepicker-toggle {
+					td.utils i.datepicker-toggle.active {
 						color: $orchid * 0.7;
 					}
 				}
-				@include susy-breakpoint($medium) {
-					/*&:hover:not(.complete) {
+				/*@include susy-breakpoint($medium) {
+					&:hover:not(.complete) {
 						background-color: $deepBlue !important;
 						color: inherit;
-					}*/
-				}
-			}
-			@include susy-breakpoint($medium) {
-				/*&:hover {
-					background-color: $deepBlue;
+					}
 				}*/
 			}
+			/*@include susy-breakpoint($medium) {
+				&:hover {
+					background-color: $deepBlue;
+				}
+			}*/
 			&.ghost {
 				opacity: .6;
 				background-color: $deepBlue !important;
