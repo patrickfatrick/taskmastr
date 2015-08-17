@@ -19,6 +19,17 @@
 	left: 0;
 }
 
+#wiki {
+	color: $white;
+	position: absolute;
+	font-size: 1.2rem;
+	width: 1.2rem;
+	cursor: pointer;
+	//margin-right: 0.5rem;
+	top: 20px;
+	left: 20px;
+}
+
 #dark-mode {
 	position: absolute;
 	font-size: 1.2rem;

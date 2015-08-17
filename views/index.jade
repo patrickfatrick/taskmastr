@@ -80,6 +80,8 @@ block content
 			ul.fine-print
 				li &rarr; Hey next time store your password somewhere, guy.
 	#menu
+		a(href="https://github.com/patrickfatrick/taskmastr/wiki", target="_blank")
+			i#wiki.fa.fa-map-o
 		input.check(type="checkbox", ng-model="user.darkmode", ng-checked="user.darkmode")
 		i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 		#list-headline Lists
@@ -131,7 +133,7 @@ block content
 							span.name {{todo.item}}
 						td.utils
 							input.datepicker-input(type="text", name="datepicker", ng-model="todo.dueDate", value="{{todo.dueDate}}", ui-date="datepickerOptions", ng-disabled="todo.complete", ng-readonly="true")
-							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index")
+							i.fa.datepicker-toggle(ng-class="{active: todo.dueDate, 'fa-calendar-check-o': todo.dueDate, 'fa-calendar-plus-o': !todo.dueDate}", datepicker-toggle="user.current.items", datepicker-index="$index",)
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil.rename-button
 							i.fa.fa-trash-o.delete-button(delete-button="user.current.items", delete-index="todo.agendaID")
