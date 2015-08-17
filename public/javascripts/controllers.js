@@ -57,7 +57,8 @@
 			$scope.sortableOptions = {
 				handle: '.sort',
 				sort: true,
-				animation: 150,
+				delay: 0,
+				animation: 75,
 				ghostClass: 'ghost',
 				scroll: true,
 				scrollSensitivity: 30,
@@ -65,24 +66,35 @@
 				onUpdate: function (evt) {
 					var itemEl = evt.model.item;
 					var itemComplete = evt.model.complete;
+					//var completeIndex = _.findLastIndex($scope.user.current.items, 'complete', true);
 					var completeIndex;
-					//$log.log(itemEl);
-					$scope.user.current.items.every(function (val, i) {
-						if (val.complete === true && val.item != itemEl) {
+					_.each($scope.user.current.items, function (val, i) {
+						if (val.complete === true && val != evt.model) {
 							completeIndex = i;
 							return false;
 						}
-						return true;
 					});
-					//$log.log(completeIndex);
-					//$log.log(evt.newIndex);
+					
+					//$log.log(evt.model);
+					//$log.log('CompleteIndex: ' + completeIndex);
+					//$log.log('OldIndex: ' + evt.oldIndex);
+					//$log.log('NewIndex: ' + evt.newIndex);
+					
 					var spliced;
+					
+					//Checks:
+					//1) If element is not complete and is being moved into complete list, move back up
+					//2) If element is complete and is being moved into uncomplete list, move back down
+					//3) if element is complete and also the only complete, move back to end of list
 					if (evt.newIndex > completeIndex && !itemComplete) {
 						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
 						$scope.user.current.items.splice(completeIndex, 0, spliced[0]);
 					} else if (evt.newIndex < completeIndex && itemComplete) {
 						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
 						$scope.user.current.items.splice(completeIndex - 1, 0, spliced[0]);
+					} else if (!completeIndex && itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.push(spliced[0]);
 					}
 				}
 			};
@@ -355,11 +367,15 @@
 				if (!index) {
 					var index = _.findIndex(arr, 'current', true);
 				}
-				if (index === arr.length) {
+				if (index === arr.length - 1) {
 					return false;
 				}
 				var splicedTodo = _.remove(arr, 'current', true);
-				arr.splice(index + 1, 0, splicedTodo[0]);
+				if (!splicedTodo[0].complete && arr[index].complete) {
+					arr.splice(index, 0, splicedTodo[0])
+				} else {
+					arr.splice(index + 1, 0, splicedTodo[0]);
+				}
 			}
 			$scope.shiftCurrentUp = function (arr, index) {
 				if (!index) {
@@ -369,7 +385,11 @@
 					return false;
 				}
 				var splicedTodo = _.remove(arr, 'current', true);
-				arr.splice(index - 1, 0, splicedTodo[0]);
+				if (splicedTodo[0].complete && !arr[index - 1].complete) {
+					arr.splice(index, 0, splicedTodo[0])
+				} else {
+					arr.splice(index - 1, 0, splicedTodo[0]);
+				}
 			}
 			hotkeys.bindTo($scope).add({
 				combo: 'command+m',

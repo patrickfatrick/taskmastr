@@ -1,3 +1,5 @@
+var tap = ("ontouchstart" in document.documentElement);
+
 // Handler to prevent auto-focuses on text inputs for mobile
 function windowWidth() {
 	return ($(window).width() > 768) ? true : false;
@@ -44,8 +46,30 @@ function renameItem() {
 	);
 }
 
+function todoHover() {
+	if (!tap) {
+		$('#content table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
+			$(this).stop().velocity({
+				backgroundColor: '#00B0FF',
+				backgroundColorAlpha: 1
+			}, {
+				duration: 0
+			});
+		});
+
+		$('#content table tbody').on('mouseleave', 'tr', function () {
+			$(this).velocity({
+				backgroundColorAlpha: 0
+			}, {
+				duration: 0
+			});
+		});
+	}
+}
+
 $(keyModal);
 $(renameItem);
+$(todoHover);
 Mousetrap.bind('ctrl+c', function() {
 	$('#todo-list .active .complete').click();
 })
