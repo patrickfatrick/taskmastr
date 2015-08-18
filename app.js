@@ -22,12 +22,6 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 mongoose.connect(config.mongoUri);
-agenda.define('Agenda running', function (job, done) {
-	var data = job.attrs.data;
-	console.log('Agenda running at ' + data.time);
-	done();
-});
-agenda.now('Agenda running', {time: new Date()});
 agenda.start();
 var app = express();
 
