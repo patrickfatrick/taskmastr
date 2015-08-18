@@ -60,8 +60,8 @@ _Tasks for the future:_
 - Revisit for bugs always.
 
 _screenshots:_
-![taskmastr](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage.png)
-![taskmastr list](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-2.png)
-![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot3.png)
-![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/screenshot4.png)
+![taskmastr](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-1.png)
+![taskmastr list](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-2a.png)
+![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/screenshot3.png)
+![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/screenshot4.png)
 
