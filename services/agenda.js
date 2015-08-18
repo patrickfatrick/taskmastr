@@ -13,7 +13,7 @@ agenda.cancel({name: 'Agenda running'}, function (err, numRemoved) {
 	console.log('Agendas removed: ' + numRemoved);
 	agenda.jobs({nextRunAt: {$exists: true, $nin: [null]}}, function (err, jobs) {
 		if (err) return console.log(err);
-		console.log(jobs);
+		//console.log(jobs);
 		jobs.forEach(function(job, i) {
 			job.schedule(job.attrs.nextRunAt);
 			console.log('Agenda rescheduled: ' + job.attrs.name + ' for ' + job.attrs.nextRunAt);
