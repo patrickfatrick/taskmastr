@@ -151,7 +151,7 @@ router.post('/write', function (req, res, next) {
 					if (itemVal.dueDate <= Date.now()) return true;
 					//Use the following for testing.
 					//itemVal.dueDate = Date.now() + 5000;
-					console.log(user.username + ' => Scheduled task => ' + 'Agenda: ' + itemVal.agendaID + ' ' + new Date(itemVal.dueDate));
+					console.log(user.username + ' => Agenda scheduled: ' + itemVal.agendaID + ' ' + new Date(itemVal.dueDate));
 					agenda.define(itemVal.agendaID, function (job, done) {
 						var data = job.attrs.data;
 						emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
