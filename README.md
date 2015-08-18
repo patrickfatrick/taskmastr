@@ -59,9 +59,11 @@ _Tasks for the future:_
 - Swipe the list menu out on mobile.
 - Revisit for bugs always.
 
-_screenshots:_
-![taskmastr](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-1.png)
-![taskmastr list](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-2a.png)
+##Screenshots
+![taskmastr basic usage](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-1.png)
+![taskmastr basic usage 2a](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-2a.png)
+![taskmastr basic usage 3](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-3.png)
+![taskmastr basic usage 4](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-4.png)
 ![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/screenshot3.png)
 ![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/screenshot4.png)
 
