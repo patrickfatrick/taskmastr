@@ -50,18 +50,9 @@ block content
 			#tips-button.button(tips-button)
 				| Tips:
 			ul.fine-print
-				| The tips have been replaced with a wiki, located&nbsp;
-				a(href="https://github.com/patrickfatrick/taskmastr/wiki" target="_blank") here
-				//
-					li &rarr; If you set a due date for sometime in the future, we will send an email notification at 6am the day of.
-					li &rarr; Your session is not stored unless you use the Remember Me toggle (which stores it for 30 days).
-					li &rarr; If you forget your password, input your username, check "Forgot Password?", and submit.
-					li &rarr; When deleting, you have <span style="font-style: italic">five seconds</span> to undo.
-					li &rarr; You <span style="font-style: italic">cannot</span> delete a list if it's your only list. Try renaming it or adding another list first.
-					li &rarr; We do store which list is currently being viewed, so feel free to save on changing lists.
-					li &rarr; You can rename a task or list by double-clicking it.
-					li &rarr; The sun and moon icons toggle dark mode, which is also stored for future visits.
-					li &rarr; <span style="font-weight: bold; font-style: italic; text-decoration: underline">KEYBOARD SHORTCUTS:</span> Return (&#8617;) saves text fields; CMD+Down (&#8984;&darr;) saves your data; CMD+Right & CMD+Left (&#8984;&rarr; & &#8984;&larr;) toggle the Lists menu; CMD+Up (&#8984;&uarr;) toggles Night Mode.
+				li &rarr; The tips have been replaced with a wiki!
+				li &rarr; Click the map #[a(href="https://github.com/patrickfatrick/taskmastr/wiki" target="_blank") #[i.fa.fa-map-o]] to view it
+				li &rarr; You can also access the wiki any time from the lists menu inside the app
 		.modal-body#reset-form(ng-if="resetForm")
 			| Go ahead and create your new password below
 			form(id="reset-form", name="resetForm", novalidate, reset-Form)
