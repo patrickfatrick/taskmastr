@@ -9,7 +9,7 @@ block content
 			| Do you have an account? 
 			br/
 			br/
-			| Log in to your existing account, or create one below!
+			| If so log in now, or create one below!
 			form(id="user-form", name="userForm", novalidate, login-form)
 				.error-text
 					label(for="user", ng-show="userForm.username.$error.required && !userForm.username.$error.pattern && formAttempt")
@@ -97,7 +97,7 @@ block content
 		#logout-container
 				#logout(ng-show="user.todos", ng-click="logout()")
 					i.fa.fa-power-off#power-off
-					label(for="power-off") Logout
+					label(for="power-off") Log out
 	#content
 		.container
 			#icon-menu(menu-toggle)
