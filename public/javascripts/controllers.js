@@ -251,7 +251,7 @@
 						list: item.trim(),
 						current: false,
 						items: [],
-						agendaID: agendaID
+						agendaID: agendaID,
 					});
 				} else {
 					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {
@@ -286,7 +286,8 @@
 						item: item.trim(),
 						complete: false,
 						agendaID: agendaID,
-						dueDate: dateObj
+						dueDate: dateObj,
+						current: (!arr.length) ? true : false
 					});
 				}
 				//$log.log('Creating todo... OK');
