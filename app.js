@@ -9,6 +9,7 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
+var agendaUI = require('agenda-ui');
 var Agenda = require('agenda');
 var async = require('async');
 var agenda = require('./services/agenda');
@@ -55,6 +56,7 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/agenda-ui', agendaUI(agenda, {poll: 180000}));
 app.use(restrict);
 
 // catch 404 and forward to error handler

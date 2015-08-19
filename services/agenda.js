@@ -27,7 +27,7 @@ agenda.jobs({nextRunAt: {$exists: true, $nin: [null]}}, function (err, jobs) {
 				var data = job.attrs.data;
 				emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
 					if (err) return next(err);
-					console.log('Notification sent');
+					console.log('Notification sent...');
 					done();
 				});
 			});
@@ -35,7 +35,7 @@ agenda.jobs({nextRunAt: {$exists: true, $nin: [null]}}, function (err, jobs) {
 				username: job.attrs.data.username,
 				item: job.attrs.data.item,
 				host: job.attrs.data.host,
-				date: job.attrs.data.dueDate
+				date: job.attrs.data.date
 			});
 			console.log('Agenda recreated => ' + job.attrs.name);
 		/*job.schedule(job.attrs.nextRunAt);
