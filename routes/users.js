@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var hat = require('hat');
+var async = require('async');
 var config = require('../config');
 var agenda = require('../services/agenda');
 var emailService = require('../services/email-service');
@@ -20,7 +21,6 @@ router.post('/login',
 				failureFlash: true
 			},
 			function (err, user, info) {
-				console.log('Sending user... OK');
 				//console.log(user);
 				//console.log(info);
 				//console.log(err);
@@ -28,6 +28,7 @@ router.post('/login',
 				if (user === 401) return res.sendStatus(401);
 				req.login(user, function (err) {
 					if (err) return next(err);
+					console.log('Sending user ' + user.username + '... OK');
 					return res.send(user);
 				});
 			}
@@ -128,31 +129,35 @@ router.post('/write', function (req, res, next) {
 	var deleteAgendas = req.body.deleteAgendas;
 	//console.log(user);
 	//Workaround to cancel agendas for deleted todos
-	deleteAgendas.forEach(function (val, i) {
+	async.each(deleteAgendas, function (agendaID, callback) {
 		agenda.cancel({
-			name: val
+			name: agendaID
 		}, function (err, numRemoved) {
 			if (err) return next(err);
-			console.log(user.username + ' => Agenda removed: ' + val);
+			console.log(user.username + ' => Agenda removed: ' + agendaID);
+			callback();
 		})
+	}, function (err) {
+		if (err) return console.log(err);
+		console.log('All deleted agendas removed successfully');
 	});
 	//Cancel current agendas and make new ones
-	user.todos.forEach(function (val, i) {
-		val.items.forEach(function (itemVal, j) {
-			//console.log(itemVal);
+	async.each(user.todos, function(todo, callback) {
+		async.each(todo.items, function (item, callback) {
+			//console.log(item);
 			agenda.cancel({
-				name: itemVal.agendaID
+				name: item.agendaID
 			}, function (err, numRemoved) {
 				if (err) return next(err);
-				console.log(user.username + ' => Agenda removed: ' + itemVal.agendaID);
-				if (itemVal.dueDate) {
+				console.log(user.username + ' => Agenda removed: ' + item.agendaID);
+				if (item.dueDate) {
 					var milliseconds = Math.floor(Math.random() * 150000);
-					itemVal.dueDate = Date.parse(itemVal.dueDate) + 21600000 + milliseconds;
-					if (itemVal.dueDate <= Date.now()) return true;
+					item.dueDate = Date.parse(item.dueDate) + 21600000 + milliseconds;
+					if (item.dueDate <= Date.now()) return true;
 					//Use the following for testing.
-					//itemVal.dueDate = Date.now() + 5000;
-					console.log(user.username + ' => Agenda scheduled: ' + itemVal.agendaID + ' ' + new Date(itemVal.dueDate));
-					agenda.define(itemVal.agendaID, function (job, done) {
+					//item.dueDate = Date.now() + 5000;
+					console.log(user.username + ' => Agenda scheduled: ' + item.agendaID + ' ' + new Date(item.dueDate));
+					agenda.define(item.agendaID, function (job, done) {
 						var data = job.attrs.data;
 						emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
 							if (err) return next(err);
@@ -160,21 +165,23 @@ router.post('/write', function (req, res, next) {
 							done();
 						});
 					});
-					agenda.schedule(new Date(itemVal.dueDate), itemVal.agendaID, {
+					agenda.schedule(new Date(item.dueDate), item.agendaID, {
 						username: user.username,
-						item: itemVal.item,
+						item: item.item,
 						host: req.headers.host,
-						date: new Date(itemVal.dueDate)
+						date: new Date(item.dueDate)
 					});
 				}
 			});
+		}, callback());
+	}, function (err) {
+		if (err) return console.log(err);
+		userService.updateUser(user, function (err, user) {
+			if (err) return next(err);
+			res.sendStatus(200);
+			//console.log(user.todos[1].items[0]);
+			console.log('Saving user ' + user.username + '... OK');
 		});
-	});
-	userService.updateUser(user, function (err, user) {
-		if (err) return next(err);
-		res.sendStatus(200);
-		//console.log(user.todos[1].items[0]);
-		console.log('Saving user... OK');
 	});
 });
 

@@ -15,10 +15,10 @@ module.exports = function () {
 				return next(err);
 			}
 			if (!user) {
-				console.log('No user');
+				console.log('No user named ' + username);
 				return next(null, null);
 			}
-			console.log('User found. Validating...');
+			console.log('User ' +  username + ' found. Validating...');
 			bcrypt.compare(key, user.key, function (err, same) {
 				if (err) {
 					return next(err);
@@ -28,7 +28,7 @@ module.exports = function () {
 					//console.log('user key: ' + user.key);
 					return next(null, 401);
 				}
-				console.log('Validating... OK');
+				console.log('Validating ' + username + '... OK');
 				next(null, user);
 			});
 		});

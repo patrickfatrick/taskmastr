@@ -10,6 +10,7 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
 var Agenda = require('agenda');
+var async = require('async');
 var agenda = require('./services/agenda');
 
 var MongoStore = connectMongo(expressSession);

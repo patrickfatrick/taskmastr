@@ -82,7 +82,7 @@ exports.resetPassword = function (user, next) {
 					resetToken: null
 				}
 			}, function (err, user) {
-				console.log('User updated');
+				console.log('User ' + user.username + ' updated');
 			});
 			next(err, user);
 		});

@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "5.2.0",
+  "version": "5.2.2",
   "homepage": "https://github.com/patrickfatrick/taskmastr",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
@@ -9,7 +9,7 @@
   "moduleType": [
     "node"
   ],
-  "license": "MIT",
+  "license": "GNU General Public License v3.0",
   "ignore": [
     "**/.*",
     "node_modules",
