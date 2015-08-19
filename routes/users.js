@@ -154,7 +154,7 @@ router.post('/write', function (req, res, next) {
 					var milliseconds = Math.floor(Math.random() * 150000);
 					//item.dueDate = Date.parse(item.dueDate) + 21600000 + milliseconds;
 					//if (item.dueDate <= Date.now()) return true;
-					//Use the following for testing.
+					//Use the following for testing...
 					item.dueDate = Date.now() + 1800000;
 					console.log(user.username + ' => Agenda scheduled: ' + item.agendaID + ' ' + new Date(item.dueDate));
 					agenda.define(item.agendaID, function (job, done) {
