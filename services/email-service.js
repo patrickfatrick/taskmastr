@@ -61,8 +61,9 @@ module.exports = function (agenda) {
 			text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + 'http://' + data.host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the tips at the login screen if you haven\'t already.\n'
 		};
 		mailer.sendMail(email, function (err, info) {
+			if (err) return done(err);
 			console.log('Email sent to ' + data.username);
-			next(err, info)
+			done();
 		});
 	});
 	
@@ -87,7 +88,7 @@ module.exports = function (agenda) {
 		});
 	});
 	
-	agenda.define('Notification', function (job, done) {
+	agenda.define('Notification Email', function (job, done) {
 		var data = job.attrs.data;
 		var monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 		var dateStr = data.date.getDate();
@@ -121,7 +122,6 @@ module.exports = function (agenda) {
 			text: 'Good morning!\n\n' + 'It is currently the morning of ' + monthArr[data.date.getMonth()] + ' ' + dateStr + ', and we just wanted to let you know that you have a task due today:\n\n "' + data.item + '"\n\n' + 'If you\'d like to check out your tasks please click this link! ' + 'http://' + data.host + '\n\n' + 'Sincerely,\n\ntaskmastr\n'
 		};
 		mailer.sendMail(email, function (err, info) {
-			//console.log('Email sent to ' + username);
 			if (err) return done(err);
 			console.log('Notification sent => ' + info[0]);
 			done();
