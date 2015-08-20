@@ -11,8 +11,9 @@ var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
 var agendaUI = require('agenda-ui');
 var Agenda = require('agenda');
-var async = require('async');
 var agenda = require('./services/agenda');
+var emailService = require('./services/email-service');
+var async = require('async');
 
 var MongoStore = connectMongo(expressSession);
 var passportConfig = require('./auth/passport-config');
@@ -24,7 +25,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 mongoose.connect(config.mongoUri);
-agenda.start();
+agenda.every('3 minutes', 'Agenda running');
 var app = express();
 
 // view engine setup

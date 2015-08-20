@@ -4,14 +4,6 @@ var config = require('../config');
 var Agenda = require('agenda');
 var agenda = new Agenda(config.agendaOptions);
 
-agenda.define('Agenda running', function (job, done) {
-	var data = job.attrs.data;
-	console.log('Agenda running at ' + new Date());
-	done();
-});
-
-agenda.every('3 minutes', 'Agenda running');
-
 /*agenda.cancel({name: 'Agenda running'}, function (err, numRemoved) {
 	if (err) return console.log(err);
 	console.log('Agendas removed: ' + numRemoved);
@@ -46,5 +38,7 @@ agenda.jobs({nextRunAt: {$exists: true, $nin: [null]}}, function (err, jobs) {
 		});
 	});
 });*/
+
+agenda.start();
 
 module.exports = agenda;

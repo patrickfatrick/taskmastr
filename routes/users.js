@@ -146,7 +146,9 @@ router.post('/write', function (req, res, next) {
 		async.each(todo.items, function (item, callback) {
 			//console.log(item);
 			agenda.cancel({
-				name: item.agendaID
+				attrs: {
+					agendaID: item.agendaID
+				}
 			}, function (err, numRemoved) {
 				if (err) return next(err);
 				console.log(user.username + ' => Agenda removed: ' + item.agendaID);
@@ -157,15 +159,8 @@ router.post('/write', function (req, res, next) {
 					//Use the following for testing...
 					//item.dueDate = Date.now() + 1800000;
 					console.log(user.username + ' => Agenda scheduled: ' + item.agendaID + ' ' + new Date(item.dueDate));
-					agenda.define(item.agendaID, function (job, done) {
-						var data = job.attrs.data;
-						emailService.notificationEmail(data.username, data.item, data.host, data.date, function (err, next) {
-							if (err) return next(err);
-							console.log('Notification sent');
-							done();
-						});
-					});
-					agenda.schedule(new Date(item.dueDate), item.agendaID, {
+					agenda.schedule(new Date(item.dueDate), 'Notification', {
+						agendaID: item.agendaID,
 						username: user.username,
 						item: item.item,
 						host: req.headers.host,
