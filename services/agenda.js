@@ -20,7 +20,7 @@ agenda.jobs({nextRunAt: {$exists: true, $nin: [null]}}, function (err, jobs) {
 	if (err) return console.log(err);
 	//console.log(jobs);
 	async.each(jobs, function(job, callback) {
-		//console.log(job);
+		//console.log(job)...;
 		agenda.cancel({name: job.attrs.name}, function (err, numRemoved) {
 			console.log('Agenda removed => ' + job.attrs.name);
 			agenda.define(job.attrs.name, function (job, done) {

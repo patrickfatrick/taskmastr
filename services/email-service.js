@@ -76,7 +76,7 @@ exports.notificationEmail = function (username, item, host, date, next) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('Message sent: ' + info);
+			console.log('Message sent: ' + info[0]);
 		}
 	});
 }
