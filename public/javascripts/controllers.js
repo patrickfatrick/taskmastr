@@ -195,6 +195,7 @@
 					})
 					.success(function (data) {
 						if (data) {
+							$scope.user.username = data.username;
 							$scope.user.todos = data.todos;
 							$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
 								list: "List 1",

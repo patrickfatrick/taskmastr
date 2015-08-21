@@ -5,7 +5,6 @@ var hat = require('hat');
 var async = require('async');
 var config = require('../config');
 var agenda = require('../services/agenda');
-var emailService = require('../services/email-service');
 var userService = require('../services/user-service');
 
 router.post('/login',
@@ -58,17 +57,11 @@ router.post('/create',
 			console.log('Creating user ' + username + ' ... OK');
 			req.login(user, function (err) {
 				if (err) return next(err);
-				agenda.define('greet ' + user.username, function (job, done) {
-					var data = job.attrs.data;
-					emailService.greetEmail(data.username, data.host, function (err, next) {
-						if (err) return next(err);
-						return res.send(user);
-					});
-				});
-				agenda.now('greet ' + user.username, {
+				agenda.now('Welcome Email', {
 					username: user.username,
 					host: req.headers.host
 				});
+				return res.send(user);
 			});
 		});
 	}
@@ -86,20 +79,13 @@ router.post('/forgot',
 			userService.setToken(user, function (err, user) {
 				if (err) return next(err);
 				//console.log(user);
-				agenda.define('reset ' + user.username, function (job, done) {
-					var data = job.attrs.data;
-					emailService.resetEmail(data.username, data.resetToken, data.host, function (err, next) {
-						if (err) return next(err);
-						res.send({
-							emailSent: true
-						});
-						done();
-					});
-				});
-				agenda.now('reset ' + user.username, {
+				agenda.now('Reset Email', {
 					username: user.username,
 					resetToken: user.resetToken,
 					host: req.headers.host
+				});
+				return res.send({
+					emailSent: true
 				});
 			});
 		});
@@ -131,7 +117,7 @@ router.post('/write', function (req, res, next) {
 	//Workaround to cancel agendas for deleted todos
 	async.each(deleteAgendas, function (agendaID, callback) {
 		agenda.cancel({
-			name: agendaID
+			'data.agendaID': agendaID
 		}, function (err, numRemoved) {
 			if (err) return next(err);
 			console.log(user.username + ' => Agenda removed: ' + agendaID);
@@ -146,9 +132,7 @@ router.post('/write', function (req, res, next) {
 		async.each(todo.items, function (item, callback) {
 			//console.log(item);
 			agenda.cancel({
-				attrs: {
-					agendaID: item.agendaID
-				}
+				'data.agendaID': item.agendaID
 			}, function (err, numRemoved) {
 				if (err) return next(err);
 				console.log(user.username + ' => Agenda removed: ' + item.agendaID);
@@ -156,10 +140,10 @@ router.post('/write', function (req, res, next) {
 					var milliseconds = Math.floor(Math.random() * 150000);
 					item.dueDate = Date.parse(item.dueDate) + 21600000 + milliseconds;
 					if (item.dueDate <= Date.now()) return true;
-					//Use the following for testing...
+					//Use the following for testing
 					//item.dueDate = Date.now() + 1800000;
 					console.log(user.username + ' => Agenda scheduled: ' + item.agendaID + ' ' + new Date(item.dueDate));
-					agenda.schedule(new Date(item.dueDate), 'Notification', {
+					agenda.schedule(new Date(item.dueDate), 'Notification Email', {
 						agendaID: item.agendaID,
 						username: user.username,
 						item: item.item,
