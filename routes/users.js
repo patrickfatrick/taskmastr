@@ -57,13 +57,6 @@ router.post('/create',
 			console.log('Creating user ' + username + ' ... OK');
 			req.login(user, function (err) {
 				if (err) return next(err);
-				/*agenda.define('greet ' + user.username, function (job, done) {
-					var data = job.attrs.data;
-					emailService.greetEmail(data.username, data.host, function (err, next) {
-						if (err) return next(err);
-						return res.send(user);
-					});
-				});*/
 				agenda.now('Welcome Email', {
 					username: user.username,
 					host: req.headers.host
@@ -86,16 +79,6 @@ router.post('/forgot',
 			userService.setToken(user, function (err, user) {
 				if (err) return next(err);
 				//console.log(user);
-				/*agenda.define('reset ' + user.username, function (job, done) {
-					var data = job.attrs.data;
-					emailService.resetEmail(data.username, data.resetToken, data.host, function (err, next) {
-						if (err) return next(err);
-						res.send({
-							emailSent: true
-						});
-						done();
-					});
-				});*/
 				agenda.now('Reset Email', {
 					username: user.username,
 					resetToken: user.resetToken,
