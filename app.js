@@ -12,7 +12,6 @@ var connectMongo = require('connect-mongo');
 var agendaUI = require('agenda-ui');
 var Agenda = require('agenda');
 var agenda = require('./services/agenda');
-var emailService = require('./services/email-service');
 var async = require('async');
 
 var MongoStore = connectMongo(expressSession);
