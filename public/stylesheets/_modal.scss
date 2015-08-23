@@ -86,6 +86,9 @@
 	@include animation(bounceOutUp 750ms);
 }
 
+.modal.invalid {
+	@include animation(rubberBand 500ms);
+}
 #mask {
 	width: 100%;
 	height: 100%;

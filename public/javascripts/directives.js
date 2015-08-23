@@ -97,6 +97,7 @@
 				todoModel: '='
 			},
 			link: function (scope, element, attrs) {
+				var attempt;
 				element.bind('click', function (e) {
 					scope.$apply(function () {
 						//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
@@ -104,22 +105,31 @@
 							scope.$parent.create(scope.todoButton, scope.todoModel, scope.$parent.token());
 							//console.log(scope.$parent.user.todos);
 							scope.todoModel = '';
+							//Remove attempt if it's present
+							scope.$parent[attempt] = false;
 						}
 					});
 				});
 				//Emoticon handlers
 				element.bind('mousedown', function (e) {
+					attempt = (scope.todoButton === scope.$parent.user.todos) ? 'listAttempt' : 'todoAttempt';
 					if (element.siblings('input:text').val()) {
 						$(this).removeClass('fa-arrow-down');
 						$(this).addClass('fa-smile-o');
 					} else {
 						$(this).removeClass('fa-arrow-down');
 						$(this).addClass('fa-meh-o');
+						//Set attempt to true to show animation
+						scope.$parent[attempt] = true;
 					}
 				});
 				element.bind('mouseup', function (e) {
 					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
 					$(this).addClass('fa-arrow-down');
+					//Remove attempt after 500ms for animation to finish
+					setTimeout(function () {
+						scope.$parent[attempt] = false;
+					}, 500);
 				});
 			}
 		}
@@ -259,7 +269,7 @@
 								scope.$apply(function () {
 									var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
 									//console.log(spliced[0]);
-									
+
 									// Current list handlers: 
 									// 1) Check if user is deleting the only list: do not allow
 									// 2) Check if deleted list is the last list: set current to first list
@@ -294,7 +304,7 @@
 										scope.$parent.setCurrent(arr, index);
 									}
 									//console.log(spliced);
-									
+
 									//If deleted, delete associated agendas
 									scope.$parent.setDeleteAgendas(spliced[0].agendaID);
 								});

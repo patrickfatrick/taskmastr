@@ -48,6 +48,7 @@ input[type='password'] {
 		&.invalid-password,
 		&.invalid-user {
 			border: 1px solid $red;
+			@include animation(rubberBand 500ms);
 		}
 		&.disabled {
 			background-color: $azure;
