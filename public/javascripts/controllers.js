@@ -17,7 +17,6 @@
 					//$log.log(data);
 					if (data) {
 						$scope.user.username = data.username;
-						$scope.user.key = data.key;
 						$scope.user.todos = data.todos;
 						_.each($scope.user.todos, function (val, i) {
 							if (!(_.find(val.items, 'current', true))) {
@@ -43,7 +42,7 @@
 					}
 				})
 				.error(function (data, status) {
-					$log.log('Get fail');
+					$log.error('Get fail: ' + status);
 					$log.log(status);
 				});
 
@@ -168,7 +167,7 @@
 					})
 					.error(function (data, status) {
 						//$log.log('Error connecting to db!');
-						$log.log(status);
+						$log.error('Get fail: ' + status);
 						if (status === 401) {
 							$scope.invalidPassword = true;
 							$scope.confirmPassword = false;
@@ -224,7 +223,7 @@
 						rememberMe: rememberMe
 					})
 					.success(function (data) {
-						//$log.log(data);
+						$log.log(data);
 						$scope.user.todos = (data.todos) ? data.todos : [{
 							list: "List 1",
 							current: true,
@@ -242,8 +241,7 @@
 						$scope.write(user);
 					})
 					.error(function (data, status) {
-						$log.log('Error connecting to db!');
-						$log.log(status);
+						$log.error('Error connecting to db: ' + status);
 					});
 			};
 			$scope.create = function (arr, item, agendaID) {

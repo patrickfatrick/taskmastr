@@ -23,12 +23,16 @@ router.post('/login',
 				//console.log(user);
 				//console.log(info);
 				//console.log(err);
-				if (!user) return res.send(user);
+				if (!user) return res.sendStatus(204);
 				if (user === 401) return res.sendStatus(401);
 				req.login(user, function (err) {
 					if (err) return next(err);
 					console.log('Sending user ' + user.username + '... OK');
-					return res.send(user);
+					return res.send({
+						username: user.username,
+						darkmode: user.darkmode,
+						todos: user.todos
+					});
 				});
 			}
 		)(req, res, next);
@@ -61,7 +65,11 @@ router.post('/create',
 					username: user.username,
 					host: req.headers.host
 				});
-				return res.send(user);
+				return res.send({
+					username: user.username,
+					darkmode: user.darkmode,
+					todos: user.todos
+				});
 			});
 		});
 	}
@@ -128,7 +136,7 @@ router.post('/write', function (req, res, next) {
 		console.log('All deleted agendas removed successfully');
 	});
 	//Cancel current agendas and make new ones
-	async.each(user.todos, function(todo, callback) {
+	async.each(user.todos, function (todo, callback) {
 		async.each(todo.items, function (item, callback) {
 			//console.log(item);
 			agenda.cancel({

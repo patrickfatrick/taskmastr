@@ -11,7 +11,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/session-data', function(req, res, next) {
-  res.send(req.user);
+	if (!req.user) return res.sendStatus(204);
+	return res.send({
+		username: req.user.username,
+		darkmode: req.user.darkmode,
+		todos: req.user.todos
+	});
 });
 
 module.exports = router;

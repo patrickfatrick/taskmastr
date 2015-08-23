@@ -191,8 +191,17 @@
 						$(this).addClass('fa-arrow-right');
 					},
 					click: function (e) {
+						//Set variables for animations and error messages
 						scope.$apply(function () {
 							scope.formAttempt = true;
+							scope.loginAttempt = true;
+							if (scope.confirmPassword) {
+								scope.confirmAttempt = true;
+							}
+							setTimeout(function () {
+								scope.confirmAttempt = false;
+								scope.loginAttempt = false;
+							}, 500);
 						});
 						if (scope.forgot) {
 							scope.setToken(scope.user.username);

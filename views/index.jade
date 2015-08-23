@@ -21,7 +21,7 @@ block content
 					label(for="user", ng-show="emailSent === true && forgot")
 						| Check your email for instructions on how to reset your password.
 				.prompt-line#user-line
-					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: formAttempt, 'invalid-user': emailSent === false && forgot}", ng-pattern="/^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$/")
+					input.prompt#user(type="text", name="username", ng-model="user.username", placeholder="Email", ng-required="true", ng-class="{tried: loginAttempt && formAttempt, 'invalid-user': emailSent === false && forgot}", ng-pattern="/^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$/")
 					button.fa.fa-arrow-right.submit#forgot-button(type="submit", ng-show="forgot")
 				.error-text(ng-show="!forgot")
 					label(for="key", ng-show="userForm.key.$invalid && formAttempt && !invalidPassword && !forgot")
@@ -29,7 +29,7 @@ block content
 					label(for="key", ng-show="invalidPassword")
 						| Invalid password
 				.prompt-line#key-line(ng-show="!forgot")
-					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt && !forgot, 'invalid-password': invalidPassword, disabled: forgot}")
+					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt && loginAttempt && !forgot, 'invalid-password': invalidPassword, disabled: forgot}")
 					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
 				.error-text
 					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pwmatch") 
@@ -37,7 +37,7 @@ block content
 					label(ng-show="userForm.confirm.$error.pattern")
 						| Passwords don't match.
 				.prompt-line#confirm-line(ng-show="confirmPassword", confirm-password)
-					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", ng-pattern="user.key", ng-class="{tried: userForm.confirm.$error.pattern, 'invalid-password': userForm.confirm.$error.pattern}")
+					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", ng-pattern="user.key", ng-class="{tried: confirmAttempt && userForm.confirm.$error.pattern, 'invalid-password': confirmAttempt && userForm.confirm.$error.pattern}")
 					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
 				#remember
 					input.check#remember-me(name="rememeber-me", type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
