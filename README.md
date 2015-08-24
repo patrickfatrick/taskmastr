@@ -6,14 +6,14 @@ While taskmastr definitely does fall under the category of "projects intended to
 Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) for information on how to use taskmastr.
 
 ##features
-taskmastr is...
+taskmastr is...  
 - Fast
 - Intuitive
 - Unintrusive
 - Mobile-friendly
 - Fun
 
-taskmastr has...
+taskmastr has...  
 - Username/Password authentication.
 - Email notifications when assigning a task a due date.
 - Session storage for up to 30 days (useful for phone usage).
