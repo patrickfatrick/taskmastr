@@ -1,5 +1,3 @@
-<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
-
 ## taskmastr
 Yet another task management web app built with Node.js, Express, MongoDB, and Angular. You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
