@@ -11,6 +11,13 @@
 
 	app.controller('UserController', ['$http', '$scope', '$log', '$location', 'hotkeys',
 		function ($http, $scope, $log, $location, hotkeys) {
+
+			/*******************************
+			 *******Server connections******
+			 *******************************/
+
+			/*********Session data*********/
+
 			$http.get('/session-data')
 				.success(function (data) {
 					//$log.log('Get successful');
@@ -46,88 +53,8 @@
 					$log.log(status);
 				});
 
-			$scope.rand = function () {
-				return Math.random().toString(36).substr(2);
-			}
+			/************Lookup************/
 
-			$scope.token = function () {
-				return $scope.rand() + $scope.rand() + $scope.rand();
-			}
-			$scope.sortableOptions = {
-				handle: '.sort',
-				sort: true,
-				delay: 0,
-				animation: 75,
-				ghostClass: 'ghost',
-				scroll: true,
-				scrollSensitivity: 30,
-				scrollSpeed: 10,
-				onUpdate: function (evt) {
-					var itemEl = evt.model.item;
-					var itemComplete = evt.model.complete;
-					//var completeIndex = _.findLastIndex($scope.user.current.items, 'complete', true);
-					var completeIndex;
-					_.each($scope.user.current.items, function (val, i) {
-						if (val.complete === true && val != evt.model) {
-							completeIndex = i;
-							return false;
-						}
-					});
-					
-					//$log.log(evt.model);
-					//$log.log('CompleteIndex: ' + completeIndex);
-					//$log.log('OldIndex: ' + evt.oldIndex);
-					//$log.log('NewIndex: ' + evt.newIndex);
-					
-					var spliced;
-					
-					//Checks:
-					//1) If element is not complete and is being moved into complete list, move back up
-					//2) If element is complete and is being moved into uncomplete list, move back down
-					//3) if element is complete and also the only complete, move back to end of list
-					if (evt.newIndex > completeIndex && !itemComplete) {
-						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
-						$scope.user.current.items.splice(completeIndex, 0, spliced[0]);
-					} else if (evt.newIndex < completeIndex && itemComplete) {
-						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
-						$scope.user.current.items.splice(completeIndex - 1, 0, spliced[0]);
-					} else if (!completeIndex && itemComplete) {
-						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
-						$scope.user.current.items.push(spliced[0]);
-					}
-				}
-			};
-			$scope.setDatepickerIndex = function (index) {
-				$scope.datepickerIndex = index;
-			}
-			$scope.setDatepickerClear = function (bool) {
-				$scope.datepickerClear = bool;
-			}
-			$scope.datepickerOptions = {
-				showButtonPanel: true,
-				showAnim: '',
-				dateFormat: 'yy-mm-dd',
-				closeText: 'Clear',
-				prevText: '',
-				nextText: '',
-				onClose: function (dateText, inst) {
-					//$log.log($scope.datepickerClear);
-					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
-					//$log.log($scope.user.todos);
-					if ($scope.datepickerClear) {
-						delete $scope.user.current.items[$scope.datepickerIndex].dueDate;
-						$scope.$apply();
-					}
-				}
-			};
-			var counter = 0;
-
-			var reset = $location.search().reset;
-			if (reset) {
-				//$log.log('Reset');
-				$scope.resetForm = true;
-				$scope.resetToken = $location.search().token;
-			}
 			$scope.lookup = function (username, key, rememberMe) {
 				$http.post('/users/login', {
 						username: username,
@@ -174,19 +101,87 @@
 						}
 					});
 			};
-			$scope.setToken = function (user) {
-				$http.post('users/forgot', {
-						username: user
+
+			/***********New user***********/
+
+			$scope.addUser = function (user, key, rememberMe) {
+				$http.post('/users/create', {
+						username: user,
+						key: key,
+						rememberMe: rememberMe
 					})
 					.success(function (data) {
 						$log.log(data);
-						$scope.emailSent = true;
+						$scope.user.todos = (data.todos) ? data.todos : [{
+							list: "List 1",
+							current: true,
+							items: []
+					}];
+						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+							list: "List 1",
+							current: true,
+							items: []
+						};
+						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : true;
+						//$log.log('User profile mounted...');
+						//$log.log($scope.user);
+						$scope.write(user);
 					})
 					.error(function (data, status) {
-						$log.log(status);
-						$scope.emailSent = false;
+						$log.error('Error connecting to db: ' + status);
 					});
 			};
+
+			/**********Save data***********/
+
+			$scope.write = function (username) {
+				var now = new Date();
+				$scope.user.dateModified = now.toISOString();
+				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
+				//$log.log('Saving to db...')
+				//$log.log($scope.user);
+				$http.post('/users/write', {
+						//json: angular.toJson($scope.user)
+						user: {
+							username: $scope.user.username,
+							todos: $scope.user.todos,
+							darkmode: $scope.user.darkmode,
+							dateModified: now
+						},
+						deleteAgendas: $scope.deleteAgendas
+					})
+					.success(function (data) {
+						//$log.log('Writing data... OK');
+						//$log.log('saveButton = ' + $scope.saveButton);
+						$scope.saveButton = false;
+						$scope.deleteAgendas = [];
+						return true;
+					})
+					.error(function (data, status) {
+						$log.log('Error writing data!');
+						$log.log(status);
+					});
+			};
+
+			/***********Log out************/
+
+			$scope.logout = function () {
+				$http.get('/users/logout')
+					.success(function (data) {
+						//$log.log('Logged out');
+						window.location.href = '/';
+					})
+					.error(function (data, status) {
+						$log.log('Error logging out! ');
+						$log.log(status);
+					});
+			};
+
+			/*******************************
+			 *******Password resetting*******
+			 *******************************/
+
 			$scope.resetPassword = function (token, newKey) {
 				$http.post('/users/reset', {
 						token: token,
@@ -216,34 +211,106 @@
 						$log.log(status);
 					});
 			};
-			$scope.addUser = function (user, key, rememberMe) {
-				$http.post('/users/create', {
-						username: user,
-						key: key,
-						rememberMe: rememberMe
+			$scope.setToken = function (user) {
+				$http.post('users/forgot', {
+						username: user
 					})
 					.success(function (data) {
 						$log.log(data);
-						$scope.user.todos = (data.todos) ? data.todos : [{
-							list: "List 1",
-							current: true,
-							items: []
-						}];
-						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-							list: "List 1",
-							current: true,
-							items: []
-						};
-						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
-						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : true;
-						//$log.log('User profile mounted...');
-						//$log.log($scope.user);
-						$scope.write(user);
+						$scope.emailSent = true;
 					})
 					.error(function (data, status) {
-						$log.error('Error connecting to db: ' + status);
+						$log.log(status);
+						$scope.emailSent = false;
 					});
 			};
+
+			var reset = $location.search().reset;
+			if (reset) {
+				//$log.log('Reset');
+				$scope.resetForm = true;
+				$scope.resetToken = $location.search().token;
+			}
+
+			$scope.rand = function () {
+				return Math.random().toString(36).substr(2);
+			}
+
+			$scope.token = function () {
+				return $scope.rand() + $scope.rand() + $scope.rand();
+			}
+			$scope.sortableOptions = {
+				handle: '.sort',
+				sort: true,
+				delay: 0,
+				animation: 75,
+				ghostClass: 'ghost',
+				scroll: true,
+				scrollSensitivity: 30,
+				scrollSpeed: 10,
+				onUpdate: function (evt) {
+					var itemEl = evt.model.item;
+					var itemComplete = evt.model.complete;
+					//var completeIndex = _.findLastIndex($scope.user.current.items, 'complete', true);
+					var completeIndex;
+					_.each($scope.user.current.items, function (val, i) {
+						if (val.complete === true && val != evt.model) {
+							completeIndex = i;
+							return false;
+						}
+					});
+
+					//$log.log(evt.model);
+					//$log.log('CompleteIndex: ' + completeIndex);
+					//$log.log('OldIndex: ' + evt.oldIndex);
+					//$log.log('NewIndex: ' + evt.newIndex);
+
+					var spliced;
+
+					//Checks:
+					//1) If element is not complete and is being moved into complete list, move back up
+					//2) If element is complete and is being moved into uncomplete list, move back down
+					//3) if element is complete and also the only complete, move back to end of list
+					if (evt.newIndex > completeIndex && !itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.splice(completeIndex, 0, spliced[0]);
+					} else if (evt.newIndex < completeIndex && itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.splice(completeIndex - 1, 0, spliced[0]);
+					} else if (!completeIndex && itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.push(spliced[0]);
+					}
+				}
+			};
+			$scope.setDatepickerIndex = function (index) {
+				$scope.datepickerIndex = index;
+			}
+			$scope.setDatepickerClear = function (bool) {
+				$scope.datepickerClear = bool;
+			}
+			$scope.datepickerOptions = {
+				showButtonPanel: true,
+				showAnim: '',
+				dateFormat: 'yy-mm-dd',
+				closeText: 'Clear',
+				prevText: '',
+				nextText: '',
+				onClose: function (dateText, inst) {
+					//$log.log($scope.datepickerClear);
+					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
+					//$log.log($scope.user.todos);
+					if ($scope.datepickerClear) {
+						delete $scope.user.current.items[$scope.datepickerIndex].dueDate;
+						$scope.$apply();
+					}
+				}
+			};
+
+			var counter = 0;
+
+			/*********Create item**********/
+
 			$scope.create = function (arr, item, agendaID) {
 				if (arr === $scope.user.todos) {
 					arr.unshift({
@@ -291,49 +358,13 @@
 				}
 				//$log.log('Creating todo... OK');
 			};
-			$scope.write = function (username) {
-				var now = new Date();
-				$scope.user.dateModified = now.toISOString();
-				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
-				//$log.log('Saving to db...')
-				//$log.log($scope.user);
-				$http.post('/users/write', {
-						//json: angular.toJson($scope.user)
-						user: {
-							username: $scope.user.username,
-							todos: $scope.user.todos,
-							darkmode: $scope.user.darkmode,
-							dateModified: now
-						},
-						deleteAgendas: $scope.deleteAgendas
-					})
-					.success(function (data) {
-						//$log.log('Writing data... OK');
-						//$log.log('saveButton = ' + $scope.saveButton);
-						$scope.saveButton = false;
-						$scope.deleteAgendas = [];
-						return true;
-					})
-					.error(function (data, status) {
-						$log.log('Error writing data!');
-						$log.log(status);
-					});
-			};
-			$scope.logout = function () {
-				$http.get('/users/logout')
-					.success(function (data) {
-						//$log.log('Logged out');
-						window.location.href = '/';
-					})
-					.error(function (data, status) {
-						$log.log('Error logging out! ');
-						$log.log(status);
-					});
-			};
 			$scope.deleteAgendas = [];
 			$scope.setDeleteAgendas = function (agendaID) {
 				$scope.deleteAgendas.push(agendaID);
 			};
+
+			/**********Observers***********/
+
 			$scope.$watch('user.todos', function (newValue, oldValue) {
 				if (newValue === oldValue) return;
 				if (counter >= 2) $scope.saveButton = true;
@@ -348,6 +379,9 @@
 				counter += 1;
 				//$.log('darkmode counter = ' + counter);
 			}, true);
+
+			/**********Set active**********/
+
 			$scope.setCurrent = function (arr, index) {
 				//$log.log('setCurrent index: ' + index);
 				if (index >= arr.length) {
@@ -391,6 +425,9 @@
 					arr.splice(index - 1, 0, splicedTodo[0]);
 				}
 			}
+
+			/************Hotkeys************/
+
 			hotkeys.bindTo($scope).add({
 				combo: 'command+m',
 				description: 'Toggle Night Mode/Bright Mode',
