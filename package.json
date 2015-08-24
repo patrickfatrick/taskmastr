@@ -2,14 +2,14 @@
   "name": "taskmastr",
   "version": "5.2.3",
   "description": "A simple web-based todo list using MongoDB, Express, Angular, and Node (MEAN)",
-  "homepage": "https://github.com/patrickfatrick/taskmastr",
+  "homepage": "http://www.taskmastr.co",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
   ],
   "moduleType": [
     "node"
   ],
-  "license": "GNU General Public License v3.0",
+	"private": true,
   "scripts": {
     "start": "node ./bin/www",
     "mongo": "mongod --dbpath ./data"

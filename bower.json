@@ -1,11 +1,12 @@
 {
   "name": "taskmastr",
   "version": "5.2.3",
-  "homepage": "https://github.com/patrickfatrick/taskmastr",
+  "homepage": "http://www.taskmastrco",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
   ],
   "description": "A simple web-based todo list using MongoDB, Express, Angular, and Node (MEAN)",
+	"private": true,
   "moduleType": [
     "node"
   ],
