@@ -1,11 +1,11 @@
-## taskmastr
+#taskmastr
 Yet another task management web app built with Node.js, Express, MongoDB, and Angular. You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
 While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
 
 Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) for information on how to use taskmastr.
 
-##features
+#Features
 taskmastr is...
 
 - Fast  
@@ -28,6 +28,7 @@ taskmastr has...
 
 taskmastr is updated regularly with new features
 
+#Changelog
 ##New in v5.2.0
 The entire app can now be controlled with the keyboard. See [this page](https://github.com/patrickfatrick/taskmastr/wiki/Keyboard-shortcuts) for details.
 
@@ -56,7 +57,7 @@ _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday
 ##New in v5.0.0
 Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
 
-##Screenshots
+#Screenshots
 ![taskmastr basic usage](./images/taskmastr-basic-usage-1.png)
 ![taskmastr basic usage 2a](./images/taskmastr-basic-usage-2a.png)
 ![taskmastr basic usage 3](./images/taskmastr-basic-usage-3.png)
