@@ -6,14 +6,16 @@ While taskmastr definitely does fall under the category of "projects intended to
 Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) for information on how to use taskmastr.
 
 ##features
-taskmastr is...  
+taskmastr is...
+
 - Fast  
 - Intuitive  
 - Unintrusive  
 - Mobile-friendly  
 - Fun  
 
-taskmastr has...  
+taskmastr has...
+
 - Username/Password authentication.  
 - Email notifications when assigning a task a due date.  
 - Session storage for up to 30 days (useful for phone usage).  
@@ -36,7 +38,8 @@ Notification scheduling _actually_ works! Hooray!
 
 We've also added in the ability to shortcut your due date when creating the task itself.
 
-Try:  
+Try:
+
 - `Remind me to wash the dishes tomorrow` 'Remind me to' signals taskmastr to look out for a date.  
 - `/r Meet with that person I know on 9/15/2015` So does '/r'.  
 - `/r Do that thing I said I'd do on oct 10` You can use an actual date or something a little easier to type.  
