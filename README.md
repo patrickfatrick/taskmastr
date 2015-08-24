@@ -3,6 +3,8 @@ Yet another task management web app built with Node.js, Express, MongoDB, and An
 
 While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
 
+Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) for information on how to use taskmastr.
+
 ##features
 taskmastr is...
 - Fast
