@@ -7,11 +7,11 @@ Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) 
 
 ##features
 taskmastr is...  
-- Fast  
-- Intuitive  
-- Unintrusive  
-- Mobile-friendly  
-- Fun  
++ Fast  
++ Intuitive  
++ Unintrusive  
++ Mobile-friendly  
++ Fun  
 
 taskmastr has...  
 - Username/Password authentication.
