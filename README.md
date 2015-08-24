@@ -7,22 +7,22 @@ Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) 
 
 ##features
 taskmastr is...  
-+ Fast  
-+ Intuitive  
-+ Unintrusive  
-+ Mobile-friendly  
-+ Fun  
+- Fast  
+- Intuitive  
+- Unintrusive  
+- Mobile-friendly  
+- Fun  
 
 taskmastr has...  
-- Username/Password authentication.
-- Email notifications when assigning a task a due date.
-- Session storage for up to 30 days (useful for phone usage).
-- Delete, reorder, and rename tasks or lists.
-- 5-second undo when deleting a task or list.
-- Night mode for those of us who work when we should be sleeping.
-- Bright mode for those of us who are afraid of the dark.
-- Now with COOL animations! More fun guaranteed!
-- Keyboard shortcuts allow you to control basically everything.
+- Username/Password authentication.  
+- Email notifications when assigning a task a due date.  
+- Session storage for up to 30 days (useful for phone usage).  
+- Delete, reorder, and rename tasks or lists.  
+- 5-second undo when deleting a task or list.  
+- Night mode for those of us who work when we should be sleeping.  
+- Bright mode for those of us who are afraid of the dark.  
+- Now with COOL animations! More fun guaranteed!  
+- Keyboard shortcuts allow you to control basically everything.  
 
 taskmastr is updated regularly with new features
 
@@ -36,15 +36,15 @@ Notification scheduling _actually_ works! Hooray!
 
 We've also added in the ability to shortcut your due date when creating the task itself.
 
-Try:
-- `Remind me to wash the dishes tomorrow` 'Remind me to' signals taskmastr to look out for a date.
-- `/r Meet with that person I know on 9/15/2015` So does '/r'.
-- `/r Do that thing I said I'd do on oct 10` You can use an actual date or something a little easier to type.
-- `/r Eat food and sleep next Tuesday` You can also use relative dates.
-- `/y come up with a New Year's Resolution` '/y' sets the date to January 1st of next year.
-- `/t Wake up at some point` '/t' sets the date to tomorrow.
-- `/w Go to work` '/w' sets the date to next Monday.
-- `/m pay rent` '/m' sets the date to the 1st of next month.
+Try:  
+- `Remind me to wash the dishes tomorrow` 'Remind me to' signals taskmastr to look out for a date.  
+- `/r Meet with that person I know on 9/15/2015` So does '/r'.  
+- `/r Do that thing I said I'd do on oct 10` You can use an actual date or something a little easier to type.  
+- `/r Eat food and sleep next Tuesday` You can also use relative dates.  
+- `/y come up with a New Year's Resolution` '/y' sets the date to January 1st of next year.  
+- `/t Wake up at some point` '/t' sets the date to tomorrow.  
+- `/w Go to work` '/w' sets the date to next Monday.  
+- `/m pay rent` '/m' sets the date to the 1st of next month.  
 
 This feature really does not and should not work for every single imaginable date format so it's up to you to stay sensible about it. It also does not work for dates in the past. Use the datepicker for that. And while we're on the subject of the datepicker, while you can set up a date in the past you will of course not receive any notification for it. The idea here is really more for allowing you to see when the task was due, after the fact.
 
@@ -54,10 +54,10 @@ _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday
 Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
 
 ##Screenshots
-![taskmastr basic usage](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-1.png)
-![taskmastr basic usage 2a](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-2a.png)
-![taskmastr basic usage 3](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-3.png)
-![taskmastr basic usage 4](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/taskmastr-basic-usage-4.png)
-![taskmastr modal](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/screenshot3.png)
-![taskmastr mobile](https://raw.githubusercontent.com/patrickfatrick/taskmastr/master/images/screenshot4.png)
+![taskmastr basic usage](./images/taskmastr-basic-usage-1.png)
+![taskmastr basic usage 2a](./images/taskmastr-basic-usage-2a.png)
+![taskmastr basic usage 3](./images/taskmastr-basic-usage-3.png)
+![taskmastr basic usage 4](./images/taskmastr-basic-usage-4.png)
+![taskmastr modal](./images/screenshot3.png)
+![taskmastr mobile](./images/screenshot4.png)
 
