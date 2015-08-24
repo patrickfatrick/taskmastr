@@ -129,6 +129,7 @@
 					//Remove attempt after 500ms for animation to finish
 					setTimeout(function () {
 						scope.$parent[attempt] = false;
+						scope.$apply();
 					}, 500);
 				});
 			}
@@ -201,6 +202,7 @@
 							setTimeout(function () {
 								scope.confirmAttempt = false;
 								scope.loginAttempt = false;
+								scope.$apply();
 							}, 500);
 						});
 						if (scope.forgot) {
