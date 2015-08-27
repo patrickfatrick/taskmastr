@@ -57,6 +57,13 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
+app.get('/agenda-ui', function (req, res, next) {
+  if(!req.isAuthenticated() || req.user.username !== 'patrick.fricano@icloud.com') {
+		res.sendStatus(401);
+	} else {
+		next();
+	}
+});
 app.use('/agenda-ui', agendaUI(agenda, {poll: 180000}));
 app.use(restrict);
 
