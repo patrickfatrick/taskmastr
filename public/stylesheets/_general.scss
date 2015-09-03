@@ -27,6 +27,7 @@ input[type='text'],
 input[type='password'] {
 	outline: none;
 	font-family: $raleway;
+	color: inherit;
 }
 
 .prompt-line {
@@ -43,16 +44,21 @@ input[type='password'] {
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
 		font-size: 2rem;
-		border: 1px solid $deepBlue;
-		@include single-box-shadow(0, 1px, 3px, null, $slateGray);
+		border: none;
+		border-bottom: 4px solid $deepBlue;
+		background: transparent;
+		//@include single-box-shadow(0, 1px, 3px, null, $slateGray);
 		&.ng-invalid.tried,
 		&.invalid-password,
 		&.invalid-user {
-			border: 1px solid $red;
+			border-color: $red;
 			@include animation(rubberBand 500ms);
 		}
 		&.disabled {
 			background-color: $azure;
+		}
+		@include input-placeholder {
+			color: $slateGray;
 		}
 	}
 	button.submit {

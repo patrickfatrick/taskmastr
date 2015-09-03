@@ -77,7 +77,7 @@ block content
 		i#dark-mode.fa(value="{{user.darkmode}}", check-button, ng-class="user.darkmode ? 'fa-sun-o' : 'fa-moon-o'")
 		#list-headline Lists
 		form.prompt-line#list-line(name="listForm", novalidate)
-			input.prompt#create-list(type="text", name="listInput", ng-class="{tried: listForm.listInput.$error.required && listAttempt}", ng-required="true", ng-model="newList", create-todo)
+			input.prompt#create-list(type="text", name="listInput", ng-class="{tried: listForm.listInput.$error.required && listAttempt}", ng-required="true", ng-model="newList", placeholder="New list", create-todo)
 			button.fa.fa-plus.submit#list-button(type="submit", todo-button="user.todos", todo-model="newList")
 		table#lists-list
 			thead
@@ -104,7 +104,7 @@ block content
 				i.fa.fa-bars
 			#todo-prompt What needs doing?
 			form.prompt-line#todo-line(name="todoForm", novalidate)
-				input.prompt#create-todo(type="text", name="todoInput", ng-class="{tried: todoForm.todoInput.$error.required && todoAttempt}", ng-required="true", ng-model="newTodo", create-todo)
+				input.prompt#create-todo(type="text", name="todoInput", ng-class="{tried: todoForm.todoInput.$error.required && todoAttempt}", ng-required="true", ng-model="newTodo", placeholder="New task", create-todo)
 				button.fa.fa-arrow-down.submit#todo-button(type="submit", todo-button="user.current.items", todo-model="newTodo")
 			i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
 			table#todo-list(ng-class="{hidden: !user.todos}")
