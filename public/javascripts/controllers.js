@@ -477,14 +477,16 @@
 			}).add({
 				combo: 'down',
 				description: 'Select the next task',
-				callback: function () {
+				callback: function (e, keypress) {
+					e.preventDefault();
 					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) + 1);
 				},
 				allowIn: ['input']
 			}).add({
 				combo: 'up',
 				description: 'Select the previous task',
-				callback: function () {
+				callback: function (e, keypress) {
+					e.preventDefault();
 					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) - 1);
 				},
 				allowIn: ['input']

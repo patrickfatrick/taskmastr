@@ -167,9 +167,6 @@ table {
 			&.deleting {
 				background: $red !important;
 				color: $white !important;
-				/*&:hover:not(.complete) {
-					background: $red !important;
-				}*/
 				&.active {
 					background: $red !important;
 				}

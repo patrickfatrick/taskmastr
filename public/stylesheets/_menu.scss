@@ -47,6 +47,9 @@
 	width: 80%;
 	line-height: 2rem;
 	font-size: 1.4rem;
+	@include input-placeholder {
+		color: $dimGray;
+	}
 }
 
 #list-button {
