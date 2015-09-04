@@ -198,8 +198,12 @@ table {
 			td.todo-cell {
 				input.rename {
 					line-height: 1.4rem;
-					font-size: 1rem;
+					font-size: inherit;
 					width: 100%;
+					background: transparent;
+					border: none;
+					border-bottom: 2px solid $oceanBlue;
+					@include selection ($deepBlue, $white);
 				}
 			}
 			i {
@@ -242,6 +246,7 @@ table {
 	text-transform: lowercase;
 	@include border-radius(15px);
 	@include animation(bounceInDown 300ms);
+	@include box-shadow (rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px);
 	@include susy-breakpoint(0px $small) {
 		width: 100%;
 		left: 0 !important;

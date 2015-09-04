@@ -46,6 +46,7 @@ input[type='password'] {
 		border: none;
 		border-bottom: 4px solid $slateGray;
 		background: transparent;
+		@include selection ($deepBlue, $white);
 		//@include single-box-shadow(0, 1px, 3px, null, $slateGray);
 		@include single-transition(border-color, 500ms, ease-out);
 		&.ng-invalid.tried,
