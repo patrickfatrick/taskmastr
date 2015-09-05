@@ -12,6 +12,7 @@
 	app.controller('UserController', ['$http', '$scope', '$log', '$location', 'hotkeys',
 		function ($http, $scope, $log, $location, hotkeys) {
 
+			$scope.user.todos = {};
 			/*******************************
 			 *******Server connections******
 			 *******************************/
@@ -19,34 +20,34 @@
 			/*********Session data*********/
 
 			$http.get('/session-data')
-				.success(function (data) {
+				.success(function (data, status) {
 					//$log.log('Get successful');
 					//$log.log(data);
-					if (data) {
-						$scope.user.username = data.username;
-						$scope.user.todos = data.todos;
-						_.each($scope.user.todos, function (val, i) {
-							if (!(_.find(val.items, 'current', true))) {
-								_.set(val.items[0], 'current', true);
-							}
+					//$log.log(status);
+					if (status === 204) return delete $scope.user.todos;
+					$scope.user.username = data.username;
+					if (data.hasOwnProperty('todos')) $scope.user.todos = data.todos;
+					_.each($scope.user.todos, function (val, i) {
+						if (!(_.find(val.items, 'current', true))) {
+							_.set(val.items[0], 'current', true);
+						}
+					});
+					$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+						list: "List 1",
+						current: true,
+						items: []
+					};
+					//$log.log($scope.user.current);
+					if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+					$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+					//$log.log('User profile mounted...');
+					//$log.log($scope.user);
+					_.each($scope.user.todos, function (val, i) {
+						if (!val.agendaID) val.agendaID = $scope.token();
+						_.each(val.items, function (itemVal, j) {
+							if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
 						});
-						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-							list: "List 1",
-							current: true,
-							items: []
-						};
-						//$log.log($scope.user.current);
-						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
-						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
-						//$log.log('User profile mounted...');
-						//$log.log($scope.user);
-						_.each($scope.user.todos, function (val, i) {
-							if (!val.agendaID) val.agendaID = $scope.token();
-							_.each(val.items, function (itemVal, j) {
-								if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
-							});
-						});
-					}
+					});
 				})
 				.error(function (data, status) {
 					$log.error('Get fail: ' + status);
@@ -163,21 +164,14 @@
 						$log.log(status);
 					});
 			};
-			
+
 			/*******Get placeholders*******/
-			
+
 			$scope.getPlaceholders = function (element) {
-				$http.get('/libraries/placeholders.json')
-					.success(function(data) {
-						var randIndex = Math.floor(Math.random() * data.placeholders.length);
-						element.attr('placeholder', data.placeholders[randIndex]);
-					})
-					.error(function(data, status) {
-						$log.log(status);
-						return {placeholders: 'New task'};
-					});
+				var randIndex = Math.floor(Math.random() * placeholders.placeholders.length);
+				element.attr('placeholder', placeholders.placeholders[randIndex]);
 			};
-			
+
 			/***********Log out************/
 
 			$scope.logout = function () {

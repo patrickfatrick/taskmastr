@@ -1,4 +1,4 @@
-{
+var placeholders = {
 	"placeholders": [
 		"Remind me to eat lunch tomorrow",
 		"/r meet Dave at the Punch Bowl next Monday",
