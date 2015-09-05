@@ -163,7 +163,22 @@
 						$log.log(status);
 					});
 			};
-
+			
+			/*******Get placeholders*******/
+			
+			$scope.getPlaceholders = function (element) {
+				$http.get('/libraries/placeholders.json')
+					.success(function(data) {
+						var randIndex = Math.floor(Math.random() * data.placeholders.length);
+						$log.log(randIndex);
+						element.attr('placeholder', data.placeholders[randIndex]);
+					})
+					.error(function(data, status) {
+						$log.log(status);
+						return {placeholders: 'New task'};
+					});
+			};
+			
 			/***********Log out************/
 
 			$scope.logout = function () {

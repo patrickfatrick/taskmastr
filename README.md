@@ -29,6 +29,11 @@ taskmastr has...
 taskmastr is updated regularly with new features
 
 #Changelog
+##New in v5.3.0
+Mostly aesthetic changes. Some are more noticeable than others, but the emphasis is making bright mode less abhorrent.
+
+Some changes were also inspired by Google's Material Design and [Material UI](http://material-ui.com/#/home).
+
 ##New in v5.2.0
 The entire app can now be controlled with the keyboard. See [this page](https://github.com/patrickfatrick/taskmastr/wiki/Keyboard-shortcuts) for details.
 

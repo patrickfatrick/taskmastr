@@ -104,7 +104,7 @@ block content
 				i.fa.fa-bars
 			#todo-prompt What needs doing?
 			form.prompt-line#todo-line(name="todoForm", novalidate)
-				input.prompt#create-todo(type="text", name="todoInput", ng-class="{tried: todoForm.todoInput.$error.required && todoAttempt}", ng-required="true", ng-model="newTodo", placeholder="New task", create-todo)
+				input.prompt.random-placeholder#create-todo(type="text", name="todoInput", ng-class="{tried: todoForm.todoInput.$error.required && todoAttempt}", ng-required="true", ng-model="newTodo", placeholder="New task", create-todo)
 				button.fa.fa-arrow-down.submit#todo-button(type="submit", todo-button="user.current.items", todo-model="newTodo")
 			i#loading.fa.fa-cog.fa-spin(ng-class="{hidden: !user.key || user.todos}")
 			table#todo-list(ng-class="{hidden: !user.todos}")
