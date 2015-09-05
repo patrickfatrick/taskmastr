@@ -170,7 +170,6 @@
 				$http.get('/libraries/placeholders.json')
 					.success(function(data) {
 						var randIndex = Math.floor(Math.random() * data.placeholders.length);
-						$log.log(randIndex);
 						element.attr('placeholder', data.placeholders[randIndex]);
 					})
 					.error(function(data, status) {

@@ -17,6 +17,7 @@
 
 #menu.toggled {
 	left: 0;
+	@include box-shadow (rgba(0, 0, 0, 0.30) 9px 0 70px, rgba(0, 0, 0, 0.22) 5px 0 30px);
 }
 
 #wiki {
@@ -47,8 +48,9 @@
 	width: 80%;
 	line-height: 2rem;
 	font-size: 1.4rem;
+	border-color: $dimGray * 1.8; 
 	@include input-placeholder {
-		color: $dimGray;
+		color: $dimGray * 1.8;
 	}
 }
 

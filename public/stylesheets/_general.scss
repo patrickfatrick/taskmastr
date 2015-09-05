@@ -52,7 +52,7 @@ input[type='password'] {
 		&.ng-invalid.tried,
 		&.invalid-password,
 		&.invalid-user {
-			border-color: $red;
+			border-color: $red !important;
 			@include animation(rubberBand 500ms);
 		}
 		&.disabled {
@@ -62,7 +62,7 @@ input[type='password'] {
 			color: $slateGray;
 		}
 		&:focus {
-			border-color: $deepBlue;
+			border-color: $deepBlue !important;
 		}
 	}
 	button.submit {
