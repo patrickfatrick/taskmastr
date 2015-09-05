@@ -86,9 +86,9 @@
 						element.val('');
 					}
 				});
-				if (element.hasClass('random-placeholder')) {
+				/*if (element.hasClass('random-placeholder')) {
 					scope.getPlaceholders(element);
-				}
+				}*/
 			}
 		}
 	});
