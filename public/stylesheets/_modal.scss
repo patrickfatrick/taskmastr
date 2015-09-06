@@ -77,7 +77,7 @@
 }
 
 .modal.ng-enter {
-	@include animation(bounceInDown 750ms);
+	@include animation(bounceInDown 500ms);
 }
 
 .modal.ng-leave {

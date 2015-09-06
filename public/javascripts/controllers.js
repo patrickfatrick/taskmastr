@@ -168,8 +168,13 @@
 			/*******Get placeholders*******/
 
 			$scope.getPlaceholders = function (element) {
-				var randIndex = Math.floor(Math.random() * placeholders.placeholders.length);
-				element.attr('placeholder', placeholders.placeholders[randIndex]);
+				$http.get('./libraries/placeholders.json')
+				.then(function (data) {
+					var randIndex = Math.floor(Math.random() * data.data.placeholders.length);
+					element.attr('placeholder', data.data.placeholders[randIndex]);
+				}, function (data) {
+					$log.log(data.status);
+				});
 			};
 
 			/***********Log out************/
