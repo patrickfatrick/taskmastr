@@ -13,6 +13,7 @@
 		function ($http, $scope, $log, $location, hotkeys) {
 
 			$scope.user.todos = {};
+			
 			/*******************************
 			 *******Server connections******
 			 *******************************/
@@ -335,7 +336,7 @@
 					});
 				} else {
 					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {
-						var char = (item.indexOf('Remind me to ') !== -1) ? 13 : 3;
+						var char = (item.indexOf('Remind me to ') !== -1 || item.indexOf('remind me to ') !== -1) ? 13 : 3;
 						var shortcut = (item.substring(0, char - 1));
 						var dateObj;
 						item = item.substring(char, item.length);
