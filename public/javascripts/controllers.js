@@ -62,36 +62,37 @@
 						key: key,
 						rememberMe: rememberMe
 					})
-					.success(function (data) {
+					.success(function (data, status) {
 						//$log.log(data);
-						if (data) {
-							$scope.user.todos = data.todos;
-							_.each($scope.user.todos, function (val, i) {
-								if (!(_.find(val.items, 'current', true))) {
-									_.set(val.items[0], 'current', true);
-								}
-							});
-							$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-								list: "List 1",
-								current: true,
-								items: []
-							};
-							//$log.log($scope.user.current);
-							//$scope.user.todos = $scope.user.current.items;
-							if (data.hasOwnProperty('key')) $scope.user.key = data.key;
-							$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
-							//$log.log('User profile mounted...');
-							//$log.log($scope.user);
-							_.each($scope.user.todos, function (val, i) {
-								if (!val.agendaID) val.agendaID = $scope.token();
-								_.each(val.items, function (itemVal, j) {
-									if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
-								});
-							});
-						} else {
+						//$log.log(status);
+						if (status === 204) {
 							$scope.confirmPassword = true;
 							$scope.invalidPassword = false;
+							return;
 						}
+						$scope.user.todos = data.todos;
+						_.each($scope.user.todos, function (val, i) {
+							if (!(_.find(val.items, 'current', true))) {
+								_.set(val.items[0], 'current', true);
+							}
+						});
+						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+							list: "List 1",
+							current: true,
+							items: []
+						};
+						//$log.log($scope.user.current);
+						//$scope.user.todos = $scope.user.current.items;
+						if (data.hasOwnProperty('key')) $scope.user.key = data.key;
+						$scope.user.darkmode = (data.hasOwnProperty('darkmode')) ? data.darkmode : false;
+						//$log.log('User profile mounted...');
+						//$log.log($scope.user);
+						_.each($scope.user.todos, function (val, i) {
+							if (!val.agendaID) val.agendaID = $scope.token();
+							_.each(val.items, function (itemVal, j) {
+								if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
+							});
+						});
 					})
 					.error(function (data, status) {
 						//$log.log('Error connecting to db!');
@@ -112,7 +113,7 @@
 						rememberMe: rememberMe
 					})
 					.success(function (data) {
-						$log.log(data);
+						//$log.log(data);
 						$scope.user.todos = (data.todos) ? data.todos : [{
 							list: "List 1",
 							current: true,
@@ -169,12 +170,12 @@
 
 			$scope.getPlaceholders = function (element) {
 				$http.get('./libraries/placeholders.json')
-				.then(function (data) {
-					var randIndex = Math.floor(Math.random() * data.data.placeholders.length);
-					element.attr('placeholder', data.data.placeholders[randIndex]);
-				}, function (data) {
-					$log.log(data.status);
-				});
+					.then(function (data) {
+						var randIndex = Math.floor(Math.random() * data.data.placeholders.length);
+						element.attr('placeholder', data.data.placeholders[randIndex]);
+					}, function (data) {
+						$log.log(data.status);
+					});
 			};
 
 			/***********Log out************/

@@ -32,12 +32,12 @@ block content
 					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt && loginAttempt && !forgot, 'invalid-password': invalidPassword, disabled: forgot}")
 					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
 				.error-text
-					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pwmatch") 
+					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pattern") 
 						| No user found. Please confirm your password.
 					label(ng-show="userForm.confirm.$error.pattern")
 						| Passwords don't match.
 				.prompt-line#confirm-line(ng-show="confirmPassword", confirm-password)
-					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", ng-pattern="user.key", ng-class="{tried: confirmAttempt && userForm.confirm.$error.pattern, 'invalid-password': confirmAttempt && userForm.confirm.$error.pattern}")
+					input.prompt#confirm(type="password", name="confirm", ng-model="user.confirm", placeholder="Password", ng-required="confirmPassword", ng-pattern="user.key", ng-class="{tried: confirmAttempt && userForm.confirm.$error.pattern, 'invalid-password': (confirmAttempt && userForm.confirm.$error.pattern) || confirmAttempt && userForm.confirm.$error.required}")
 					button.fa.fa-arrow-right.submit#confirm-button(type="submit")
 				#remember
 					input.check#remember-me(name="rememeber-me", type="checkbox", ng-model="rememberMe", ng-checked="rememberMe")
