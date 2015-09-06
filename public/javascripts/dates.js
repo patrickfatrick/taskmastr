@@ -25,7 +25,7 @@ function dateStrs(item) {
 	var momentObj = moment(item.slice(keyword, item.length), dateFormats);
 	var dateObj = (momentObj.isValid()) ? momentObj._d : date(item.slice(keyword, item.length));
 	//console.log('Date: ' + dateObj);
-	if (Date.parse(dateObj) <= Date.now()) {
+	if (Date.parse(dateObj) <= moment().startOf('day')._d) {
 		dateObj = moment(dateObj).add(1, 'y')._d;
 		item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
 	} else {
