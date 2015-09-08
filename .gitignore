@@ -4,7 +4,6 @@ node_modules
 
 #Bower dependencies
 public/bower
-public/jspm_packages
 
 #data
 data
