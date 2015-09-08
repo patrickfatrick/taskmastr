@@ -1,3 +1,4 @@
+/*
 var gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	uglify = require('gulp-uglify'),
@@ -78,3 +79,9 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['watch', 'js', 'compass', 'jade']);
+*/
+
+var requireDir = require('require-dir');
+
+// Require all tasks in gulp/tasks, including subfolders
+requireDir('./gulp/tasks', { recurse: true });

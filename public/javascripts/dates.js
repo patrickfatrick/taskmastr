@@ -1,4 +1,7 @@
-function dateStrs(item) {
+import moment from '../bower/moment/min/moment.min';
+import date from '../libraries/date.js/dist/date.min';
+
+export default function (item) {
 	var keywords = [
 		'next', ' on ', 'tomorrow',
 		'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',

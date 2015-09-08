@@ -7,7 +7,11 @@ html(ng-app="taskmastrApp")
 		meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
 		base(href="/")
 		link(rel="apple-touch-icon", href="../images/iphone-icon.png")
-		link(rel="stylesheet", href="/stylesheets/styles.css")
-		script(type="text/javascript", src="/javascripts/script.js")
+		link(rel="stylesheet", href="/dist/stylesheets/styles.css")
+		//script(src="jspm_packages/system.js")
+		//script(src="config.js")
+		//script(type='text/javascript').
+			System.import('./dist/javascripts/index')
+		script(type="text/javascript", src="/dist/javascripts/index.js")
 	body(ng-controller="UserController as user", ng-class="{'dark-mode': user.darkmode}")
 		block content

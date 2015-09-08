@@ -40,6 +40,11 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(cookieParser("suzy eats a suzy snack"));
+
+if (app.get('env') === 'development') {
+  app.use(require('connect-livereload')());
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession({

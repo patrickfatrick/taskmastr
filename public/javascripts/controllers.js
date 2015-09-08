@@ -1,4 +1,11 @@
-(function () {
+import angular from '../bower/angular';
+import _ from '../bower/lodash/lodash';
+import '../bower/Sortable/Sortable';
+import '../bower/Sortable/ng-sortable';
+import hotkeys from '../bower/angular-hotkeys/build/hotkeys';
+import dateStrs from './dates';
+
+export default function controllers () {
 	'use strict';
 	/* Controllers */
 
@@ -579,4 +586,4 @@
 			});
 		}
 	]);
-})();
+}

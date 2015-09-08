@@ -1,13 +1,18 @@
-(function () {
+import angular from '../bower/angular';
+import $ from '../bower/jquery/dist/jquery';
+import _ from '../bower/lodash/lodash';
+import {windowWidth} from './interactions'; 
+
+export default function directives () {
 	var app = angular.module('taskmastrDirectives', []);
 	// timoutID set for 'delete' directive timer
 	var timeoutID;
 	var pending = {};
 
 	// Handler to prevent auto-focuses on text inputs for mobile
-	function windowWidth() {
+	/*function windowWidth() {
 		return ($(window).width() > 768) ? true : false;
-	}
+	}*/
 
 	app.directive('complete', function () {
 		return {
@@ -420,4 +425,4 @@
 			}
 		}
 	});
-})();
+}
