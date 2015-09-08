@@ -1,1 +1,0 @@
-module.exports = require("npm:animate.css@3.4.0/animate.css!");

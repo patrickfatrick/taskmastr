@@ -1,1 +1,0 @@
-module.exports = require("github:chieffancypants/angular-hotkeys@1.5.0/build/hotkeys");

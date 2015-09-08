@@ -1,1 +1,0 @@
-module.exports = require("github:angular-ui/ui-date@0.0.8/src/date");
