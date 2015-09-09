@@ -1,7 +1,14 @@
 var gulp = require('gulp');
-var gls = require('gulp-live-server');
-var server = gls('./bin/www', {env: {NODE_ENV: 'development'}}, false);
+var nodemon = require('gulp-nodemon');
+var config = require('../config').nodemon;
+var livereload = require('gulp-livereload');
+var notify = require('gulp-notify');
 
-gulp.task('server', function() {
-  server.start();
+gulp.task('server', function () {
+	nodemon(config)
+	.on('restart', function () {
+		gulp.src(config.script)
+		.pipe(livereload())
+		.pipe(notify('Restarting...'));
+	});
 });

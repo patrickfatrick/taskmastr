@@ -48,15 +48,19 @@ module.exports = {
 		],
 		tasks: ['build']
 	},
-	browserSync: {
-		options: {
-			proxy: 'localhost:3000',
-			port: 8080,
-			files: [
-				dest + '/stylesheets/**/*.*',
-				dest + '/javascripts/**/*.*',
-				'../views/*.jade'
-			]
-		}
+	nodemon: {
+		script: 'bin/www',
+		ext: 'js jade css',
+		env: {
+			NODE_ENV: 'development'
+		},
+		ignore: [
+			'node_modules/**/*',
+			'data/**/*',
+			'.sass-cache/**/*',
+			'public/**/*',
+			'gulpfile.js',
+			'gulp/**/*'
+		]
 	}
 };
