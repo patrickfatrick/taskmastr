@@ -1,22 +1,23 @@
-import $ from '../bower/jquery/dist/jquery';
-import velocity from '../bower/velocity/velocity';
+import $ from 'jquery';
+import jQuery from 'jquery';
+import velocity from 'velocity';
 
-var interactions = {};
+//var interactions = {};
 
-interactions.tap = ("ontouchstart" in document.documentElement);
+var tap = ("ontouchstart" in document.documentElement);
 
 // Handler to prevent auto-focuses on text inputs for mobile
-interactions.windowWidth = function () {
+export function windowWidth () {
 	return ($(window).width() > 768) ? true : false;
 }
 
-interactions.keyModal = function () {
-	if (interactions.windowWidth()) {
+export function keyModal () {
+	if (windowWidth()) {
 		$('#user').focus();
 	}
 }
 
-interactions.renameItem = function () {
+export function renameItem () {
 	$('table tbody').on('dblclick', '.name', function () {
 		$(this).hide();
 		$(this).siblings('.rename').show().select();
@@ -51,8 +52,8 @@ interactions.renameItem = function () {
 	);
 }
 
-interactions.todoHover = function () {
-	if (!(interactions.tap)) {
+export function todoHover () {
+	if (!(tap)) {
 		$('#content table tbody').on('mouseenter', 'tr:not(".complete"):not(".deleting")', function () {
 			$(this).stop().velocity({
 				backgroundColor: '#00B0FF',
@@ -71,5 +72,3 @@ interactions.todoHover = function () {
 		});
 	}
 }
-
-module.exports = interactions;

@@ -1,4 +1,3 @@
-/* ---------- Compass Defaults ---------- */
 /* ---------- Color Palette ---------- */
 
 $white: #FFF;
@@ -18,19 +17,15 @@ $nightDark: #353459;
 $nightLight: #8A63D4;
 $brightDark: #C1F0F6;
 $brightLight: #E9F6FC;
+
 /* ---------- Fonts ---------- */
 
 $josefin: "Josefin Sans", sans-serif;
 $cardo: "Cardo", serif;
 $raleway: "Raleway", sans-serif;
-/* ---------- Susy Settings ---------- */
 
-$susy: (
-	columns: 12,
-	gutters: 0.25,
-	column-width: 4em
-);
-@include border-box-sizing;
+/* ---------- Neat Settings ---------- */
+
 $small: 480px;
 $medsmall: 650px;
 $medium: 768px;
@@ -45,29 +40,29 @@ $large: 1200px;
 }
 
 @mixin text-effect($color) {
-	@include single-text-shadow(2px, 2px, 0, null, $color * 0.8);
+	text-shadow: 2px 2px 0 $color * 0.8;
 	&:hover {
 		top: 7px;
 		left: 14px;
-		@include single-text-shadow(4px, 4px, 0, null, $color * 0.8);
+		text-shadow: 4px 4px 0 $color * 0.8;
 	}
 	&:active {
 		top: 0.6rem !important;
 		left: 1rem !important;
-		@include single-text-shadow(2px, 2px, 0, null, $color * 0.8);
+		text-shadow: 2px 2px 0 $color * 0.8;
 	}
 }
 
 @mixin button-effect($color, $bottomHover, $bottomActive) {
-	@include single-box-shadow(2px, 2px, 0, null, $color * 0.8);
+	box-shadow: 2px 2px 0 $color * 0.8;
 	&:hover {
 		bottom: $bottomHover;
 		left: -2px;
-		@include single-box-shadow(4px, 4px, 0, null, $color * 0.8);
+		box-shadow: 4px 4px 0 $color * 0.8;
 	}
 	&:active {
 		bottom: $bottomActive;
 		left: 0;
-		@include single-box-shadow(2px, 2px, 0, null, $color * 0.8);
+		box-shadow: 2px 2px 0 $color * 0.8;
 	}
 }

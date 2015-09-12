@@ -1,10 +1,10 @@
 var gulp = require('gulp');
-//var gls = require('gulp-live-server');
-//var server = gls('./bin/www', {env: {NODE_ENV: 'development'}});
 var livereload = require('gulp-livereload');
-//var browserSync = require('browser-sync');
-var config = require('../config').watch;
+var notify = require('gulp-notify');
+var config = require('../config');
 
-gulp.task('build', ['browserify', 'styles', 'jade'], function() {
-  gulp.src(config.src).pipe(livereload());
+gulp.task('build', ['systemjs', 'styles', 'jade'], function() {
+  gulp.src([config.sass.src, config.systemjs.src, config.jade.src])
+	.pipe(livereload())
+	.pipe(notify('Refreshing...'));
 });

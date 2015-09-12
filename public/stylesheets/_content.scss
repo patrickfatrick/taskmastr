@@ -1,10 +1,10 @@
 #content {
 	height: 100%;
-	@include single-transition(margin-left, 200ms, ease-out);
+	@include transition(margin-left 200ms ease-out);
 }
 
 #content.menued {
-	@include susy-breakpoint($medlarge) {
+	@include media(min-width $medlarge) {
 		margin-left: 250px;
 	}
 }
@@ -16,7 +16,7 @@
 	padding-bottom: 20%;
 	overflow: scroll;
 	@include center;
-	@include susy-breakpoint($medlarge) {
+	@include media(min-width $medlarge) {
 		position: relative;
 	}
 }
@@ -29,11 +29,11 @@
 	iframe {
 		width: 320px;
 		height: 180px;
-		@include susy-breakpoint($small) {
+		@include media(min-width $small) {
 			width: 384px;
 			height: 216px;
 		}
-		@include susy-breakpoint($medium) {
+		@include media(min-width $medium) {
 			width: 560px;
 			height: 315px;
 		}
@@ -52,15 +52,15 @@
 	z-index: 3;
 	font-size: 1.4rem;
 	color: $white;
-	@include single-transition(all, 200ms, ease-out);
-	@include susy-breakpoint($medlarge) {
+	@include transition(all 200ms ease-out);
+	@include media(min-width $medlarge) {
 		top: 100px;
 	}
 }
 
 #icon-menu.toggled {
 	margin-left: 250px;
-	@include susy-breakpoint($medlarge) {
+	@include media(min-width $medlarge) {
 		left: 0;
 	}
 }
@@ -68,7 +68,7 @@
 #todo-prompt {
 	margin-bottom: 10px;
 	font-size: 2rem;
-	@include susy-breakpoint($medsmall) {
+	@include media(min-width $medsmall) {
 		font-size: 2.5rem;
 		width: 60%;
 		@include center;
@@ -76,12 +76,12 @@
 }
 
 #todo-line {
-	@include susy-breakpoint($medium) {
+	@include media(min-width $medium) {
 		width: 60%;
 	}
 	#create-todo {
 		width: 70%;
-		@include susy-breakpoint($medium) {
+		@include media(min-width $medium) {
 			width: 89%;
 		}
 	}
@@ -122,8 +122,9 @@ table {
 	margin-top: 1rem;
 	width: 100%;
 	margin-right: 1rem;
+	text-align: left;
 	@include center;
-	@include susy-breakpoint($medium) {
+	@include media(min-width $medium) {
 		width: 60%;
 	}
 	thead {
@@ -131,7 +132,7 @@ table {
 	}
 	tbody {
 		tr {
-			@include single-transition(unset);
+			@include transition(unset);
 			&.complete {
 				color: $completeGray;
 				background: transparent !important;
@@ -180,7 +181,7 @@ table {
 			&.ng-leave-active,
 			&.ng-move,
 			&.ng-move-active {
-				@include single-transition(unset);
+				@include transition(unset);
 			}
 			&.ng-enter {
 				@include animation(bounceInLeft 400ms);
@@ -203,20 +204,23 @@ table {
 					background: transparent;
 					border: none;
 					border-bottom: 2px solid $oceanBlue;
-					@include selection ($deepBlue, $white);
+					@include selection(true) {
+						background-color: $deepBlue;
+						color: $white;
+					}
 				}
 			}
 			i {
 				cursor: pointer;
 				font-size: 1.4rem !important;
 				padding: 0.2rem;
-				@include susy-breakpoint($medium) {
+				@include media(min-width $medium) {
 					font-size: 1.2rem !important;
 				}
 			}
 			td.utils {
 				width: 8.3rem;
-				@include susy-breakpoint($medium) {
+				@include media(min-width $medium) {
 					width: 7.2rem;
 				}
 				.sort {
@@ -244,21 +248,21 @@ table {
 	font-size: 1rem;
 	margin-top: 20px;
 	text-transform: lowercase;
-	@include border-radius(15px);
+	border-radius: 15px;
 	@include animation(bounceInDown 300ms);
-	@include box-shadow (rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px);
-	@include susy-breakpoint(0px $small) {
+	box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+	@include media(max-width $small) {
 		width: 100%;
 		left: 0 !important;
 	}
-	@include susy-breakpoint($medium) {
+	@include media(min-width $medium) {
 		margin-left: -165px;
 	}
 	.ui-datepicker-header {
 		background: $orchid;
 		font-weight: normal;
 		border: none;
-		@include border-radius(15px 15px 0 0);
+		@include border-top-radius(15px);
 	}
 	.ui-datepicker-prev,
 	.ui-datepicker-next {
@@ -287,7 +291,7 @@ table {
 	}
 	.ui-datepicker-calendar {
 		margin-top: 0.4em;
-		@include susy-breakpoint(0px $small) {
+		@include media(max-width $small) {
 			height: 150px;
 		}
 		th {

@@ -9,11 +9,9 @@ body {
 	color: $black;
 	font-family: $cardo;
 	font-size: 1rem;
-	@include single-transition(all, 1s, ease-out);
-	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight));
-	@include background-size(auto 300%);
-	background-position: bottom;
-	@include susy-breakpoint($small) {
+	@include transition(all 1s ease-out);
+	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight) bottom / auto 300%);
+	@include media(min-width $small) {
 		font-size: 1.4rem;
 	}
 	&.dark-mode {
@@ -34,7 +32,7 @@ input[type='password'] {
 	white-space: nowrap;
 	text-align: right;
 	@include center;
-	@include susy-breakpoint($small) {
+	@include media(min-width $small) {
 		text-align: center;
 	}
 	.prompt {
@@ -46,8 +44,11 @@ input[type='password'] {
 		border: none;
 		border-bottom: 4px solid $slateGray;
 		background: transparent;
-		@include selection ($deepBlue, $white);
-		@include single-transition(border-color, 500ms, ease-out);
+		@include selection {
+			background: $deepBlue;
+			color: $white;
+		}
+		@include transition(border-color 500ms ease-out);
 		&.ng-invalid.tried,
 		&.invalid-password,
 		&.invalid-user {
@@ -57,7 +58,7 @@ input[type='password'] {
 		&.disabled {
 			background-color: $azure;
 		}
-		@include input-placeholder {
+		@include placeholder {
 			color: $slateGray;
 		}
 		&:focus {
@@ -93,8 +94,8 @@ input[type='password'] {
 	cursor: pointer;
 	border: 0;
 	outline: 0;
+	border-radius: 20px;
 	@include center;
-	@include border-radius(20px);
 	@include button-effect($orchid, 2px, 0);
 }
 

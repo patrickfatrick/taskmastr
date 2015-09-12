@@ -9,15 +9,15 @@
 	left: -250px;
 	color: $white;
 	padding: 3.1rem 0 2rem 0;
-	@include single-transition(all, 200ms, ease-out);
-	@include susy-breakpoint($medlarge) {
+	@include transition(all 200ms ease-out);
+	@include media(min-width $medlarge) {
 		padding: 4.7rem 0 2rem 0;
 	}
 }
 
 #menu.toggled {
 	left: 0;
-	@include box-shadow (rgba(0, 0, 0, 0.30) 9px 0 70px, rgba(0, 0, 0, 0.22) 5px 0 30px);
+	box-shadow: rgba(0, 0, 0, 0.30) 9px 0 70px, rgba(0, 0, 0, 0.22) 5px 0 30px;
 }
 
 #wiki {
@@ -49,7 +49,7 @@
 	line-height: 2rem;
 	font-size: 1.4rem;
 	border-color: $dimGray * 1.8; 
-	@include input-placeholder {
+	@include placeholder {
 		color: $dimGray * 1.8;
 	}
 }
@@ -73,7 +73,7 @@
 	}
 	td.utils {
 		width: 6.3rem;
-		@include susy-breakpoint($medium) {
+		@include media(min-width $medium) {
 			width: 5.5rem;
 		}
 	}

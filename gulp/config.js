@@ -4,49 +4,55 @@ var gutil = require('gulp-util');
 
 module.exports = {
 	sass: {
-		src: src + './public/stylesheets/**/*.scss',
+		src: src + '/stylesheets/styles.scss',
 		dest: dest + '/stylesheets',
 		settings: {
-			config_file: './config.rb',
-			css: dest + '/stylesheets',
-			sass: src + '/stylesheets',
-			sourcemap: true
+			outputStyle: 'compressed'
 		}
 	},
-	browserify: {
-		settings: {
-			transform: [['babelify', {
-				compact: false
-			}]]
-		},
+	dependencies: {
 		src: [
-			/*src + '/bower/jquery/dist/jquery.min.js',
-			src + '/libraries/jquery-ui/jquery-ui.js',
-			src + '/bower/lodash/lodash.min.js',
-			src + '/bower/velocity/velocity.min.js',
-			src + '/bower/moment/min/moment.min.js',
-			src + '/libraries/date.js/dist/date.min.js',
-			src + '/bower/angular-touch/angular-touch.min.js',
-			src + '/bower/angular-animate/angular-animate.js',
-			src + '/bower/angular-ui-date/src/date.js',
-			src + '/bower/Sortable/Sortable.js',
-			src + '/bower/Sortable/ng-sortable.js',*/
-			src + '/javascripts/app.js'
+		src + '/bower/jquery/dist/jquery.min.js',
+		src + '/libraries/jquery-ui/jquery-ui.js',
+		src + '/bower/lodash/lodash.min.js',
+		src + '/bower/velocity/velocity.min.js',
+		src + '/bower/moment/min/moment.min.js',
+		src + '/libraries/date.js/dist/date.min.js',
+		src + '/bower/angular/angular.min.js',
+		src + '/bower/angular-touch/angular-touch.min.js',
+		src + '/bower/angular-animate/angular-animate.js',
+		src + '/bower/angular-ui-date/src/date.js',
+		src + '/bower/Sortable/Sortable.js',
+		src + '/bower/Sortable/ng-sortable.js',
+		src + '/bower/angular-hotkeys/build/hotkeys.min.js'
 		],
-		dest: dest + '/javascripts',
-		outputName: 'index.js',
-		debug: gutil.env.type === 'dev'
+		dest: dest + '/javascripts/dependencies.js'
+	},
+	systemjs: {
+		options: {
+			sourceMaps: true,
+			minify: true
+		},
+		config: src + '/config.js',
+		src: src + '/javascripts/app.js',
+		dest: dest + '/javascripts/index.js'
 	},
 	jade: {
 		src: '../views/*.jade'
 	},
 	watch: {
-		src: [
-			dest + '/stylesheets/**/*.*',
-			src + '/javascripts/**/*.*',
-			'../views/*.jade'
-		],
-		tasks: ['build']
+		sass: {
+			src: src + '/stylesheets/*.scss',
+			tasks: ['styles']
+		},
+		systemjs: {
+			src: src + '/javascripts/**/*',
+			tasks: ['systemjs']
+		},
+		jade: {
+			src: './views/**/*',
+			tasks: ['jade']
+		}
 	},
 	nodemon: {
 		script: 'bin/www',
@@ -60,7 +66,8 @@ module.exports = {
 			'.sass-cache/**/*',
 			'public/**/*',
 			'gulpfile.js',
-			'gulp/**/*'
+			'gulp/**/*',
+			'views/**/*'
 		]
 	}
 };
