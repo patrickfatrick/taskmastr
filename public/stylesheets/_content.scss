@@ -121,6 +121,7 @@
 }
 
 table {
+	display: none;
 	table-layout: auto;
 	margin-top: 1rem;
 	width: 100%;
@@ -129,6 +130,9 @@ table {
 	@include center;
 	@include media(min-width $medium) {
 		width: 60%;
+	}
+	&.ng-scope {
+		display: table;
 	}
 	thead {
 		display: none;
