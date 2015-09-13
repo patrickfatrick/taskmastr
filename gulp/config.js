@@ -38,7 +38,7 @@ module.exports = {
 		dest: dest + '/javascripts/index.js'
 	},
 	jade: {
-		src: '../views/*.jade'
+		src: './views/**/*'
 	},
 	watch: {
 		sass: {

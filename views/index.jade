@@ -1,8 +1,8 @@
 extends layout
 
 block content
-	#mask(ng-if="!user.todos")
-	.modal#key-modal.animated(ng-if="!user.todos")
+	#mask(ng-if="!user.todos", ng-show="!user.todos")
+	.modal#key-modal.animated(ng-if="!user.todos", ng-show="!user.todos")
 		.modal-header
 			h1#headline Taskmastr
 		.modal-body#key-ask(ng-if="!resetForm")
@@ -128,4 +128,4 @@ block content
 							i.fa.fa-arrows-v.sort
 							i.fa.fa-pencil.rename-button
 							i.fa.fa-trash-o.delete-button(delete-button="user.current.items", delete-index="todo.agendaID")
-			#save-button.button(ng-if="saveButton", save) Save
+			#save-button.button(ng-if="saveButton", ng-show="saveButton", save) Save
