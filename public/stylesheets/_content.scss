@@ -17,11 +17,7 @@
 	padding-bottom: 20%;
 	overflow: scroll;
 	@include center;
-	/*@include span-columns(12);
-	@include media(min-width $medium) {
-			@include span-columns(6);
-			@include shift(3);
-		}*/
+	@include outer-container;
 	@include media(min-width $medlarge) {
 		position: relative;
 	}
@@ -39,6 +35,7 @@
 			width: 384px;
 			height: 216px;
 		}
+
 		@include media(min-width $medium) {
 			width: 560px;
 			height: 315px;
@@ -74,16 +71,26 @@
 #todo-prompt {
 	margin-bottom: 10px;
 	font-size: 2rem;
+	@include center;
+	@include span-columns(14);
 	@include media(min-width $medsmall) {
 		font-size: 2.5rem;
-		width: 60%;
-		@include center;
+		//width: 60%;
+	}
+	@include media(min-width $medium) {
+		@include span-columns(8 of 14);
+		@include shift(3 of 14);
 	}
 }
 
 #todo-line {
-	@include media(min-width $medium) {
+	/*@include media(min-width $medium) {
 		width: 60%;
+	}*/
+	@include span-columns(13);
+	@include media(min-width $medium) {
+		@include span-columns(8 of 14);
+		@include shift(3 of 14);
 	}
 	#create-todo {
 		width: 70%;
@@ -133,9 +140,9 @@ table {
 	margin-right: 1rem;
 	text-align: left;
 	@include center;
-	@include media(min-width $medium) {
+	/*@include media(min-width $medium) {
 		width: 60%;
-	}
+	}*/
 	thead {
 		display: none;
 	}
@@ -232,6 +239,7 @@ table {
 				@include media(min-width $medium) {
 					width: 7.2rem;
 				}
+
 				.sort {
 					padding: 0 8px 0 8px;
 				}
@@ -251,6 +259,11 @@ table {
 	}
 	&#todo-list {
 		display: none;
+		@include span-columns(14);
+		@include media(min-width $medium) {
+			@include span-columns(8 of 14);
+			@include shift(3 of 14);
+		}
 		&.ng-scope {
 			display: table;
 		}
@@ -265,14 +278,16 @@ table {
 	text-transform: lowercase;
 	border-radius: 15px;
 	@include animation(bounceInDown 300ms);
-	box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
 	@include media(max-width $small) {
 		width: 100%;
 		left: 0 !important;
 	}
+
 	@include media(min-width $medium) {
 		margin-left: -165px;
 	}
+
 	.ui-datepicker-header {
 		background: $orchid;
 		font-weight: normal;
@@ -309,6 +324,7 @@ table {
 		@include media(max-width $small) {
 			height: 150px;
 		}
+
 		th {
 			width: 1rem;
 			padding-left: 0 !important;

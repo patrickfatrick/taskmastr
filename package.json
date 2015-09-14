@@ -51,6 +51,7 @@
     "jspm": "^0.16.2",
     "matchdep": "^0.3.0",
     "require-dir": "^0.3.0",
+    "systemjs-builder": "^0.13.6",
     "tiny-lr": "^0.1.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
@@ -70,7 +71,6 @@
       "es6-module-loader": "npm:es6-module-loader@^0.17.7",
       "geoffgraham/animate.scss": "github:geoffgraham/animate.scss@^3.2.0",
       "jquery": "github:components/jquery@^2.1.4",
-      "jquery-ui": "github:components/jquery-ui/jquery-ui",
       "lodash": "npm:lodash@^3.10.1",
       "moment": "github:moment/moment@^2.10.6",
       "velocity": "github:julianshapiro/velocity@^1.2.2"
