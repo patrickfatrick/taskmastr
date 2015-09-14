@@ -1,13 +1,13 @@
-@import url("../../stylesheets/jquery-ui.css");
-
 @import "./bourbon/bourbon";
 @import "./neat/neat";
 @import "./animate/animate";
+@import "./jquery-ui/jquery-ui";
 
 @import "../fonts/josefin-sans/josefin-sans";
 @import "../fonts/cardo/cardo";
 @import "../fonts/raleway/raleway";
 @import "../fonts/font-awesome/scss/font-awesome";
+
 @import "reset";
 @import "variables";
 @import "general";

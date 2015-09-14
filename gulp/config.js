@@ -10,24 +10,6 @@ module.exports = {
 			outputStyle: 'compressed'
 		}
 	},
-	dependencies: {
-		src: [
-		src + '/bower/jquery/dist/jquery.min.js',
-		src + '/libraries/jquery-ui/jquery-ui.js',
-		src + '/bower/lodash/lodash.min.js',
-		src + '/bower/velocity/velocity.min.js',
-		src + '/bower/moment/min/moment.min.js',
-		src + '/libraries/date.js/dist/date.min.js',
-		src + '/bower/angular/angular.min.js',
-		src + '/bower/angular-touch/angular-touch.min.js',
-		src + '/bower/angular-animate/angular-animate.js',
-		src + '/bower/angular-ui-date/src/date.js',
-		src + '/bower/Sortable/Sortable.js',
-		src + '/bower/Sortable/ng-sortable.js',
-		src + '/bower/angular-hotkeys/build/hotkeys.min.js'
-		],
-		dest: dest + '/javascripts/dependencies.js'
-	},
 	systemjs: {
 		options: {
 			sourceMaps: true,
@@ -56,7 +38,7 @@ module.exports = {
 	},
 	nodemon: {
 		script: 'bin/www',
-		ext: 'js jade css',
+		ext: 'js',
 		env: {
 			NODE_ENV: 'development'
 		},

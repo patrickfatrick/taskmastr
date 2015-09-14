@@ -1,4 +1,5 @@
 #content {
+	//@include outer-container;
 	height: 100%;
 	@include transition(margin-left 200ms ease-out);
 }
@@ -16,6 +17,11 @@
 	padding-bottom: 20%;
 	overflow: scroll;
 	@include center;
+	/*@include span-columns(12);
+	@include media(min-width $medium) {
+			@include span-columns(6);
+			@include shift(3);
+		}*/
 	@include media(min-width $medlarge) {
 		position: relative;
 	}
@@ -113,7 +119,7 @@
 
 #loading {
 	margin-top: 3rem;
-	font-size: 3rem;
+	font-size: 5rem;
 }
 
 .hidden {
@@ -121,7 +127,6 @@
 }
 
 table {
-	display: none;
 	table-layout: auto;
 	margin-top: 1rem;
 	width: 100%;
@@ -130,9 +135,6 @@ table {
 	@include center;
 	@include media(min-width $medium) {
 		width: 60%;
-	}
-	&.ng-scope {
-		display: table;
 	}
 	thead {
 		display: none;
@@ -245,6 +247,12 @@ table {
 					height: 1px;
 				}
 			}
+		}
+	}
+	&#todo-list {
+		display: none;
+		&.ng-scope {
+			display: table;
 		}
 	}
 }

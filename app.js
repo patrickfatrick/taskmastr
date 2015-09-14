@@ -41,8 +41,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser("suzy eats a suzy snack"));
 
+//Start livereload server in dev
 if (app.get('env') === 'development') {
-  app.use(require('connect-livereload')());
+  app.use(require('connect-livereload')({
+    port: 35729
+  }));
 }
 
 app.use(express.static(path.join(__dirname, 'public')));

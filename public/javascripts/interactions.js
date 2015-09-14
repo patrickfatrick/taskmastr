@@ -2,8 +2,6 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 import velocity from 'velocity';
 
-//var interactions = {};
-
 var tap = ("ontouchstart" in document.documentElement);
 
 // Handler to prevent auto-focuses on text inputs for mobile
