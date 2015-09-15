@@ -51,5 +51,8 @@ module.exports = {
 			'gulp/**/*',
 			'views/**/*'
 		]
+	},
+	mongo: {
+		dir: './data'
 	}
 };
