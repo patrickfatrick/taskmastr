@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import jQuery from 'jquery';
-import 'jquery-ui';
+import '../../../libraries/jquery-ui/jquery-ui';
 import angular from 'angular';
 import _ from 'lodash';
 import 'Sortable';

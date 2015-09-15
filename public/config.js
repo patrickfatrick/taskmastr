@@ -31,7 +31,6 @@ System.config({
     "geoffgraham/animate.scss": "github:geoffgraham/animate.scss@3.2.0",
     "interactions": "javascripts/interactions",
     "jquery": "github:components/jquery@2.1.4",
-    "jquery-ui": "github:components/jquery-ui/jquery-ui",
     "lodash": "npm:lodash@3.10.1",
     "moment": "github:moment/moment@2.10.6",
     "ng-sortable": "github:RubaXa/Sortable@1.2.1/ng-sortable",

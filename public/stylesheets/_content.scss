@@ -127,6 +127,7 @@
 #loading {
 	margin-top: 3rem;
 	font-size: 5rem;
+	@include span-columns(14);
 }
 
 .hidden {
@@ -258,14 +259,14 @@ table {
 		}
 	}
 	&#todo-list {
-		display: none;
 		@include span-columns(14);
 		@include media(min-width $medium) {
 			@include span-columns(8 of 14);
 			@include shift(3 of 14);
 		}
+		display: none !important;
 		&.ng-scope {
-			display: table;
+			display: table !important;
 		}
 	}
 }
