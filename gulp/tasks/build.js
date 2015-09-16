@@ -6,5 +6,5 @@ var config = require('../config');
 gulp.task('build', ['systemjs', 'styles', 'jade'], function() {
   gulp.src([config.sass.src, config.systemjs.src, config.jade.src])
 	.pipe(livereload())
-	.pipe(notify('Refreshing...'));
+	.pipe(notify('Starting server...'));
 });
