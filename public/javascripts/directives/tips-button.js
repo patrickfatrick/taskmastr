@@ -7,7 +7,7 @@ export default function tipsButton() {
 		restrict: 'A',
 		scope: false,
 		link: function (scope, element, attrs) {
-			element.bind('click', function (e) {
+			element.on('click', function (e) {
 				if ($('#tips-button').hasClass('toggled')) {
 					$('.fine-print').velocity('slideUp', {
 						duration: 250,

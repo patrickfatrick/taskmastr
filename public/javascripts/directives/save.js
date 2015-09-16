@@ -6,7 +6,7 @@ export default function save() {
 		restrict: 'A',
 		scope: false,
 		link: function (scope, element, attrs) {
-			element.bind('click', function () {
+			element.on('click', function () {
 				_.each(scope.user.todos, function (val, i) {
 					_.each(val.items, function (itemVal, j) {
 						if (itemVal.dueDate) {

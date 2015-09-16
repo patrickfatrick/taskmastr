@@ -11,7 +11,7 @@ export default function todoButton () {
 		},
 		link: function (scope, element, attrs) {
 			var attempt;
-			element.bind('click', function (e) {
+			element.on('click', function (e) {
 				scope.$apply(function () {
 					//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
 					if (scope.todoModel) {
@@ -24,7 +24,7 @@ export default function todoButton () {
 				});
 			});
 			//Emoticon handlers
-			element.bind('mousedown', function (e) {
+			element.on('mousedown', function (e) {
 				attempt = (scope.todoButton === scope.$parent.user.todos) ? 'listAttempt' : 'todoAttempt';
 				if (element.siblings('input:text').val()) {
 					$(this).removeClass('fa-arrow-down');
@@ -36,7 +36,7 @@ export default function todoButton () {
 					scope.$parent[attempt] = true;
 				}
 			});
-			element.bind('mouseup', function (e) {
+			element.on('mouseup', function (e) {
 				$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
 				$(this).addClass('fa-arrow-down');
 				//Remove attempt after 500ms for animation to finish

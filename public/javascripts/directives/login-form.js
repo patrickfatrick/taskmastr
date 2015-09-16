@@ -7,7 +7,7 @@ export default function loginForm() {
 		restrict: 'A',
 		scope: false,
 		link: function (scope, element, attrs) {
-			element.bind('submit', function (e) {
+			element.on('submit', function (e) {
 				scope.$apply(function () {
 					var username = scope.user.username;
 					var userKey = scope.user.key;

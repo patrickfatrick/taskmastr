@@ -11,7 +11,7 @@ export default function complete() {
 			completeIndex: '='
 		},
 		link: function (scope, element, attrs) {
-			element.bind('click', function () {
+			element.on('click', function () {
 				scope.$apply(function () {
 					var todos = scope.complete;
 					// If there's a complete todo present, set newIndex to that index, not the end of the list

@@ -11,6 +11,9 @@ import deleteButton from './delete-button';
 import tipsButton from './tips-button';
 import menuToggle from './menu-toggle';
 import datepickerToggle from './datepicker-toggle';
+import rename from './rename';
+import renameProxy from './rename-proxy';
+import hover from './hover';
 
 export default function () {
 	var app = angular.module('taskmastrDirectives', []);
@@ -29,4 +32,7 @@ export default function () {
 	app.directive('tipsButton', tipsButton);
 	app.directive('menuToggle', menuToggle);
 	app.directive('datepickerToggle', datepickerToggle);
+	app.directive('rename', rename);
+	app.directive('renameProxy', renameProxy);
+	app.directive('hover', hover);
 }

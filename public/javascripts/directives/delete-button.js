@@ -14,7 +14,7 @@ export default function deleteButton () {
 			deleteIndex: '='
 		},
 		link: function (scope, element, attrs) {
-			element.bind('click', function (e) {
+			element.on('click', function (e) {
 				var item = element.parents('tr');
 				var arr = scope.deleteButton;
 				if (!item.hasClass('deleting')) {

@@ -10,6 +10,7 @@
 	color: $white;
 	padding: 3.1rem 0 2rem 0;
 	@include transition(all 200ms ease-out);
+	@include outer-container;
 	@include media(min-width $medlarge) {
 		padding: 4.7rem 0 2rem 0;
 	}
@@ -57,26 +58,6 @@
 #list-button {
 	background: $deepBlue;
 	@include button-effect($deepBlue, 2px, 0);
-}
-
-#lists-list {
-	font-size: 1.4rem;
-	width: 100%;
-	tbody th {
-		display: none;
-	}
-	tbody tr.current {
-		background: $deepBlue;
-	}
-	tbody tr:hover:not(.current) {
-		background: inherit;
-	}
-	td.utils {
-		width: 6.3rem;
-		@include media(min-width $medium) {
-			width: 5.5rem;
-		}
-	}
 }
 
 #logout {

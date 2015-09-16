@@ -7,7 +7,7 @@ export default function resetForm() {
 		restrict: 'A',
 		scope: false,
 		link: function (scope, element, attrs) {
-			element.bind('submit', function (e) {
+			element.on('submit', function (e) {
 				scope.$apply(function ($location) {
 					var token = scope.resetToken;
 					var newKey = scope.user.newKey;

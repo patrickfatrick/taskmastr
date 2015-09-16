@@ -1,7 +1,7 @@
 @import "./bourbon/bourbon";
 @import "./neat/neat";
 @import "./animate/animate";
-@import "./jquery-ui/jquery-ui";
+@import "./jquery-ui/jquery-ui.structure";
 
 @import "../fonts/josefin-sans/josefin-sans";
 @import "../fonts/cardo/cardo";
@@ -14,3 +14,5 @@
 @import "modal";
 @import "content";
 @import "menu";
+@import "datepicker";
+@import "lists";

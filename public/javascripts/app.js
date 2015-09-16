@@ -14,8 +14,6 @@ import hotkeys from 'angular-hotkeys';
 import controllers from './controllers/index';
 import directives from './directives/index';
 
-import * as interactions from 'interactions';
-
 var app = angular.module('taskmastrApp', [
 	'ngTouch',
 	'ngAnimate',
@@ -28,10 +26,6 @@ var app = angular.module('taskmastrApp', [
 
 controllers();
 directives();
-
-interactions.keyModal();
-interactions.renameItem();
-interactions.todoHover();
 
 Mousetrap.bind('ctrl+c', function () {
 	$('#todo-list .active .complete').click();

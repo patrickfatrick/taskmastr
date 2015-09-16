@@ -24,9 +24,11 @@ gulp.task('systemjs', function () {
 	var builder = new Builder ();
 	builder.loadConfig(config.config)
 	.then(function () {
-		builder.buildSFX(config.src, config.dest, config.options);
-		gulp.src(config.src)
-		.pipe(livereload());
+		builder.buildSFX(config.src, config.dest, config.options)
+		.then(function () {
+			gulp.src(config.src)
+			.pipe(livereload());
+		})
 	})
 	.catch(function (err) {
 		console.log('SystemJS build error...');

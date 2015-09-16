@@ -11,7 +11,7 @@ export default function datepickerToggle () {
 		},
 		link: function (scope, element, attrs) {
 			var todos = scope.datepickerToggle;
-			element.bind('click', function (e) {
+			element.on('click', function (e) {
 				scope.$apply(function () {
 					scope.$parent.setDatepickerIndex(scope.datepickerIndex);
 					scope.$parent.setDatepickerClear(false);

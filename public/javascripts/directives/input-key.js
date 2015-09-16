@@ -7,7 +7,7 @@ export default function inputKey () {
 		restrict: 'A',
 		scope: false,
 		link: function (scope, element, attrs) {
-			element.bind('keydown', function (e) {
+			element.on('keydown', function (e) {
 				var key = e.which;
 
 				if (key === 13) {
