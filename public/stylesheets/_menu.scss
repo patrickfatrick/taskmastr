@@ -43,6 +43,12 @@
 #list-headline {
 	font-family: $cardo;
 	font-size: 2rem;
+	@include span-columns(14);
+}
+
+#list-line {
+	@include span-columns(12);
+	@include shift(1);
 }
 
 #create-list {

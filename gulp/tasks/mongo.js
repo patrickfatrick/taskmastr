@@ -14,13 +14,6 @@ var runCommand = function(command) {
   });
 }
 
-/*gulp.task('mongo', function () {
-	exec('mongod --dbpath ' + config.dir, function (err, stdout, stderr) {
-		console.log(stdout);
-		notify('Starting MongoDB...');
-	})
-});*/
-
 gulp.task("mongo-start", function() {
   var command = "mongod --dbpath " + config.dir;
   runCommand(command);

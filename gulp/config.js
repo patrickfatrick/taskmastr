@@ -54,5 +54,9 @@ module.exports = {
 	},
 	mongo: {
 		dir: './data'
+	},
+	notify: {
+		sound: 'Submarine',
+		icon: './public/images/iphone-icon.png'
 	}
 };

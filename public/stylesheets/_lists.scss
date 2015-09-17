@@ -1,13 +1,8 @@
 table {
 	table-layout: auto;
 	margin-top: 1rem;
-	//width: 100%;
-	//margin-right: 1rem;
 	text-align: left;
 	@include center;
-	/*@include media(min-width $medium) {
-		width: 60%;
-	}*/
 	thead {
 		display: none;
 	}
@@ -131,11 +126,12 @@ table {
 		display: none !important;
 		&.ng-scope {
 			display: table !important;
+			position: relative;
+			margin-top: 1rem;
 		}
 	}
 	&#lists-list {
 		font-size: 1.4rem;
-		//width: 100%;
 		@include fill-parent;
 		tbody th {
 			display: none;
