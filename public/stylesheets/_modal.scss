@@ -13,6 +13,7 @@
 	background: $white;
 	box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
 	border-radius: 15px;
+	@include outer-container;
 	@include center;
 	@include media(min-width $medium) {
 		width: 50%;
@@ -53,11 +54,19 @@
 		padding: 30px;
 		form {
 			margin-top: 2rem;
+			@include outer-container;
 			span {
 				display: block;
 				text-align: left;
 				font-size: 0.8rem;
 				margin-left: 0;
+			}
+		}
+		.prompt-line {
+			@include span-columns(12);
+			@include media(min-width $medium) {
+				@include span-columns(10);
+				@include shift(2);
 			}
 		}
 		.fine-print {
@@ -68,16 +77,23 @@
 			@include media(min-width $medium) {
 				font-size: 0.8rem;
 			}
+			i {
+				color: $deepBlue;
+			}
 		}
 		#key-button {
 			padding: 4px 6px 5px 7px;
 		}
 		#remember, #forgot-password, .error-text {
-			width: 80%;
-			margin-left: 12%;
 			text-align: left;
 			margin-top: 0.5rem;
 			font-size: 0.8rem;
+			padding-left: 0.5rem;
+			@include span-columns(12);
+			@include media(min-width $medium) {
+				@include span-columns(10);
+				@include shift(2);				
+			}
 			i {
 				width: 0.8rem;
 				margin-right: 1rem;
