@@ -52,6 +52,9 @@
 	}
 	.modal-body {
 		padding: 30px;
+		.greeting {
+			line-height: 2rem;
+		}
 		form {
 			margin-top: 2rem;
 			@include outer-container;

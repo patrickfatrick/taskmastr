@@ -73,6 +73,7 @@
       "jquery": "github:components/jquery@^2.1.4",
       "lodash": "npm:lodash@^3.10.1",
       "moment": "github:moment/moment@^2.10.6",
+      "typescript": "npm:typescript@^1.6.2",
       "velocity": "github:julianshapiro/velocity@^1.2.2"
     },
     "devDependencies": {

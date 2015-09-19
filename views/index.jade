@@ -6,10 +6,10 @@ block content
 		.modal-header
 			h1#headline Taskmastr
 		.modal-body#key-ask(ng-if="!resetForm")
-			| Do you have an account? 
-			br/
-			br/
-			| If so log in now, or create one below!
+			.greeting
+				| Do you have an account? 
+				br/
+				| If so log in now, or create one below!
 			form(id="user-form", name="userForm", novalidate, login-form)
 				.error-text
 					label(for="user", ng-show="userForm.username.$error.required && !userForm.username.$error.pattern && formAttempt")
