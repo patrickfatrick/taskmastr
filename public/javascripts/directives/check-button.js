@@ -6,8 +6,8 @@ export default function checkButton() {
 	return {
 		restrict: 'A',
 		scope: false,
-		link: function (scope, element, attrs) {
-			element.on('click', function () {
+		link: (scope, element, attrs) => {
+			element.on('click', () => {
 				element.siblings('.check').click();
 			});
 		}

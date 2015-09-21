@@ -6,13 +6,13 @@ export default function loginForm() {
 	return {
 		restrict: 'A',
 		scope: false,
-		link: function (scope, element, attrs) {
-			element.on('submit', function (e) {
-				scope.$apply(function () {
-					var username = scope.user.username;
-					var userKey = scope.user.key;
-					var confirmKey = scope.user.confirm;
-					var rememberMe = scope.rememberMe;
+		link: (scope, element, attrs) => {
+			element.on('submit', e => {
+				scope.$apply(() => {
+					const username = scope.user.username;
+					const userKey = scope.user.key;
+					const confirmKey = scope.user.confirm;
+					const rememberMe = scope.rememberMe;
 					// Do lookup if confirm password is null
 					if (!scope.confirmPassword) {
 						scope.lookup(username, userKey, rememberMe);
@@ -26,7 +26,7 @@ export default function loginForm() {
 			});
 			//Emoticon handlers
 			$('#user-form .submit').on({
-				mousedown: function (e) {
+				mousedown: e => {
 					$(this).removeClass('fa-arrow-right');
 					if (!scope.userForm.$invalid) {
 						$(this).addClass('fa-smile-o');
@@ -34,19 +34,19 @@ export default function loginForm() {
 						$(this).addClass('fa-meh-o');
 					}
 				},
-				mouseup: function (e) {
+				mouseup: e => {
 					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
 					$(this).addClass('fa-arrow-right');
 				},
-				click: function (e) {
+				click: e => {
 					//Set variables for animations and error messages
-					scope.$apply(function () {
+					scope.$apply(() => {
 						scope.formAttempt = true;
 						scope.loginAttempt = true;
 						if (scope.confirmPassword) {
 							scope.confirmAttempt = true;
 						}
-						setTimeout(function () {
+						setTimeout(() => {
 							scope.confirmAttempt = false;
 							scope.loginAttempt = false;
 							scope.$apply();

@@ -6,11 +6,11 @@ export default function resetForm() {
 	return {
 		restrict: 'A',
 		scope: false,
-		link: function (scope, element, attrs) {
-			element.on('submit', function (e) {
-				scope.$apply(function ($location) {
-					var token = scope.resetToken;
-					var newKey = scope.user.newKey;
+		link: (scope, element, attrs) => {
+			element.on('submit', e => {
+				scope.$apply($location => {
+					const token = scope.resetToken;
+					const newKey = scope.user.newKey;
 					if (!scope.resetForm.confirmReset.$error.pattern) {
 						scope.resetPassword(token, newKey);
 					}
@@ -18,7 +18,7 @@ export default function resetForm() {
 			});
 			//Emoticon handlers
 			$('#user-form .submit').on({
-				mousedown: function (e) {
+				mousedown: e => {
 					$(this).removeClass('fa-arrow-right');
 					if (!scope.userForm.$invalid) {
 						$(this).addClass('fa-smile-o');
@@ -26,12 +26,12 @@ export default function resetForm() {
 						$(this).addClass('fa-meh-o');
 					}
 				},
-				mouseup: function (e) {
+				mouseup: e => {
 					$(this).removeClass('fa-smile-o').removeClass('fa-meh-o');
 					$(this).addClass('fa-arrow-right');
 				},
-				click: function (e) {
-					scope.$apply(function () {
+				click: e => {
+					scope.$apply(() => {
 						scope.formAttempt = true;
 					});
 					if (scope.resetForm.$invalid) {

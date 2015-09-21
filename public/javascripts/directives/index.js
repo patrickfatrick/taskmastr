@@ -16,7 +16,7 @@ import renameProxy from './rename-proxy';
 import hover from './hover';
 
 export default function () {
-	var app = angular.module('taskmastrDirectives', []);
+	let app = angular.module('taskmastrDirectives', []);
 	
 	app.directive('complete', complete);
 	app.directive('save', save);

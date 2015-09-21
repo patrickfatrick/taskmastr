@@ -10,16 +10,16 @@ export default function complete() {
 			complete: '=',
 			completeIndex: '='
 		},
-		link: function (scope, element, attrs) {
-			element.on('click', function () {
-				scope.$apply(function () {
-					var todos = scope.complete;
+		link: (scope, element, attrs) => {
+			element.on('click', () => {
+				scope.$apply(() => {
+					const todos = scope.complete;
 					// If there's a complete todo present, set newIndex to that index, not the end of the list
-					var splicedTodo = todos.splice(scope.completeIndex, 1);
+					const splicedTodo = todos.splice(scope.completeIndex, 1);
 					//console.log('OldIndex: ' + scope.completeIndex);
 					//console.log(splicedTodo);
-					var newIndex = todos.length;
-					_.each(todos, function (val, i) {
+					let newIndex = todos.length;
+					_.each(todos, (val, i) => {
 						if (val.complete === true) {
 							newIndex = i;
 							return false;

@@ -4,8 +4,8 @@ import jQuery from 'jquery';
 import _ from 'lodash';
 
 export default function deleteButton () {
-	var timeoutID;
-	var pending = {};
+	let timeoutID;
+	let pending = {};
 	
 	return {
 		restrict: 'A',
@@ -13,21 +13,21 @@ export default function deleteButton () {
 			deleteButton: '=',
 			deleteIndex: '='
 		},
-		link: function (scope, element, attrs) {
-			element.on('click', function (e) {
-				var item = element.parents('tr');
-				var arr = scope.deleteButton;
+		link: (scope, element, attrs) => {
+			element.on('click', e => {
+				const item = element.parents('tr');
+				const arr = scope.deleteButton;
 				if (!item.hasClass('deleting')) {
 					element.removeClass('fa-trash-o').addClass('fa-undo');
 					item.addClass('deleting');
-					var arrLength = arr.length;
-					var index = _.findIndex(arr, 'agendaID', scope.deleteIndex);;
+					let arrLength = arr.length;
+					let index = _.findIndex(arr, 'agendaID', scope.deleteIndex);;
 					// 1) Deleting a list
 					// 2) Deleting a task
 					if (arr === scope.$parent.user.todos) {
-						timeoutID = setTimeout(function () {
-							scope.$apply(function () {
-								var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
+						timeoutID = setTimeout(() => {
+							scope.$apply(() => {
+								let spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
 								//console.log(spliced[0]);
 
 								// Current list handlers: 
@@ -46,7 +46,7 @@ export default function deleteButton () {
 								}
 								//If deleted, delete the list's agendas
 								if (spliced) {
-									_.each(spliced[0].items, function (val, i) {
+									_.each(spliced[0].items, (val, i) => {
 										scope.$parent.setDeleteAgendas(val.agendaID);
 									});
 								}
@@ -55,9 +55,9 @@ export default function deleteButton () {
 						pending[timeoutID] = 1;
 						_.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID = timeoutID;
 					} else {
-						timeoutID = setTimeout(function () {
-							scope.$apply(function () {
-								var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
+						timeoutID = setTimeout(() => {
+							scope.$apply(() => {
+								let spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
 								if (spliced[0].current && index === (arrLength - 1)) {
 									scope.$parent.setCurrent(arr, 0);
 								} else if (spliced[0].current) {
@@ -75,8 +75,8 @@ export default function deleteButton () {
 				} else {
 					element.removeClass('fa-undo').addClass('fa-trash-o');
 					item.removeClass('deleting');
-					var deleteID;
-					scope.$apply(function () {
+					let deleteID;
+					scope.$apply(() => {
 						deleteID = _.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID;
 						if (pending.hasOwnProperty(deleteID)) {
 							clearTimeout(deleteID);

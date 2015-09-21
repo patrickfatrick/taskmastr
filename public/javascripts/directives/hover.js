@@ -10,10 +10,10 @@ export default function hover() {
 			complete: '=',
 			completeIndex: '='
 		},
-		link: function (scope, element, attrs) {
-			var tap = ("ontouchstart" in document.documentElement);
+		link: (scope, element, attrs) => {
+			const tap = ("ontouchstart" in document.documentElement);
 			if (!(tap)) {
-				element.on('mouseenter', function () {
+				element.on('mouseenter', () => {
 					element.stop().velocity({
 						backgroundColor: '#00B0FF',
 						backgroundColorAlpha: 1
@@ -22,8 +22,8 @@ export default function hover() {
 					});
 				});
 
-				element.on('mouseleave', function () {
-					$(this).velocity({
+				element.on('mouseleave', () => {
+					element.velocity({
 						backgroundColorAlpha: 0
 					}, {
 						duration: 0

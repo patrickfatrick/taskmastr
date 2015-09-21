@@ -5,6 +5,7 @@ var gutil = require('gulp-util');
 module.exports = {
 	sass: {
 		src: src + '/stylesheets/styles.scss',
+		watch: 'public/stylesheets/*.scss',
 		dest: dest + '/stylesheets',
 		settings: {
 			outputStyle: 'compressed'
@@ -13,10 +14,11 @@ module.exports = {
 	systemjs: {
 		options: {
 			sourceMaps: true,
-			minify: true
+			//minify: true
 		},
 		config: src + '/config.js',
 		src: src + '/javascripts/app.js',
+		watch: 'public/javascripts/**/*',
 		dest: dest + '/javascripts/index.js'
 	},
 	jade: {
@@ -28,7 +30,7 @@ module.exports = {
 			tasks: ['styles']
 		},
 		systemjs: {
-			src: src + '/javascripts/**/*',
+			src: 'public/javascripts/**/*',
 			tasks: ['systemjs']
 		},
 		jade: {

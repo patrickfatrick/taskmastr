@@ -9,17 +9,18 @@ export default function datepickerToggle () {
 			datepickerToggle: '=',
 			datepickerIndex: '='
 		},
-		link: function (scope, element, attrs) {
-			var todos = scope.datepickerToggle;
-			element.on('click', function (e) {
-				scope.$apply(function () {
+		link: (scope, element, attrs) => {
+			const todos = scope.datepickerToggle;
+			element.on('click', e => {
+				scope.$apply(() => {
 					scope.$parent.setDatepickerIndex(scope.datepickerIndex);
 					scope.$parent.setDatepickerClear(false);
+					scope.$parent.setDatepickerShown(true);
 					element.siblings('.datepicker-input').focus();
 				});
 			});
-			$('body').on('mousedown', '.ui-datepicker-close', function () {
-				scope.$apply(function () {
+			$('body').on('mousedown', '.ui-datepicker-close', () => {
+				scope.$apply(() => {
 					scope.$parent.setDatepickerClear(true);
 				});
 			});

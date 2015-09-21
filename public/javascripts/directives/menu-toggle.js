@@ -6,8 +6,8 @@ export default function menuToggle () {
 	return {
 		restrict: 'A',
 		scope: false,
-		link: function (scope, element, attrs) {
-			element.on('click', function (e) {
+		link: (scope, element, attrs) => {
+			element.on('click', e => {
 				if (!$('#menu').hasClass('toggled')) {
 					$('#content').addClass('menued');
 					element.addClass('toggled');

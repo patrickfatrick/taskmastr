@@ -4,11 +4,17 @@ var livereload = require('gulp-livereload');
 var notify = require('gulp-notify');
 var config = require('../config').systemjs;
 
-gulp.task('systemjs', function () {
+gulp.task('systemjs', function (cb) {
 	var builder = new Builder ();
+	
+	/**
+	* Unfortunately his must run synchronously (nested);
+	* Promise.all doesn't run functions in sequence and buildStatis must come after loadConfig
+	*/
+	
 	builder.loadConfig(config.config)
 	.then(function () {
-		builder.buildSFX(config.src, config.dest, config.options)
+		builder.buildStatic(config.src, config.dest, config.options)
 		.then(function () {
 			gulp.src(config.src)
 			.pipe(livereload())
@@ -17,10 +23,11 @@ gulp.task('systemjs', function () {
 				sound: 'Submarine',
 				icon: './public/images/iphone-icon.png'
 			}));
+			return cb();
 		})
-	})
-	.catch(function (err) {
-		console.log('SystemJS build error...');
-		console.log(err);
+		.catch(function (err) {
+			console.log('SystemJS build error...');
+			cb(new Error(err));
+		});
 	});
 });

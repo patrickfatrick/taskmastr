@@ -9,7 +9,7 @@ var notifyConfig = {
 	sound: 'Submarine',
 	icon: './public/images/iphone-icon.png'
 }
-gulp.task('server', function () {
+gulp.task('server', function (cb) {
 	nodemon(config)
 	.on('start', function () {
 		gulp.src(config.script)
@@ -28,4 +28,5 @@ gulp.task('server', function () {
 			icon: './public/images/iphone-icon.png'
 		}))
 	});
+	return cb();
 });

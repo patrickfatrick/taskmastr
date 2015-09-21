@@ -1,10 +1,12 @@
 #ui-datepicker-div {
+	z-index: 5;
 	background: $white;
 	font-family: $raleway;
 	font-size: 1rem;
-	margin-top: 20px;
+	margin-top: -125px;
 	text-transform: lowercase;
 	border-radius: 15px;
+	@include center;
 	@include animation(bounceInDown 300ms);
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
 	@include media(max-width $small) {
@@ -13,10 +15,13 @@
 	}
 
 	@include media(min-width $medium) {
-		margin-left: -165px;
+		width: 400px;
+		left: 0 !important;
+		right: 0;
 	}
 
 	.ui-datepicker-header {
+		color: $white;
 		background: $orchid;
 		font-weight: normal;
 		border: none;
@@ -54,9 +59,9 @@
 	}
 	.ui-datepicker-calendar {
 		margin-top: 0.4em;
-		@include media(max-width $small) {
+		/*@include media(max-width $small) {
 			height: 150px;
-		}
+		}*/
 		th {
 			width: 1rem;
 			padding-left: 0 !important;
@@ -64,6 +69,10 @@
 		}
 		td {
 			padding: 0;
+			a {
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
 		}
 		.ui-datepicker-unselectable a {
 			color: $oceanBlue;

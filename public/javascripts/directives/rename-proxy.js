@@ -6,8 +6,8 @@ export default function renameProxy() {
 	return {
 		restrict: 'A',
 		scope: false,
-		link: function (scope, element, attrs) {
-			element.on('dblclick', function () {
+		link: (scope, element, attrs) => {
+			element.on('dblclick', () => {
 				element.parents('tr').find('.rename-button').click();
 			});
 		}

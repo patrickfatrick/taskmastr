@@ -3,7 +3,7 @@ var livereload = require('gulp-livereload');
 var notify = require('gulp-notify');
 var config = require('../config').jade;
 
-gulp.task('jade', function() {
+gulp.task('jade', function(cb) {
   gulp.src(config.src)
 	.pipe(livereload())
 	.pipe(notify({
@@ -11,4 +11,5 @@ gulp.task('jade', function() {
 		sound: 'Submarine',
 		icon: './public/images/iphone-icon.png'
 	}));
+	return cb();
 });

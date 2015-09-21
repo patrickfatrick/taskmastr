@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	#mask(ng-if="!user.todos", ng-show="!user.todos")
+	#mask(ng-if="!user.todos || datepickerShown", ng-show="!user.todos || datepickerShown")
 	.modal#key-modal.animated(ng-if="!user.todos", ng-show="!user.todos")
 		.modal-header
 			h1#headline Taskmastr

@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var exec = require('child_process').exec
-//var mkdirs = require('mkdirs');
 var config = require('../config').mongo;
 var notify = require('gulp-notify');
 
@@ -14,12 +13,14 @@ var runCommand = function(command) {
   });
 }
 
-gulp.task("mongo-start", function() {
+gulp.task("mongo-start", function(cb) {
   var command = "mongod --dbpath " + config.dir;
   runCommand(command);
+	return cb();
 });
 
-gulp.task("mongo-stop", function() {
+gulp.task("mongo-stop", function(cb) {
   var command = 'mongo admin --eval "db.shutdownServer();"'
   runCommand(command);
+	return cb();
 });
