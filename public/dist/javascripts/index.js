@@ -22280,11 +22280,673 @@ $__System.registerDynamic("10", ["f"], true, function(require, exports, module) 
   return module.exports;
 });
 
+$__System.registerDynamic("11", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function() {};
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("12", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(done, value) {
+    return {
+      value: value,
+      done: !!done
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("13", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {};
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("14", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var toString = {}.toString;
+  module.exports = function(it) {
+    return toString.call(it).slice(8, -1);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("15", ["14"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var cof = require("14");
+  module.exports = 0 in Object('z') ? Object : function(it) {
+    return cof(it) == 'String' ? it.split('') : Object(it);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("16", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(it) {
+    if (it == undefined)
+      throw TypeError("Can't call method on  " + it);
+    return it;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("17", ["15", "16"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var IObject = require("15"),
+      defined = require("16");
+  module.exports = function(it) {
+    return IObject(defined(it));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("18", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = true;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("19", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var UNDEFINED = 'undefined';
+  var global = module.exports = typeof window != UNDEFINED && window.Math == Math ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
+  if (typeof __g == 'number')
+    __g = global;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("1a", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var core = module.exports = {};
+  if (typeof __e == 'number')
+    __e = core;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("1b", ["19", "1a"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var global = require("19"),
+      core = require("1a"),
+      PROTOTYPE = 'prototype';
+  var ctx = function(fn, that) {
+    return function() {
+      return fn.apply(that, arguments);
+    };
+  };
+  var $def = function(type, name, source) {
+    var key,
+        own,
+        out,
+        exp,
+        isGlobal = type & $def.G,
+        isProto = type & $def.P,
+        target = isGlobal ? global : type & $def.S ? global[name] : (global[name] || {})[PROTOTYPE],
+        exports = isGlobal ? core : core[name] || (core[name] = {});
+    if (isGlobal)
+      source = name;
+    for (key in source) {
+      own = !(type & $def.F) && target && key in target;
+      if (own && key in exports)
+        continue;
+      out = own ? target[key] : source[key];
+      if (isGlobal && typeof target[key] != 'function')
+        exp = source[key];
+      else if (type & $def.B && own)
+        exp = ctx(out, global);
+      else if (type & $def.W && target[key] == out)
+        !function(C) {
+          exp = function(param) {
+            return this instanceof C ? new C(param) : C(param);
+          };
+          exp[PROTOTYPE] = C[PROTOTYPE];
+        }(out);
+      else
+        exp = isProto && typeof out == 'function' ? ctx(Function.call, out) : out;
+      exports[key] = exp;
+      if (isProto)
+        (exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+    }
+  };
+  $def.F = 1;
+  $def.G = 2;
+  $def.S = 4;
+  $def.P = 8;
+  $def.B = 16;
+  $def.W = 32;
+  module.exports = $def;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("1c", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $Object = Object;
+  module.exports = {
+    create: $Object.create,
+    getProto: $Object.getPrototypeOf,
+    isEnum: {}.propertyIsEnumerable,
+    getDesc: $Object.getOwnPropertyDescriptor,
+    setDesc: $Object.defineProperty,
+    setDescs: $Object.defineProperties,
+    getKeys: $Object.keys,
+    getNames: $Object.getOwnPropertyNames,
+    getSymbols: $Object.getOwnPropertySymbols,
+    each: [].forEach
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("1d", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(bitmap, value) {
+    return {
+      enumerable: !(bitmap & 1),
+      configurable: !(bitmap & 2),
+      writable: !(bitmap & 4),
+      value: value
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("1e", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(exec) {
+    try {
+      return !!exec();
+    } catch (e) {
+      return true;
+    }
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("1f", ["1e"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = !require("1e")(function() {
+    return Object.defineProperty({}, 'a', {get: function() {
+        return 7;
+      }}).a != 7;
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("20", ["1c", "1d", "1f"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("1c"),
+      createDesc = require("1d");
+  module.exports = require("1f") ? function(object, key, value) {
+    return $.setDesc(object, key, createDesc(1, value));
+  } : function(object, key, value) {
+    object[key] = value;
+    return object;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("21", ["20"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("20");
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("22", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var hasOwnProperty = {}.hasOwnProperty;
+  module.exports = function(it, key) {
+    return hasOwnProperty.call(it, key);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("23", ["19"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var global = require("19"),
+      SHARED = '__core-js_shared__',
+      store = global[SHARED] || (global[SHARED] = {});
+  module.exports = function(key) {
+    return store[key] || (store[key] = {});
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("24", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var id = 0,
+      px = Math.random();
+  module.exports = function(key) {
+    return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("25", ["23", "19", "24"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var store = require("23")('wks'),
+      Symbol = require("19").Symbol;
+  module.exports = function(name) {
+    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || require("24"))('Symbol.' + name));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("26", ["22", "20", "25"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var has = require("22"),
+      hide = require("20"),
+      TAG = require("25")('toStringTag');
+  module.exports = function(it, tag, stat) {
+    if (it && !has(it = stat ? it : it.prototype, TAG))
+      hide(it, TAG, tag);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("27", ["1c", "20", "25", "1d", "26"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  'use strict';
+  var $ = require("1c"),
+      IteratorPrototype = {};
+  require("20")(IteratorPrototype, require("25")('iterator'), function() {
+    return this;
+  });
+  module.exports = function(Constructor, NAME, next) {
+    Constructor.prototype = $.create(IteratorPrototype, {next: require("1d")(1, next)});
+    require("26")(Constructor, NAME + ' Iterator');
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("28", ["18", "1b", "21", "20", "22", "25", "13", "27", "1c", "26"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  'use strict';
+  var LIBRARY = require("18"),
+      $def = require("1b"),
+      $redef = require("21"),
+      hide = require("20"),
+      has = require("22"),
+      SYMBOL_ITERATOR = require("25")('iterator'),
+      Iterators = require("13"),
+      BUGGY = !([].keys && 'next' in [].keys()),
+      FF_ITERATOR = '@@iterator',
+      KEYS = 'keys',
+      VALUES = 'values';
+  var returnThis = function() {
+    return this;
+  };
+  module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE) {
+    require("27")(Constructor, NAME, next);
+    var createMethod = function(kind) {
+      switch (kind) {
+        case KEYS:
+          return function keys() {
+            return new Constructor(this, kind);
+          };
+        case VALUES:
+          return function values() {
+            return new Constructor(this, kind);
+          };
+      }
+      return function entries() {
+        return new Constructor(this, kind);
+      };
+    };
+    var TAG = NAME + ' Iterator',
+        proto = Base.prototype,
+        _native = proto[SYMBOL_ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT],
+        _default = _native || createMethod(DEFAULT),
+        methods,
+        key;
+    if (_native) {
+      var IteratorPrototype = require("1c").getProto(_default.call(new Base));
+      require("26")(IteratorPrototype, TAG, true);
+      if (!LIBRARY && has(proto, FF_ITERATOR))
+        hide(IteratorPrototype, SYMBOL_ITERATOR, returnThis);
+    }
+    if (!LIBRARY || FORCE)
+      hide(proto, SYMBOL_ITERATOR, _default);
+    Iterators[NAME] = _default;
+    Iterators[TAG] = returnThis;
+    if (DEFAULT) {
+      methods = {
+        keys: IS_SET ? _default : createMethod(KEYS),
+        values: DEFAULT == VALUES ? _default : createMethod(VALUES),
+        entries: DEFAULT != VALUES ? _default : createMethod('entries')
+      };
+      if (FORCE)
+        for (key in methods) {
+          if (!(key in proto))
+            $redef(proto, key, methods[key]);
+        }
+      else
+        $def($def.P + $def.F * BUGGY, NAME, methods);
+    }
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("29", ["11", "12", "13", "17", "28"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  'use strict';
+  var setUnscope = require("11"),
+      step = require("12"),
+      Iterators = require("13"),
+      toIObject = require("17");
+  require("28")(Array, 'Array', function(iterated, kind) {
+    this._t = toIObject(iterated);
+    this._i = 0;
+    this._k = kind;
+  }, function() {
+    var O = this._t,
+        kind = this._k,
+        index = this._i++;
+    if (!O || index >= O.length) {
+      this._t = undefined;
+      return step(1);
+    }
+    if (kind == 'keys')
+      return step(0, index);
+    if (kind == 'values')
+      return step(0, O[index]);
+    return step(0, [index, O[index]]);
+  }, 'values');
+  Iterators.Arguments = Iterators.Array;
+  setUnscope('keys');
+  setUnscope('values');
+  setUnscope('entries');
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("2a", ["29", "13"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  require("29");
+  var Iterators = require("13");
+  Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("2b", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var ceil = Math.ceil,
+      floor = Math.floor;
+  module.exports = function(it) {
+    return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("2c", ["2b", "16"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var toInteger = require("2b"),
+      defined = require("16");
+  module.exports = function(TO_STRING) {
+    return function(that, pos) {
+      var s = String(defined(that)),
+          i = toInteger(pos),
+          l = s.length,
+          a,
+          b;
+      if (i < 0 || i >= l)
+        return TO_STRING ? '' : undefined;
+      a = s.charCodeAt(i);
+      return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff ? TO_STRING ? s.charAt(i) : a : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("2d", ["2c", "28"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  'use strict';
+  var $at = require("2c")(true);
+  require("28")(String, 'String', function(iterated) {
+    this._t = String(iterated);
+    this._i = 0;
+  }, function() {
+    var O = this._t,
+        index = this._i,
+        point;
+    if (index >= O.length)
+      return {
+        value: undefined,
+        done: true
+      };
+    point = $at(O, index);
+    this._i += point.length;
+    return {
+      value: point,
+      done: false
+    };
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("2e", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(it) {
+    return it !== null && (typeof it == 'object' || typeof it == 'function');
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("2f", ["2e"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var isObject = require("2e");
+  module.exports = function(it) {
+    if (!isObject(it))
+      throw TypeError(it + ' is not an object!');
+    return it;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("30", ["14", "25"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var cof = require("14"),
+      TAG = require("25")('toStringTag'),
+      ARG = cof(function() {
+        return arguments;
+      }()) == 'Arguments';
+  module.exports = function(it) {
+    var O,
+        T,
+        B;
+    return it === undefined ? 'Undefined' : it === null ? 'Null' : typeof(T = (O = Object(it))[TAG]) == 'string' ? T : ARG ? cof(O) : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("31", ["30", "25", "13", "1a"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var classof = require("30"),
+      ITERATOR = require("25")('iterator'),
+      Iterators = require("13");
+  module.exports = require("1a").getIteratorMethod = function(it) {
+    if (it != undefined)
+      return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("32", ["2f", "31", "1a"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var anObject = require("2f"),
+      get = require("31");
+  module.exports = require("1a").getIterator = function(it) {
+    var iterFn = get(it);
+    if (typeof iterFn != 'function')
+      throw TypeError(it + ' is not iterable!');
+    return anObject(iterFn.call(it));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("33", ["2a", "2d", "32"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  require("2a");
+  require("2d");
+  module.exports = require("32");
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("34", ["33"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": require("33"),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 (function() {
 var _removeDefine = $__System.get("@@amd-helpers").createDefine();
 (function(factory) {
   if (typeof define === "function" && define.amd) {
-    define("11", ["3"], factory);
+    define("36", ["3"], factory);
   } else {
     factory(jQuery);
   }
@@ -25080,7 +25742,7 @@ var _removeDefine = $__System.get("@@amd-helpers").createDefine();
 
 _removeDefine();
 })();
-$__System.registerDynamic("12", [], true, function(require, exports, module) {
+$__System.registerDynamic("37", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -25142,37 +25804,37 @@ $__System.registerDynamic("12", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("13", ["12"], true, function(require, exports, module) {
+$__System.registerDynamic("38", ["37"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("12");
+  module.exports = require("37");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("14", ["13"], true, function(require, exports, module) {
+$__System.registerDynamic("39", ["38"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__System._nodeRequire ? process : require("13");
+  module.exports = $__System._nodeRequire ? process : require("38");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("15", ["14"], true, function(require, exports, module) {
+$__System.registerDynamic("3a", ["39"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("14");
+  module.exports = require("39");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("16", ["15"], true, function(require, exports, module) {
+$__System.registerDynamic("3b", ["3a"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -29481,22 +30143,22 @@ $__System.registerDynamic("16", ["15"], true, function(require, exports, module)
         root._ = _;
       }
     }.call(this));
-  })(require("15"));
+  })(require("3a"));
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("17", ["16"], true, function(require, exports, module) {
+$__System.registerDynamic("3c", ["3b"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("16");
+  module.exports = require("3b");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("18", [], true, function(require, exports, module) {
+$__System.registerDynamic("3d", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -29574,22 +30236,22 @@ $__System.registerDynamic("18", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("19", ["18"], true, function(require, exports, module) {
+$__System.registerDynamic("3e", ["3d"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("18");
+  module.exports = require("3d");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("1a", ["19"], true, function(require, exports, module) {
+$__System.registerDynamic("3f", ["3e"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var debug = require("19")('date:date');
+  var debug = require("3e")('date:date');
   var _second = 1000;
   var _minute = 60 * _second;
   var _hour = 60 * _minute;
@@ -29714,13 +30376,13 @@ $__System.registerDynamic("1a", ["19"], true, function(require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("1b", ["1a", "19"], true, function(require, exports, module) {
+$__System.registerDynamic("40", ["3f", "3e"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var date = require("1a");
-  var debug = require("19")('date:parser');
+  var date = require("3f");
+  var debug = require("3e")('date:parser');
   var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
   var rMeridiem = /^(\d{1,2})([:.](\d{1,2}))?([:.](\d{1,2}))?\s*([ap]m)/;
@@ -30081,27 +30743,27 @@ $__System.registerDynamic("1b", ["1a", "19"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("1c", ["1b"], true, function(require, exports, module) {
+$__System.registerDynamic("41", ["40"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("1b");
+  module.exports = require("40");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("1d", ["1c"], true, function(require, exports, module) {
+$__System.registerDynamic("42", ["41"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("1c");
+  module.exports = require("41");
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("1e", [], false, function(__require, __exports, __module) {
+$__System.registerDynamic("43", [], false, function(__require, __exports, __module) {
   var _retrieveGlobal = $__System.get("@@global-helpers").prepareGlobal(__module.id, null, null);
   (function() {
     "format global";
@@ -32423,12 +33085,12 @@ $__System.registerDynamic("1e", [], false, function(__require, __exports, __modu
   return _retrieveGlobal();
 });
 
-$__System.registerDynamic("1f", ["1e"], true, function(require, exports, module) {
+$__System.registerDynamic("44", ["43"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("1e");
+  module.exports = require("43");
   global.define = __define;
   return module.exports;
 });
@@ -32718,7 +33380,7 @@ var _removeDefine = $__System.get("@@amd-helpers").createDefine();
   if (typeof module === "object" && typeof module.exports === "object") {
     module.exports = factory();
   } else if (typeof define === "function" && define.amd) {
-    define("32", [], factory);
+    define("57", [], factory);
   } else {
     factory();
   }
@@ -34585,13 +35247,367 @@ _removeDefine();
 })();
 (function() {
 var _removeDefine = $__System.get("@@amd-helpers").createDefine();
-define("33", ["32"], function(main) {
+define("58", ["57"], function(main) {
   return main;
 });
 
 _removeDefine();
 })();
-$__System.register('20', ['1f', '1d'], function (_export) {
+$__System.register('35', ['34'], function (_export) {
+	var _getIterator, convert;
+
+	return {
+		setters: [function (_) {
+			_getIterator = _['default'];
+		}],
+		execute: function () {
+			/**
+    * Take a user-input date in any format and convert it to several formats
+    * Also serves as a wrapper for common JS date methods like toUTCString and toISOString
+    * toLocaleDateString is currently not well-supported especially on mobile
+    * 
+    * Author: Patrick Fricano
+    * 
+    * convert.format = 'string': string such as '9/12/2015', '12/9/2015', or '2015-9-12' with or without leading zeros
+    * convert.format = 'iso': ISO string including time such as '2015-09-12T23:06:19Z'
+    * convert.format = 'isoShort': ISO string without time such as '2015-09-12'
+    * convert.format = 'utc': UTC string such as 'Sat, 12 Sep 2015 06:00:00 GMT'
+    * convert.format = 'utcShort': UTC string without time such as 'Sat, 12 Sep 2015'
+    * convert.format = 'unix': milliseconds since January 1, 1970
+    * convert.inputClass: class name on the text input field to search for
+    * convert.outputClass: class name on the text ouput field to search for
+    * convert.options: if format === string, set order, delimiter and number of digits included
+    */
+
+			'use strict';
+
+			convert = {
+				search: ['yyyy', // four-digit year
+				'yy', // two-digit year
+				'DDa', // full day of the week
+				'ddd', // two-digit date of the month
+				'Da', // abbreviated day of the week
+				'dd', // date of the month with no leading zeros
+				'MMo', // full month
+				'mmm', // two-digit month
+				'Mo', // abbreviated month
+				'mm', // month with no leading zeros
+				'hhh', // two-digit hours
+				'hh', // hour with no leading zeros
+				'ttt', // two-digit minutes
+				'tt', // minutes with no leading zeros
+				'AP', // AM or PM
+				'ap', // am or pm
+				'zz' // timezone
+				],
+				to: {} // Where the conversion methods will go
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the four-digit year
+    */
+			convert.to.yyyy = function (date) {
+				return date.getFullYear();
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the two-digit year
+    */
+			convert.to.yy = function (date) {
+				return date.getFullYear().toString().substr(2);
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the two-digit month
+    */
+			convert.to.mmm = function (date) {
+				var month = (date.getMonth() + 1).toString();
+				return month.length < 2 ? '0' + month : month;
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the month with no leading zeros
+    */
+			convert.to.mm = function (date) {
+				var month = (date.getMonth() + 1).toString();
+				return month;
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {String}	the full month
+    */
+			convert.to.MMo = function (date) {
+				var months = ['January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+				var month = date.getMonth().toString();
+				return months[month];
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {String}	the abbreviated month
+    */
+			convert.to.Mo = function (date) {
+				var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+				var month = date.getMonth().toString();
+				return months[month];
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the two-digit date of the month
+    */
+			convert.to.ddd = function (date) {
+				var day = date.getDate().toString();
+				return day.length < 2 ? '0' + day : day;
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the date of the month with no leading zeros
+    */
+			convert.to.dd = function (date) {
+				var day = date.getDate().toString();
+				return day;
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {String} the full day of the week
+    */
+			convert.to.DDa = function (date) {
+				var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+				var dayOfWeek = date.getDay();
+				return days[dayOfWeek];
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Date} 	a date object
+    * @returns {Number}	the abbreviated day of the week
+    */
+			convert.to.Da = function (date) {
+				var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+				var dayOfWeek = date.getDay();
+				return days[dayOfWeek];
+			};
+
+			convert.to.hhh = function (date) {
+				var hour = date.getHours();
+				switch (hour) {
+					case 0:
+						hour = 12;
+						break;
+					case hour < 13:
+						hour = hour;
+						break;
+					case hour < 24:
+						hour = hour - 12;
+						break;
+					default:
+						hour = hour;
+						break;
+				}
+				hour = hour.toString();
+				return hour.length < 2 ? '0' + hour : hour;
+			};
+
+			convert.to.hh = function (date) {
+				var hour = date.getHours();
+				switch (hour) {
+					case 0:
+						hour = 12;
+						break;
+					case hour < 13:
+						hour = hour;
+						break;
+					case hour < 24:
+						hour = hour - 12;
+						break;
+					default:
+						hour = hour;
+						break;
+				}
+				return hour;
+			};
+
+			convert.to.ttt = function (date) {
+				var minute = date.getMinutes().toString();
+				return minute.length < 2 ? '0' + minute : minute;
+			};
+
+			convert.to.tt = function (date) {
+				var minute = date.getMinutes().toString();
+				return minute;
+			};
+
+			convert.to.ap = function (date) {
+				var hour = date.getHours();
+				var ampm = undefined;
+				switch (hour) {
+					case hour < 12:
+						ampm = 'am';
+						break;
+					default:
+						ampm = 'pm';
+						break;
+				}
+				return ampm;
+			};
+
+			convert.to.AP = function (date) {
+				var hour = date.getHours();
+				var ampm = undefined;
+				switch (hour) {
+					case hour < 12:
+						ampm = 'AM';
+						break;
+					default:
+						ampm = 'PM';
+						break;
+				}
+				return ampm;
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Object} 	input a string or date object (something that can be converted to a valid date)
+    * @param {String} format a string indicating the output date format
+    * @returns {Date}	if string passes the test, return the date object
+    */
+			convert.to.string = function (input, format) {
+				var date = convert.to.date(input);
+				var converted = format;
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+
+				try {
+					for (var _iterator = _getIterator(convert.search), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var i = _step.value;
+
+						if (converted.indexOf(i) !== -1) {
+							console.log('match on ' + i);
+							var stringStart = converted.substr(0, converted.indexOf(i));
+							var stringEnd = converted.substr(converted.indexOf(i) + i.length, converted.length);
+							converted = stringStart + convert.to[i](date) + stringEnd;
+							console.log(converted);
+						}
+					}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator['return']) {
+							_iterator['return']();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+
+				return converted;
+			};
+
+			/**
+    * Convert the object passed to a date and test its validity
+    * @param {Object} 	obj any object
+    * @returns {Date}	if string passes the test, return the date object
+    */
+			convert.to.date = function (obj) {
+				if (obj == null) throw new TypeError('This is null or undefined');
+				obj = new Date(obj);
+				if (Object.prototype.toString.call(obj) === "[object Date]") {
+					if (isNaN(obj.getTime())) {
+						throw new TypeError('This is not a valid date');
+					}
+				}
+				return obj;
+			};
+
+			/**
+    * Converts a date object to an ISO string
+    * @param   {Date}   date a date object
+    * @returns {String} ISO String including time
+    */
+			convert.to.iso = function (string) {
+				var date = convert.to.date(string);
+
+				return date.toISOString();
+			};
+
+			/**
+    * Converts a date object to an ISO string without the time
+    * @param   {Date}   date a date object
+    * @returns {String} ISO String without time (just the date)
+    */
+			convert.to.isoShort = function (string) {
+				var date = convert.to.date(string);
+				return date.toISOString().split('T')[0];
+			};
+
+			/**
+    * Converts a date object to a UTC string
+    * @param   {Date}   date a date object
+    * @returns {String} UTC string including time
+    */
+			convert.to.utc = function (string) {
+				var date = convert.to.date(string);
+
+				return date.toUTCString();
+			};
+
+			/**
+    * Converts a date object to a UTC string without the time
+    * @param   {Date}   date a date object
+    * @returns {String} UTC string without time (just the date)
+    */
+			convert.to.utcShort = function (string) {
+				var date = convert.to.date(string);
+
+				var arr = date.toUTCString().split(' ');
+				var newArr = [];
+
+				console.log(arr);
+				for (var i = 0; i < 4; i++) {
+					newArr.push(arr[i]);
+				}
+
+				return newArr.join(' ');
+			};
+
+			/**
+    * Converts a date object to UNIX time (milliseconds from January 1, 1970)
+    * @param   {Date}   date a date object
+    * @returns {Number} milliseconds from January1, 1970
+    */
+			convert.to.unix = function (string) {
+				var date = convert.to.date(string);
+
+				return Date.parse(date);
+			};
+
+			_export('default', convert);
+		}
+	};
+});
+$__System.register('45', ['42', '44'], function (_export) {
 	/**
  * Takes a string containing: 1) a task, 2) human-readable date representation,
  * and outputs the task and a date object
@@ -34602,12 +35618,12 @@ $__System.register('20', ['1f', '1d'], function (_export) {
 
 	'use strict';
 
-	var moment, date;
+	var date, moment;
 	return {
-		setters: [function (_f) {
-			moment = _f['default'];
-		}, function (_d) {
-			date = _d['default'];
+		setters: [function (_2) {
+			date = _2['default'];
+		}, function (_) {
+			moment = _['default'];
 		}],
 		execute: function () {
 			_export('default', function (item) {
@@ -34636,10 +35652,10 @@ $__System.register('20', ['1f', '1d'], function (_export) {
 		}
 	};
 });
-$__System.register('21', ['3', '5', '10', '11', '17', '20', 'd', 'e', '1d'], function (_export) {
+$__System.register('46', ['3', '5', '10', '36', '42', '45', '3c', 'd', 'e'], function (_export) {
 	'use strict';
 
-	var $, jQuery, angular, hotkeys, _, dateStrs, date;
+	var $, jQuery, angular, hotkeys, date, dateify, _;
 
 	_export('default', UserController);
 
@@ -34648,9 +35664,9 @@ $__System.register('21', ['3', '5', '10', '11', '17', '20', 'd', 'e', '1d'], fun
 
 			$scope.user.todos = {};
 
-			/*******************************
-    *******Server connections******
-    *******************************/
+			/**
+   * Server connections
+   */
 
 			/*********Session data*********/
 
@@ -34764,7 +35780,7 @@ $__System.register('21', ['3', '5', '10', '11', '17', '20', 'd', 'e', '1d'], fun
 
 			/**
    * Save data back to MongoDB
-   * @param 		{String} 		username 		email address
+   * @param 		{String} 		username 			email address
    * @returns 	{Boolean} 								success or failure
    */
 
@@ -34957,23 +35973,23 @@ $__System.register('21', ['3', '5', '10', '11', '17', '20', 'd', 'e', '1d'], fun
 						switch (shortcut) {
 							case '/t':
 								dateObj = date('tomorrow');
-								item = dateStrs(item).item;
+								item = dateify(item).item;
 								break;
 							case '/w':
 								dateObj = date('next Monday');
-								item = dateStrs(item).item;
+								item = dateify(item).item;
 								break;
 							case '/m':
 								dateObj = moment().startOf('month').add(1, 'M')._d;
-								item = dateStrs(item).item;
+								item = dateify(item).item;
 								break;
 							case '/y':
 								dateObj = moment().startOf('year').add(1, 'y')._d;
-								item = dateStrs(item).item;
+								item = dateify(item).item;
 								break;
 							default:
-								dateObj = dateStrs(item).dateObj;
-								item = dateStrs(item).item;
+								dateObj = dateify(item).dateObj;
+								item = dateify(item).item;
 								break;
 						}
 					}
@@ -35200,19 +36216,19 @@ $__System.register('21', ['3', '5', '10', '11', '17', '20', 'd', 'e', '1d'], fun
 			jQuery = _2['default'];
 		}, function (_4) {
 			angular = _4['default'];
-		}, function (_6) {
-			hotkeys = _6['default'];
-		}, function (_3) {}, function (_5) {
-			_ = _5['default'];
+		}, function (_5) {
+			hotkeys = _5['default'];
+		}, function (_3) {}, function (_6) {
+			date = _6['default'];
 		}, function (_7) {
-			dateStrs = _7['default'];
-		}, function (_d) {}, function (_e) {}, function (_d2) {
-			date = _d2['default'];
-		}],
+			dateify = _7['default'];
+		}, function (_c) {
+			_ = _c['default'];
+		}, function (_d) {}, function (_e) {}],
 		execute: function () {}
 	};
 });
-$__System.register('22', ['5', '21'], function (_export) {
+$__System.register('47', ['5', '46'], function (_export) {
 	'use strict';
 
 	var angular, UserController;
@@ -35239,7 +36255,7 @@ $__System.register('22', ['5', '21'], function (_export) {
 		}
 	};
 });
-$__System.register('23', ['3', '5', '17'], function (_export) {
+$__System.register('48', ['3', '5', '3c'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular, _;
@@ -35283,13 +36299,13 @@ $__System.register('23', ['3', '5', '17'], function (_export) {
 			jQuery = _3['default'];
 		}, function (_2) {
 			angular = _2['default'];
-		}, function (_4) {
-			_ = _4['default'];
+		}, function (_c) {
+			_ = _c['default'];
 		}],
 		execute: function () {}
 	};
 });
-$__System.register('24', ['3', '5', '17'], function (_export) {
+$__System.register('49', ['3', '5', '3c'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular, _;
@@ -35326,13 +36342,17 @@ $__System.register('24', ['3', '5', '17'], function (_export) {
 			jQuery = _3['default'];
 		}, function (_2) {
 			angular = _2['default'];
-		}, function (_4) {
-			_ = _4['default'];
+		}, function (_c) {
+			_ = _c['default'];
 		}],
 		execute: function () {}
 	};
 });
-$__System.register('25', ['3', '5'], function (_export) {
+$__System.register('4a', ['3', '5'], function (_export) {
+	/**
+ * Controls the checkbox to complete a task
+ */
+
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35361,7 +36381,7 @@ $__System.register('25', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register("26", [], function (_export) {
+$__System.register("4b", [], function (_export) {
 	"use strict";
 
 	return {
@@ -35373,7 +36393,7 @@ $__System.register("26", [], function (_export) {
 		}
 	};
 });
-$__System.register('27', ['3', '5', '26'], function (_export) {
+$__System.register('4c', ['3', '5', '4b'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular, placeholders;
@@ -35406,13 +36426,13 @@ $__System.register('27', ['3', '5', '26'], function (_export) {
 			jQuery = _2['default'];
 		}, function (_) {
 			angular = _['default'];
-		}, function (_3) {
-			placeholders = _3['default'];
+		}, function (_b) {
+			placeholders = _b['default'];
 		}],
 		execute: function () {}
 	};
 });
-$__System.register('28', ['3', '5'], function (_export) {
+$__System.register('4d', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35478,7 +36498,7 @@ $__System.register('28', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('29', ['3', '5'], function (_export) {
+$__System.register('4e', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35516,7 +36536,7 @@ $__System.register('29', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('2a', ['3', '5'], function (_export) {
+$__System.register('4f', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35598,7 +36618,7 @@ $__System.register('2a', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('2b', ['3', '5'], function (_export) {
+$__System.register('50', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35658,7 +36678,7 @@ $__System.register('2b', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('2c', ['3', '5', '17'], function (_export) {
+$__System.register('51', ['3', '5', '3c'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular, _;
@@ -35763,13 +36783,13 @@ $__System.register('2c', ['3', '5', '17'], function (_export) {
 			jQuery = _3['default'];
 		}, function (_2) {
 			angular = _2['default'];
-		}, function (_4) {
-			_ = _4['default'];
+		}, function (_c) {
+			_ = _c['default'];
 		}],
 		execute: function () {}
 	};
 });
-$__System.register('2d', ['3', '5'], function (_export) {
+$__System.register('52', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35812,7 +36832,7 @@ $__System.register('2d', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('2e', ['3', '5'], function (_export) {
+$__System.register('53', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35857,7 +36877,7 @@ $__System.register('2e', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('2f', ['3', '5'], function (_export) {
+$__System.register('54', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35900,7 +36920,7 @@ $__System.register('2f', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('30', ['3', '5'], function (_export) {
+$__System.register('55', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35953,7 +36973,7 @@ $__System.register('30', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('31', ['3', '5'], function (_export) {
+$__System.register('56', ['3', '5'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular;
@@ -35982,7 +37002,7 @@ $__System.register('31', ['3', '5'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('34', ['3', '5', '33'], function (_export) {
+$__System.register('59', ['3', '5', '58'], function (_export) {
 	'use strict';
 
 	var $, jQuery, angular, velocity;
@@ -36032,10 +37052,10 @@ $__System.register('34', ['3', '5', '33'], function (_export) {
 		execute: function () {}
 	};
 });
-$__System.register('35', ['5', '23', '24', '25', '27', '28', '29', '30', '31', '34', '2a', '2b', '2c', '2d', '2e', '2f'], function (_export) {
+$__System.register('5a', ['5', '48', '49', '50', '51', '52', '53', '54', '55', '56', '59', '4a', '4c', '4d', '4e', '4f'], function (_export) {
 	'use strict';
 
-	var angular, complete, save, checkButton, createTodo, todoButton, inputKey, rename, renameProxy, hover, loginForm, resetForm, deleteButton, tipsButton, menuToggle, datepickerToggle;
+	var angular, complete, save, resetForm, deleteButton, tipsButton, menuToggle, datepickerToggle, rename, renameProxy, hover, checkButton, createTodo, todoButton, inputKey, loginForm;
 	return {
 		setters: [function (_) {
 			angular = _['default'];
@@ -36044,31 +37064,31 @@ $__System.register('35', ['5', '23', '24', '25', '27', '28', '29', '30', '31', '
 		}, function (_3) {
 			save = _3['default'];
 		}, function (_4) {
-			checkButton = _4['default'];
+			resetForm = _4['default'];
 		}, function (_5) {
-			createTodo = _5['default'];
+			deleteButton = _5['default'];
 		}, function (_6) {
-			todoButton = _6['default'];
+			tipsButton = _6['default'];
 		}, function (_7) {
-			inputKey = _7['default'];
+			menuToggle = _7['default'];
 		}, function (_8) {
-			rename = _8['default'];
+			datepickerToggle = _8['default'];
 		}, function (_9) {
-			renameProxy = _9['default'];
+			rename = _9['default'];
 		}, function (_10) {
-			hover = _10['default'];
+			renameProxy = _10['default'];
+		}, function (_11) {
+			hover = _11['default'];
 		}, function (_a) {
-			loginForm = _a['default'];
-		}, function (_b) {
-			resetForm = _b['default'];
+			checkButton = _a['default'];
 		}, function (_c) {
-			deleteButton = _c['default'];
+			createTodo = _c['default'];
 		}, function (_d) {
-			tipsButton = _d['default'];
+			todoButton = _d['default'];
 		}, function (_e) {
-			menuToggle = _e['default'];
+			inputKey = _e['default'];
 		}, function (_f) {
-			datepickerToggle = _f['default'];
+			loginForm = _f['default'];
 		}],
 		execute: function () {
 			_export('default', function () {
@@ -36095,10 +37115,11 @@ $__System.register('35', ['5', '23', '24', '25', '27', '28', '29', '30', '31', '
 		}
 	};
 });
-$__System.register('1', ['3', '5', '7', '9', '10', '22', '35', 'b', 'd', 'e'], function (_export) {
+$__System.register('1', ['3', '5', '7', '9', '10', '35', '47', 'b', 'd', 'e', '5a'], function (_export) {
+	'use strict';
 	/* App Module */
 
-	'use strict';var $, jQuery, angular, ngTouch, ngAnimate, hotkeys, controllers, directives, uiDate, Sortable, ngSortable, app;
+	var $, jQuery, angular, ngTouch, ngAnimate, hotkeys, convert, controllers, uiDate, Sortable, ngSortable, directives, app;
 	return {
 		setters: [function (_) {
 			$ = _['default'];
@@ -36112,15 +37133,17 @@ $__System.register('1', ['3', '5', '7', '9', '10', '22', '35', 'b', 'd', 'e'], f
 		}, function (_5) {
 			hotkeys = _5['default'];
 		}, function (_6) {
-			controllers = _6['default'];
+			convert = _6['default'];
 		}, function (_7) {
-			directives = _7['default'];
+			controllers = _7['default'];
 		}, function (_b) {
 			uiDate = _b['default'];
 		}, function (_d) {
 			Sortable = _d['default'];
 		}, function (_e) {
 			ngSortable = _e['default'];
+		}, function (_a) {
+			directives = _a['default'];
 		}],
 		execute: function () {
 			app = angular.module('taskmastrApp', ['ngTouch', 'ngAnimate', 'cfp.hotkeys', 'ui.date', 'ng-sortable', 'taskmastrControllers', 'taskmastrDirectives']);
@@ -36128,6 +37151,11 @@ $__System.register('1', ['3', '5', '7', '9', '10', '22', '35', 'b', 'd', 'e'], f
 			controllers();
 			directives();
 
+			/**
+   * Shortcuts declared here due to $apply foibles in UserController
+   */
+
+			console.log(convert.to.string(new Date(), 'DDa, MMo dd, yyyy hhh:tttAP'));
 			Mousetrap.bind('ctrl+c', function () {
 				$('#todo-list .active .complete').click();
 			});

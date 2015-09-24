@@ -1,3 +1,7 @@
+/**
+* Controls the checkbox to complete a task
+*/
+
 import angular from 'angular';
 import $ from 'jquery';
 import jQuery from 'jquery';

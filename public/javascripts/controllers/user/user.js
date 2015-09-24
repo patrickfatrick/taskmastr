@@ -7,7 +7,7 @@ import 'Sortable';
 import 'ng-sortable';
 import hotkeys from 'angular-hotkeys';
 import date from 'date.js';
-import dateStrs from 'dateStrs';
+import dateify from 'dateify';
 
 export default function UserController () {
 	return ['$http', '$scope', '$log', '$location', 'hotkeys',
@@ -15,9 +15,9 @@ export default function UserController () {
 			
 			$scope.user.todos = {};
 			
-			/*******************************
-			 *******Server connections******
-			 *******************************/
+			/**
+			* Server connections
+			*/
 			
 			/*********Session data*********/
 			
@@ -339,23 +339,23 @@ export default function UserController () {
 						switch (shortcut) {
 						case '/t':
 							dateObj = date('tomorrow');
-							item = dateStrs(item).item;
+							item = dateify(item).item;
 							break;
 						case '/w':
 							dateObj = date('next Monday');
-							item = dateStrs(item).item;
+							item = dateify(item).item;
 							break;
 						case '/m':
 							dateObj = moment().startOf('month').add(1, 'M')._d;
-							item = dateStrs(item).item;
+							item = dateify(item).item;
 							break;
 						case '/y':
 							dateObj = moment().startOf('year').add(1, 'y')._d;
-							item = dateStrs(item).item;
+							item = dateify(item).item;
 							break;
 						default:
-							dateObj = dateStrs(item).dateObj;
-							item = dateStrs(item).item;
+							dateObj = dateify(item).dateObj;
+							item = dateify(item).item;
 							break;
 						}
 					}

@@ -10,6 +10,7 @@ import uiDate from 'angular-ui-date';
 import Sortable from 'Sortable';
 import ngSortable from 'ng-sortable';
 import hotkeys from 'angular-hotkeys';
+import convert from 'convert';
 
 import controllers from './controllers/index';
 import directives from './directives/index';
@@ -27,6 +28,11 @@ var app = angular.module('taskmastrApp', [
 controllers();
 directives();
 
+/**
+* Shortcuts declared here due to $apply foibles in UserController
+*/
+
+console.log(convert.to.string(new Date(), 'DDa, MMo dd, yyyy hhh:tttAP'));
 Mousetrap.bind('ctrl+c', function () {
 	$('#todo-list .active .complete').click();
 })
