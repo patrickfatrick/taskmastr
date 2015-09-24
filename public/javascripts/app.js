@@ -32,7 +32,7 @@ directives();
 * Shortcuts declared here due to $apply foibles in UserController
 */
 
-console.log(convert.to.string(new Date(), 'DDa, MMo dd, yyyy hhh:tttAP'));
+console.log(convert.to.string(new Date(), 'DDD, yyyy-mm-dd hhh:ttt.mllap zz'));
 Mousetrap.bind('ctrl+c', function () {
 	$('#todo-list .active .complete').click();
 })

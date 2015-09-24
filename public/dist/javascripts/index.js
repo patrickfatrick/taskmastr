@@ -35282,23 +35282,25 @@ $__System.register('35', ['34'], function (_export) {
 			'use strict';
 
 			convert = {
-				search: ['yyyy', // four-digit year
-				'yy', // two-digit year
-				'DDa', // full day of the week
-				'ddd', // two-digit date of the month
-				'Da', // abbreviated day of the week
-				'dd', // date of the month with no leading zeros
-				'MMo', // full month
-				'mmm', // two-digit month
-				'Mo', // abbreviated month
-				'mm', // month with no leading zeros
-				'hhh', // two-digit hours
-				'hh', // hour with no leading zeros
-				'ttt', // two-digit minutes
-				'tt', // minutes with no leading zeros
+				search: ['yyyy', // four-digit year 2015
+				'yy', // two-digit year (20)15
+				'DDD', // full day of the week Sunday-Saturday
+				'ddd', // two-digit date of the month 01-31
+				'DD', // abbreviated day of the week Sun-Sat
+				'dd', // date of the month with no leading zeros 1-31
+				'MMM', // full month January-December
+				'mmm', // two-digit month 00-12
+				'MM', // abbreviated month Jan-Dec
+				'mm', // month with no leading zeros 1-12
+				'hhh', // two-digit hours 01-12
+				'hh', // hour with no leading zeros 1-12
+				'ttt', // two-digit minutes 00-59
+				'tt', // minutes with no leading zeros 0-59
 				'AP', // AM or PM
 				'ap', // am or pm
-				'zz' // timezone
+				'mll', //milliseconds 000-999
+				'ml', //milliseconds with no leading zeros 0-999
+				'zz' // timezone offset UTC -6:00
 				],
 				to: {} // Where the conversion methods will go
 			};
@@ -35346,7 +35348,7 @@ $__System.register('35', ['34'], function (_export) {
     * @param {Date} 	a date object
     * @returns {String}	the full month
     */
-			convert.to.MMo = function (date) {
+			convert.to.MMM = function (date) {
 				var months = ['January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 				var month = date.getMonth().toString();
 				return months[month];
@@ -35357,7 +35359,7 @@ $__System.register('35', ['34'], function (_export) {
     * @param {Date} 	a date object
     * @returns {String}	the abbreviated month
     */
-			convert.to.Mo = function (date) {
+			convert.to.MM = function (date) {
 				var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 				var month = date.getMonth().toString();
 				return months[month];
@@ -35388,7 +35390,7 @@ $__System.register('35', ['34'], function (_export) {
     * @param {Date} 	a date object
     * @returns {String} the full day of the week
     */
-			convert.to.DDa = function (date) {
+			convert.to.DDD = function (date) {
 				var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 				var dayOfWeek = date.getDay();
 				return days[dayOfWeek];
@@ -35399,7 +35401,7 @@ $__System.register('35', ['34'], function (_export) {
     * @param {Date} 	a date object
     * @returns {Number}	the abbreviated day of the week
     */
-			convert.to.Da = function (date) {
+			convert.to.DD = function (date) {
 				var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 				var dayOfWeek = date.getDay();
 				return days[dayOfWeek];
@@ -35407,40 +35409,18 @@ $__System.register('35', ['34'], function (_export) {
 
 			convert.to.hhh = function (date) {
 				var hour = date.getHours();
-				switch (hour) {
-					case 0:
-						hour = 12;
-						break;
-					case hour < 13:
-						hour = hour;
-						break;
-					case hour < 24:
-						hour = hour - 12;
-						break;
-					default:
-						hour = hour;
-						break;
-				}
+				if (hour === 0) hour = 12;
+				if (hour < 13) hour = hour;
+				if (hour >= 13) hour = hour - 12;
 				hour = hour.toString();
 				return hour.length < 2 ? '0' + hour : hour;
 			};
 
 			convert.to.hh = function (date) {
 				var hour = date.getHours();
-				switch (hour) {
-					case 0:
-						hour = 12;
-						break;
-					case hour < 13:
-						hour = hour;
-						break;
-					case hour < 24:
-						hour = hour - 12;
-						break;
-					default:
-						hour = hour;
-						break;
-				}
+				if (hour === 0) hour = 12;
+				if (hour < 13) hour = hour;
+				if (hour >= 13) hour = hour - 12;
 				return hour;
 			};
 
@@ -35456,30 +35436,40 @@ $__System.register('35', ['34'], function (_export) {
 
 			convert.to.ap = function (date) {
 				var hour = date.getHours();
-				var ampm = undefined;
-				switch (hour) {
-					case hour < 12:
-						ampm = 'am';
-						break;
-					default:
-						ampm = 'pm';
-						break;
-				}
+				var ampm = hour < 12 ? 'am' : 'pm';
 				return ampm;
 			};
 
 			convert.to.AP = function (date) {
 				var hour = date.getHours();
-				var ampm = undefined;
-				switch (hour) {
-					case hour < 12:
-						ampm = 'AM';
+				var ampm = hour < 12 ? 'AM' : 'PM';
+				return ampm;
+			};
+
+			convert.to.mll = function (date) {
+				var milliseconds = date.getMilliseconds().toString();
+				switch (milliseconds.length) {
+					case 1:
+						milliseconds = '00' + milliseconds;
+						break;
+					case 2:
+						milliseconds = '0' + milliseconds;
 						break;
 					default:
-						ampm = 'PM';
+						milliseconds = milliseconds;
 						break;
 				}
-				return ampm;
+				return milliseconds;
+			};
+
+			convert.to.ml = function (date) {
+				var milliseconds = date.getMilliseconds().toString();
+				return milliseconds;
+			};
+
+			convert.to.zz = function (date) {
+				var offset = date.getTimezoneOffset() / 60 * -1;
+				return 'UTC ' + offset + ':00';
 			};
 
 			/**
@@ -35500,11 +35490,11 @@ $__System.register('35', ['34'], function (_export) {
 						var i = _step.value;
 
 						if (converted.indexOf(i) !== -1) {
-							console.log('match on ' + i);
-							var stringStart = converted.substr(0, converted.indexOf(i));
-							var stringEnd = converted.substr(converted.indexOf(i) + i.length, converted.length);
-							converted = stringStart + convert.to[i](date) + stringEnd;
-							console.log(converted);
+							//console.log('Search string is: ' + i);
+							//console.log('Converted string is: ' + convert.to[i](date));
+							var replacer = convert.to[i](date).toString();
+							converted = converted.replace(i, replacer);
+							//console.log(converted);
 						}
 					}
 				} catch (err) {
@@ -37155,7 +37145,7 @@ $__System.register('1', ['3', '5', '7', '9', '10', '35', '47', 'b', 'd', 'e', '5
    * Shortcuts declared here due to $apply foibles in UserController
    */
 
-			console.log(convert.to.string(new Date(), 'DDa, MMo dd, yyyy hhh:tttAP'));
+			console.log(convert.to.string(new Date(), 'DDD, yyyy-mm-dd hhh:ttt.mllap zz'));
 			Mousetrap.bind('ctrl+c', function () {
 				$('#todo-list .active .complete').click();
 			});

@@ -18,23 +18,25 @@
 
 let convert = {
 	search: [
-		'yyyy', // four-digit year
-		'yy', // two-digit year
-		'DDa', // full day of the week
-		'ddd', // two-digit date of the month
-		'Da', // abbreviated day of the week
-		'dd', // date of the month with no leading zeros
-		'MMo', // full month
-		'mmm', // two-digit month
-		'Mo', // abbreviated month
-		'mm', // month with no leading zeros
-		'hhh', // two-digit hours
-		'hh', // hour with no leading zeros
-		'ttt', // two-digit minutes
-		'tt', // minutes with no leading zeros
+		'yyyy', // four-digit year 2015
+		'yy', // two-digit year (20)15
+		'DDD', // full day of the week Sunday-Saturday
+		'ddd', // two-digit date of the month 01-31
+		'DD', // abbreviated day of the week Sun-Sat
+		'dd', // date of the month with no leading zeros 1-31
+		'MMM', // full month January-December
+		'mmm', // two-digit month 00-12
+		'MM', // abbreviated month Jan-Dec
+		'mm', // month with no leading zeros 1-12
+		'hhh', // two-digit hours 01-12
+		'hh', // hour with no leading zeros 1-12
+		'ttt', // two-digit minutes 00-59
+		'tt', // minutes with no leading zeros 0-59
 		'AP', // AM or PM
 		'ap', // am or pm
-		'zz' // timezone
+		'mll', //milliseconds 000-999
+		'ml', //milliseconds with no leading zeros 0-999
+		'zz' // timezone offset UTC -6:00
 	],
 	to: {} // Where the conversion methods will go
 };
@@ -82,7 +84,7 @@ convert.to.mm = date => {
  * @param {Date} 	a date object
  * @returns {String}	the full month
  */
-convert.to.MMo = date => {
+convert.to.MMM = date => {
 	const months = ['January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	let month = date.getMonth().toString();
 	return months[month];
@@ -93,7 +95,7 @@ convert.to.MMo = date => {
  * @param {Date} 	a date object
  * @returns {String}	the abbreviated month
  */
-convert.to.Mo = date => {
+convert.to.MM = date => {
 	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov',  'Dec']
 	let month = date.getMonth().toString();
 	return months[month];
@@ -124,7 +126,7 @@ convert.to.dd = date => {
  * @param {Date} 	a date object
  * @returns {String} the full day of the week
  */
-convert.to.DDa = date => {
+convert.to.DDD = date => {
 	const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	let dayOfWeek = date.getDay();
 	return days[dayOfWeek];
@@ -135,7 +137,7 @@ convert.to.DDa = date => {
  * @param {Date} 	a date object
  * @returns {Number}	the abbreviated day of the week
  */
-convert.to.Da = date => {
+convert.to.DD = date => {
 	const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	let dayOfWeek = date.getDay();
 	return days[dayOfWeek];
@@ -143,40 +145,18 @@ convert.to.Da = date => {
 
 convert.to.hhh = date => {
 	let hour = date.getHours();
-	switch (hour) {
-		case 0:
-			hour = 12;
-			break;
-		case hour < 13:
-			hour = hour;
-			break;
-		case hour < 24:
-			hour = hour - 12;
-			break;
-		default:
-			hour = hour;
-			break;
-	}
+	if (hour === 0) hour = 12;
+	if (hour < 13) hour = hour;
+	if (hour >= 13) hour = hour - 12;
 	hour = hour.toString();
 	return (hour.length < 2) ? '0' + hour : hour;
 }
 
 convert.to.hh = date => {
 	let hour = date.getHours();
-	switch (hour) {
-		case 0:
-			hour = 12;
-			break;
-		case hour < 13:
-			hour = hour;
-			break;
-		case hour < 24:
-			hour = hour - 12;
-			break;
-		default:
-			hour = hour;
-			break;
-	}
+	if (hour === 0) hour = 12;
+	if (hour < 13) hour = hour;
+	if (hour >= 13) hour = hour - 12;
 	return hour;
 }
 
@@ -192,30 +172,40 @@ convert.to.tt = date => {
 
 convert.to.ap = date => {
 	let hour = date.getHours();
-	let ampm;
-	switch (hour) {
-		case hour < 12:
-			ampm = 'am';
-			break;
-		default:
-			ampm = 'pm';
-			break;
-	}
+	let ampm = (hour < 12) ? 'am' : 'pm';
 	return ampm;
 }
 
 convert.to.AP = date => {
 	let hour = date.getHours();
-	let ampm;
-	switch (hour) {
-		case hour < 12:
-			ampm = 'AM';
+	let ampm = (hour < 12) ? 'AM' : 'PM';
+	return ampm;
+}
+
+convert.to.mll = date => {
+	let milliseconds = date.getMilliseconds().toString();
+	switch (milliseconds.length) {
+		case 1:
+			milliseconds = '00' + milliseconds;
+			break;
+		case 2:
+			milliseconds = '0' + milliseconds;
 			break;
 		default:
-			ampm = 'PM';
+			milliseconds = milliseconds;
 			break;
 	}
-	return ampm;
+	return milliseconds;
+}
+
+convert.to.ml = date => {
+	let milliseconds = date.getMilliseconds().toString();
+	return milliseconds;
+}
+
+convert.to.zz = date => {
+	let offset = date.getTimezoneOffset() / 60 * -1;
+	return 'UTC ' + offset + ':00';
 }
 
 /**
@@ -229,11 +219,11 @@ convert.to.string = (input, format) => {
 	let converted = format;
 	for (let i of convert.search) {
 		if (converted.indexOf(i) !== -1) {
-			console.log('match on ' + i);
-			let stringStart = converted.substr(0, converted.indexOf(i));
-			let stringEnd = converted.substr((converted.indexOf(i) + i.length), converted.length);
-			converted =  stringStart + convert.to[i](date) + stringEnd;
-			console.log(converted);
+			//console.log('Search string is: ' + i);
+			//console.log('Converted string is: ' + convert.to[i](date));
+			const replacer = convert.to[i](date).toString();
+			converted = converted.replace(i, replacer);
+			//console.log(converted);
 		}
 	}
 	return converted;
