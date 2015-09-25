@@ -24,7 +24,7 @@ System.config({
     "angular-ui/ui-date": "github:angular-ui/ui-date@0.0.8",
     "babel": "npm:babel-core@5.8.25",
     "babel-runtime": "npm:babel-runtime@5.8.24",
-		"convert": "libraries/convert",
+		//"reform": "libraries/reform",
     "core-js": "npm:core-js@1.1.4",
     "date.js": "npm:date.js@0.2.0",
     "dateify": "libraries/dateify",
