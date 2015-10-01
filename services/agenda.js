@@ -1,5 +1,5 @@
 var config = require('../config');
-var Agenda = require('agenda');
+var Agenda = require('../libraries/agenda');
 var agenda = new Agenda(config.agendaOptions);
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
