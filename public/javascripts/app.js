@@ -10,7 +10,7 @@ import uiDate from 'angular-ui-date';
 import Sortable from 'Sortable';
 import ngSortable from 'ng-sortable';
 import hotkeys from 'angular-hotkeys';
-import reform from '../libraries/reform';
+import gregorian from 'gregorian';
 
 import controllers from './controllers/index';
 import directives from './directives/index';
@@ -31,8 +31,6 @@ directives();
 /**
 * Shortcuts declared here due to $apply foibles in UserController
 */
-
-console.log(reform.to.string(new Date(), 'DDD, yyyy-mm-dd hhh:ttt.mllap zz'));
 Mousetrap.bind('ctrl+c', function () {
 	$('#todo-list .active .complete').click();
 })
