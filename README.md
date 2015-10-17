@@ -63,9 +63,9 @@ _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday
 Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
 
 # Screenshots
-![taskmastr basic usage](./images/taskmastr-basic-usage-1.png)
-![taskmastr basic usage 2a](./images/taskmastr-basic-usage-2a.png)
-![taskmastr basic usage 3](./images/taskmastr-basic-usage-3.png)
-![taskmastr basic usage 4](./images/taskmastr-basic-usage-4.png)
-![taskmastr modal](./images/screenshot3.png)
-![taskmastr mobile](./images/screenshot4.png)
+![taskmastr basic usage](/images/taskmastr-basic-usage-1.png)
+![taskmastr basic usage 2a](/images/taskmastr-basic-usage-2a.png)
+![taskmastr basic usage 3](/images/taskmastr-basic-usage-3.png)
+![taskmastr basic usage 4](/images/taskmastr-basic-usage-4.png)
+![taskmastr modal](/images/screenshot3.png)
+![taskmastr mobile](/images/screenshot4.png)
