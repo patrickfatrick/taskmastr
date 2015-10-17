@@ -1,11 +1,11 @@
-#taskmastr
+# taskmastr
 Yet another task management web app built with Node.js, Express, MongoDB, and Angular. You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
 
 While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
 
 Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) for information on how to use taskmastr.
 
-#Features
+# Features
 taskmastr is...
 
 - Fast  
@@ -28,18 +28,18 @@ taskmastr has...
 
 taskmastr is updated regularly with new features
 
-#Changelog
-##New in v5.3.0
+# Changelog
+## New in v5.3.0
 Mostly aesthetic changes. Some are more noticeable than others, but the emphasis is making bright mode less abhorrent.
 
 Some changes were also inspired by Google's Material Design and [Material UI](http://material-ui.com/#/home).
 
-##New in v5.2.0
+## New in v5.2.0
 The entire app can now be controlled with the keyboard. See [this page](https://github.com/patrickfatrick/taskmastr/wiki/Keyboard-shortcuts) for details.
 
 This entails a pretty big shift in functionality. In the same way that lists have behaved where one is active at any given moment, now individual tasks can also be active. The active task is highlighted in green, and you can select the next or previous task in the list using the up and down arrow keys. Once a task is selected you can do all the usual stuff to it using the keyboard: complete it, rename it, move it, set a due date, and delete it.
 
-##New in v5.1.0
+## New in v5.1.0
 Notification scheduling _actually_ works! Hooray!
 
 We've also added in the ability to shortcut your due date when creating the task itself.
@@ -59,14 +59,13 @@ This feature really does not and should not work for every single imaginable dat
 
 _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday' will not work, use 'next week' when you mean one week from today. Same goes for 'next month' for one month from today, and 'next year' for... well, you know.
 
-##New in v5.0.0
+## New in v5.0.0
 Notifications! Use the new datepicker next to each task to assign a due date, and we'll send you a handy reminder at 6am the day of.
 
-#Screenshots
+# Screenshots
 ![taskmastr basic usage](./images/taskmastr-basic-usage-1.png)
 ![taskmastr basic usage 2a](./images/taskmastr-basic-usage-2a.png)
 ![taskmastr basic usage 3](./images/taskmastr-basic-usage-3.png)
 ![taskmastr basic usage 4](./images/taskmastr-basic-usage-4.png)
 ![taskmastr modal](./images/screenshot3.png)
 ![taskmastr mobile](./images/screenshot4.png)
-
