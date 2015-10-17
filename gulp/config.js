@@ -14,7 +14,7 @@ module.exports = {
 	systemjs: {
 		options: {
 			sourceMaps: true,
-			//minify: true
+			minify: false //set to true for production
 		},
 		config: src + '/config.js',
 		src: src + '/javascripts/app.js',

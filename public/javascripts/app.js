@@ -10,7 +10,6 @@ import uiDate from 'angular-ui-date';
 import Sortable from 'Sortable';
 import ngSortable from 'ng-sortable';
 import hotkeys from 'angular-hotkeys';
-import gregorian from 'gregorian';
 
 import controllers from './controllers/index';
 import directives from './directives/index';

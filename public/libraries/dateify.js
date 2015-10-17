@@ -3,11 +3,11 @@
 * and outputs the task and a date object
 * @params {String} item user-input task (including date)
 * @returns {String} item the task without the date information
-* @returns {Date} dateObj the corresponding due date
+* @returns {Date} dueDate the corresponding due date
 */
 
-import moment from 'moment';
-import date from 'date.js';
+import gregorian from 'gregorian';
+import datejs from 'date.js';
 
 export default function (item) {
 	const keywords = [
@@ -33,14 +33,15 @@ export default function (item) {
 			return true;
 		}
 	});
-	let momentObj = moment(item.slice(keyword, item.length), dateFormats);
-	let dateObj = (momentObj.isValid()) ? momentObj._d : date(item.slice(keyword, item.length));
-	//console.log('Date: ' + dateObj);
-	if (Date.parse(dateObj) <= moment().startOf('day')._d) {
-		dateObj = moment(dateObj).add(1, 'y')._d;
+
+	let dueDate = gregorian.reform(item.slice(keyword, item.length));
+	dueDate = (dueDate.reagent()) ? dueDate.recite() : datejs(item.slice(keyword, item.length));
+	//console.log('Date: ' + dueDate);
+	if (Date.parse(dueDate) <= gregorian.reform(dueDate).restart('d').recite()) {
+		dueDate = gregorian.reform(dueDate).add(1, 'y').recite();
 		item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
 	} else {
 		item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
 	}
-	return {item: item, dateObj: dateObj};
+	return {item: item, dueDate: dueDate};
 }

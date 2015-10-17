@@ -7,6 +7,7 @@ import 'Sortable';
 import 'ng-sortable';
 import hotkeys from 'angular-hotkeys';
 import date from 'date.js';
+import gregorian from 'gregorian';
 import dateify from 'dateify';
 
 export default function UserController () {
@@ -331,30 +332,30 @@ export default function UserController () {
 						agendaID: agendaID,
 					});
 				} else {
-					let dateObj;
+					let dueDate;
 					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {
 						const char = (item.indexOf('Remind me to ') !== -1 || item.indexOf('remind me to ') !== -1) ? 13 : 3;
 						const shortcut = (item.substring(0, char - 1));
 						item = item.substring(char, item.length);
 						switch (shortcut) {
 						case '/t':
-							dateObj = date('tomorrow');
+							dueDate = date('tomorrow');
 							item = dateify(item).item;
 							break;
 						case '/w':
-							dateObj = date('next Monday');
+							dueDate = date('next Monday');
 							item = dateify(item).item;
 							break;
 						case '/m':
-							dateObj = moment().startOf('month').add(1, 'M')._d;
+							dueDate = gregorian.reform().restart('m').add(1, 'm').recite();
 							item = dateify(item).item;
 							break;
 						case '/y':
-							dateObj = moment().startOf('year').add(1, 'y')._d;
+							dueDate = gregorian.reform().restart('y').add(1, 'y').recite();
 							item = dateify(item).item;
 							break;
 						default:
-							dateObj = dateify(item).dateObj;
+							dueDate = dateify(item).dueDate;
 							item = dateify(item).item;
 							break;
 						}
@@ -363,7 +364,7 @@ export default function UserController () {
 						item: item.trim(),
 						complete: false,
 						agendaID: agendaID,
-						dueDate: dateObj,
+						dueDate: dueDate,
 						current: (!arr.length) ? true : false
 					});
 				}

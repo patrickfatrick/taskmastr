@@ -29,12 +29,11 @@ System.config({
     "dateify": "libraries/dateify",
     "es6-module-loader": "npm:es6-module-loader@0.17.7",
     "geoffgraham/animate.scss": "github:geoffgraham/animate.scss@3.2.0",
-    "gregorian": "npm:gregorian@1.1.5",
+    "gregorian": "npm:gregorian@1.3.1",
     "interactions": "javascripts/interactions",
     "jquery": "github:components/jquery@2.1.4",
     "jquery-ui": "libraries/jquery-ui/jquery-ui",
     "lodash": "npm:lodash@3.10.1",
-    "moment": "github:moment/moment@2.10.6",
     "ng-sortable": "github:RubaXa/Sortable@1.2.1/ng-sortable",
     "velocity": "github:julianshapiro/velocity@1.2.2",
     "github:angular/bower-angular-animate@1.4.5": {
