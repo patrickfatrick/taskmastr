@@ -3,7 +3,6 @@ var Builder = require('systemjs-builder');
 var livereload = require('gulp-livereload');
 var notify = require('gulp-notify');
 var config = require('../config').systemjs;
-var gzip = require('gulp-gzip');
 
 gulp.task('systemjs', function (cb) {
 	var builder = new Builder ();

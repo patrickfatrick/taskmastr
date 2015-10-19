@@ -24,8 +24,6 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 mongoose.connect(config.mongoUri);
-//Ensure agenda is running at start-up
-agenda.every('3 minutes', 'Agenda running');
 var app = express();
 
 // view engine setup

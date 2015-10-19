@@ -704,13 +704,7 @@
             return require.call(loader, names, callback, errback, module.id);
           });
 
-        // set global require to AMD require
-        var curRequire = __global.require;
-        __global.require = require;
-
         var output = factory.apply(exportsIndex == -1 ? __global : exports, depValues);
-
-        __global.require = curRequire;
 
         if (typeof output == 'undefined' && module)
           output = module.exports;
@@ -793,6 +787,7 @@
   loader.amdDefine = define;
   loader.amdRequire = require;
 })(typeof self != 'undefined' ? self : global);
+
 "bundle";
 (function() {
 var _removeDefine = $__System.get("@@amd-helpers").createDefine();
@@ -18046,12 +18041,12 @@ $__System.registerDynamic("4", [], false, function(__require, __exports, __modul
   return _retrieveGlobal();
 });
 
-$__System.registerDynamic("5", ["4"], true, function(require, exports, module) {
+$__System.registerDynamic("5", ["4"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("4");
+  module.exports = req('4');
   global.define = __define;
   return module.exports;
 });
@@ -18336,12 +18331,12 @@ $__System.registerDynamic("6", ["5"], false, function(__require, __exports, __mo
   return _retrieveGlobal();
 });
 
-$__System.registerDynamic("7", ["6"], true, function(require, exports, module) {
+$__System.registerDynamic("7", ["6"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("6");
+  module.exports = req('6');
   global.define = __define;
   return module.exports;
 });
@@ -20490,12 +20485,12 @@ $__System.registerDynamic("8", ["5"], false, function(__require, __exports, __mo
   return _retrieveGlobal();
 });
 
-$__System.registerDynamic("9", ["8"], true, function(require, exports, module) {
+$__System.registerDynamic("9", ["8"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("8");
+  module.exports = req('8');
   global.define = __define;
   return module.exports;
 });
@@ -20636,12 +20631,12 @@ $__System.registerDynamic("a", [], false, function(__require, __exports, __modul
   return _retrieveGlobal();
 });
 
-$__System.registerDynamic("b", ["a"], true, function(require, exports, module) {
+$__System.registerDynamic("b", ["a"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("a");
+  module.exports = req('a');
   global.define = __define;
   return module.exports;
 });
@@ -22270,12 +22265,12 @@ $__System.registerDynamic("f", ["5"], false, function(__require, __exports, __mo
   return _retrieveGlobal();
 });
 
-$__System.registerDynamic("10", ["f"], true, function(require, exports, module) {
+$__System.registerDynamic("10", ["f"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("f");
+  module.exports = req('f');
   global.define = __define;
   return module.exports;
 });
@@ -25080,7 +25075,7 @@ var _removeDefine = $__System.get("@@amd-helpers").createDefine();
 
 _removeDefine();
 })();
-$__System.registerDynamic("12", [], true, function(require, exports, module) {
+$__System.registerDynamic("12", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -25142,37 +25137,37 @@ $__System.registerDynamic("12", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("13", ["12"], true, function(require, exports, module) {
+$__System.registerDynamic("13", ["12"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("12");
+  module.exports = req('12');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("14", ["13"], true, function(require, exports, module) {
+$__System.registerDynamic("14", ["13"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__System._nodeRequire ? process : require("13");
+  module.exports = $__System._nodeRequire ? process : req('13');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("15", ["14"], true, function(require, exports, module) {
+$__System.registerDynamic("15", ["14"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("14");
+  module.exports = req('14');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("16", ["15"], true, function(require, exports, module) {
+$__System.registerDynamic("16", ["15"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -29481,22 +29476,22 @@ $__System.registerDynamic("16", ["15"], true, function(require, exports, module)
         root._ = _;
       }
     }.call(this));
-  })(require("15"));
+  })(req('15'));
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("17", ["16"], true, function(require, exports, module) {
+$__System.registerDynamic("17", ["16"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("16");
+  module.exports = req('16');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("18", [], true, function(require, exports, module) {
+$__System.registerDynamic("18", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -29574,22 +29569,22 @@ $__System.registerDynamic("18", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("19", ["18"], true, function(require, exports, module) {
+$__System.registerDynamic("19", ["18"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("18");
+  module.exports = req('18');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("1a", ["19"], true, function(require, exports, module) {
+$__System.registerDynamic("1a", ["19"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var debug = require("19")('date:date');
+  var debug = req('19')('date:date');
   var _second = 1000;
   var _minute = 60 * _second;
   var _hour = 60 * _minute;
@@ -29714,13 +29709,13 @@ $__System.registerDynamic("1a", ["19"], true, function(require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("1b", ["1a", "19"], true, function(require, exports, module) {
+$__System.registerDynamic("1b", ["1a", "19"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var date = require("1a");
-  var debug = require("19")('date:parser');
+  var date = req('1a');
+  var debug = req('19')('date:parser');
   var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
   var rMeridiem = /^(\d{1,2})([:.](\d{1,2}))?([:.](\d{1,2}))?\s*([ap]m)/;
@@ -30081,27 +30076,46 @@ $__System.registerDynamic("1b", ["1a", "19"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("1c", ["1b"], true, function(require, exports, module) {
+$__System.registerDynamic("1c", ["1b"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("1b");
+  module.exports = req('1b');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("1d", ["1c"], true, function(require, exports, module) {
+$__System.registerDynamic("1d", ["1c"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("1c");
+  module.exports = req('1c');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("1f", [], true, function(require, exports, module) {
+$__System.register('1e', [], function (_export) {
+  /* */
+  'use strict';
+
+  /**
+   * Convert the object passed to a date and test its validity
+   * @param {Object} 	obj any object
+   * @returns {Date}	if string passes the test, return the date object
+   */
+  return {
+    setters: [],
+    execute: function () {
+      _export('default', function (obj) {
+        obj = obj || new Date();
+        return new Date(obj);
+      });
+    }
+  };
+});
+$__System.registerDynamic("1f", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30111,7 +30125,7 @@ $__System.registerDynamic("1f", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("20", [], true, function(require, exports, module) {
+$__System.registerDynamic("20", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30126,7 +30140,7 @@ $__System.registerDynamic("20", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("21", [], true, function(require, exports, module) {
+$__System.registerDynamic("21", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30136,7 +30150,7 @@ $__System.registerDynamic("21", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("22", [], true, function(require, exports, module) {
+$__System.registerDynamic("22", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30149,12 +30163,12 @@ $__System.registerDynamic("22", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("23", ["22"], true, function(require, exports, module) {
+$__System.registerDynamic("23", ["22"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = require("22");
+  var cof = req('22');
   module.exports = 0 in Object('z') ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
@@ -30162,7 +30176,7 @@ $__System.registerDynamic("23", ["22"], true, function(require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("24", [], true, function(require, exports, module) {
+$__System.registerDynamic("24", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30176,13 +30190,13 @@ $__System.registerDynamic("24", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("25", ["23", "24"], true, function(require, exports, module) {
+$__System.registerDynamic("25", ["23", "24"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var IObject = require("23"),
-      defined = require("24");
+  var IObject = req('23'),
+      defined = req('24');
   module.exports = function(it) {
     return IObject(defined(it));
   };
@@ -30190,7 +30204,7 @@ $__System.registerDynamic("25", ["23", "24"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("26", [], true, function(require, exports, module) {
+$__System.registerDynamic("26", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30200,7 +30214,7 @@ $__System.registerDynamic("26", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("27", [], true, function(require, exports, module) {
+$__System.registerDynamic("27", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30213,7 +30227,7 @@ $__System.registerDynamic("27", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("28", [], true, function(require, exports, module) {
+$__System.registerDynamic("28", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30225,13 +30239,13 @@ $__System.registerDynamic("28", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("29", ["27", "28"], true, function(require, exports, module) {
+$__System.registerDynamic("29", ["27", "28"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = require("27"),
-      core = require("28"),
+  var global = req('27'),
+      core = req('28'),
       PROTOTYPE = 'prototype';
   var ctx = function(fn, that) {
     return function() {
@@ -30283,7 +30297,7 @@ $__System.registerDynamic("29", ["27", "28"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("2a", [], true, function(require, exports, module) {
+$__System.registerDynamic("2a", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30305,7 +30319,7 @@ $__System.registerDynamic("2a", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("2b", [], true, function(require, exports, module) {
+$__System.registerDynamic("2b", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30322,7 +30336,7 @@ $__System.registerDynamic("2b", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("2c", [], true, function(require, exports, module) {
+$__System.registerDynamic("2c", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30338,12 +30352,12 @@ $__System.registerDynamic("2c", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("2d", ["2c"], true, function(require, exports, module) {
+$__System.registerDynamic("2d", ["2c"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = !require("2c")(function() {
+  module.exports = !req('2c')(function() {
     return Object.defineProperty({}, 'a', {get: function() {
         return 7;
       }}).a != 7;
@@ -30352,14 +30366,14 @@ $__System.registerDynamic("2d", ["2c"], true, function(require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("2e", ["2a", "2b", "2d"], true, function(require, exports, module) {
+$__System.registerDynamic("2e", ["2a", "2b", "2d"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = require("2a"),
-      createDesc = require("2b");
-  module.exports = require("2d") ? function(object, key, value) {
+  var $ = req('2a'),
+      createDesc = req('2b');
+  module.exports = req('2d') ? function(object, key, value) {
     return $.setDesc(object, key, createDesc(1, value));
   } : function(object, key, value) {
     object[key] = value;
@@ -30369,17 +30383,17 @@ $__System.registerDynamic("2e", ["2a", "2b", "2d"], true, function(require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("2f", ["2e"], true, function(require, exports, module) {
+$__System.registerDynamic("2f", ["2e"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("2e");
+  module.exports = req('2e');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("30", [], true, function(require, exports, module) {
+$__System.registerDynamic("30", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30392,12 +30406,12 @@ $__System.registerDynamic("30", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("31", ["27"], true, function(require, exports, module) {
+$__System.registerDynamic("31", ["27"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = require("27"),
+  var global = req('27'),
       SHARED = '__core-js_shared__',
       store = global[SHARED] || (global[SHARED] = {});
   module.exports = function(key) {
@@ -30407,7 +30421,7 @@ $__System.registerDynamic("31", ["27"], true, function(require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("32", [], true, function(require, exports, module) {
+$__System.registerDynamic("32", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30421,28 +30435,28 @@ $__System.registerDynamic("32", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("33", ["31", "27", "32"], true, function(require, exports, module) {
+$__System.registerDynamic("33", ["31", "27", "32"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var store = require("31")('wks'),
-      Symbol = require("27").Symbol;
+  var store = req('31')('wks'),
+      Symbol = req('27').Symbol;
   module.exports = function(name) {
-    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || require("32"))('Symbol.' + name));
+    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || req('32'))('Symbol.' + name));
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("34", ["30", "2e", "33"], true, function(require, exports, module) {
+$__System.registerDynamic("34", ["30", "2e", "33"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var has = require("30"),
-      hide = require("2e"),
-      TAG = require("33")('toStringTag');
+  var has = req('30'),
+      hide = req('2e'),
+      TAG = req('33')('toStringTag');
   module.exports = function(it, tag, stat) {
     if (it && !has(it = stat ? it : it.prototype, TAG))
       hide(it, TAG, tag);
@@ -30451,38 +30465,38 @@ $__System.registerDynamic("34", ["30", "2e", "33"], true, function(require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("35", ["2a", "2e", "33", "2b", "34"], true, function(require, exports, module) {
+$__System.registerDynamic("35", ["2a", "2e", "33", "2b", "34"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   'use strict';
-  var $ = require("2a"),
+  var $ = req('2a'),
       IteratorPrototype = {};
-  require("2e")(IteratorPrototype, require("33")('iterator'), function() {
+  req('2e')(IteratorPrototype, req('33')('iterator'), function() {
     return this;
   });
   module.exports = function(Constructor, NAME, next) {
-    Constructor.prototype = $.create(IteratorPrototype, {next: require("2b")(1, next)});
-    require("34")(Constructor, NAME + ' Iterator');
+    Constructor.prototype = $.create(IteratorPrototype, {next: req('2b')(1, next)});
+    req('34')(Constructor, NAME + ' Iterator');
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("36", ["26", "29", "2f", "2e", "30", "33", "21", "35", "2a", "34"], true, function(require, exports, module) {
+$__System.registerDynamic("36", ["26", "29", "2f", "2e", "30", "33", "21", "35", "2a", "34"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   'use strict';
-  var LIBRARY = require("26"),
-      $def = require("29"),
-      $redef = require("2f"),
-      hide = require("2e"),
-      has = require("30"),
-      SYMBOL_ITERATOR = require("33")('iterator'),
-      Iterators = require("21"),
+  var LIBRARY = req('26'),
+      $def = req('29'),
+      $redef = req('2f'),
+      hide = req('2e'),
+      has = req('30'),
+      SYMBOL_ITERATOR = req('33')('iterator'),
+      Iterators = req('21'),
       BUGGY = !([].keys && 'next' in [].keys()),
       FF_ITERATOR = '@@iterator',
       KEYS = 'keys',
@@ -30491,7 +30505,7 @@ $__System.registerDynamic("36", ["26", "29", "2f", "2e", "30", "33", "21", "35",
     return this;
   };
   module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE) {
-    require("35")(Constructor, NAME, next);
+    req('35')(Constructor, NAME, next);
     var createMethod = function(kind) {
       switch (kind) {
         case KEYS:
@@ -30514,8 +30528,8 @@ $__System.registerDynamic("36", ["26", "29", "2f", "2e", "30", "33", "21", "35",
         methods,
         key;
     if (_native) {
-      var IteratorPrototype = require("2a").getProto(_default.call(new Base));
-      require("34")(IteratorPrototype, TAG, true);
+      var IteratorPrototype = req('2a').getProto(_default.call(new Base));
+      req('34')(IteratorPrototype, TAG, true);
       if (!LIBRARY && has(proto, FF_ITERATOR))
         hide(IteratorPrototype, SYMBOL_ITERATOR, returnThis);
     }
@@ -30542,17 +30556,17 @@ $__System.registerDynamic("36", ["26", "29", "2f", "2e", "30", "33", "21", "35",
   return module.exports;
 });
 
-$__System.registerDynamic("37", ["1f", "20", "21", "25", "36"], true, function(require, exports, module) {
+$__System.registerDynamic("37", ["1f", "20", "21", "25", "36"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   'use strict';
-  var setUnscope = require("1f"),
-      step = require("20"),
-      Iterators = require("21"),
-      toIObject = require("25");
-  require("36")(Array, 'Array', function(iterated, kind) {
+  var setUnscope = req('1f'),
+      step = req('20'),
+      Iterators = req('21'),
+      toIObject = req('25');
+  req('36')(Array, 'Array', function(iterated, kind) {
     this._t = toIObject(iterated);
     this._i = 0;
     this._k = kind;
@@ -30578,19 +30592,19 @@ $__System.registerDynamic("37", ["1f", "20", "21", "25", "36"], true, function(r
   return module.exports;
 });
 
-$__System.registerDynamic("38", ["37", "21"], true, function(require, exports, module) {
+$__System.registerDynamic("38", ["37", "21"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  require("37");
-  var Iterators = require("21");
+  req('37');
+  var Iterators = req('21');
   Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("39", [], true, function(require, exports, module) {
+$__System.registerDynamic("39", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30604,13 +30618,13 @@ $__System.registerDynamic("39", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("3a", ["39", "24"], true, function(require, exports, module) {
+$__System.registerDynamic("3a", ["39", "24"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = require("39"),
-      defined = require("24");
+  var toInteger = req('39'),
+      defined = req('24');
   module.exports = function(TO_STRING) {
     return function(that, pos) {
       var s = String(defined(that)),
@@ -30628,14 +30642,14 @@ $__System.registerDynamic("3a", ["39", "24"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("3b", ["3a", "36"], true, function(require, exports, module) {
+$__System.registerDynamic("3b", ["3a", "36"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   'use strict';
-  var $at = require("3a")(true);
-  require("36")(String, 'String', function(iterated) {
+  var $at = req('3a')(true);
+  req('36')(String, 'String', function(iterated) {
     this._t = String(iterated);
     this._i = 0;
   }, function() {
@@ -30658,7 +30672,7 @@ $__System.registerDynamic("3b", ["3a", "36"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("3c", [], true, function(require, exports, module) {
+$__System.registerDynamic("3c", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -30670,12 +30684,12 @@ $__System.registerDynamic("3c", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("3d", ["3c"], true, function(require, exports, module) {
+$__System.registerDynamic("3d", ["3c"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var isObject = require("3c");
+  var isObject = req('3c');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -30685,13 +30699,13 @@ $__System.registerDynamic("3d", ["3c"], true, function(require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("3e", ["22", "33"], true, function(require, exports, module) {
+$__System.registerDynamic("3e", ["22", "33"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = require("22"),
-      TAG = require("33")('toStringTag'),
+  var cof = req('22'),
+      TAG = req('33')('toStringTag'),
       ARG = cof(function() {
         return arguments;
       }()) == 'Arguments';
@@ -30705,15 +30719,15 @@ $__System.registerDynamic("3e", ["22", "33"], true, function(require, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("3f", ["3e", "33", "21", "28"], true, function(require, exports, module) {
+$__System.registerDynamic("3f", ["3e", "33", "21", "28"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var classof = require("3e"),
-      ITERATOR = require("33")('iterator'),
-      Iterators = require("21");
-  module.exports = require("28").getIteratorMethod = function(it) {
+  var classof = req('3e'),
+      ITERATOR = req('33')('iterator'),
+      Iterators = req('21');
+  module.exports = req('28').getIteratorMethod = function(it) {
     if (it != undefined)
       return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
   };
@@ -30721,14 +30735,14 @@ $__System.registerDynamic("3f", ["3e", "33", "21", "28"], true, function(require
   return module.exports;
 });
 
-$__System.registerDynamic("40", ["3d", "3f", "28"], true, function(require, exports, module) {
+$__System.registerDynamic("40", ["3d", "3f", "28"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = require("3d"),
-      get = require("3f");
-  module.exports = require("28").getIterator = function(it) {
+  var anObject = req('3d'),
+      get = req('3f');
+  module.exports = req('28').getIterator = function(it) {
     var iterFn = get(it);
     if (typeof iterFn != 'function')
       throw TypeError(it + ' is not iterable!');
@@ -30738,31 +30752,2187 @@ $__System.registerDynamic("40", ["3d", "3f", "28"], true, function(require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("41", ["38", "3b", "40"], true, function(require, exports, module) {
+$__System.registerDynamic("41", ["38", "3b", "40"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  require("38");
-  require("3b");
-  module.exports = require("40");
+  req('38');
+  req('3b');
+  module.exports = req('40');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("42", ["41"], true, function(require, exports, module) {
+$__System.registerDynamic("42", ["41"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": require("41"),
+    "default": req('41'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
+$__System.register('43', [], function (_export) {
+  /* */
+  'use strict';
+
+  /**
+   * Take a date object and output the capitalized 12-hour clock period (AM/PM)
+   * @param   {Date}   date a date object
+   * @returns {String} the capitalized 12-hour clock period 
+   */
+  var AP, ap, D, DD, H, HH, M, MM, d, dd, dt, h, hh, l, ll, m, mm, s, ss, t, tt, yy, yyyy, zz, iso, utc, unix;
+  return {
+    setters: [],
+    execute: function () {
+      AP = function AP(date) {
+        var hour = date.getHours();
+        var ampm = hour < 12 ? 'AM' : 'PM';
+        return ampm;
+      };
+
+      _export('AP', AP);
+
+      /**
+       * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
+       * @param   {Date   date a date object
+       * @returns {String} the uncapitalized 12-hour clock period 
+       */
+
+      ap = function ap(date) {
+        var hour = date.getHours();
+        var ampm = hour < 12 ? 'am' : 'pm';
+        return ampm;
+      };
+
+      _export('ap', ap);
+
+      /**
+       * Take a date object and output the abreviated day of the week
+       * @param {Date} 	a date object
+       * @returns {String}	the abbreviated day of the week
+       */
+
+      D = function D(date) {
+        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var dayOfWeek = date.getDay();
+        return days[dayOfWeek];
+      };
+
+      _export('D', D);
+
+      /**
+       * Take a date object and output the day of the week
+       * @param {Date} 	a date object
+       * @returns {String} the full day of the week
+       */
+
+      DD = function DD(date) {
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayOfWeek = date.getDay();
+        return days[dayOfWeek];
+      };
+
+      _export('DD', DD);
+
+      /**
+       * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
+       * @param   {Date}   date a date object
+       * @returns {String} the hour with no leading zeros
+       */
+
+      H = function H(date) {
+        var hour = date.getHours();
+        return hour;
+      };
+
+      _export('H', H);
+
+      /**
+       * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
+       * @param   {Date}   date a date object
+       * @returns {String} the hour with no leading zeros
+       */
+
+      HH = function HH(date) {
+        var hour = date.getHours().toString();
+        return hour.length < 2 ? '0' + hour : hour;
+      };
+
+      _export('HH', HH);
+
+      /**
+       * Take a date object and output the abbreviated month
+       * @param {Date} 	a date object
+       * @returns {String}	the abbreviated month
+       */
+
+      M = function M(date) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+        var month = date.getMonth();
+        return months[month];
+      };
+
+      _export('M', M);
+
+      /**
+       * Take a date object and output the month
+       * @param {Date} 	a date object
+       * @returns {String}	the full month
+       */
+
+      MM = function MM(date) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var month = date.getMonth();
+        return months[month];
+      };
+
+      _export('MM', MM);
+
+      /**
+       * Take a date object and output the date of the month with no leading zeros (1-31)
+       * @param {Date} 	a date object
+       * @returns {String}	the date of the month with no leading zeros
+       */
+
+      d = function d(date) {
+        var day = date.getDate().toString();
+        return day;
+      };
+
+      _export('d', d);
+
+      /**
+       * Take a date object and output the two-digit date of the month (01-31)
+       * @param {Date} 	a date object
+       * @returns {String}	the two-digit date of the month
+       */
+
+      dd = function dd(date) {
+        var day = date.getDate().toString();
+        return day.length < 2 ? '0' + day : day;
+      };
+
+      _export('dd', dd);
+
+      /**
+       * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
+       * @param {Date} 	a date object
+       * @returns {String}	the date with no leading zeros but with the ordinal
+       */
+
+      dt = function dt(date) {
+        var day = date.getDate();
+        switch (day) {
+          case 1:
+          case 21:
+          case 31:
+            day += 'st';
+            break;
+          case 2:
+          case 22:
+            day += 'nd';
+            break;
+          case 3:
+          case 23:
+            day += 'rd';
+            break;
+          default:
+            day += 'th';
+        }
+        return day;
+      };
+
+      _export('dt', dt);
+
+      /**
+       * Take a date object and outpit the hour with no leading zeros (1-12)
+       * @param   {Date}   date a date object
+       * @returns {String} the hour with no leading zeros
+       */
+
+      h = function h(date) {
+        var hour = date.getHours();
+        if (hour === 0) hour = 12;
+        if (hour < 13) hour = hour;
+        if (hour >= 13) hour = hour - 12;
+        return hour;
+      };
+
+      _export('h', h);
+
+      /**
+       * Take a date object and output the two-digit hour (01-12)
+       * @param   {Date}   date a date object
+       * @returns {String} the two-digit hour
+       */
+
+      hh = function hh(date) {
+        var hour = date.getHours();
+        if (hour === 0) hour = 12;
+        if (hour < 13) hour = hour;
+        if (hour >= 13) hour = hour - 12;
+        hour = hour.toString();
+        return hour.length < 2 ? '0' + hour : hour;
+      };
+
+      _export('hh', hh);
+
+      /**
+       * Take a date object and output the milliseconds with no leading zeros (0-999)
+       * @param   {Date} date a date object
+       * @returns {String}    the number of milliseconds
+       */
+
+      l = function l(date) {
+        var milliseconds = date.getMilliseconds().toString();
+        return milliseconds;
+      };
+
+      _export('l', l);
+
+      /**
+       * Take a date object and and output the three-digit milliseconds (000-999)
+       * @param   {Date}   date a date object
+       * @returns {String} the number of milliseconds
+       */
+
+      ll = function ll(date) {
+        var milliseconds = date.getMilliseconds().toString();
+        switch (milliseconds.length) {
+          case 1:
+            milliseconds = '00' + milliseconds;
+            break;
+          case 2:
+            milliseconds = '0' + milliseconds;
+            break;
+          default:
+            milliseconds = milliseconds;
+            break;
+        }
+        return milliseconds;
+      };
+
+      _export('ll', ll);
+
+      /**
+       * Take a date object and output the numeric month (1-12)
+       * @param {Date} 	a date object
+       * @returns {String}	the month with no leading zeros
+       */
+
+      m = function m(date) {
+        var month = (date.getMonth() + 1).toString();
+        return month;
+      };
+
+      _export('m', m);
+
+      /**
+       * Take a date object and output the two-digit month (01-12)
+       * @param {Date} 	a date object
+       * @returns {String}	the two-digit month
+       */
+
+      mm = function mm(date) {
+        var month = (date.getMonth() + 1).toString();
+        return month.length < 2 ? '0' + month : month;
+      };
+
+      _export('mm', mm);
+
+      /**
+       * Take a date object and outpit the seconds with no leading zeros (0-59)
+       * @param   {Date}   date a date object
+       * @returns {String} the seconds with no leading zeros
+       */
+
+      s = function s(date) {
+        var second = date.getSeconds();
+        return second;
+      };
+
+      _export('s', s);
+
+      /**
+       * Take a date object and outpit the two-digit seconds (0-59)
+       * @param   {Date}   date a date object
+       * @returns {String} the two-digit seconds
+       */
+
+      ss = function ss(date) {
+        var second = date.getSeconds().toString();
+        return second.length < 2 ? '0' + second : second;
+      };
+
+      _export('ss', ss);
+
+      /**
+       * Take a date object and output the minutes with no leading zeros
+       * @param   {Date} date a date object
+       * @returns {String}  the minutes with no leading zeros
+       */
+
+      t = function t(date) {
+        var minute = date.getMinutes().toString();
+        return minute;
+      };
+
+      _export('t', t);
+
+      /**
+       * Take a date object and output the two-digit minutes
+       * @param   {Date}   date a date object
+       * @returns {String} the two-digit minutes
+       */
+
+      tt = function tt(date) {
+        var minute = date.getMinutes().toString();
+        return minute.length < 2 ? '0' + minute : minute;
+      };
+
+      _export('tt', tt);
+
+      /**
+       * Take a date object and output the two-digit year
+       * @param {Date} 	a date object
+       * @returns {String}	the two-digit year
+       */
+
+      yy = function yy(date) {
+        return date.getFullYear().toString().substr(2);
+      };
+
+      _export('yy', yy);
+
+      /**
+       * Take a date object and output the four-digit year
+       * @param {Date} 	a date object
+       * @returns {String}	the four-digit year
+       */
+
+      yyyy = function yyyy(date) {
+        return date.getFullYear().toString();
+      };
+
+      _export('yyyy', yyyy);
+
+      /**
+       * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
+       * @param   {Date}   date a date object
+       * @returns {String} the timezone offset 
+       */
+
+      zz = function zz(date) {
+        var offset = date.getTimezoneOffset() / 60 * -1;
+        return 'UTC ' + offset + ':00';
+      };
+
+      _export('zz', zz);
+
+      /**
+       * Converts a date object to an ISO string
+       * @param   {Date}   date   a date object
+       * @param {String}		format optional 'short' to remove the time
+       * @returns {String} ISO String including time
+       */
+
+      iso = function iso(date, format) {
+        format = format || null;
+        //console.log('iso function date: ' + date);
+        if (format === 'short') return date.toISOString().split('T')[0];
+        return date.toISOString();
+      };
+
+      _export('iso', iso);
+
+      /**
+       * Converts a date object to a UTC string
+       * @param   {Date}   date a date object
+       * @param 	{String}	format optional 'shart' to remove the time from the output
+       * @returns {String} UTC string with or without time
+       */
+
+      utc = function utc(date, format) {
+        format = format || null;
+        var utc = date.toUTCString();
+        if (format === 'short') {
+          var arr = utc.split(' ');
+          var newArr = [];
+
+          for (var i = 0; i < 4; i++) {
+            newArr.push(arr[i]);
+          }
+
+          return newArr.join(' ');
+        }
+        return utc;
+      };
+
+      _export('utc', utc);
+
+      /**
+       * Converts a date object to UNIX time (milliseconds from January 1, 1970)
+       * @param   {Date}   date a date object
+       * @returns {Number} milliseconds from January 1, 1970
+       */
+
+      unix = function unix(date) {
+        return Date.parse(date);
+      };
+
+      _export('unix', unix);
+    }
+  };
+});
+$__System.register('44', ['42', '43'], function (_export) {
+	var _getIterator, to;
+
+	return {
+		setters: [function (_) {
+			_getIterator = _['default'];
+		}, function (_2) {
+			to = _2;
+		}],
+		execute: function () {
+			/* */
+
+			/**
+    * Take a Gregorian object and output the reformatted string
+    * See https://github.com/patrickfatrick/gregorian#accepted-formats for details
+    * @param {String} 	format a string or date object (something that can be converted to a valid date)
+    * @returns {String}	the date reformatted into the specified format
+    */
+			'use strict';
+
+			_export('default', function (format, delimiter) {
+				delimiter = delimiter || '+';
+				var date = this.d;
+				var search = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
+				var converted = format;
+
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+
+				try {
+					for (var _iterator = _getIterator(search), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var piece = _step.value;
+
+						var re = new RegExp('\\b' + piece + '\\b', 'g');
+						if (re.test(converted)) {
+							switch (piece) {
+								case 'unix':
+									converted = to.unix(date);
+									break;
+								case 'utc-short':
+									converted = to.utc(date, 'short');
+									break;
+								case 'utc':
+									converted = to.utc(date);
+									break;
+								case 'iso-short':
+									converted = to.iso(date, 'short');
+									break;
+								case 'iso':
+									converted = to.iso(date);
+									break;
+								default:
+									var replacer = to[piece](date).toString();
+									converted = converted.replace(re, replacer);
+							}
+						}
+					}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator['return']) {
+							_iterator['return']();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+
+				if (typeof converted === 'string') {
+					converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
+				}
+				return converted;
+			});
+		}
+	};
+});
+$__System.register('45', [], function (_export) {
+	/* */
+	'use strict';
+
+	/**
+  * Adds specified increments to a gregorian object
+  * @param   {Number} n         a number to multiply the increment by
+  * @param   {String} increment an increment to add
+  * @returns {Object} a new gregorian object
+  */
+	var add, subtract;
+	function addSubtract(obj, n, increment) {
+
+		var increments = {};
+
+		increments.l = function (date) {
+			return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
+		};
+		increments.s = function (date) {
+			return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
+		};
+		increments.t = function (date) {
+			return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
+		};
+		increments.h = function (date) {
+			return new Date(date.setUTCHours(date.getUTCHours() + n));
+		};
+		increments.d = function (date) {
+			return new Date(date.setUTCDate(date.getUTCDate() + n));
+		};
+		increments.w = function (date) {
+			return new Date(date.setUTCDate(date.getUTCDate() + n * 7));
+		};
+		increments.m = function (date) {
+			var newMonth = date.getUTCMonth() + n;
+			var newYear = date.getUTCFullYear();
+			var newDate = date.getUTCDate();
+
+			if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+				return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+			} else {
+				return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+			}
+		};
+		increments.y = function (date) {
+			var newYear = date.getUTCFullYear() + n;
+			var newMonth = date.getUTCMonth();
+			var newDate = date.getUTCDate();
+
+			if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+				return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+			} else {
+				return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+			}
+		};
+
+		obj.d = increments[increment](obj.d);
+		return obj;
+	}
+
+	return {
+		setters: [],
+		execute: function () {
+			add = function add(n, increment) {
+				return addSubtract(this, n * 1, increment);
+			};
+
+			_export('add', add);
+
+			subtract = function subtract(n, increment) {
+				return addSubtract(this, n * -1, increment);
+			};
+
+			_export('subtract', subtract);
+		}
+	};
+});
+$__System.register('46', [], function (_export) {
+	/* */
+	'use strict';
+
+	/**
+  * Sets the date or time to the start of the specified increment
+  * @param   {String} increment an increment to set
+  * @returns {Object} a new gregorian object
+  */
+	return {
+		setters: [],
+		execute: function () {
+			_export('default', function (increment) {
+				var increments = {};
+
+				increments.s = function (date) {
+					return new Date(date.setSeconds(date.getSeconds(), 0));
+				};
+				increments.t = function (date) {
+					return new Date(date.setMinutes(date.getMinutes(), 0, 0));
+				};
+				increments.h = function (date) {
+					return new Date(date.setHours(date.getHours(), 0, 0, 0));
+				};
+				increments.d = function (date) {
+					date.setDate(date.getDate());
+					date.setHours(0, 0, 0, 0);
+					return new Date(date);
+				};
+				increments.w = function (date) {
+					date.setDate(date.getDate() - date.getDay());
+					date.setHours(0, 0, 0, 0);
+					return new Date(date);
+				};
+				increments.m = function (date) {
+					date.setMonth(date.getMonth(), 1);
+					date.setHours(0, 0, 0, 0);
+					return new Date(date);
+				};
+				increments.y = function (date) {
+					date.setFullYear(date.getFullYear(), 0, 1);
+					date.setHours(0, 0, 0, 0);
+					return new Date(date);
+				};
+
+				this.d = increments[increment](this.d);
+				return this;
+			});
+		}
+	};
+});
+$__System.register("47", [], function (_export) {
+  /*
+   * Takes a gregorian object and checks that it has a valid date.
+   * @param {Object}  A gregorian object
+   * @return {Boolean}
+   */
+  "use strict";
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("default", function () {
+        if (isNaN(this.d.getTime())) {
+          return false;
+        }
+        return true;
+      });
+    }
+  };
+});
+$__System.register("48", [], function (_export) {
+  /*
+   * Takes a gregorian object and outputs the date object
+   * @param {Object}  A gregorian object
+   * @return {Date} the date object it contains
+   */
+  "use strict";
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("default", function () {
+        return this.d;
+      });
+    }
+  };
+});
+$__System.register('49', ['44', '45', '46', '47', '48', '1e'], function (_export) {
+	/* */
+
+	/**
+  * Take a string or date object and convert it into a gregorian object
+  * @param   {Object} obj A string or date object that can be parsed into a date
+  * @returns {Object} Gregorian object
+  */
+	'use strict';
+
+	var to, add, subtract, restart, reagent, recite, reformDate;
+	return {
+		setters: [function (_) {
+			to = _['default'];
+		}, function (_2) {
+			add = _2.add;
+			subtract = _2.subtract;
+		}, function (_3) {
+			restart = _3['default'];
+		}, function (_4) {
+			reagent = _4['default'];
+		}, function (_5) {
+			recite = _5['default'];
+		}, function (_e) {
+			reformDate = _e['default'];
+		}],
+		execute: function () {
+			_export('default', function (obj) {
+				var date = reformDate(obj);
+				return {
+					d: date,
+					input: obj,
+					to: to,
+					add: add,
+					subtract: subtract,
+					restart: restart,
+					reagent: reagent,
+					recite: recite
+				};
+			});
+		}
+	};
+});
+$__System.register('4a', ['49'], function (_export) {
+  /* */
+  'use strict';
+
+  /**
+   * Gregorian
+   * Author: Patrick Fricano
+   * https://www.github.com/patrickfatrick/gregorian
+   */
+
+  var reform, gregorian;
+  return {
+    setters: [function (_) {
+      reform = _['default'];
+    }],
+    execute: function () {
+      gregorian = {
+        reform: reform
+      };
+
+      _export('default', gregorian);
+    }
+  };
+});
+$__System.register('4b', ['4a'], function (_export) {
+  /* */
+  'use strict';
+
+  var gregorian;
+  return {
+    setters: [function (_a) {
+      gregorian = _a['default'];
+    }],
+    execute: function () {
+      _export('default', gregorian);
+    }
+  };
+});
+$__System.register("4c", ["4b"], function (_export) {
+  "use strict";
+
+  return {
+    setters: [function (_b) {
+      var _exportObj = {};
+
+      for (var _key in _b) {
+        if (_key !== "default") _exportObj[_key] = _b[_key];
+      }
+
+      _exportObj["default"] = _b["default"];
+
+      _export(_exportObj);
+    }],
+    execute: function () {}
+  };
+});
+$__System.register('4d', ['4c', '1d'], function (_export) {
+	/**
+ * Takes a string containing: 1) a task, 2) human-readable date representation,
+ * and outputs the task and a date object
+ * @params {String} item user-input task (including date)
+ * @returns {String} item the task without the date information
+ * @returns {Date} dueDate the corresponding due date
+ */
+
+	'use strict';
+
+	var gregorian, datejs;
+	return {
+		setters: [function (_c) {
+			gregorian = _c['default'];
+		}, function (_d) {
+			datejs = _d['default'];
+		}],
+		execute: function () {
+			_export('default', function (item) {
+				var keywords = ['next', ' on ', 'tomorrow', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december', ' Jan ', ' Feb ', ' Mar ', ' Apr ', ' May ', ' Jun ', ' Jul ', ' Aug ', ' Sept ', ' Oct ', ' Nov ', ' Dec ', ' jan ', ' feb ', ' mar ', ' apr ', ' may ', ' jun ', ' jul ', ' aug ', ' sept ', ' oct ', ' nov ', ' dec ', ' 01/', ' 02/', ' 03/', ' 04/', ' 05/', ' 06/', ' 07/', ' 08/', ' 09/', ' 10/', ' 11/', ' 12/', ' 13/', ' 14/', ' 15/', ' 16/', ' 17/', ' 18/', ' 19/', ' 20/', ' 21/', ' 22/', ' 23/', ' 24/', ' 25/', ' 26/', ' 27/', ' 28/', ' 29/', ' 30/', ' 31/', ' 2015-', ' 2016-', '2017-', '2018-', '2019-', '2020-'];
+				var dateFormats = ['MM-DD-YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD', 'MMM D', 'MMM Do', 'MMM Do, YYYY', 'MMMM D', 'MMMM Do', 'MMMM Do, YYYY'];
+
+				var keyword = undefined;
+				keywords.some(function (val, i) {
+					var index = item.indexOf(val);
+					if (index !== -1) {
+						keyword = index;
+						return true;
+					}
+				});
+
+				var dueDate = gregorian.reform(item.slice(keyword, item.length));
+				dueDate = dueDate.reagent() ? dueDate.recite() : datejs(item.slice(keyword, item.length));
+				//console.log('Date: ' + dueDate);
+				if (Date.parse(dueDate) <= gregorian.reform(dueDate).restart('d').recite()) {
+					dueDate = gregorian.reform(dueDate).add(1, 'y').recite();
+					item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
+				} else {
+					item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
+				}
+				return { item: item, dueDate: dueDate };
+			});
+		}
+	};
+});
+$__System.register('4e', ['3', '5', '10', '11', '17', 'd', 'e', '1d', '4c', '4d'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular, hotkeys, _, date, gregorian, dateify;
+
+	_export('default', UserController);
+
+	function UserController() {
+		return ['$http', '$scope', '$log', '$location', 'hotkeys', function ($http, $scope, $log, $location, hotkeys) {
+
+			$scope.user.todos = {};
+
+			/**
+   * Server connections
+   */
+
+			/*********Session data*********/
+
+			$http.get('/session-data').then(function (response) {
+				//$log.log('Get successful: ' + response.status + response.statusText);
+				//$log.log(response);
+				if (response.status === 204) return delete $scope.user.todos;
+				$scope.user.username = response.data.username;
+				if (response.data.hasOwnProperty('todos')) $scope.user.todos = response.data.todos;
+				_.each($scope.user.todos, function (val, i) {
+					if (!_.find(val.items, 'current', true)) {
+						_.set(val.items[0], 'current', true);
+					}
+				});
+				$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+					list: "List 1",
+					current: true,
+					items: []
+				};
+				//$log.log($scope.user.current);
+				if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
+				$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : false;
+				//$log.log('User profile mounted...');
+				//$log.log($scope.user);
+				_.each($scope.user.todos, function (val, i) {
+					if (!val.agendaID) val.agendaID = $scope.token();
+					_.each(val.items, function (itemVal, j) {
+						if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
+					});
+				});
+			})['catch'](function (response) {
+				$log.error('Error getting user: ' + response.status + response.statusText);
+			});
+
+			/************Lookup************/
+
+			$scope.lookup = function (username, key, rememberMe) {
+				$http.post('/users/login', {
+					username: username,
+					key: key,
+					rememberMe: rememberMe
+				}).then(function (response) {
+					//$log.log('Get successful: ' + response.status + response.statusText);
+					//$log.log(response);
+					if (status === 204) {
+						$scope.confirmPassword = true;
+						$scope.invalidPassword = false;
+						return;
+					}
+					$scope.user.todos = response.data.todos;
+					_.each($scope.user.todos, function (val, i) {
+						if (!_.find(val.items, 'current', true)) {
+							_.set(val.items[0], 'current', true);
+						}
+					});
+					$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+						list: "List 1",
+						current: true,
+						items: []
+					};
+					//$log.log($scope.user.current);
+					//$scope.user.todos = $scope.user.current.items;
+					if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
+					$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : false;
+					//$log.log('User profile mounted...');
+					//$log.log($scope.user);
+					_.each($scope.user.todos, function (val, i) {
+						if (!val.agendaID) val.agendaID = $scope.token();
+						_.each(val.items, function (itemVal, j) {
+							if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
+						});
+					});
+				})['catch'](function (response) {
+					$log.error('Error getting user: ' + response.status + response.statusText);
+					if (response.status === 401) {
+						$scope.invalidPassword = true;
+						$scope.confirmPassword = false;
+					}
+				});
+			};
+
+			/***********New user***********/
+
+			$scope.addUser = function (user, key, rememberMe) {
+				$http.post('/users/create', {
+					username: user,
+					key: key,
+					rememberMe: rememberMe
+				}).then(function (response) {
+					//$log.log('Create successul: ' + response.status + response.statusText);
+					//$log.log(response);
+					$scope.user.todos = response.data.todos ? response.data.todos : [{
+						list: "List 1",
+						current: true,
+						items: []
+					}];
+					$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+						list: "List 1",
+						current: true,
+						items: []
+					};
+					if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
+					$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : true;
+					//$log.log('User profile mounted...');
+					//$log.log($scope.user);
+					$scope.write(user);
+				})['catch'](function (response) {
+					$log.error('Error creating user: ' + response.status + response.statusText);
+				});
+			};
+
+			/**
+   * Save data back to MongoDB
+   * @param 		{String} 		username 			email address
+   * @returns 	{Boolean} 								success or failure
+   */
+
+			$scope.write = function (username) {
+				var now = new Date();
+				$scope.user.dateModified = now.toISOString();
+				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
+				//$log.log('Saving to db...')
+				//$log.log($scope.user);
+				$http.post('/users/write', {
+					//json: angular.toJson($scope.user)
+					user: {
+						username: $scope.user.username,
+						todos: $scope.user.todos,
+						darkmode: $scope.user.darkmode,
+						dateModified: now
+					},
+					deleteAgendas: $scope.deleteAgendas
+				}).then(function (response) {
+					//$log.log('Write successful: ' + response.status + responses.statusText);
+					//$log.log('saveButton = ' + $scope.saveButton);
+					$scope.saveButton = false;
+					$scope.deleteAgendas = [];
+					return true;
+				})['catch'](function (response) {
+					$log.log('Error writing data: ' + response.status + response.statusText);
+				});
+			};
+
+			/***********Log out************/
+
+			$scope.logout = function () {
+				$http.get('/users/logout').then(function (response) {
+					//$log.log('Logged out');
+					window.location.href = '/';
+				}).error(function (response) {
+					$log.log('Error logging out: ' + response.status + response.statusText);
+				});
+			};
+
+			/*******************************
+    *******Password resetting*******
+    *******************************/
+
+			$scope.resetPassword = function (token, newKey) {
+				$http.post('/users/reset', {
+					token: token,
+					newKey: newKey
+				}).then(function (response) {
+					if (response.data) {
+						$scope.user.username = response.data.username;
+						$scope.user.todos = response.data.todos;
+						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
+							list: "List 1",
+							current: true,
+							items: []
+						};
+						//$log.log($scope.user.current);
+						//$scope.user.todos = $scope.user.current.items;
+						if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
+						$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : false;
+						//$log.log('User profile mounted...');
+						//$log.log($scope.user);
+						$location.path('/');
+						//$log.log($location.path());
+					}
+				})['catch'](function (response) {
+					$scope.resetFail = true;
+					$log.log('Error resetting password: ' + response.status + response.statusText);
+				});
+			};
+			$scope.setToken = function (user) {
+				$http.post('users/forgot', {
+					username: user
+				}).then(function (response) {
+					$log.log(response.data);
+					$scope.emailSent = true;
+				})['catch'](function (response) {
+					$log.log('Error creating reset token: ' + response.status + response.statusText);
+					$scope.emailSent = false;
+				});
+			};
+
+			var reset = $location.search().reset;
+			if (reset) {
+				//$log.log('Reset');
+				$scope.resetForm = true;
+				$scope.resetToken = $location.search().token;
+			}
+
+			$scope.rand = function () {
+				return Math.random().toString(36).substr(2);
+			};
+
+			$scope.token = function () {
+				return $scope.rand() + $scope.rand() + $scope.rand();
+			};
+			$scope.sortableOptions = {
+				handle: '.sort',
+				sort: true,
+				delay: 0,
+				animation: 75,
+				ghostClass: 'ghost',
+				scroll: true,
+				scrollSensitivity: 30,
+				scrollSpeed: 10,
+				onUpdate: function onUpdate(evt) {
+					var itemEl = evt.model.item;
+					var itemComplete = evt.model.complete;
+					var completeIndex = undefined;
+					_.each($scope.user.current.items, function (val, i) {
+						if (val.complete === true && val != evt.model) {
+							completeIndex = i;
+							return false;
+						}
+					});
+
+					//$log.log(evt.model);
+					//$log.log('CompleteIndex: ' + completeIndex);
+					//$log.log('OldIndex: ' + evt.oldIndex);
+					//$log.log('NewIndex: ' + evt.newIndex);
+
+					var spliced = undefined;
+
+					//Checks:
+					//1) If element is not complete and is being moved into complete list, move back up
+					//2) If element is complete and is being moved into uncomplete list, move back down
+					//3) if element is complete and also the only complete, move back to end of list
+					if (evt.newIndex > completeIndex && !itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.splice(completeIndex, 0, spliced[0]);
+					} else if (evt.newIndex < completeIndex && itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.splice(completeIndex - 1, 0, spliced[0]);
+					} else if (!completeIndex && itemComplete) {
+						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
+						$scope.user.current.items.push(spliced[0]);
+					}
+				}
+			};
+			$scope.setDatepickerIndex = function (index) {
+				$scope.datepickerIndex = index;
+			};
+			$scope.setDatepickerClear = function (bool) {
+				$scope.datepickerClear = bool;
+			};
+			$scope.setDatepickerShown = function (bool) {
+				$scope.datepickerShown = bool;
+			};
+			$scope.datepickerOptions = {
+				showButtonPanel: true,
+				showAnim: '',
+				dateFormat: 'yy-mm-dd',
+				closeText: 'Clear',
+				prevText: '',
+				nextText: '',
+				onSelect: function onSelect() {
+					$scope.datepickerShown = false;
+				},
+				onClose: function onClose(dateText, inst) {
+					//$log.log($scope.datepickerClear);
+					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
+					//$log.log($scope.user.todos);
+					$scope.datepickerShown = false;
+					if ($scope.datepickerClear) {
+						delete $scope.user.current.items[$scope.datepickerIndex].dueDate;
+						$scope.$apply();
+					}
+				}
+			};
+
+			var counter = 0;
+
+			/*********Create item**********/
+
+			$scope.create = function (arr, item, agendaID) {
+				if (arr === $scope.user.todos) {
+					arr.unshift({
+						list: item.trim(),
+						current: false,
+						items: [],
+						agendaID: agendaID
+					});
+				} else {
+					var dueDate = undefined;
+					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {
+						var char = item.indexOf('Remind me to ') !== -1 || item.indexOf('remind me to ') !== -1 ? 13 : 3;
+						var shortcut = item.substring(0, char - 1);
+						item = item.substring(char, item.length);
+						switch (shortcut) {
+							case '/t':
+								dueDate = date('tomorrow');
+								item = dateify(item).item;
+								break;
+							case '/w':
+								dueDate = date('next Monday');
+								item = dateify(item).item;
+								break;
+							case '/m':
+								dueDate = gregorian.reform().restart('m').add(1, 'm').recite();
+								item = dateify(item).item;
+								break;
+							case '/y':
+								dueDate = gregorian.reform().restart('y').add(1, 'y').recite();
+								item = dateify(item).item;
+								break;
+							default:
+								dueDate = dateify(item).dueDate;
+								item = dateify(item).item;
+								break;
+						}
+					}
+					arr.unshift({
+						item: item.trim(),
+						complete: false,
+						agendaID: agendaID,
+						dueDate: dueDate,
+						current: !arr.length ? true : false
+					});
+				}
+				//$log.log('Creating todo... OK');
+			};
+			$scope.deleteAgendas = [];
+			$scope.setDeleteAgendas = function (agendaID) {
+				$scope.deleteAgendas.push(agendaID);
+			};
+
+			/**********Observers***********/
+
+			$scope.$watch('user.todos', function (newValue, oldValue) {
+				if (newValue === oldValue) return;
+				if (counter >= 2) $scope.saveButton = true;
+				//$log.log('saveButton = ' + $scope.saveButton);
+				counter += 1;
+				//$.log('todo counter = ' + counter);
+			}, true);
+			$scope.$watch('user.darkmode', function (newValue, oldValue) {
+				if (newValue === oldValue) return;
+				if (counter >= 2) $scope.saveButton = true;
+				//$log.log('saveButton = ' + $scope.saveButton);
+				counter += 1;
+				//$.log('darkmode counter = ' + counter);
+			}, true);
+
+			/**********Set active**********/
+
+			$scope.setCurrent = function (arr, index) {
+				//$log.log('setCurrent index: ' + index);
+				if (index >= arr.length) {
+					index = 0;
+				}
+				if (index === -1) {
+					index = arr.length - 1;
+				}
+				if (arr === $scope.user.todos) {
+					_.set(_.find(arr, 'current', true), $scope.user.current);
+					_.set($scope.user, 'current', arr[index]);
+				}
+				_.set(_.find(arr, 'current', true), 'current', false);
+				_.set(arr[index], 'current', true);
+			};
+			$scope.shiftCurrentDown = function (arr, index) {
+				if (!index) {
+					index = _.findIndex(arr, 'current', true);
+				}
+				if (index === arr.length - 1) {
+					return false;
+				}
+				var splicedTodo = _.remove(arr, 'current', true);
+				if (!splicedTodo[0].complete && arr[index].complete) {
+					arr.splice(index, 0, splicedTodo[0]);
+				} else {
+					arr.splice(index + 1, 0, splicedTodo[0]);
+				}
+			};
+			$scope.shiftCurrentUp = function (arr, index) {
+				if (!index) {
+					index = _.findIndex(arr, 'current', true);
+				}
+				if (index === 0) {
+					return false;
+				}
+				var splicedTodo = _.remove(arr, 'current', true);
+				if (splicedTodo[0].complete && !arr[index - 1].complete) {
+					arr.splice(index, 0, splicedTodo[0]);
+				} else {
+					arr.splice(index - 1, 0, splicedTodo[0]);
+				}
+			};
+
+			/************Hotkeys************/
+
+			hotkeys.bindTo($scope).add({
+				combo: 'command+m',
+				description: 'Toggle Night Mode/Bright Mode',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$scope.user.darkmode = $scope.user.darkmode ? false : true;
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+s',
+				description: 'Save your data',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$('#save-button').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+right',
+				description: 'Show the lists menu',
+				callback: function callback() {
+					$('#icon-menu:not(".toggled")').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+left',
+				description: 'Hide the lists menu',
+				callback: function callback() {
+					$('#icon-menu.toggled').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+f',
+				description: 'Focus on the task creation input',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$('#create-todo').focus();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+f',
+				description: 'Focus on the list creation input',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$('#create-list').focus();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'down',
+				description: 'Select the next task',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) + 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'up',
+				description: 'Select the previous task',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) - 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+down',
+				description: 'Select the next list',
+				callback: function callback() {
+					$scope.setCurrent($scope.user.todos, _.findIndex($scope.user.todos, 'current', true) + 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+up',
+				description: 'Select the previous list',
+				callback: function callback() {
+					$scope.setCurrent($scope.user.todos, _.findIndex($scope.user.todos, 'current', true) - 1);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+r',
+				description: 'Rename the selected task',
+				callback: function callback() {
+					$('#todo-list .active .rename-button').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+r',
+				description: 'Rename the selected list',
+				callback: function callback(e, keypress) {
+					e.preventDefault();
+					$('#lists-list .current .rename-button').click();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'ctrl+d',
+				description: 'Toggle the active task\'s datepicker',
+				callback: function callback(e, keypress) {
+					$('#todo-list .active .datepicker-input').focus();
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+down',
+				description: 'Move selected task down',
+				callback: function callback(e, keypress) {
+					$scope.shiftCurrentDown($scope.user.current.items);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+up',
+				description: 'Move selected task up',
+				callback: function callback() {
+					$scope.shiftCurrentUp($scope.user.current.items);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+command+down',
+				description: 'Move selected list down',
+				callback: function callback(e, keypress) {
+					$scope.shiftCurrentDown($scope.user.todos);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'alt+command+up',
+				description: 'Move selected list up',
+				callback: function callback() {
+					$scope.shiftCurrentUp($scope.user.todos);
+				},
+				allowIn: ['input']
+			}).add({
+				combo: 'command+backspace',
+				description: 'Remove selected task\'s due date',
+				callback: function callback() {
+					delete _.find($scope.user.current.items, 'current', true).dueDate;
+				},
+				allowIn: ['input']
+			});
+		}];
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_4) {
+			angular = _4['default'];
+		}, function (_6) {
+			hotkeys = _6['default'];
+		}, function (_3) {}, function (_5) {
+			_ = _5['default'];
+		}, function (_d) {}, function (_e) {}, function (_d2) {
+			date = _d2['default'];
+		}, function (_c) {
+			gregorian = _c['default'];
+		}, function (_d3) {
+			dateify = _d3['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('4f', ['5', '4e'], function (_export) {
+	'use strict';
+
+	var angular, UserController;
+	return {
+		setters: [function (_) {
+			angular = _['default'];
+		}, function (_e) {
+			UserController = _e['default'];
+		}],
+		execute: function () {
+			_export('default', function () {
+				'use strict';
+				/* Controllers */
+
+				var app = angular.module('taskmastrControllers', []);
+
+				app.config(['$locationProvider', 'hotkeysProvider', function ($locationProvider, hotkeysProvider) {
+					$locationProvider.html5Mode(true);
+					hotkeysProvider.includeCheatSheet = false;
+				}]);
+
+				app.controller('UserController', UserController());
+			});
+		}
+	};
+});
+$__System.register('50', ['3', '5', '17'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular, _;
+
+	_export('default', complete);
+
+	function complete() {
+		return {
+			restrict: "A",
+			scope: {
+				complete: '=',
+				completeIndex: '='
+			},
+			link: function link(scope, element, attrs) {
+				element.on('click', function () {
+					scope.$apply(function () {
+						var todos = scope.complete;
+						// If there's a complete todo present, set newIndex to that index, not the end of the list
+						var splicedTodo = todos.splice(scope.completeIndex, 1);
+						//console.log('OldIndex: ' + scope.completeIndex);
+						//console.log(splicedTodo);
+						var newIndex = todos.length;
+						_.each(todos, function (val, i) {
+							if (val.complete === true) {
+								newIndex = i;
+								return false;
+							}
+						});
+						//console.log('NewIndex: ' + newIndex);
+						todos.splice(newIndex, 0, splicedTodo[0]);
+						//scope.$parent.complete(scope.complete, scope.completeIndex);
+					});
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_3) {
+			$ = _3['default'];
+			jQuery = _3['default'];
+		}, function (_2) {
+			angular = _2['default'];
+		}, function (_4) {
+			_ = _4['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('51', ['3', '5', '17'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular, _;
+
+	_export('default', save);
+
+	function save() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('click', function () {
+					_.each(scope.user.todos, function (val, i) {
+						_.each(val.items, function (itemVal, j) {
+							if (itemVal.dueDate) {
+								//console.log(new Date(itemVal.dueDate).getHours());
+								itemVal.dueDate = new Date(itemVal.dueDate).setHours(0);
+								itemVal.dueDate = new Date(itemVal.dueDate).setMinutes(0);
+								itemVal.dueDate = new Date(itemVal.dueDate);
+								//console.log(new Date(itemVal.dueDate).getHours());
+							}
+						});
+					});
+					//scope.$apply();
+					scope.write(scope.user.username);
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_3) {
+			$ = _3['default'];
+			jQuery = _3['default'];
+		}, function (_2) {
+			angular = _2['default'];
+		}, function (_4) {
+			_ = _4['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('52', ['3', '5'], function (_export) {
+	/**
+ * Controls the checkbox to complete a task
+ */
+
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', checkButton);
+
+	function checkButton() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('click', function () {
+					element.siblings('.check').click();
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register("53", [], function (_export) {
+	"use strict";
+
+	return {
+		setters: [],
+		execute: function () {
+			_export("default", {
+				"placeholders": ["Remind me to eat lunch tomorrow", "/r meet Dave at the Punch Bowl next Monday", "/y come up with a New Year's Resolution", "/m pay rent", "Pay that bill", "/t stop playing World of Warcraft, maybe", "Set up a meeting in front of the CEO", "Clean up all the poop in the back yard", "Start watching Mr. Robot", "Read Kavalier & Clay", "Walk the dog", "Remind me to water the plants on Tuesday", "/r get a costume on 10/30/2015", "/r buy everyone Christmas gifts Dec 24", "/r learn how to juggle next year", "/r fix the chair on Sunday", "Check out the art walk downtown", "/t meet Katie for lunch", "Buy a new bike", "Remind me to mow the lawn on Saturday", "Find the remote", "Finish Infinite Jest", "/t buy groceries", "Remind me to vacuum on Saturday", "/m book club", "/y start saving for a house", "/r move into a new place next year", "Buy milk", "Buy dog food", "Take a shower", "Replace the ceiling fan", "Fix the sliding doors", "Implement that shiny new Javascript library", "/y become a vegetarian", "/t write a strongly worded letter", "Start sleeping without the nightlight", "Never forget", "/r take out all the wasps tomorrow", "Take Suzy to the dog park", "Learn how to make a martini", "Watch Dr. Strangelove", "Remind me to go to the movies on Sunday", "/r prank Taylor real good April 1st", "/t read the new xkcd", "Do some jumping jacks", "/m say 'yes' to everything for one month", "Learn the subtle art of beekeeping", "Fix the derailleur", "Check out the fall foliage 10/03/2015", "Learn how to tango", "/t shave", "Remind me to watch the Apple keynote Sept 9"]
+			});
+		}
+	};
+});
+$__System.register('54', ['3', '5', '53'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular, placeholders;
+
+	_export('default', createTodo);
+
+	function createTodo() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('keydown', function (e) {
+					var key = e.which;
+					if (key === 13) {
+						element.siblings('.submit').click();
+						element.val('');
+					}
+				});
+				if (element.hasClass('random-placeholder')) {
+					var randIndex = Math.floor(Math.random() * placeholders.placeholders.length);
+					element.attr('placeholder', placeholders.placeholders[randIndex]);
+				}
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}, function (_3) {
+			placeholders = _3['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('55', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', todoButton);
+
+	function todoButton() {
+		var _this = this;
+
+		return {
+			restrict: 'A',
+			scope: {
+				todoButton: '=',
+				todoModel: '='
+			},
+			link: function link(scope, element, attrs) {
+				var attempt = undefined;
+				element.on('click', function (e) {
+					scope.$apply(function () {
+						//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
+						if (scope.todoModel) {
+							scope.$parent.create(scope.todoButton, scope.todoModel, scope.$parent.token());
+							//console.log(scope.$parent.user.todos);
+							scope.todoModel = '';
+							//Remove attempt if it's present
+							scope.$parent[attempt] = false;
+						}
+					});
+				});
+				//Emoticon handlers
+				element.on('mousedown', function (e) {
+					attempt = scope.todoButton === scope.$parent.user.todos ? 'listAttempt' : 'todoAttempt';
+					if (element.siblings('input:text').val()) {
+						$(_this).removeClass('fa-arrow-down');
+						$(_this).addClass('fa-smile-o');
+					} else {
+						$(_this).removeClass('fa-arrow-down');
+						$(_this).addClass('fa-meh-o');
+						//Set attempt to true to show animation
+						scope.$parent[attempt] = true;
+					}
+				});
+				element.on('mouseup', function (e) {
+					$(_this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+					$(_this).addClass('fa-arrow-down');
+					//Remove attempt after 500ms for animation to finish
+					setTimeout(function () {
+						scope.$parent[attempt] = false;
+						scope.$apply();
+					}, 500);
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('56', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', inputKey);
+
+	function inputKey() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('keydown', function (e) {
+					var key = e.which;
+
+					if (key === 13) {
+						if (attrs.inputKey === 'key') {
+							$('#key-button').click();
+						}
+						if (attrs.inputKey === 'confirm') {
+							$('#confirm-button').click();
+						}
+					}
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('57', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', loginForm);
+
+	function loginForm() {
+		var _this = this;
+
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('submit', function (e) {
+					scope.$apply(function () {
+						var username = scope.user.username;
+						var userKey = scope.user.key;
+						var confirmKey = scope.user.confirm;
+						var rememberMe = scope.rememberMe;
+						// Do lookup if confirm password is null
+						if (!scope.confirmPassword) {
+							scope.lookup(username, userKey, rememberMe);
+							//console.log('lookup');
+						}
+						//Add user if confirm password is not null and passwords match
+						if (scope.confirmPassword && !scope.userForm.confirm.$error.pattern) {
+							scope.addUser(username, confirmKey, rememberMe);
+						}
+					});
+				});
+				//Emoticon handlers
+				$('#user-form .submit').on({
+					mousedown: function mousedown(e) {
+						$(_this).removeClass('fa-arrow-right');
+						if (!scope.userForm.$invalid) {
+							$(_this).addClass('fa-smile-o');
+						} else {
+							$(_this).addClass('fa-meh-o');
+						}
+					},
+					mouseup: function mouseup(e) {
+						$(_this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+						$(_this).addClass('fa-arrow-right');
+					},
+					click: function click(e) {
+						//Set variables for animations and error messages
+						scope.$apply(function () {
+							scope.formAttempt = true;
+							scope.loginAttempt = true;
+							if (scope.confirmPassword) {
+								scope.confirmAttempt = true;
+							}
+							setTimeout(function () {
+								scope.confirmAttempt = false;
+								scope.loginAttempt = false;
+								scope.$apply();
+							}, 500);
+						});
+						if (scope.forgot) {
+							scope.setToken(scope.user.username);
+							return false;
+						}
+						if (scope.userForm.$invalid) {
+							e.preventDefault();
+						}
+					}
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('58', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', resetForm);
+
+	function resetForm() {
+		var _this = this;
+
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('submit', function (e) {
+					scope.$apply(function ($location) {
+						var token = scope.resetToken;
+						var newKey = scope.user.newKey;
+						if (!scope.resetForm.confirmReset.$error.pattern) {
+							scope.resetPassword(token, newKey);
+						}
+					});
+				});
+				//Emoticon handlers
+				$('#user-form .submit').on({
+					mousedown: function mousedown(e) {
+						$(_this).removeClass('fa-arrow-right');
+						if (!scope.userForm.$invalid) {
+							$(_this).addClass('fa-smile-o');
+						} else {
+							$(_this).addClass('fa-meh-o');
+						}
+					},
+					mouseup: function mouseup(e) {
+						$(_this).removeClass('fa-smile-o').removeClass('fa-meh-o');
+						$(_this).addClass('fa-arrow-right');
+					},
+					click: function click(e) {
+						scope.$apply(function () {
+							scope.formAttempt = true;
+						});
+						if (scope.resetForm.$invalid) {
+							e.preventDefault();
+						}
+					}
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('59', ['3', '5', '17'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular, _;
+
+	_export('default', deleteButton);
+
+	function deleteButton() {
+		var timeoutID = undefined;
+		var pending = {};
+
+		return {
+			restrict: 'A',
+			scope: {
+				deleteButton: '=',
+				deleteIndex: '='
+			},
+			link: function link(scope, element, attrs) {
+				element.on('click', function (e) {
+					var item = element.parents('tr');
+					var arr = scope.deleteButton;
+					if (!item.hasClass('deleting')) {
+						(function () {
+							element.removeClass('fa-trash-o').addClass('fa-undo');
+							item.addClass('deleting');
+							var arrLength = arr.length;
+							var index = _.findIndex(arr, 'agendaID', scope.deleteIndex);;
+							// 1) Deleting a list
+							// 2) Deleting a task
+							if (arr === scope.$parent.user.todos) {
+								timeoutID = setTimeout(function () {
+									scope.$apply(function () {
+										var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
+										//console.log(spliced[0]);
+
+										// Current list handlers:
+										// 1) Check if user is deleting the only list: do not allow
+										// 2) Check if deleted list is the last list: set current to first list
+										// 3) By default if current list is deleted: set current to next list
+										if (spliced[0].current && arrLength === 1) {
+											arr.splice(0, 1, spliced[0]);
+											spliced = undefined;
+											element.removeClass('fa-undo').addClass('fa-trash-o');
+											item.removeClass('deleting');
+										} else if (spliced[0].current && index === arrLength - 1) {
+											scope.$parent.setCurrent(arr, 0);
+										} else if (spliced[0].current) {
+											scope.$parent.setCurrent(arr, index);
+										}
+										//If deleted, delete the list's agendas
+										if (spliced) {
+											_.each(spliced[0].items, function (val, i) {
+												scope.$parent.setDeleteAgendas(val.agendaID);
+											});
+										}
+									});
+								}, 5000);
+								pending[timeoutID] = 1;
+								_.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID = timeoutID;
+							} else {
+								timeoutID = setTimeout(function () {
+									scope.$apply(function () {
+										var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
+										if (spliced[0].current && index === arrLength - 1) {
+											scope.$parent.setCurrent(arr, 0);
+										} else if (spliced[0].current) {
+											scope.$parent.setCurrent(arr, index);
+										}
+										//console.log(spliced);
+
+										//If deleted, delete associated agendas
+										scope.$parent.setDeleteAgendas(spliced[0].agendaID);
+									});
+								}, 5000);
+								pending[timeoutID] = 1;
+								_.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID = timeoutID;
+							}
+						})();
+					} else {
+						(function () {
+							element.removeClass('fa-undo').addClass('fa-trash-o');
+							item.removeClass('deleting');
+							var deleteID = undefined;
+							scope.$apply(function () {
+								deleteID = _.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID;
+								if (pending.hasOwnProperty(deleteID)) {
+									clearTimeout(deleteID);
+									delete pending[deleteID];
+									delete _.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID;
+									//console.log('Timeout cleared: ' + deleteID);
+								}
+							});
+						})();
+					}
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_3) {
+			$ = _3['default'];
+			jQuery = _3['default'];
+		}, function (_2) {
+			angular = _2['default'];
+		}, function (_4) {
+			_ = _4['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('5a', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', tipsButton);
+
+	function tipsButton() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('click', function (e) {
+					if ($('#tips-button').hasClass('toggled')) {
+						$('.fine-print').velocity('slideUp', {
+							duration: 250,
+							complete: function complete() {
+								$('#tips-button').removeClass('toggled');
+							}
+						});
+					} else {
+						$('.fine-print').velocity('slideDown', {
+							duration: 250,
+							complete: function complete() {
+								$('#tips-button').addClass('toggled');
+							}
+						});
+					}
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('5b', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', menuToggle);
+
+	function menuToggle() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('click', function (e) {
+					if (!$('#menu').hasClass('toggled')) {
+						$('#content').addClass('menued');
+						element.addClass('toggled');
+						element.find('.fa-bars').removeClass('fa-bars').addClass('fa-times');
+						$('#menu').addClass('toggled');
+						if ($(window).width() > 768) {
+							$('#create-list').focus();
+						}
+					} else {
+						$('#content').removeClass('menued');
+						element.removeClass('toggled');
+						element.find('.fa-times').removeClass('fa-times').addClass('fa-bars');
+						$('#menu').removeClass('toggled');
+						if ($(window).width() > 768) {
+							$('#create-todo').focus();
+						}
+					}
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('5c', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', datepickerToggle);
+
+	function datepickerToggle() {
+		return {
+			restrict: 'A',
+			scope: {
+				datepickerToggle: '=',
+				datepickerIndex: '='
+			},
+			link: function link(scope, element, attrs) {
+				var todos = scope.datepickerToggle;
+				element.on('click', function (e) {
+					scope.$apply(function () {
+						scope.$parent.setDatepickerIndex(scope.datepickerIndex);
+						scope.$parent.setDatepickerClear(false);
+						scope.$parent.setDatepickerShown(true);
+						element.siblings('.datepicker-input').focus();
+					});
+				});
+				$('body').on('mousedown', '.ui-datepicker-close', function () {
+					scope.$apply(function () {
+						scope.$parent.setDatepickerClear(true);
+					});
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('5d', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', rename);
+
+	function rename() {
+		var _this = this;
+
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('click', function () {
+					var text = element.parents('tr').find('span.name');
+					var rename = element.parents('tr').find('.rename');
+					text.hide();
+					rename.show().select();
+				});
+
+				var renameHandler = function renameHandler(el) {
+					if ($('.rename').val()) {
+						el.siblings('.name').show();
+						el.hide();
+					}
+				};
+
+				$('table tbody').on({
+					keydown: function keydown(e) {
+						var key = e.which;
+						if (key === 13) {
+							renameHandler($(_this));
+						}
+					},
+					blur: function blur() {
+						renameHandler($(_this));
+					}
+				}, '.rename');
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
+$__System.register('5e', ['3', '5'], function (_export) {
+	'use strict';
+
+	var $, jQuery, angular;
+
+	_export('default', renameProxy);
+
+	function renameProxy() {
+		return {
+			restrict: 'A',
+			scope: false,
+			link: function link(scope, element, attrs) {
+				element.on('dblclick', function () {
+					element.parents('tr').find('.rename-button').click();
+				});
+			}
+		};
+	}
+
+	return {
+		setters: [function (_2) {
+			$ = _2['default'];
+			jQuery = _2['default'];
+		}, function (_) {
+			angular = _['default'];
+		}],
+		execute: function () {}
+	};
+});
 (function() {
 var _removeDefine = $__System.get("@@amd-helpers").createDefine();
 ;
@@ -32921,2201 +35091,6 @@ define("60", ["5f"], function(main) {
 
 _removeDefine();
 })();
-$__System.register('1e', [], function (_export) {
-  /* */
-  'use strict';
-
-  /**
-   * Convert the object passed to a date and test its validity
-   * @param {Object} 	obj any object
-   * @returns {Date}	if string passes the test, return the date object
-   */
-  return {
-    setters: [],
-    execute: function () {
-      _export('default', function (obj) {
-        obj = obj || new Date();
-        return new Date(obj);
-      });
-    }
-  };
-});
-$__System.register('43', [], function (_export) {
-  /* */
-  'use strict';
-
-  /**
-   * Take a date object and output the capitalized 12-hour clock period (AM/PM)
-   * @param   {Date}   date a date object
-   * @returns {String} the capitalized 12-hour clock period 
-   */
-  var AP, ap, D, DD, H, HH, M, MM, d, dd, dt, h, hh, l, ll, m, mm, s, ss, t, tt, yy, yyyy, zz, iso, utc, unix;
-  return {
-    setters: [],
-    execute: function () {
-      AP = function AP(date) {
-        var hour = date.getHours();
-        var ampm = hour < 12 ? 'AM' : 'PM';
-        return ampm;
-      };
-
-      _export('AP', AP);
-
-      /**
-       * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
-       * @param   {Date   date a date object
-       * @returns {String} the uncapitalized 12-hour clock period 
-       */
-
-      ap = function ap(date) {
-        var hour = date.getHours();
-        var ampm = hour < 12 ? 'am' : 'pm';
-        return ampm;
-      };
-
-      _export('ap', ap);
-
-      /**
-       * Take a date object and output the abreviated day of the week
-       * @param {Date} 	a date object
-       * @returns {String}	the abbreviated day of the week
-       */
-
-      D = function D(date) {
-        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        var dayOfWeek = date.getDay();
-        return days[dayOfWeek];
-      };
-
-      _export('D', D);
-
-      /**
-       * Take a date object and output the day of the week
-       * @param {Date} 	a date object
-       * @returns {String} the full day of the week
-       */
-
-      DD = function DD(date) {
-        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var dayOfWeek = date.getDay();
-        return days[dayOfWeek];
-      };
-
-      _export('DD', DD);
-
-      /**
-       * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
-       * @param   {Date}   date a date object
-       * @returns {String} the hour with no leading zeros
-       */
-
-      H = function H(date) {
-        var hour = date.getHours();
-        return hour;
-      };
-
-      _export('H', H);
-
-      /**
-       * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
-       * @param   {Date}   date a date object
-       * @returns {String} the hour with no leading zeros
-       */
-
-      HH = function HH(date) {
-        var hour = date.getHours().toString();
-        return hour.length < 2 ? '0' + hour : hour;
-      };
-
-      _export('HH', HH);
-
-      /**
-       * Take a date object and output the abbreviated month
-       * @param {Date} 	a date object
-       * @returns {String}	the abbreviated month
-       */
-
-      M = function M(date) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-        var month = date.getMonth();
-        return months[month];
-      };
-
-      _export('M', M);
-
-      /**
-       * Take a date object and output the month
-       * @param {Date} 	a date object
-       * @returns {String}	the full month
-       */
-
-      MM = function MM(date) {
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var month = date.getMonth();
-        return months[month];
-      };
-
-      _export('MM', MM);
-
-      /**
-       * Take a date object and output the date of the month with no leading zeros (1-31)
-       * @param {Date} 	a date object
-       * @returns {String}	the date of the month with no leading zeros
-       */
-
-      d = function d(date) {
-        var day = date.getDate().toString();
-        return day;
-      };
-
-      _export('d', d);
-
-      /**
-       * Take a date object and output the two-digit date of the month (01-31)
-       * @param {Date} 	a date object
-       * @returns {String}	the two-digit date of the month
-       */
-
-      dd = function dd(date) {
-        var day = date.getDate().toString();
-        return day.length < 2 ? '0' + day : day;
-      };
-
-      _export('dd', dd);
-
-      /**
-       * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
-       * @param {Date} 	a date object
-       * @returns {String}	the date with no leading zeros but with the ordinal
-       */
-
-      dt = function dt(date) {
-        var day = date.getDate();
-        switch (day) {
-          case 1:
-          case 21:
-          case 31:
-            day += 'st';
-            break;
-          case 2:
-          case 22:
-            day += 'nd';
-            break;
-          case 3:
-          case 23:
-            day += 'rd';
-            break;
-          default:
-            day += 'th';
-        }
-        return day;
-      };
-
-      _export('dt', dt);
-
-      /**
-       * Take a date object and outpit the hour with no leading zeros (1-12)
-       * @param   {Date}   date a date object
-       * @returns {String} the hour with no leading zeros
-       */
-
-      h = function h(date) {
-        var hour = date.getHours();
-        if (hour === 0) hour = 12;
-        if (hour < 13) hour = hour;
-        if (hour >= 13) hour = hour - 12;
-        return hour;
-      };
-
-      _export('h', h);
-
-      /**
-       * Take a date object and output the two-digit hour (01-12)
-       * @param   {Date}   date a date object
-       * @returns {String} the two-digit hour
-       */
-
-      hh = function hh(date) {
-        var hour = date.getHours();
-        if (hour === 0) hour = 12;
-        if (hour < 13) hour = hour;
-        if (hour >= 13) hour = hour - 12;
-        hour = hour.toString();
-        return hour.length < 2 ? '0' + hour : hour;
-      };
-
-      _export('hh', hh);
-
-      /**
-       * Take a date object and output the milliseconds with no leading zeros (0-999)
-       * @param   {Date} date a date object
-       * @returns {String}    the number of milliseconds
-       */
-
-      l = function l(date) {
-        var milliseconds = date.getMilliseconds().toString();
-        return milliseconds;
-      };
-
-      _export('l', l);
-
-      /**
-       * Take a date object and and output the three-digit milliseconds (000-999)
-       * @param   {Date}   date a date object
-       * @returns {String} the number of milliseconds
-       */
-
-      ll = function ll(date) {
-        var milliseconds = date.getMilliseconds().toString();
-        switch (milliseconds.length) {
-          case 1:
-            milliseconds = '00' + milliseconds;
-            break;
-          case 2:
-            milliseconds = '0' + milliseconds;
-            break;
-          default:
-            milliseconds = milliseconds;
-            break;
-        }
-        return milliseconds;
-      };
-
-      _export('ll', ll);
-
-      /**
-       * Take a date object and output the numeric month (1-12)
-       * @param {Date} 	a date object
-       * @returns {String}	the month with no leading zeros
-       */
-
-      m = function m(date) {
-        var month = (date.getMonth() + 1).toString();
-        return month;
-      };
-
-      _export('m', m);
-
-      /**
-       * Take a date object and output the two-digit month (01-12)
-       * @param {Date} 	a date object
-       * @returns {String}	the two-digit month
-       */
-
-      mm = function mm(date) {
-        var month = (date.getMonth() + 1).toString();
-        return month.length < 2 ? '0' + month : month;
-      };
-
-      _export('mm', mm);
-
-      /**
-       * Take a date object and outpit the seconds with no leading zeros (0-59)
-       * @param   {Date}   date a date object
-       * @returns {String} the seconds with no leading zeros
-       */
-
-      s = function s(date) {
-        var second = date.getSeconds();
-        return second;
-      };
-
-      _export('s', s);
-
-      /**
-       * Take a date object and outpit the two-digit seconds (0-59)
-       * @param   {Date}   date a date object
-       * @returns {String} the two-digit seconds
-       */
-
-      ss = function ss(date) {
-        var second = date.getSeconds().toString();
-        return second.length < 2 ? '0' + second : second;
-      };
-
-      _export('ss', ss);
-
-      /**
-       * Take a date object and output the minutes with no leading zeros
-       * @param   {Date} date a date object
-       * @returns {String}  the minutes with no leading zeros
-       */
-
-      t = function t(date) {
-        var minute = date.getMinutes().toString();
-        return minute;
-      };
-
-      _export('t', t);
-
-      /**
-       * Take a date object and output the two-digit minutes
-       * @param   {Date}   date a date object
-       * @returns {String} the two-digit minutes
-       */
-
-      tt = function tt(date) {
-        var minute = date.getMinutes().toString();
-        return minute.length < 2 ? '0' + minute : minute;
-      };
-
-      _export('tt', tt);
-
-      /**
-       * Take a date object and output the two-digit year
-       * @param {Date} 	a date object
-       * @returns {String}	the two-digit year
-       */
-
-      yy = function yy(date) {
-        return date.getFullYear().toString().substr(2);
-      };
-
-      _export('yy', yy);
-
-      /**
-       * Take a date object and output the four-digit year
-       * @param {Date} 	a date object
-       * @returns {String}	the four-digit year
-       */
-
-      yyyy = function yyyy(date) {
-        return date.getFullYear().toString();
-      };
-
-      _export('yyyy', yyyy);
-
-      /**
-       * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
-       * @param   {Date}   date a date object
-       * @returns {String} the timezone offset 
-       */
-
-      zz = function zz(date) {
-        var offset = date.getTimezoneOffset() / 60 * -1;
-        return 'UTC ' + offset + ':00';
-      };
-
-      _export('zz', zz);
-
-      /**
-       * Converts a date object to an ISO string
-       * @param   {Date}   date   a date object
-       * @param {String}		format optional 'short' to remove the time
-       * @returns {String} ISO String including time
-       */
-
-      iso = function iso(date, format) {
-        format = format || null;
-        //console.log('iso function date: ' + date);
-        if (format === 'short') return date.toISOString().split('T')[0];
-        return date.toISOString();
-      };
-
-      _export('iso', iso);
-
-      /**
-       * Converts a date object to a UTC string
-       * @param   {Date}   date a date object
-       * @param 	{String}	format optional 'shart' to remove the time from the output
-       * @returns {String} UTC string with or without time
-       */
-
-      utc = function utc(date, format) {
-        format = format || null;
-        var utc = date.toUTCString();
-        if (format === 'short') {
-          var arr = utc.split(' ');
-          var newArr = [];
-
-          for (var i = 0; i < 4; i++) {
-            newArr.push(arr[i]);
-          }
-
-          return newArr.join(' ');
-        }
-        return utc;
-      };
-
-      _export('utc', utc);
-
-      /**
-       * Converts a date object to UNIX time (milliseconds from January 1, 1970)
-       * @param   {Date}   date a date object
-       * @returns {Number} milliseconds from January 1, 1970
-       */
-
-      unix = function unix(date) {
-        return Date.parse(date);
-      };
-
-      _export('unix', unix);
-    }
-  };
-});
-$__System.register('44', ['42', '43'], function (_export) {
-	var _getIterator, to;
-
-	return {
-		setters: [function (_) {
-			_getIterator = _['default'];
-		}, function (_2) {
-			to = _2;
-		}],
-		execute: function () {
-			/* */
-
-			/**
-    * Take a Gregorian object and output the reformatted string
-    * See https://github.com/patrickfatrick/gregorian#accepted-formats for details
-    * @param {String} 	format a string or date object (something that can be converted to a valid date)
-    * @returns {String}	the date reformatted into the specified format
-    */
-			'use strict';
-
-			_export('default', function (format, delimiter) {
-				delimiter = delimiter || '+';
-				var date = this.d;
-				var search = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
-				var converted = format;
-
-				var _iteratorNormalCompletion = true;
-				var _didIteratorError = false;
-				var _iteratorError = undefined;
-
-				try {
-					for (var _iterator = _getIterator(search), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-						var piece = _step.value;
-
-						//console.log(converted + ' vs ' + piece);
-						var re = new RegExp('\\b' + piece + '\\b', 'g');
-						if (re.test(converted)) {
-							switch (piece) {
-								case 'unix':
-									converted = to.unix(date);
-									break;
-								case 'utc-short':
-									converted = to.utc(date, 'short');
-									break;
-								case 'utc':
-									converted = to.utc(date);
-									break;
-								case 'iso-short':
-									converted = to.iso(date, 'short');
-									break;
-								case 'iso':
-									converted = to.iso(date);
-									break;
-								default:
-									//console.log('Search string is: ' + piece);
-									//console.log('Converted string is: ' + to[piece](date));
-									var replacer = to[piece](date).toString();
-									converted = converted.replace(re, replacer);
-							}
-						}
-					}
-				} catch (err) {
-					_didIteratorError = true;
-					_iteratorError = err;
-				} finally {
-					try {
-						if (!_iteratorNormalCompletion && _iterator['return']) {
-							_iterator['return']();
-						}
-					} finally {
-						if (_didIteratorError) {
-							throw _iteratorError;
-						}
-					}
-				}
-
-				if (typeof converted === 'string') {
-					converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
-				}
-				// console .log(converted);
-				return converted;
-			});
-		}
-	};
-});
-$__System.register('45', [], function (_export) {
-	/* */
-	'use strict';
-
-	/**
-  * Adds specified increments to a gregorian object
-  * @param   {Number} n         a number to multiply the increment by
-  * @param   {String} increment an increment to add
-  * @returns {Object} a new gregorian object
-  */
-	var add, subtract;
-	function addSubtract(obj, n, increment) {
-
-		var increments = {};
-
-		increments.l = function (date) {
-			return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
-		};
-		increments.s = function (date) {
-			return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
-		};
-		increments.t = function (date) {
-			return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
-		};
-		increments.h = function (date) {
-			return new Date(date.setUTCHours(date.getUTCHours() + n));
-		};
-		increments.d = function (date) {
-			return new Date(date.setUTCDate(date.getUTCDate() + n));
-		};
-		increments.w = function (date) {
-			return new Date(date.setUTCDate(date.getUTCDate() + n * 7));
-		};
-		increments.m = function (date) {
-			var newMonth = date.getUTCMonth() + n;
-			var newYear = date.getUTCFullYear();
-			var newDate = date.getUTCDate();
-
-			if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-				return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-			} else {
-				return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
-			}
-		};
-		increments.y = function (date) {
-			var newYear = date.getUTCFullYear() + n;
-			var newMonth = date.getUTCMonth();
-			var newDate = date.getUTCDate();
-
-			if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-				return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-			} else {
-				return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
-			}
-		};
-
-		return {
-			d: increments[increment](obj.d),
-			input: obj.input,
-			to: obj.to,
-			add: obj.add,
-			subtract: obj.subtract,
-			restart: obj.restart,
-			reagent: obj.reagent,
-			recite: obj.recite
-		};
-	}
-
-	return {
-		setters: [],
-		execute: function () {
-			add = function add(n, increment) {
-				return addSubtract(this, n * 1, increment);
-			};
-
-			_export('add', add);
-
-			subtract = function subtract(n, increment) {
-				return addSubtract(this, n * -1, increment);
-			};
-
-			_export('subtract', subtract);
-		}
-	};
-});
-$__System.register('46', [], function (_export) {
-	/* */
-	'use strict';
-
-	/**
-  * Sets the date or time to the start of the specified increment
-  * @param   {String} increment an increment to set
-  * @returns {Object} a new gregorian object
-  */
-	return {
-		setters: [],
-		execute: function () {
-			_export('default', function (increment) {
-				var increments = {};
-
-				increments.s = function (date) {
-					return new Date(date.setSeconds(date.getSeconds(), 0));
-				};
-				increments.t = function (date) {
-					return new Date(date.setMinutes(date.getMinutes(), 0, 0));
-				};
-				increments.h = function (date) {
-					return new Date(date.setHours(date.getHours(), 0, 0, 0));
-				};
-				increments.d = function (date) {
-					date.setDate(date.getDate());
-					date.setHours(0, 0, 0, 0);
-					return new Date(date);
-				};
-				increments.w = function (date) {
-					date.setDate(date.getDate() - date.getDay());
-					date.setHours(0, 0, 0, 0);
-					return new Date(date);
-				};
-				increments.m = function (date) {
-					date.setMonth(date.getMonth(), 1);
-					date.setHours(0, 0, 0, 0);
-					return new Date(date);
-				};
-				increments.y = function (date) {
-					date.setFullYear(date.getFullYear(), 0, 1);
-					date.setHours(0, 0, 0, 0);
-					return new Date(date);
-				};
-
-				return {
-					d: increments[increment](this.d),
-					input: this.input,
-					to: this.to,
-					add: this.add,
-					subtract: this.subtract,
-					restart: this.restart,
-					reagent: this.reagent,
-					recite: this.recite
-				};
-			});
-		}
-	};
-});
-$__System.register("47", [], function (_export) {
-  /*
-   * Takes a gregorian object and checks that it has a valid date.
-   * @param {Object}  A gregorian object
-   * @return {Boolean}
-   */
-  "use strict";
-
-  return {
-    setters: [],
-    execute: function () {
-      _export("default", function () {
-        if (isNaN(this.d.getTime())) {
-          return false;
-        }
-        return true;
-      });
-    }
-  };
-});
-$__System.register("48", [], function (_export) {
-  /*
-   * Takes a gregorian object and outputs the date object
-   * @param {Object}  A gregorian object
-   * @return {Date} the date object it contains
-   */
-  "use strict";
-
-  return {
-    setters: [],
-    execute: function () {
-      _export("default", function () {
-        return this.d;
-      });
-    }
-  };
-});
-$__System.register('49', ['44', '45', '46', '47', '48', '1e'], function (_export) {
-	/* */
-
-	/**
-  * Take a string or date object and convert it into a gregorian object
-  * @param   {Object} obj A string or date object that can be parsed into a date
-  * @returns {Object} Gregorian object
-  */
-	'use strict';
-
-	var to, add, subtract, restart, reagent, recite, reformDate;
-	return {
-		setters: [function (_) {
-			to = _['default'];
-		}, function (_2) {
-			add = _2.add;
-			subtract = _2.subtract;
-		}, function (_3) {
-			restart = _3['default'];
-		}, function (_4) {
-			reagent = _4['default'];
-		}, function (_5) {
-			recite = _5['default'];
-		}, function (_e) {
-			reformDate = _e['default'];
-		}],
-		execute: function () {
-			_export('default', function (obj) {
-				var date = reformDate(obj);
-				return {
-					d: date,
-					input: obj,
-					to: to,
-					add: add,
-					subtract: subtract,
-					restart: restart,
-					reagent: reagent,
-					recite: recite
-				};
-			});
-		}
-	};
-});
-$__System.register('4a', ['49'], function (_export) {
-  /* */
-  'use strict';
-
-  /**
-   * Gregorian
-   * Author: Patrick Fricano
-   * https://www.github.com/patrickfatrick/gregorian
-   */
-
-  var reform, gregorian;
-  return {
-    setters: [function (_) {
-      reform = _['default'];
-    }],
-    execute: function () {
-      gregorian = {
-        reform: reform
-      };
-
-      _export('default', gregorian);
-    }
-  };
-});
-$__System.register('4b', ['4a'], function (_export) {
-  /* */
-  'use strict';
-
-  var gregorian;
-  return {
-    setters: [function (_a) {
-      gregorian = _a['default'];
-    }],
-    execute: function () {
-      _export('default', gregorian);
-    }
-  };
-});
-$__System.register("4c", ["4b"], function (_export) {
-  "use strict";
-
-  return {
-    setters: [function (_b) {
-      var _exportObj = {};
-
-      for (var _key in _b) {
-        if (_key !== "default") _exportObj[_key] = _b[_key];
-      }
-
-      _exportObj["default"] = _b["default"];
-
-      _export(_exportObj);
-    }],
-    execute: function () {}
-  };
-});
-$__System.register('4d', ['4c', '1d'], function (_export) {
-	/**
- * Takes a string containing: 1) a task, 2) human-readable date representation,
- * and outputs the task and a date object
- * @params {String} item user-input task (including date)
- * @returns {String} item the task without the date information
- * @returns {Date} dueDate the corresponding due date
- */
-
-	'use strict';
-
-	var gregorian, datejs;
-	return {
-		setters: [function (_c) {
-			gregorian = _c['default'];
-		}, function (_d) {
-			datejs = _d['default'];
-		}],
-		execute: function () {
-			_export('default', function (item) {
-				var keywords = ['next', ' on ', 'tomorrow', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december', ' Jan ', ' Feb ', ' Mar ', ' Apr ', ' May ', ' Jun ', ' Jul ', ' Aug ', ' Sept ', ' Oct ', ' Nov ', ' Dec ', ' jan ', ' feb ', ' mar ', ' apr ', ' may ', ' jun ', ' jul ', ' aug ', ' sept ', ' oct ', ' nov ', ' dec ', ' 01/', ' 02/', ' 03/', ' 04/', ' 05/', ' 06/', ' 07/', ' 08/', ' 09/', ' 10/', ' 11/', ' 12/', ' 13/', ' 14/', ' 15/', ' 16/', ' 17/', ' 18/', ' 19/', ' 20/', ' 21/', ' 22/', ' 23/', ' 24/', ' 25/', ' 26/', ' 27/', ' 28/', ' 29/', ' 30/', ' 31/', ' 2015-', ' 2016-', '2017-', '2018-', '2019-', '2020-'];
-				var dateFormats = ['MM-DD-YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD', 'MMM D', 'MMM Do', 'MMM Do, YYYY', 'MMMM D', 'MMMM Do', 'MMMM Do, YYYY'];
-
-				var keyword = undefined;
-				keywords.some(function (val, i) {
-					var index = item.indexOf(val);
-					if (index !== -1) {
-						keyword = index;
-						return true;
-					}
-				});
-
-				var dueDate = gregorian.reform(item.slice(keyword, item.length));
-				dueDate = dueDate.reagent() ? dueDate.recite() : datejs(item.slice(keyword, item.length));
-				//console.log('Date: ' + dueDate);
-				if (Date.parse(dueDate) <= gregorian.reform(dueDate).restart('d').recite()) {
-					dueDate = gregorian.reform(dueDate).add(1, 'y').recite();
-					item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
-				} else {
-					item = item.slice(0, 1).toUpperCase() + item.slice(1, keyword);
-				}
-				return { item: item, dueDate: dueDate };
-			});
-		}
-	};
-});
-$__System.register('4e', ['3', '5', '10', '11', '17', 'd', 'e', '1d', '4c', '4d'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular, hotkeys, _, date, gregorian, dateify;
-
-	_export('default', UserController);
-
-	function UserController() {
-		return ['$http', '$scope', '$log', '$location', 'hotkeys', function ($http, $scope, $log, $location, hotkeys) {
-
-			$scope.user.todos = {};
-
-			/**
-   * Server connections
-   */
-
-			/*********Session data*********/
-
-			$http.get('/session-data').then(function (response) {
-				//$log.log('Get successful: ' + response.status + response.statusText);
-				//$log.log(response);
-				if (response.status === 204) return delete $scope.user.todos;
-				$scope.user.username = response.data.username;
-				if (response.data.hasOwnProperty('todos')) $scope.user.todos = response.data.todos;
-				_.each($scope.user.todos, function (val, i) {
-					if (!_.find(val.items, 'current', true)) {
-						_.set(val.items[0], 'current', true);
-					}
-				});
-				$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-					list: "List 1",
-					current: true,
-					items: []
-				};
-				//$log.log($scope.user.current);
-				if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
-				$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : false;
-				//$log.log('User profile mounted...');
-				//$log.log($scope.user);
-				_.each($scope.user.todos, function (val, i) {
-					if (!val.agendaID) val.agendaID = $scope.token();
-					_.each(val.items, function (itemVal, j) {
-						if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
-					});
-				});
-			})['catch'](function (response) {
-				$log.error('Error getting user: ' + response.status + response.statusText);
-			});
-
-			/************Lookup************/
-
-			$scope.lookup = function (username, key, rememberMe) {
-				$http.post('/users/login', {
-					username: username,
-					key: key,
-					rememberMe: rememberMe
-				}).then(function (response) {
-					//$log.log('Get successful: ' + response.status + response.statusText);
-					//$log.log(response);
-					if (status === 204) {
-						$scope.confirmPassword = true;
-						$scope.invalidPassword = false;
-						return;
-					}
-					$scope.user.todos = response.data.todos;
-					_.each($scope.user.todos, function (val, i) {
-						if (!_.find(val.items, 'current', true)) {
-							_.set(val.items[0], 'current', true);
-						}
-					});
-					$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-						list: "List 1",
-						current: true,
-						items: []
-					};
-					//$log.log($scope.user.current);
-					//$scope.user.todos = $scope.user.current.items;
-					if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
-					$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : false;
-					//$log.log('User profile mounted...');
-					//$log.log($scope.user);
-					_.each($scope.user.todos, function (val, i) {
-						if (!val.agendaID) val.agendaID = $scope.token();
-						_.each(val.items, function (itemVal, j) {
-							if (!itemVal.agendaID) itemVal.agendaID = $scope.token();
-						});
-					});
-				})['catch'](function (response) {
-					$log.error('Error getting user: ' + response.status + response.statusText);
-					if (response.status === 401) {
-						$scope.invalidPassword = true;
-						$scope.confirmPassword = false;
-					}
-				});
-			};
-
-			/***********New user***********/
-
-			$scope.addUser = function (user, key, rememberMe) {
-				$http.post('/users/create', {
-					username: user,
-					key: key,
-					rememberMe: rememberMe
-				}).then(function (response) {
-					//$log.log('Create successul: ' + response.status + response.statusText);
-					//$log.log(response);
-					$scope.user.todos = response.data.todos ? response.data.todos : [{
-						list: "List 1",
-						current: true,
-						items: []
-					}];
-					$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-						list: "List 1",
-						current: true,
-						items: []
-					};
-					if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
-					$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : true;
-					//$log.log('User profile mounted...');
-					//$log.log($scope.user);
-					$scope.write(user);
-				})['catch'](function (response) {
-					$log.error('Error creating user: ' + response.status + response.statusText);
-				});
-			};
-
-			/**
-   * Save data back to MongoDB
-   * @param 		{String} 		username 			email address
-   * @returns 	{Boolean} 								success or failure
-   */
-
-			$scope.write = function (username) {
-				var now = new Date();
-				$scope.user.dateModified = now.toISOString();
-				_.set($scope.user.todos, _.find($scope.user.todos, _.matchesProperty('current', true)), $scope.user.current);
-				//$log.log('Saving to db...')
-				//$log.log($scope.user);
-				$http.post('/users/write', {
-					//json: angular.toJson($scope.user)
-					user: {
-						username: $scope.user.username,
-						todos: $scope.user.todos,
-						darkmode: $scope.user.darkmode,
-						dateModified: now
-					},
-					deleteAgendas: $scope.deleteAgendas
-				}).then(function (response) {
-					//$log.log('Write successful: ' + response.status + responses.statusText);
-					//$log.log('saveButton = ' + $scope.saveButton);
-					$scope.saveButton = false;
-					$scope.deleteAgendas = [];
-					return true;
-				})['catch'](function (response) {
-					$log.log('Error writing data: ' + response.status + response.statusText);
-				});
-			};
-
-			/***********Log out************/
-
-			$scope.logout = function () {
-				$http.get('/users/logout').then(function (response) {
-					//$log.log('Logged out');
-					window.location.href = '/';
-				}).error(function (response) {
-					$log.log('Error logging out: ' + response.status + response.statusText);
-				});
-			};
-
-			/*******************************
-    *******Password resetting*******
-    *******************************/
-
-			$scope.resetPassword = function (token, newKey) {
-				$http.post('/users/reset', {
-					token: token,
-					newKey: newKey
-				}).then(function (response) {
-					if (response.data) {
-						$scope.user.username = response.data.username;
-						$scope.user.todos = response.data.todos;
-						$scope.user.current = _.find($scope.user.todos, _.matchesProperty('current', true)) ? _.find($scope.user.todos, _.matchesProperty('current', true)) : {
-							list: "List 1",
-							current: true,
-							items: []
-						};
-						//$log.log($scope.user.current);
-						//$scope.user.todos = $scope.user.current.items;
-						if (response.data.hasOwnProperty('key')) $scope.user.key = response.data.key;
-						$scope.user.darkmode = response.data.hasOwnProperty('darkmode') ? response.data.darkmode : false;
-						//$log.log('User profile mounted...');
-						//$log.log($scope.user);
-						$location.path('/');
-						//$log.log($location.path());
-					}
-				})['catch'](function (response) {
-					$scope.resetFail = true;
-					$log.log('Error resetting password: ' + response.status + response.statusText);
-				});
-			};
-			$scope.setToken = function (user) {
-				$http.post('users/forgot', {
-					username: user
-				}).then(function (response) {
-					$log.log(response.data);
-					$scope.emailSent = true;
-				})['catch'](function (response) {
-					$log.log('Error creating reset token: ' + response.status + response.statusText);
-					$scope.emailSent = false;
-				});
-			};
-
-			var reset = $location.search().reset;
-			if (reset) {
-				//$log.log('Reset');
-				$scope.resetForm = true;
-				$scope.resetToken = $location.search().token;
-			}
-
-			$scope.rand = function () {
-				return Math.random().toString(36).substr(2);
-			};
-
-			$scope.token = function () {
-				return $scope.rand() + $scope.rand() + $scope.rand();
-			};
-			$scope.sortableOptions = {
-				handle: '.sort',
-				sort: true,
-				delay: 0,
-				animation: 75,
-				ghostClass: 'ghost',
-				scroll: true,
-				scrollSensitivity: 30,
-				scrollSpeed: 10,
-				onUpdate: function onUpdate(evt) {
-					var itemEl = evt.model.item;
-					var itemComplete = evt.model.complete;
-					var completeIndex = undefined;
-					_.each($scope.user.current.items, function (val, i) {
-						if (val.complete === true && val != evt.model) {
-							completeIndex = i;
-							return false;
-						}
-					});
-
-					//$log.log(evt.model);
-					//$log.log('CompleteIndex: ' + completeIndex);
-					//$log.log('OldIndex: ' + evt.oldIndex);
-					//$log.log('NewIndex: ' + evt.newIndex);
-
-					var spliced = undefined;
-
-					//Checks:
-					//1) If element is not complete and is being moved into complete list, move back up
-					//2) If element is complete and is being moved into uncomplete list, move back down
-					//3) if element is complete and also the only complete, move back to end of list
-					if (evt.newIndex > completeIndex && !itemComplete) {
-						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
-						$scope.user.current.items.splice(completeIndex, 0, spliced[0]);
-					} else if (evt.newIndex < completeIndex && itemComplete) {
-						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
-						$scope.user.current.items.splice(completeIndex - 1, 0, spliced[0]);
-					} else if (!completeIndex && itemComplete) {
-						spliced = $scope.user.current.items.splice(evt.newIndex, 1);
-						$scope.user.current.items.push(spliced[0]);
-					}
-				}
-			};
-			$scope.setDatepickerIndex = function (index) {
-				$scope.datepickerIndex = index;
-			};
-			$scope.setDatepickerClear = function (bool) {
-				$scope.datepickerClear = bool;
-			};
-			$scope.setDatepickerShown = function (bool) {
-				$scope.datepickerShown = bool;
-			};
-			$scope.datepickerOptions = {
-				showButtonPanel: true,
-				showAnim: '',
-				dateFormat: 'yy-mm-dd',
-				closeText: 'Clear',
-				prevText: '',
-				nextText: '',
-				onSelect: function onSelect() {
-					$scope.datepickerShown = false;
-				},
-				onClose: function onClose(dateText, inst) {
-					//$log.log($scope.datepickerClear);
-					//$log.log($scope.user.current.items[$scope.datepickerIndex].dueDate);
-					//$log.log($scope.user.todos);
-					$scope.datepickerShown = false;
-					if ($scope.datepickerClear) {
-						delete $scope.user.current.items[$scope.datepickerIndex].dueDate;
-						$scope.$apply();
-					}
-				}
-			};
-
-			var counter = 0;
-
-			/*********Create item**********/
-
-			$scope.create = function (arr, item, agendaID) {
-				if (arr === $scope.user.todos) {
-					arr.unshift({
-						list: item.trim(),
-						current: false,
-						items: [],
-						agendaID: agendaID
-					});
-				} else {
-					var dueDate = undefined;
-					if (item.indexOf('Remind me to ') === 0 || item.indexOf('remind me to ') === 0 || item.indexOf('/') === 0) {
-						var char = item.indexOf('Remind me to ') !== -1 || item.indexOf('remind me to ') !== -1 ? 13 : 3;
-						var shortcut = item.substring(0, char - 1);
-						item = item.substring(char, item.length);
-						switch (shortcut) {
-							case '/t':
-								dueDate = date('tomorrow');
-								item = dateify(item).item;
-								break;
-							case '/w':
-								dueDate = date('next Monday');
-								item = dateify(item).item;
-								break;
-							case '/m':
-								dueDate = gregorian.reform().restart('m').add(1, 'm').recite();
-								item = dateify(item).item;
-								break;
-							case '/y':
-								dueDate = gregorian.reform().restart('y').add(1, 'y').recite();
-								item = dateify(item).item;
-								break;
-							default:
-								dueDate = dateify(item).dueDate;
-								item = dateify(item).item;
-								break;
-						}
-					}
-					arr.unshift({
-						item: item.trim(),
-						complete: false,
-						agendaID: agendaID,
-						dueDate: dueDate,
-						current: !arr.length ? true : false
-					});
-				}
-				//$log.log('Creating todo... OK');
-			};
-			$scope.deleteAgendas = [];
-			$scope.setDeleteAgendas = function (agendaID) {
-				$scope.deleteAgendas.push(agendaID);
-			};
-
-			/**********Observers***********/
-
-			$scope.$watch('user.todos', function (newValue, oldValue) {
-				if (newValue === oldValue) return;
-				if (counter >= 2) $scope.saveButton = true;
-				//$log.log('saveButton = ' + $scope.saveButton);
-				counter += 1;
-				//$.log('todo counter = ' + counter);
-			}, true);
-			$scope.$watch('user.darkmode', function (newValue, oldValue) {
-				if (newValue === oldValue) return;
-				if (counter >= 2) $scope.saveButton = true;
-				//$log.log('saveButton = ' + $scope.saveButton);
-				counter += 1;
-				//$.log('darkmode counter = ' + counter);
-			}, true);
-
-			/**********Set active**********/
-
-			$scope.setCurrent = function (arr, index) {
-				//$log.log('setCurrent index: ' + index);
-				if (index >= arr.length) {
-					index = 0;
-				}
-				if (index === -1) {
-					index = arr.length - 1;
-				}
-				if (arr === $scope.user.todos) {
-					_.set(_.find(arr, 'current', true), $scope.user.current);
-					_.set($scope.user, 'current', arr[index]);
-				}
-				_.set(_.find(arr, 'current', true), 'current', false);
-				_.set(arr[index], 'current', true);
-			};
-			$scope.shiftCurrentDown = function (arr, index) {
-				if (!index) {
-					index = _.findIndex(arr, 'current', true);
-				}
-				if (index === arr.length - 1) {
-					return false;
-				}
-				var splicedTodo = _.remove(arr, 'current', true);
-				if (!splicedTodo[0].complete && arr[index].complete) {
-					arr.splice(index, 0, splicedTodo[0]);
-				} else {
-					arr.splice(index + 1, 0, splicedTodo[0]);
-				}
-			};
-			$scope.shiftCurrentUp = function (arr, index) {
-				if (!index) {
-					index = _.findIndex(arr, 'current', true);
-				}
-				if (index === 0) {
-					return false;
-				}
-				var splicedTodo = _.remove(arr, 'current', true);
-				if (splicedTodo[0].complete && !arr[index - 1].complete) {
-					arr.splice(index, 0, splicedTodo[0]);
-				} else {
-					arr.splice(index - 1, 0, splicedTodo[0]);
-				}
-			};
-
-			/************Hotkeys************/
-
-			hotkeys.bindTo($scope).add({
-				combo: 'command+m',
-				description: 'Toggle Night Mode/Bright Mode',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$scope.user.darkmode = $scope.user.darkmode ? false : true;
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'command+s',
-				description: 'Save your data',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$('#save-button').click();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+right',
-				description: 'Show the lists menu',
-				callback: function callback() {
-					$('#icon-menu:not(".toggled")').click();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+left',
-				description: 'Hide the lists menu',
-				callback: function callback() {
-					$('#icon-menu.toggled').click();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'ctrl+f',
-				description: 'Focus on the task creation input',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$('#create-todo').focus();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+f',
-				description: 'Focus on the list creation input',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$('#create-list').focus();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'down',
-				description: 'Select the next task',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) + 1);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'up',
-				description: 'Select the previous task',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$scope.setCurrent($scope.user.current.items, _.findIndex($scope.user.current.items, 'current', true) - 1);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+down',
-				description: 'Select the next list',
-				callback: function callback() {
-					$scope.setCurrent($scope.user.todos, _.findIndex($scope.user.todos, 'current', true) + 1);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+up',
-				description: 'Select the previous list',
-				callback: function callback() {
-					$scope.setCurrent($scope.user.todos, _.findIndex($scope.user.todos, 'current', true) - 1);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'ctrl+r',
-				description: 'Rename the selected task',
-				callback: function callback() {
-					$('#todo-list .active .rename-button').click();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+r',
-				description: 'Rename the selected list',
-				callback: function callback(e, keypress) {
-					e.preventDefault();
-					$('#lists-list .current .rename-button').click();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'ctrl+d',
-				description: 'Toggle the active task\'s datepicker',
-				callback: function callback(e, keypress) {
-					$('#todo-list .active .datepicker-input').focus();
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'command+down',
-				description: 'Move selected task down',
-				callback: function callback(e, keypress) {
-					$scope.shiftCurrentDown($scope.user.current.items);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'command+up',
-				description: 'Move selected task up',
-				callback: function callback() {
-					$scope.shiftCurrentUp($scope.user.current.items);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+command+down',
-				description: 'Move selected list down',
-				callback: function callback(e, keypress) {
-					$scope.shiftCurrentDown($scope.user.todos);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'alt+command+up',
-				description: 'Move selected list up',
-				callback: function callback() {
-					$scope.shiftCurrentUp($scope.user.todos);
-				},
-				allowIn: ['input']
-			}).add({
-				combo: 'command+backspace',
-				description: 'Remove selected task\'s due date',
-				callback: function callback() {
-					delete _.find($scope.user.current.items, 'current', true).dueDate;
-				},
-				allowIn: ['input']
-			});
-		}];
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_4) {
-			angular = _4['default'];
-		}, function (_6) {
-			hotkeys = _6['default'];
-		}, function (_3) {}, function (_5) {
-			_ = _5['default'];
-		}, function (_d) {}, function (_e) {}, function (_d2) {
-			date = _d2['default'];
-		}, function (_c) {
-			gregorian = _c['default'];
-		}, function (_d3) {
-			dateify = _d3['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('4f', ['5', '4e'], function (_export) {
-	'use strict';
-
-	var angular, UserController;
-	return {
-		setters: [function (_) {
-			angular = _['default'];
-		}, function (_e) {
-			UserController = _e['default'];
-		}],
-		execute: function () {
-			_export('default', function () {
-				'use strict';
-				/* Controllers */
-
-				var app = angular.module('taskmastrControllers', []);
-
-				app.config(['$locationProvider', 'hotkeysProvider', function ($locationProvider, hotkeysProvider) {
-					$locationProvider.html5Mode(true);
-					hotkeysProvider.includeCheatSheet = false;
-				}]);
-
-				app.controller('UserController', UserController());
-			});
-		}
-	};
-});
-$__System.register('50', ['3', '5', '17'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular, _;
-
-	_export('default', complete);
-
-	function complete() {
-		return {
-			restrict: "A",
-			scope: {
-				complete: '=',
-				completeIndex: '='
-			},
-			link: function link(scope, element, attrs) {
-				element.on('click', function () {
-					scope.$apply(function () {
-						var todos = scope.complete;
-						// If there's a complete todo present, set newIndex to that index, not the end of the list
-						var splicedTodo = todos.splice(scope.completeIndex, 1);
-						//console.log('OldIndex: ' + scope.completeIndex);
-						//console.log(splicedTodo);
-						var newIndex = todos.length;
-						_.each(todos, function (val, i) {
-							if (val.complete === true) {
-								newIndex = i;
-								return false;
-							}
-						});
-						//console.log('NewIndex: ' + newIndex);
-						todos.splice(newIndex, 0, splicedTodo[0]);
-						//scope.$parent.complete(scope.complete, scope.completeIndex);
-					});
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_3) {
-			$ = _3['default'];
-			jQuery = _3['default'];
-		}, function (_2) {
-			angular = _2['default'];
-		}, function (_4) {
-			_ = _4['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('51', ['3', '5', '17'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular, _;
-
-	_export('default', save);
-
-	function save() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('click', function () {
-					_.each(scope.user.todos, function (val, i) {
-						_.each(val.items, function (itemVal, j) {
-							if (itemVal.dueDate) {
-								//console.log(new Date(itemVal.dueDate).getHours());
-								itemVal.dueDate = new Date(itemVal.dueDate).setHours(0);
-								itemVal.dueDate = new Date(itemVal.dueDate).setMinutes(0);
-								itemVal.dueDate = new Date(itemVal.dueDate);
-								//console.log(new Date(itemVal.dueDate).getHours());
-							}
-						});
-					});
-					//scope.$apply();
-					scope.write(scope.user.username);
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_3) {
-			$ = _3['default'];
-			jQuery = _3['default'];
-		}, function (_2) {
-			angular = _2['default'];
-		}, function (_4) {
-			_ = _4['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('52', ['3', '5'], function (_export) {
-	/**
- * Controls the checkbox to complete a task
- */
-
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', checkButton);
-
-	function checkButton() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('click', function () {
-					element.siblings('.check').click();
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register("53", [], function (_export) {
-	"use strict";
-
-	return {
-		setters: [],
-		execute: function () {
-			_export("default", {
-				"placeholders": ["Remind me to eat lunch tomorrow", "/r meet Dave at the Punch Bowl next Monday", "/y come up with a New Year's Resolution", "/m pay rent", "Pay that bill", "/t stop playing World of Warcraft, maybe", "Set up a meeting in front of the CEO", "Clean up all the poop in the back yard", "Start watching Mr. Robot", "Read Kavalier & Clay", "Walk the dog", "Remind me to water the plants on Tuesday", "/r get a costume on 10/30/2015", "/r buy everyone Christmas gifts Dec 24", "/r learn how to juggle next year", "/r fix the chair on Sunday", "Check out the art walk downtown", "/t meet Katie for lunch", "Buy a new bike", "Remind me to mow the lawn on Saturday", "Find the remote", "Finish Infinite Jest", "/t buy groceries", "Remind me to vacuum on Saturday", "/m book club", "/y start saving for a house", "/r move into a new place next year", "Buy milk", "Buy dog food", "Take a shower", "Replace the ceiling fan", "Fix the sliding doors", "Implement that shiny new Javascript library", "/y become a vegetarian", "/t write a strongly worded letter", "Start sleeping without the nightlight", "Never forget", "/r take out all the wasps tomorrow", "Take Suzy to the dog park", "Learn how to make a martini", "Watch Dr. Strangelove", "Remind me to go to the movies on Sunday", "/r prank Taylor real good April 1st", "/t read the new xkcd", "Do some jumping jacks", "/m say 'yes' to everything for one month", "Learn the subtle art of beekeeping", "Fix the derailleur", "Check out the fall foliage 10/03/2015", "Learn how to tango", "/t shave", "Remind me to watch the Apple keynote Sept 9"]
-			});
-		}
-	};
-});
-$__System.register('54', ['3', '5', '53'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular, placeholders;
-
-	_export('default', createTodo);
-
-	function createTodo() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('keydown', function (e) {
-					var key = e.which;
-					if (key === 13) {
-						element.siblings('.submit').click();
-						element.val('');
-					}
-				});
-				if (element.hasClass('random-placeholder')) {
-					var randIndex = Math.floor(Math.random() * placeholders.placeholders.length);
-					element.attr('placeholder', placeholders.placeholders[randIndex]);
-				}
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}, function (_3) {
-			placeholders = _3['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('55', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', todoButton);
-
-	function todoButton() {
-		var _this = this;
-
-		return {
-			restrict: 'A',
-			scope: {
-				todoButton: '=',
-				todoModel: '='
-			},
-			link: function link(scope, element, attrs) {
-				var attempt = undefined;
-				element.on('click', function (e) {
-					scope.$apply(function () {
-						//console.log(scope.todoButton + ' ' + scope.$parent.newTodo);
-						if (scope.todoModel) {
-							scope.$parent.create(scope.todoButton, scope.todoModel, scope.$parent.token());
-							//console.log(scope.$parent.user.todos);
-							scope.todoModel = '';
-							//Remove attempt if it's present
-							scope.$parent[attempt] = false;
-						}
-					});
-				});
-				//Emoticon handlers
-				element.on('mousedown', function (e) {
-					attempt = scope.todoButton === scope.$parent.user.todos ? 'listAttempt' : 'todoAttempt';
-					if (element.siblings('input:text').val()) {
-						$(_this).removeClass('fa-arrow-down');
-						$(_this).addClass('fa-smile-o');
-					} else {
-						$(_this).removeClass('fa-arrow-down');
-						$(_this).addClass('fa-meh-o');
-						//Set attempt to true to show animation
-						scope.$parent[attempt] = true;
-					}
-				});
-				element.on('mouseup', function (e) {
-					$(_this).removeClass('fa-smile-o').removeClass('fa-meh-o');
-					$(_this).addClass('fa-arrow-down');
-					//Remove attempt after 500ms for animation to finish
-					setTimeout(function () {
-						scope.$parent[attempt] = false;
-						scope.$apply();
-					}, 500);
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('56', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', inputKey);
-
-	function inputKey() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('keydown', function (e) {
-					var key = e.which;
-
-					if (key === 13) {
-						if (attrs.inputKey === 'key') {
-							$('#key-button').click();
-						}
-						if (attrs.inputKey === 'confirm') {
-							$('#confirm-button').click();
-						}
-					}
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('57', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', loginForm);
-
-	function loginForm() {
-		var _this = this;
-
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('submit', function (e) {
-					scope.$apply(function () {
-						var username = scope.user.username;
-						var userKey = scope.user.key;
-						var confirmKey = scope.user.confirm;
-						var rememberMe = scope.rememberMe;
-						// Do lookup if confirm password is null
-						if (!scope.confirmPassword) {
-							scope.lookup(username, userKey, rememberMe);
-							//console.log('lookup');
-						}
-						//Add user if confirm password is not null and passwords match
-						if (scope.confirmPassword && !scope.userForm.confirm.$error.pattern) {
-							scope.addUser(username, confirmKey, rememberMe);
-						}
-					});
-				});
-				//Emoticon handlers
-				$('#user-form .submit').on({
-					mousedown: function mousedown(e) {
-						$(_this).removeClass('fa-arrow-right');
-						if (!scope.userForm.$invalid) {
-							$(_this).addClass('fa-smile-o');
-						} else {
-							$(_this).addClass('fa-meh-o');
-						}
-					},
-					mouseup: function mouseup(e) {
-						$(_this).removeClass('fa-smile-o').removeClass('fa-meh-o');
-						$(_this).addClass('fa-arrow-right');
-					},
-					click: function click(e) {
-						//Set variables for animations and error messages
-						scope.$apply(function () {
-							scope.formAttempt = true;
-							scope.loginAttempt = true;
-							if (scope.confirmPassword) {
-								scope.confirmAttempt = true;
-							}
-							setTimeout(function () {
-								scope.confirmAttempt = false;
-								scope.loginAttempt = false;
-								scope.$apply();
-							}, 500);
-						});
-						if (scope.forgot) {
-							scope.setToken(scope.user.username);
-							return false;
-						}
-						if (scope.userForm.$invalid) {
-							e.preventDefault();
-						}
-					}
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('58', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', resetForm);
-
-	function resetForm() {
-		var _this = this;
-
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('submit', function (e) {
-					scope.$apply(function ($location) {
-						var token = scope.resetToken;
-						var newKey = scope.user.newKey;
-						if (!scope.resetForm.confirmReset.$error.pattern) {
-							scope.resetPassword(token, newKey);
-						}
-					});
-				});
-				//Emoticon handlers
-				$('#user-form .submit').on({
-					mousedown: function mousedown(e) {
-						$(_this).removeClass('fa-arrow-right');
-						if (!scope.userForm.$invalid) {
-							$(_this).addClass('fa-smile-o');
-						} else {
-							$(_this).addClass('fa-meh-o');
-						}
-					},
-					mouseup: function mouseup(e) {
-						$(_this).removeClass('fa-smile-o').removeClass('fa-meh-o');
-						$(_this).addClass('fa-arrow-right');
-					},
-					click: function click(e) {
-						scope.$apply(function () {
-							scope.formAttempt = true;
-						});
-						if (scope.resetForm.$invalid) {
-							e.preventDefault();
-						}
-					}
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('59', ['3', '5', '17'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular, _;
-
-	_export('default', deleteButton);
-
-	function deleteButton() {
-		var timeoutID = undefined;
-		var pending = {};
-
-		return {
-			restrict: 'A',
-			scope: {
-				deleteButton: '=',
-				deleteIndex: '='
-			},
-			link: function link(scope, element, attrs) {
-				element.on('click', function (e) {
-					var item = element.parents('tr');
-					var arr = scope.deleteButton;
-					if (!item.hasClass('deleting')) {
-						(function () {
-							element.removeClass('fa-trash-o').addClass('fa-undo');
-							item.addClass('deleting');
-							var arrLength = arr.length;
-							var index = _.findIndex(arr, 'agendaID', scope.deleteIndex);;
-							// 1) Deleting a list
-							// 2) Deleting a task
-							if (arr === scope.$parent.user.todos) {
-								timeoutID = setTimeout(function () {
-									scope.$apply(function () {
-										var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
-										//console.log(spliced[0]);
-
-										// Current list handlers:
-										// 1) Check if user is deleting the only list: do not allow
-										// 2) Check if deleted list is the last list: set current to first list
-										// 3) By default if current list is deleted: set current to next list
-										if (spliced[0].current && arrLength === 1) {
-											arr.splice(0, 1, spliced[0]);
-											spliced = undefined;
-											element.removeClass('fa-undo').addClass('fa-trash-o');
-											item.removeClass('deleting');
-										} else if (spliced[0].current && index === arrLength - 1) {
-											scope.$parent.setCurrent(arr, 0);
-										} else if (spliced[0].current) {
-											scope.$parent.setCurrent(arr, index);
-										}
-										//If deleted, delete the list's agendas
-										if (spliced) {
-											_.each(spliced[0].items, function (val, i) {
-												scope.$parent.setDeleteAgendas(val.agendaID);
-											});
-										}
-									});
-								}, 5000);
-								pending[timeoutID] = 1;
-								_.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID = timeoutID;
-							} else {
-								timeoutID = setTimeout(function () {
-									scope.$apply(function () {
-										var spliced = _.remove(arr, 'agendaID', scope.deleteIndex);
-										if (spliced[0].current && index === arrLength - 1) {
-											scope.$parent.setCurrent(arr, 0);
-										} else if (spliced[0].current) {
-											scope.$parent.setCurrent(arr, index);
-										}
-										//console.log(spliced);
-
-										//If deleted, delete associated agendas
-										scope.$parent.setDeleteAgendas(spliced[0].agendaID);
-									});
-								}, 5000);
-								pending[timeoutID] = 1;
-								_.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID = timeoutID;
-							}
-						})();
-					} else {
-						(function () {
-							element.removeClass('fa-undo').addClass('fa-trash-o');
-							item.removeClass('deleting');
-							var deleteID = undefined;
-							scope.$apply(function () {
-								deleteID = _.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID;
-								if (pending.hasOwnProperty(deleteID)) {
-									clearTimeout(deleteID);
-									delete pending[deleteID];
-									delete _.find(arr, _.matchesProperty('agendaID', scope.deleteIndex)).timeoutID;
-									//console.log('Timeout cleared: ' + deleteID);
-								}
-							});
-						})();
-					}
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_3) {
-			$ = _3['default'];
-			jQuery = _3['default'];
-		}, function (_2) {
-			angular = _2['default'];
-		}, function (_4) {
-			_ = _4['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('5a', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', tipsButton);
-
-	function tipsButton() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('click', function (e) {
-					if ($('#tips-button').hasClass('toggled')) {
-						$('.fine-print').velocity('slideUp', {
-							duration: 250,
-							complete: function complete() {
-								$('#tips-button').removeClass('toggled');
-							}
-						});
-					} else {
-						$('.fine-print').velocity('slideDown', {
-							duration: 250,
-							complete: function complete() {
-								$('#tips-button').addClass('toggled');
-							}
-						});
-					}
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('5b', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', menuToggle);
-
-	function menuToggle() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('click', function (e) {
-					if (!$('#menu').hasClass('toggled')) {
-						$('#content').addClass('menued');
-						element.addClass('toggled');
-						element.find('.fa-bars').removeClass('fa-bars').addClass('fa-times');
-						$('#menu').addClass('toggled');
-						if ($(window).width() > 768) {
-							$('#create-list').focus();
-						}
-					} else {
-						$('#content').removeClass('menued');
-						element.removeClass('toggled');
-						element.find('.fa-times').removeClass('fa-times').addClass('fa-bars');
-						$('#menu').removeClass('toggled');
-						if ($(window).width() > 768) {
-							$('#create-todo').focus();
-						}
-					}
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('5c', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', datepickerToggle);
-
-	function datepickerToggle() {
-		return {
-			restrict: 'A',
-			scope: {
-				datepickerToggle: '=',
-				datepickerIndex: '='
-			},
-			link: function link(scope, element, attrs) {
-				var todos = scope.datepickerToggle;
-				element.on('click', function (e) {
-					scope.$apply(function () {
-						scope.$parent.setDatepickerIndex(scope.datepickerIndex);
-						scope.$parent.setDatepickerClear(false);
-						scope.$parent.setDatepickerShown(true);
-						element.siblings('.datepicker-input').focus();
-					});
-				});
-				$('body').on('mousedown', '.ui-datepicker-close', function () {
-					scope.$apply(function () {
-						scope.$parent.setDatepickerClear(true);
-					});
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('5d', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', rename);
-
-	function rename() {
-		var _this = this;
-
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('click', function () {
-					var text = element.parents('tr').find('span.name');
-					var rename = element.parents('tr').find('.rename');
-					text.hide();
-					rename.show().select();
-				});
-
-				var renameHandler = function renameHandler(el) {
-					if ($('.rename').val()) {
-						el.siblings('.name').show();
-						el.hide();
-					}
-				};
-
-				$('table tbody').on({
-					keydown: function keydown(e) {
-						var key = e.which;
-						if (key === 13) {
-							renameHandler($(_this));
-						}
-					},
-					blur: function blur() {
-						renameHandler($(_this));
-					}
-				}, '.rename');
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
-$__System.register('5e', ['3', '5'], function (_export) {
-	'use strict';
-
-	var $, jQuery, angular;
-
-	_export('default', renameProxy);
-
-	function renameProxy() {
-		return {
-			restrict: 'A',
-			scope: false,
-			link: function link(scope, element, attrs) {
-				element.on('dblclick', function () {
-					element.parents('tr').find('.rename-button').click();
-				});
-			}
-		};
-	}
-
-	return {
-		setters: [function (_2) {
-			$ = _2['default'];
-			jQuery = _2['default'];
-		}, function (_) {
-			angular = _['default'];
-		}],
-		execute: function () {}
-	};
-});
 $__System.register('61', ['3', '5', '60'], function (_export) {
 	'use strict';
 

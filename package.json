@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "5.3.0",
+  "version": "5.4.0",
   "engines": {
     "node": "4.0.0"
   },
@@ -18,7 +18,7 @@
     "mongo": "mongod --dbpath ./data"
   },
   "dependencies": {
-    "agenda": "^0.6.28",
+    "agenda": "^0.7.0",
     "agenda-ui": "0.0.7",
     "async": "^1.4.2",
     "bcrypt": "^0.8.3",
@@ -44,7 +44,6 @@
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
     "gulp-connect": "^2.2.0",
-    "gulp-gzip": "^1.2.0",
     "gulp-livereload": "^3.8.0",
     "gulp-nodemon": "^2.0.4",
     "gulp-notify": "^2.2.0",
@@ -53,11 +52,11 @@
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
     "jspm": "^0.16.2",
-    "matchdep": "^0.3.0",
+    "matchdep": "^1.0.0",
     "require-dir": "^0.3.0",
     "systemjs": "^0.19.0",
     "systemjs-builder": "^0.14.3",
-    "tiny-lr": "^0.1.5",
+    "tiny-lr": "^0.2.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
