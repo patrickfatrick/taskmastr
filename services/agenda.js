@@ -1,10 +1,6 @@
 var config = require('../config');
 var Agenda = require('agenda');
-var agenda = new Agenda(config.agendaOptions, function(err) {
-  if (err) return err;
-  agenda.emit('ready');
-  agenda.start();
-});
+var agenda = new Agenda(config.agendaOptions);
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
 
