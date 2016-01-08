@@ -1,0 +1,42 @@
+<template>
+	<div class="error-text">
+		<label for="user" v-show="!require && (loginAttempt || forgotAttempt)">Email address required</label>
+		<label for="user" v-show="!validate && require && loginAttempt">Invalid email address</label>
+		<label for="user" v-show="forgot && forgotAttempt">That username doesn't exist</label>
+		<label for="user" v-show="forgot && forgotEmail">Check your email for instructions on how to reset your password.</label>
+	</div>
+	<div id="user-line" class="prompt-line">
+		<input id="user" class="prompt" type="text" name="username" placeholder="Email" v-model="user.username" v-bind:class="{'invalid': loginAttempt && (!require || !validate)}"></input>
+		<button id="forgot-button" class="fa fa-arrow-right submit" type="submit" v-if="forgot" v-on:click="setForgotAttempt(true)">
+	</div>
+</template>
+
+<script>
+
+import store from '../../store/store';
+
+export default {
+	computed: {
+		user () {
+			return store.state.user;
+		},
+		forgot () {
+			return store.state.forgot;
+		},
+		forgotEmail () {
+			return store.state.forgotEmail;
+		},
+		loginAttempt () {
+			return store.state.loginAttempt;
+		}
+	},
+	props: {
+		validate: Boolean,
+		require: Boolean
+	},
+	methods: {
+		setForgotAttempt: store.actions.setForgotAttempt
+	}
+};
+
+</script>

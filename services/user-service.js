@@ -9,7 +9,7 @@ exports.addUser = function (user, next) {
 		var newUser = new User({
 			username: user.username.toLowerCase(),
 			key: user.key,
-			todos: user.todos,
+			tasks: user.tasks,
 			darkmode: user.darkmode
 		});
 		newUser.save(function (err, user) {
@@ -34,9 +34,13 @@ exports.updateUser = function (user, next) {
 		username: user.username.toLowerCase()
 	}, {
 		$set: {
-			todos: user.todos,
+			tasks: user.tasks,
 			darkmode: user.darkmode,
 			dateModified: user.dateModified
+		},
+		// remove legacy todos
+		$unset: {
+			todos: ''
 		}
 	}, {
 		new: true

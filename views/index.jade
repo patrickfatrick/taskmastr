@@ -1,13 +1,21 @@
 extends layout
 
 block content
+	app
+	if env === 'development'
+		script(src="http://localhost:8080/webpack-dev-server.js")
+		script(src="http://localhost:8080/public/dist/bundle.js")
+	else
+		script(src="/dist/bundle.js")
+
+// block content
 	#mask(ng-if="!user.todos || datepickerShown", ng-show="!user.todos || datepickerShown")
 	.modal#key-modal.animated(ng-if="!user.todos", ng-show="!user.todos")
 		.modal-header
 			h1#headline Taskmastr
 		.modal-body#key-ask(ng-if="!resetForm")
 			.greeting
-				| Do you have an account? 
+				| Do you have an account?
 				br/
 				| If so log in now, or create one below!
 			form(id="user-form", name="userForm", novalidate, login-form)
@@ -32,7 +40,7 @@ block content
 					input.prompt#key(type="password", name="key", ng-model="user.key", placeholder="Password", ng-required="true", ng-class="{tried: formAttempt && loginAttempt && !forgot, 'invalid-password': invalidPassword, disabled: forgot}")
 					button.fa.fa-arrow-right.submit#key-button(type="submit", ng-hide="confirmPassword")
 				.error-text
-					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pattern") 
+					label(for="confirm", ng-show="confirmPassword && userForm.confirm.$error.required && !userForm.confirm.$error.pattern")
 						| No user found. Please confirm your password.
 					label(ng-show="userForm.confirm.$error.pattern")
 						| Passwords don't match.

@@ -31,7 +31,7 @@ router.post('/login',
 					return res.send({
 						username: user.username,
 						darkmode: user.darkmode,
-						todos: user.todos
+						tasks: user.tasks
 					});
 				});
 			}
@@ -68,7 +68,7 @@ router.post('/create',
 				return res.send({
 					username: user.username,
 					darkmode: user.darkmode,
-					todos: user.todos
+					tasks: user.tasks
 				});
 			});
 		});
@@ -122,37 +122,37 @@ router.post('/write', function (req, res, next) {
 	var user = req.body.user;
 	var deleteAgendas = req.body.deleteAgendas;
 	//console.log(user);
-	//Workaround to cancel agendas for deleted todos
-	async.each(deleteAgendas, function (agendaID, callback) {
+	//Workaround to cancel agendas for deleted tasks
+	async.each(deleteAgendas, function (id, callback) {
 		agenda.cancel({
-			'data.agendaID': agendaID
-		}, function (err, numRemoved) {
+			'data.agendaID': id
+		}, function (err) {
 			if (err) return next(err);
-			console.log(user.username + ' => Agenda removed: ' + agendaID);
+			console.log(user.username + ' => Agenda removed: ' + id);
 			callback();
-		})
+		});
 	}, function (err) {
 		if (err) return console.log(err);
 		console.log('All deleted agendas removed successfully');
 	});
 	//Cancel current agendas and make new ones
-	async.each(user.todos, function (todo, callback) {
-		async.each(todo.items, function (item, callback) {
+	async.each(user.tasks, function (task, callback) {
+		async.each(task.items, function (item) {
 			//console.log(item);
 			agenda.cancel({
-				'data.agendaID': item.agendaID
-			}, function (err, numRemoved) {
+				'data.agendaID': item.id
+			}, function (err) {
 				if (err) return next(err);
-				console.log(user.username + ' => Agenda removed: ' + item.agendaID);
+				console.log(user.username + ' => Agenda removed: ' + item.id);
 				if (item.dueDate) {
 					var milliseconds = Math.floor(Math.random() * 150000);
 					item.dueDate = Date.parse(item.dueDate) + 21600000 + milliseconds;
 					if (item.dueDate <= Date.now()) return true;
 					//Use the following for testing
 					//item.dueDate = Date.now() + 1800000;
-					console.log(user.username + ' => Agenda scheduled: ' + item.agendaID + ' ' + new Date(item.dueDate));
+					console.log(user.username + ' => Agenda scheduled: ' + item.id + ' ' + new Date(item.dueDate));
 					agenda.schedule(new Date(item.dueDate), 'Notification Email', {
-						agendaID: item.agendaID,
+						agendaID: item.id,
 						username: user.username,
 						item: item.item,
 						host: req.headers.host,
@@ -166,7 +166,7 @@ router.post('/write', function (req, res, next) {
 		userService.updateUser(user, function (err, user) {
 			if (err) return next(err);
 			res.sendStatus(200);
-			//console.log(user.todos[1].items[0]);
+			//console.log(user.tasks[1].items[0]);
 			console.log('Saving user ' + user.username + '... OK');
 		});
 	});

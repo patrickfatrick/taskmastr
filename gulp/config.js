@@ -3,6 +3,17 @@ var src = './public';
 var gutil = require('gulp-util');
 
 module.exports = {
+	build: {
+		transform: [
+			['babelify', {
+				compressed: false
+			}],
+			['vueify']
+		],
+		src: src + '/main.js',
+		dest: dest + '/',
+		outputName: 'bundle.js'
+	},
 	sass: {
 		src: src + '/stylesheets/styles.scss',
 		watch: 'public/stylesheets/*.scss',
@@ -11,15 +22,8 @@ module.exports = {
 			outputStyle: 'compressed'
 		}
 	},
-	systemjs: {
-		options: {
-			sourceMaps: true,
-			minify: false //set to true for production
-		},
-		config: src + '/config.js',
-		src: src + '/javascripts/app.js',
-		watch: 'public/javascripts/**/*',
-		dest: dest + '/javascripts/index.js'
+	fonts: {
+		dest: dest + '/fonts'
 	},
 	jade: {
 		src: './views/**/*'
@@ -28,10 +32,6 @@ module.exports = {
 		sass: {
 			src: src + '/stylesheets/*.scss',
 			tasks: ['styles']
-		},
-		systemjs: {
-			src: 'public/javascripts/**/*',
-			tasks: ['systemjs']
 		},
 		jade: {
 			src: './views/**/*',
@@ -42,7 +42,7 @@ module.exports = {
 		script: 'bin/www',
 		ext: 'js',
 		env: {
-			NODE_ENV: 'development'
+			NODE_ENV: process.env.NODE_ENV
 		},
 		ignore: [
 			'node_modules/**/*',
@@ -60,5 +60,12 @@ module.exports = {
 	notify: {
 		sound: 'Submarine',
 		icon: './public/images/iphone-icon.png'
+	},
+	webpack: {
+		contentBase: '.',
+		publicPath: '/public/dist/',
+		hot: true,
+		noInfo: true,
+		stats: {colors: true}
 	}
 };

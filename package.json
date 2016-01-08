@@ -15,11 +15,14 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "mongo": "mongod --dbpath ./data"
+    "mongo": "mongod --dbpath ./data",
+    "dev": "NODE_ENV=development gulp",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "agenda": "^0.7.0",
     "agenda-ui": "0.0.7",
+    "animate.scss": "0.0.6",
     "async": "^1.4.2",
     "bcrypt": "^0.8.3",
     "body-parser": "~1.14.0",
@@ -27,67 +30,60 @@
     "connect-mongo": "^0.8.1",
     "cookie-parser": "~1.4.0",
     "debug": "~2.2.0",
+    "dragula": "^3.6.2",
     "express": "~4.13.3",
     "express-session": "^1.11.2",
+    "gregorian": "^1.5.0",
     "hat": "0.0.3",
     "jade": "~1.11.0",
+    "lodash": "^3.10.1",
     "mongoose": "^4.1.7",
     "morgan": "^1.5.3",
+    "mousetrap": "^1.5.3",
+    "node-bourbon": "^4.2.3",
+    "node-font-awesome": "^1.0.2",
+    "node-neat": "^1.7.2",
     "nodemailer": "^1.4.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.3.0"
+    "pikaday": "^1.4.0",
+    "serve-favicon": "~2.3.0",
+    "vue": "^1.0.13",
+    "vuex": "^0.2.0",
+    "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
-    "connect-livereload": "^0.5.3",
+    "babel": "^6.3.26",
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-transform-runtime": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "babel-runtime": "^5.8.34",
+    "browser-sync": "^2.10.1",
+    "css-loader": "^0.23.1",
+    "eslint": "^1.10.3",
+    "eslint-loader": "^1.2.0",
+    "exports-loader": "^0.6.2",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
     "gulp-connect": "^2.2.0",
-    "gulp-livereload": "^3.8.0",
     "gulp-nodemon": "^2.0.4",
-    "gulp-notify": "^2.2.0",
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
-    "jspm": "^0.16.2",
+    "imports-loader": "^0.6.5",
     "matchdep": "^1.0.0",
     "require-dir": "^0.3.0",
-    "systemjs": "^0.19.0",
-    "systemjs-builder": "^0.14.3",
+    "sass-npm": "^1.0.2",
+    "style-loader": "^0.13.0",
     "tiny-lr": "^0.2.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
-  },
-  "jspm": {
-    "directories": {
-      "baseURL": "public"
-    },
-    "dependencies": {
-      "Sortable": "github:RubaXa/Sortable@^1.2.1",
-      "angular": "github:angular/bower-angular@^1.4.5",
-      "angular-animate": "github:angular/bower-angular-animate@^1.4.5",
-      "angular-hotkeys": "github:chieffancypants/angular-hotkeys@^1.5.0",
-      "angular-touch": "github:angular/bower-angular-touch@^1.4.5",
-      "angular-ui-date": "github:angular-ui/ui-date@^0.0.8",
-      "date.js": "npm:date.js@^0.2.0",
-      "es6-module-loader": "npm:es6-module-loader@^0.17.7",
-      "geoffgraham/animate.scss": "github:geoffgraham/animate.scss@^3.2.0",
-      "gregorian": "npm:gregorian@^1.3.1",
-      "jquery": "github:components/jquery@^2.1.4",
-      "lodash": "npm:lodash@^3.10.1",
-      "velocity": "github:julianshapiro/velocity@^1.2.2"
-    },
-    "devDependencies": {
-      "babel": "npm:babel-core@^5.8.25",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
-    },
-    "overrides": {
-      "npm:gregorian@1.2.0": {
-        "format": "es6"
-      }
-    }
+    "vue-hot-reload-api": "^1.2.2",
+    "vue-html-loader": "^1.1.0",
+    "vue-loader": "^7.5.0",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
   }
 }

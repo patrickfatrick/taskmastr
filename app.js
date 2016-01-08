@@ -10,9 +10,7 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
 var agendaUI = require('agenda-ui');
-var Agenda = require('agenda');
 var agenda = require('./services/agenda');
-var async = require('async');
 
 var MongoStore = connectMongo(expressSession);
 var passportConfig = require('./auth/passport-config');
@@ -37,14 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
-app.use(cookieParser("suzy eats a suzy snack"));
-
-//Start livereload server in dev
-if (app.get('env') === 'development') {
-  app.use(require('connect-livereload')({
-    port: 35729
-  }));
-}
+app.use(cookieParser('suzy eats a suzy snack'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -93,8 +84,9 @@ app.use(function (req, res, next) {
 
 // development error handler
 // will print stacktrace
+// start livereload server
 if (app.get('env') === 'development') {
-	app.use(function (err, req, res, next) {
+	app.use(function (err, req, res) {
 		res.status(err.status || 500);
 		res.render('error', {
 			message: err.message,
@@ -105,7 +97,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
 	res.status(err.status || 500);
 	res.render('error', {
 		status: err.status,

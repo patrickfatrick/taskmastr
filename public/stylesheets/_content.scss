@@ -103,21 +103,17 @@
 }
 
 #save-button {
-	display: none;
 	background-color: $deepBlue;
 	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 20px;
 	@include button-effect($deepBlue, 22px, 20px);
-	&.ng-enter {
+	&.save-enter {
 		@include animation(bounceIn 300ms);
 	}
-	&.ng-leave {
+	&.save-leave {
 		@include animation(bounceOut 300ms);
-	}
-	&.ng-scope {
-		display: block;
 	}
 }
 

@@ -1,5 +1,4 @@
 .modal {
-	display: none;
 	color: $black;
 	height: auto;
 	width: 100%;
@@ -19,10 +18,10 @@
 		width: 50%;
 		top: 10%;
 	}
-	&.ng-enter {
+	&.modal-enter {
 		@include animation(bounceInDown 500ms);
 	}
-	&.ng-leave {
+	&.modal-leave {
 		@include animation(bounceOutUp 750ms);
 	}
 	&.invalid {
@@ -64,19 +63,21 @@
 				font-size: 0.8rem;
 				margin-left: 0;
 			}
-		}
-		.prompt-line {
-			@include span-columns(12);
-			@include media(min-width $medium) {
-				@include span-columns(10);
-				@include shift(2);
+			.prompt-line {
+				@include span-columns(12);
+				@include media(min-width $medium) {
+					@include span-columns(8);
+					@include shift(2);
+				}
 			}
 		}
 		.fine-print {
 			margin-top: 1rem;
 			font-size: 1rem;
-			display: none;
 			line-height: 1.2rem;
+			&.fine-print-enter {
+				@include animation(slideInDown 500ms);
+			}
 			@include media(min-width $medium) {
 				font-size: 0.8rem;
 			}
@@ -109,16 +110,15 @@
 }
 
 #mask {
-	display: none;
 	width: 100%;
 	height: 100%;
 	background: rgba(0, 0, 0, 0.3);
 	z-index: 1;
 	position: absolute;
-	&.ng-enter {
+	&.mask-enter {
 		@include animation(fadeIn 300ms);
 	}
-	&.ng-leave {
+	&.mask-leave {
 		@include animation(fadeOut 750ms);
 	}
 	&.ng-scope {

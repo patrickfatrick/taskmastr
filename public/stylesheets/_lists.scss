@@ -9,6 +9,9 @@ table {
 	tbody {
 		tr {
 			@include transition(unset);
+			&:hover {
+				background-color: $deepBlue;
+			}
 			&.complete {
 				color: $completeGray;
 				background: transparent !important;
@@ -28,18 +31,28 @@ table {
 					}
 				}
 			}
-			&.ghost {
-				opacity: .6;
-				background-color: $deepBlue !important;
-				&.active {
-					background-color: $astroTurf !important;
-				}
-				&.active.complete {
-					background-color: $grassStain !important;
-				}
-				&.complete {
-					background-color: transparent !important;
-				}
+			&.gu-mirror {
+			  position: fixed !important;
+			  margin: 0 !important;
+			  z-index: 9999 !important;
+			  opacity: 0.8;
+			  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+			  filter: alpha(opacity=80);
+			}
+			&.gu-hide {
+			  display: none !important;
+			}
+			&.gu-unselectable {
+			  -webkit-user-select: none !important;
+			  -moz-user-select: none !important;
+			  -ms-user-select: none !important;
+			  user-select: none !important;
+			}
+			&.gu-transit {
+			  opacity: 0.6;
+			  background-color: $deepBlue;
+			  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+			  filter: alpha(opacity=20);
 			}
 			&.deleting {
 				background: $red !important;
@@ -51,18 +64,10 @@ table {
 					color: $white;
 				}
 			}
-			&.ng-enter,
-			&.ng-enter-active,
-			&.ng-leave,
-			&.ng-leave-active,
-			&.ng-move,
-			&.ng-move-active {
-				@include transition(unset);
-			}
-			&.ng-enter {
+			&.item-enter {
 				@include animation(bounceInLeft 400ms);
 			}
-			&.ng-leave {
+			&.item-leave {
 				@include animation(bounceOutLeft 400ms);
 			}
 			td,
@@ -95,9 +100,9 @@ table {
 				}
 			}
 			td.utils {
-				width: 8.3rem;
+				width: 9.3rem;
 				@include media(min-width $medium) {
-					width: 7.2rem;
+					width: 8.7rem;
 				}
 
 				.sort {
@@ -118,16 +123,13 @@ table {
 		}
 	}
 	&#todo-list {
+		display: table !important;
+		position: relative;
+		margin-top: 1rem;
 		@include fill-parent;
 		@include media(min-width $medium) {
-			@include span-columns(8);
-			@include shift(3);
-		}
-		display: none !important;
-		&.ng-scope {
-			display: table !important;
-			position: relative;
-			margin-top: 1rem;
+			@include span-columns(8 of 14);
+			@include shift(3 of 14);
 		}
 	}
 	&#lists-list {
@@ -143,9 +145,9 @@ table {
 			background: inherit;
 		}
 		td.utils {
-			width: 6.3rem;
+			width: 6.4rem;
 			@include media(min-width $medium) {
-				width: 5.5rem;
+				width: 6.6rem;
 			}
 		}
 	}

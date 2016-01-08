@@ -6,15 +6,20 @@ html {
 body {
 	@extend html;
 	text-align: center;
-	color: $black;
 	font-family: $cardo;
 	font-size: 1rem;
-	@include transition(all 1s ease-out);
-	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight) bottom / auto 300%);
 	@include media(min-width $small) {
 		font-size: 1.4rem;
 	}
-	&.dark-mode {
+}
+#app-container {
+	@extend html;
+	color: $black;
+	@include transition(all 1s ease-out);
+	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight));
+	background-position: bottom;
+	background-size: auto 300%;
+	&.darkmode {
 		background-position: top;
 		color: $white;
 	}
@@ -49,8 +54,7 @@ input[type='password'] {
 		}
 		@include transition(border-color 500ms ease-out);
 		&.ng-invalid.tried,
-		&.invalid-password,
-		&.invalid-user {
+		&.invalid {
 			border-color: $red !important;
 			@include animation(rubberBand 500ms);
 		}

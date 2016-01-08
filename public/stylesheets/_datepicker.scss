@@ -1,4 +1,4 @@
-#ui-datepicker-div {
+.pika-single:not(.is-hidden) {
 	z-index: 5 !important;
 	background: $white;
 	font-family: $raleway;
@@ -6,6 +6,7 @@
 	margin-top: -125px;
 	text-transform: lowercase;
 	border-radius: 15px;
+	padding: 0.2em 0.2em 0;
 	@include center;
 	@include animation(bounceInDown 300ms);
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
@@ -20,17 +21,54 @@
 		right: 0;
 	}
 
-	.ui-datepicker-header {
+	.pika-title {
 		color: $white;
 		background: $orchid;
 		font-weight: normal;
 		border: none;
 		@include border-top-radius(15px);
+		.pika-label {
+			display: inline-block;
+			position: relative;
+			z-index: 9999;
+			overflow: hidden;
+			margin: 0;
+			padding: 5px 3px;
+			font-size: 14px;
+			line-height: 20px;
+			font-weight: bold;
+		}
+		.pika-select {
+			cursor: pointer;
+			position: absolute;
+			z-index: 9998;
+			margin: 0;
+			left: 0;
+			top: 5px;
+			filter: alpha(opacity=0);
+			opacity: 0;
+		}
 	}
-	.ui-datepicker-prev,
-	.ui-datepicker-next {
+	.pika-prev,
+	.pika-next {
+		display: block;
+		cursor: pointer;
+		position: relative;
+		outline: none;
+		border: 0;
+		padding: 0;
+		width: 25px;
+		height: 32px;
+		text-indent: 25px;
+		white-space: nowrap;
+		overflow: hidden;
+		background-color: transparent;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin: 0 0.5rem;
 		&:hover {
-			background: transparent;
+			background-color: transparent;
 			color: $deepBlue;
 			border: none;
 		}
@@ -39,29 +77,19 @@
 			padding-top: 0.3rem;
 		}
 	}
-	.ui-state-default,
-	.ui-widget-content .ui-state-default,
-	.ui-widget-header .ui-state-default {
-		background: $white;
-		border: none;
-		outline: none;
-		text-transform: lowercase;
-		font-weight: normal;
-		color: #1C94C4;
-		font-size: 1rem;
-		&:hover {
-			background: $deepBlue !important;
-			color: $white !important;
-		}
+	.pika-prev {
+		float: left;
+		background-image: url('../fonts/arrow-circle-left.svg');
+	}
+	.pika-next {
+		float: right;
+		background-image: url('../fonts/arrow-circle-right.svg');
 	}
 	.ui-datepicker-buttonpane {
 		border-bottom: 1px solid #E5E9EA !important;
 	}
-	.ui-datepicker-calendar {
-		margin-top: 0.4em;
-		/*@include media(max-width $small) {
-			height: 150px;
-		}*/
+	table {
+		margin: 1rem 2rem;
 		th {
 			width: 1rem;
 			padding-left: 0 !important;
@@ -69,16 +97,34 @@
 		}
 		td {
 			padding: 0;
-			a {
+			button {
+				width: 3rem;
+				height: 1.5rem;
+				background: $white;
+				border: none;
+				outline: none;
+				text-transform: lowercase;
+				font-weight: normal;
+				color: $oceanBlue;
+				font-size: 1rem;
+				padding: 0;
 				padding-top: 5px;
 				padding-bottom: 5px;
+				border: none;
+				&:hover {
+					background: $deepBlue !important;
+					color: $white !important;
+				}
+			}
+			&.is-empty {
+				background: $white;
 			}
 		}
 		.ui-datepicker-unselectable a {
 			color: $oceanBlue;
 			background: $white;
 		}
-		.ui-datepicker-today a {
+		.is-selected button{
 			color: $white;
 			background: $deepBlue;
 		}
@@ -86,7 +132,7 @@
 			background: $grassStain;
 			color: $white;
 		}
-		.ui-datepicker-current-day a {
+		.is-today button {
 			background: $astroTurf !important;
 			color: $black !important;
 		}

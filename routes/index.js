@@ -6,8 +6,9 @@ router.get('/', function(req, res, next) {
 	var vm = {
 		title: 'taskmastr',
 		error: req.flash('error'),
-	}
-  res.render('index', vm);
+		env: process.env.NODE_ENV
+	};
+	res.render('index', vm);
 });
 
 router.get('/session-data', function(req, res, next) {
@@ -15,7 +16,7 @@ router.get('/session-data', function(req, res, next) {
 	return res.send({
 		username: req.user.username,
 		darkmode: req.user.darkmode,
-		todos: req.user.todos
+		tasks: req.user.tasks
 	});
 });
 
