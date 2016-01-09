@@ -19,7 +19,7 @@
       2,
       "always"
     ],
-    "no-console": 1
+    "no-console": 2
   },
   "env": {
     "es6": true,

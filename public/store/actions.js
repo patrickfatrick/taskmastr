@@ -44,7 +44,7 @@ export default {
 			/**
 			 * Failsafes for IDs, set delete if it doesn't exist.
 			 */
-			let tasks = response.tasks || response.todos;
+			let tasks = (response.tasks) ? response.tasks : response.todos;
 			_.each(tasks, list => {
 				_.set(list, 'delete', false);
 				if (list.hasOwnProperty('agendaID')) {
@@ -62,6 +62,9 @@ export default {
 					}
 					if(!item.hasOwnProperty('agendaID') || !item.hasOwnProperty('id')) {
 						_.set(item, 'id', hat());
+					}
+					if (!item.hasOwnProperty('dueDate')) {
+						_.set(item, 'dueDate', undefined);
 					}
 				});
 			});
@@ -99,6 +102,9 @@ export default {
 					}
 					if(!item.hasOwnProperty('agendaID') || !item.hasOwnProperty('id')) {
 						_.set(item, 'id', hat());
+					}
+					if (!item.hasOwnProperty('dueDate')) {
+						_.set(item, 'dueDate', undefined);
 					}
 				});
 			});
@@ -154,6 +160,9 @@ export default {
 					}
 					if(!item.hasOwnProperty('agendaID') || !item.hasOwnProperty('id')) {
 						_.set(item, 'id', hat());
+					}
+					if (!item.hasOwnProperty('dueDate')) {
+						_.set(item, 'dueDate', undefined);
 					}
 				});
 			});

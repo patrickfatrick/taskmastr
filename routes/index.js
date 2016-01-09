@@ -13,10 +13,11 @@ router.get('/', function(req, res, next) {
 
 router.get('/session-data', function(req, res, next) {
 	if (!req.user) return res.sendStatus(204);
+	console.log('Sending user ' + req.user.username + '... OK');
 	return res.send({
 		username: req.user.username,
 		darkmode: req.user.darkmode,
-		tasks: req.user.tasks
+		tasks: (req.user.tasks.length) ? req.user.tasks : req.user.todos
 	});
 });
 
