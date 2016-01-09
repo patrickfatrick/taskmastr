@@ -9,12 +9,19 @@
 
 <script>
 
+import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
 	methods: {
 		logout: store.actions.logout
+	},
+	ready () {
+		Mousetrap.bind('command+esc', (e) => {
+			e.preventDefault();
+			return this.logout();
+		});
 	}
-}
-;	
+};
+
 </script>

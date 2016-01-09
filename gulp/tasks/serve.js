@@ -5,7 +5,7 @@ var config = require('../config').nodemon;
 var browserSyncConfig = require('../config').watch;
 
 gulp.task('serve', ['nodemon'], function() {
-	browserSync({
+	browserSync.init({
 		open: false,
 		proxy: 'http://localhost:3000',
 		files: [browserSyncConfig.sass.src],

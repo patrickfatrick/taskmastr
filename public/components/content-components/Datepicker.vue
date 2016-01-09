@@ -1,16 +1,15 @@
 <template>
 	<span>
-		<input class="datepicker-input" type="text" name="datepicker" v-model="task.dueDate" v-bind:disabled="task.complete" readonly="true" v-el:pikaday></input>
+		<input class="datepicker-input" type="text" name="datepicker" :value="task.dueDate" v-bind:disabled="task.complete" readonly="true" v-el:pikaday></input>
 		<i class="fa datepicker-toggle" v-bind:class="{'active': task.dueDate, 'fa-calendar-check-o': task.dueDate, 'fa-calendar-plus-o': !task.dueDate}" v-el:pikatrigger v-on:dblclick="setTaskDueDate(index, undefined)"></i>
 	</span>
 </template>
 
 <script>
 
-import _ from 'lodash';
+import Mousetrap from 'mousetrap';
 import Pikaday from 'pikaday';
 import gregorian from 'gregorian';
-import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
@@ -42,14 +41,11 @@ export default {
 			trigger: this.$els.pikatrigger,
 			yearRange: 1,
 			onSelect: function () {
-				return this.setTaskDueDate(this.index, gregorian.reform(this.picker).recite());
-			}.bind(this),
-			onClose: function () {
-				return this.picker.hide();
+				return this.setTaskDueDate(this.index, gregorian.reform(this.picker._d).to('yyyy-mm-dd HH:tt:ss'));
 			}.bind(this)
 		});
-		Mousetrap.bind('command+backspace', () => {
-			return this.setTaskDueDate(_.findIndex(this.tasks, 'current', true), undefined);
+		Mousetrap.bind('ctrl+d', () => {
+			return this.$els.pikatrigger.click();
 		});
 	}
 };

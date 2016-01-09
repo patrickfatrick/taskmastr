@@ -1,8 +1,8 @@
 <template>
 	<div class="error-text">
-		<label for="confirm" v-show="loginAttempt && !user.confirm && !confirmAttempt">No user found. Please confirm your password.</label>
-		<label for="confirm" v-show="confirmAttempt && !user.confirm">Password confirmation required.</label>
-		<label for="confirm" v-show="!match && loginAttempt && user.confirm">Passwords don't match.</label>
+		<span v-show="loginAttempt && !user.confirm && !confirmAttempt">No user found. Please confirm your password.</span>
+		<span v-show="confirmAttempt && !user.confirm">Password confirmation required.</span>
+		<span v-show="!match && loginAttempt && user.confirm">Passwords don't match.</span>
 	</div>
 	<div id="confirm-line" class="prompt-line">
 		<input id="confirm" class="prompt" type="password" name="password" placeholder="Password" v-model="user.confirm" v-bind:class="{'invalid': confirmAttempt && !match}"></input>

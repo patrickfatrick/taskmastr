@@ -14,13 +14,11 @@
 		width: 100%;
 		left: 0 !important;
 	}
-
 	@include media(min-width $medium) {
 		width: 400px;
 		left: 0 !important;
 		right: 0;
 	}
-
 	.pika-title {
 		color: $white;
 		background: $orchid;
@@ -115,6 +113,10 @@
 					background: $deepBlue !important;
 					color: $white !important;
 				}
+				&:focus {
+					background: $grassStain;
+					color: $white;
+				}
 			}
 			&.is-empty {
 				background: $white;
@@ -128,13 +130,12 @@
 			color: $white;
 			background: $deepBlue;
 		}
-		.ui-datepicker-days-cell-over a {
-			background: $grassStain;
-			color: $white;
-		}
 		.is-today button {
 			background: $astroTurf !important;
 			color: $black !important;
 		}
 	}
+}
+.pika-single.is-hidden {
+	display: none;
 }

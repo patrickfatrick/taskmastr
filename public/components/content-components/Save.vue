@@ -4,6 +4,7 @@
 
 <script>
 
+import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
@@ -14,6 +15,13 @@ export default {
 	},
 	methods: {
 		save: store.actions.save
+	},
+	ready () {
+		Mousetrap.bind('command+s', (e) => {
+			e.preventDefault();
+			if (!this.saveButton) return;
+			return this.save();
+		});
 	}
 };
 	

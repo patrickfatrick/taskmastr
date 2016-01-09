@@ -31,6 +31,10 @@ taskmastr is updated regularly with new features
 
 # Changelog
 
+## New in v6.0
+
+The front-end has been completely rewritten in the ground up in [Vue](vuejs.org), from Angular 1.x. With that comes some small changes but mostly everything should be under the hood. 
+
 ## New in v5.3.0
 
 Mostly aesthetic changes. Some are more noticeable than others, but the emphasis is making bright mode less abhorrent.

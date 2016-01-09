@@ -1,5 +1,5 @@
 <template>
-	<form id="user-form" name="userForm" action="/users/login" novalidate v-if="!forgot && !create" v-on:submit.prevent="loginUser(user.username, user.key, rememberMe, isValid)">
+	<form id="user-form" name="userForm" action="/users/login" novalidate v-if="!forgot && !create && !reset" v-on:submit.prevent="loginUser(user.username, user.key, rememberMe, isValid)">
 		<username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
 		<key-input :require="validate.passwordRequired"></key-input>
 		<remember-me></remember-me>
@@ -27,6 +27,9 @@ export default {
 	computed: {
 		user () {
 			return store.state.user;
+		},
+		reset () {
+			return store.state.reset;
 		},
 		forgot () {
 			return store.state.forgot;

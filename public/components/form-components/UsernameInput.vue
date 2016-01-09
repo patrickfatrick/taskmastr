@@ -1,9 +1,9 @@
 <template>
 	<div class="error-text">
-		<label for="user" v-show="!require && (loginAttempt || forgotAttempt)">Email address required</label>
-		<label for="user" v-show="!validate && require && loginAttempt">Invalid email address</label>
-		<label for="user" v-show="forgot && forgotAttempt">That username doesn't exist</label>
-		<label for="user" v-show="forgot && forgotEmail">Check your email for instructions on how to reset your password.</label>
+		<span v-show="!require && (loginAttempt || forgotAttempt)">Email address required</span>
+		<span v-show="!validate && require && loginAttempt">Invalid email address</span>
+		<span v-show="forgot && forgotAttempt">That username doesn't exist</span>
+		<span v-show="forgot && forgotEmail">Check your email for instructions on how to reset your password.</span>
 	</div>
 	<div id="user-line" class="prompt-line">
 		<input id="user" class="prompt" type="text" name="username" placeholder="Email" v-model="user.username" v-bind:class="{'invalid': loginAttempt && (!require || !validate)}"></input>

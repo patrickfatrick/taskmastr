@@ -60,6 +60,31 @@ export function forgot (username) {
 	});
 }
 
+export function reset (token, newKey) {
+	return fetch('/users/reset', {
+		method: 'post',
+		credentials: 'same-origin',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			token: token,
+			newKey: newKey
+		})
+	})
+	.then(response => {
+		if (response.status === 401) return {
+			error: 401, 
+			msg: 'This reset link is no longer or never was valid. Please close this window and try again.'
+		};
+		return response.json();
+	})
+	.then(response => {
+		return response;
+	});
+}
+
 export function logout () {
 	return fetch('/users/logout', {
 		method: 'get',

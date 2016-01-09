@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var expressSession = require('express-session');
@@ -56,6 +57,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(compression(config.compression));
+
 app.use('/', routes);
 app.use('/users', users);
 app.get('/agenda-ui', function (req, res, next) {
@@ -71,6 +74,13 @@ app.get('/agenda-ui', function (req, res, next) {
 app.use('/agenda-ui', agendaUI(agenda, {
 	poll: 180000
 }));
+
+agenda.on('ready', function () {
+	// Uncomment to test agenda
+	// agenda.every('3 minutes', 'Agenda running');
+	agenda.start();
+});
+
 app.use(restrict);
 
 // catch 404 and forward to error handler

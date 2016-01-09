@@ -24,7 +24,9 @@
 </template>
 <script>
 
+import _ from 'lodash';
 import dragula from 'dragula';
+import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
@@ -54,6 +56,7 @@ export default {
 		setCurrentList: store.actions.setCurrentList,
 		sortLists: store.actions.sortLists,
 		renameToggle (index) {
+			if (this.renameToggled === index) return this.renameToggled = null;
 			return this.renameToggled = index;
 		},
 		_drag (drake) {
@@ -79,6 +82,34 @@ export default {
 		this.drake.containers = [this.$els.dragula];
 		this._drag(this.drake);
 		this._drop(this.drake);
+
+		// Keyboard bindings
+		Mousetrap.bind('alt+up', () => {
+			return this.setCurrentList(_.findIndex(this.lists, 'current', true) - 1);
+		});
+		Mousetrap.bind('alt+down', () => {
+			return this.setCurrentList(_.findIndex(this.lists, 'current', true) + 1);
+		});
+		Mousetrap.bind('alt+backspace', () => {
+			return this.deleteList(_.findIndex(this.lists, 'current', true));
+		});
+		Mousetrap.bind('alt+r', () => {
+			return this.renameToggle(_.findIndex(this.lists, 'current', true));
+		});
+		Mousetrap.bind('alt+s', () => {
+			const currentIndex = _.findIndex(this.lists, 'current', true);
+
+			if (currentIndex === this.lists.length) return;
+
+			return this.sortLists(currentIndex, currentIndex + 1);
+		});
+		Mousetrap.bind('alt+w', () => {
+			const currentIndex = _.findIndex(this.lists, 'current', true);
+
+			if (currentIndex === 0) return;
+
+			return this.sortLists(currentIndex, currentIndex - 1);
+		});
 	}
 };
 

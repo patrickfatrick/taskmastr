@@ -71,12 +71,11 @@ exports.resetPassword = function (user, next) {
 			resetToken: user.token
 		}, function (err, user) {
 			if (err) return next(err, err);
-			if (!user) return next(null, null)
-			var username = user.username
+			if (!user) return next(null, null);
+			var username = user.username;
 			var newKey = hash;
-			if (err) return next(err);
 			if (Date.now() > user.resetDate) {
-				return next(err, null)
+				return next(err, null);
 			}
 			User.update({
 				username: username

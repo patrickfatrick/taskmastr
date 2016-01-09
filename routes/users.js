@@ -105,15 +105,19 @@ router.post('/reset',
 		var token = req.body.token;
 		var newKey = req.body.newKey;
 		console.log('Reset token: ' + token);
-		console.log('New Key: ' + newKey);
+		//console.log('New Key: ' + newKey);
 		userService.resetPassword({
 			token: token,
 			newKey: newKey
 		}, function (err, user) {
 			if (err) return next(err);
 			//console.log(user);
-			if (!user) res.status(401);
-			res.send(user);
+			if (!user) return res.sendStatus(401);
+			return res.send({
+				username: user.username,
+				darkmode: user.darkmode,
+				tasks: user.tasks
+			});
 		});
 	}
 );

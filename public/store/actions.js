@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import hat from 'hat';
-import {getSession, login, create, forgot, logout, save} from '../services/user-services';
+import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services';
 
 const defaultList = {
 	list: 'List 1',
@@ -8,10 +8,12 @@ const defaultList = {
 	items: []
 };
 
-// Used for deletion of tasks and lists
 let timeoutID;
 
 export default {
+	/**
+	 * User Actions
+	 */
 	toggleCheckbox: 'TOGGLE_CHECKBOX',
 	setUsername: 'SET_USERNAME',
 	setKey: 'SET_KEY',
@@ -24,15 +26,11 @@ export default {
 	setForgotAttempt: 'SET_FORGOT_ATTEMPT',
 	setForgotEmail: 'SET_FORGOT_EMAIL',
 	setConfirmAttempt: 'SET_CONFIRM_ATTEMPT',
-	deleteProp: 'DELETE_PROP',
-	setCurrentTask: 'SET_CURRENT_TASK',
-	setCurrentList: 'SET_CURRENT_LIST',
-	setMenuToggled: 'SET_MENU_TOGGLED',
+	setReset: 'SET_RESET_FORM',
+	setResetAttempt: 'SET_RESET_ATTEMPT',
+	setResetToken: 'SET_RESET_TOKEN',
+	setResetFail: 'SET_RESET_FAIL',
 	setSaveButton: 'SET_SAVE_BUTTON',
-	setNewTask: 'SET_NEW_TASK',
-	setNewList: 'SET_NEW_LIST',
-	setTaskDelete: 'SET_TASK_DELETE',
-	deleteAgenda: 'DELETE_AGENDA',
 	setDarkmode: (store, bool) => {
 		store.dispatch('SET_DARKMODE', bool);
 		store.dispatch('SET_SAVE_BUTTON', true);
@@ -132,6 +130,42 @@ export default {
 			return store.dispatch('SET_FORGOT_EMAIL', true);
 		});
 	},
+	resetPassword: (store, token, key, isValid) => {
+		if (!isValid) return;
+		reset(token, key)
+		.then(response => {
+			if (response.error) {
+				if (response.error === 401) return store.dispatch('SET_RESET_FAIL', response.msg);
+			}
+			let tasks = response.tasks || response.todos;
+			_.each(tasks, list => {
+				if (list.hasOwnProperty('agendaID')) {
+					_.set(list, 'id', list.agendaID);
+					delete list.agendaID;
+				}
+				if(!list.hasOwnProperty('agendaID') || !list.hasOwnProperty('id')) {
+					_.set(list, 'id', hat());
+				}
+				_.each(list.items, item => {	
+					_.set(item, 'delete', false);
+					if (item.hasOwnProperty('agendaID')) {
+						_.set(item, 'id', item.agendaID);
+						delete item.agendaID;
+					}
+					if(!item.hasOwnProperty('agendaID') || !item.hasOwnProperty('id')) {
+						_.set(item, 'id', hat());
+					}
+				});
+			});
+			store.dispatch('SET_USERNAME', response.username);
+			store.dispatch('SET_KEY', '');
+			store.dispatch('SET_DARKMODE', response.darkmode);
+			store.dispatch('SET_TASKS', tasks);
+			let current = _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) ? _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) : 0;
+			store.dispatch('SET_CURRENT_LIST', current);
+			return;
+		});
+	},
 	logout: () => {
 		return logout()
 		.then(() => {
@@ -152,6 +186,13 @@ export default {
 			return store.dispatch('SET_SAVE_BUTTON', false);
 		});
 	},
+	/**
+	 * Task Actions
+	 */
+	setCurrentTask: 'SET_CURRENT_TASK',
+	setNewTask: 'SET_NEW_TASK',
+	setTaskDelete: 'SET_TASK_DELETE',
+	deleteAgenda: 'DELETE_AGENDA',
 	addTask: (store, task) => {
 		store.dispatch('ADD_TASK', task);
 		store.dispatch('SET_SAVE_BUTTON', true);
@@ -209,6 +250,12 @@ export default {
 		store.dispatch('SORT_TASKS', oldIndex, newIndex);
 		store.dispatch('SET_SAVE_BUTTON', true);
 	},
+	/**
+	 * [List Actions
+	 */
+	setCurrentList: 'SET_CURRENT_LIST',
+	setMenuToggled: 'SET_MENU_TOGGLED',
+	setNewList: 'SET_NEW_LIST',
 	addList: (store, list) => {
 		store.dispatch('ADD_LIST', list);
 		store.dispatch('SET_SAVE_BUTTON', true);

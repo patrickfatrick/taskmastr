@@ -6,6 +6,7 @@
 
 <script>
 
+import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
@@ -16,6 +17,14 @@ export default {
 	},
 	methods: {
 		setMenuToggled: store.actions.setMenuToggled
+	},
+	ready () {
+		Mousetrap.bind('alt+right', () => {
+			return this.setMenuToggled(true);
+		});
+		Mousetrap.bind('alt+left', () => {
+			return this.setMenuToggled(false);
+		});
 	}
 };
 

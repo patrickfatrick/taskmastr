@@ -1,7 +1,7 @@
 <template>
 	<div class="error-text">
-		<label for="key" v-show="!require && loginAttempt">Password required</label>
-		<label for="key" v-show="invalidKey">{{invalidKey}}</label>
+		<span v-show="!require && loginAttempt">Password required</span>
+		<span v-show="invalidKey">{{invalidKey}}</span>
 	</div>
 	<div id="key-line" class="prompt-line">
 		<input id="key" class="prompt" type="password" name="password" placeholder="Password" v-model="user.key" v-bind:class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>

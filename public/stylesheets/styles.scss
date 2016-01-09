@@ -1,13 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(https://fonts.googleapis.com/css?family=Cardo);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import "font-awesome";
 @import "bourbon";
 @import "neat";
 @import "./animate/animate.scss";
-@import "./jquery-ui/jquery-ui.structure";
-
-@import "../fonts/josefin-sans/josefin-sans";
-@import "../fonts/cardo/cardo";
-@import "../fonts/raleway/raleway";
-//@import "../fonts/font-awesome/scss/font-awesome";
-@import "font-awesome";
 
 @import "reset";
 @import "variables";

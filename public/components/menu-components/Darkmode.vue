@@ -5,6 +5,7 @@
 
 <script>
 
+import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
@@ -15,6 +16,12 @@ export default {
 	},
 	methods: {
 		setDarkmode: store.actions.setDarkmode
+	},
+	ready () {
+		Mousetrap.bind('command+m', (e) => {
+			e.preventDefault();
+			return this.setDarkmode(!this.darkmode);
+		});
 	}
 };
 
