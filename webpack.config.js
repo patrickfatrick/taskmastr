@@ -2,7 +2,6 @@ var webpack = require('webpack');
 
 module.exports = {
 	entry: [
-		'webpack/hot/dev-server',
 		'./public/main.js'
 	],
 	output: {
@@ -32,7 +31,6 @@ module.exports = {
 		plugins: ['transform-runtime']
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
 		new webpack.ProvidePlugin({
 			'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
 		})
@@ -56,4 +54,6 @@ if (process.env.NODE_ENV === 'production') {
 	];
 } else {
 	module.exports.devtool = '#source-map';
+	module.exports.entry.unshift('webpack/hot/dev-server');
+	module.exports.plugins.unshift(new webpack.HotModuleReplacementPlugin());
 }
