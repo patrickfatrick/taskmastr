@@ -222,11 +222,12 @@ export default {
 		const nextTask = tasks[index + 1];
 		if (!task.delete) {
 			timeoutID = setTimeout(() => {
-				if (task.current && index === (tasks.length - 1)) {
-					store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, prevTask));
-				}
 				if (task.current) {
-					store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, nextTask));
+					if (task.current && index === (tasks.length - 1)) {
+						store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, prevTask));
+					} else {
+						store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, nextTask));
+					}
 				}
 				store.dispatch('DELETE_AGENDA', task.id);
 				store.dispatch('UPDATE_DELETE_QUEUE', task.id, null);
@@ -261,7 +262,7 @@ export default {
 		store.dispatch('SET_SAVE_BUTTON', true);
 	},
 	/**
-	 * [List Actions
+	 * List Actions
 	 */
 	setCurrentList: 'SET_CURRENT_LIST',
 	setMenuToggled: 'SET_MENU_TOGGLED',
@@ -282,11 +283,18 @@ export default {
 		const nextList = lists[index + 1];
 		if (!list.delete) {
 			timeoutID = setTimeout(() => {
-				if (list.current && index === (lists.length - 1)) {
-					store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, prevList));
+				//Do not allow if it's the only list
+				if (lists.length === 1) {
+					store.dispatch('UPDATE_DELETE_QUEUE', list.id, null);
+					store.dispatch('SET_LIST_DELETE', _.findIndex(lists, 'id', list.id), false);
+					return;
 				}
 				if (list.current) {
-					store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, nextList));
+					if (list.current && index === (lists.length - 1)) {
+						store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, prevList));
+					} else {
+						store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, nextList));
+					}
 				}
 				store.dispatch('DELETE_AGENDA', list.id);
 				store.dispatch('UPDATE_DELETE_QUEUE', list.id, null);
