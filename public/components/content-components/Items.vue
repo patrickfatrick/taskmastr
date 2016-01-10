@@ -15,7 +15,7 @@
 					<i class="complate fa" v-bind:class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}" v-on:click="completeTask($index, !task.complete)"></i>
 				</th>
 				<td class="task-cell" v-on:click="setCurrentTask($index)">
-					<input class="rename" type="text" v-model="task.item" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)"></input>
+					<input class="rename" type="text" v-model="task.item" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)" v-on:change="setSaveButton(true)"></input>
 					<span class="name" v-show="renameToggled !== $index" v-on:dblclick="renameToggle($index)">{{task.item}}</span>
 				</td>
 				<td class="utils">
@@ -67,6 +67,7 @@ export default {
 		deleteTask: store.actions.deleteTask,
 		completeTask: store.actions.completeTask,
 		sortTasks: store.actions.sortTasks,
+		setSaveButton: store.actions.setSaveButton,
 		renameToggle (index) {
 			if (this.renameToggled === index) return this.renameToggled = null;
 			return this.renameToggled = index;

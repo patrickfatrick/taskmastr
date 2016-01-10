@@ -10,7 +10,7 @@
 			<tr v-for="list in lists" v-bind:class="{'deleting': list.delete, 'current': current.list === list.list}" name="list{{$index + 1}}" transition="item">
 				<th></th>
 				<td class="todo-cell" v-on:click="setCurrentList($index)">
-					<input class="rename" type="text" v-model="list.list" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)"></input>
+					<input class="rename" type="text" v-model="list.list" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)" v-on:change="setSaveButton(true)"></input>
 					<span class="name" v-show="renameToggled !== $index" v-on:dblclick="renameToggle($index)">{{list.list}}</span>
 				</td>
 				<td class="utils">
@@ -55,6 +55,7 @@ export default {
 		deleteList: store.actions.deleteList,
 		setCurrentList: store.actions.setCurrentList,
 		sortLists: store.actions.sortLists,
+		setSaveButton: store.actions.setSaveButton,
 		renameToggle (index) {
 			if (this.renameToggled === index) return this.renameToggled = null;
 			return this.renameToggled = index;
