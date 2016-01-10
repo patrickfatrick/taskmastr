@@ -3,7 +3,6 @@ module.exports = function(req, res, next) {
 		console.log(req);
 		res.sendStatus(401);
 	} else {
-		console.log(req.user);
-		next();
+		return next();
 	}
-}
+};

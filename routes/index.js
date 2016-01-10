@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
 	var vm = {
 		title: 'taskmastr',
 		error: req.flash('error'),
@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 	res.render('index', vm);
 });
 
-router.get('/session-data', function(req, res, next) {
+router.get('/session-data', function(req, res) {
 	if (!req.user) return res.sendStatus(204);
 	console.log('Sending user ' + req.user.username + '... OK');
 	return res.send({
