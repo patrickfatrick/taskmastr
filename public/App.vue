@@ -12,10 +12,8 @@ import store from './store/store';
 import Modal from './components/Modal.vue';
 import Menu from './components/Menu.vue';
 import Content from './components/Content.vue';
-import {polyfill} from 'es6-promise';
 import {extractDate, getUrlVar} from './store/prototypes';
 
-polyfill();
 extractDate();
 getUrlVar();
 
