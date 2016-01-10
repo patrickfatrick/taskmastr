@@ -29,9 +29,6 @@ import CreateForm from './CreateForm.vue';
 import ForgotForm from './ForgotForm.vue';
 import ResetForm from './ResetForm.vue';
 import Tips from './Tips.vue';
-import {getUrlVar} from '../store/prototypes';
-
-getUrlVar();
 
 export default {
 	computed: {
