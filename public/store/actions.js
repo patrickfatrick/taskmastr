@@ -14,6 +14,7 @@ export default {
 	/**
 	 * User Actions
 	 */
+	setInit: 'SET_INIT',
 	toggleCheckbox: 'TOGGLE_CHECKBOX',
 	setUsername: 'SET_USERNAME',
 	setKey: 'SET_KEY',
@@ -39,7 +40,7 @@ export default {
 		return getSession()
 		.then(response => {
 			if (response.error) {
-				if (response.error === 204) return;
+				if (response.error === 204) return store.dispatch('SET_INIT', true);
 			}
 			/**
 			 * Failsafes for IDs, set delete if it doesn't exist.
@@ -64,7 +65,7 @@ export default {
 						_.set(item, 'id', hat());
 					}
 					if (!item.hasOwnProperty('dueDate')) {
-						_.set(item, 'dueDate', undefined);
+						_.set(item, 'dueDate', null);
 					}
 				});
 			});

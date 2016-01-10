@@ -21,6 +21,7 @@ export default new Vuex.Store({
 			tasks: [],
 			current: {}
 		},
+		init: false,
 		forgot: false,
 		create: false,
 		reset: false,

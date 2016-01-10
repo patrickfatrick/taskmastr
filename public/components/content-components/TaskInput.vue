@@ -74,7 +74,7 @@ export default {
 						break;
 				}
 			} else {
-				dueDate = undefined;
+				dueDate = null;
 			}
 			store.actions.addTask({
 				item: task,

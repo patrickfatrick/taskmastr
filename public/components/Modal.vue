@@ -1,6 +1,6 @@
 <template>
-	<div id="mask" v-if="!user.tasks.length" transition="mask"></div>
-	<div id="key-modal" class="modal" v-if="!user.tasks.length" transition="modal">
+	<div id="mask" v-if="!user.tasks.length && init" transition="mask"></div>
+	<div id="key-modal" class="modal" v-if="!user.tasks.length && init" transition="modal">
 		<div class="modal-header">
 			<h1 id="headline">Taskmastr</h1>
 		</div>
@@ -43,6 +43,9 @@ export default {
 		},
 		reset () {
 			return store.state.reset;
+		},
+		init () {
+			return store.state.init;
 		}
 	},
 	components: {
