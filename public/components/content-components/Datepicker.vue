@@ -1,7 +1,7 @@
 <template>
 	<span>
 		<input class="datepicker-input" type="text" name="datepicker" :value="task.dueDate" v-bind:disabled="task.complete" readonly="true" v-el:pikaday></input>
-		<i class="fa datepicker-toggle" v-bind:class="{'active': task.dueDate, 'fa-calendar-check-o': task.dueDate, 'fa-calendar-plus-o': !task.dueDate}" v-el:pikatrigger v-on:dblclick="setTaskDueDate(index, undefined)"></i>
+		<i class="fa datepicker-toggle" v-bind:class="{'active': task.dueDate, 'fa-calendar-check-o': task.dueDate, 'fa-calendar-plus-o': !task.dueDate}" v-el:pikatrigger v-on:dblclick="setTaskDueDate(index, '')"></i>
 	</span>
 </template>
 

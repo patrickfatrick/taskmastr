@@ -65,7 +65,7 @@ export default {
 						_.set(item, 'id', hat());
 					}
 					if (!item.hasOwnProperty('dueDate')) {
-						_.set(item, 'dueDate', null);
+						_.set(item, 'dueDate', '');
 					}
 				});
 			});
@@ -105,7 +105,7 @@ export default {
 						_.set(item, 'id', hat());
 					}
 					if (!item.hasOwnProperty('dueDate')) {
-						_.set(item, 'dueDate', undefined);
+						_.set(item, 'dueDate', '');
 					}
 				});
 			});

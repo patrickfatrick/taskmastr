@@ -74,7 +74,7 @@ export default {
 						break;
 				}
 			} else {
-				dueDate = null;
+				dueDate = '';
 			}
 			store.actions.addTask({
 				item: task,
