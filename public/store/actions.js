@@ -218,10 +218,10 @@ export default {
 	deleteTask (store, index) {
 		const tasks = store.state.user.current.items;
 		const task = tasks[index];
-		const prevTask = tasks[index - 1];
-		const nextTask = tasks[index + 1];
 		if (!task.delete) {
 			timeoutID = setTimeout(() => {
+				let prevTask = tasks[index - 1];
+				let nextTask = tasks[index + 1];
 				if (task.current) {
 					if (task.current && index === (tasks.length - 1)) {
 						store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, prevTask));
@@ -279,10 +279,10 @@ export default {
 		const lists = store.state.user.tasks;
 		if (lists.length === 1) return;
 		const list = lists[index];
-		const prevList = lists[index - 1];
-		const nextList = lists[index + 1];
 		if (!list.delete) {
 			timeoutID = setTimeout(() => {
+				let prevList = lists[index - 1];
+				let nextList = lists[index + 1];
 				//Do not allow if it's the only list
 				if (lists.length === 1) {
 					store.dispatch('UPDATE_DELETE_QUEUE', list.id, null);

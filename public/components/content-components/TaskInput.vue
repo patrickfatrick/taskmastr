@@ -44,8 +44,8 @@ export default {
 		addTask (task) {
 			if (!this.newTask) return;
 			let dueDate;
-			if (task.indexOf('Remind me to ') === 0 || task.indexOf('remind me to ') === 0 || task.indexOf('/') === 0) {
-				const char = (task.indexOf('Remind me to ') !== -1 || task.indexOf('remind me to ') !== -1) ? 13 : 3;
+			if (task.toLowerCase().indexOf('remind me to ') === 0 || task.indexOf('/') === 0) {
+				const char = (task.toLowerCase().indexOf('remind me to ') !== -1) ? 13 : 3;
 				const shortcut = (task.substring(0, char - 1));
 				task = task.substring(char, task.length);
 				switch (shortcut) {

@@ -1,14 +1,12 @@
-/**
-* Takes a string containing: 1) a task, 2) human-readable date representation,
-* and outputs the task and a date object
-* @params {String} item user-input task (including date)
-* @returns {String} item the task without the date information
-* @returns {Date} dueDate the corresponding due date
-*/
-
 import gregorian from 'gregorian';
 import date from 'date.js';
 
+/**
+* Takes a string containing a human-readable date, and outputs the string and a date object
+* @params {String} 	item 		user-input string (including date)
+* @returns {String} 				the string without the date information
+* @returns {Date} 					the corresponding due date
+*/
 export var extractDate = function () {
 	String.prototype.extractDate = function () {
 		const keywords = [
@@ -48,6 +46,11 @@ export var extractDate = function () {
 	};
 };
 
+/**
+ * Takes a query string and outputs the value of a specified field
+ * @param {String}	variable	the variable to search for
+ * @return {String} 					the value of the field, or false if it doesn't exist
+ */
 export var getUrlVar = function () {
 	String.prototype.getUrlVar = function (variable) {
 		const fields = this.split('&');
