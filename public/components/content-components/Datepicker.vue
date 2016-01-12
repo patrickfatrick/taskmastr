@@ -41,7 +41,7 @@ export default {
 			trigger: this.$els.pikatrigger,
 			yearRange: 1,
 			onSelect: function () {
-				return this.setTaskDueDate(this.index, gregorian.reform(this.picker._d).to('yyyy-mm-dd HH:tt:ss'));
+				return this.setTaskDueDate(this.index, gregorian.reform(this.picker._d).set(6, 'h').to('iso'));
 			}.bind(this)
 		});
 		Mousetrap.bind('ctrl+d', () => {

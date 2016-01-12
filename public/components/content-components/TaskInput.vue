@@ -41,6 +41,7 @@ export default {
 		}
 	},
 	methods: {
+		setTaskDueDate: store.actions.setTaskDueDate,
 		addTask (task) {
 			if (!this.newTask) return;
 			let dueDate;
@@ -50,19 +51,19 @@ export default {
 				task = task.substring(char, task.length);
 				switch (shortcut) {
 					case '/t':
-						dueDate = gregorian.reform(date('tomorrow')).to('yyyy-mm-dd HH:tt:ss');
+						dueDate = gregorian.reform(date('tomorrow')).set(6, 'h').restart('h').to('iso');
 						task = task.extractDate().item;
 						break;
 					case '/w':
-						dueDate = gregorian.reform(date('next Monday')).to('yyyy-mm-dd HH:tt:ss');
+						dueDate = gregorian.reform(date('next Monday')).set(6, 'h').restart('h').to('iso');
 						task = task.extractDate().item;
 						break;
 					case '/m':
-						dueDate = gregorian.reform().restart('m').add(1, 'm').to('yyyy-mm-dd HH:tt:ss');
+						dueDate = gregorian.reform().restart('m').add(1, 'm').set(6, 'h').restart('h').to('iso');
 						task = task.extractDate().item;
 						break;
 					case '/y':
-						dueDate = gregorian.reform().restart('y').add(1, 'y').to('yyyy-mm-dd HH:tt:ss');
+						dueDate = gregorian.reform().restart('y').add(1, 'y').set(6, 'h').restart('h').to('iso');
 						task = task.extractDate().item;
 						break;
 					default:
