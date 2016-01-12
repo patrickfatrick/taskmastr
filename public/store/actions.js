@@ -296,7 +296,7 @@ export default {
 						store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, nextList));
 					}
 				}
-				_.each(list, item => {
+				_.each(list.items, item => {
 					store.dispatch('DELETE_AGENDA', item.id);
 				});
 				store.dispatch('UPDATE_DELETE_QUEUE', list.id, null);
