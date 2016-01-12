@@ -127,6 +127,7 @@ router.post('/write', function (req, res, next) {
 	var user = req.body.user;
 	var deleteAgendas = req.body.deleteAgendas;
 	//console.log(user);
+	//console.log(deleteAgendas);
 	//Workaround to cancel agendas for deleted tasks
 	async.each(deleteAgendas, function (id, callback) {
 		agenda.cancel({
@@ -150,17 +151,17 @@ router.post('/write', function (req, res, next) {
 				if (err) return next(err);
 				console.log(user.username + ' => Agenda removed: ' + item.id);
 				if (item.dueDate) {
-					item.dueDate = Date.parse(item.dueDate);
+					item.dueDate = new Date(item.dueDate);
 					if (item.dueDate <= Date.now()) return true;
 					//Use the following for testing
 					//item.dueDate = Date.now() + 1800000;
-					console.log(user.username + ' => Agenda scheduled: ' + item.id + ' ' + new Date(item.dueDate));
-					agenda.schedule(new Date(item.dueDate), 'Notification Email', {
+					console.log(user.username + ' => Agenda scheduled: ' + item.id + ' ' + item.dueDate);
+					agenda.schedule(item.dueDate, 'Notification Email', {
 						agendaID: item.id,
 						username: user.username,
 						item: item.item,
 						host: req.headers.host,
-						date: new Date(item.dueDate)
+						date: item.dueDate
 					});
 				}
 			});
