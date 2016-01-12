@@ -1,6 +1,6 @@
 <template>
 	<form id="todo-line" class="prompt-line" name="todoForm" novalidate v-on:submit.prevent="addTask(newTask.trim())">
-		<input id="create-todo" class="prompt random-placeholder" type="text" name="todoInput" v-model="newTask" v-bind:class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
+		<input id="create-todo" class="prompt random-placeholder mousetrap" type="text" name="todoInput" v-model="newTask" v-bind:class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
 		<button class="fa fa-arrow-down submit" type="submit"></button>
 	</form>
 </template>
@@ -86,7 +86,8 @@ export default {
 		}
 	},
 	ready () {
-		Mousetrap.bind('ctrl+f', () => {
+		Mousetrap.bind('ctrl+f', (e) => {
+			e.preventDefault();
 			this.$els.taskinput.focus();
 		});
 	}

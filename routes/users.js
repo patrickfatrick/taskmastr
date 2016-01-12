@@ -27,7 +27,7 @@ router.post('/login',
 				if (user === 401) return res.sendStatus(401);
 				req.login(user, function (err) {
 					if (err) return next(err);
-					console.log(user);
+					//console.log(user);
 					console.log('Sending user ' + user.username + '... OK');
 					return res.send({
 						username: user.username,

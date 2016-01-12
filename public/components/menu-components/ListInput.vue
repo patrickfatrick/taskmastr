@@ -1,6 +1,6 @@
 <template>
 	<form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addList(newList.trim())">
-		<input id="create-list" class="prompt" type="text" name="todoInput" v-model="newList" v-bind:class="{'invalid': !isValid && ListAttempt}" placeholder="New List"></input>
+		<input id="create-list" class="prompt mousetrap" type="text" name="todoInput" v-model="newList" v-bind:class="{'invalid': !isValid && ListAttempt}" placeholder="New List" v-el:listinput></input>
 		<button id="list-button" class="fa fa-arrow-down submit" type="submit"></button>
 	</form>
 </template>
@@ -8,6 +8,7 @@
 <script>
 
 import hat from 'hat';
+import Mousetrap from 'mousetrap';
 import store from '../../store/store';
 
 export default {
@@ -45,6 +46,12 @@ export default {
 			this.newList = '';
 			return store.actions.setSaveButton(true);
 		}
+	},
+	ready () {
+		Mousetrap.bind('alt+f', (e) => {
+			e.preventDefault();
+			this.$els.listinput.focus();
+		});
 	}
 };
 
