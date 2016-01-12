@@ -118,7 +118,7 @@ export default {
 		Mousetrap.bind('ctrl+r', () => {
 			return this.renameToggle(_.findIndex(this.tasks, 'current', true));
 		});
-		Mousetrap.bind('ctrl+s', () => {
+		Mousetrap.bind('ctrl+command+down', () => {
 			const completeIndex = _.findIndex(this.tasks, 'complete', true);
 			const currentIndex = _.findIndex(this.tasks, 'current', true);
 
@@ -129,7 +129,7 @@ export default {
 
 			return this.sortTasks(currentIndex, currentIndex + 1);
 		});
-		Mousetrap.bind('ctrl+w', () => {
+		Mousetrap.bind('ctrl+command+up', () => {
 			const completeIndex = _.findIndex(this.tasks, 'complete', true);
 			const currentIndex = _.findIndex(this.tasks, 'current', true);
 

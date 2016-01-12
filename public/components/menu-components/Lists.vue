@@ -97,14 +97,14 @@ export default {
 		Mousetrap.bind('alt+r', () => {
 			return this.renameToggle(_.findIndex(this.lists, 'current', true));
 		});
-		Mousetrap.bind('alt+s', () => {
+		Mousetrap.bind('alt+command+down', () => {
 			const currentIndex = _.findIndex(this.lists, 'current', true);
 
 			if (currentIndex === this.lists.length) return;
 
 			return this.sortLists(currentIndex, currentIndex + 1);
 		});
-		Mousetrap.bind('alt+w', () => {
+		Mousetrap.bind('alt+command+up', () => {
 			const currentIndex = _.findIndex(this.lists, 'current', true);
 
 			if (currentIndex === 0) return;
