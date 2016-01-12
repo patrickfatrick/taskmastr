@@ -101,7 +101,7 @@ export default {
 						_.set(item, 'id', item.agendaID);
 						delete item.agendaID;
 					}
-					if(!item.hasOwnProperty('agendaID') || !item.hasOwnProperty('id')) {
+					if(!item.hasOwnProperty('agendaID') && !item.hasOwnProperty('id')) {
 						_.set(item, 'id', hat());
 					}
 					if (!item.hasOwnProperty('dueDate')) {
@@ -159,7 +159,7 @@ export default {
 						_.set(item, 'id', item.agendaID);
 						delete item.agendaID;
 					}
-					if(!item.hasOwnProperty('agendaID') || !item.hasOwnProperty('id')) {
+					if(!item.hasOwnProperty('agendaID') && !item.hasOwnProperty('id')) {
 						_.set(item, 'id', hat());
 					}
 					if (!item.hasOwnProperty('dueDate')) {
