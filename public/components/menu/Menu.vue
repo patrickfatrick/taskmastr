@@ -1,6 +1,6 @@
 <template>
 	<div id="menu" v-bind:class="{'toggled': menuToggled}">
-		<a href="https://patrickfatrick.gitbooks.io/taskmastr/content/index.html" target="_blank">
+		<a href="{{wiki}}" target="_blank">
 		<i id="wiki" class="fa fa-map-o"></i>
 		</a>
 		<darkmode></darkmode>
@@ -23,6 +23,9 @@ export default {
 	computed: {
 		menuToggled () {
 			return store.state.menuToggled;
+		},
+		wiki () {
+			return store.state.wiki;
 		}
 	},
 	components: {

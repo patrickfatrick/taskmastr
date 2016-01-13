@@ -21,6 +21,7 @@ export default new Vuex.Store({
 			tasks: [],
 			current: {}
 		},
+		wiki: '//patrickfatrick.gitbooks.io/taskmastr/content/',
 		init: false,
 		auth: false,
 		forgot: false,
