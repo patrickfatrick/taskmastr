@@ -105,12 +105,14 @@ export default {
 		// Keyboard bindings
 		Mousetrap.bind('up', (e) => {
 			e.preventDefault();
-			let index = (_.findIndex(this.tasks, 'current', true) === 0) ? 0 : _.findIndex(this.tasks, 'current', true) - 1; 
+			let index = _.findIndex(this.tasks, 'current', true);
+			index = (index === 0) ? 0 : index - 1; 
 			return this.setCurrentTask(index);
 		});
 		Mousetrap.bind('down', (e) => {
 			e.preventDefault();
-			let index = (_.findIndex(this.tasks, 'current', true) == this.tasks.length - 1) ? this.tasks.length - 1 : _.findIndex(this.tasks, 'current', true) + 1;
+			let index = _.findIndex(this.tasks, 'current', true);
+			index =  (index === this.tasks.length - 1) ? this.tasks.length - 1 : index + 1;
 			return this.setCurrentTask(index);
 		});
 		Mousetrap.bind('ctrl+backspace', () => {
