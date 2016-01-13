@@ -23,6 +23,9 @@ body {
 		background-position: top;
 		color: $white;
 	}
+	.view {
+		@extend html;
+	}
 }
 
 input[type='text'],

@@ -54,6 +54,7 @@
     "pikaday": "^1.4.0",
     "serve-favicon": "~2.3.0",
     "vue": "^1.0.13",
+    "vue-router": "^0.7.8",
     "vuex": "^0.2.0",
     "whatwg-fetch": "^0.10.1"
   },

@@ -9,7 +9,7 @@
 
 import hat from 'hat';
 import Mousetrap from 'mousetrap';
-import store from '../../store/store';
+import store from '../../../store/store';
 
 export default {
 	data () {
@@ -39,7 +39,7 @@ export default {
 			store.actions.addList({
 				list: list,
 				items: [],
-				current: true,
+				current: false,
 				delete: false,
 				id: hat()
 			});

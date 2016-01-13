@@ -1,7 +1,8 @@
 <template>
-	<form id="user-form" name="userForm" action="/users/login" novalidate v-if="!forgot && !create && !reset" v-on:submit.prevent="loginUser(user.username, user.key, rememberMe, isValid)">
+	<form id="create-form" name="createForm" action="/users/create" novalidate v-if="create && !forgot" v-on:submit.prevent="createUser(user.username.trim(), user.confirm, rememberMe, isValid)">
 		<username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
 		<key-input :require="validate.passwordRequired"></key-input>
+		<confirm-input :match="validate.confirmMatch"></confirm-input>
 		<remember-me></remember-me>
 		<forgot-password></forgot-password>
 	</form>
@@ -9,9 +10,10 @@
 
 <script>
 
-import store from '../store/store';
+import store from '../../store/store';
 import UsernameInput from './form-components/UsernameInput.vue';
 import KeyInput from './form-components/KeyInput.vue';
+import ConfirmInput from './form-components/ConfirmInput.vue';
 import RememberMe from './form-components/RememberMe.vue';
 import ForgotPassword from './form-components/ForgotPassword.vue';
 
@@ -21,30 +23,29 @@ export default {
 	components: {
 		UsernameInput,
 		KeyInput,
+		ConfirmInput,
 		RememberMe,
 		ForgotPassword
 	},
 	computed: {
+		auth () {
+			return store.state.auth;
+		},
 		user () {
 			return store.state.user;
-		},
-		reset () {
-			return store.state.reset;
-		},
-		forgot () {
-			return store.state.forgot;
-		},
-		create () {
-			return store.state.create;
 		},
 		rememberMe () {
 			return store.state.rememberMe;
 		},
+		create () {
+			return store.state.create;
+		},
 		validate () {
 			return {
-				usernameEmail: emailRE.test(this.user.username),
+				usernameEmail: emailRE.test(this.user.username.trim()),
 				usernameRequired: !!this.user.username.trim(),
-				passwordRequired: !!this.user.key.trim()
+				passwordRequired: !!this.user.key.trim(),
+				confirmMatch: this.user.confirm.trim() === this.user.key.trim()
 			};
 		},
 		isValid () {
@@ -55,7 +56,18 @@ export default {
 		}
 	},
 	methods: {
-		loginUser: store.actions.loginUser
+		save: store.actions.save,
+		createUser (username, key, rememberMe, isValid) {
+			store.actions.createUser(username, key, rememberMe, isValid)
+			.then (() => {
+				this.save();
+				if (this.auth) {
+					setTimeout(() => {
+						this.$route.router.go('/app');
+					}, 750);
+				}
+			});
+		}
 	}
 };
 

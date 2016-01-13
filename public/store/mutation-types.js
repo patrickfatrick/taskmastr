@@ -1,4 +1,5 @@
 export const SET_INIT = 'SET_INIT';
+export const SET_AUTH = 'SET_AUTH';
 export const TOGGLE_CHECKBOX = 'TOGGLE_CHECKBOX';
 export const SET_USERNAME = 'SET_USERNAME';
 export const SET_KEY = 'SET_KEY';

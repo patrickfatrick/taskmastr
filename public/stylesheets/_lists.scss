@@ -126,6 +126,11 @@ table {
 		display: table !important;
 		position: relative;
 		margin-top: 1rem;
+		// fixes for safari
+		float: none !important;
+		&:last-child {
+			margin-right: auto !important;
+		}
 		@include fill-parent;
 		@include media(min-width $medium) {
 			@include span-columns(8 of 14);

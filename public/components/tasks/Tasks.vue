@@ -13,11 +13,11 @@
 
 <script>
 
-import store from '../store/store';
-import MenuToggle from './content-components/MenuToggle.vue';
-import TaskInput from './content-components/TaskInput.vue';
-import Items from './content-components/Items.vue';
-import Save from './content-components/Save.vue';
+import store from '../../store/store';
+import MenuToggle from '../misc/MenuToggle.vue';
+import TaskInput from './task-components/TaskInput.vue';
+import Items from './task-components/Items.vue';
+import Save from '../misc/Save.vue';
 
 export default {
 	computed: {

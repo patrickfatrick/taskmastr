@@ -1,12 +1,7 @@
 import _ from 'lodash';
 import hat from 'hat';
 import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services';
-
-const defaultList = {
-	list: 'List 1',
-	current: true,
-	items: []
-};
+import defaultList from './default-list';
 
 let timeoutID;
 
@@ -15,6 +10,7 @@ export default {
 	 * User Actions
 	 */
 	setInit: 'SET_INIT',
+	setAuth: 'SET_AUTH',
 	toggleCheckbox: 'TOGGLE_CHECKBOX',
 	setUsername: 'SET_USERNAME',
 	setKey: 'SET_KEY',
@@ -75,12 +71,13 @@ export default {
 			store.dispatch('SET_TASKS', tasks);
 			let current = _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) ? _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) : 0;
 			store.dispatch('SET_CURRENT_LIST', current);
-			return;
+			store.dispatch('SET_AUTH', response.username);
+			return response.username;
 		});
 	},
 	loginUser: (store, username, key, rememberMe, isValid) => {
 		if (!isValid) return;
-		login(username, key, rememberMe)
+		return login(username, key, rememberMe)
 		.then(response => {
 			if (response.error) {
 				if (response.error === 204) return store.dispatch('SET_CREATE');
@@ -115,19 +112,21 @@ export default {
 			store.dispatch('SET_TASKS', tasks);
 			let current = _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) ? _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) : 0;
 			store.dispatch('SET_CURRENT_LIST', current);
-			return;
+			store.dispatch('SET_AUTH', response.username);
+			return response.username;
 		});
 	},
 	createUser: (store, username, key, rememberMe, isValid) => {
 		if (!isValid) return;
-		create(username, key, rememberMe)
+		return create(username, key, rememberMe)
 		.then(() => {
 			store.dispatch('SET_KEY', '');
 			store.dispatch('SET_CONFIRM', '');
 			store.dispatch('SET_DARKMODE', true);
 			store.dispatch('SET_TASKS', [defaultList]);
 			store.dispatch('SET_CURRENT_LIST', 0);
-			return;
+			store.dispatch('SET_AUTH', username);
+			return username;
 		});
 	},
 	forgotPassword: (store, username, isValid) => {
@@ -139,46 +138,19 @@ export default {
 	},
 	resetPassword: (store, token, key, isValid) => {
 		if (!isValid) return;
-		reset(token, key)
+		return reset(token, key)
 		.then(response => {
 			if (response.error) {
 				if (response.error === 401) return store.dispatch('SET_RESET_FAIL', response.msg);
 			}
-			let tasks = response.tasks || response.todos;
-			_.each(tasks, list => {
-				if (list.hasOwnProperty('agendaID')) {
-					_.set(list, 'id', list.agendaID);
-					delete list.agendaID;
-				}
-				if(!list.hasOwnProperty('agendaID') || !list.hasOwnProperty('id')) {
-					_.set(list, 'id', hat());
-				}
-				_.each(list.items, item => {	
-					_.set(item, 'delete', false);
-					if (item.hasOwnProperty('agendaID')) {
-						_.set(item, 'id', item.agendaID);
-						delete item.agendaID;
-					}
-					if(!item.hasOwnProperty('agendaID') && !item.hasOwnProperty('id')) {
-						_.set(item, 'id', hat());
-					}
-					if (!item.hasOwnProperty('dueDate')) {
-						_.set(item, 'dueDate', undefined);
-					}
-				});
-			});
-			store.dispatch('SET_USERNAME', response.username);
-			store.dispatch('SET_KEY', '');
-			store.dispatch('SET_DARKMODE', response.darkmode);
-			store.dispatch('SET_TASKS', tasks);
-			let current = _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) ? _.findIndex(store.state.user.tasks, _.matchesProperty('current', true)) : 0;
-			store.dispatch('SET_CURRENT_LIST', current);
-			return;
+			return response.username;
 		});
 	},
 	logout: () => {
 		return logout()
 		.then(() => {
+			//document.cookie = 'connect.sid=; expires=-1';
+			//store.dispatch('SET_AUTH', false);
 			window.location.href = '/';
 		});
 	},

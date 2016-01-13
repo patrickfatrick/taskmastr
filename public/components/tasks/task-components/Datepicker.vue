@@ -10,7 +10,7 @@
 import Mousetrap from 'mousetrap';
 import Pikaday from 'pikaday';
 import gregorian from 'gregorian';
-import store from '../../store/store';
+import store from '../../../store/store';
 
 export default {
 	data () {

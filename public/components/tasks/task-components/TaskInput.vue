@@ -12,7 +12,7 @@ import hat from 'hat';
 import Mousetrap from 'mousetrap';
 import gregorian from 'gregorian';
 import date from 'date.js';
-import store from '../../store/store';
+import store from '../../../store/store';
 
 export default {
 	data () {
@@ -67,7 +67,7 @@ export default {
 						task = task.extractDate().item;
 						break;
 					default:
-						dueDate = task.extractDate().dueDate;
+						dueDate = gregorian.reform(task.extractDate().dueDate).restart('d').set(6, 'h').to('iso');
 						task = task.extractDate().item;
 						break;
 				}

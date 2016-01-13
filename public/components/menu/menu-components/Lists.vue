@@ -9,7 +9,7 @@
 		<tbody v-el:dragula>
 			<tr v-for="list in lists" v-bind:class="{'deleting': list.delete, 'current': current.list === list.list}" name="list{{$index + 1}}" transition="item">
 				<th></th>
-				<td class="todo-cell" v-on:click="setCurrentList($index)">
+				<td class="task-cell" v-on:click="setCurrentList($index)">
 					<input class="rename" type="text" v-model="list.list" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)" v-on:change="setSaveButton(true)"></input>
 					<span class="name" v-show="renameToggled !== $index" v-on:dblclick="renameToggle($index)">{{list.list}}</span>
 				</td>
@@ -27,7 +27,7 @@
 import _ from 'lodash';
 import dragula from 'dragula';
 import Mousetrap from 'mousetrap';
-import store from '../../store/store';
+import store from '../../../store/store';
 
 export default {
 	data () {
@@ -86,15 +86,17 @@ export default {
 
 		// Keyboard bindings
 		Mousetrap.bind('alt+up', () => {
-			return this.setCurrentList(_.findIndex(this.lists, 'current', true) - 1);
+			let index = (_.findIndex(this.lists, 'current', true) === 0) ? 0 : _.findIndex(this.lists, 'current', true) - 1;
+			return this.setCurrentList(index);
 		});
 		Mousetrap.bind('alt+down', () => {
-			return this.setCurrentList(_.findIndex(this.lists, 'current', true) + 1);
+			let index = (_.findIndex(this.lists, 'current', true) === this.lists.length - 1) ? this.lists.length - 1 : _.findIndex(this.lists, 'current', true) + 1;
+			return this.setCurrentList(index);
 		});
 		Mousetrap.bind('alt+backspace', () => {
 			return this.deleteList(_.findIndex(this.lists, 'current', true));
 		});
-		Mousetrap.bind('alt+r', () => {
+		Mousetrap.bind('alt+/', () => {
 			return this.renameToggle(_.findIndex(this.lists, 'current', true));
 		});
 		Mousetrap.bind('alt+command+down', () => {

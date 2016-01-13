@@ -1,5 +1,5 @@
 <template>
-	<form id="reset-form" name="resetForm" action="/users/reset" novalidate v-if="reset" v-on:submit.prevent="resetPassword(resetToken, user.resetKey, isValid)">
+	<form id="reset-form" name="resetForm" action="/users/reset" novalidate v-on:submit.prevent="resetPassword(resetToken, user.resetKey, isValid)">
 		<reset-key-input :require="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
 		<reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
 	</form>
@@ -7,7 +7,7 @@
 
 <script>
 
-import store from '../store/store';
+import store from '../../store/store';
 import ResetKeyInput from './form-components/ResetKeyInput.vue';
 import ResetConfirmInput from './form-components/ResetConfirmInput.vue';
 
@@ -17,6 +17,9 @@ export default {
 		ResetConfirmInput
 	},
 	computed: {
+		auth () {
+			return store.state.auth;
+		},
 		user () {
 			return store.state.user;
 		},
@@ -41,7 +44,21 @@ export default {
 		}
 	},
 	methods: {
-		resetPassword: store.actions.resetPassword
+		loginUser: store.actions.loginUser,
+		resetPassword (resetToken, resetKey, isValid) {
+			store.actions.resetPassword(resetToken, resetKey, isValid)
+			.then ((response) => {
+				if (!response) return false;
+				return this.loginUser(response, resetKey, false, isValid);
+			})
+			.then(() => {
+				if (this.auth) {
+					setTimeout(() => {
+						this.$route.router.go('/app');
+					}, 750);
+				}
+			});
+		}
 	}
 };
 

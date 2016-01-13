@@ -36,13 +36,11 @@ export var extractDate = function () {
 		let dueDate = gregorian.reform(this.slice(keyword, this.length));
 		let item;
 		dueDate = (dueDate.reagent()) ? dueDate.recite() : date(this.slice(keyword, this.length));
-		if (Date.parse(dueDate) <= gregorian.reform(dueDate).restart('d').recite()) {
-			dueDate = gregorian.reform(dueDate).add(1, 'y').recite();
-			item = this.slice(0, 1).toUpperCase() + this.slice(1, keyword);
-		} else {
-			item = this.slice(0, 1).toUpperCase() + this.slice(1, keyword);
-		}
-		return {item: item, dueDate: gregorian.reform(dueDate).to('yyyy-mm-dd')};
+		// if (dueDate <= gregorian.reform(dueDate).restart('d').recite()) {
+		// 	dueDate = gregorian.reform(dueDate).add(1, 'y').recite();
+		// }
+		item = this.slice(0, 1).toUpperCase() + this.slice(1, keyword);
+		return {item: item, dueDate: gregorian.reform(dueDate).to('iso')};
 	};
 };
 

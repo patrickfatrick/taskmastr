@@ -22,6 +22,7 @@ export default new Vuex.Store({
 			current: {}
 		},
 		init: false,
+		auth: false,
 		forgot: false,
 		create: false,
 		reset: false,

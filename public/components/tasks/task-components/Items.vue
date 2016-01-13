@@ -34,7 +34,7 @@
 import _ from 'lodash';
 import dragula from 'dragula';
 import Mousetrap from 'mousetrap';
-import store from '../../store/store';
+import store from '../../../store/store';
 import Datepicker from './Datepicker.vue';
 
 export default {
@@ -103,11 +103,15 @@ export default {
 		this._drop(this.drake);
 
 		// Keyboard bindings
-		Mousetrap.bind('up', () => {
-			return this.setCurrentTask(_.findIndex(this.tasks, 'current', true) - 1);
+		Mousetrap.bind('up', (e) => {
+			e.preventDefault();
+			let index = (_.findIndex(this.tasks, 'current', true) === 0) ? 0 : _.findIndex(this.tasks, 'current', true) - 1; 
+			return this.setCurrentTask(index);
 		});
-		Mousetrap.bind('down', () => {
-			return this.setCurrentTask(_.findIndex(this.tasks, 'current', true) + 1);
+		Mousetrap.bind('down', (e) => {
+			e.preventDefault();
+			let index = (_.findIndex(this.tasks, 'current', true) == this.tasks.length - 1) ? this.tasks.length - 1 : _.findIndex(this.tasks, 'current', true) + 1;
+			return this.setCurrentTask(index);
 		});
 		Mousetrap.bind('ctrl+backspace', () => {
 			return this.deleteTask(_.findIndex(this.tasks, 'current', true));
@@ -115,7 +119,7 @@ export default {
 		Mousetrap.bind('ctrl+c', () => {
 			return this.completeTask(_.findIndex(this.tasks, 'current', true), !(_.find(this.tasks, 'current', true).complete));
 		});
-		Mousetrap.bind('ctrl+r', () => {
+		Mousetrap.bind('ctrl+/', () => {
 			return this.renameToggle(_.findIndex(this.tasks, 'current', true));
 		});
 		Mousetrap.bind('ctrl+command+down', () => {

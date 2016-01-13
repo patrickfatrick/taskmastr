@@ -1,6 +1,6 @@
 <template>
 	<div id="menu" v-bind:class="{'toggled': menuToggled}">
-		<a href="https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home" target="_blank">
+		<a href="https://patrickfatrick.gitbooks.io/taskmastr/content/index.html" target="_blank">
 		<i id="wiki" class="fa fa-map-o"></i>
 		</a>
 		<darkmode></darkmode>
@@ -13,11 +13,11 @@
 
 <script>
 
-import store from '../store/store';
+import store from '../../store/store';
 import Darkmode from './menu-components/Darkmode.vue';
 import ListInput from './menu-components/ListInput.vue';
 import Lists from './menu-components/Lists.vue';
-import Logout from './menu-components/Logout.vue';
+import Logout from '../misc/Logout.vue';
 
 export default {
 	computed: {

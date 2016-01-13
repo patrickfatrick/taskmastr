@@ -115,9 +115,7 @@ router.post('/reset',
 			//console.log(user);
 			if (!user) return res.sendStatus(401);
 			return res.send({
-				username: user.username,
-				darkmode: user.darkmode,
-				tasks: user.tasks
+				username: user.username
 			});
 		});
 	}

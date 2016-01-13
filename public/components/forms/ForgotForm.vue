@@ -7,7 +7,7 @@
 
 <script>
 
-import store from '../store/store';
+import store from '../../store/store';
 import UsernameInput from './form-components/UsernameInput.vue';
 import ForgotPassword from './form-components/ForgotPassword.vue';
 
