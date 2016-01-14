@@ -6,7 +6,7 @@
 				<h1 id="headline">Taskmastr</h1>
 			</div>
 			<div id="key-ask" class="modal-body">
-				<div class="reset-greeting" v-if="reset">
+				<div class="reset-greeting">
 					<p>Go ahead and create your new password below</p>
 				</div>
 				<reset-form></reset-form>
