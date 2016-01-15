@@ -24,14 +24,8 @@ import Tips from './forms/form-components/Tips.vue';
 
 export default {
 	computed: {
-		datepickerShown() {
-			return store.state.datepickerShown;
-		},
 		user () {
 			return store.state.user;
-		},
-		reset () {
-			return store.state.reset;
 		},
 		init () {
 			return store.state.init;
@@ -47,6 +41,10 @@ export default {
 	methods: {
 		setReset: store.actions.setReset,
 		setResetToken: store.actions.setResetToken
+	},
+	ready () {
+		if (this.$route.query.token) this.setResetToken(this.$route.query.token);
+		if (this.$route.path.indexOf('/reset') === 0) return this.setReset(true);
 	}
 };
 

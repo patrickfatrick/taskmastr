@@ -14,10 +14,18 @@ export default {
 	computed: {
 		forgot () {
 			return store.state.forgot;
+		},
+		create () {
+			return store.state.create;
 		}
 	},
 	methods: {
-		toggleCheckbox: store.actions.toggleCheckbox
+		toggleCheckbox (forgot) {
+			store.actions.toggleCheckbox(forgot);
+			if (!this.forgot && this.create) return this.$route.router.go('/create');
+			if (!this.forgot) return this.$route.router.go('/login');
+			return this.$route.router.go('/forgot');
+		}
 	}
 };
 

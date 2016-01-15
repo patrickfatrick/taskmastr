@@ -7,9 +7,10 @@
 			</div>
 			<div id="key-ask" class="modal-body">
 				<div class="greeting">
-					<p>Confirm your password to create a new account.</p>
+					<p>Forgot your password?</p>
+					<p>Fill in your email address and we'll send you a reset link.</p>
 				</div>
-				<create-form></create-form>
+				<forgot-form></forgot-form>
 				<tips></tips>
 			</div>
 		</div>
@@ -19,7 +20,7 @@
 <script>
 
 import store from '../store/store';
-import CreateForm from './forms/CreateForm.vue';
+import ForgotForm from './forms/ForgotForm.vue';
 import Tips from './forms/form-components/Tips.vue';
 
 export default {
@@ -27,16 +28,28 @@ export default {
 		user () {
 			return store.state.user;
 		},
+		reset () {
+			return store.state.reset;
+		},
 		init () {
 			return store.state.init;
 		},
 		auth () {
 			return store.state.auth;
+		},
+		forgot () {
+			return store.state.forgot;
 		}
 	},
 	components: {
-		CreateForm,
+		ForgotForm,
 		Tips
+	},
+	methods: {
+		toggleCheckbox: store.actions.toggleCheckbox
+	},
+	ready () {
+		if (this.$route.path === '/forgot' && !this.forgot) return this.toggleCheckbox('forgot');
 	}
 };
 

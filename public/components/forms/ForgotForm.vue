@@ -1,5 +1,5 @@
 <template>
-	<form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate v-if="forgot" v-on:submit.prevent="forgotPassword(user.username, isValid)">
+	<form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate v-if="$route.path === '/forgot'" v-on:submit.prevent="forgotPassword(user.username, isValid)">
 		<username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
 		<forgot-password></forgot-password>
 	</form>

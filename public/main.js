@@ -5,7 +5,12 @@ import LoginVue from './components/LoginVue.vue';
 import ContentVue from './components/ContentVue.vue';
 import ResetVue from './components/ResetVue.vue';
 import CreateVue from './components/CreateVue.vue';
+import ForgotVue from './components/ForgotVue.vue';
 import store from './store/store';
+import {extractDate, getUrlVar} from './store/prototypes';
+
+extractDate();
+getUrlVar();
 
 // Debug mode. Turned off in production builds
 Vue.config.debug = process.env.NODE_ENV !== 'production';
@@ -38,6 +43,10 @@ router.map({
 	'/create': {
 		name: 'Create',
 		component: CreateVue
+	},
+	'/forgot': {
+		name: 'Forgot',
+		component: ForgotVue
 	}
 });
 
