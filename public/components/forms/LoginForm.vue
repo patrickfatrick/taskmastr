@@ -1,5 +1,5 @@
 <template>
-	<form id="user-form" name="userForm" action="/users/login" novalidate v-if="!forgot && !create && !reset" v-on:submit.prevent="loginUser(user.username, user.key, rememberMe, isValid)">
+	<form id="user-form" name="userForm" action="/users/login" novalidate v-if="!forgot && ($route.path !== '/create' || $route.path !== '/reset')" v-on:submit.prevent="loginUser(user.username, user.key, rememberMe, isValid)">
 		<username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
 		<key-input :require="validate.passwordRequired"></key-input>
 		<remember-me></remember-me>
@@ -66,6 +66,10 @@ export default {
 						this.$route.router.go('/app');
 					}, 750);
 				}
+				if (this.create) {
+					this.$route.router.go('/create');
+				}
+				return;
 			});
 		}
 	}

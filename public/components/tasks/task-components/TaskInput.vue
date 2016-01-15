@@ -77,7 +77,7 @@ export default {
 			store.actions.addTask({
 				item: task,
 				complete: false,
-				current: !(_.find(this.user.current.items, _.matchesProperty('current', true))),
+				current: !(_.find(this.user.current.items, {current: true})),
 				dueDate: dueDate,
 				delete: false,
 				id: hat()

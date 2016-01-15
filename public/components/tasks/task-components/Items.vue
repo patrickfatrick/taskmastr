@@ -82,7 +82,7 @@ export default {
 				let oldIndex = this.dragStart;
 				let newIndex = this._index(el);
 				// Revert if trying to move complete task into incomplete list and vice versa
-				let completeIndex = _.findIndex(this.tasks, 'complete', true);
+				let completeIndex = _.findIndex(this.tasks, {complete: true});
 				if (completeIndex !== -1) {
 					if (this.tasks[oldIndex].complete && newIndex < completeIndex) return this.drake.cancel();
 					if (!this.tasks[oldIndex].complete && newIndex >= completeIndex) return this.drake.cancel();
@@ -105,28 +105,28 @@ export default {
 		// Keyboard bindings
 		Mousetrap.bind('up', (e) => {
 			e.preventDefault();
-			let index = _.findIndex(this.tasks, 'current', true);
+			let index = _.findIndex(this.tasks, {current: true});
 			index = (index === 0) ? 0 : index - 1; 
 			return this.setCurrentTask(index);
 		});
 		Mousetrap.bind('down', (e) => {
 			e.preventDefault();
-			let index = _.findIndex(this.tasks, 'current', true);
+			let index = _.findIndex(this.tasks, {current: true});
 			index =  (index === this.tasks.length - 1) ? this.tasks.length - 1 : index + 1;
 			return this.setCurrentTask(index);
 		});
 		Mousetrap.bind('ctrl+backspace', () => {
-			return this.deleteTask(_.findIndex(this.tasks, 'current', true));
+			return this.deleteTask(_.findIndex(this.tasks, {current: true}));
 		});
 		Mousetrap.bind('ctrl+c', () => {
-			return this.completeTask(_.findIndex(this.tasks, 'current', true), !(_.find(this.tasks, 'current', true).complete));
+			return this.completeTask(_.findIndex(this.tasks, {current: true}), !(_.find(this.tasks, {current: true}).complete));
 		});
 		Mousetrap.bind('ctrl+/', () => {
-			return this.renameToggle(_.findIndex(this.tasks, 'current', true));
+			return this.renameToggle(_.findIndex(this.tasks, {current: true}));
 		});
 		Mousetrap.bind('ctrl+command+down', () => {
-			const completeIndex = _.findIndex(this.tasks, 'complete', true);
-			const currentIndex = _.findIndex(this.tasks, 'current', true);
+			const completeIndex = _.findIndex(this.tasks, {complete: true});
+			const currentIndex = _.findIndex(this.tasks, {current: true});
 
 			if (completeIndex !== -1) {
 				if (!this.tasks[currentIndex].complete && currentIndex === completeIndex - 1) return;
@@ -136,8 +136,8 @@ export default {
 			return this.sortTasks(currentIndex, currentIndex + 1);
 		});
 		Mousetrap.bind('ctrl+command+up', () => {
-			const completeIndex = _.findIndex(this.tasks, 'complete', true);
-			const currentIndex = _.findIndex(this.tasks, 'current', true);
+			const completeIndex = _.findIndex(this.tasks, {complete: true});
+			const currentIndex = _.findIndex(this.tasks, {current: true});
 
 			if (completeIndex !== -1) {
 				if (this.tasks[currentIndex].complete && currentIndex === completeIndex) return;

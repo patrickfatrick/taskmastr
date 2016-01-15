@@ -4,6 +4,7 @@ import App from './App.vue';
 import LoginVue from './components/LoginVue.vue';
 import ContentVue from './components/ContentVue.vue';
 import ResetVue from './components/ResetVue.vue';
+import CreateVue from './components/CreateVue.vue';
 import store from './store/store';
 
 // Debug mode. Turned off in production builds
@@ -33,6 +34,10 @@ router.map({
 	'/reset': {
 		name: 'Reset',
 		component: ResetVue
+	},
+	'/create': {
+		name: 'Create',
+		component: CreateVue
 	}
 });
 

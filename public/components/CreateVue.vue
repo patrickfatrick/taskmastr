@@ -10,8 +10,7 @@
 					<p>Do you have an account?</p>
 					<p>If so, log in now, or create one below!</p>
 				</div>
-				<login-form></login-form>
-				<forgot-form></forgot-form>
+				<create-form></create-form>
 				<tips></tips>
 			</div>
 		</div>
@@ -21,8 +20,7 @@
 <script>
 
 import store from '../store/store';
-import LoginForm from './forms/LoginForm.vue';
-import ForgotForm from './forms/ForgotForm.vue';
+import CreateForm from './forms/CreateForm.vue';
 import Tips from './forms/form-components/Tips.vue';
 
 export default {
@@ -44,8 +42,7 @@ export default {
 		}
 	},
 	components: {
-		LoginForm,
-		ForgotForm,
+		CreateForm,
 		Tips
 	}
 };

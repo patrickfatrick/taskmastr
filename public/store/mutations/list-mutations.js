@@ -3,7 +3,7 @@ import {SET_CURRENT_LIST, SET_MENU_TOGGLED, ADD_LIST, REMOVE_LIST, SET_NEW_LIST,
 
 export const listMutations = {
 	[SET_CURRENT_LIST] (state, index) {
-		_.set(_.find(state.user.tasks, 'current', true), 'current', false);
+		_.set(_.find(state.user.tasks, {current: true}), 'current', false);
 		state.user.tasks[index].current = true;
 		return state.user.current = state.user.tasks[index];
 	},

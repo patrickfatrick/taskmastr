@@ -3,7 +3,7 @@ import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_TASK_COMPLETE
 
 export const taskMutations = {
 	[SET_CURRENT_TASK] (state, index) {
-		_.set(_.find(state.user.current.items, 'current', true), 'current', false);
+		_.set(_.find(state.user.current.items, {current: true}), 'current', false);
 		return state.user.current.items[index].current = true;
 	},
 	[ADD_TASK] (state, task) {
