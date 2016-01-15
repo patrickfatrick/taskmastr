@@ -79,6 +79,7 @@ export default {
 				complete: false,
 				current: !(_.find(this.user.current.items, {current: true})),
 				dueDate: dueDate,
+				dateCreated: gregorian.reform(new Date()).to('iso'),
 				delete: false,
 				id: hat()
 			});

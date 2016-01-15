@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import hat from 'hat';
+import gregorian from 'gregorian';
 import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services';
 import defaultList from './default-list';
 
@@ -63,6 +64,9 @@ export default {
 					if (!item.hasOwnProperty('dueDate')) {
 						_.set(item, 'dueDate', '');
 					}
+					if (!item.hasOwnProperty('dateCreated')) {
+						_.set(item, 'dateCreated', gregorian.reform(new Date()).to('iso'));
+					}
 				});
 			});
 			store.dispatch('SET_USERNAME', response.username);
@@ -103,6 +107,9 @@ export default {
 					}
 					if (!item.hasOwnProperty('dueDate')) {
 						_.set(item, 'dueDate', '');
+					}
+					if (!item.hasOwnProperty('dateCreated')) {
+						_.set(item, 'dateCreated', gregorian.reform(new Date()).to('iso'));
 					}
 				});
 			});

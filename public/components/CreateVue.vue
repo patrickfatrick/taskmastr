@@ -11,6 +11,7 @@
 					<p>If so, log in now, or create one below!</p>
 				</div>
 				<create-form></create-form>
+				<forgot-form></forgot-form>
 				<tips></tips>
 			</div>
 		</div>
@@ -21,6 +22,7 @@
 
 import store from '../store/store';
 import CreateForm from './forms/CreateForm.vue';
+import ForgotForm from './forms/ForgotForm.vue';
 import Tips from './forms/form-components/Tips.vue';
 
 export default {
@@ -43,6 +45,7 @@ export default {
 	},
 	components: {
 		CreateForm,
+		ForgotForm,
 		Tips
 	}
 };

@@ -1,5 +1,5 @@
 <template>
-	<form id="create-form" name="createForm" action="/users/create" novalidate v-on:submit.prevent="createUser(user.username.trim(), user.confirm, rememberMe, isValid)">
+	<form id="create-form" name="createForm" v-if="!forgot && ($route.path === '/create')" action="/users/create" novalidate v-on:submit.prevent="createUser(user.username.trim(), user.confirm, rememberMe, isValid)">
 		<username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
 		<key-input :require="validate.passwordRequired"></key-input>
 		<confirm-input :match="validate.confirmMatch"></confirm-input>
@@ -33,6 +33,9 @@ export default {
 		},
 		user () {
 			return store.state.user;
+		},
+		forgot () {
+			return store.state.forgot;
 		},
 		rememberMe () {
 			return store.state.rememberMe;
