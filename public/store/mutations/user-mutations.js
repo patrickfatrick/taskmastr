@@ -1,64 +1,66 @@
+import _ from 'lodash'
 import {SET_INIT, SET_AUTH, TOGGLE_CHECKBOX, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_CONFIRM_ATTEMPT, SET_RESET, SET_RESET_ATTEMPT, SET_RESET_TOKEN, SET_RESET_FAIL, SET_SAVE_BUTTON} from '../mutation-types'
 
 export const userMutations = {
   [SET_INIT] (state, bool) {
-    state.init = bool
+    _.set(state, 'init', bool)
   },
   [SET_AUTH] (state, val) {
-    state.auth = val
+    _.set(state, 'auth', val)
   },
   [TOGGLE_CHECKBOX] (state, checkbox) {
-    state[checkbox] = !state[checkbox]
+    // state[checkbox] = !state[checkbox]
+    _.set(state, [checkbox], !state[checkbox])
   },
   [SET_USERNAME] (state, username) {
-    state.user.username = username
+    _.set(state, 'user.username', username);
   },
   [SET_KEY] (state, key) {
-    state.user.key = key
+    _.set(state, 'user.key', key)
   },
   [SET_CONFIRM] (state, confirm) {
-    state.user.confirm = confirm
+    _.set(state, 'user.confirm', confirm)
   },
   [SET_DARKMODE] (state, bool) {
-    state.user.darkmode = bool
+    _.set(state, 'user.darkmode', bool)
   },
   [SET_TASKS] (state, tasks) {
-    state.user.tasks = tasks
+    _.set(state, 'user.tasks', tasks)
   },
   [SET_FORGOT] (state) {
-    state.forgot = !state.forgot
+    _.set(state, 'forgot', !state.forgot)
   },
   [SET_CREATE] (state) {
-    state.create = !state.create
+    _.set(state, 'create', !state.create)
   },
   [SET_INVALID_KEY] (state, msg) {
-    state.invalidKey = msg
+    _.set(state, 'invalidKey', msg)
   },
   [SET_LOGIN_ATTEMPT] (state, bool) {
-    state.loginAttempt = bool
+    _.set(state, 'loginAttempt', bool)
   },
   [SET_FORGOT_ATTEMPT] (state, bool) {
-    state.forgotAttempt = bool
+    _.set(state, 'forgotAttempt', bool)
   },
   [SET_FORGOT_EMAIL] (state, bool) {
-    state.forgotEmail = bool
+    _.set(state, 'forgotEmail', bool)
   },
   [SET_CONFIRM_ATTEMPT] (state, bool) {
-    state.confirmAttempt = bool
+    _.set(state, 'confirmAttempt', bool)
   },
   [SET_RESET] (state, bool) {
-    state.reset = bool
+    _.set(state, 'reset', bool)
   },
   [SET_RESET_ATTEMPT] (state, bool) {
-    state.resetAttempt = bool
+    _.set(state, 'resetAttempt', bool)
   },
   [SET_RESET_TOKEN] (state, val) {
-    state.resetToken = val
+    _.set(state, 'resetToken', val)
   },
   [SET_RESET_FAIL] (state, val) {
-    state.resetFail = val
+    _.set(state, 'resetFail', val)
   },
   [SET_SAVE_BUTTON] (state, bool) {
-    state.saveButton = bool
+    _.set(state, 'saveButton', bool)
   }
 }

@@ -4,11 +4,11 @@ import {SET_CURRENT_LIST, SET_MENU_TOGGLED, ADD_LIST, REMOVE_LIST, SET_NEW_LIST,
 export const listMutations = {
   [SET_CURRENT_LIST] (state, index) {
     _.set(_.find(state.user.tasks, {current: true}), 'current', false)
-    state.user.tasks[index].current = true
-    state.user.current = state.user.tasks[index]
+    _.set(state, 'user.tasks[' + index + '].current', true)
+    _.set(state, 'user.current', state.user.tasks[index])
   },
   [SET_MENU_TOGGLED] (state, bool) {
-    state.menuToggled = bool
+    _.set(state, 'menuToggled', bool)
   },
   [ADD_LIST] (state, list) {
     state.user.tasks.unshift(list)
@@ -17,10 +17,10 @@ export const listMutations = {
     state.user.tasks.splice(index, 1)
   },
   [SET_NEW_LIST] (state, list) {
-    state.newList = list
+    _.set(state, 'newList', list)
   },
   [SET_LIST_DELETE] (state, index, bool) {
-    state.user.tasks[index].delete = bool
+    _.set(state, 'user.tasks[' + index + '].delete', bool)
   },
   [SORT_LISTS] (state, oldIndex, newIndex) {
     let spliced = state.user.tasks.splice(oldIndex, 1)
