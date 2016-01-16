@@ -1,32 +1,39 @@
 <template>
-	<div id="tips-button" class="button" v-on:click="toggleTips">Tips:</div>
-	<ul class="fine-print" v-show="toggled" transition="fine-print">
-		<li>&rarr; The tips have been replaced with a wiki!</li>
-		<li>&rarr; Click the map <a href="{{wiki}}" target="_blank"><i class="fa fa-map-o"></i></a> to view it</li>
-		<li>&rarr; You can also access the wiki any time from the lists menu inside the app</li>
-	</ul>
+  <div id="tips-button" class="button" v-on:click="loginUser(testUser, testKey, false, true)">Try it</div>
 </template>
 
 <script>
 
-import store from '../../../store/store';
+import store from '../../../store/store'
 
 export default {
-	data () {
-		return {
-			toggled: false
-		};
-	},
-	computed: {
-		wiki () {
-			return store.state.wiki;
-		}
-	},
-	methods: {
-		toggleTips () {
-			return this.toggled = !this.toggled;
-		}
-	}
-};
+  data () {
+    return {
+      testUser: 'mrormrstestperson@taskmastr.co',
+      testKey: 'S41iVAtINGREsIdUE-278'
+    }
+  },
+  computed: {
+    wiki () {
+      return store.state.wiki
+    },
+    auth () {
+      return store.state.auth
+    }
+  },
+  methods: {
+    loginUser (username, key, rememberMe, isValid) {
+      store.actions.loginUser(username, key, rememberMe, isValid)
+      .then(() => {
+        if (this.auth) {
+          setTimeout(() => {
+            this.$route.router.go('/app')
+          }, 750)
+        }
+        return
+      })
+    }
+  }
+}
 
 </script>

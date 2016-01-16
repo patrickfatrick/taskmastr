@@ -21,7 +21,7 @@ agenda.define('Welcome Email', function (job, done) {
 		to: data.username,
 		from: 'taskmastr <do-not-reply@taskmastr.co>',
 		subject: 'Greetings from taskmastr',
-		text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + 'http://' + data.host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the taskmastr wiki if you have\'nt already! https://github.com/patrickfatrick/taskmastr/wiki\n'
+		text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + 'http://' + data.host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the taskmastr wiki if you have\'nt already! https://patrickfatrick.gitbooks.io/taskmastr/content/\n'
 	};
 	mailer.sendMail(email, function (err) {
 		if (err) return done(err);

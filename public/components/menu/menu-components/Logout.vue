@@ -1,27 +1,27 @@
 <template>
-	<div id="logout-container">
-		<div id="logout" v-on:click="logout">
-			<i id="power-off" class="fa fa-power-off"></i>
-			<label for="power-off">Log out</label>
-		</div>
-	</div>
+  <div id="logout-container">
+    <div id="logout" v-on:click="logout">
+      <i id="power-off" class="fa fa-power-off"></i>
+      <label for="power-off">Log out</label>
+    </div>
+  </div>
 </template>
 
 <script>
 
-import Mousetrap from 'mousetrap';
-import store from '../../../store/store';
+import Mousetrap from 'mousetrap'
+import store from '../../../store/store'
 
 export default {
-	methods: {
-		logout: store.actions.logout
-	},
-	ready () {
-		Mousetrap.bind('command+esc', (e) => {
-			e.preventDefault();
-			return this.logout();
-		});
-	}
-};
+  methods: {
+    logout: store.actions.logout
+  },
+  ready () {
+    Mousetrap.bind('command+esc', (e) => {
+      e.preventDefault()
+      return this.logout()
+    })
+  }
+}
 
 </script>

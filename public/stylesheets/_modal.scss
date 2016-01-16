@@ -71,20 +71,6 @@
 				}
 			}
 		}
-		.fine-print {
-			margin-top: 1rem;
-			font-size: 1rem;
-			line-height: 1.2rem;
-			&.fine-print-enter {
-				@include animation(slideInDown 500ms);
-			}
-			@include media(min-width $medium) {
-				font-size: 0.8rem;
-			}
-			i {
-				color: $deepBlue;
-			}
-		}
 		#key-button {
 			padding: 4px 6px 5px 7px;
 		}
