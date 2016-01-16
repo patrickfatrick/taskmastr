@@ -69,7 +69,6 @@ export default {
         if (this.create) {
           this.$route.router.go('/create')
         }
-        return
       })
     }
   }

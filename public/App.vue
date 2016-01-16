@@ -25,7 +25,7 @@ export default {
   ready () {
     store.actions.getSession()
     .then(() => {
-      if (this.auth) return this.$route.router.go('/app')
+      if (this.auth) this.$route.router.go('/app')
     })
   }
 }

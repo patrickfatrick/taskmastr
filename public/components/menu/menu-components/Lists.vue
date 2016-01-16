@@ -89,32 +89,32 @@ export default {
 
     // Keyboard bindings
     Mousetrap.bind('alt+up', () => {
-      let index = (_.findIndex(this.lists, {current: true}) === 0) ? 0 : _.findIndex(this.lists, 'current', true) - 1
-      return this.setCurrentList(index)
+      let index = (_.findIndex(this.lists, {current: true}) === 0)
+        ? 0
+        : _.findIndex(this.lists, 'current', true) - 1
+      this.setCurrentList(index)
     })
     Mousetrap.bind('alt+down', () => {
-      let index = (_.findIndex(this.lists, {current: true}) === this.lists.length - 1) ? this.lists.length - 1 : _.findIndex(this.lists, 'current', true) + 1
-      return this.setCurrentList(index)
+      let index = (_.findIndex(this.lists, {current: true}) === this.lists.length - 1)
+        ? this.lists.length - 1
+        : _.findIndex(this.lists, 'current', true) + 1
+      this.setCurrentList(index)
     })
     Mousetrap.bind('alt+backspace', () => {
-      return this.deleteList(_.findIndex(this.lists, {current: true}))
+      this.deleteList(_.findIndex(this.lists, {current: true}))
     })
     Mousetrap.bind('alt+/', () => {
-      return this.renameToggle(_.findIndex(this.lists, {current: true}))
+      this.renameToggle(_.findIndex(this.lists, {current: true}))
     })
     Mousetrap.bind('alt+command+down', () => {
       const currentIndex = _.findIndex(this.lists, {current: true})
-
       if (currentIndex === this.lists.length) return
-
-      return this.sortLists(currentIndex, currentIndex + 1)
+      this.sortLists(currentIndex, currentIndex + 1)
     })
     Mousetrap.bind('alt+command+up', () => {
       const currentIndex = _.findIndex(this.lists, {current: true})
-
       if (currentIndex === 0) return
-
-      return this.sortLists(currentIndex, currentIndex - 1)
+      this.sortLists(currentIndex, currentIndex - 1)
     })
   }
 }

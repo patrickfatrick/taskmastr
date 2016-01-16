@@ -19,7 +19,7 @@ export default {
   ready () {
     Mousetrap.bind('command+esc', (e) => {
       e.preventDefault()
-      return this.logout()
+      this.logout()
     })
   }
 }

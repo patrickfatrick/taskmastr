@@ -20,7 +20,7 @@ export default {
   ready () {
     Mousetrap.bind('command+m', (e) => {
       e.preventDefault()
-      return this.setDarkmode(!this.darkmode)
+      this.setDarkmode(!this.darkmode)
     })
   }
 }

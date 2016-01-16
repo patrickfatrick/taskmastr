@@ -30,7 +30,6 @@ export default {
             this.$route.router.go('/app')
           }, 750)
         }
-        return
       })
     }
   }

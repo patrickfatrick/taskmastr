@@ -24,7 +24,7 @@ export default {
       store.actions.toggleCheckbox(forgot)
       if (!this.forgot && this.create) return this.$route.router.go('/create')
       if (!this.forgot) return this.$route.router.go('/login')
-      return this.$route.router.go('/forgot')
+      this.$route.router.go('/forgot')
     }
   }
 }

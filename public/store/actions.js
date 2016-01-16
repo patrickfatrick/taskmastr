@@ -73,7 +73,9 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', tasks)
-      let current = _.findIndex(store.state.user.tasks, {current: true}) ? _.findIndex(store.state.user.tasks, {current: true}) : 0
+      let current = _.findIndex(store.state.user.tasks, {current: true})
+        ? _.findIndex(store.state.user.tasks, {current: true})
+        : 0
       store.dispatch('SET_CURRENT_LIST', current)
       store.dispatch('SET_AUTH', response.username)
       return response.username
@@ -117,7 +119,9 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', tasks)
-      let current = _.findIndex(store.state.user.tasks, {current: true}) ? _.findIndex(store.state.user.tasks, {current: true}) : 0
+      let current = _.findIndex(store.state.user.tasks, {current: true})
+        ? _.findIndex(store.state.user.tasks, {current: true})
+        : 0
       store.dispatch('SET_CURRENT_LIST', current)
       store.dispatch('SET_AUTH', response.username)
       return response.username
@@ -220,17 +224,17 @@ export default {
       clearTimeout(store.state.deleteQueue[task.id])
       store.dispatch('UPDATE_DELETE_QUEUE', task.id, null)
       store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), false)
-      return
     }
   },
   completeTask (store, index, bool) {
     const tasks = store.state.user.current.items
     const n = (tasks[index].complete) ? 0 : -1
-    const newIndex = (_.findIndex(tasks, {complete: true}) !== -1) ? _.findIndex(tasks, {complete: true}) + n : tasks.length
+    const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
+      ? _.findIndex(tasks, {complete: true}) + n
+      : tasks.length
     store.dispatch('SET_TASK_COMPLETE', index, bool)
     store.dispatch('SORT_TASKS', index, newIndex)
     store.dispatch('SET_SAVE_BUTTON', true)
-    return
   },
   setTaskDueDate (store, index, date) {
     store.dispatch('SET_TASK_DUE_DATE', index, date)
@@ -289,7 +293,6 @@ export default {
       clearTimeout(store.state.deleteQueue[list.id])
       store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)
       store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
-      return
     }
   },
   sortLists (store, oldIndex, newIndex) {

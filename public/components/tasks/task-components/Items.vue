@@ -109,23 +109,27 @@ export default {
     Mousetrap.bind('up', e => {
       e.preventDefault()
       let index = _.findIndex(this.tasks, {current: true})
-      index = (index === 0) ? 0 : index - 1
-      return this.setCurrentTask(index)
+      index = (index === 0)
+        ? 0
+        : index - 1
+      this.setCurrentTask(index)
     })
     Mousetrap.bind('down', e => {
       e.preventDefault()
       let index = _.findIndex(this.tasks, {current: true})
-      index = (index === this.tasks.length - 1) ? this.tasks.length - 1 : index + 1
-      return this.setCurrentTask(index)
+      index = (index === this.tasks.length - 1)
+        ? this.tasks.length - 1
+        : index + 1
+      this.setCurrentTask(index)
     })
     Mousetrap.bind('ctrl+backspace', () => {
-      return this.deleteTask(_.findIndex(this.tasks, {current: true}))
+      this.deleteTask(_.findIndex(this.tasks, {current: true}))
     })
     Mousetrap.bind('ctrl+c', () => {
-      return this.completeTask(_.findIndex(this.tasks, {current: true}), !(_.find(this.tasks, {current: true}).complete))
+      this.completeTask(_.findIndex(this.tasks, {current: true}), !(_.find(this.tasks, {current: true}).complete))
     })
     Mousetrap.bind('ctrl+/', () => {
-      return this.renameToggle(_.findIndex(this.tasks, {current: true}))
+      this.renameToggle(_.findIndex(this.tasks, {current: true}))
     })
     Mousetrap.bind('ctrl+command+down', () => {
       const completeIndex = _.findIndex(this.tasks, {complete: true})
@@ -136,7 +140,7 @@ export default {
       }
       if (currentIndex === this.tasks.length) return
 
-      return this.sortTasks(currentIndex, currentIndex + 1)
+      this.sortTasks(currentIndex, currentIndex + 1)
     })
     Mousetrap.bind('ctrl+command+up', () => {
       const completeIndex = _.findIndex(this.tasks, {complete: true})
@@ -147,7 +151,7 @@ export default {
       }
       if (currentIndex === 0) return
 
-      return this.sortTasks(currentIndex, currentIndex - 1)
+      this.sortTasks(currentIndex, currentIndex - 1)
     })
   }
 }

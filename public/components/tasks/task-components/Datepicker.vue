@@ -45,7 +45,7 @@ export default {
       }.bind(this)
     })
     Mousetrap.bind('ctrl+d', () => {
-      return this.$els.pikatrigger.click()
+      this.$els.pikatrigger.click()
     })
   }
 }
