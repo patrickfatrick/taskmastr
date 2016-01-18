@@ -1,0 +1,27 @@
+.task-details {
+  visibility: hidden;
+  position: absolute;
+  background: $gray * 1.4;
+  color: $black;
+  padding: 1rem;
+  margin: 0.7rem;
+  border: 1px solid $gray;
+  box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+  top: -1000px;
+  min-height: 500px;
+  opacity: 0;
+  @include transition(all 200ms ease-out);
+  @include fill-parent;
+  @include media(min-width $medium) {
+    @include span-columns(8 of 14);
+    @include shift(3 of 14);
+  }
+  &.toggled {
+    visibility: visible;
+    top: 3rem;
+    opacity: 1;
+  }
+  .task-label {
+    font-size: 0.8rem;
+  }
+}

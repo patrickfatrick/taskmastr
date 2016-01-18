@@ -11,7 +11,7 @@
           <p>Fill in your email address and we'll send you a reset link.</p>
         </div>
         <forgot-form></forgot-form>
-        <tips></tips>
+        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
 
 import store from '../store/store'
 import ForgotForm from './forms/ForgotForm.vue'
-import Tips from './forms/form-components/Tips.vue'
+import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   computed: {
@@ -43,7 +43,7 @@ export default {
   },
   components: {
     ForgotForm,
-    Tips
+    TryIt
   },
   methods: {
     toggleCheckbox: store.actions.toggleCheckbox

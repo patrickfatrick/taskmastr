@@ -1,7 +1,9 @@
 <template>
   <form id="todo-line" class="prompt-line" name="todoForm" novalidate v-on:submit.prevent="addTask(newTask.trim())">
     <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" name="todoInput" v-model="newTask" v-bind:class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
-    <button class="fa fa-arrow-down submit" type="submit"></button>
+    <button class="submit" title="Create task" type="submit">
+      <i class="fa fa-arrow-down "></i>
+    </button>
   </form>
 </template>
 

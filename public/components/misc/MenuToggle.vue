@@ -1,6 +1,8 @@
 <template>
   <div id="icon-menu" v-bind:class="{'toggled': menuToggled}">
-    <i class="fa" v-bind:class="{'fa-bars': !menuToggled, 'fa-times': menuToggled}" v-on:click="setMenuToggled(!menuToggled)"></i>
+    <button title="Toggle menu" v-on:click.prevent="setMenuToggled(!menuToggled)">
+      <i class="fa" v-bind:class="{'fa-bars': !menuToggled, 'fa-times': menuToggled}"></i>
+    </button>
   </div>
 </template>
 

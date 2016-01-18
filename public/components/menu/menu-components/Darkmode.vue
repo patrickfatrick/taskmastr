@@ -1,6 +1,8 @@
 <template>
   <input class="check" type="checkbox" title="Toggle Darkmode" v-model="darkmode"></input>
-  <i id="dark-mode" class="fa" v-bind:class="{'fa-sun-o': darkmode, 'fa-moon-o': !darkmode}" v-on:click="setDarkmode(!darkmode)"></i>
+  <button id="dark-mode" title="Toggle Night Mode" v-on:click.prevent="setDarkmode(!darkmode)">
+    <i class="fa" v-bind:class="{'fa-sun-o': darkmode, 'fa-moon-o': !darkmode}"></i>
+  </button>
 </template>
 
 <script>

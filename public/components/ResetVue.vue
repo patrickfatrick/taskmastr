@@ -10,7 +10,7 @@
           <p>Go ahead and create your new password below</p>
         </div>
         <reset-form></reset-form>
-        <tips></tips>
+        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 import store from '../store/store'
 import ResetForm from './forms/ResetForm.vue'
-import Tips from './forms/form-components/Tips.vue'
+import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   computed: {
@@ -36,7 +36,7 @@ export default {
   },
   components: {
     ResetForm,
-    Tips
+    TryIt
   },
   methods: {
     setReset: store.actions.setReset,

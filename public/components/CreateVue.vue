@@ -10,7 +10,7 @@
           <p>Confirm your password to create a new account.</p>
         </div>
         <create-form></create-form>
-        <tips></tips>
+        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 import store from '../store/store'
 import CreateForm from './forms/CreateForm.vue'
-import Tips from './forms/form-components/Tips.vue'
+import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   computed: {
@@ -36,7 +36,7 @@ export default {
   },
   components: {
     CreateForm,
-    Tips
+    TryIt
   }
 }
 

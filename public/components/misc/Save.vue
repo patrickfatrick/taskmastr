@@ -1,5 +1,5 @@
 <template>
-  <div id="save-button" class="button" v-if="saveButton" transition="save" v-on:click="save">Save</div>
+  <button id="save-button" class="button" title="Save" v-if="saveButton" transition="save" v-on:click.prevent="save">Save</button>
 </template>
 
 <script>

@@ -1,9 +1,9 @@
 <template>
   <div id="logout-container">
-    <div id="logout" v-on:click="logout">
+    <button id="logout" title="Log out" v-on:click.prevent="logout">
       <i id="power-off" class="fa fa-power-off"></i>
       <label for="power-off">Log out</label>
-    </div>
+    </button>
   </div>
 </template>
 

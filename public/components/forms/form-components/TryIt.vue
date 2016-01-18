@@ -1,5 +1,5 @@
 <template>
-  <div id="tips-button" class="button" v-on:click="loginUser(testUser, testKey, false, true)">Try it</div>
+  <button id="try-it-button" class="button" title="Try it" v-on:click="loginUser(testUser, testKey, false, true)">Try it</button>
 </template>
 
 <script>

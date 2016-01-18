@@ -1,7 +1,9 @@
 <template>
   <form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addList(newList.trim())">
     <input id="create-list" class="prompt mousetrap" type="text" name="todoInput" v-model="newList" v-bind:class="{'invalid': !isValid && ListAttempt}" placeholder="New List" v-el:listinput></input>
-    <button id="list-button" class="fa fa-arrow-down submit" type="submit"></button>
+    <button id="list-button" class="submit" title="Create task" type="submit">
+      <i class="fa fa-arrow-down"></i>
+    </button>
   </form>
 </template>
 
@@ -36,6 +38,7 @@ export default {
   },
   methods: {
     addList (list) {
+      if (!this.newList) return
       store.actions.addList({
         list: list,
         items: [],

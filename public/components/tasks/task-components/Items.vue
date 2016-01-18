@@ -12,7 +12,9 @@
       <tr v-for="task in tasks" class="task" v-bind:class="{'deleting': task.delete, 'complete': task.complete, 'active': task.current}" name="task{{$index + 1}}" transition="item">
         <th>
           <input class="check" type="checkbox" v-model="task.complete"></input>
-          <i class="complate fa" v-bind:class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}" v-on:click="completeTask($index, !task.complete)"></i>
+          <button class="complete" title="Complete task" v-on:click.prevent="completeTask($index, !task.complete)">
+            <i class="fa" v-bind:class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"></i>
+          </button>
         </th>
         <td class="task-cell" v-on:click="setCurrentTask($index)">
           <input class="rename" type="text" v-model="task.item" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)" v-on:change="setSaveButton(true)"></input>
@@ -20,9 +22,15 @@
         </td>
         <td class="utils">
           <datepicker :task="task" :index="$index"></datepicker>
-          <i class="fa fa-arrows-v sort"></i>
-          <i class="fa fa-pencil rename-button" v-on:click="renameToggle($index)"></i>
-          <i class="fa" v-bind:class="{'fa-trash-o': !task.delete, 'fa-undo': task.delete}" v-on:click="deleteTask($index)"></i>
+          <button class="sort-button" title="Sort task">
+            <i class="sort-handle fa fa-arrows-v"></i>
+          </button>
+          <button class="rename-button" title="Rename task" v-on:click.prevent="renameToggle($index)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="delete-button" title="Delete task" v-on:click.prevent="deleteTask($index)">
+            <i class="fa" v-bind:class="{'fa-trash-o': !task.delete, 'fa-undo': task.delete}"></i>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -44,7 +52,7 @@ export default {
       drake: dragula({
         revertOnSpill: true,
         moves: (el, source, handle) => {
-          if (handle.classList.contains('sort')) return true
+          if (handle.classList.contains('sort-handle')) return true
           return false
         }
       }),

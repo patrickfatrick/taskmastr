@@ -35,6 +35,16 @@ input[type='password'] {
 	color: inherit;
 }
 
+button {
+  border: none;
+  outline: none;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
 .prompt-line {
 	white-space: nowrap;
 	text-align: right;
@@ -80,7 +90,7 @@ input[type='password'] {
 		color: $white;
 		background: $orchid;
 		border-radius: 50%;
-		padding: 5px 7px 5px 6px;
+		padding: 2px 2px 3px 2px;
 		border: none;
 		outline: none;
 		@include button-effect($orchid, 2px, 0);
@@ -96,7 +106,7 @@ input[type='password'] {
 	position: relative;
 	width: 100px;
 	height: 2.5rem;
-	padding: 3px 4px 0 7px;
+	padding: 2px 4px 2px 7px;
 	cursor: pointer;
 	border: 0;
 	outline: 0;

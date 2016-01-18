@@ -100,13 +100,13 @@ table {
 				}
 			}
 			td.utils {
-				width: 9.3rem;
+				width: 8.7rem;
 				@include media(min-width $medium) {
-					width: 8.7rem;
+					width: 9rem;
 				}
 
-				.sort {
-					padding: 0 8px 0 8px;
+				.sort-button {
+					padding: 0 5px 0 5px;
 				}
 				.datepicker-toggle.active {
 					color: $orchid;

@@ -14,9 +14,15 @@
           <span class="name" v-show="renameToggled !== $index" v-on:dblclick="renameToggle($index)">{{list.list}}</span>
         </td>
         <td class="utils">
-          <i class="fa fa-arrows-v sort"></i>
-          <i class="fa fa-pencil rename-button" v-on:click="renameToggle($index)"></i>
-          <i class="fa" v-bind:class="{'fa-trash-o': !list.delete, 'fa-undo': list.delete}" v-on:click="deleteList($index)"></i>
+          <button class="sort-button" title="Sort list">
+            <i class="sort-handle fa fa-arrows-v sort"></i>
+          </button>
+          <button class="rename-button" title="Rename list" v-on:click.prevent="renameToggle($index)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="delete-button" title="Delete list" v-on:click.prevent="deleteList($index)">
+            <i class="fa" v-bind:class="{'fa-trash-o': !list.delete, 'fa-undo': list.delete}"></i>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -36,7 +42,7 @@ export default {
       drake: dragula({
         revertOnSpill: true,
         moves: (el, source, handle) => {
-          if (handle.classList.contains('sort')) return true
+          if (handle.classList.contains('sort-handle')) return true
           return false
         }
       }),

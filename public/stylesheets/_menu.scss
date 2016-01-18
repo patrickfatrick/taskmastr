@@ -7,6 +7,7 @@
 	background: $orchid;
 	z-index: 3;
 	left: -250px;
+	visibility: hidden;
 	color: $white;
 	padding: 3.1rem 0 2rem 0;
 	@include transition(all 200ms ease-out);
@@ -18,6 +19,7 @@
 
 #menu.toggled {
 	left: 0;
+	visibility: visible;
 	box-shadow: rgba(0, 0, 0, 0.30) 9px 0 70px, rgba(0, 0, 0, 0.22) 5px 0 30px;
 }
 
@@ -76,7 +78,7 @@
 	margin-right: auto;
 	font-size: 1rem;
 	font-family: $josefin;
-	padding: 11px 4px 0px 8px;
+	padding: 2px 4px 2px 8px;
 	width: 100px;
 	cursor: pointer;
 	text-transform: lowercase;

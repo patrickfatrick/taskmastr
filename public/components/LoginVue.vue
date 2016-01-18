@@ -11,7 +11,7 @@
           <p>If so, log in now, or create one below!</p>
         </div>
         <login-form></login-form>
-        <tips></tips>
+        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
 
 import store from '../store/store'
 import LoginForm from './forms/LoginForm.vue'
-import Tips from './forms/form-components/Tips.vue'
+import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   computed: {
@@ -37,7 +37,7 @@ export default {
   },
   components: {
     LoginForm,
-    Tips
+    TryIt
   }
 }
 
