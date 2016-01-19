@@ -7,7 +7,7 @@ import date from 'date.js'
 * @returns {String}         the string without the date information
 * @returns {Date}           the corresponding due date
 */
-export var extractDate = function (string) {
+export default function (string) {
   const keywords = [
     'next', ' on ', 'tomorrow',
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',

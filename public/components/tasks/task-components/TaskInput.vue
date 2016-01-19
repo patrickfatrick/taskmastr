@@ -15,7 +15,7 @@ import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
 import store from '../../../store/store'
-import {extractDate} from '../../../store/prototypes'
+import extractDate from '../../../helper-utilities/extractDate'
 
 export default {
   data () {
@@ -78,13 +78,16 @@ export default {
         dueDate = ''
       }
       store.actions.addTask({
+        id: hat(),
         item: task,
-        complete: false,
         current: !(_.find(this.user.current.items, {current: true})),
-        dueDate: dueDate,
+        complete: false,
         dateCreated: gregorian.reform(new Date()).to('iso'),
-        delete: false,
-        id: hat()
+        dueDate: dueDate,
+        notes: '',
+        _dueDateDifference: null,
+        _delete: false,
+        _detailsToggled: false
       })
       this.newTask = ''
       return store.actions.setSaveButton(true)

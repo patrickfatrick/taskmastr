@@ -3,7 +3,7 @@
 	background: $white;
 	font-family: $raleway;
 	font-size: 1rem;
-	margin-top: -125px;
+	margin-top: 1rem;
 	text-transform: lowercase;
 	border-radius: 15px;
 	padding: 0.2em 0.2em 0;
@@ -126,13 +126,13 @@
 			color: $oceanBlue;
 			background: $white;
 		}
+		.is-today button {
+			background: $astroTurf;
+			color: $black;
+		}
 		.is-selected button{
 			color: $white;
 			background: $deepBlue;
-		}
-		.is-today button {
-			background: $astroTurf !important;
-			color: $black !important;
 		}
 	}
 }

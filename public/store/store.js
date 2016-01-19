@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import mutations from './mutations'
 import actions from './actions'
-import placeholders from './placeholders'
+import placeholders from '../helper-utilities/placeholders'
 
 Vue.use(Vuex)
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
       confirm: '',
       resetKey: '',
       resetConfirmKey: '',
-      darkmode: false,
+      darkmode: true,
       tasks: [],
       current: {}
     },

@@ -1,13 +1,13 @@
-table {
-	table-layout: auto;
+.table {
+	//table-layout: auto;
+	@include display(table);
 	margin-top: 1rem;
 	text-align: left;
 	@include center;
-	thead {
-		display: none;
-	}
-	tbody {
-		tr {
+	.table-body {
+		@include outer-container;
+		.table-row {
+			@include row();
 			@include transition(unset);
 			&:hover {
 				background-color: $deepBlue;
@@ -16,7 +16,7 @@ table {
 				color: $completeGray;
 				background: transparent !important;
 				font-style: italic;
-				td.utils i.datepicker-toggle.active {
+				td.utils i.details-button.active {
 					color: $completeGray;
 				}
 			}
@@ -26,7 +26,7 @@ table {
 				&.complete {
 					background-color: $grassStain !important;
 					color: $completeGray * 0.7;
-					td.utils i.datepicker-toggle.active {
+					td.utils i.details-button.active {
 						color: $orchid * 0.7;
 					}
 				}
@@ -60,8 +60,8 @@ table {
 				&.active {
 					background: $red !important;
 				}
-				td.utils i.datepicker-toggle.active {
-					color: $white;
+				.utils .details-button.active {
+					color: $white !important;
 				}
 			}
 			&.item-enter {
@@ -70,14 +70,35 @@ table {
 			&.item-leave {
 				@include animation(bounceOutLeft 400ms);
 			}
-			td,
-			th {
+			.table-data,
+			.table-header {
 				padding: 0.5rem;
 			}
-			th {
+			.table-header {
 				width: 3rem;
+
+				@include span-columns(2 of 21);
+				@include media(min-width $medium) {
+					@include span-columns(1 of 21);
+				}
 			}
-			td.task-cell {
+			.table-data.task-cell {
+				font-size: 1.4rem;
+				padding-top: 0.7rem;
+				word-wrap: break-word;
+				@include span-columns(12 of 21);
+				@include media(min-width $small) {
+					@include span-columns(14 of 21);
+				}
+				@include media(min-width $medsmall) {
+					@include span-columns(15 of 21);
+				}
+				@include media(min-width $medium) {
+					@include span-columns(17 of 21);
+				}
+				span {
+					vertical-align: middle;
+				}
 				input.rename {
 					line-height: 1.4rem;
 					font-size: inherit;
@@ -99,25 +120,26 @@ table {
 					font-size: 1.2rem !important;
 				}
 			}
-			td.utils {
-				width: 8.7rem;
-				@include media(min-width $medium) {
-					width: 9rem;
+			.table-data.utils {
+				@include omega();
+				@include span-columns(7 of 21)
+				@include media(min-width $small) {
+					@include span-columns(5 of 21);
 				}
-
+				@include media(min-width $medsmall) {
+					@include span-columns(4 of 21);
+				}
+				@include media(min-width $medium) {
+					@include span-columns(3 of 21);
+				}
 				.sort-button {
 					padding: 0 5px 0 5px;
 				}
-				.datepicker-toggle.active {
+				.details-button.active {
 					color: $orchid;
 				}
-				.datepicker-input {
-					background: transparent;
-					color: transparent;
-					border: none;
-					box-shadow: none;
-					width: 1px;
-					height: 1px;
+				.details-button.overdue {
+					color: $red;
 				}
 			}
 		}
@@ -128,32 +150,34 @@ table {
 		margin-top: 1rem;
 		// fixes for safari
 		float: none !important;
+		@include fill-parent();
 		&:last-child {
 			margin-right: auto !important;
 		}
-		@include fill-parent;
 		@include media(min-width $medium) {
-			@include span-columns(8 of 14);
-			@include shift(3 of 14);
+			width: 700px;
+		}
+		@include media(min-width $large) {
+			width: 800px;
 		}
 	}
 	&#lists-list {
 		font-size: 1.4rem;
-		@include fill-parent;
-		tbody th {
+		@include fill-parent();
+		.table-header {
 			display: none;
 		}
-		tbody tr.current {
+		.table-row.current {
 			background: $deepBlue;
 		}
-		tbody tr:hover:not(.current) {
+		.table-row:hover:not(.current) {
 			background: inherit;
 		}
-		td.utils {
-			width: 6.8rem;
-			@include media(min-width $medium) {
-				width: 6.6rem;
-			}
+		.table-data.task-cell {
+			@include span-columns(12 of 21);
+		}
+		.table-data.utils {
+			@include span-columns(9 of 21);
 		}
 	}
 }

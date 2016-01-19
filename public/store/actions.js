@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import hat from 'hat'
 import gregorian from 'gregorian'
 import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services'
-import defaultList from './default-list'
+import defaultList from '../helper-utilities/default-list'
+import mapTasks from '../helper-utilities/map-tasks'
 
 let timeoutID
 
@@ -43,36 +43,11 @@ export default {
        * Failsafes for IDs, set delete if it doesn't exist.
        */
       let tasks = (response.tasks) ? response.tasks : response.todos
-      _.each(tasks, list => {
-        _.set(list, 'delete', false)
-        if (list.hasOwnProperty('agendaID')) {
-          _.set(list, 'id', list.agendaID)
-          delete list.agendaID
-        }
-        if (!list.hasOwnProperty('agendaID') || !list.hasOwnProperty('id')) {
-          _.set(list, 'id', hat())
-        }
-        _.each(list.items, item => {
-          _.set(item, 'delete', false)
-          if (list.hasOwnProperty('agendaID')) {
-            _.set(item, 'id', item.agendaID)
-            delete item.agendaID
-          }
-          if (!item.hasOwnProperty('agendaID') && !item.hasOwnProperty('id')) {
-            _.set(item, 'id', hat())
-          }
-          if (!item.hasOwnProperty('dueDate')) {
-            _.set(item, 'dueDate', '')
-          }
-          if (!item.hasOwnProperty('dateCreated')) {
-            _.set(item, 'dateCreated', gregorian.reform(new Date()).to('iso'))
-          }
-        })
-      })
+      let taskMap = _.map(tasks, mapTasks)
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
-      store.dispatch('SET_TASKS', tasks)
+      store.dispatch('SET_TASKS', taskMap)
       let current = _.findIndex(store.state.user.tasks, {current: true})
         ? _.findIndex(store.state.user.tasks, {current: true})
         : 0
@@ -90,35 +65,11 @@ export default {
         if (response.error === 401) return store.dispatch('SET_INVALID_KEY', response.msg)
       }
       let tasks = response.tasks || response.todos
-      _.each(tasks, list => {
-        if (list.hasOwnProperty('agendaID')) {
-          _.set(list, 'id', list.agendaID)
-          delete list.agendaID
-        }
-        if (!list.hasOwnProperty('agendaID') || !list.hasOwnProperty('id')) {
-          _.set(list, 'id', hat())
-        }
-        _.each(list.items, item => {
-          _.set(item, 'delete', false)
-          if (item.hasOwnProperty('agendaID')) {
-            _.set(item, 'id', item.agendaID)
-            delete item.agendaID
-          }
-          if (!item.hasOwnProperty('agendaID') && !item.hasOwnProperty('id')) {
-            _.set(item, 'id', hat())
-          }
-          if (!item.hasOwnProperty('dueDate')) {
-            _.set(item, 'dueDate', '')
-          }
-          if (!item.hasOwnProperty('dateCreated')) {
-            _.set(item, 'dateCreated', gregorian.reform(new Date()).to('iso'))
-          }
-        })
-      })
+      let taskMap = _.map(tasks, mapTasks)
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
-      store.dispatch('SET_TASKS', tasks)
+      store.dispatch('SET_TASKS', taskMap)
       let current = _.findIndex(store.state.user.tasks, {current: true})
         ? _.findIndex(store.state.user.tasks, {current: true})
         : 0
@@ -186,6 +137,7 @@ export default {
   setNewTask: 'SET_NEW_TASK',
   setTaskDelete: 'SET_TASK_DELETE',
   deleteAgenda: 'DELETE_AGENDA',
+  toggleDetails: 'TOGGLE_DETAILS',
   addTask: (store, task) => {
     store.dispatch('ADD_TASK', task)
     store.dispatch('SET_SAVE_BUTTON', true)
@@ -201,7 +153,7 @@ export default {
   deleteTask (store, index) {
     const tasks = store.state.user.current.items
     const task = tasks[index]
-    if (!task.delete) {
+    if (!task._delete) {
       timeoutID = setTimeout(() => {
         let prevTask = tasks[index - 1]
         let nextTask = tasks[index + 1]
@@ -244,6 +196,16 @@ export default {
     store.dispatch('SORT_TASKS', oldIndex, newIndex)
     store.dispatch('SET_SAVE_BUTTON', true)
   },
+  setDueDateDifference (store, index, dueDate) {
+    if (!dueDate) {
+      store.dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
+      return
+    }
+    const today = gregorian.reform(new Date()).set(6, 'h').recite()
+    dueDate = new Date(dueDate)
+    let diff = Math.floor(Math.round((dueDate - today) / 1000 / 60 / 60 / 24))
+    store.dispatch('SET_DUE_DATE_DIFFERENCE', index, diff)
+  },
   /**
    * List Actions
    */
@@ -262,7 +224,7 @@ export default {
     const lists = store.state.user.tasks
     if (lists.length === 1) return
     const list = lists[index]
-    if (!list.delete) {
+    if (!list._delete) {
       timeoutID = setTimeout(() => {
         let prevList = lists[index - 1]
         let nextList = lists[index + 1]

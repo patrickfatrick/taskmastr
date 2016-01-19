@@ -45,7 +45,7 @@
 #icon-menu {
 	position: fixed;
 	left: 0;
-	top: 4.7rem;
+	top: 4rem;
 	width: 3rem;
 	height: auto;
 	background: $orchid;
@@ -56,7 +56,7 @@
 	color: $white;
 	@include transition(all 200ms ease-out);
 	@include media(min-width $medlarge) {
-		top: 100px;
+		top: 6.2rem;
 	}
 }
 
@@ -108,6 +108,7 @@
 	left: 0;
 	right: 0;
 	bottom: 20px;
+	z-index: 10;
 	@include button-effect($deepBlue, 22px, 20px);
 	&.save-enter {
 		@include animation(bounceIn 300ms);

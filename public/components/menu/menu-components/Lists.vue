@@ -1,19 +1,12 @@
 <template>
-  <table id="lists-list" v-show="lists">
-    <thead>
-      <tr>
-        <th>name</th>
-        <th>utils</th>
-      </tr>
-    </thead>
-    <tbody v-el:dragula>
-      <tr v-for="list in lists" v-bind:class="{'deleting': list.delete, 'current': current.list === list.list}" name="list{{$index + 1}}" transition="item">
-        <th></th>
-        <td class="task-cell" v-on:click="setCurrentList($index)">
+  <div id="lists-list" class="table" v-show="lists">
+    <div class="table-body" v-el:dragula>
+      <div class="table-row" v-for="list in lists" v-bind:class="{'deleting': list._delete, 'current': current.list === list.list}" name="list{{$index + 1}}" transition="item">
+        <div class="task-cell table-data" v-on:click="setCurrentList($index)">
           <input class="rename" type="text" v-model="list.list" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)" v-on:change="setSaveButton(true)"></input>
           <span class="name" v-show="renameToggled !== $index" v-on:dblclick="renameToggle($index)">{{list.list}}</span>
-        </td>
-        <td class="utils">
+        </div>
+        <div class="utils table-data">
           <button class="sort-button" title="Sort list">
             <i class="sort-handle fa fa-arrows-v sort"></i>
           </button>
@@ -21,12 +14,12 @@
             <i class="fa fa-pencil"></i>
           </button>
           <button class="delete-button" title="Delete list" v-on:click.prevent="deleteList($index)">
-            <i class="fa" v-bind:class="{'fa-trash-o': !list.delete, 'fa-undo': list.delete}"></i>
+            <i class="fa" v-bind:class="{'fa-trash-o': !list._delete, 'fa-undo': list._delete}"></i>
           </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 

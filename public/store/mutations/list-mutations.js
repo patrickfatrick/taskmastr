@@ -20,7 +20,7 @@ export const listMutations = {
     _.set(state, 'newList', list)
   },
   [SET_LIST_DELETE] (state, index, bool) {
-    _.set(state, 'user.tasks[' + index + '].delete', bool)
+    _.set(state, 'user.tasks[' + index + ']._delete', bool)
   },
   [SORT_LISTS] (state, oldIndex, newIndex) {
     let spliced = state.user.tasks.splice(oldIndex, 1)

@@ -1,27 +1,113 @@
 .task-details {
-  visibility: hidden;
-  position: absolute;
+  position: fixed;
   background: $gray * 1.4;
-  color: $black;
-  padding: 1rem;
-  margin: 0.7rem;
+  color: $gray * 0.6;
+  padding: 0.5rem 0.7rem 3rem 0.7rem;
   border: 1px solid $gray;
+  border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
-  top: -1000px;
-  min-height: 500px;
-  opacity: 0;
-  @include transition(all 200ms ease-out);
-  @include fill-parent;
+  top: 0;
+  min-height: 100%;
+  z-index: 5;
+  overflow-y: scroll;
+  @include fill-parent();
+  @include outer-container;
+  @include center;
+  left: 0;
+  right: 0;
   @include media(min-width $medium) {
-    @include span-columns(8 of 14);
-    @include shift(3 of 14);
+    width: 768px;
   }
-  &.toggled {
-    visibility: visible;
+  @include media(min-height 600px) {
     top: 3rem;
-    opacity: 1;
+    min-height: 500px;
+  }
+  @include media(min-height 700px) {
+    min-height: 600px;
+  }
+  &.details-enter {
+    @include animation(bounceInDown 250ms);
+  }
+  &.details-leave {
+    @include animation(bounceOutUp 250ms);
+  }
+  .task-details-close {
+    float: right;
+    color: $gray;
+  }
+  .task-name-container {
+    padding: 0 2rem;
+    width: 100%;
+    .task-name {
+      width: 100%;
+      font-size: 2.5rem;
+      line-height: 3rem;
+      margin-bottom: 0.5rem;
+      border: none;
+      background: transparent;
+      border-bottom: 4px solid $slateGray;
+      @include transition(border-color 500ms ease-out);
+      @include selection {
+        background: $deepBlue;
+        color: $white;
+      }
+      &:focus {
+        border-color: $deepBlue !important;
+      }
+    }
+  }
+  .task-details-container {
+    padding: 1rem 2rem 0 2rem;
+    text-align: left;
+    line-height: 1.4rem;
+    @include row();
+    .task-details-panel {
+      @include fill-parent();
+      @include media(min-width $medium) {
+        @include span-columns(4 of 12);
+        @include omega(4n);
+      }
+      .overdue {
+        color: $red;
+      }
+      .due-today {
+        color: $grassStain;
+      }
+    }
   }
   .task-label {
     font-size: 0.8rem;
+    margin-right: 0.5rem;
+  }
+  .datepicker-input {
+    background: transparent;
+    color: transparent;
+    border: none;
+    box-shadow: none;
+    position: absolute;
+    top: -10000px;
+    visibility: hidden;
+  }
+  .datepicker-toggle {
+    font-size: 1.2rem;
+  }
+  .task-notes {
+    width: 100%;
+    min-height: 300px;
+    height: auto;
+    outline: none;
+    resize: none;
+    background: transparent;
+    font-size: 1rem;
+    font-family: $raleway;
+    padding: 0.5rem;
+    border: 2px solid $slateGray;
+    @include transition(border-color 500ms ease-out);
+    &:focus {
+      border-color: $deepBlue;
+    }
+    @include media(min-height 700px) {
+      min-height: 375px;
+    }
   }
 }
