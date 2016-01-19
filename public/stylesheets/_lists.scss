@@ -1,5 +1,4 @@
 .table {
-	//table-layout: auto;
 	@include display(table);
 	margin-top: 1rem;
 	text-align: left;
@@ -76,25 +75,19 @@
 			}
 			.table-header {
 				width: 3rem;
-
+				text-align: center;
 				@include span-columns(2 of 21);
-				@include media(min-width $medium) {
-					@include span-columns(1 of 21);
-				}
 			}
 			.table-data.task-cell {
 				font-size: 1.4rem;
 				padding-top: 0.7rem;
 				word-wrap: break-word;
-				@include span-columns(12 of 21);
+				@include span-columns(11 of 21);
 				@include media(min-width $small) {
-					@include span-columns(14 of 21);
+					@include span-columns(13 of 21);
 				}
 				@include media(min-width $medsmall) {
 					@include span-columns(15 of 21);
-				}
-				@include media(min-width $medium) {
-					@include span-columns(17 of 21);
 				}
 				span {
 					vertical-align: middle;
@@ -121,16 +114,16 @@
 				}
 			}
 			.table-data.utils {
+				padding-left: 0;
+				padding-right: 0;
+				text-align: center;
 				@include omega();
-				@include span-columns(7 of 21)
+				@include span-columns(8 of 21)
 				@include media(min-width $small) {
-					@include span-columns(5 of 21);
+					@include span-columns(6 of 21);
 				}
 				@include media(min-width $medsmall) {
 					@include span-columns(4 of 21);
-				}
-				@include media(min-width $medium) {
-					@include span-columns(3 of 21);
 				}
 				.sort-button {
 					padding: 0 5px 0 5px;
@@ -145,7 +138,6 @@
 		}
 	}
 	&#task-list {
-		display: table !important;
 		position: relative;
 		margin-top: 1rem;
 		// fixes for safari

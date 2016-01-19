@@ -1,9 +1,11 @@
 <template>
   <div id="content">
     <div class="container">
-    <div id="todo-prompt">What needs doing?</div>
+    <div class="prompt-container">
+      <div id="todo-prompt">What needs doing?</div>
+      <task-input></task-input>
+    </div>
     <menu-toggle></menu-toggle>
-    <task-input></task-input>
     <items></items>
     <i id="loading" class="fa fa-cog fa-spin" v-if="user.key || !user.tasks"></i>
     </div>

@@ -67,12 +67,26 @@
 	}
 }
 
+.prompt-container {
+	@include outer-container;
+	@include fill-parent();
+	@include media(min-width $medium) {
+		width: 700px;
+	}
+	@include media(min-width $large) {
+		width: 800px;
+	}
+}
+
 #todo-prompt {
-	margin-bottom: 10px;
-	font-size: 2rem;
+	margin-bottom: 15px;
+	margin-top: -5px;
+	font-size: 2.2rem;
 	@include center;
 	@include span-columns(14 of 14);
 	@include media(min-width $medsmall) {
+		margin-bottom: 10px;
+		margin-top: 0;
 		font-size: 2.5rem;
 	}
 	@include media(min-width $medium) {
@@ -83,16 +97,25 @@
 
 #todo-line {
 	margin-bottom: 1rem;
-	@include span-columns(12 of 14);
-	@include shift(1);
+	@include span-columns(11 of 14);
+	@include shift(3);
 	@include media(min-width $medium) {
-		@include span-columns(8 of 14);
-		@include shift(3 of 14);
+		@include span-columns(12 of 14);
+		@include shift(1 of 14);
 	}
 	#create-todo {
-		width: 70%;
+		@include span-columns(9 of 12)
 		@include media(min-width $medium) {
-			width: 89%;
+			@include span-columns(11 of 12)
+		}
+	}
+	.button-container {
+		text-align: left;
+		@include omega();
+		@include span-columns(3 of 12);
+		@include media(min-width $medium) {
+			text-align: center;
+			@include span-columns(1 of 12);
 		}
 	}
 }
