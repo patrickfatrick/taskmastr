@@ -67,18 +67,6 @@ export default {
     },
     {
       id: hat(),
-      item: 'Clear an existing due date by double-clicking the calendar icon in the detailed view.',
-      current: false,
-      complete: false,
-      dateCreated: gregorian.reform(new Date()).to('iso'),
-      dueDate: null,
-      notes: '',
-      _dueDateDifference: null,
-      _delete: false,
-      _detailsToggled: false
-    },
-    {
-      id: hat(),
       item: 'Now try creating a new list by hitting the menu button on the left.',
       current: false,
       complete: false,

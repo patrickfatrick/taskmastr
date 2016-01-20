@@ -10,7 +10,7 @@
     <div class="task-details-container">
       <div class="task-create task-details-panel"><span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}</div>
       <div class="task-due task-details-panel">
-        <span class="task-label" v-show="task.dueDate">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) : ''}}&nbsp;
+        <span class="task-label" v-show="task.dueDate">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
         <span class="task-label" v-show="!task.dueDate">Set a due date&nbsp;</span>
         <datepicker :task="task" :index="index"></datepicker>
       </div>

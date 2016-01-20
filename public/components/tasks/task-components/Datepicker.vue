@@ -1,9 +1,15 @@
 <template>
   <span>
-    <input class="datepicker-input" type="text" name="datepicker" :value="task.dueDate" v-bind:disabled="task.complete" readonly="true" v-el:pikaday></input>
-    <button class="datepicker-toggle" title="Toggle datepicker" v-el:pikatrigger v-on:dblclick="setTaskDueDate(index, '')" v-bind:class="{'active': task.dueDate}">
+    <input class="datepicker-input" type="text" name="datepicker" v-model="task.dueDate" v-bind:disabled="task.complete" readonly="true" v-el:pikaday></input>
+    <button class="datepicker-toggle" title="Toggle datepicker" v-el:pikatrigger v-bind:class="{'active': task.dueDate}">
       <i class="fa" v-bind:class="{'fa-calendar-check-o': task.dueDate, 'fa-calendar-plus-o': !task.dueDate}"></i>
     </button>
+    <div class="remove-due-date" v-show="task.dueDate">
+      <button class="remove-due-date-button" title="Remove due date" v-on:click.prevent="setTaskDueDate(index, '')">
+        <span class="task-label">Remove</span>
+        <i class="fa fa-calendar-times-o"></i>
+      </button>
+    </div>
   </span>
 </template>
 
@@ -25,7 +31,6 @@ export default {
     }
   },
   props: [
-    'value',
     'task',
     'index'
   ],
