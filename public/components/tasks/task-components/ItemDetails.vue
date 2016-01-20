@@ -5,7 +5,7 @@
       <i class="fa fa-times"></i>
     </button>
     <div class="task-name-container">
-      <input class="task-name" type="text" v-model="task.item" v-on:change="setSaveButton(true)"></input>
+      <input class="task-name mousetrap" type="text" v-model="task.item" v-on:change="setSaveButton(true)"></input>
     </div>
     <div class="task-details-container">
       <div class="task-create task-details-panel"><span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}</div>
@@ -29,7 +29,7 @@
     <div class="task-details-container">
       <h2>Notes</h2>
       <div class="task-notes-container">
-        <textarea class="task-notes" v-model="task.notes" v-on:change="setSaveButton(true)"></textarea>
+        <textarea class="task-notes mousetrap" v-model="task.notes" v-on:change="setSaveButton(true)"></textarea>
       </div>
     </div>
   </div>
