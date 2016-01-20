@@ -46,7 +46,9 @@ export default {
     }
   },
   methods: {
+    setSaveButton: store.actions.setSaveButton,
     setTaskDueDate: store.actions.setTaskDueDate,
+    setDueDateDifference: store.actions.setDueDateDifference,
     addTask (task) {
       if (!this.newTask) return
       let dueDate
@@ -92,7 +94,7 @@ export default {
         _detailsToggled: false
       })
       this.newTask = ''
-      return store.actions.setSaveButton(true)
+      this.setSaveButton(true)
     }
   },
   ready () {
