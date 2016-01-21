@@ -1,3 +1,3 @@
-var gulp = require('gulp');
+var gulp = require('gulp')
 
-gulp.task('default', ['mongo-start', 'serve', 'webpack', 'watch']);
+gulp.task('default', ['mongo-start', 'serve', 'webpack', 'watch'])

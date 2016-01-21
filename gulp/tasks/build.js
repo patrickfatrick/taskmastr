@@ -1,3 +1,3 @@
-var gulp = require('gulp');
+var gulp = require('gulp')
 
-gulp.task('build', ['styles', 'jade']);
+gulp.task('build', ['styles', 'jade'])

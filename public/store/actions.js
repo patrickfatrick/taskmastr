@@ -138,6 +138,7 @@ export default {
   setTaskDelete: 'SET_TASK_DELETE',
   deleteAgenda: 'DELETE_AGENDA',
   toggleDetails: 'TOGGLE_DETAILS',
+  setTaskDueDate: 'SET_TASK_DUE_DATE',
   addTask: (store, task) => {
     store.dispatch('ADD_TASK', task)
     store.dispatch('SET_SAVE_BUTTON', true)
@@ -186,10 +187,6 @@ export default {
       : tasks.length
     store.dispatch('SET_TASK_COMPLETE', index, bool)
     store.dispatch('SORT_TASKS', index, newIndex)
-    store.dispatch('SET_SAVE_BUTTON', true)
-  },
-  setTaskDueDate (store, index, date) {
-    store.dispatch('SET_TASK_DUE_DATE', index, date)
     store.dispatch('SET_SAVE_BUTTON', true)
   },
   sortTasks (store, oldIndex, newIndex) {
