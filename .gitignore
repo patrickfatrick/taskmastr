@@ -19,3 +19,6 @@ data
 
 #debug
 npm-debug.log
+
+#coverage
+coverage
