@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for public/store/mutations/user-mutations.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">public/store/mutations/</a> user-mutations.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">35.48% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>11/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.76% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.09% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/22</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash'
+import {<span class="fstat-no" title="function not covered" >SET_INIT, <span class="fstat-no" title="function not covered" >SET_AUTH, <span class="fstat-no" title="function not covered" >TOGGLE_CHECKBOX, <span class="fstat-no" title="function not covered" >SET_USERNAME, <span class="fstat-no" title="function not covered" >SET_KEY, <span class="fstat-no" title="function not covered" >SET_CONFIRM, <span class="fstat-no" title="function not covered" >SET_DARKMODE, <span class="fstat-no" title="function not covered" >SET_TASKS, <span class="fstat-no" title="function not covered" >SET_FORGOT, <span class="fstat-no" title="function not covered" >SET_CREATE, <span class="fstat-no" title="function not covered" >SET_INVALID_KEY, <span class="fstat-no" title="function not covered" >SET_LOGIN_ATTEMPT, <span class="fstat-no" title="function not covered" >SET_FORGOT_ATTEMPT, <span class="fstat-no" title="function not covered" >SET_FORGOT_EMAIL, <span class="fstat-no" title="function not covered" >SET_CONFIRM_ATTEMPT, <span class="fstat-no" title="function not covered" >SET_RESET, <span class="fstat-no" title="function not covered" >SET_RESET_ATTEMPT, <span class="fstat-no" title="function not covered" >SET_RESET_TOKEN, <span class="fstat-no" title="function not covered" >SET_RESET_FAIL, <span class="fstat-no" title="function not covered" >SET_SAVE_BUTTON} from '../mutation-types'</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
+&nbsp;
+export const userMutations = {
+  [SET_INIT] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'init', bool)</span>
+  },
+  [SET_AUTH] (state, val) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'auth', val)</span>
+  },
+  [TOGGLE_CHECKBOX] (state, checkbox) {
+    // state[checkbox] = !state[checkbox]
+<span class="cstat-no" title="statement not covered" >    _.set(state, [checkbox], !state[checkbox])</span>
+  },
+  [SET_USERNAME] (state, username) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.username', username)</span>
+  },
+  [SET_KEY] (state, key) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.key', key)</span>
+  },
+  [SET_CONFIRM] (state, confirm) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.confirm', confirm)</span>
+  },
+  [SET_DARKMODE] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.darkmode', bool)</span>
+  },
+  [SET_TASKS] (state, tasks) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.tasks', tasks)</span>
+  },
+  [SET_FORGOT] (state) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'forgot', !state.forgot)</span>
+  },
+  [SET_CREATE] (state) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'create', !state.create)</span>
+  },
+  [SET_INVALID_KEY] (state, msg) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'invalidKey', msg)</span>
+  },
+  [SET_LOGIN_ATTEMPT] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'loginAttempt', bool)</span>
+  },
+  [SET_FORGOT_ATTEMPT] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'forgotAttempt', bool)</span>
+  },
+  [SET_FORGOT_EMAIL] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'forgotEmail', bool)</span>
+  },
+  [SET_CONFIRM_ATTEMPT] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'confirmAttempt', bool)</span>
+  },
+  [SET_RESET] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'reset', bool)</span>
+  },
+  [SET_RESET_ATTEMPT] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'resetAttempt', bool)</span>
+  },
+  [SET_RESET_TOKEN] (state, val) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'resetToken', val)</span>
+  },
+  [SET_RESET_FAIL] (state, val) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'resetFail', val)</span>
+  },
+  [SET_SAVE_BUTTON] (state, bool) {
+<span class="cstat-no" title="statement not covered" >    _.set(state, 'saveButton', bool)</span>
+  }
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 20 2016 21:56:43 GMT-0700 (MST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

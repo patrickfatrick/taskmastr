@@ -13,7 +13,7 @@ export const userMutations = {
     _.set(state, [checkbox], !state[checkbox])
   },
   [SET_USERNAME] (state, username) {
-    _.set(state, 'user.username', username);
+    _.set(state, 'user.username', username)
   },
   [SET_KEY] (state, key) {
     _.set(state, 'user.key', key)

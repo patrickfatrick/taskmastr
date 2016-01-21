@@ -10,7 +10,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    preloaders: [
+    preLoaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,

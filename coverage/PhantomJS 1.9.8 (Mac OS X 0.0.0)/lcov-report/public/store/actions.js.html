@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for public/store/actions.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">public/store/</a> actions.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>14/153</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">6.25% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/64</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">3.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.54% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/130</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash'
+import gregorian from 'gregorian'
+import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services'
+import defaultList from '../helper-utilities/default-list'
+import mapTasks from '../helper-utilities/map-tasks'
+&nbsp;
+let timeoutID
+&nbsp;
+export default {
+  /**
+   * User Actions
+   */
+  setInit: 'SET_INIT',
+  setAuth: 'SET_AUTH',
+  toggleCheckbox: 'TOGGLE_CHECKBOX',
+  setUsername: 'SET_USERNAME',
+  setKey: 'SET_KEY',
+  setConfirm: 'SET_CONFIRM',
+  setTasks: 'SET_TASKS',
+  setForgot: 'SET_FORGOT',
+  setCreate: 'SET_CREATE',
+  setInvalidKay: 'SET_INVALID_KEY',
+  setLoginAttempt: 'SET_LOGIN_ATTEMPT',
+  setForgotAttempt: 'SET_FORGOT_ATTEMPT',
+  setForgotEmail: 'SET_FORGOT_EMAIL',
+  setConfirmAttempt: 'SET_CONFIRM_ATTEMPT',
+  setReset: 'SET_RESET_FORM',
+  setResetAttempt: 'SET_RESET_ATTEMPT',
+  setResetToken: 'SET_RESET_TOKEN',
+  setResetFail: 'SET_RESET_FAIL',
+  setSaveButton: 'SET_SAVE_BUTTON',
+  setDarkmode: <span class="fstat-no" title="function not covered" >(store, bool) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_DARKMODE', bool)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+  getSession: <span class="fstat-no" title="function not covered" >store =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return getSession()</span>
+    .then(<span class="fstat-no" title="function not covered" >response =&gt; <span class="cstat-no" title="statement not covered" >{</span></span>
+<span class="cstat-no" title="statement not covered" >      i</span>f (response.error) {
+<span class="cstat-no" title="statement not covered" >        i</span></span>f (response.error === 204) <span class="cstat-no" title="statement not covered" >return store.dispatch('SET_INIT', true)
+      }
+      /**
+       * Failsafes for IDs, set delete if it doesn't exist.
+       */
+      let tasks = (response.tasks) ? response.tasks : response.todos
+<span class="cstat-no" title="statement not covered" >      let taskMap = _.map(tasks, mapTasks)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_USERNAME', response.username)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_KEY', '')</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_DARKMODE', response.darkmode)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_TASKS', taskMap)</span>
+<span class="cstat-no" title="statement not covered" >      let current = _.findIndex(store.state.user.tasks, {current: true})</span>
+        ? _.findIndex(store.state.user.tasks, {current: true})
+        : 0
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_CURRENT_LIST', current)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_AUTH', response.username)</span>
+<span class="cstat-no" title="statement not covered" >      return response.username</span>
+    })
+  },
+  loginUser: <span class="fstat-no" title="function not covered" >(store, username, key, rememberMe, isValid) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    i</span></span>f (!isValid) <span class="cstat-no" title="statement not covered" >return
+<span class="cstat-no" title="statement not covered" >    return login(username, key, rememberMe)</span>
+    .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      i</span>f (response.error) {
+<span class="cstat-no" title="statement not covered" >        i</span></span>f (response.error === 204) <span class="cstat-no" title="statement not covered" >return store.dispatch('SET_CREATE')
+<span class="cstat-no" title="statement not covered" >        i</span></span>f (response.error === 401) <span class="cstat-no" title="statement not covered" >return store.dispatch('SET_INVALID_KEY', response.msg)
+      }
+<span class="cstat-no" title="statement not covered" >      let tasks = response.tasks || response.todos</span>
+<span class="cstat-no" title="statement not covered" >      let taskMap = _.map(tasks, mapTasks)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_USERNAME', response.username)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_KEY', '')</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_DARKMODE', response.darkmode)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_TASKS', taskMap)</span>
+<span class="cstat-no" title="statement not covered" >      let current = _.findIndex(store.state.user.tasks, {current: true})</span>
+        ? _.findIndex(store.state.user.tasks, {current: true})
+        : 0
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_CURRENT_LIST', current)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_AUTH', response.username)</span>
+<span class="cstat-no" title="statement not covered" >      return response.username</span>
+    })
+  },
+  createUser: <span class="fstat-no" title="function not covered" >(store, username, key, rememberMe, isValid) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    i</span></span>f (!isValid) <span class="cstat-no" title="statement not covered" >return
+<span class="cstat-no" title="statement not covered" >    return create(username, key, rememberMe)</span>
+    .then(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_KEY', '')</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_CONFIRM', '')</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_DARKMODE', true)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_TASKS', [defaultList])</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_CURRENT_LIST', 0)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_AUTH', username)</span>
+<span class="cstat-no" title="statement not covered" >      return username</span>
+    })
+  },
+  forgotPassword: <span class="fstat-no" title="function not covered" >(store, username, isValid) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    i</span></span>f (!isValid) <span class="cstat-no" title="statement not covered" >return
+<span class="cstat-no" title="statement not covered" >    forgot(username)</span>
+    .then(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      return store.dispatch('SET_FORGOT_EMAIL', true)</span>
+    })
+  },
+  resetPassword: <span class="fstat-no" title="function not covered" >(store, token, key, isValid) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    i</span></span>f (!isValid) <span class="cstat-no" title="statement not covered" >return
+<span class="cstat-no" title="statement not covered" >    return reset(token, key)</span>
+    .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      i</span>f (response.error) {
+<span class="cstat-no" title="statement not covered" >        i</span></span>f (response.error === 401) <span class="cstat-no" title="statement not covered" >return store.dispatch('SET_RESET_FAIL', response.msg)
+      }
+<span class="cstat-no" title="statement not covered" >      return response.username</span>
+    })
+  },
+  logout: <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return logout()</span>
+    .then(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      window.location.href = '/'</span>
+    })
+  },
+  save: <span class="fstat-no" title="function not covered" >store =&gt; <span class="cstat-no" title="statement not covered" >{</span></span>
+<span class="cstat-no" title="statement not covered" >    let u</span>ser = {
+      username: store.state.user.username,
+      tasks: store.state.user.tasks,
+      darkmode: store.state.user.darkmode,
+      dateModified: Date.now()
+    }
+    // handle "try it" account
+    i</span>f (user.username === 'mrormrstestperson@taskmastr.co') <span class="cstat-no" title="statement not covered" >return store.dispatch('SET_SAVE_BUTTON', false)
+<span class="cstat-no" title="statement not covered" >    let deleteAgendas = store.state.deleteAgendas</span>
+<span class="cstat-no" title="statement not covered" >    return save(user, deleteAgendas)</span>
+    .then(<span class="fstat-no" title="function not covered" >(response) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      i</span></span>f (response.status !== 200) <span class="cstat-no" title="statement not covered" >return
+<span class="cstat-no" title="statement not covered" >      return store.dispatch('SET_SAVE_BUTTON', false)</span>
+    })
+  },
+  /**
+   * Task Actions
+   */
+  setCurrentTask: 'SET_CURRENT_TASK',
+  setNewTask: 'SET_NEW_TASK',
+  setTaskDelete: 'SET_TASK_DELETE',
+  deleteAgenda: 'DELETE_AGENDA',
+  toggleDetails: 'TOGGLE_DETAILS',
+  setTaskDueDate: 'SET_TASK_DUE_DATE',
+  addTask: <span class="fstat-no" title="function not covered" >(store, task) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('ADD_TASK', task)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+  removeTask: <span class="fstat-no" title="function not covered" >(store, index) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('REMOVE_TASK', index)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+  setTaskComplete: <span class="fstat-no" title="function not covered" >(store, index, bool) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_TASK_COMPLETE', index, bool)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+<span class="fstat-no" title="function not covered" >  deleteTask (store, index) {</span>
+<span class="cstat-no" title="statement not covered" >    const tasks = store.state.user.current.items</span>
+<span class="cstat-no" title="statement not covered" >    const task = tasks[index]</span>
+<span class="cstat-no" title="statement not covered" >    i</span>f (!task._delete) {
+<span class="cstat-no" title="statement not covered" >      timeoutID = setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        let prevTask = tasks[index - 1]</span>
+<span class="cstat-no" title="statement not covered" >        let nextTask = tasks[index + 1]</span>
+<span class="cstat-no" title="statement not covered" >        i</span>f (task.current) {
+<span class="cstat-no" title="statement not covered" >          i</span>f (task.current &amp;&amp; index === (tasks.length - 1)) {
+<span class="cstat-no" title="statement not covered" >            store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, prevTask))</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, nextTask))</span>
+          }
+        }
+<span class="cstat-no" title="statement not covered" >        store.dispatch('DELETE_AGENDA', task.id)</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('UPDATE_DELETE_QUEUE', task.id, null)</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), false)</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('REMOVE_TASK', _.findIndex(tasks, {id: task.id}))</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('SET_SAVE_BUTTON', true)</span>
+      }, 5000)
+<span class="cstat-no" title="statement not covered" >      store.dispatch('UPDATE_DELETE_QUEUE', task.id, timeoutID)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), true)</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      clearTimeout(store.state.deleteQueue[task.id])</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('UPDATE_DELETE_QUEUE', task.id, null)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), false)</span>
+    }
+  },
+<span class="fstat-no" title="function not covered" >  completeTask (store, index, bool) {</span>
+<span class="cstat-no" title="statement not covered" >    const tasks = store.state.user.current.items</span>
+<span class="cstat-no" title="statement not covered" >    const n = (tasks[index].complete) ? 0 : -1</span>
+<span class="cstat-no" title="statement not covered" >    const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)</span>
+      ? _.findIndex(tasks, {complete: true}) + n
+      : tasks.length
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_TASK_COMPLETE', index, bool)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SORT_TASKS', index, newIndex)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+<span class="fstat-no" title="function not covered" >  sortTasks (store, oldIndex, newIndex) {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SORT_TASKS', oldIndex, newIndex)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+<span class="fstat-no" title="function not covered" >  setDueDateDifference (store, index, dueDate) {</span>
+<span class="cstat-no" title="statement not covered" >    i</span>f (!dueDate) {
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_DUE_DATE_DIFFERENCE', index, null)</span>
+<span class="cstat-no" title="statement not covered" >      return</span>
+    }
+<span class="cstat-no" title="statement not covered" >    const today = gregorian.reform(new Date()).set(6, 'h').recite()</span>
+<span class="cstat-no" title="statement not covered" >    dueDate = new Date(dueDate)</span>
+<span class="cstat-no" title="statement not covered" >    let diff = Math.floor(Math.round((dueDate - today) / 1000 / 60 / 60 / 24))</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_DUE_DATE_DIFFERENCE', index, diff)</span>
+  },
+  /**
+   * List Actions
+   */
+  setCurrentList: 'SET_CURRENT_LIST',
+  setMenuToggled: 'SET_MENU_TOGGLED',
+  setNewList: 'SET_NEW_LIST',
+  addList: <span class="fstat-no" title="function not covered" >(store, list) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('ADD_LIST', list)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+  removeList: <span class="fstat-no" title="function not covered" >(store, index) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('REMOVE_LIST', index)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  },
+<span class="fstat-no" title="function not covered" >  deleteList (store, index) {</span>
+<span class="cstat-no" title="statement not covered" >    const lists = store.state.user.tasks</span>
+<span class="cstat-no" title="statement not covered" >    i</span></span>f (lists.length === 1) <span class="cstat-no" title="statement not covered" >return
+<span class="cstat-no" title="statement not covered" >    const list = lists[index]</span>
+<span class="cstat-no" title="statement not covered" >    i</span>f (!list._delete) {
+<span class="cstat-no" title="statement not covered" >      timeoutID = setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >{</span></span></span>
+<span class="cstat-no" title="statement not covered" >        let prevList = lists[index - 1]</span>
+<span class="cstat-no" title="statement not covered" >        let n</span>extList = lists[index + 1]
+        // Do not allow if it's the only list
+        if (lists.length === 1) {
+<span class="cstat-no" title="statement not covered" >          store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)</span>
+<span class="cstat-no" title="statement not covered" >          store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+        }
+<span class="cstat-no" title="statement not covered" >        i</span>f (list.current) {
+<span class="cstat-no" title="statement not covered" >          i</span>f (list.current &amp;&amp; index === (lists.length - 1)) {
+<span class="cstat-no" title="statement not covered" >            store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, prevList))</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, nextList))</span>
+          }
+        }
+<span class="cstat-no" title="statement not covered" >        _.each(list.items, <span class="fstat-no" title="function not covered" >item =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >          store.dispatch('DELETE_AGENDA', item.id)</span>
+        })
+<span class="cstat-no" title="statement not covered" >        store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('REMOVE_LIST', _.findIndex(lists, {id: list.id}))</span>
+<span class="cstat-no" title="statement not covered" >        store.dispatch('SET_SAVE_BUTTON', true)</span>
+      }, 5000)
+<span class="cstat-no" title="statement not covered" >      store.dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), true)</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      clearTimeout(store.state.deleteQueue[list.id])</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)</span>
+<span class="cstat-no" title="statement not covered" >      store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)</span>
+    }
+  },
+<span class="fstat-no" title="function not covered" >  sortLists (store, oldIndex, newIndex) {</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SORT_LISTS', oldIndex, newIndex)</span>
+<span class="cstat-no" title="statement not covered" >    store.dispatch('SET_SAVE_BUTTON', true)</span>
+  }
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 20 2016 21:56:43 GMT-0700 (MST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

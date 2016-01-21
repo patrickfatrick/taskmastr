@@ -1,4 +1,5 @@
 import hat from 'hat'
+import _ from 'lodash'
 import gregorian from 'gregorian'
 
 export default function (list) {
