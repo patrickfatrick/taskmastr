@@ -1,7 +1,7 @@
 <template>
   <div id="task-list" class="table" v-show='tasks'>
     <div class="table-body" v-el:dragula>
-      <div v-for="task in tasks" class="task table-row" v-bind:class="{'deleting': task._delete, 'complete': task.complete, 'active': task.current}" name="task{{$index + 1}}" transition="item">
+      <div v-for="task in tasks" class="task table-row" name="task{{$index + 1}}" v-bind:class="{'deleting': task._delete, 'complete': task.complete, 'active': task.current}" v-on:dblclick.prevent="toggleDetails($index, true)" transition="item">
         <div class="table-header">
           <input class="check" type="checkbox" v-model="task.complete"></input>
           <button class="complete" title="Complete task" v-on:click.prevent="completeTask($index, !task.complete)">
