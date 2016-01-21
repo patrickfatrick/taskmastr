@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">44% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>11/25</span>
+        <span class='fraction'>25/25</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/13</span>
+        <span class='fraction'>13/13</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.5% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/16</span>
+        <span class='fraction'>16/16</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -92,86 +92,86 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash'
-import {<span class="fstat-no" title="function not covered" >SET_CURRENT_TASK, <span class="fstat-no" title="function not covered" >ADD_TASK, <span class="fstat-no" title="function not covered" >REMOVE_TASK, <span class="fstat-no" title="function not covered" >SET_NEW_TASK, <span class="fstat-no" title="function not covered" >SET_TASK_COMPLETE, <span class="fstat-no" title="function not covered" >SET_TASK_DELETE, <span class="fstat-no" title="function not covered" >SET_TASK_DUE_DATE, <span class="fstat-no" title="function not covered" >DELETE_AGENDA, <span class="fstat-no" title="function not covered" >UPDATE_DELETE_QUEUE, <span class="fstat-no" title="function not covered" >SORT_TASKS, <span class="fstat-no" title="function not covered" >TOGGLE_DETAILS, <span class="fstat-no" title="function not covered" >SET_DUE_DATE_DIFFERENCE} from '../mutation-types'</span></span></span></span></span></span></span></span></span></span></span></span>
+import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_TASK_COMPLETE, SET_TASK_DELETE, SET_TASK_DUE_DATE, DELETE_AGENDA, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
 &nbsp;
 export const taskMutations = {
   [SET_CURRENT_TASK] (state, index) {
-<span class="cstat-no" title="statement not covered" >    _.set(_.find(state.user.current.items, {current: true}), 'current', false)</span>
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.current.items[' + index + '].current', true)</span>
+    _.set(_.find(state.user.current.items, {current: true}), 'current', false)
+    _.set(state, 'user.current.items[' + index + '].current', true)
   },
   [ADD_TASK] (state, task) {
-<span class="cstat-no" title="statement not covered" >    state.user.current.items.unshift(task)</span>
+    state.user.current.items.unshift(task)
   },
   [REMOVE_TASK] (state, index) {
-<span class="cstat-no" title="statement not covered" >    state.user.current.items.splice(index, 1)</span>
+    state.user.current.items.splice(index, 1)
   },
   [SET_NEW_TASK] (state, task) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'newTask', task)</span>
+    _.set(state, 'newTask', task)
   },
   [SET_TASK_COMPLETE] (state, index, bool) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.current.items[' + index + '].complete', bool)</span>
+    _.set(state, 'user.current.items[' + index + '].complete', bool)
   },
   [SET_TASK_DELETE] (state, index, bool) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.current.items[' + index + ']._delete', bool)</span>
+    _.set(state, 'user.current.items[' + index + ']._delete', bool)
   },
   [SET_TASK_DUE_DATE] (state, index, date) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.current.items[' + index + '].dueDate', date)</span>
+    _.set(state, 'user.current.items[' + index + '].dueDate', date)
   },
   [DELETE_AGENDA] (state, id) {
-<span class="cstat-no" title="statement not covered" >    state.deleteAgendas.push(id)</span>
+    state.deleteAgendas.push(id)
   },
   [UPDATE_DELETE_QUEUE] (state, id, val) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'deleteQueue[' + id + ']', val)</span>
+    _.set(state, 'deleteQueue[' + id + ']', val)
   },
   [SORT_TASKS] (state, oldIndex, newIndex) {
-<span class="cstat-no" title="statement not covered" >    let spliced = state.user.current.items.splice(oldIndex, 1)</span>
-<span class="cstat-no" title="statement not covered" >    state.user.current.items.splice(newIndex, 0, spliced[0])</span>
+    let spliced = state.user.current.items.splice(oldIndex, 1)
+    state.user.current.items.splice(newIndex, 0, spliced[0])
   },
   [TOGGLE_DETAILS] (state, index, bool) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.current.items[' + index + ']._detailsToggled', bool)</span>
+    _.set(state, 'user.current.items[' + index + ']._detailsToggled', bool)
   },
   [SET_DUE_DATE_DIFFERENCE] (state, index, n) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'user.current.items[' + index + ']._dueDateDifference', n)</span>
+    _.set(state, 'user.current.items[' + index + ']._dueDateDifference', n)
   }
 }
 &nbsp;
@@ -181,7 +181,7 @@ export const taskMutations = {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 20 2016 21:56:43 GMT-0700 (MST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jan 21 2016 06:31:03 GMT-0700 (MST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
