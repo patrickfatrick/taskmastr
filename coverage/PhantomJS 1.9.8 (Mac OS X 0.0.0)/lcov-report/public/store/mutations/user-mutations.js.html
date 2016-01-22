@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">87.1% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>27/31</span>
+        <span class='fraction'>31/31</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">80.95% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>17/21</span>
+        <span class='fraction'>21/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">81.82% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/22</span>
+        <span class='fraction'>22/22</span>
       </div>
     </div>
   </div>
@@ -109,8 +109,7 @@
 64
 65
 66
-67
-68</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -119,7 +118,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4×</span>
@@ -164,21 +162,21 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash'
-import {SET_INIT, SET_AUTH, TOGGLE_CHECKBOX, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_CONFIRM_ATTEMPT, SET_RESET, <span class="fstat-no" title="function not covered" >SET_RESET_ATTEMPT, <span class="fstat-no" title="function not covered" >SET_RESET_TOKEN, <span class="fstat-no" title="function not covered" >SET_RESET_FAIL, <span class="fstat-no" title="function not covered" >SET_SAVE_BUTTON} from '../mutation-types'</span></span></span></span>
+import {SET_INIT, SET_AUTH, TOGGLE_CHECKBOX, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_CONFIRM_ATTEMPT, SET_RESET, SET_RESET_ATTEMPT, SET_RESET_TOKEN, SET_RESET_FAIL, SET_SAVE_BUTTON} from '../mutation-types'
 &nbsp;
 export const userMutations = {
   [SET_INIT] (state, bool) {
@@ -188,7 +186,6 @@ export const userMutations = {
     _.set(state, 'auth', val)
   },
   [TOGGLE_CHECKBOX] (state, checkbox) {
-    // state[checkbox] = !state[checkbox]
     _.set(state, [checkbox], !state[checkbox])
   },
   [SET_USERNAME] (state, username) {
@@ -231,16 +228,16 @@ export const userMutations = {
     _.set(state, 'reset', bool)
   },
   [SET_RESET_ATTEMPT] (state, bool) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'resetAttempt', bool)</span>
+    _.set(state, 'resetAttempt', bool)
   },
   [SET_RESET_TOKEN] (state, val) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'resetToken', val)</span>
+    _.set(state, 'resetToken', val)
   },
   [SET_RESET_FAIL] (state, val) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'resetFail', val)</span>
+    _.set(state, 'resetFail', val)
   },
   [SET_SAVE_BUTTON] (state, bool) {
-<span class="cstat-no" title="statement not covered" >    _.set(state, 'saveButton', bool)</span>
+    _.set(state, 'saveButton', bool)
   }
 }
 &nbsp;
@@ -250,7 +247,7 @@ export const userMutations = {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jan 21 2016 16:49:20 GMT-0700 (MST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jan 22 2016 06:57:38 GMT-0700 (MST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

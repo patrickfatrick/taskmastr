@@ -9,7 +9,6 @@ export const userMutations = {
     _.set(state, 'auth', val)
   },
   [TOGGLE_CHECKBOX] (state, checkbox) {
-    // state[checkbox] = !state[checkbox]
     _.set(state, [checkbox], !state[checkbox])
   },
   [SET_USERNAME] (state, username) {

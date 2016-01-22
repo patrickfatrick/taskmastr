@@ -1,6 +1,6 @@
 /* global describe it */
 import chai from 'chai'
-import {userMutations} from '../public/store/mutations/user-mutations'
+import {userMutations} from '../../public/store/mutations/user-mutations'
 
 chai.should()
 describe('user mutations', () => {
@@ -368,5 +368,165 @@ describe('user mutations', () => {
     state.forgotEmail.should.be.true
     state.confirmAttempt.should.be.true
     state.reset.should.be.true
+  })
+
+  it('SET_RESET_ATTEMPT', () => {
+    let state = {
+      user: {
+        username: 'username',
+        key: 'password',
+        confirm: 'password',
+        darkmode: true,
+        tasks: []
+      },
+      forgot: true,
+      create: true,
+      invalidKey: 'Invalid key',
+      loginAttempt: true,
+      forgotAttempt: true,
+      forgotEmail: true,
+      confirmAttempt: true,
+      reset: true,
+      resetAttempt: false
+    }
+
+    userMutations.SET_RESET_ATTEMPT(state, true)
+
+    state.user.should.have.property('username', 'username')
+    state.user.should.have.property('key', 'password')
+    state.user.should.have.property('confirm', 'password')
+    state.user.should.have.property('darkmode', true)
+    state.forgot.should.be.true
+    state.create.should.be.true
+    state.invalidKey.should.equal('Invalid key')
+    state.loginAttempt.should.be.true
+    state.forgotAttempt.should.be.true
+    state.forgotEmail.should.be.true
+    state.confirmAttempt.should.be.true
+    state.reset.should.be.true
+    state.resetAttempt.should.be.true
+  })
+
+  it('SET_RESET_TOKEN', () => {
+    let state = {
+      user: {
+        username: 'username',
+        key: 'password',
+        confirm: 'password',
+        darkmode: true,
+        tasks: []
+      },
+      forgot: true,
+      create: true,
+      invalidKey: 'Invalid key',
+      loginAttempt: true,
+      forgotAttempt: true,
+      forgotEmail: true,
+      confirmAttempt: true,
+      reset: true,
+      resetAttempt: true,
+      resetToken: ''
+    }
+
+    userMutations.SET_RESET_TOKEN(state, 'token')
+
+    state.user.should.have.property('username', 'username')
+    state.user.should.have.property('key', 'password')
+    state.user.should.have.property('confirm', 'password')
+    state.user.should.have.property('darkmode', true)
+    state.forgot.should.be.true
+    state.create.should.be.true
+    state.invalidKey.should.equal('Invalid key')
+    state.loginAttempt.should.be.true
+    state.forgotAttempt.should.be.true
+    state.forgotEmail.should.be.true
+    state.confirmAttempt.should.be.true
+    state.reset.should.be.true
+    state.resetAttempt.should.be.true
+    state.resetToken.should.equal('token')
+  })
+
+  it('SET_RESET_FAIL', () => {
+    let state = {
+      user: {
+        username: 'username',
+        key: 'password',
+        confirm: 'password',
+        darkmode: true,
+        tasks: []
+      },
+      forgot: true,
+      create: true,
+      invalidKey: 'Invalid key',
+      loginAttempt: true,
+      forgotAttempt: true,
+      forgotEmail: true,
+      confirmAttempt: true,
+      reset: true,
+      resetAttempt: true,
+      resetToken: 'token',
+      resetFail: false
+    }
+
+    userMutations.SET_RESET_FAIL(state, true)
+
+    state.user.should.have.property('username', 'username')
+    state.user.should.have.property('key', 'password')
+    state.user.should.have.property('confirm', 'password')
+    state.user.should.have.property('darkmode', true)
+    state.forgot.should.be.true
+    state.create.should.be.true
+    state.invalidKey.should.equal('Invalid key')
+    state.loginAttempt.should.be.true
+    state.forgotAttempt.should.be.true
+    state.forgotEmail.should.be.true
+    state.confirmAttempt.should.be.true
+    state.reset.should.be.true
+    state.resetAttempt.should.be.true
+    state.resetToken.should.equal('token')
+    state.resetFail.should.equal(true)
+  })
+
+  it('SET_SAVE_BUTTON', () => {
+    let state = {
+      user: {
+        username: 'username',
+        key: 'password',
+        confirm: 'password',
+        darkmode: true,
+        tasks: []
+      },
+      forgot: true,
+      create: true,
+      invalidKey: 'Invalid key',
+      loginAttempt: true,
+      forgotAttempt: true,
+      forgotEmail: true,
+      confirmAttempt: true,
+      reset: true,
+      resetAttempt: true,
+      resetToken: 'token',
+      resetFail: true,
+      saveButton: false
+    }
+
+    userMutations.SET_SAVE_BUTTON(state, true)
+
+    state.user.should.have.property('username', 'username')
+    state.user.should.have.property('key', 'password')
+    state.user.should.have.property('confirm', 'password')
+    state.user.should.have.property('darkmode', true)
+    state.forgot.should.be.true
+    state.create.should.be.true
+    state.invalidKey.should.equal('Invalid key')
+    state.loginAttempt.should.be.true
+    state.forgotAttempt.should.be.true
+    state.forgotEmail.should.be.true
+    state.confirmAttempt.should.be.true
+    state.reset.should.be.true
+    state.resetAttempt.should.be.true
+    state.resetToken.should.equal('token')
+    state.resetFail.should.be.true
+    state.saveButton.should.be.true
   })
 })

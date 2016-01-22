@@ -1,5 +1,6 @@
 var webpackConfig = require('./webpack.config.js')
 delete webpackConfig.entry
+delete webpackConfig.plugins
 
 webpackConfig.module.preLoaders.unshift({
   test: /\.js$/,
@@ -10,8 +11,8 @@ webpackConfig.module.preLoaders.unshift({
 module.exports = function (karma) {
   karma.set({
     basePath: '',
-    files: ['test/index.js'],
-    frameworks: ['mocha', 'chai'], // 'mocha', 'chai'
+    files: ['node_modules/es6-promise/dist/es6-promise.js', 'node_modules/whatwg-fetch/fetch.js', 'test/index.js'],
+    frameworks: ['mocha', 'chai', 'sinon'], // 'mocha', 'chai', 'sinon'
     plugins: [
       'karma-webpack',
       'karma-mocha',
@@ -22,7 +23,8 @@ module.exports = function (karma) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-safari-launcher',
-      'karma-opera-launcher'
+      'karma-opera-launcher',
+      'karma-sinon'
     ],
     browsers: ['PhantomJS'], // 'Chrome', 'Safari', 'Firefox', 'Opera'
     preprocessors: {

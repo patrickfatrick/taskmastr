@@ -24,7 +24,7 @@ export default {
   setForgotAttempt: 'SET_FORGOT_ATTEMPT',
   setForgotEmail: 'SET_FORGOT_EMAIL',
   setConfirmAttempt: 'SET_CONFIRM_ATTEMPT',
-  setReset: 'SET_RESET_FORM',
+  setReset: 'SET_RESET',
   setResetAttempt: 'SET_RESET_ATTEMPT',
   setResetToken: 'SET_RESET_TOKEN',
   setResetFail: 'SET_RESET_FAIL',
