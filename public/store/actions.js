@@ -34,8 +34,7 @@ export default {
     store.dispatch('SET_SAVE_BUTTON', true)
   },
   getSession: store => {
-    return getSession()
-    .then(response => {
+    return getSession(response => {
       if (response.error) {
         if (response.error === 204) return store.dispatch('SET_INIT', true)
       }
@@ -48,8 +47,8 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', taskMap)
-      let current = _.findIndex(store.state.user.tasks, {current: true})
-        ? _.findIndex(store.state.user.tasks, {current: true})
+      let current = _.findIndex(taskMap, {current: true})
+        ? _.findIndex(taskMap, {current: true})
         : 0
       store.dispatch('SET_CURRENT_LIST', current)
       store.dispatch('SET_AUTH', response.username)
@@ -58,8 +57,7 @@ export default {
   },
   loginUser: (store, username, key, rememberMe, isValid) => {
     if (!isValid) return
-    return login(username, key, rememberMe)
-    .then(response => {
+    return login(username, key, rememberMe, response => {
       if (response.error) {
         if (response.error === 204) return store.dispatch('SET_CREATE')
         if (response.error === 401) return store.dispatch('SET_INVALID_KEY', response.msg)
@@ -70,8 +68,8 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', taskMap)
-      let current = _.findIndex(store.state.user.tasks, {current: true})
-        ? _.findIndex(store.state.user.tasks, {current: true})
+      let current = _.findIndex(taskMap, {current: true})
+        ? _.findIndex(taskMap, {current: true})
         : 0
       store.dispatch('SET_CURRENT_LIST', current)
       store.dispatch('SET_AUTH', response.username)
@@ -80,37 +78,35 @@ export default {
   },
   createUser: (store, username, key, rememberMe, isValid) => {
     if (!isValid) return
-    return create(username, key, rememberMe)
-    .then(() => {
+    return create(username, key, rememberMe, response => {
+      store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_CONFIRM', '')
-      store.dispatch('SET_DARKMODE', true)
+      store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', [defaultList])
       store.dispatch('SET_CURRENT_LIST', 0)
-      store.dispatch('SET_AUTH', username)
-      return username
+      store.dispatch('SET_AUTH', response.username)
+      return response.username
     })
   },
   forgotPassword: (store, username, isValid) => {
     if (!isValid) return
-    forgot(username)
-    .then(() => {
-      return store.dispatch('SET_FORGOT_EMAIL', true)
+    forgot(username, response => {
+      if (response.emailSent) return store.dispatch('SET_FORGOT_EMAIL', true)
     })
   },
   resetPassword: (store, token, key, isValid) => {
     if (!isValid) return
-    return reset(token, key)
-    .then(response => {
+    return reset(token, key, response => {
       if (response.error) {
         if (response.error === 401) return store.dispatch('SET_RESET_FAIL', response.msg)
       }
+      store.dispatch('SET_USERNAME', response.username)
       return response.username
     })
   },
   logout: () => {
-    return logout()
-    .then(() => {
+    return logout(() => {
       window.location.href = '/'
     })
   },
@@ -124,9 +120,8 @@ export default {
     // handle "try it" account
     if (user.username === 'mrormrstestperson@taskmastr.co') return store.dispatch('SET_SAVE_BUTTON', false)
     let deleteAgendas = store.state.deleteAgendas
-    return save(user, deleteAgendas)
-    .then((response) => {
-      if (response.status !== 200) return
+    return save(user, deleteAgendas, response => {
+      if (response.status !== 200) return store.dispatch('SET_SAVE_BUTTON', true)
       return store.dispatch('SET_SAVE_BUTTON', false)
     })
   },

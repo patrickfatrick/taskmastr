@@ -4,15 +4,19 @@ delete webpackConfig.plugins
 
 webpackConfig.module.preLoaders.unshift({
   test: /\.js$/,
-  exclude: /node_modules|public\/dist\//,
+  exclude: /node_modules|public\/dist\/|test/,
   loader: 'isparta'
 })
 
 module.exports = function (karma) {
   karma.set({
     basePath: '',
-    files: ['node_modules/es6-promise/dist/es6-promise.js', 'node_modules/whatwg-fetch/fetch.js', 'test/index.js'],
-    frameworks: ['mocha', 'chai', 'sinon'], // 'mocha', 'chai', 'sinon'
+    files: [
+      'node_modules/es6-promise/dist/es6-promise.js',
+      'node_modules/whatwg-fetch/fetch.js',
+      'test/index.js'
+    ],
+    frameworks: ['mocha', 'sinon', 'chai'],
     plugins: [
       'karma-webpack',
       'karma-mocha',

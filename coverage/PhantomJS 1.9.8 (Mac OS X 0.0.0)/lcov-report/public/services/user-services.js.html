@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">47.83% </span>
+        <span class="strong">60.87% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>22/46</span>
+        <span class='fraction'>28/46</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">33.33% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>4/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">10% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/20</span>
+        <span class='fraction'>8/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/30</span>
+        <span class='fraction'>15/30</span>
       </div>
       <div class='fl pad1y'>
         <span class="strong">2 statements, 1 branch</span>
@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -203,7 +203,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,7 +223,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -241,7 +241,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -268,7 +268,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -278,7 +278,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -292,7 +292,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -309,7 +309,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function login (username, key, rememberMe) {
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function login (username, key, rememberMe, cb) {
   return window.fetch('/users/login', {
     method: 'post',
     credentials: 'same-origin',
@@ -329,12 +329,12 @@
 <span class="cstat-no" title="statement not covered" >    return response.json()</span>
   })
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
-export <span class="fstat-no" title="function not covered" >function create (username, key, rememberMe) {</span>
-<span class="cstat-no" title="statement not covered" >  return window.fetch('/users/create', {</span>
+export function create (username, key, rememberMe, cb) {
+  return window.fetch('/users/create', {
     method: 'post',
     credentials: 'same-origin',
     headers: {
@@ -349,12 +349,12 @@ export <span class="fstat-no" title="function not covered" >function create (use
   })
   .then(<span class="fstat-no" title="function not covered" >r</span>esponse =&gt; response.json())
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
-export <span class="fstat-no" title="function not covered" >function forgot (username) {</span>
-<span class="cstat-no" title="statement not covered" >  return window.fetch('/users/forgot', {</span>
+export function forgot (username, cb) {
+  return window.fetch('/users/forgot', {
     method: 'post',
     credentials: 'same-origin',
     headers: {
@@ -367,12 +367,12 @@ export <span class="fstat-no" title="function not covered" >function forgot (use
   })
   .then(<span class="fstat-no" title="function not covered" >r</span>esponse =&gt; response.json())
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
-export <span class="fstat-no" title="function not covered" >function reset (token, newKey) {</span>
-<span class="cstat-no" title="statement not covered" >  return window.fetch('/users/reset', {</span>
+export function reset (token, newKey, cb) {
+  return window.fetch('/users/reset', {
     method: 'post',
     credentials: 'same-origin',
     headers: {
@@ -394,22 +394,22 @@ export <span class="fstat-no" title="function not covered" >function reset (toke
 <span class="cstat-no" title="statement not covered" >    return response.json()</span>
   })
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
-export <span class="fstat-no" title="function not covered" >function logout () {</span>
-<span class="cstat-no" title="statement not covered" >  return window.fetch('/users/logout', {</span>
+export function logout (cb) {
+  return window.fetch('/users/logout', {
     method: 'get',
     credentials: 'same-origin'
   })
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
-export <span class="fstat-no" title="function not covered" >function getSession () {</span>
-<span class="cstat-no" title="statement not covered" >  return window.fetch('/session-data', {</span>
+export function getSession (cb) {
+  return window.fetch('/session-data', {
     method: 'get',
     credentials: 'same-origin'
   })
@@ -418,12 +418,12 @@ export <span class="fstat-no" title="function not covered" >function getSession 
 <span class="cstat-no" title="statement not covered" >    return response.json()</span>
   })
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
-export <span class="fstat-no" title="function not covered" >function save (user, deleteAgendas) {</span>
-<span class="cstat-no" title="statement not covered" >  return window.fetch('/users/write', {</span>
+export function save (user, deleteAgendas, cb) {
+  return window.fetch('/users/write', {
     method: 'post',
     credentials: 'same-origin',
     headers: {
@@ -436,7 +436,7 @@ export <span class="fstat-no" title="function not covered" >function save (user,
     })
   })
   .then(<span class="fstat-no" title="function not covered" >response =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return response</span>
+<span class="cstat-no" title="statement not covered" >    cb(response)</span>
   })
 }
 &nbsp;
@@ -446,7 +446,7 @@ export <span class="fstat-no" title="function not covered" >function save (user,
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jan 22 2016 06:57:38 GMT-0700 (MST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jan 24 2016 07:50:56 GMT-0700 (MST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

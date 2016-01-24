@@ -7,7 +7,7 @@ export default function (list) {
     id: list.id || list.agendaID || hat(),
     list: list.list,
     current: list.current,
-    _delete: list.delete,
+    _delete: false,
     items: _.map(list.items, function (item) {
       return {
         id: item.id || item.agendaID,

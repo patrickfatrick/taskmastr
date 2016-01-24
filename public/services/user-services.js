@@ -1,4 +1,4 @@
-export function login (username, key, rememberMe) {
+export function login (username, key, rememberMe, cb) {
   return window.fetch('/users/login', {
     method: 'post',
     credentials: 'same-origin',
@@ -18,11 +18,11 @@ export function login (username, key, rememberMe) {
     return response.json()
   })
   .then(response => {
-    return response
+    cb(response)
   })
 }
 
-export function create (username, key, rememberMe) {
+export function create (username, key, rememberMe, cb) {
   return window.fetch('/users/create', {
     method: 'post',
     credentials: 'same-origin',
@@ -38,11 +38,11 @@ export function create (username, key, rememberMe) {
   })
   .then(response => response.json())
   .then(response => {
-    return response
+    cb(response)
   })
 }
 
-export function forgot (username) {
+export function forgot (username, cb) {
   return window.fetch('/users/forgot', {
     method: 'post',
     credentials: 'same-origin',
@@ -56,11 +56,11 @@ export function forgot (username) {
   })
   .then(response => response.json())
   .then(response => {
-    return response
+    cb(response)
   })
 }
 
-export function reset (token, newKey) {
+export function reset (token, newKey, cb) {
   return window.fetch('/users/reset', {
     method: 'post',
     credentials: 'same-origin',
@@ -83,21 +83,21 @@ export function reset (token, newKey) {
     return response.json()
   })
   .then(response => {
-    return response
+    cb(response)
   })
 }
 
-export function logout () {
+export function logout (cb) {
   return window.fetch('/users/logout', {
     method: 'get',
     credentials: 'same-origin'
   })
   .then(response => {
-    return response
+    cb(response)
   })
 }
 
-export function getSession () {
+export function getSession (cb) {
   return window.fetch('/session-data', {
     method: 'get',
     credentials: 'same-origin'
@@ -107,11 +107,11 @@ export function getSession () {
     return response.json()
   })
   .then(response => {
-    return response
+    cb(response)
   })
 }
 
-export function save (user, deleteAgendas) {
+export function save (user, deleteAgendas, cb) {
   return window.fetch('/users/write', {
     method: 'post',
     credentials: 'same-origin',
@@ -125,6 +125,6 @@ export function save (user, deleteAgendas) {
     })
   })
   .then(response => {
-    return response
+    cb(response)
   })
 }
