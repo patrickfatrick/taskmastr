@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
-import {testAction} from './test-action'
-const actionsInjector = require('inject!../../public/store/actions')
+import {testAction} from '../test-action'
+const actionsInjector = require('inject!../../../public/store/actions')
 
 chai.should()
 
@@ -16,7 +16,7 @@ describe('resetPassword', () => {
     })
 
     testAction(actions.default.resetPassword, ['token', 'newKey', true], {}, [
-      {name: 'SET_USERNAME', payload: 'username'}
+      {name: 'SET_USERNAME', payload: ['username']}
     ], done)
   })
 
@@ -30,7 +30,7 @@ describe('resetPassword', () => {
     })
 
     testAction(actions.default.resetPassword, ['token', 'newKey', true], {}, [
-      {name: 'SET_RESET_FAIL', payload: 'Invalid link'}
+      {name: 'SET_RESET_FAIL', payload: ['Invalid link']}
     ], done)
   })
 

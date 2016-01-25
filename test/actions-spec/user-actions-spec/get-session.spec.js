@@ -1,8 +1,8 @@
 /* global describe it */
 import chai from 'chai'
-import {testAction} from './test-action'
-import {mockUser} from '../user-mocks'
-const actionsInjector = require('inject!../../public/store/actions')
+import {testAction} from '../test-action'
+import {mockUser} from '../../user-mocks'
+const actionsInjector = require('inject!../../../public/store/actions')
 
 chai.should()
 
@@ -17,12 +17,12 @@ describe('getSession', () => {
     })
 
     testAction(actions.default.getSession, [], {}, [
-      {name: 'SET_USERNAME', payload: 'username'},
-      {name: 'SET_KEY', payload: ''},
-      {name: 'SET_DARKMODE', payload: true},
-      {name: 'SET_TASKS', payload: mockUser.tasks},
-      {name: 'SET_CURRENT_LIST', payload: 0},
-      {name: 'SET_AUTH', payload: 'username'}
+      {name: 'SET_USERNAME', payload: ['username']},
+      {name: 'SET_KEY', payload: ['']},
+      {name: 'SET_DARKMODE', payload: [true]},
+      {name: 'SET_TASKS', payload: [mockUser.tasks]},
+      {name: 'SET_CURRENT_LIST', payload: [0]},
+      {name: 'SET_AUTH', payload: ['username']}
     ], done)
   })
 
@@ -36,7 +36,7 @@ describe('getSession', () => {
     })
 
     testAction(actions.default.getSession, [], {}, [
-      {name: 'SET_INIT', payload: true}
+      {name: 'SET_INIT', payload: [true]}
     ], done)
   })
 })

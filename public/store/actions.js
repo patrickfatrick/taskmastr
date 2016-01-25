@@ -142,10 +142,6 @@ export default {
     store.dispatch('REMOVE_TASK', index)
     store.dispatch('SET_SAVE_BUTTON', true)
   },
-  setTaskComplete: (store, index, bool) => {
-    store.dispatch('SET_TASK_COMPLETE', index, bool)
-    store.dispatch('SET_SAVE_BUTTON', true)
-  },
   deleteTask (store, index) {
     const tasks = store.state.user.current.items
     const task = tasks[index]
@@ -214,8 +210,8 @@ export default {
   },
   deleteList (store, index) {
     const lists = store.state.user.tasks
-    if (lists.length === 1) return
     const list = lists[index]
+    if (lists.length === 1) return
     if (!list._delete) {
       timeoutID = setTimeout(() => {
         let prevList = lists[index - 1]

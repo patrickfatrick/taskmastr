@@ -8,6 +8,8 @@ webpackConfig.module.preLoaders.unshift({
   loader: 'isparta'
 })
 
+webpackConfig.devtool = 'inline-source-map'
+
 module.exports = function (karma) {
   karma.set({
     basePath: '',
@@ -19,6 +21,7 @@ module.exports = function (karma) {
     frameworks: ['mocha', 'sinon', 'chai'],
     plugins: [
       'karma-webpack',
+      'karma-sourcemap-loader',
       'karma-mocha',
       'karma-chai',
       'karma-coverage',
@@ -32,7 +35,7 @@ module.exports = function (karma) {
     ],
     browsers: ['PhantomJS'], // 'Chrome', 'Safari', 'Firefox', 'Opera'
     preprocessors: {
-      'test/index.js': ['webpack']
+      'test/index.js': ['webpack', 'sourcemap']
     },
     webpack: webpackConfig,
     webpackMiddleware: {

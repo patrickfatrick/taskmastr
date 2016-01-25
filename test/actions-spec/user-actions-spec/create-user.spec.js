@@ -1,8 +1,8 @@
 /* global describe it */
 import chai from 'chai'
-import {testAction} from './test-action'
-import {newUser} from '../user-mocks'
-const actionsInjector = require('inject!../../public/store/actions')
+import {testAction} from '../test-action'
+import {newUser} from '../../user-mocks'
+const actionsInjector = require('inject!../../../public/store/actions')
 
 chai.should()
 
@@ -17,13 +17,13 @@ describe('createUser', () => {
     })
 
     testAction(actions.default.createUser, ['username', 'password', false, true], {}, [
-      {name: 'SET_USERNAME', payload: 'username'},
-      {name: 'SET_KEY', payload: ''},
-      {name: 'SET_CONFIRM', payload: ''},
-      {name: 'SET_DARKMODE', payload: true},
-      {name: 'SET_TASKS', payload: newUser.tasks},
-      {name: 'SET_CURRENT_LIST', payload: 0},
-      {name: 'SET_AUTH', payload: 'username'}
+      {name: 'SET_USERNAME', payload: ['username']},
+      {name: 'SET_KEY', payload: ['']},
+      {name: 'SET_CONFIRM', payload: ['']},
+      {name: 'SET_DARKMODE', payload: [true]},
+      {name: 'SET_TASKS', payload: [newUser.tasks]},
+      {name: 'SET_CURRENT_LIST', payload: [0]},
+      {name: 'SET_AUTH', payload: ['username']}
     ], done)
   })
 

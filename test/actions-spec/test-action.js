@@ -2,7 +2,7 @@
 export const testAction = (action, args, state, expectedMutations, done) => {
   let count = 0
   // mock dispatch
-  const dispatch = (name, payload) => {
+  const dispatch = (name, ...payload) => {
     const mutation = expectedMutations[count]
     mutation.name.should.equal(name)
     if (payload) {

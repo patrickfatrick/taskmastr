@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
-import {testAction} from './test-action'
-const actionsInjector = require('inject!../../public/store/actions')
+import {testAction} from '../test-action'
+const actionsInjector = require('inject!../../../public/store/actions')
 
 chai.should()
 
@@ -16,7 +16,7 @@ describe('forgotPassword', () => {
     })
 
     testAction(actions.default.forgotPassword, ['username', true], {}, [
-      {name: 'SET_FORGOT_EMAIL', payload: true}
+      {name: 'SET_FORGOT_EMAIL', payload: [true]}
     ], done)
   })
 

@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
-import {testAction} from './test-action'
-const actionsInjector = require('inject!../../public/store/actions')
+import {testAction} from '../test-action'
+const actionsInjector = require('inject!../../../public/store/actions')
 
 chai.should()
 
@@ -23,7 +23,7 @@ describe('save', () => {
       }
     }
     testAction(actions.default.save, [], state, [
-      {name: 'SET_SAVE_BUTTON', payload: false}
+      {name: 'SET_SAVE_BUTTON', payload: [false]}
     ], done)
   })
 
@@ -44,7 +44,28 @@ describe('save', () => {
       }
     }
     testAction(actions.default.save, [], state, [
-      {name: 'SET_SAVE_BUTTON', payload: true}
+      {name: 'SET_SAVE_BUTTON', payload: [true]}
+    ], done)
+  })
+
+  it('only dispatches SET_SAVE_BUTTON on test account', done => {
+    const actions = actionsInjector({
+      '../services/user-services': {
+        save (user, deleteAgendas, cb) {
+          cb({})
+        }
+      }
+    })
+    let state = {
+      user: {
+        username: 'mrormrstestperson@taskmastr.co',
+        key: 'password',
+        darkmode: true,
+        tasks: []
+      }
+    }
+    testAction(actions.default.save, [], state, [
+      {name: 'SET_SAVE_BUTTON', payload: [false]}
     ], done)
   })
 })
