@@ -168,6 +168,57 @@ describe('deleteList', () => {
     clock.tick(5000)
   })
 
+  it('undoes deletion methods when only list (multiple deletions)', done => {
+    let state = {
+      user: {
+        tasks: [
+          {
+            id: 'listid',
+            list: 'List 1',
+            current: true,
+            _delete: false,
+            items: [
+              {
+                id: 'itemid',
+                item: 'Item 1'
+              }
+            ]
+          },
+          {
+            id: 'listid2',
+            list: 'List 2',
+            current: false,
+            _delete: false,
+            items: [
+              {
+                id: 'itemid2',
+                item: 'Item 2'
+              }
+            ]
+          }
+        ]
+      }
+    }
+    testAction(actions.deleteList, [0], state, [
+      {name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 4]},
+      {name: 'SET_LIST_DELETE', payload: [0, true]},
+      {name: 'SET_CURRENT_LIST', payload: [1]},
+      {name: 'DELETE_AGENDA', payload: ['itemid']},
+      {name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null]},
+      {name: 'SET_LIST_DELETE', payload: [0, false]},
+      {name: 'REMOVE_LIST', payload: [0]},
+      {name: 'SET_SAVE_BUTTON', payload: [true]}
+    ], done)
+    clock.tick(1000)
+    testAction(actions.deleteList, [1], state, [
+      {name: 'UPDATE_DELETE_QUEUE', payload: ['listid2', 5]},
+      {name: 'SET_LIST_DELETE', payload: [1, true]},
+      {name: 'UPDATE_DELETE_QUEUE', payload: ['listid2', null]},
+      {name: 'SET_LIST_DELETE', payload: [1, false]}
+    ], done)
+    clock.tick(5000)
+  })
+
   it('undoes list deletion mutations when _delete', done => {
     let state = {
       user: {
