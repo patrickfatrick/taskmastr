@@ -70,6 +70,7 @@
     "babel-runtime": "^5.8.35",
     "browser-sync": "^2.11.1",
     "chai": "^3.4.1",
+    "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
     "debug": "^2.2.0",
     "exports-loader": "^0.6.2",

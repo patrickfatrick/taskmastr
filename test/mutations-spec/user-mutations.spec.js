@@ -24,23 +24,32 @@ describe('user mutations', () => {
     state.auth.should.equal('patrick.fricano@icloud.com')
   })
 
-  it('TOGGLE_CHECKBOX', () => {
+  it('SET_FORGOT', () => {
     let state = {
-      rememberMe: false,
       forgot: false
     }
 
-    userMutations.TOGGLE_CHECKBOX(state, 'rememberMe', true)
-    userMutations.TOGGLE_CHECKBOX(state, 'forgot', true)
+    userMutations.SET_FORGOT(state, true)
 
-    state.rememberMe.should.be.true
     state.forgot.should.be.true
 
-    userMutations.TOGGLE_CHECKBOX(state, 'rememberMe', false)
-    userMutations.TOGGLE_CHECKBOX(state, 'forgot', false)
+    userMutations.SET_FORGOT(state, false)
+
+    state.forgot.should.be.false
+  })
+
+  it('SET_REMEMBER_ME', () => {
+    let state = {
+      rememberMe: false
+    }
+
+    userMutations.SET_REMEMBER_ME(state, true)
+
+    state.rememberMe.should.be.true
+
+    userMutations.SET_REMEMBER_ME(state, false)
 
     state.rememberMe.should.be.false
-    state.forgot.should.be.false
   })
 
   it('SET_USERNAME', () => {
@@ -145,27 +154,6 @@ describe('user mutations', () => {
     state.user.tasks.length.should.equal(2)
     state.user.tasks[0].list.should.equal('Current list')
     state.user.tasks[1].list.should.equal('Not current list')
-  })
-
-  it('SET_FORGOT', () => {
-    let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: false
-    }
-
-    userMutations.SET_FORGOT(state)
-
-    state.user.should.have.property('username', 'username')
-    state.user.should.have.property('key', 'password')
-    state.user.should.have.property('confirm', 'password')
-    state.user.should.have.property('darkmode', true)
-    state.forgot.should.be.true
   })
 
   it('SET_CREATE', () => {

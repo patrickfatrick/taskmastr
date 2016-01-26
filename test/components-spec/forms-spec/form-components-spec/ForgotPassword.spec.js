@@ -14,8 +14,12 @@ describe('ForgotPassword.vue', function () {
     ForgotPassword.computed.create().should.be.false
   })
 
-  it('should have a toggleCheckbox method', () => {
-    ForgotPassword.methods.toggleCheckbox.should.be.an.instanceof(Function)
+  it('should have a setForgot method', () => {
+    ForgotPassword.methods.setForgot.should.be.an.instanceof(Function)
+  })
+
+  it('should have a setForgot method', () => {
+    ForgotPassword.methods.toggleForgot.should.be.an.instanceof(Function)
   })
 
   it('should render with initial state', () => {
@@ -27,5 +31,20 @@ describe('ForgotPassword.vue', function () {
     }).$mount()
     vm.$el.querySelector('.fa').classList.contains('fa-square-o').should.be.true
     vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.false
+  })
+
+  it('should respond to changes in the state', () => {
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': ForgotPassword
+      }
+    }).$mount()
+    vm.$children[0].setForgot(true)
+    Vue.nextTick(() => {
+      vm.$children[0].forgot.should.be.true
+      vm.$el.querySelector('.fa').classList.contains('fa-square-o').should.be.false
+      vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.true
+    })
   })
 })

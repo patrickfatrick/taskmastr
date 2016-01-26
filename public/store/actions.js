@@ -12,12 +12,12 @@ export default {
    */
   setInit: 'SET_INIT',
   setAuth: 'SET_AUTH',
-  toggleCheckbox: 'TOGGLE_CHECKBOX',
   setUsername: 'SET_USERNAME',
   setKey: 'SET_KEY',
   setConfirm: 'SET_CONFIRM',
   setTasks: 'SET_TASKS',
   setForgot: 'SET_FORGOT',
+  setRememberMe: 'SET_REMEMBER_ME',
   setCreate: 'SET_CREATE',
   setInvalidKay: 'SET_INVALID_KEY',
   setLoginAttempt: 'SET_LOGIN_ATTEMPT',

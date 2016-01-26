@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_INIT, SET_AUTH, TOGGLE_CHECKBOX, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_CONFIRM_ATTEMPT, SET_RESET, SET_RESET_ATTEMPT, SET_RESET_TOKEN, SET_RESET_FAIL, SET_SAVE_BUTTON} from '../mutation-types'
+import {SET_INIT, SET_AUTH, TOGGLE_CHECKBOX, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_REMEMBER_ME, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_CONFIRM_ATTEMPT, SET_RESET, SET_RESET_ATTEMPT, SET_RESET_TOKEN, SET_RESET_FAIL, SET_SAVE_BUTTON} from '../mutation-types'
 
 export const userMutations = {
   [SET_INIT] (state, bool) {
@@ -26,8 +26,11 @@ export const userMutations = {
   [SET_TASKS] (state, tasks) {
     _.set(state, 'user.tasks', tasks)
   },
-  [SET_FORGOT] (state) {
-    _.set(state, 'forgot', !state.forgot)
+  [SET_FORGOT] (state, bool) {
+    _.set(state, 'forgot', bool)
+  },
+  [SET_REMEMBER_ME] (state, bool) {
+    _.set(state, 'rememberMe', bool)
   },
   [SET_CREATE] (state) {
     _.set(state, 'create', !state.create)
