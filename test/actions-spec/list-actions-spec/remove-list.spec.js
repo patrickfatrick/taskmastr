@@ -1,13 +1,12 @@
 /* global describe it */
 import chai from 'chai'
 import {testAction} from '../test-action'
-const actionsInjector = require('inject!../../../public/store/actions')
+import actions from '../../../public/store/actions'
 
 chai.should()
 
 describe('removeList', () => {
   it('dispatches REMOVE_LIST and SET_SAVE_BUTTON', done => {
-    const actions = actionsInjector({})
     let state = {
       user: {
         tasks: [
@@ -34,7 +33,7 @@ describe('removeList', () => {
         ]
       }
     }
-    testAction(actions.default.removeList, [0], state, [
+    testAction(actions.removeList, [0], state, [
       {name: 'REMOVE_LIST', payload: [0]},
       {name: 'SET_SAVE_BUTTON', payload: [true]}
     ], done)

@@ -18,7 +18,7 @@ module.exports = function (karma) {
       'node_modules/whatwg-fetch/fetch.js',
       'test/index.js'
     ],
-    frameworks: ['mocha', 'sinon', 'chai'],
+    frameworks: ['mocha', 'sinon-stub-promise', 'sinon', 'chai'],
     plugins: [
       'karma-webpack',
       'karma-sourcemap-loader',
@@ -31,7 +31,8 @@ module.exports = function (karma) {
       'karma-firefox-launcher',
       'karma-safari-launcher',
       'karma-opera-launcher',
-      'karma-sinon'
+      'karma-sinon',
+      'karma-sinon-stub-promise'
     ],
     browsers: ['PhantomJS'], // 'Chrome', 'Safari', 'Firefox', 'Opera'
     preprocessors: {

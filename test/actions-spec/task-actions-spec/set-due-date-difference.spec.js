@@ -1,7 +1,7 @@
 /* global describe it sinon beforeEach afterEach*/
 import chai from 'chai'
 import {testAction} from '../test-action'
-const actionsInjector = require('inject!../../../public/store/actions')
+import actions from '../../../public/store/actions'
 
 chai.should()
 
@@ -17,34 +17,28 @@ describe('setDueDateDifference', () => {
   })
 
   it('dispatches SET_DUE_DATE_DIFFERENCE with dueDate', done => {
-    const actions = actionsInjector({})
-
     const dueDate = Date.parse(new Date()) + (1000 * 60 * 60 * 24)
     const index = 0
 
-    testAction(actions.default.setDueDateDifference, [index, dueDate], {}, [
+    testAction(actions.setDueDateDifference, [index, dueDate], {}, [
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, 1]}
     ], done)
   })
 
   it('dispatches SET_DUE_DATE_DIFFERENCE with a past dueDate', done => {
-    const actions = actionsInjector({})
-
     const dueDate = Date.parse(new Date()) - (1000 * 60 * 60 * 24)
     const index = 0
 
-    testAction(actions.default.setDueDateDifference, [index, dueDate], {}, [
+    testAction(actions.setDueDateDifference, [index, dueDate], {}, [
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, -1]}
     ], done)
   })
 
   it('dispatches SET_DUE_DATE_DIFFERENCE without a dueDate', done => {
-    const actions = actionsInjector({})
-
     const dueDate = null
     const index = 0
 
-    testAction(actions.default.setDueDateDifference, [index, dueDate], {}, [
+    testAction(actions.setDueDateDifference, [index, dueDate], {}, [
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null]}
     ], done)
   })

@@ -4,5 +4,9 @@ var testsContext = require.context('.', true, /\.spec$/)
 testsContext.keys().forEach(testsContext)
 
 // require store files
-const componentsContext = require.context('../public/store/', true, /\.js$/)
-componentsContext.keys().forEach(componentsContext)
+const storeContext = require.context('../public/store/', true, /\.js$/)
+storeContext.keys().forEach(storeContext)
+
+// require component files
+const componentContext = require.context('../public/components/', true, /\.vue$/)
+componentContext.keys().forEach(componentContext)

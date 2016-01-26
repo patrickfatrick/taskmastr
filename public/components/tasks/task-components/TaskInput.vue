@@ -17,7 +17,7 @@ import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
 import store from '../../../store/store'
-import extractDate from '../../../helper-utilities/extractDate'
+import extractDate from '../../../helper-utilities/extract-date'
 
 export default {
   data () {

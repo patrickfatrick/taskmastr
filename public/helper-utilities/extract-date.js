@@ -34,10 +34,7 @@ export default function (string) {
 
   let dueDate = gregorian.reform(string.slice(keyword, string.length))
   let item
-  dueDate = (dueDate.reagent()) ? dueDate.recite() : date(string.slice(keyword, string.length))
-  // if (dueDate <= gregorian.reform(dueDate).restart('d').recite()) {
-  //  dueDate = gregorian.reform(dueDate).add(1, 'y').recite()
-  // }
+  dueDate = (dueDate.reagent()) ? dueDate.set(0, 'h').recite() : date(string.slice(keyword, string.length))
   item = string.slice(0, 1).toUpperCase() + string.slice(1, keyword)
-  return {item: item, dueDate: gregorian.reform(dueDate).to('iso')}
+  return {item: item.trim(), dueDate: gregorian.reform(dueDate).to('iso')}
 }
