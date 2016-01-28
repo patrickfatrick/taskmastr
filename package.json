@@ -18,7 +18,8 @@
     "mongo": "mongod --dbpath ./data",
     "dev": "NODE_ENV=development gulp",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "test": "karma start"
+    "test": "karma start",
+    "postinstall": "npm install async debug"
   },
   "dependencies": {
     "agenda": "^0.7.7",
