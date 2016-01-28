@@ -12,6 +12,11 @@ body {
 		font-size: 1.4rem;
 	}
 }
+
+.hidden {
+	display: none !important;
+}
+
 #app-container {
 	@extend html;
 	color: $black;

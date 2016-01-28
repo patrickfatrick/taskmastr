@@ -29,6 +29,7 @@ export default new Vuex.Store({
     loginAttempt: false,
     forgotAttempt: false,
     forgotEmail: false,
+    forgotFail: false,
     confirmAttempt: false,
     resetToken: null,
     resetAttempt: false,

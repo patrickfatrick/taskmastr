@@ -1,6 +1,6 @@
 <template>
   <div id="reset-confirm-line" class="prompt-line">
-    <input id="reset-key" class="prompt" type="password" name="resetConfirm" placeholder="Password" v-model="user.resetConfirmKey" v-bind:class="{'invalid': resetAttempt && (!match || resetFail)}"></input>
+    <input id="reset-confirm" class="prompt" type="password" name="resetConfirm" placeholder="Password" v-model="user.resetConfirmKey" v-bind:class="{'invalid': resetAttempt && (!match || resetFail)}"></input>
     <button id="reset-button" class="fa fa-arrow-right submit" type="submit" v-on:click="setResetAttempt(true)"></button>
   </div>
 </template>
@@ -16,6 +16,9 @@ export default {
     },
     resetAttempt () {
       return store.state.resetAttempt
+    },
+    resetFail () {
+      return store.state.resetFail
     }
   },
   methods: {

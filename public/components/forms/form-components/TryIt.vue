@@ -1,5 +1,5 @@
 <template>
-  <button id="try-it-button" class="button" title="Try it" v-on:click="loginUser(testUser, testKey, false, true)">Try it</button>
+  <button id="try-it-button" class="button" title="Try it" v-on:click="loginTestUser(testUser, testKey, false, true)">Try it</button>
 </template>
 
 <script>
@@ -22,15 +22,14 @@ export default {
     }
   },
   methods: {
-    loginUser (username, key, rememberMe, isValid) {
-      store.actions.loginUser(username, key, rememberMe, isValid)
-      .then(() => {
-        if (this.auth) {
-          setTimeout(() => {
-            this.$route.router.go('/app')
-          }, 750)
-        }
-      })
+    loginUser: store.actions.loginUser,
+    loginTestUser (username, key, rememberMe, isValid) {
+      this.loginUser(username, key, rememberMe, isValid)
+      if (this.auth) {
+        setTimeout(() => {
+          this.$route.router.go('/app')
+        }, 750)
+      }
     }
   }
 }

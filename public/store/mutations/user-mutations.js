@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_INIT, SET_AUTH, TOGGLE_CHECKBOX, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_REMEMBER_ME, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_CONFIRM_ATTEMPT, SET_RESET, SET_RESET_ATTEMPT, SET_RESET_TOKEN, SET_RESET_FAIL, SET_SAVE_BUTTON} from '../mutation-types'
+import {SET_INIT, SET_AUTH, SET_USERNAME, SET_KEY, SET_CONFIRM, SET_DARKMODE, SET_TASKS, SET_FORGOT, SET_REMEMBER_ME, SET_CREATE, SET_INVALID_KEY, SET_LOGIN_ATTEMPT, SET_FORGOT_ATTEMPT, SET_FORGOT_EMAIL, SET_FORGOT_FAIL, SET_CONFIRM_ATTEMPT, SET_RESET, SET_RESET_ATTEMPT, SET_RESET_TOKEN, SET_RESET_FAIL, SET_SAVE_BUTTON} from '../mutation-types'
 
 export const userMutations = {
   [SET_INIT] (state, bool) {
@@ -7,9 +7,6 @@ export const userMutations = {
   },
   [SET_AUTH] (state, val) {
     _.set(state, 'auth', val)
-  },
-  [TOGGLE_CHECKBOX] (state, checkbox) {
-    _.set(state, [checkbox], !state[checkbox])
   },
   [SET_USERNAME] (state, username) {
     _.set(state, 'user.username', username)
@@ -46,6 +43,9 @@ export const userMutations = {
   },
   [SET_FORGOT_EMAIL] (state, bool) {
     _.set(state, 'forgotEmail', bool)
+  },
+  [SET_FORGOT_FAIL] (state, bool) {
+    _.set(state, 'forgotFail', bool)
   },
   [SET_CONFIRM_ATTEMPT] (state, bool) {
     _.set(state, 'confirmAttempt', bool)

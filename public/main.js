@@ -14,7 +14,6 @@ Vue.config.debug = process.env.NODE_ENV !== 'production'
 Vue.use(Router)
 
 var app = Vue.extend({
-  // el: 'body',
   components: {
     app: App
   }

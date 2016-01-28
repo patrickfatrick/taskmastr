@@ -290,6 +290,39 @@ describe('user mutations', () => {
     state.forgotEmail.should.be.true
   })
 
+  it('SET_FORGOT_FAIL', () => {
+    let state = {
+      user: {
+        username: 'username',
+        key: 'password',
+        confirm: 'password',
+        darkmode: true,
+        tasks: []
+      },
+      forgot: true,
+      create: true,
+      invalidKey: 'Invalid key',
+      loginAttempt: true,
+      forgotAttempt: true,
+      forgotEmail: true,
+      forgotFail: false
+    }
+
+    userMutations.SET_FORGOT_FAIL(state, true)
+
+    state.user.should.have.property('username', 'username')
+    state.user.should.have.property('key', 'password')
+    state.user.should.have.property('confirm', 'password')
+    state.user.should.have.property('darkmode', true)
+    state.forgot.should.be.true
+    state.create.should.be.true
+    state.invalidKey.should.equal('Invalid key')
+    state.loginAttempt.should.be.true
+    state.forgotAttempt.should.be.true
+    state.forgotEmail.should.be.true
+    state.forgotFail.should.be.true
+  })
+
   it('SET_CONFIRM_ATTEMPT', () => {
     let state = {
       user: {

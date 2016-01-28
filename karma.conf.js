@@ -8,6 +8,10 @@ webpackConfig.module.preLoaders.unshift({
   loader: 'isparta'
 })
 
+webpackConfig.vue.loaders = {
+  js: 'babel!isparta!standard'
+}
+
 webpackConfig.devtool = 'inline-source-map'
 
 module.exports = function (karma) {

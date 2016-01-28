@@ -54,7 +54,10 @@ export function forgot (username, cb) {
       username: username
     })
   })
-  .then(response => response.json())
+  .then(response => {
+    if (response.status === 401) return {error: 401, msg: 'That username doesn\'t exist.'}
+    return response.json()
+  })
   .then(response => {
     cb(response)
   })

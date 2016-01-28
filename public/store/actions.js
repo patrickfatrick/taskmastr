@@ -23,6 +23,7 @@ export default {
   setLoginAttempt: 'SET_LOGIN_ATTEMPT',
   setForgotAttempt: 'SET_FORGOT_ATTEMPT',
   setForgotEmail: 'SET_FORGOT_EMAIL',
+  setForgotFail: 'SET_FORGOT_FAIL',
   setConfirmAttempt: 'SET_CONFIRM_ATTEMPT',
   setReset: 'SET_RESET',
   setResetAttempt: 'SET_RESET_ATTEMPT',
@@ -92,6 +93,9 @@ export default {
   forgotPassword: (store, username, isValid) => {
     if (!isValid) return
     forgot(username, response => {
+      if (response.error) {
+        if (response.error === 401) return store.dispatch('SET_FORGOT_FAIL', response.msg)
+      }
       if (response.emailSent) return store.dispatch('SET_FORGOT_EMAIL', true)
     })
   },

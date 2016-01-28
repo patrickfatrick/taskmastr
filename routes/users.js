@@ -81,7 +81,7 @@ router.post('/forgot',
       if (err) return next(err)
       if (!user) {
         console.log('No user: ' + username)
-        return next(null, null)
+        return res.sendStatus(401)
       }
       userService.setToken(user, function (err, user) {
         if (err) return next(err)
