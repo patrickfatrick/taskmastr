@@ -25,11 +25,13 @@ export default {
     loginUser: store.actions.loginUser,
     loginTestUser (username, key, rememberMe, isValid) {
       this.loginUser(username, key, rememberMe, isValid)
-      if (this.auth) {
-        setTimeout(() => {
-          this.$route.router.go('/app')
-        }, 750)
-      }
+      .then(() => {
+        if (this.auth) {
+          setTimeout(() => {
+            this.$route.router.go('/app')
+          }, 250)
+        }
+      })
     }
   }
 }

@@ -68,7 +68,7 @@ export default {
         if (this.auth) {
           setTimeout(() => {
             this.$route.router.go('/app')
-          }, 750)
+          }, 250)
         }
       })
     }

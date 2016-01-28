@@ -70,7 +70,7 @@ describe('TryIt.vue', function () {
     sinon.spy(vm.$children[0].$route.router, 'go')
 
     vm.$children[0].loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true)
-    clock.tick(750)
+    clock.tick(250)
     vm.$children[0].$route.router.go.calledWith('/app').should.be.true
     vm.$children[0].loginUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true).should.be.true
 

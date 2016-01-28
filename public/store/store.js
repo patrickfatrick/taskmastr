@@ -14,7 +14,7 @@ export default new Vuex.Store({
       confirm: '',
       resetKey: '',
       resetConfirmKey: '',
-      darkmode: true,
+      darkmode: false,
       tasks: [],
       current: {}
     },
