@@ -17,14 +17,16 @@ describe('TryIt.vue', function () {
   }
 
   let clock
+  let promise
 
   beforeEach(() => {
-    const start = 'Jan 1, 2016 00:00:000 UTC'
-    clock = sinon.useFakeTimers(Date.parse(start))
+    clock = sinon.useFakeTimers()
+    promise = sinon.stub(TryIt.methods, 'loginUser').returnsPromise()
   })
 
   afterEach(() => {
     clock.restore()
+    TryIt.methods.loginUser.restore()
   })
 
   it('should have a testUser property', () => {
@@ -59,23 +61,22 @@ describe('TryIt.vue', function () {
   })
 
   it('should log in to the test account on button push', (done) => {
-    sinon.stub(TryIt.computed, 'auth').returns('true')
+    sinon.stub(TryIt.computed, 'auth').returns('mrormrstestperson@taskmastr.co')
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
         'test': TryIt
       }
     }).$mount()
-    sinon.stub(vm.$children[0], 'loginUser').returns('mrormrstestperson@taskmastr.co')
+    promise.resolves('mrormrstestperson@taskmastr.co')
     sinon.spy(vm.$children[0].$route.router, 'go')
 
     vm.$children[0].loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true)
     clock.tick(250)
     vm.$children[0].$route.router.go.calledWith('/app').should.be.true
-    vm.$children[0].loginUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true).should.be.true
 
+    TryIt.computed.auth.restore()
     vm.$children[0].$route.router.go.restore()
-    vm.$children[0].loginUser.restore()
     done()
   })
 
@@ -86,9 +87,11 @@ describe('TryIt.vue', function () {
         'test': TryIt
       }
     }).$mount()
+    promise.resolves('mrormrstestperson@taskmastr.co')
     sinon.spy(vm.$children[0], 'loginTestUser')
 
     vm.$el.querySelector('#try-it-button').click()
+    clock.tick(250)
     vm.$children[0].loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true).should.be.true
 
     vm.$children[0].loginTestUser.restore()
