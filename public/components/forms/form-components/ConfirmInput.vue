@@ -6,7 +6,9 @@
   </div>
   <div id="confirm-line" class="prompt-line">
     <input id="confirm" class="prompt" type="password" name="password" placeholder="Password" v-model="user.confirm" v-bind:class="{'invalid': confirmAttempt && !match}"></input>
-    <button id="confirm-button" class="fa fa-arrow-right submit" type="submit" v-on:click="setConfirmAttempt(true)"></button>
+    <button id="confirm-button" class="submit" type="submit" v-on:click="setConfirmAttempt(true)">
+      <i class="fa fa-arrow-right"></i>
+    </button>
   </div>
 </template>
 

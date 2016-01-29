@@ -5,7 +5,9 @@
   </div>
   <div id="key-line" class="prompt-line">
     <input id="key" class="prompt" type="password" name="password" placeholder="Password" v-model="user.key" v-bind:class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>
-    <button id="key-button" class="fa fa-arrow-right submit" type="submit" v-if="$route.path !== '/create'" v-on:click="setLoginAttempt(true)"></button>
+    <button id="key-button" class="submit" type="submit" v-if="$route.path !== '/create'" v-on:click="setLoginAttempt(true)">
+      <i class="fa fa-arrow-right"></i>
+    </button>
   </div>
 </template>
 

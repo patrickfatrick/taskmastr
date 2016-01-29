@@ -7,7 +7,9 @@
   </div>
   <div id="user-line" class="prompt-line">
     <input id="user" class="prompt" type="text" name="username" placeholder="Email" v-model="user.username" v-bind:class="{'invalid': (loginAttempt || forgotAttempt) && (!require || !validate || forgotFail)}"></input>
-    <button id="forgot-button" class="fa fa-arrow-right submit" type="submit" v-if="$route.path ==='/forgot'" v-on:click="setForgotAttempt(true)">
+    <button id="forgot-button" class="submit" type="submit" v-if="$route.path ==='/forgot'" v-on:click="setForgotAttempt(true)">
+      <i class="fa fa-arrow-right"></i>
+    </button>
   </div>
 </template>
 
