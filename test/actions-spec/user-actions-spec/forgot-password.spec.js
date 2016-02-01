@@ -15,20 +15,8 @@ describe('forgotPassword', () => {
       }
     })
 
-    testAction(actions.default.forgotPassword, ['username', true], {}, [
+    testAction(actions.default.forgotPassword, ['username'], {}, [
       {name: 'SET_FORGOT_EMAIL', payload: [true]}
     ], done)
-  })
-
-  it('does nothing if form is invalid', done => {
-    const actions = actionsInjector({
-      '../services/user-services': {
-        forgot (user, deleteAgendas, cb) {
-          cb({})
-        }
-      }
-    })
-
-    testAction(actions.default.forgotPassword, ['', false], {}, [], done)
   })
 })

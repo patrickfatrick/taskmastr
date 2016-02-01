@@ -1,7 +1,7 @@
 <template>
   <div id="forgot-password">
-    <input id="forgot" class="check" name="forgot" type="checkbox" v-model="forgot"></input>
-    <i class="fa" v-bind:class="{'fa-check-square-o': forgot, 'fa-square-o': !forgot}" v-on:click="toggleForgot(!forgot)"></i>
+    <input id="forgot" class="check" name="forgot" type="checkbox" :value="forgot"></input>
+    <i class="fa" :class="{'fa-check-square-o': forgot, 'fa-square-o': !forgot}" @click="toggleForgot(!forgot)"></i>
     <label for="forgot">Forgot your password?</label>
   </div>
 </template>

@@ -19,7 +19,7 @@ export default {
   setForgot: 'SET_FORGOT',
   setRememberMe: 'SET_REMEMBER_ME',
   setCreate: 'SET_CREATE',
-  setInvalidKay: 'SET_INVALID_KEY',
+  setInvalidKey: 'SET_INVALID_KEY',
   setLoginAttempt: 'SET_LOGIN_ATTEMPT',
   setForgotAttempt: 'SET_FORGOT_ATTEMPT',
   setForgotEmail: 'SET_FORGOT_EMAIL',
@@ -29,6 +29,8 @@ export default {
   setResetAttempt: 'SET_RESET_ATTEMPT',
   setResetToken: 'SET_RESET_TOKEN',
   setResetFail: 'SET_RESET_FAIL',
+  setResetKey: 'SET_RESET_KEY',
+  setResetConfirmKey: 'SET_RESET_CONFIRM_KEY',
   setSaveButton: 'SET_SAVE_BUTTON',
   setDarkmode: (store, bool) => {
     store.dispatch('SET_DARKMODE', bool)
@@ -56,8 +58,7 @@ export default {
       return response.username
     })
   },
-  loginUser: (store, username, key, rememberMe, isValid) => {
-    if (!isValid) return
+  loginUser: (store, username, key, rememberMe) => {
     return login(username, key, rememberMe, response => {
       if (response.error) {
         if (response.error === 204) return store.dispatch('SET_CREATE')
@@ -77,8 +78,7 @@ export default {
       return response.username
     })
   },
-  createUser: (store, username, key, rememberMe, isValid) => {
-    if (!isValid) return
+  createUser: (store, username, key, rememberMe) => {
     return create(username, key, rememberMe, response => {
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
@@ -90,8 +90,7 @@ export default {
       return response.username
     })
   },
-  forgotPassword: (store, username, isValid) => {
-    if (!isValid) return
+  forgotPassword: (store, username) => {
     forgot(username, response => {
       if (response.error) {
         if (response.error === 401) return store.dispatch('SET_FORGOT_FAIL', response.msg)
@@ -99,8 +98,7 @@ export default {
       if (response.emailSent) return store.dispatch('SET_FORGOT_EMAIL', true)
     })
   },
-  resetPassword: (store, token, key, isValid) => {
-    if (!isValid) return
+  resetPassword: (store, token, key) => {
     return reset(token, key, response => {
       if (response.error) {
         if (response.error === 401) return store.dispatch('SET_RESET_FAIL', response.msg)
@@ -109,12 +107,12 @@ export default {
       return response.username
     })
   },
-  logout: () => {
+  logoutUser: () => {
     return logout(() => {
       window.location.href = '/'
     })
   },
-  save: store => {
+  saveUser: store => {
     let user = {
       username: store.state.user.username,
       tasks: store.state.user.tasks,
@@ -204,6 +202,8 @@ export default {
   setCurrentList: 'SET_CURRENT_LIST',
   setMenuToggled: 'SET_MENU_TOGGLED',
   setNewList: 'SET_NEW_LIST',
+  setListAttempt: 'SET_LIST_ATTEMPT',
+  renameList: 'RENAME_LIST',
   addList: (store, list) => {
     store.dispatch('ADD_LIST', list)
     store.dispatch('SET_SAVE_BUTTON', true)

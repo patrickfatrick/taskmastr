@@ -15,7 +15,7 @@ describe('resetPassword', () => {
       }
     })
 
-    testAction(actions.default.resetPassword, ['token', 'newKey', true], {}, [
+    testAction(actions.default.resetPassword, ['token', 'newKey'], {}, [
       {name: 'SET_USERNAME', payload: ['username']}
     ], done)
   })
@@ -29,20 +29,8 @@ describe('resetPassword', () => {
       }
     })
 
-    testAction(actions.default.resetPassword, ['token', 'newKey', true], {}, [
+    testAction(actions.default.resetPassword, ['token', 'newKey'], {}, [
       {name: 'SET_RESET_FAIL', payload: ['Invalid link']}
     ], done)
-  })
-
-  it('does nothing if form is invalid', done => {
-    const actions = actionsInjector({
-      '../services/user-services': {
-        reset (token, newKey, cb) {
-          cb({})
-        }
-      }
-    })
-
-    testAction(actions.default.resetPassword, ['token', '', false], {}, [], done)
   })
 })

@@ -50,10 +50,12 @@ router.post('/create',
     var username = req.body.username
     var key = req.body.key
     var rememberMe = req.body.rememberMe
+    var darkmode = req.body.darkmode
     userService.addUser({
       username: username,
       key: key,
-      rememberMe: rememberMe
+      rememberMe: rememberMe,
+      darkmode: darkmode
     }, function (err, user) {
       if (err) console.log(err)
       console.log(username + ' not found.')

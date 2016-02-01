@@ -22,7 +22,7 @@ describe('save', () => {
         tasks: []
       }
     }
-    testAction(actions.default.save, [], state, [
+    testAction(actions.default.saveUser, [], state, [
       {name: 'SET_SAVE_BUTTON', payload: [false]}
     ], done)
   })
@@ -43,7 +43,7 @@ describe('save', () => {
         tasks: []
       }
     }
-    testAction(actions.default.save, [], state, [
+    testAction(actions.default.saveUser, [], state, [
       {name: 'SET_SAVE_BUTTON', payload: [true]}
     ], done)
   })
@@ -64,7 +64,7 @@ describe('save', () => {
         tasks: []
       }
     }
-    testAction(actions.default.save, [], state, [
+    testAction(actions.default.saveUser, [], state, [
       {name: 'SET_SAVE_BUTTON', payload: [false]}
     ], done)
   })

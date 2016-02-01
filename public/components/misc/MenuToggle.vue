@@ -1,7 +1,7 @@
 <template>
-  <div id="icon-menu" v-bind:class="{'toggled': menuToggled}">
-    <button title="Toggle menu" v-on:click.prevent="setMenuToggled(!menuToggled)">
-      <i class="fa" v-bind:class="{'fa-bars': !menuToggled, 'fa-times': menuToggled}"></i>
+  <div id="icon-menu" :class="{'toggled': menuToggled}">
+    <button title="Toggle menu" @click.prevent="setMenuToggled(!menuToggled)">
+      <i class="fa" :class="{'fa-bars': !menuToggled, 'fa-times': menuToggled}"></i>
     </button>
   </div>
 </template>
@@ -20,12 +20,12 @@ export default {
   methods: {
     setMenuToggled: store.actions.setMenuToggled
   },
-  ready () {
+  compiled () {
     Mousetrap.bind('alt+right', () => {
-      return this.setMenuToggled(true)
+      this.setMenuToggled(true)
     })
     Mousetrap.bind('alt+left', () => {
-      return this.setMenuToggled(false)
+      this.setMenuToggled(false)
     })
   }
 }

@@ -58,8 +58,9 @@ export default {
     }
   },
   methods: {
-    loginUser (username, key, rememberMe, isValid) {
-      store.actions.loginUser(username, key, rememberMe, isValid)
+    loginUser (username, key, rememberMe) {
+      if (!this.isValid) return
+      store.actions.loginUser(username, key, rememberMe)
       .then(() => {
         if (this.auth) {
           setTimeout(() => {

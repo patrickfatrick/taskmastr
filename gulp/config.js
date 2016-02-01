@@ -50,7 +50,9 @@ module.exports = {
       'public/**/*',
       'gulpfile.js',
       'gulp/**/*',
-      'views/**/*'
+      'views/**/*',
+      'test/**/*',
+      'coverage/**/*'
     ]
   },
   mongo: {

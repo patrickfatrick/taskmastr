@@ -1,5 +1,5 @@
 <template>
-  <form id="create-form" name="createForm" v-if="!forgot && ($route.path === '/create')" action="/users/create" novalidate v-on:submit.prevent="createUser(user.username.trim(), user.confirm, rememberMe, isValid)">
+  <form id="create-form" name="createForm" v-if="!forgot && ($route.path === '/create')" action="/users/create" novalidate v-on:submit.prevent="createUser(user.username.trim(), user.confirm, rememberMe)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <key-input :require="validate.passwordRequired"></key-input>
     <confirm-input :match="validate.confirmMatch"></confirm-input>
@@ -61,8 +61,9 @@ export default {
   methods: {
     save: store.actions.save,
     loginUser: store.actions.loginUser,
-    createUser (username, key, rememberMe, isValid) {
-      store.actions.createUser(username, key, rememberMe, isValid)
+    createUser (username, key, rememberMe) {
+      if (!this.isValid) return
+      store.actions.createUser(username, key, rememberMe)
       .then(() => {
         this.save()
         if (this.auth) {

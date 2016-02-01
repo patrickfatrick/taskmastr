@@ -16,7 +16,7 @@ describe('loginUser', () => {
       }
     })
 
-    testAction(actions.default.loginUser, ['username', 'password', false, true], {}, [
+    testAction(actions.default.loginUser, ['username', 'password', false], {}, [
       {name: 'SET_USERNAME', payload: ['username']},
       {name: 'SET_KEY', payload: ['']},
       {name: 'SET_DARKMODE', payload: [true]},
@@ -35,7 +35,7 @@ describe('loginUser', () => {
       }
     })
 
-    testAction(actions.default.loginUser, ['username', 'password', false, true], {}, [
+    testAction(actions.default.loginUser, ['username', 'password', false], {}, [
       {name: 'SET_CREATE', payload: []}
     ], done)
   })
@@ -49,20 +49,8 @@ describe('loginUser', () => {
       }
     })
 
-    testAction(actions.default.loginUser, ['username', 'password', false, true], {}, [
+    testAction(actions.default.loginUser, ['username', 'password', false], {}, [
       {name: 'SET_INVALID_KEY', payload: ['Invalid key']}
     ], done)
-  })
-
-  it('does nothing if form is invalid', done => {
-    const actions = actionsInjector({
-      '../services/user-services': {
-        login (username, key, rememberMe, cb) {
-          cb({})
-        }
-      }
-    })
-
-    testAction(actions.default.loginUser, ['username', 'password', false, false], {}, [], done)
   })
 })

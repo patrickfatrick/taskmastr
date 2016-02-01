@@ -19,9 +19,9 @@ export default {
   methods: {
     setDarkmode: store.actions.setDarkmode
   },
-  ready () {
+  compiled () {
     Mousetrap.bind('command+m', (e) => {
-      e.preventDefault()
+      if (e.preventDefault) e.preventDefault()
       this.setDarkmode(!this.darkmode)
     })
   }

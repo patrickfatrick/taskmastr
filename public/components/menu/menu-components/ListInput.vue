@@ -1,6 +1,6 @@
 <template>
-  <form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addList(newList.trim())">
-    <input id="create-list" class="prompt mousetrap" type="text" name="todoInput" v-model="newList" v-bind:class="{'invalid': !isValid && ListAttempt}" placeholder="New List" v-el:listinput></input>
+  <form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addNewList(newList.trim())">
+    <input id="create-list" class="prompt mousetrap" type="text" name="todoInput" :value="newList" v-on:change="setNewList($event.target.value)" v-bind:class="{'invalid': !isValid && listAttempt}" placeholder="New List" v-el:listinput></input>
     <button id="list-button" class="submit" title="Create task" type="submit">
       <i class="fa fa-arrow-down"></i>
     </button>
@@ -14,13 +14,13 @@ import Mousetrap from 'mousetrap'
 import store from '../../../store/store'
 
 export default {
-  data () {
-    return {
-      newList: '',
-      listAttempt: false
-    }
-  },
   computed: {
+    newList () {
+      return store.state.newList
+    },
+    listAttempt () {
+      return store.state.listAttempt
+    },
     user () {
       return store.state.user
     },
@@ -37,22 +37,28 @@ export default {
     }
   },
   methods: {
-    addList (list) {
-      if (!this.newList) return
-      store.actions.addList({
+    addList: store.actions.addList,
+    setNewList: store.actions.setNewList,
+    setListAttempt: store.actions.setListAttempt,
+    setSaveButton: store.actions.setSaveButton,
+    addNewList (list) {
+      this.setListAttempt(true)
+      if (!this.isValid) return
+      this.addList({
+        id: hat(),
         list: list,
         items: [],
         current: false,
-        delete: false,
-        id: hat()
+        _delete: false
       })
-      this.newList = ''
-      return store.actions.setSaveButton(true)
+      this.setListAttempt(false)
+      this.setNewList('')
+      this.setSaveButton(true)
     }
   },
-  ready () {
+  compiled () {
     Mousetrap.bind('alt+f', (e) => {
-      e.preventDefault()
+      if (e.preventDefault) e.preventDefault()
       this.$els.listinput.focus()
     })
   }

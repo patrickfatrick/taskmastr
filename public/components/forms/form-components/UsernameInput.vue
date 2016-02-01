@@ -6,7 +6,7 @@
     <span v-bind:class="{'hidden': !($route.path === '/forgot' && forgotAttempt && forgotEmail && !forgotFail)}">Check your email for instructions on how to reset your password.</span>
   </div>
   <div id="user-line" class="prompt-line">
-    <input id="user" class="prompt" type="text" name="username" placeholder="Email" v-model="user.username" v-bind:class="{'invalid': (loginAttempt || forgotAttempt) && (!require || !validate || forgotFail)}"></input>
+    <input id="user" class="prompt" type="text" name="username" placeholder="Email" :value="user.username" @change="setUsername($event.target.value)" :class="{'invalid': (loginAttempt || forgotAttempt) && (!require || !validate || forgotFail)}"></input>
     <button id="forgot-button" class="submit" type="submit" v-if="$route.path ==='/forgot'" v-on:click="setForgotAttempt(true)">
       <i class="fa fa-arrow-right"></i>
     </button>
@@ -43,6 +43,7 @@ export default {
     require: Boolean
   },
   methods: {
+    setUsername: store.actions.setUsername,
     setForgotAttempt: store.actions.setForgotAttempt
   }
 }

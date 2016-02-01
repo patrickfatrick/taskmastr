@@ -29,12 +29,12 @@ describe('TryIt.vue', function () {
     TryIt.methods.loginUser.restore()
   })
 
-  it('should have a testUser property', () => {
-    TryIt.data().testUser.should.equal('mrormrstestperson@taskmastr.co')
+  it('should inherit the testUser property from the state', () => {
+    TryIt.computed.testUser().should.equal('mrormrstestperson@taskmastr.co')
   })
 
-  it('should have a testKey property', () => {
-    TryIt.data().testKey.should.equal('S41iVAtINGREsIdUE-278')
+  it('should inherit the testKey property from the state', () => {
+    TryIt.computed.testKey().should.equal('S41iVAtINGREsIdUE-278')
   })
 
   it('should inherit the wiki property from the state', () => {

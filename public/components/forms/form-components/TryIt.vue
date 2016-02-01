@@ -1,5 +1,5 @@
 <template>
-  <button id="try-it-button" class="button" title="Try it" v-on:click="loginTestUser(testUser, testKey, false, true)">Try it</button>
+  <button id="try-it-button" class="button" title="Try it" @click="loginTestUser(testUser, testKey, false, true)">Try it</button>
 </template>
 
 <script>
@@ -7,18 +7,18 @@
 import store from '../../../store/store'
 
 export default {
-  data () {
-    return {
-      testUser: 'mrormrstestperson@taskmastr.co',
-      testKey: 'S41iVAtINGREsIdUE-278'
-    }
-  },
   computed: {
     wiki () {
       return store.state.wiki
     },
     auth () {
       return store.state.auth
+    },
+    testUser () {
+      return store.state.testUser
+    },
+    testKey () {
+      return store.state.testKey
     }
   },
   methods: {

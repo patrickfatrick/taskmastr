@@ -4,8 +4,8 @@
     <span v-bind:class="{'hidden': !invalidKey || !loginAttempt}">{{invalidKey}}</span>
   </div>
   <div id="key-line" class="prompt-line">
-    <input id="key" class="prompt" type="password" name="password" placeholder="Password" v-model="user.key" v-bind:class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>
-    <button id="key-button" class="submit" type="submit" v-if="$route.path !== '/create'" v-on:click="setLoginAttempt(true)">
+    <input id="key" class="prompt" type="password" name="password" placeholder="Password" :value="user.key" @change="setKey($event.target.value)" :class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>
+    <button id="key-button" class="submit" type="submit" v-if="$route.path !== '/create'" @click="setLoginAttempt(true)">
       <i class="fa fa-arrow-right"></i>
     </button>
   </div>
@@ -31,6 +31,7 @@ export default {
     }
   },
   methods: {
+    setKey: store.actions.setKey,
     setLoginAttempt: store.actions.setLoginAttempt
   },
   props: {

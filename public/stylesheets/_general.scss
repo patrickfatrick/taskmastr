@@ -62,6 +62,17 @@ button {
   padding: 0;
 }
 
+a{
+	text-decoration: none;
+	color: inherit;
+	&:focus,
+	&:visited,
+	&:active {
+		text-decoration: none;
+		color: inherit;
+	}
+}
+
 .prompt-line {
 	white-space: nowrap;
 	text-align: right;

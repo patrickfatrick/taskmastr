@@ -7,6 +7,7 @@ import placeholders from '../helper-utilities/placeholders'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production',
   state: {
     user: {
       username: '',
@@ -38,7 +39,11 @@ export default new Vuex.Store({
     saveButton: false,
     deleteAgendas: [],
     deleteQueue: {},
-    placeholder: placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)]
+    listAttempt: false,
+    newList: '',
+    placeholder: placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)],
+    testUser: 'mrormrstestperson@taskmastr.co',
+    testKey: 'S41iVAtINGREsIdUE-278'
   },
   mutations: mutations,
   actions: actions

@@ -1,5 +1,5 @@
 <template>
-  <form id="reset-form" name="resetForm" action="/users/reset" novalidate v-on:submit.prevent="resetPassword(resetToken, user.resetKey, isValid)">
+  <form id="reset-form" name="resetForm" action="/users/reset" novalidate v-on:submit.prevent="resetPassword(resetToken, user.resetKey)">
     <reset-key-input :require="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
     <reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
   </form>
@@ -45,11 +45,12 @@ export default {
   },
   methods: {
     loginUser: store.actions.loginUser,
-    resetPassword (resetToken, resetKey, isValid) {
-      store.actions.resetPassword(resetToken, resetKey, isValid)
+    resetPassword (resetToken, resetKey) {
+      if (!this.isValid) return
+      store.actions.resetPassword(resetToken, resetKey)
       .then((response) => {
         if (!response) return false
-        return this.loginUser(response, resetKey, false, isValid)
+        return this.loginUser(response, resetKey, false)
       })
       .then(() => {
         if (this.auth) {

@@ -1,26 +1,27 @@
 <template>
   <div id="lists-list" class="table" v-show="lists">
     <div class="table-body" v-el:dragula>
-      <div class="table-row" v-for="list in lists" v-bind:class="{'deleting': list._delete, 'current': current.list === list.list}" name="list{{$index + 1}}" transition="item">
-        <div class="task-cell table-data" v-on:click="setCurrentList($index)">
-          <input class="rename" type="text" v-model="list.list" v-show="renameToggled === $index" v-on:keyup.enter="renameToggle(null)" v-on:blur="renameToggle(null)" v-on:change="setSaveButton(true)"></input>
-          <span class="name" v-show="renameToggled !== $index" v-on:dblclick="renameToggle($index)">{{list.list}}</span>
+      <div class="table-row" v-for="list in lists" :class="{'deleting': list._delete, 'current': list.current}" name="list{{$index + 1}}" transition="item">
+        <div class="task-cell table-data">
+          <input class="rename" type="text" :value="list.list" @change="rename($index, $event.target.value)" :class="{'hidden': !(renameToggled === $index)}" @keyup.enter="renameToggle(null)" @blur="renameToggle(null)"></input>
+          <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="setCurrentList($index)" @dblclick="renameToggle($index)">{{list.list}}</button>
         </div>
         <div class="utils table-data">
           <button class="sort-button" title="Sort list">
             <i class="sort-handle fa fa-arrows-v sort"></i>
           </button>
-          <button class="rename-button" title="Rename list" v-on:click.prevent="renameToggle($index)">
+          <button class="rename-button" title="Rename list" @click.prevent="renameToggle($index)">
             <i class="fa fa-pencil"></i>
           </button>
-          <button class="delete-button" title="Delete list" v-on:click.prevent="deleteList($index)">
-            <i class="fa" v-bind:class="{'fa-trash-o': !list._delete, 'fa-undo': list._delete}"></i>
+          <button class="delete-button" title="Delete list" @click.prevent="deleteList($index)">
+            <i class="fa" :class="{'fa-trash-o': !list._delete, 'fa-undo': list._delete}"></i>
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 
 import _ from 'lodash'
@@ -55,7 +56,13 @@ export default {
     setCurrentList: store.actions.setCurrentList,
     sortLists: store.actions.sortLists,
     setSaveButton: store.actions.setSaveButton,
-    renameToggle (index) {
+    renameList: store.actions.renameList,
+    rename (index, name) {
+      if (!this.lists[index].list) return
+      this.renameList(index, name)
+      this.setSaveButton(true)
+    },
+    renameToggle (index, e) {
       if (this.renameToggled === index) {
         this.renameToggled = null
         return
@@ -68,7 +75,7 @@ export default {
       })
     },
     _drop (drake) {
-      drake.on('drop', (el) => {
+      drake.on('drop', el => {
         let oldIndex = this.dragStart
         let newIndex = this._index(el)
         this.sortLists(oldIndex, newIndex)
@@ -81,11 +88,7 @@ export default {
       return index
     }
   },
-  ready () {
-    this.drake.containers = [this.$els.dragula]
-    this._drag(this.drake)
-    this._drop(this.drake)
-
+  compiled () {
     // Keyboard bindings
     Mousetrap.bind('alt+up', () => {
       let index = (_.findIndex(this.lists, {current: true}) === 0)
@@ -107,7 +110,7 @@ export default {
     })
     Mousetrap.bind('alt+command+down', () => {
       const currentIndex = _.findIndex(this.lists, {current: true})
-      if (currentIndex === this.lists.length) return
+      if (currentIndex === this.lists.length - 1) return
       this.sortLists(currentIndex, currentIndex + 1)
     })
     Mousetrap.bind('alt+command+up', () => {
@@ -115,6 +118,11 @@ export default {
       if (currentIndex === 0) return
       this.sortLists(currentIndex, currentIndex - 1)
     })
+  },
+  ready () {
+    this.drake.containers = [this.$els.dragula]
+    this._drag(this.drake)
+    this._drop(this.drake)
   }
 }
 

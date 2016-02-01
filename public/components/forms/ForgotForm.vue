@@ -1,5 +1,5 @@
 <template>
-  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate v-if="$route.path === '/forgot'" v-on:submit.prevent="forgotPassword(user.username, isValid)">
+  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate v-if="$route.path === '/forgot'" v-on:submit.prevent="forgotPassword(user.username)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <forgot-password></forgot-password>
   </form>
@@ -39,7 +39,10 @@ export default {
     }
   },
   methods: {
-    forgotPassword: store.actions.forgotPassword
+    forgotPassword (username) {
+      if (!this.isValid) return
+      store.actions.forgotPassword(username)
+    }
   }
 }
 

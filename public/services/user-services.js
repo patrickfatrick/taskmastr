@@ -33,7 +33,8 @@ export function create (username, key, rememberMe, cb) {
     body: JSON.stringify({
       username: username,
       key: key,
-      rememberMe: rememberMe
+      rememberMe: rememberMe,
+      darkmode: true
     })
   })
   .then(response => response.json())

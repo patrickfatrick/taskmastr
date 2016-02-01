@@ -1,6 +1,6 @@
 <template>
   <div id="logout-container">
-    <button id="logout" title="Log out" v-on:click.prevent="logout">
+    <button id="logout" title="Log out" @click.prevent="logout">
       <i id="power-off" class="fa fa-power-off"></i>
       <label for="power-off">Log out</label>
     </button>
@@ -14,11 +14,14 @@ import store from '../../store/store'
 
 export default {
   methods: {
-    logout: store.actions.logout
+    logoutUser: store.actions.logoutUser,
+    logout () {
+      this.logoutUser()
+    }
   },
-  ready () {
+  compiled () {
     Mousetrap.bind('command+esc', (e) => {
-      e.preventDefault()
+      if (e.preventDefault) e.preventDefault()
       return this.logout()
     })
   }

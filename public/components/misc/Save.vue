@@ -1,5 +1,5 @@
 <template>
-  <button id="save-button" class="button" title="Save" v-if="saveButton" transition="save" v-on:click.prevent="save">Save</button>
+  <button id="save-button" class="button" title="Save" v-if="saveButton" transition="save" @click.prevent="save">Save</button>
 </template>
 
 <script>
@@ -14,11 +14,14 @@ export default {
     }
   },
   methods: {
-    save: store.actions.save
+    saveUser: store.actions.saveUser,
+    save () {
+      this.saveUser()
+    }
   },
-  ready () {
+  compiled () {
     Mousetrap.bind('command+s', (e) => {
-      e.preventDefault()
+      if (e.preventDefault) e.preventDefault()
       if (!this.saveButton) return
       return this.save()
     })

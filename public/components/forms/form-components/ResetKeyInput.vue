@@ -6,7 +6,7 @@
     <span v-bind:class="{'hidden': !(!token)}">This doesn't appear to be a valid reset link. Please try again.</span>
   </div>
   <div id="reset-key-line" class="prompt-line">
-    <input id="reset-key" class="prompt" type="password" name="resetKey" placeholder="Password" v-model="user.resetKey" v-bind:class="{'invalid': resetAttempt && (!require || resetFail)}"></input>
+    <input id="reset-key" class="prompt" type="password" name="resetKey" placeholder="Password" :value="user.resetKey" @change="setResetKey($event.target.value)" :class="{'invalid': resetAttempt && (!require || resetFail)}"></input>
   </div>
 </template>
 
@@ -30,6 +30,9 @@ export default {
     require: Boolean,
     match: Boolean,
     token: Boolean
+  },
+  methods: {
+    setResetKey: store.actions.setResetKey
   }
 }
 

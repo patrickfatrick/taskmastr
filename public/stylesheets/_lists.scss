@@ -89,7 +89,10 @@
 				@include media(min-width $medsmall) {
 					@include span-columns(15 of 21);
 				}
-				span {
+				button {
+					font-family: inherit;
+					width: 100%;
+					text-align: left;
 					vertical-align: middle;
 				}
 				input.rename {
