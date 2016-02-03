@@ -132,6 +132,7 @@ export default {
    */
   setCurrentTask: 'SET_CURRENT_TASK',
   setNewTask: 'SET_NEW_TASK',
+  setTaskAttempt: 'SET_TASK_ATTEMPT',
   setTaskDelete: 'SET_TASK_DELETE',
   deleteAgenda: 'DELETE_AGENDA',
   toggleDetails: 'TOGGLE_DETAILS',

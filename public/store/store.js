@@ -39,8 +39,10 @@ export default new Vuex.Store({
     saveButton: false,
     deleteAgendas: [],
     deleteQueue: {},
+    taskAttempt: false,
     listAttempt: false,
     newList: '',
+    newTask: '',
     placeholder: placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)],
     testUser: 'mrormrstestperson@taskmastr.co',
     testKey: 'S41iVAtINGREsIdUE-278'

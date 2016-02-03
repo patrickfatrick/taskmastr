@@ -1,8 +1,8 @@
 <template>
-  <form id="todo-line" class="prompt-line" name="todoForm" novalidate v-on:submit.prevent="addTask(newTask.trim())">
-    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" name="todoInput" v-model="newTask" v-bind:class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
+  <form id="todo-line" class="prompt-line" name="todoForm" novalidate @submit.prevent="addNewTask(newTask.trim())">
+    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" name="todoInput" :value="newTask" @change="setNewTask($event.target.value)" :class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
     <div class="button-container">
-      <button class="submit" title="Create task" type="submit">
+      <button id="task-button" class="submit" title="Create task" type="submit">
         <i class="fa fa-arrow-down "></i>
       </button>
     </div>
@@ -20,15 +20,15 @@ import store from '../../../store/store'
 import extractDate from '../../../helper-utilities/extract-date'
 
 export default {
-  data () {
-    return {
-      newTask: '',
-      taskAttempt: false
-    }
-  },
   computed: {
     user () {
       return store.state.user
+    },
+    newTask () {
+      return store.state.newTask
+    },
+    taskAttempt () {
+      return store.state.taskAttempt
     },
     placeholder () {
       return store.state.placeholder
@@ -46,11 +46,15 @@ export default {
     }
   },
   methods: {
+    setNewTask: store.actions.setNewTask,
+    setTaskAttempt: store.actions.setTaskAttempt,
     setSaveButton: store.actions.setSaveButton,
     setTaskDueDate: store.actions.setTaskDueDate,
     setDueDateDifference: store.actions.setDueDateDifference,
-    addTask (task) {
-      if (!this.newTask) return
+    addTask: store.actions.addTask,
+    addNewTask (task) {
+      this.setTaskAttempt(true)
+      if (!this.isValid) return
       let dueDate
       if (task.toLowerCase().indexOf('remind me to ') === 0 || task.indexOf('/') === 0) {
         const char = (task.toLowerCase().indexOf('remind me to ') !== -1) ? 13 : 3
@@ -81,7 +85,7 @@ export default {
       } else {
         dueDate = ''
       }
-      store.actions.addTask({
+      this.addTask({
         id: hat(),
         item: task,
         current: !(_.find(this.user.current.items, {current: true})),
@@ -93,7 +97,8 @@ export default {
         _delete: false,
         _detailsToggled: false
       })
-      this.newTask = ''
+      this.setTaskAttempt(false)
+      this.setNewTask('')
       this.setSaveButton(true)
     }
   },
