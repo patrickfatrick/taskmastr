@@ -5,27 +5,6 @@ import TaskInput from '../../../../public/components/tasks/task-components/TaskI
 
 chai.should()
 describe('TaskInput.vue', function () {
-  // beforeEach(() => {
-  //   sinon.useFakeTimers()
-  //   sinon.stub(TaskInput.computed, 'user').returns({
-  //     current: {
-  //       id: 'listid',
-  //       list: 'List 1',
-  //       current: false,
-  //       _delete: true,
-  //       items: [
-  //         {
-  //           id: 'itemid',
-  //           item: 'Item 1'
-  //         }
-  //       ]
-  //     }
-  //   })
-  // })
-
-  // afterEach(() => {
-  //   TaskInput.computed.user.restore()
-  // })
   let clock
 
   beforeEach(() => {
@@ -112,10 +91,11 @@ describe('TaskInput.vue', function () {
         'test': TaskInput
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'addTask')
+    sinon.stub(vm.$children[0], 'addTask')
     sinon.spy(vm.$children[0], 'setSaveButton')
 
     vm.$el.querySelector('#task-button').click()
+    console.log(vm.$children[0].addTask.args[0])
     vm.$children[0].addTask.calledOnce.should.be.true
     vm.$children[0].setSaveButton.calledWith(true).should.be.true
 
@@ -137,7 +117,7 @@ describe('TaskInput.vue', function () {
         'test': TaskInput
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'addTask')
+    sinon.stub(vm.$children[0], 'addTask')
     sinon.spy(vm.$children[0], 'setSaveButton')
 
     vm.$el.querySelector('#task-button').click()
