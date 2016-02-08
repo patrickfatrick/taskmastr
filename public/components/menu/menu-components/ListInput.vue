@@ -40,7 +40,6 @@ export default {
     addList: store.actions.addList,
     setNewList: store.actions.setNewList,
     setListAttempt: store.actions.setListAttempt,
-    setSaveButton: store.actions.setSaveButton,
     addNewList (list) {
       this.setListAttempt(true)
       if (!this.isValid) return
@@ -53,7 +52,6 @@ export default {
       })
       this.setListAttempt(false)
       this.setNewList('')
-      this.setSaveButton(true)
     }
   },
   compiled () {

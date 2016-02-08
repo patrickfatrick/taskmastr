@@ -69,8 +69,8 @@ describe('ForgotPassword.vue', function () {
       }
     }).$mount()
 
-    sinon.spy(vm.$children[0].$route.router, 'go')
-    sinon.spy(vm.$children[0], 'setForgot')
+    sinon.stub(vm.$children[0].$route.router, 'go')
+    sinon.stub(vm.$children[0], 'setForgot')
 
     vm.$children[0].toggleForgot(true)
     vm.$children[0].setForgot.calledWith(true).should.be.true
@@ -92,8 +92,8 @@ describe('ForgotPassword.vue', function () {
       }
     }).$mount()
 
-    sinon.spy(vm.$children[0].$route.router, 'go')
-    sinon.spy(vm.$children[0], 'setForgot')
+    sinon.stub(vm.$children[0].$route.router, 'go')
+    sinon.stub(vm.$children[0], 'setForgot')
 
     vm.$children[0].toggleForgot(false)
     vm.$children[0].setForgot.calledWith(false).should.be.true
@@ -116,8 +116,8 @@ describe('ForgotPassword.vue', function () {
       }
     }).$mount()
 
-    sinon.spy(vm.$children[0].$route.router, 'go')
-    sinon.spy(vm.$children[0], 'setForgot')
+    sinon.stub(vm.$children[0].$route.router, 'go')
+    sinon.stub(vm.$children[0], 'setForgot')
 
     vm.$children[0].toggleForgot(false)
     vm.$children[0].setForgot.calledWith(false).should.be.true

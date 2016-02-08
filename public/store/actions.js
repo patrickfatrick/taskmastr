@@ -134,9 +134,14 @@ export default {
   setNewTask: 'SET_NEW_TASK',
   setTaskAttempt: 'SET_TASK_ATTEMPT',
   setTaskDelete: 'SET_TASK_DELETE',
+  renameTask: 'RENAME_TASK',
   deleteAgenda: 'DELETE_AGENDA',
   toggleDetails: 'TOGGLE_DETAILS',
   setTaskDueDate: 'SET_TASK_DUE_DATE',
+  setTaskNotes (store, index, notes) {
+    store.dispatch('SET_TASK_NOTES', index, notes)
+    store.dispatch('SET_SAVE_BUTTON', true)
+  },
   addTask: (store, task) => {
     store.dispatch('ADD_TASK', task)
     store.dispatch('SET_SAVE_BUTTON', true)

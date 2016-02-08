@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_TASK_DELETE, SET_TASK_DUE_DATE, DELETE_AGENDA, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
+import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, DELETE_AGENDA, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
 
 export const taskMutations = {
   [SET_CURRENT_TASK] (state, index) {
@@ -24,6 +24,9 @@ export const taskMutations = {
   [SET_TASK_DELETE] (state, index, bool) {
     _.set(state, 'user.current.items[' + index + ']._delete', bool)
   },
+  [RENAME_TASK] (state, index, name) {
+    _.set(state, 'user.current.items[' + index + '].item', name)
+  },
   [SET_TASK_DUE_DATE] (state, index, date) {
     _.set(state, 'user.current.items[' + index + '].dueDate', date)
   },
@@ -39,6 +42,9 @@ export const taskMutations = {
   },
   [TOGGLE_DETAILS] (state, index, bool) {
     _.set(state, 'user.current.items[' + index + ']._detailsToggled', bool)
+  },
+  [SET_TASK_NOTES] (state, index, notes) {
+    _.set(state, 'user.current.items[' + index + '].notes', notes)
   },
   [SET_DUE_DATE_DIFFERENCE] (state, index, n) {
     _.set(state, 'user.current.items[' + index + ']._dueDateDifference', n)

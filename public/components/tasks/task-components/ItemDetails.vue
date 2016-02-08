@@ -1,35 +1,35 @@
 <template>
-  <div class="mask" v-if="task._detailsToggled" transition="mask" v-on:click="toggleDetails(index, false)"></div>
-  <div class="task-details" v-bind:class="{'toggled': task._detailsToggled}" transition="details" v-show="task._detailsToggled">
-    <button class="task-details-close" v-on:click.prevent="toggleDetails(index, false)">
+  <div class="mask" v-if="task._detailsToggled" transition="mask" @click="toggleDetails(index, false)"></div>
+  <div class="task-details" v-if="task._detailsToggled" :class="{'toggled': task._detailsToggled}" transition="details">
+    <button class="task-details-close" @click.prevent="toggleDetails(index, false)">
       <i class="fa fa-times"></i>
     </button>
     <div class="task-name-container">
-      <input class="task-name mousetrap" type="text" v-model="task.item" v-on:change="setSaveButton(true)"></input>
+      <input class="task-name mousetrap" type="text" :value="task.item" @change="rename($event, $index)"></input>
     </div>
     <div class="task-details-container">
       <div class="task-create task-details-panel"><span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}</div>
       <div class="task-due task-details-panel">
-        <span class="task-label" v-show="task.dueDate">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
-        <span class="task-label" v-show="!task.dueDate">Set a due date&nbsp;</span>
+        <span class="task-label" :class="{'hidden': !task.dueDate}">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
+        <span class="task-label" :class="{'hidden': task.dueDate}">Set a due date&nbsp;</span>
         <datepicker :task="task" :index="index"></datepicker>
       </div>
       <div class="task-details-panel">
-        <div class="due-in" v-show="task._dueDateDifference > 0">
-          <span v-show="task._dueDateDifference > 1"><span class="task-label">which is</span>{{task._dueDateDifference}} days <span class="task-label">from now</span></span>
-          <span v-show="task._dueDateDifference === 1"><span class="task-label">which is</span>tomorrow</span>
+        <div class="due-in" :class="{'hidden': !(task._dueDateDifference > 0)}">
+          <span :class="{'hidden': !(task._dueDateDifference > 1)}"><span class="task-label">which is</span>{{task._dueDateDifference}} days <span class="task-label">from now</span></span>
+          <span :class="{'hidden': !(task._dueDateDifference === 1)}"><span class="task-label">which is</span>tomorrow</span>
         </div>
-        <div class="overdue" v-show="task._dueDateDifference < 0">
-          <span v-show="task._dueDateDifference < -1"><span class="task-label">which was</span>{{-task._dueDateDifference}} days <span class="task-label">ago</span></span>
-          <span v-show="task._dueDateDifference === -1"><span class="task-label">which was</span>yesterday</span>
+        <div class="overdue" :class="{'hidden': !(task._dueDateDifference < 0)}">
+          <span :class="{'hidden': !(task._dueDateDifference < -1)}"><span class="task-label">which was</span>{{-task._dueDateDifference}} days <span class="task-label">ago</span></span>
+          <span :class="{'hidden': !(task._dueDateDifference === -1)}"><span class="task-label">which was</span>yesterday</span>
         </div>
-        <div class="due-today" v-show="task._dueDateDifference === 0"><span class="task-label">which is</span>today</div>
+        <div class="due-today" :class="{'hidden': !(task._dueDateDifference === 0)}"><span class="task-label">which is</span>today</div>
       </div>
     </div>
     <div class="task-details-container">
       <h2>Notes</h2>
       <div class="task-notes-container">
-        <textarea class="task-notes mousetrap" v-model="task.notes" v-on:change="setSaveButton(true)"></textarea>
+        <textarea class="task-notes mousetrap" :value="task.notes" @change="setTaskNotes(index, $event.target.value)"></textarea>
       </div>
     </div>
   </div>
@@ -52,19 +52,29 @@ export default {
       return store.state.user.current.items
     }
   },
-  props: [
-    'task',
-    'index'
-  ],
+  props: {
+    'index': Number,
+    'task': Object
+  },
   methods: {
+    setTaskNotes: store.actions.setTaskNotes,
     setSaveButton: store.actions.setSaveButton,
     toggleDetails: store.actions.toggleDetails,
     setDueDateDifference: store.actions.setDueDateDifference,
+    renameTask: store.actions.renameTask,
+    rename (e, index) {
+      if (!e.target.value) {
+        e.target.value = this.task.item
+        return
+      }
+      this.renameTask(this.index, e.target.value.trim())
+      this.setSaveButton(true)
+    },
     reformatDate (date) {
       return gregorian.reform(date).to('M d, yyyy')
     }
   },
-  ready () {
+  compiled () {
     this.setDueDateDifference(this.index, this.task.dueDate)
 
     // Keyboard bindings
@@ -73,7 +83,7 @@ export default {
         this.toggleDetails(_.findIndex(this.tasks, {_detailsToggled: true}), false)
       }
       let index = _.findIndex(this.tasks, {current: true})
-      this.toggleDetails(index, !(this.tasks[index]._detailsToggled))
+      this.toggleDetails(index, !(this.task._detailsToggled))
     })
   }
 }

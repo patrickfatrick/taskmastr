@@ -142,7 +142,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'setCurrentList')
+    sinon.stub(vm.$children[0], 'setCurrentList')
 
     vm.$el.querySelectorAll('.name')[0].click()
     vm.$children[0].setCurrentList.calledWith(0).should.be.true
@@ -158,7 +158,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'renameToggle')
+    sinon.stub(vm.$children[0], 'renameToggle')
 
     let dblclick
     dblclick = document.createEvent('HTMLEvents')
@@ -182,7 +182,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'renameToggle')
+    sinon.stub(vm.$children[0], 'renameToggle')
 
     let dblclick
     dblclick = document.createEvent('HTMLEvents')
@@ -211,7 +211,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'renameList')
+    sinon.stub(vm.$children[0], 'renameList')
 
     let change
     change = document.createEvent('HTMLEvents')
@@ -232,12 +232,12 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'renameList')
+    sinon.stub(vm.$children[0], 'renameList')
 
     let change
     change = document.createEvent('HTMLEvents')
     change.initEvent('change', true, true, window)
-    vm.$children[0].lists[0].list = ''
+    vm.$el.querySelectorAll('.rename')[0].value = ''
     vm.$el.querySelectorAll('.rename')[0].dispatchEvent(change)
 
     vm.$children[0].renameList.calledOnce.should.be.false
@@ -253,7 +253,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'renameToggle')
+    sinon.stub(vm.$children[0], 'renameToggle')
 
     let blur
     blur = document.createEvent('HTMLEvents')
@@ -274,7 +274,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'setCurrentList')
+    sinon.stub(vm.$children[0], 'setCurrentList')
 
     Mousetrap.trigger('alt+up')
     vm.$children[0].setCurrentList.calledWith(0).should.be.true
@@ -290,7 +290,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'setCurrentList')
+    sinon.stub(vm.$children[0], 'setCurrentList')
 
     Mousetrap.trigger('alt+down')
     vm.$children[0].setCurrentList.calledWith(1).should.be.true
@@ -306,7 +306,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'deleteList')
+    sinon.stub(vm.$children[0], 'deleteList')
 
     Mousetrap.trigger('alt+backspace')
     vm.$children[0].deleteList.calledWith(1).should.be.true
@@ -322,7 +322,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'renameToggle')
+    sinon.stub(vm.$children[0], 'renameToggle')
 
     Mousetrap.trigger('alt+/')
     vm.$children[0].renameToggle.calledWith(1).should.be.true
@@ -338,7 +338,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'sortLists')
+    sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+up')
     vm.$children[0].sortLists.calledWith(1, 0).should.be.true
@@ -381,7 +381,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'sortLists')
+    sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+up')
     vm.$children[0].sortLists.calledOnce.should.be.false
@@ -424,7 +424,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'sortLists')
+    sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+down')
     vm.$children[0].sortLists.calledWith(0, 1).should.be.true
@@ -440,7 +440,7 @@ describe('Lists.vue', function () {
         'test': Lists
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'sortLists')
+    sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+down')
     vm.$children[0].sortLists.calledOnce.should.be.false

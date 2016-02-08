@@ -69,7 +69,7 @@ describe('TryIt.vue', function () {
       }
     }).$mount()
     promise.resolves('mrormrstestperson@taskmastr.co')
-    sinon.spy(vm.$children[0].$route.router, 'go')
+    sinon.stub(vm.$children[0].$route.router, 'go')
 
     vm.$children[0].loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true)
     clock.tick(250)
@@ -88,7 +88,7 @@ describe('TryIt.vue', function () {
       }
     }).$mount()
     promise.resolves('mrormrstestperson@taskmastr.co')
-    sinon.spy(vm.$children[0], 'loginTestUser')
+    sinon.stub(vm.$children[0], 'loginTestUser')
 
     vm.$el.querySelector('#try-it-button').click()
     clock.tick(250)

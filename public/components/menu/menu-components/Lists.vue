@@ -3,7 +3,7 @@
     <div class="table-body" v-el:dragula>
       <div class="table-row" v-for="list in lists" :class="{'deleting': list._delete, 'current': list.current}" name="list{{$index + 1}}" transition="item">
         <div class="task-cell table-data">
-          <input class="rename" type="text" :value="list.list" @change="rename($index, $event.target.value)" :class="{'hidden': !(renameToggled === $index)}" @keyup.enter="renameToggle(null)" @blur="renameToggle(null)"></input>
+          <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(renameToggled === $index)}" @keyup.enter="renameToggle(null)" @blur="renameToggle(null)"></input>
           <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="setCurrentList($index)" @dblclick="renameToggle($index)">{{list.list}}</button>
         </div>
         <div class="utils table-data">
@@ -57,9 +57,12 @@ export default {
     sortLists: store.actions.sortLists,
     setSaveButton: store.actions.setSaveButton,
     renameList: store.actions.renameList,
-    rename (index, name) {
-      if (!this.lists[index].list) return
-      this.renameList(index, name)
+    rename (e, index) {
+      if (!e.target.value) {
+        e.target.value = this.lists[index].list
+        return
+      }
+      this.renameList(index, e.target.value.trim())
       this.setSaveButton(true)
     },
     renameToggle (index, e) {

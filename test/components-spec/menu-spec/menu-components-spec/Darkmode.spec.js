@@ -48,7 +48,7 @@ describe('Darkmode.vue', function () {
         'test': Darkmode
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'setDarkmode')
+    sinon.stub(vm.$children[0], 'setDarkmode')
 
     vm.$el.querySelector('#dark-mode').click()
     vm.$children[0].setDarkmode.calledWith(true).should.be.true
@@ -66,7 +66,7 @@ describe('Darkmode.vue', function () {
         'test': Darkmode
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'setDarkmode')
+    sinon.stub(vm.$children[0], 'setDarkmode')
 
     Mousetrap.trigger('command+m')
     vm.$children[0].setDarkmode.calledWith(true).should.be.true

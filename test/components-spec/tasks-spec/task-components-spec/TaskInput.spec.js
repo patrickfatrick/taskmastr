@@ -36,10 +36,6 @@ describe('TaskInput.vue', function () {
     TaskInput.computed.isValid.should.be.an.instanceof(Function)
   })
 
-  it('should inherit a setSaveButton action from the store', () => {
-    TaskInput.methods.setSaveButton.should.be.an.instanceof(Function)
-  })
-
   it('should inherit a setNewTask action from the store', () => {
     TaskInput.methods.setNewTask.should.be.an.instanceof(Function)
   })
@@ -92,15 +88,151 @@ describe('TaskInput.vue', function () {
       }
     }).$mount()
     sinon.stub(vm.$children[0], 'addTask')
-    sinon.spy(vm.$children[0], 'setSaveButton')
 
     vm.$el.querySelector('#task-button').click()
-    console.log(vm.$children[0].addTask.args[0])
     vm.$children[0].addTask.calledOnce.should.be.true
-    vm.$children[0].setSaveButton.calledWith(true).should.be.true
 
     vm.$children[0].addTask.restore()
-    vm.$children[0].setSaveButton.restore()
+    TaskInput.computed.isValid.restore()
+    TaskInput.computed.taskAttempt.restore()
+    TaskInput.computed.newTask.restore()
+    done()
+  })
+
+  it('should call addTask with a dueDate shortcut on form submit', (done) => {
+    sinon.stub(TaskInput.computed, 'isValid').returns(true)
+    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.computed, 'newTask').returns('Remind me to new task tomorrow')
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': TaskInput
+      }
+    }).$mount()
+    sinon.stub(vm.$children[0], 'addTask')
+
+    vm.$el.querySelector('#task-button').click()
+    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
+    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-01T13:00:00.000Z')
+
+    vm.$children[0].addTask.restore()
+    TaskInput.computed.isValid.restore()
+    TaskInput.computed.taskAttempt.restore()
+    TaskInput.computed.newTask.restore()
+    done()
+  })
+
+  it('should call addTask with a shorter dueDate shortcut on form submit', (done) => {
+    sinon.stub(TaskInput.computed, 'isValid').returns(true)
+    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.computed, 'newTask').returns('/r new task tomorrow')
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': TaskInput
+      }
+    }).$mount()
+    sinon.stub(vm.$children[0], 'addTask')
+
+    vm.$el.querySelector('#task-button').click()
+    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
+    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-01T13:00:00.000Z')
+
+    vm.$children[0].addTask.restore()
+    TaskInput.computed.isValid.restore()
+    TaskInput.computed.taskAttempt.restore()
+    TaskInput.computed.newTask.restore()
+    done()
+  })
+
+  it('should call addTask with a dueDate shortcut for tomorrow on form submit', (done) => {
+    sinon.stub(TaskInput.computed, 'isValid').returns(true)
+    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.computed, 'newTask').returns('/t new task')
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': TaskInput
+      }
+    }).$mount()
+    sinon.stub(vm.$children[0], 'addTask')
+
+    vm.$el.querySelector('#task-button').click()
+    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
+    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-01T13:00:00.000Z')
+
+    vm.$children[0].addTask.restore()
+    TaskInput.computed.isValid.restore()
+    TaskInput.computed.taskAttempt.restore()
+    TaskInput.computed.newTask.restore()
+    done()
+  })
+
+  it('should call addTask with a dueDate shortcut for next week on form submit', (done) => {
+    sinon.stub(TaskInput.computed, 'isValid').returns(true)
+    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.computed, 'newTask').returns('/w new task')
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': TaskInput
+      }
+    }).$mount()
+    sinon.stub(vm.$children[0], 'addTask')
+
+    vm.$el.querySelector('#task-button').click()
+    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
+    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-04T13:00:00.000Z')
+
+    vm.$children[0].addTask.restore()
+    TaskInput.computed.isValid.restore()
+    TaskInput.computed.taskAttempt.restore()
+    TaskInput.computed.newTask.restore()
+    done()
+  })
+
+  it('should call addTask with a dueDate shortcut for next month on form submit', (done) => {
+    clock.tick(86400000)
+    sinon.stub(TaskInput.computed, 'isValid').returns(true)
+    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.computed, 'newTask').returns('/m new task')
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': TaskInput
+      }
+    }).$mount()
+    sinon.stub(vm.$children[0], 'addTask')
+
+    vm.$el.querySelector('#task-button').click()
+    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
+    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-02-01T13:00:00.000Z')
+
+    vm.$children[0].addTask.restore()
+    TaskInput.computed.isValid.restore()
+    TaskInput.computed.taskAttempt.restore()
+    TaskInput.computed.newTask.restore()
+    done()
+  })
+
+  it('should call addTask with a dueDate shortcut for next year on form submit', (done) => {
+    clock.tick(86400000)
+    sinon.stub(TaskInput.computed, 'isValid').returns(true)
+    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.computed, 'newTask').returns('/y new task')
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': TaskInput
+      }
+    }).$mount()
+    sinon.stub(vm.$children[0], 'addTask')
+
+    vm.$el.querySelector('#task-button').click()
+    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
+    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2017-01-01T13:00:00.000Z')
+
+    vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
     TaskInput.computed.taskAttempt.restore()
     TaskInput.computed.newTask.restore()
@@ -118,14 +250,11 @@ describe('TaskInput.vue', function () {
       }
     }).$mount()
     sinon.stub(vm.$children[0], 'addTask')
-    sinon.spy(vm.$children[0], 'setSaveButton')
 
     vm.$el.querySelector('#task-button').click()
     vm.$children[0].addTask.calledOnce.should.be.false
-    vm.$children[0].setSaveButton.calledWith(true).should.be.false
 
     vm.$children[0].addTask.restore()
-    vm.$children[0].setSaveButton.restore()
     TaskInput.computed.isValid.restore()
     TaskInput.computed.taskAttempt.restore()
     TaskInput.computed.newTask.restore()

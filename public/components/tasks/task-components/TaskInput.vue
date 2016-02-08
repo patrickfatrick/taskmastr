@@ -48,7 +48,6 @@ export default {
   methods: {
     setNewTask: store.actions.setNewTask,
     setTaskAttempt: store.actions.setTaskAttempt,
-    setSaveButton: store.actions.setSaveButton,
     setTaskDueDate: store.actions.setTaskDueDate,
     setDueDateDifference: store.actions.setDueDateDifference,
     addTask: store.actions.addTask,
@@ -99,7 +98,6 @@ export default {
       })
       this.setTaskAttempt(false)
       this.setNewTask('')
-      this.setSaveButton(true)
     }
   },
   ready () {

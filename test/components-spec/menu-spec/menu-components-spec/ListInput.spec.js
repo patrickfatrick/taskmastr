@@ -25,10 +25,6 @@ describe('ListInput.vue', function () {
     ListInput.computed.isValid.should.be.an.instanceof(Function)
   })
 
-  it('should inherit a setSaveButton action from the store', () => {
-    ListInput.methods.setSaveButton.should.be.an.instanceof(Function)
-  })
-
   it('should inherit a setNewList action from the store', () => {
     ListInput.methods.setNewList.should.be.an.instanceof(Function)
   })
@@ -80,15 +76,12 @@ describe('ListInput.vue', function () {
         'test': ListInput
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'addList')
-    sinon.spy(vm.$children[0], 'setSaveButton')
+    sinon.stub(vm.$children[0], 'addList')
 
     vm.$el.querySelector('#list-button').click()
     vm.$children[0].addList.calledOnce.should.be.true
-    vm.$children[0].setSaveButton.calledWith(true).should.be.true
 
     vm.$children[0].addList.restore()
-    vm.$children[0].setSaveButton.restore()
     ListInput.computed.isValid.restore()
     ListInput.computed.listAttempt.restore()
     ListInput.computed.newList.restore()
@@ -105,15 +98,12 @@ describe('ListInput.vue', function () {
         'test': ListInput
       }
     }).$mount()
-    sinon.spy(vm.$children[0], 'addList')
-    sinon.spy(vm.$children[0], 'setSaveButton')
+    sinon.stub(vm.$children[0], 'addList')
 
     vm.$el.querySelector('#list-button').click()
     vm.$children[0].addList.calledOnce.should.be.false
-    vm.$children[0].setSaveButton.calledWith(true).should.be.false
 
     vm.$children[0].addList.restore()
-    vm.$children[0].setSaveButton.restore()
     ListInput.computed.isValid.restore()
     ListInput.computed.listAttempt.restore()
     ListInput.computed.newList.restore()

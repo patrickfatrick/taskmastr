@@ -17,7 +17,9 @@ export default new Vuex.Store({
       resetConfirmKey: '',
       darkmode: false,
       tasks: [],
-      current: {}
+      current: {
+        items: []
+      }
     },
     wiki: '//patrickfatrick.gitbooks.io/taskmastr/content/',
     init: false,

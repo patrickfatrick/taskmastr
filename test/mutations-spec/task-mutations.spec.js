@@ -157,6 +157,31 @@ describe('task mutations', () => {
     state.user.current.items[0]._delete.should.be.false
   })
 
+  it('RENAME_TASK', () => {
+    let state = {
+      user: {
+        current: {
+          list: 'Current list',
+          current: true,
+          items: [
+            {
+              item: 'Current task',
+              current: true
+            },
+            {
+              item: 'Not current task',
+              current: false
+            }
+          ]
+        }
+      }
+    }
+
+    taskMutations.RENAME_TASK(state, 0, 'New current task')
+
+    state.user.current.items[0].item.should.equal('New current task')
+  })
+
   it('SET_TASK_DUE_DATE', () => {
     const today = new Date()
     let state = {
@@ -314,6 +339,33 @@ describe('task mutations', () => {
     taskMutations.TOGGLE_DETAILS(state, 1, true)
 
     state.user.current.items[0]._detailsToggled.should.be.true
+  })
+
+  it('SET_TASK_NOTES', () => {
+    let state = {
+      user: {
+        current: {
+          list: 'Current list',
+          current: true,
+          items: [
+            {
+              item: 'Current task',
+              current: true,
+              notes: ''
+            },
+            {
+              item: 'Not current task',
+              current: false,
+              notes: ''
+            }
+          ]
+        }
+      }
+    }
+
+    taskMutations.SET_TASK_NOTES(state, 0, 'Some notes')
+
+    state.user.current.items[0].notes.should.equal('Some notes')
   })
 
   it('SET_DUE_DATE_DIFFERENCE', () => {
