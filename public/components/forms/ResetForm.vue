@@ -46,9 +46,9 @@ export default {
     reset (resetToken, resetKey) {
       if (!this.isValid) return
       this.resetPassword(resetToken, resetKey)
-      .then(response => {
-        if (!response) return false
-        return this.loginUser(response, resetKey, false)
+      .then(() => {
+        if (!this.user.username) return false
+        return this.loginUser(this.user.username, resetKey, false)
       })
       .then(() => {
         if (this.auth) {

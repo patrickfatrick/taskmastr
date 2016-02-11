@@ -36,8 +36,8 @@ export default {
     store.dispatch('SET_DARKMODE', bool)
     store.dispatch('SET_SAVE_BUTTON', true)
   },
-  getSession: store => {
-    return getSession(response => {
+  getSession: (store) => {
+    return getSession((response) => {
       if (response.error) {
         if (response.error === 204) return store.dispatch('SET_INIT', true)
       }
@@ -59,7 +59,7 @@ export default {
     })
   },
   loginUser: (store, username, key, rememberMe) => {
-    return login(username, key, rememberMe, response => {
+    return login(username, key, rememberMe, (response) => {
       if (response.error) {
         if (response.error === 204) return store.dispatch('SET_CREATE', true)
         if (response.error === 401) return store.dispatch('SET_INVALID_KEY', response.msg)
@@ -79,7 +79,7 @@ export default {
     })
   },
   createUser: (store, username, key, rememberMe) => {
-    return create(username, key, rememberMe, response => {
+    return create(username, key, rememberMe, (response) => {
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_CONFIRM', '')
@@ -91,7 +91,7 @@ export default {
     })
   },
   forgotPassword: (store, username) => {
-    forgot(username, response => {
+    forgot(username, (response) => {
       if (response.error) {
         if (response.error === 401) return store.dispatch('SET_FORGOT_FAIL', response.msg)
       }
@@ -99,7 +99,7 @@ export default {
     })
   },
   resetPassword: (store, token, key) => {
-    return reset(token, key, response => {
+    return reset(token, key, (response) => {
       if (response.error) {
         if (response.error === 401) return store.dispatch('SET_RESET_FAIL', response.msg)
       }
@@ -112,7 +112,7 @@ export default {
       window.location.href = '/'
     })
   },
-  saveUser: store => {
+  saveUser: (store) => {
     let user = {
       username: store.state.user.username,
       tasks: store.state.user.tasks,
@@ -122,7 +122,7 @@ export default {
     // handle "try it" account
     if (user.username === 'mrormrstestperson@taskmastr.co') return store.dispatch('SET_SAVE_BUTTON', false)
     let deleteAgendas = store.state.deleteAgendas
-    return save(user, deleteAgendas, response => {
+    return save(user, deleteAgendas, (response) => {
       if (response.status !== 200) return store.dispatch('SET_SAVE_BUTTON', true)
       return store.dispatch('SET_SAVE_BUTTON', false)
     })
@@ -239,7 +239,7 @@ export default {
             store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, nextList))
           }
         }
-        _.each(list.items, item => {
+        _.each(list.items, (item) => {
           store.dispatch('DELETE_AGENDA', item.id)
         })
         store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)

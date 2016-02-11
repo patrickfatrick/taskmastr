@@ -77,7 +77,7 @@ exports.resetPassword = function (user, next) {
       if (Date.now() > user.resetDate) {
         return next(err, null)
       }
-      User.update({
+      User.findOneAndUpdate({
         username: username
       }, {
         $set: {
