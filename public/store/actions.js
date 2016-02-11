@@ -61,7 +61,7 @@ export default {
   loginUser: (store, username, key, rememberMe) => {
     return login(username, key, rememberMe, response => {
       if (response.error) {
-        if (response.error === 204) return store.dispatch('SET_CREATE')
+        if (response.error === 204) return store.dispatch('SET_CREATE', true)
         if (response.error === 401) return store.dispatch('SET_INVALID_KEY', response.msg)
       }
       let tasks = response.tasks || response.todos

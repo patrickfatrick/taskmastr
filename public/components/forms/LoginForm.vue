@@ -1,5 +1,5 @@
 <template>
-  <form id="user-form" name="userForm" action="/users/login" novalidate v-if="$route.path === '/login'" v-on:submit.prevent="loginUser(user.username, user.key, rememberMe, isValid)">
+  <form id="user-form" name="userForm" action="/users/login" novalidate v-if="$route.path === '/login'" @submit.prevent="login(user.username, user.key, rememberMe, isValid)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <key-input :require="validate.passwordRequired"></key-input>
     <remember-me></remember-me>
@@ -51,8 +51,8 @@ export default {
       }
     },
     isValid () {
-      var validation = this.validate
-      return Object.keys(validation).every(function (key) {
+      const validation = this.validate
+      return Object.keys(validation).every(key => {
         return validation[key]
       })
     }
@@ -68,7 +68,7 @@ export default {
             this.$route.router.go('/app')
           }, 250)
         }
-        if (this.create) {
+        if (this.create && !this.auth) {
           this.$route.router.go('/create')
         }
       })

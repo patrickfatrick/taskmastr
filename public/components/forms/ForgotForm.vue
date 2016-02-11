@@ -1,5 +1,5 @@
 <template>
-  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate v-if="$route.path === '/forgot'" v-on:submit.prevent="forgotPassword(user.username)">
+  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate v-if="$route.path === '/forgot'" @submit.prevent="forgot(user.username)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <forgot-password></forgot-password>
   </form>
@@ -22,9 +22,6 @@ export default {
     user () {
       return store.state.user
     },
-    forgot () {
-      return store.state.forgot
-    },
     validate () {
       return {
         usernameEmail: emailRE.test(this.user.username),
@@ -39,9 +36,10 @@ export default {
     }
   },
   methods: {
-    forgotPassword (username) {
+    forgotPassword: store.actions.forgotPassword,
+    forgot (username) {
       if (!this.isValid) return
-      store.actions.forgotPassword(username)
+      this.forgotPassword(username)
     }
   }
 }

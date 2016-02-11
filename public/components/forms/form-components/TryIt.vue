@@ -1,5 +1,5 @@
 <template>
-  <button id="try-it-button" class="button" title="Try it" @click="loginTestUser(testUser, testKey, false, true)">Try it</button>
+  <button id="try-it-button" class="button" title="Try it" @click="loginTestUser(testUser, testKey, false)">Try it</button>
 </template>
 
 <script>
@@ -23,8 +23,8 @@ export default {
   },
   methods: {
     loginUser: store.actions.loginUser,
-    loginTestUser (username, key, rememberMe, isValid) {
-      this.loginUser(username, key, rememberMe, isValid)
+    loginTestUser (username, key, rememberMe) {
+      this.loginUser(username, key, rememberMe)
       .then(() => {
         if (this.auth) {
           setTimeout(() => {

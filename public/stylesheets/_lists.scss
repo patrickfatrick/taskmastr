@@ -80,7 +80,6 @@
 			}
 			.table-data.task-cell {
 				font-size: 1.4rem;
-				padding-top: 0.7rem;
 				word-wrap: break-word;
 				@include span-columns(11 of 21);
 				@include media(min-width $small) {

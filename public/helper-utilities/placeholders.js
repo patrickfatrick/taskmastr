@@ -13,7 +13,7 @@ export default {
     'Walk the dog',
     'Remind me to water the plants on Tuesday',
     '/r get a costume on 10/30/2015',
-    '/r buy everyone Christmas gifts Dec 24',
+    '/r buy everyone Christmas gifts Dec 24, 2016',
     '/r learn how to juggle next year',
     '/r fix the chair on Sunday',
     'Check out the art walk downtown',
@@ -42,7 +42,7 @@ export default {
     'Learn how to make a martini',
     'Watch Dr. Strangelove',
     'Remind me to go to the movies on Sunday',
-    '/r prank Taylor real good April 1st',
+    '/r prank Taylor real good April 1st, 2016',
     '/t read the new xkcd',
     'Do some jumping jacks',
     '/m say "yes" to everything for one month',
@@ -51,6 +51,6 @@ export default {
     'Check out the fall foliage 10/03/2015',
     'Learn how to tango',
     '/t shave',
-    'Remind me to watch the Apple keynote Sept 9'
+    'Remind me to watch the Apple keynote Sept 9, 2015'
   ]
 }

@@ -169,7 +169,7 @@ describe('user mutations', () => {
       create: false
     }
 
-    userMutations.SET_CREATE(state)
+    userMutations.SET_CREATE(state, true)
 
     state.user.should.have.property('username', 'username')
     state.user.should.have.property('key', 'password')

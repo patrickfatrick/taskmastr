@@ -5,7 +5,7 @@
     <span v-show="!match && loginAttempt && user.confirm">Passwords don't match.</span>
   </div>
   <div id="confirm-line" class="prompt-line">
-    <input id="confirm" class="prompt" type="password" name="password" placeholder="Password" :value="user.confirm" @change="setConfirm($event.target.value)" :class="{'invalid': confirmAttempt && !match}"></input>
+    <input id="confirm" class="prompt" type="password" name="password" placeholder="Password" :value="user.confirm" @input="setConfirm($event.target.value)" :class="{'invalid': confirmAttempt && !match}"></input>
     <button id="confirm-button" class="submit" type="submit" @click="setConfirmAttempt(true)">
       <i class="fa fa-arrow-right"></i>
     </button>

@@ -51,4 +51,11 @@ describe('extractDate', () => {
     extract.should.have.property('item', 'See you')
     extract.should.have.property('dueDate', '2016-01-04T00:00:00.000Z')
   })
+
+  it('works with "tomorrow"', () => {
+    const string = 'see you tomorrow'
+    const extract = extractDate(string)
+    extract.should.have.property('item', 'See you')
+    extract.should.have.property('dueDate', '2016-01-02T00:00:00.000Z')
+  })
 })

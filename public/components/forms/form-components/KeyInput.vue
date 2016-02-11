@@ -1,10 +1,10 @@
 <template>
   <div class="error-text">
-    <span v-bind:class="{'hidden': require || !loginAttempt}">Password required</span>
-    <span v-bind:class="{'hidden': !invalidKey || !loginAttempt}">{{invalidKey}}</span>
+    <span :class="{'hidden': require || !loginAttempt}">Password required</span>
+    <span :class="{'hidden': !invalidKey || !loginAttempt}">{{invalidKey}}</span>
   </div>
   <div id="key-line" class="prompt-line">
-    <input id="key" class="prompt" type="password" name="password" placeholder="Password" :value="user.key" @change="setKey($event.target.value)" :class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>
+    <input id="key" class="prompt" type="password" name="password" placeholder="Password" :value="user.key" @input="setKey($event.target.value)" :class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>
     <button id="key-button" class="submit" type="submit" v-if="$route.path !== '/create'" @click="setLoginAttempt(true)">
       <i class="fa fa-arrow-right"></i>
     </button>

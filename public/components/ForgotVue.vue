@@ -46,10 +46,10 @@ export default {
     TryIt
   },
   methods: {
-    toggleCheckbox: store.actions.toggleCheckbox
+    setForgot: store.actions.setForgot
   },
-  ready () {
-    if (this.$route.path === '/forgot' && !this.forgot) return this.toggleCheckbox('forgot')
+  compiled () {
+    if (this.$route.path === '/forgot' && !this.forgot) return this.setForgot(true)
   }
 }
 

@@ -36,7 +36,7 @@ describe('loginUser', () => {
     })
 
     testAction(actions.default.loginUser, ['username', 'password', false], {}, [
-      {name: 'SET_CREATE', payload: []}
+      {name: 'SET_CREATE', payload: [true]}
     ], done)
   })
 

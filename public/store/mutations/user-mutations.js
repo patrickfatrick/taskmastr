@@ -29,8 +29,8 @@ export const userMutations = {
   [SET_REMEMBER_ME] (state, bool) {
     _.set(state, 'rememberMe', bool)
   },
-  [SET_CREATE] (state) {
-    _.set(state, 'create', !state.create)
+  [SET_CREATE] (state, bool) {
+    _.set(state, 'create', bool)
   },
   [SET_INVALID_KEY] (state, msg) {
     _.set(state, 'invalidKey', msg)

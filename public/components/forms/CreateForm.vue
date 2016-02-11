@@ -1,5 +1,5 @@
 <template>
-  <form id="create-form" name="createForm" v-if="!forgot && ($route.path === '/create')" action="/users/create" novalidate v-on:submit.prevent="createUser(user.username.trim(), user.confirm, rememberMe)">
+  <form id="create-form" name="createForm" v-if="!forgot && ($route.path === '/create')" action="/users/create" novalidate @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <key-input :require="validate.passwordRequired"></key-input>
     <confirm-input :match="validate.confirmMatch"></confirm-input>
@@ -40,9 +40,6 @@ export default {
     rememberMe () {
       return store.state.rememberMe
     },
-    create () {
-      return store.state.create
-    },
     validate () {
       return {
         usernameEmail: emailRE.test(this.user.username.trim()),
@@ -59,13 +56,14 @@ export default {
     }
   },
   methods: {
-    save: store.actions.save,
+    saveUser: store.actions.saveUser,
     loginUser: store.actions.loginUser,
-    createUser (username, key, rememberMe) {
+    createUser: store.actions.createUser,
+    create (username, key, rememberMe) {
       if (!this.isValid) return
-      store.actions.createUser(username, key, rememberMe)
+      this.createUser(username, key, rememberMe)
       .then(() => {
-        this.save()
+        this.saveUser()
         if (this.auth) {
           setTimeout(() => {
             this.$route.router.go('/app')

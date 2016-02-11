@@ -60,7 +60,7 @@ describe('TryIt.vue', function () {
     vm.$el.querySelector('#try-it-button').textContent.should.equal('Try it')
   })
 
-  it('should log in to the test account on button push', (done) => {
+  it('should log in to the test account on loginTestUser', (done) => {
     sinon.stub(TryIt.computed, 'auth').returns('mrormrstestperson@taskmastr.co')
     const vm = new Vue({
       template: '<div><test></test></div>',
@@ -71,7 +71,7 @@ describe('TryIt.vue', function () {
     promise.resolves('mrormrstestperson@taskmastr.co')
     sinon.stub(vm.$children[0].$route.router, 'go')
 
-    vm.$children[0].loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true)
+    vm.$children[0].loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false)
     clock.tick(250)
     vm.$children[0].$route.router.go.calledWith('/app').should.be.true
 
@@ -92,7 +92,7 @@ describe('TryIt.vue', function () {
 
     vm.$el.querySelector('#try-it-button').click()
     clock.tick(250)
-    vm.$children[0].loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false, true).should.be.true
+    vm.$children[0].loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false).should.be.true
 
     vm.$children[0].loginTestUser.restore()
     done()

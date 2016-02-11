@@ -42,9 +42,9 @@ export default {
     setReset: store.actions.setReset,
     setResetToken: store.actions.setResetToken
   },
-  ready () {
+  compiled () {
     if (this.$route.query.token) this.setResetToken(this.$route.query.token)
-    if (this.$route.path.indexOf('/reset') === 0) return this.setReset(true)
+    if (this.$route.path === '/reset') return this.setReset(true)
   }
 }
 
