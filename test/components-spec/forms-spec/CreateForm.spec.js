@@ -13,7 +13,8 @@ describe('CreateForm.vue', function () {
           return location
         }
       },
-      path: '/create'
+      path: '/create',
+      name: 'Create'
     }
   }
 

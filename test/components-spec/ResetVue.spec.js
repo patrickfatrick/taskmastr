@@ -14,6 +14,7 @@ describe('ResetVue.vue', function () {
         }
       },
       path: '/reset',
+      name: 'Reset',
       query: {
         token: 'token'
       }
@@ -128,6 +129,7 @@ describe('ResetVue.vue', function () {
         }
       },
       path: '/login',
+      name: 'Login',
       query: {
         token: 'token'
       }

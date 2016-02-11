@@ -44,7 +44,7 @@ export default {
   },
   compiled () {
     if (this.$route.query.token) this.setResetToken(this.$route.query.token)
-    if (this.$route.path === '/reset') return this.setReset(true)
+    if (this.$route.name === 'Reset') return this.setReset(true)
   }
 }
 

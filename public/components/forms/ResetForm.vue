@@ -1,5 +1,5 @@
 <template>
-  <form id="reset-form" name="resetForm" action="/users/reset" novalidate v-if="$route.path === '/reset'" @submit.prevent="reset(resetToken, user.resetKey)">
+  <form id="reset-form" name="resetForm" action="/users/reset" novalidate v-if="$route.name === 'Reset'" @submit.prevent="reset(resetToken, user.resetKey)">
     <reset-key-input :require="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
     <reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
   </form>

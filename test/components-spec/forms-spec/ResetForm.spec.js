@@ -13,7 +13,8 @@ describe('ResetForm.vue', function () {
           return location
         }
       },
-      path: '/reset'
+      path: '/reset',
+      name: 'Reset'
     }
   }
 

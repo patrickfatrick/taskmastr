@@ -13,7 +13,8 @@ describe('LoginForm.vue', function () {
           return location
         }
       },
-      path: '/login'
+      path: '/login',
+      name: 'Login'
     }
   }
 

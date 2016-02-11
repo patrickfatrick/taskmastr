@@ -1,5 +1,5 @@
 <template>
-  <form id="create-form" name="createForm" v-if="!forgot && ($route.path === '/create')" action="/users/create" novalidate @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)">
+  <form id="create-form" name="createForm" v-if="!forgot && ($route.name === 'Create')" action="/users/create" novalidate @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <key-input :require="validate.passwordRequired"></key-input>
     <confirm-input :match="validate.confirmMatch"></confirm-input>

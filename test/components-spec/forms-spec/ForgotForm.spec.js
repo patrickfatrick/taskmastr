@@ -13,7 +13,8 @@ describe('ForgotForm.vue', function () {
           return location
         }
       },
-      path: '/forgot'
+      path: '/forgot',
+      name: 'Forgot'
     }
   }
 
