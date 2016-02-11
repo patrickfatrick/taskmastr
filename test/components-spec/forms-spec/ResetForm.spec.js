@@ -73,6 +73,9 @@ describe('ResetForm.vue', function () {
 
   it('should reset password and log in to app if isValid', (done) => {
     sinon.stub(ResetForm.computed, 'auth').returns('username@domain.com')
+    sinon.stub(ResetForm.computed, 'user').returns({
+      username: 'username@domain.com'
+    })
     sinon.stub(ResetForm.computed, 'validate').returns({
       passwordRequired: true,
       confirmMatch: true,
@@ -98,6 +101,7 @@ describe('ResetForm.vue', function () {
     vm.$children[0].$route.router.go.calledWith('/app').should.be.true
 
     ResetForm.computed.auth.restore()
+    ResetForm.computed.user.restore()
     ResetForm.computed.validate.restore()
     ResetForm.computed.isValid.restore()
     vm.$children[0].$route.router.go.restore()
@@ -108,6 +112,9 @@ describe('ResetForm.vue', function () {
 
   it('should not reset password or log in to app if !isValid', (done) => {
     sinon.stub(ResetForm.computed, 'auth').returns('username@domain.com')
+    sinon.stub(ResetForm.computed, 'user').returns({
+      username: 'username@domain.com'
+    })
     sinon.stub(ResetForm.computed, 'validate').returns({
       passwordRequired: true,
       confirmMatch: true,
@@ -133,6 +140,7 @@ describe('ResetForm.vue', function () {
     vm.$children[0].$route.router.go.calledOnce.should.be.false
 
     ResetForm.computed.auth.restore()
+    ResetForm.computed.user.restore()
     ResetForm.computed.validate.restore()
     ResetForm.computed.isValid.restore()
     vm.$children[0].$route.router.go.restore()
@@ -143,6 +151,9 @@ describe('ResetForm.vue', function () {
 
   it('should not reset password or log in to app if invalid token', (done) => {
     sinon.stub(ResetForm.computed, 'auth').returns(false)
+    sinon.stub(ResetForm.computed, 'user').returns({
+      username: ''
+    })
     sinon.stub(ResetForm.computed, 'validate').returns({
       passwordRequired: true,
       confirmMatch: true,
@@ -168,6 +179,7 @@ describe('ResetForm.vue', function () {
     vm.$children[0].$route.router.go.calledOnce.should.be.false
 
     ResetForm.computed.auth.restore()
+    ResetForm.computed.user.restore()
     ResetForm.computed.validate.restore()
     ResetForm.computed.isValid.restore()
     vm.$children[0].$route.router.go.restore()
