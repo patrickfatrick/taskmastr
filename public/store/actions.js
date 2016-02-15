@@ -37,10 +37,8 @@ export default {
     store.dispatch('SET_SAVE_BUTTON', true)
   },
   getSession: (store) => {
-    return getSession((response) => {
-      if (response.error) {
-        if (response.error === 204) return store.dispatch('SET_INIT', true)
-      }
+    return getSession((err, response) => {
+      if (err) return store.dispatch('SET_INIT', true)
       /**
        * Failsafes for IDs, set delete if it doesn't exist.
        */
@@ -59,10 +57,10 @@ export default {
     })
   },
   loginUser: (store, username, key, rememberMe) => {
-    return login(username, key, rememberMe, (response) => {
-      if (response.error) {
-        if (response.error === 204) return store.dispatch('SET_CREATE', true)
-        if (response.error === 401) return store.dispatch('SET_INVALID_KEY', response.msg)
+    return login(username, key, rememberMe, (err, response) => {
+      if (err) {
+        if (response.status === 204) return store.dispatch('SET_CREATE', true)
+        if (response.status === 401) return store.dispatch('SET_INVALID_KEY', err)
       }
       let tasks = response.tasks || response.todos
       let taskMap = _.map(tasks, mapTasks)
@@ -79,7 +77,8 @@ export default {
     })
   },
   createUser: (store, username, key, rememberMe) => {
-    return create(username, key, rememberMe, (response) => {
+    return create(username, key, rememberMe, (err, response) => {
+      if (err) return console.log(err, response.statusText)
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_CONFIRM', '')
@@ -91,17 +90,15 @@ export default {
     })
   },
   forgotPassword: (store, username) => {
-    forgot(username, (response) => {
-      if (response.error) {
-        if (response.error === 401) return store.dispatch('SET_FORGOT_FAIL', response.msg)
-      }
+    forgot(username, (err, response) => {
+      if (err) return store.dispatch('SET_FORGOT_FAIL', err)
       if (response.emailSent) return store.dispatch('SET_FORGOT_EMAIL', true)
     })
   },
   resetPassword: (store, token, key) => {
-    return reset(token, key, (response) => {
-      if (response.error) {
-        if (response.error === 401) return store.dispatch('SET_RESET_FAIL', response.msg)
+    return reset(token, key, (err, response) => {
+      if (err) {
+        return store.dispatch('SET_RESET_FAIL', err)
       }
       store.dispatch('SET_USERNAME', response.username)
       return response.username
@@ -122,8 +119,8 @@ export default {
     // handle "try it" account
     if (user.username === 'mrormrstestperson@taskmastr.co') return store.dispatch('SET_SAVE_BUTTON', false)
     let deleteAgendas = store.state.deleteAgendas
-    return save(user, deleteAgendas, (response) => {
-      if (response.status !== 200) return store.dispatch('SET_SAVE_BUTTON', true)
+    return save(user, deleteAgendas, (err, response) => {
+      if (err) return store.dispatch('SET_SAVE_BUTTON', true)
       return store.dispatch('SET_SAVE_BUTTON', false)
     })
   },

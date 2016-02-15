@@ -6,11 +6,11 @@ const actionsInjector = require('inject!../../../public/store/actions')
 chai.should()
 
 describe('save', () => {
-  it('saves', done => {
+  it('saves', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         save (user, deleteAgendas, cb) {
-          cb({status: 200})
+          cb(null, {status: 200})
         }
       }
     })
@@ -27,11 +27,11 @@ describe('save', () => {
     ], done)
   })
 
-  it('does not dispatch save on failure', done => {
+  it('does not dispatch save on failure', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         save (user, deleteAgendas, cb) {
-          cb({status: 500})
+          cb('Error', {status: 500})
         }
       }
     })
@@ -48,11 +48,11 @@ describe('save', () => {
     ], done)
   })
 
-  it('only dispatches SET_SAVE_BUTTON on test account', done => {
+  it('only dispatches SET_SAVE_BUTTON on test account', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         save (user, deleteAgendas, cb) {
-          cb({})
+          cb(null, {})
         }
       }
     })

@@ -7,11 +7,11 @@ const actionsInjector = require('inject!../../../public/store/actions')
 chai.should()
 
 describe('getSession', () => {
-  it('logs in on success', done => {
+  it('logs in on success', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         getSession (cb) {
-          cb(mockUser)
+          cb(null, mockUser)
         }
       }
     })
@@ -26,11 +26,11 @@ describe('getSession', () => {
     ], done)
   })
 
-  it('dispatches SET_INIT on no user session', done => {
+  it('dispatches SET_INIT on no user session', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         getSession (cb) {
-          cb({error: 204})
+          cb('Error', {status: 204})
         }
       }
     })

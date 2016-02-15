@@ -23,7 +23,7 @@ describe('user-services', () => {
   it('getSession should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    getSession(response => {
+    getSession((response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true
@@ -33,7 +33,7 @@ describe('user-services', () => {
   it('getSession should return an error on 204', (done) => {
     let response = {status: 204}
     promise.resolves(response)
-    getSession(response => {
+    getSession((response) => {
       response.should.have.property('error', 204)
       response.should.have.property('msg', 'No session data found')
     })
@@ -50,7 +50,7 @@ describe('user-services', () => {
   it('login should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    login('username', 'password', false, response => {
+    login('username', 'password', false, (response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true
@@ -60,7 +60,7 @@ describe('user-services', () => {
   it('login should return an error on 204', (done) => {
     let response = {status: 204}
     promise.resolves(response)
-    login('username', 'password', false, response => {
+    login('username', 'password', false, (response) => {
       response.should.have.property('error', 204)
       response.should.have.property('msg', 'No user found. Please confirm your password.')
     })
@@ -71,7 +71,7 @@ describe('user-services', () => {
   it('login should return an error on 401', (done) => {
     let response = {status: 401}
     promise.resolves(response)
-    login('username', 'password', false, response => {
+    login('username', 'password', false, (response) => {
       response.should.have.property('error', 401)
       response.should.have.property('msg', 'Invalid password.')
     })
@@ -88,7 +88,7 @@ describe('user-services', () => {
   it('create should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    create('username', 'password', false, response => {
+    create('username', 'password', false, (response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true
@@ -104,7 +104,7 @@ describe('user-services', () => {
   it('forgot should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    forgot('username', response => {
+    forgot('username', (response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true
@@ -120,7 +120,7 @@ describe('user-services', () => {
   it('reset should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    reset('token', 'password', response => {
+    reset('token', 'password', (response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true
@@ -130,7 +130,7 @@ describe('user-services', () => {
   it('reset should return an error on 401', (done) => {
     let response = {status: 401}
     promise.resolves(response)
-    reset(response => {
+    reset((response) => {
       response.should.have.property('error', 401)
       response.should.have.property('msg', 'This reset link is no longer or never was valid. Please close this window and try again.')
     })
@@ -147,7 +147,7 @@ describe('user-services', () => {
   it('logout should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    logout(response => {
+    logout((response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true
@@ -163,7 +163,7 @@ describe('user-services', () => {
   it('save should return a response', (done) => {
     let response = {response: 'response'}
     promise.resolves(response)
-    save(response => {
+    save((response) => {
       response.should.have.property('response', 'response')
     })
     window.fetch.calledOnce.should.be.true

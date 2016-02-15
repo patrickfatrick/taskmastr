@@ -7,11 +7,11 @@ const actionsInjector = require('inject!../../../public/store/actions')
 chai.should()
 
 describe('loginUser', () => {
-  it('logs in on success', done => {
+  it('logs in on success', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         login (username, key, rememberMe, cb) {
-          cb(mockUser)
+          cb(null, mockUser)
         }
       }
     })
@@ -26,11 +26,11 @@ describe('loginUser', () => {
     ], done)
   })
 
-  it('dispatches SET_CREATE when no user found', done => {
+  it('dispatches SET_CREATE when no user found', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         login (username, key, rememberMe, cb) {
-          cb({error: 204})
+          cb('Error', {status: 204})
         }
       }
     })
@@ -40,11 +40,11 @@ describe('loginUser', () => {
     ], done)
   })
 
-  it('dispatches SET_INVALID_KEY on invalid password', done => {
+  it('dispatches SET_INVALID_KEY on invalid password', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         login (username, key, rememberMe, cb) {
-          cb({error: 401, msg: 'Invalid key'})
+          cb('Invalid key', {status: 401})
         }
       }
     })

@@ -7,11 +7,11 @@ const actionsInjector = require('inject!../../../public/store/actions')
 chai.should()
 
 describe('createUser', () => {
-  it('logs in on success', done => {
+  it('logs in on success', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         create (username, key, rememberMe, cb) {
-          cb(newUser)
+          cb(null, newUser)
         }
       }
     })
@@ -25,5 +25,17 @@ describe('createUser', () => {
       {name: 'SET_CURRENT_LIST', payload: [0]},
       {name: 'SET_AUTH', payload: ['username']}
     ], done)
+  })
+
+  it('does not log in on fail', (done) => {
+    const actions = actionsInjector({
+      '../services/user-services': {
+        login (username, key, rememberMe, cb) {
+          cb('Error', {status: 401})
+        }
+      }
+    })
+
+    testAction(actions.default.loginUser, ['username', 'password', false], {}, [], done)
   })
 })

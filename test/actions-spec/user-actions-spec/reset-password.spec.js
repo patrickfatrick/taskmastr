@@ -6,11 +6,11 @@ const actionsInjector = require('inject!../../../public/store/actions')
 chai.should()
 
 describe('resetPassword', () => {
-  it('dispatches SET_USERNAME on success', done => {
+  it('dispatches SET_USERNAME on success', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         reset (token, newKey, cb) {
-          cb({username: 'username'})
+          cb(null, {username: 'username'})
         }
       }
     })
@@ -20,11 +20,11 @@ describe('resetPassword', () => {
     ], done)
   })
 
-  it('dispatches RESET_FAIL on failure', done => {
+  it('dispatches RESET_FAIL on failure', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
         reset (token, newKey, cb) {
-          cb({error: 401, msg: 'Invalid link'})
+          cb('Invalid link', {status: 401})
         }
       }
     })
