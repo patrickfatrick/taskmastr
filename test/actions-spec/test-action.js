@@ -21,6 +21,4 @@ export const testAction = (action, args, state, expectedMutations, done) => {
     expectedMutations.length.should.equal(0)
     done()
   }
-  // expectedMutations.length.should.equal(count)
-  // done()
 }
