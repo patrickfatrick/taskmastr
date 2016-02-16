@@ -16,7 +16,7 @@ describe('setDueDateDifference', () => {
     clock.restore()
   })
 
-  it('dispatches SET_DUE_DATE_DIFFERENCE with dueDate', done => {
+  it('dispatches SET_DUE_DATE_DIFFERENCE with dueDate', (done) => {
     const dueDate = Date.parse(new Date()) + (1000 * 60 * 60 * 24)
     const index = 0
 
@@ -25,7 +25,7 @@ describe('setDueDateDifference', () => {
     ], done)
   })
 
-  it('dispatches SET_DUE_DATE_DIFFERENCE with a past dueDate', done => {
+  it('dispatches SET_DUE_DATE_DIFFERENCE with a past dueDate', (done) => {
     const dueDate = Date.parse(new Date()) - (1000 * 60 * 60 * 24)
     const index = 0
 
@@ -34,7 +34,7 @@ describe('setDueDateDifference', () => {
     ], done)
   })
 
-  it('dispatches SET_DUE_DATE_DIFFERENCE without a dueDate', done => {
+  it('dispatches SET_DUE_DATE_DIFFERENCE without a dueDate', (done) => {
     const dueDate = null
     const index = 0
 

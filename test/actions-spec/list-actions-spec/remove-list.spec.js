@@ -6,7 +6,7 @@ import actions from '../../../public/store/actions'
 chai.should()
 
 describe('removeList', () => {
-  it('dispatches REMOVE_LIST and SET_SAVE_BUTTON', done => {
+  it('dispatches REMOVE_LIST and SET_SAVE_BUTTON', (done) => {
     let state = {
       user: {
         tasks: [

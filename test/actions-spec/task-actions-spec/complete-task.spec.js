@@ -6,7 +6,7 @@ import actions from '../../../public/store/actions'
 chai.should()
 
 describe('completeTask', () => {
-  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON with another complete', done => {
+  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON with another complete', (done) => {
     let state = {
       user: {
         current: {
@@ -34,7 +34,7 @@ describe('completeTask', () => {
     ], done)
   })
 
-  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON on true without another complete', done => {
+  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON on true without another complete', (done) => {
     let state = {
       user: {
         current: {
@@ -62,7 +62,7 @@ describe('completeTask', () => {
     ], done)
   })
 
-  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON on false', done => {
+  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON on false', (done) => {
     let state = {
       user: {
         current: {
@@ -90,7 +90,7 @@ describe('completeTask', () => {
     ], done)
   })
 
-  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON when after another complete', done => {
+  it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON when after another complete', (done) => {
     let state = {
       user: {
         current: {

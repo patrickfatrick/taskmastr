@@ -43,7 +43,7 @@ describe('ForgotPassword.vue', function () {
     vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.false
   })
 
-  it('should respond to changes in the state', done => {
+  it('should respond to changes in the state', (done) => {
     sinon.stub(ForgotPassword.computed, 'forgot').returns(true)
     const vm = new Vue({
       template: '<div><test></test></div>',
@@ -60,7 +60,7 @@ describe('ForgotPassword.vue', function () {
     done()
   })
 
-  it('should route to /forgot on forgot', done => {
+  it('should route to /forgot on forgot', (done) => {
     sinon.stub(ForgotPassword.computed, 'forgot').returns(true)
     const vm = new Vue({
       template: '<div><test></test></div>',
@@ -82,7 +82,7 @@ describe('ForgotPassword.vue', function () {
     done()
   })
 
-  it('should route to /create on !forgot and create', done => {
+  it('should route to /create on !forgot and create', (done) => {
     sinon.stub(ForgotPassword.computed, 'forgot').returns(false)
     sinon.stub(ForgotPassword.computed, 'create').returns(true)
     const vm = new Vue({

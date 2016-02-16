@@ -13,10 +13,14 @@ export const testAction = (action, args, state, expectedMutations, done) => {
       done()
     }
   }
-  if (expectedMutations.length === 0) {
-    count.should.equal(0)
+  // call the action with mocked store and arguments
+  action({dispatch, state}, ...args)
+
+  // check if nothing should have been dispatched
+  if (count === 0) {
+    expectedMutations.length.should.equal(0)
     done()
   }
-  // call the action with mocked store
-  action({dispatch, state}, ...args)
+  // expectedMutations.length.should.equal(count)
+  // done()
 }

@@ -52,7 +52,7 @@ export default {
     },
     isValid () {
       const validation = this.validate
-      return Object.keys(validation).every(key => {
+      return Object.keys(validation).every((key) => {
         return validation[key]
       })
     }

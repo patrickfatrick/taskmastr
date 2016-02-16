@@ -30,12 +30,12 @@ describe('createUser', () => {
   it('does not log in on fail', (done) => {
     const actions = actionsInjector({
       '../services/user-services': {
-        login (username, key, rememberMe, cb) {
+        create (username, key, rememberMe, cb) {
           cb('Error', {status: 401})
         }
       }
     })
 
-    testAction(actions.default.loginUser, ['username', 'password', false], {}, [], done)
+    testAction(actions.default.createUser, ['username', 'password', false], {}, [], done)
   })
 })

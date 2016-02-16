@@ -49,7 +49,7 @@ router.redirect({
   '*': '/login'
 })
 
-router.beforeEach(transition => {
+router.beforeEach((transition) => {
   if (!transition.to.auth && store.state.auth) return router.go('/app')
   if (transition.to.auth && !store.state.auth) return router.go('/login')
   transition.next()

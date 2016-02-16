@@ -16,7 +16,7 @@ describe('deleteList', () => {
     clock.restore()
   })
 
-  it('dispatches list deletion mutations when not current nor _delete', done => {
+  it('dispatches list deletion mutations when not current nor _delete', (done) => {
     let state = {
       user: {
         tasks: [
@@ -57,7 +57,7 @@ describe('deleteList', () => {
     clock.tick(5000)
   })
 
-  it('dispatches list deletion mutations when index is 0 and current', done => {
+  it('dispatches list deletion mutations when index is 0 and current', (done) => {
     let state = {
       user: {
         tasks: [
@@ -101,7 +101,7 @@ describe('deleteList', () => {
     clock.tick(5000)
   })
 
-  it('dispatches list deletion mutations when index is last and current', done => {
+  it('dispatches list deletion mutations when index is last and current', (done) => {
     let state = {
       user: {
         tasks: [
@@ -145,7 +145,7 @@ describe('deleteList', () => {
     clock.tick(5000)
   })
 
-  it('does nothing when only list', done => {
+  it('does nothing when only list', (done) => {
     let state = {
       user: {
         tasks: [
@@ -168,7 +168,7 @@ describe('deleteList', () => {
     clock.tick(5000)
   })
 
-  it('undoes deletion methods when only list (multiple deletions)', done => {
+  it('undoes deletion methods when only list (multiple deletions)', (done) => {
     let state = {
       user: {
         tasks: [
@@ -219,7 +219,7 @@ describe('deleteList', () => {
     clock.tick(5000)
   })
 
-  it('undoes list deletion mutations when _delete', done => {
+  it('undoes list deletion mutations when _delete', (done) => {
     let state = {
       user: {
         tasks: [

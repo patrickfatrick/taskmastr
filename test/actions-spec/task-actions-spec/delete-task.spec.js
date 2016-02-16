@@ -16,7 +16,7 @@ describe('deleteTask', () => {
     clock.restore()
   })
 
-  it('dispatches task deletion mutations when not current nor _delete', done => {
+  it('dispatches task deletion mutations when not current nor _delete', (done) => {
     let state = {
       user: {
         current: {
@@ -51,7 +51,7 @@ describe('deleteTask', () => {
     clock.tick(5000)
   })
 
-  it('dispatches task deletion mutations when index is 0 and current', done => {
+  it('dispatches task deletion mutations when index is 0 and current', (done) => {
     let state = {
       user: {
         current: {
@@ -89,7 +89,7 @@ describe('deleteTask', () => {
     clock.tick(5000)
   })
 
-  it('dispatches task deletion mutations when index is last and current', done => {
+  it('dispatches task deletion mutations when index is last and current', (done) => {
     let state = {
       user: {
         current: {
@@ -127,7 +127,7 @@ describe('deleteTask', () => {
     clock.tick(5000)
   })
 
-  it('undoes task deletion mutations when _delete', done => {
+  it('undoes task deletion mutations when _delete', (done) => {
     let state = {
       user: {
         current: {

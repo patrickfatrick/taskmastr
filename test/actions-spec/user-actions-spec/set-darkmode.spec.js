@@ -6,7 +6,7 @@ const actionsInjector = require('inject!../../../public/store/actions')
 chai.should()
 
 describe('setDarkmode', () => {
-  it('dispatches SET_DARKMODE and SET_SAVE_BUTTON on true', done => {
+  it('dispatches SET_DARKMODE and SET_SAVE_BUTTON on true', (done) => {
     const actions = actionsInjector({})
 
     testAction(actions.default.setDarkmode, [true], {}, [
@@ -15,7 +15,7 @@ describe('setDarkmode', () => {
     ], done)
   })
 
-  it('dispatches SET_DARKMODE and SET_SAVE_BUTTON on false', done => {
+  it('dispatches SET_DARKMODE and SET_SAVE_BUTTON on false', (done) => {
     const actions = actionsInjector({})
 
     testAction(actions.default.setDarkmode, [false], {}, [

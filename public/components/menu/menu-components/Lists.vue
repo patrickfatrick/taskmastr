@@ -73,12 +73,12 @@ export default {
       this.renameToggled = index
     },
     _drag (drake) {
-      drake.on('drag', el => {
+      drake.on('drag', (el) => {
         this.dragStart = this._index(el)
       })
     },
     _drop (drake) {
-      drake.on('drop', el => {
+      drake.on('drop', (el) => {
         let oldIndex = this.dragStart
         let newIndex = this._index(el)
         this.sortLists(oldIndex, newIndex)

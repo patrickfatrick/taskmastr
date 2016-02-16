@@ -24,7 +24,7 @@ export default function (string) {
 
   let keyword
 
-  keywords.some(word => {
+  keywords.some((word) => {
     const index = string.indexOf(word)
     if (index !== -1) {
       keyword = index

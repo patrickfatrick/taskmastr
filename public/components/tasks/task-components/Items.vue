@@ -68,12 +68,12 @@ export default {
     setSaveButton: store.actions.setSaveButton,
     toggleDetails: store.actions.toggleDetails,
     _drag (drake) {
-      drake.on('drag', el => {
+      drake.on('drag', (el) => {
         this.dragStart = this._index(el)
       })
     },
     _drop (drake) {
-      drake.on('drop', el => {
+      drake.on('drop', (el) => {
         let oldIndex = this.dragStart
         let newIndex = this._index(el)
         // Revert if trying to move complete task into incomplete list and vice versa
@@ -94,7 +94,7 @@ export default {
   },
   compiled () {
     // Keyboard bindings
-    Mousetrap.bind('up', e => {
+    Mousetrap.bind('up', (e) => {
       if (e.preventDefault) e.preventDefault()
       let index = _.findIndex(this.tasks, {current: true})
       index = (index === 0)
@@ -102,7 +102,7 @@ export default {
         : index - 1
       this.setCurrentTask(index)
     })
-    Mousetrap.bind('down', e => {
+    Mousetrap.bind('down', (e) => {
       if (e.preventDefault) e.preventDefault()
       let index = _.findIndex(this.tasks, {current: true})
       index = (index === this.tasks.length - 1)

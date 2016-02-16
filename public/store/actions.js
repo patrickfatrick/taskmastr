@@ -78,7 +78,7 @@ export default {
   },
   createUser: (store, username, key, rememberMe) => {
     return create(username, key, rememberMe, (err, response) => {
-      if (err) return console.log(err, response.statusText)
+      if (err) return err
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_CONFIRM', '')
