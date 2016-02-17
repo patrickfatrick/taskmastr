@@ -7,6 +7,9 @@
           <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="setCurrentList($index)" @dblclick="renameToggle($index)">{{list.list}}</button>
         </div>
         <div class="utils table-data">
+          <button class="sort-button" title="Sort list">
+            <i class="sort-handle fa fa-arrows-v sort"></i>
+          </button>
           <button class="rename-button" title="Rename list" @click.prevent="renameToggle($index)">
             <i class="fa fa-pencil"></i>
           </button>
@@ -117,7 +120,11 @@ export default {
     this.drake = dragula({
       containers: [this.$els.dragula],
       revertOnSpill: true,
-      mirrorContainer: this.$els.dragula
+      mirrorContainer: this.$els.dragula,
+      moves: (el, source, handle) => {
+        if (handle.classList.contains('sort-handle')) return true
+        return false
+      }
     })
     this._drag(this.drake)
     this._drop(this.drake)
