@@ -8,9 +8,6 @@
 		.table-row {
 			@include row();
 			@include transition(unset);
-			&:hover {
-				background-color: $deepBlue;
-			}
 			&.complete {
 				color: $completeGray;
 				background: transparent !important;
@@ -45,6 +42,11 @@
 			}
 			&.item-leave {
 				@include animation(bounceOutLeft 400ms);
+			}
+			@include media(min-width $medium) {
+				&:hover {
+					background-color: $deepBlue;
+				}
 			}
 			i {
 				cursor: pointer;
