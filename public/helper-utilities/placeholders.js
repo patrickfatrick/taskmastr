@@ -18,7 +18,7 @@ export default {
     '/r buy everyone Christmas gifts Dec 24, ' + year,
     '/r learn how to juggle next year',
     '/r fix the chair on Sunday',
-    '/r fdCheck out the art walk downtown next Friday',
+    '/r Check out the art walk downtown next Friday',
     '/t meet Katie for lunch',
     'Buy a new bike',
     'Remind me to mow the lawn on Saturday',

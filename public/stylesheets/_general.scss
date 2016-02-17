@@ -26,6 +26,7 @@ body {
   color: $white;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
 }
 .gu-hide {
   display: none !important;
@@ -102,6 +103,7 @@ a{
 .prompt-line {
 	white-space: nowrap;
 	text-align: right;
+	margin-bottom: 2rem;
 	@include center;
 	@include media(min-width $small) {
 		text-align: center;

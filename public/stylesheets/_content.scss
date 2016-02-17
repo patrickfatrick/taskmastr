@@ -45,16 +45,20 @@
 #icon-menu {
 	position: fixed;
 	left: 0;
-	top: 4rem;
-	width: 3rem;
+	top: 5rem;
+	width: 2.2rem;
+	padding: 10px 0 12px 0;
+	border-radius: 0 10px 10px 0;
 	height: auto;
 	background: $orchid;
-	padding: 20px 0 20px 0;
-	border-radius: 0 20px 20px 0;
-	z-index: 3;
-	font-size: 1.4rem;
+	z-index: 10000;
 	color: $white;
 	@include transition(all 200ms ease-out);
+	@include media(min-width $medium) {
+		padding: 20px 0 22px 0;
+		width: 3rem;
+		border-radius: 0 20px 20px 0;
+	}
 	@include media(min-width $medlarge) {
 		top: 6.2rem;
 	}
@@ -96,9 +100,8 @@
 }
 
 #todo-line {
-	margin-bottom: 1rem;
-	@include span-columns(11 of 14);
-	@include shift(3);
+	@include span-columns(12 of 14);
+	@include shift(2);
 	@include media(min-width $medium) {
 		@include span-columns(12 of 14);
 		@include shift(1 of 14);
