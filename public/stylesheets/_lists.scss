@@ -65,7 +65,7 @@
 			}
 			.table-data.task-cell {
 				word-wrap: break-word;
-				@include span-columns(12 of 21);
+				@include span-columns(13 of 21);
 				@include media(min-width $small) {
 					@include span-columns(14 of 21);
 				}
@@ -96,7 +96,7 @@
 				padding-right: 0;
 				text-align: center;
 				@include omega();
-				@include span-columns(7 of 21)
+				@include span-columns(6 of 21)
 				@include media(min-width $small) {
 					@include span-columns(5 of 21);
 				}
