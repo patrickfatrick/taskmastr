@@ -80,7 +80,9 @@
 		button {
 			padding: 1px 3px 4px 5px
 		}
-		#remember, #forgot-password, .error-text {
+		#remember, 
+		#forgot-password, 
+		.error-text {
 			text-align: left;
 			font-size: 0.8rem;
 			padding-left: 0.5rem;
@@ -93,6 +95,13 @@
 			i {
 				width: 0.8rem;
 				margin-right: 1rem;
+			}
+		}
+		#remember, 
+		#forgot-password {
+			margin-top: 1rem;
+			@include media(min-width $medium) {
+				margin-top: 0.5rem;
 			}
 		}
 		#try-it-button {

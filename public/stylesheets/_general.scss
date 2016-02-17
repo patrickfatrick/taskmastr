@@ -110,18 +110,16 @@ a{
 .prompt-line {
 	white-space: nowrap;
 	text-align: right;
+	margin-bottom: 1rem;
 	@include center;
 	@include media(min-width $small) {
 		text-align: center;
 	}
-	@include media(min-width $medium) {
-		margin-bottom: 1rem;
-	}
 	.prompt {
 		width: 100%;
 		padding: 1px 0.5rem;
-		margin-bottom: 1rem;
 		border: none;
+		border-radius: 0;
 		border-bottom: 4px solid $slateGray;
 		background: transparent;
 		@include selection {
