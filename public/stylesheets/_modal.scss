@@ -52,11 +52,16 @@
 	.modal-body {
 		padding: 30px;
 		.greeting {
-			line-height: 2rem;
+			line-height: 1.4rem;
+			@include media(min-width $medium) {
+				line-height: 2rem;
+			}
 		}
 		form {
-			margin-top: 2rem;
 			@include outer-container;
+			@include media(min-width $medium) {
+				margin-top: 2rem;
+			}
 			span {
 				display: block;
 				text-align: left;
@@ -76,11 +81,12 @@
 		}
 		#remember, #forgot-password, .error-text {
 			text-align: left;
-			margin-top: 0.5rem;
+			margin-top: 1rem;
 			font-size: 0.8rem;
 			padding-left: 0.5rem;
 			@include span-columns(12 of 12);
 			@include media(min-width $medium) {
+				margin-top: 0.5rem;
 				@include span-columns(10 of 12);
 				@include shift(2 of 12);				
 			}

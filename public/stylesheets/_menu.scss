@@ -49,6 +49,7 @@
 }
 
 #list-line {
+	margin-bottom: 2rem;
 	@include span-columns(12 of 14);
 	@include shift(1 of 14)
 }
