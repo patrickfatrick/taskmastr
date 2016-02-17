@@ -10,6 +10,7 @@
 	visibility: hidden;
 	color: $white;
 	padding: 3.1rem 0 2rem 0;
+	overflow-y: scroll;
 	@include transition(all 200ms ease-out);
 	@include outer-container;
 	@include media(min-width $medlarge) {
@@ -69,11 +70,15 @@
 	@include button-effect($deepBlue, 2px, 0);
 }
 
+#logout-container {
+  position: fixed;
+  bottom: 0;
+  width: 250px;
+  height: 5rem;
+  padding: 1rem;
+  background: $orchid;
+}
 #logout {
-	position: absolute;
-	bottom: 20px;
-	left: 0;
-	right: 0;
 	margin-left: auto;
 	margin-right: auto;
 	font-size: 1rem;
