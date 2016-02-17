@@ -22,6 +22,9 @@
 	left: 0;
 	visibility: visible;
 	box-shadow: rgba(0, 0, 0, 0.30) 9px 0 70px, rgba(0, 0, 0, 0.22) 5px 0 30px;
+	#logout-container {
+		left: 0;
+	}
 }
 
 #wiki {
@@ -50,7 +53,7 @@
 }
 
 #list-line {
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
 	@include span-columns(12 of 14);
 	@include shift(1 of 14)
 }
@@ -77,6 +80,8 @@
   height: 5rem;
   padding: 1rem;
   background: $orchid;
+  left: -250px;
+  @include transition(all 200ms ease-out);
 }
 #logout {
 	margin-left: auto;

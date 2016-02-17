@@ -8,6 +8,7 @@ body {
 	text-align: center;
 	font-family: $cardo;
 	font-size: 1rem;
+	position: fixed;
 	@include media(min-width $small) {
 		font-size: 1.4rem;
 	}
@@ -65,6 +66,12 @@ input[type='password'] {
 	outline: none;
 	font-family: $raleway;
 	color: inherit;
+	font-size: 1.4rem;
+	line-height: 1.8rem;
+	@include media(min-width $medium) {
+		font-size: 2rem;
+		line-height: 2.4rem;
+	}
 }
 
 h1 {
@@ -112,9 +119,8 @@ a{
 	}
 	.prompt {
 		width: 100%;
-		line-height: 2.4rem;
 		padding: 1px 0.5rem;
-		font-size: 2rem;
+		margin-bottom: 1rem;
 		border: none;
 		border-bottom: 4px solid $slateGray;
 		background: transparent;

@@ -100,7 +100,7 @@
 }
 
 #todo-line {
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
 	@include span-columns(12 of 14);
 	@include shift(2);
 	@include media(min-width $medium) {
