@@ -8,7 +8,6 @@ body {
 	text-align: center;
 	font-family: $cardo;
 	font-size: 1rem;
-	position: fixed;
 	@include media(min-width $small) {
 		font-size: 1.4rem;
 	}
