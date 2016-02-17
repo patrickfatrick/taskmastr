@@ -97,6 +97,16 @@ describe('task mutations', () => {
     state.newTask.should.equal('')
   })
 
+  it('SET_PLACEHOLDER', () => {
+    let state = {
+      placeholder: ''
+    }
+
+    taskMutations.SET_PLACEHOLDER(state, 'placeholder')
+
+    state.placeholder.should.equal('placeholder')
+  })
+
   it('SET_TASK_COMPLETE', () => {
     let state = {
       user: {

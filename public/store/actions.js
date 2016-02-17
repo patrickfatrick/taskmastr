@@ -129,6 +129,7 @@ export default {
    */
   setCurrentTask: 'SET_CURRENT_TASK',
   setNewTask: 'SET_NEW_TASK',
+  setPlaceholder: 'SET_PLACEHOLDER',
   setTaskAttempt: 'SET_TASK_ATTEMPT',
   setTaskDelete: 'SET_TASK_DELETE',
   renameTask: 'RENAME_TASK',

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import mutations from './mutations'
 import actions from './actions'
-import placeholders from '../helper-utilities/placeholders'
 
 Vue.use(Vuex)
 
@@ -45,7 +44,7 @@ export default new Vuex.Store({
     listAttempt: false,
     newList: '',
     newTask: '',
-    placeholder: placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)],
+    placeholder: '',
     testUser: 'mrormrstestperson@taskmastr.co',
     testKey: 'S41iVAtINGREsIdUE-278'
   },

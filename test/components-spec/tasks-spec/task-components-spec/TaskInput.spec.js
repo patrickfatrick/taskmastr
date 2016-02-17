@@ -40,6 +40,10 @@ describe('TaskInput.vue', function () {
     TaskInput.methods.setNewTask.should.be.an.instanceof(Function)
   })
 
+  it('should inherit a setPlaceholder action from the store', () => {
+    TaskInput.methods.setPlaceholder.should.be.an.instanceof(Function)
+  })
+
   it('should inherit a setTaskAttempt action from the store', () => {
     TaskInput.methods.setTaskAttempt.should.be.an.instanceof(Function)
   })
@@ -77,7 +81,7 @@ describe('TaskInput.vue', function () {
     done()
   })
 
-  it('should call addTask on form submit', (done) => {
+  it('should call addTask and setPlaceholder on form submit', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
     sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
     sinon.stub(TaskInput.computed, 'newTask').returns('New task')
@@ -88,11 +92,14 @@ describe('TaskInput.vue', function () {
       }
     }).$mount()
     sinon.stub(vm.$children[0], 'addTask')
+    sinon.stub(vm.$children[0], 'setPlaceholder')
 
     vm.$el.querySelector('#task-button').click()
     vm.$children[0].addTask.calledOnce.should.be.true
+    vm.$children[0].setPlaceholder.calledOnce.should.be.true
 
     vm.$children[0].addTask.restore()
+    vm.$children[0].setPlaceholder.restore()
     TaskInput.computed.isValid.restore()
     TaskInput.computed.taskAttempt.restore()
     TaskInput.computed.newTask.restore()

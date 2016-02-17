@@ -18,6 +18,7 @@ import gregorian from 'gregorian'
 import date from 'date.js'
 import store from '../../../store/store'
 import extractDate from '../../../helper-utilities/extract-date'
+import placeholders from '../../../helper-utilities/placeholders'
 
 export default {
   computed: {
@@ -47,6 +48,7 @@ export default {
   },
   methods: {
     setNewTask: store.actions.setNewTask,
+    setPlaceholder: store.actions.setPlaceholder,
     setTaskAttempt: store.actions.setTaskAttempt,
     setTaskDueDate: store.actions.setTaskDueDate,
     setDueDateDifference: store.actions.setDueDateDifference,
@@ -98,9 +100,12 @@ export default {
       })
       this.setTaskAttempt(false)
       this.setNewTask('')
+      this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
     }
   },
-  ready () {
+  compiled () {
+    this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
+
     Mousetrap.bind('ctrl+f', (e) => {
       e.preventDefault()
       this.$els.taskinput.focus()
