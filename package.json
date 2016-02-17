@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "6.1.14",
+  "version": "6.1.15",
   "engines": {
     "node": "5.6.0"
   },
