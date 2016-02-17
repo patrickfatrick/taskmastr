@@ -15,9 +15,6 @@
           <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails($index, true)" v-bind:class="{'active': task.dueDate, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
             <i class="fa" :class="{'fa-pencil-square-o': !task._dueDateDifference || task._dueDateDifference > 0, 'fa-exclamation-triangle': task._dueDateDifference < 0}"></i>
           </button>
-          <button class="sort-button" title="Sort task">
-            <i class="sort-handle fa fa-arrows-v"></i>
-          </button>
           <button class="delete-button" title="Delete task" @click.prevent="deleteTask($index)">
             <i class="fa" :class="{'fa-trash-o': !task._delete, 'fa-undo': task._delete}"></i>
           </button>
@@ -39,13 +36,7 @@ import ItemDetails from './ItemDetails.vue'
 export default {
   data () {
     return {
-      drake: dragula({
-        revertOnSpill: true,
-        moves: (el, source, handle) => {
-          if (handle.classList.contains('sort-handle')) return true
-          return false
-        }
-      }),
+      drake: null,
       dragStart: null
     }
   },
@@ -140,7 +131,11 @@ export default {
     })
   },
   ready () {
-    this.drake.containers = [this.$els.dragula]
+    this.drake = dragula({
+      containers: [this.$els.dragula],
+      revertOnSpill: true,
+      mirrorContainer: this.$els.dragula
+    })
     this._drag(this.drake)
     this._drop(this.drake)
   }

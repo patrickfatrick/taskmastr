@@ -106,6 +106,7 @@ export default {
   compiled () {
     this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
 
+    // Keyboard bindings
     Mousetrap.bind('ctrl+f', (e) => {
       e.preventDefault()
       this.$els.taskinput.focus()

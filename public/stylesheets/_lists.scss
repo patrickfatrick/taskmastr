@@ -30,29 +30,6 @@
 					}
 				}
 			}
-			&.gu-mirror {
-			  position: fixed !important;
-			  margin: 0 !important;
-			  z-index: 9999 !important;
-			  opacity: 0.8;
-			  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-			  filter: alpha(opacity=80);
-			}
-			&.gu-hide {
-			  display: none !important;
-			}
-			&.gu-unselectable {
-			  -webkit-user-select: none !important;
-			  -moz-user-select: none !important;
-			  -ms-user-select: none !important;
-			  user-select: none !important;
-			}
-			&.gu-transit {
-			  opacity: 0.6;
-			  background-color: $deepBlue;
-			  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-			  filter: alpha(opacity=20);
-			}
 			&.deleting {
 				background: $red !important;
 				color: $white !important;
@@ -69,7 +46,15 @@
 			&.item-leave {
 				@include animation(bounceOutLeft 400ms);
 			}
-			.table-data,
+			i {
+				cursor: pointer;
+				font-size: 1.4rem !important;
+				padding: 0.2rem;
+				@include media(min-width $medium) {
+					font-size: 1.2rem !important;
+				}
+			}
+		  .table-data,
 			.table-header {
 				padding: 0.5rem;
 			}
@@ -81,12 +66,12 @@
 			.table-data.task-cell {
 				font-size: 1.4rem;
 				word-wrap: break-word;
-				@include span-columns(11 of 21);
+				@include span-columns(14 of 21);
 				@include media(min-width $small) {
-					@include span-columns(13 of 21);
+					@include span-columns(15 of 21);
 				}
 				@include media(min-width $medsmall) {
-					@include span-columns(15 of 21);
+					@include span-columns(16 of 21);
 				}
 				button {
 					font-family: inherit;
@@ -107,25 +92,17 @@
 					}
 				}
 			}
-			i {
-				cursor: pointer;
-				font-size: 1.4rem !important;
-				padding: 0.2rem;
-				@include media(min-width $medium) {
-					font-size: 1.2rem !important;
-				}
-			}
 			.table-data.utils {
 				padding-left: 0;
 				padding-right: 0;
 				text-align: center;
 				@include omega();
-				@include span-columns(8 of 21)
+				@include span-columns(5 of 21)
 				@include media(min-width $small) {
-					@include span-columns(6 of 21);
+					@include span-columns(4 of 21);
 				}
 				@include media(min-width $medsmall) {
-					@include span-columns(4 of 21);
+					@include span-columns(3 of 21);
 				}
 				.sort-button {
 					padding: 0 5px 0 5px;
@@ -168,10 +145,10 @@
 			background: inherit;
 		}
 		.table-data.task-cell {
-			@include span-columns(12 of 21);
+			@include span-columns(14 of 21);
 		}
 		.table-data.utils {
-			@include span-columns(9 of 21);
+			@include span-columns(7 of 21);
 		}
 	}
 }

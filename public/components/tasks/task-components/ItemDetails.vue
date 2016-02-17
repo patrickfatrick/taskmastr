@@ -83,7 +83,7 @@ export default {
         this.toggleDetails(_.findIndex(this.tasks, {_detailsToggled: true}), false)
       }
       let index = _.findIndex(this.tasks, {current: true})
-      this.toggleDetails(index, !(this.task._detailsToggled))
+      this.toggleDetails(index, !(this.tasks[index]._detailsToggled))
     })
   }
 }
