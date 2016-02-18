@@ -168,7 +168,7 @@ router.post('/write', function (req, res, next) {
     if (err) return console.log(err)
     userService.updateUser(user, function (err, user) {
       if (err) return next(err)
-      res.sendStatus(200)
+      res.send({username: user.username})
       // console.log(user.tasks[1].items[0])
       console.log('Saving user ' + user.username + '... OK')
     })

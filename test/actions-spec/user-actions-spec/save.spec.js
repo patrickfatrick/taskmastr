@@ -10,7 +10,7 @@ describe('save', () => {
     const actions = actionsInjector({
       '../services/user-services': {
         save (user, deleteAgendas, cb) {
-          cb(null, {status: 200})
+          cb(null, {username: 'username@domain.com'})
         }
       }
     })
@@ -31,7 +31,7 @@ describe('save', () => {
     const actions = actionsInjector({
       '../services/user-services': {
         save (user, deleteAgendas, cb) {
-          cb('Error', {status: 500})
+          cb('Error', {})
         }
       }
     })
