@@ -1,9 +1,20 @@
 <template>
   <div id="menu" v-bind:class="{'toggled': menuToggled}">
-    <a href="{{wiki}}" target="_blank">
-    <i id="wiki" class="fa fa-map-o"></i>
-    </a>
-    <darkmode></darkmode>
+    <div id="menu-tools">
+      <div id="wiki-container">
+        <a href="{{wiki}}" target="_blank">
+          <i class="fa fa-map-o"></i>
+        </a>
+      </div>
+      <div id="repo-container">
+        <a href="{{repo}}" target="_blank">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      </div>
+      <div id="darkmode-container">
+        <darkmode></darkmode>
+      </div>
+    </div>
     <div id="list-headline">Lists</div>
     <list-input></list-input>
     <lists></lists>
@@ -26,7 +37,11 @@ export default {
     },
     wiki () {
       return store.state.wiki
+    },
+    repo () {
+      return store.state.repo
     }
+
   },
   components: {
     Darkmode,

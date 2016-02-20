@@ -9,13 +9,10 @@
 	left: -250px;
 	visibility: hidden;
 	color: $white;
-	padding: 3.1rem 0 2rem 0;
+	padding: 0 0 2rem 0;
 	overflow-y: scroll;
 	@include transition(all 200ms ease-out);
 	@include outer-container;
-	@include media(min-width $medlarge) {
-		padding: 4.7rem 0 2rem 0;
-	}
 }
 
 #menu.toggled {
@@ -27,23 +24,31 @@
 	}
 }
 
-#wiki {
+#menu-tools {
+	@include fill-parent();
+	@include row();
 	color: $white;
-	position: absolute;
 	font-size: 1.2rem;
-	width: 1.2rem;
-	cursor: pointer;
-	top: 20px;
-	left: 20px;
+	margin-bottom: 2rem;
+	@include media(min-width $medlarge) {
+		margin-bottom: 3rem;
+	}
 }
 
-#dark-mode {
-	position: absolute;
-	font-size: 1.2rem;
-	width: 1.2rem;
-	cursor: pointer;
-	top: 20px;
-	left: 210px;
+#wiki-container {
+	@include span-columns(1 of 3);
+	padding: 0.5rem;
+}
+
+#repo-container {
+	@include span-columns(1 of 3);
+	padding: 0.5rem;
+}
+
+#darkmode-container {
+	@include omega;
+	@include span-columns(1 of 3);
+	padding: 0.5rem;
 }
 
 #list-headline {
