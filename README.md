@@ -1,9 +1,9 @@
 # taskmastr
-Yet another task management web app built with Node.js, Express, MongoDB, and Angular. You can find a hosted version of this at [taskmastr.co](//www.taskmastr.co)
+Yet another task management web app, this one is built with the VENM stack (Vue, Express, Node, MongoDB). You can find a hosted version of this at [taskmastr.co](https://www.taskmastr.co)
 
 While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
 
-Please see [the wiki](//patrickfatrick.gitbooks.io/taskmastr/content/) for information on how to use taskmastr.
+Please see [the wiki](https://patrickfatrick.gitbooks.io/taskmastr/content/) for information on how to use taskmastr.
 
 # Features
 
