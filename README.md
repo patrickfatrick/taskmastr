@@ -1,9 +1,9 @@
 # taskmastr
-Yet another task management web app built with Node.js, Express, MongoDB, and Angular. You can find a hosted version of this at [taskmastr.co](http://www.taskmastr.co)
+Yet another task management web app built with Node.js, Express, MongoDB, and Angular. You can find a hosted version of this at [taskmastr.co](//www.taskmastr.co)
 
 While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
 
-Please see [the wiki](https://bitbucket.org/patrickfatrick/taskmastr/wiki/Home) for information on how to use taskmastr.
+Please see [the wiki](//patrickfatrick.gitbooks.io/taskmastr/content/) for information on how to use taskmastr.
 
 # Features
 
@@ -78,5 +78,5 @@ _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday
 ![taskmastr basic usage 2](/images/taskmastr-basic-usage-2.png)
 ![taskmastr basic usage 3](/images/taskmastr-basic-usage-3.png)
 ![taskmastr basic usage 4](/images/taskmastr-basic-usage-4.png)
-![taskmastr basic usage 5](/images/taskmastr-basic-usage-4.png)
-![taskmastr modal](/images/screenshot3.png)
+![taskmastr basic usage 5](/images/taskmastr-basic-usage-5.png)
+![taskmastr modal](/images/taskmastr-modal.png)
