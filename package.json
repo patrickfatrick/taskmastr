@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "6.1.16",
+  "version": "6.1.17",
   "engines": {
     "node": "5.6.0"
   },
@@ -117,15 +117,5 @@
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
-  },
-  "globals": [
-    "describe",
-    "context",
-    "before",
-    "beforeEach",
-    "after",
-    "afterEach",
-    "it",
-    "expect"
-  ]
+  }
 }

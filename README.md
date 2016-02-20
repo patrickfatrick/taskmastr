@@ -31,6 +31,10 @@ taskmastr is updated regularly with new features
 
 # Changelog
 
+## New in v6.1
+
+Detailed views for tasks, this is now where due dates are set and removed, where tasks are renamed, and, NEW FEATURE, where you can set notes for each task. The calendar and rename toggles in the list have been replaced with a toggle for the detailed view.
+
 ## New in v6.0
 
 The front-end has been completely rewritten in the ground up in [Vue](vuejs.org), from Angular 1.x. With that comes some small changes but mostly everything should be under the hood. 
@@ -68,10 +72,11 @@ This feature really does not and should not work for every single imaginable dat
 
 _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday' will not work, use 'next week' when you mean one week from today. Same goes for 'next month' for one month from today, and 'next year' for... well, you know.
 
-## New in v5.0.0
+## Screenshots
 
 ![taskmastr basic usage](/images/taskmastr-basic-usage-1.png)
-![taskmastr basic usage 2a](/images/taskmastr-basic-usage-2a.png)
+![taskmastr basic usage 2](/images/taskmastr-basic-usage-2.png)
 ![taskmastr basic usage 3](/images/taskmastr-basic-usage-3.png)
 ![taskmastr basic usage 4](/images/taskmastr-basic-usage-4.png)
+![taskmastr basic usage 5](/images/taskmastr-basic-usage-4.png)
 ![taskmastr modal](/images/screenshot3.png)

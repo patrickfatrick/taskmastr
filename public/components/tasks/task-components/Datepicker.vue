@@ -46,8 +46,8 @@ export default {
       if (!this.tasks[index].dueDate) {
         this.picker.setDate('')
         this.setDueDateDifference(this.index, null)
+        this.setSaveButton(true)
       }
-      this.setSaveButton(true)
     }
   },
   compiled () {

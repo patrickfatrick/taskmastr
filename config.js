@@ -1,15 +1,13 @@
-var config = {}
-
-config.mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr'
-config.agendaOptions = {
-  db: {
-    address: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr',
-    collection: 'agendaJobs'
+module.exports = {
+  mongoUri: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr',
+  agendaOptions: {
+    db: {
+      address: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr',
+      collection: 'agendaJobs'
+    }
+  },
+  cookieMaxAge: 30 * 24 * 3600 * 1000,
+  compression: {
+    level: 9
   }
 }
-config.cookieMaxAge = 30 * 24 * 3600 * 1000
-config.compression = {
-  level: 9
-}
-
-module.exports = config
