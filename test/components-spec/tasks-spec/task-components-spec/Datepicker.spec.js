@@ -154,7 +154,7 @@ describe('Datepicker.vue', function () {
     done()
   })
 
-  it('should call setTaskDueDate and setSaveButton on setDueDate', (done) => {
+  it('should call setTaskDueDate and not setSaveButton on setDueDate', (done) => {
     Datepicker.computed.tasks.restore()
     delete Datepicker.computed.task
     sinon.stub(Datepicker.computed, 'tasks').returns([
@@ -192,7 +192,7 @@ describe('Datepicker.vue', function () {
 
     vm.$children[0].setDueDate(0, '2016-01-01T00:00:00.000Z')
     vm.$children[0].setTaskDueDate.calledWith(0, '2016-01-01T00:00:00.000Z').should.be.true
-    vm.$children[0].setSaveButton.calledWith(true).should.be.true
+    vm.$children[0].setSaveButton.calledWith(true).should.be.false
 
     vm.$children[0].setSaveButton.restore()
     vm.$children[0].setTaskDueDate.restore()

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, DELETE_AGENDA, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
+import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_DATE_COMPLETED, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, DELETE_AGENDA, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
 
 export const taskMutations = {
   [SET_CURRENT_TASK] (state, index) {
@@ -23,6 +23,9 @@ export const taskMutations = {
   },
   [SET_TASK_COMPLETE] (state, index, bool) {
     _.set(state, 'user.current.items[' + index + '].complete', bool)
+  },
+  [SET_DATE_COMPLETED] (state, index, date) {
+    _.set(state, 'user.current.items[' + index + '].dateCompleted', date)
   },
   [SET_TASK_DELETE] (state, index, bool) {
     _.set(state, 'user.current.items[' + index + ']._delete', bool)

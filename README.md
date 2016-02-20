@@ -31,6 +31,12 @@ taskmastr is updated regularly with new features
 
 # Changelog
 
+## New in v6.2
+
+We now track date completed in addition to date created. If a task is complete and you check out the detailed view you will now see the date the task was completed on, instead of the usual due date information.
+
+This also goes hand in hand with new functionality with completion: we now remove due dates when a task is completed. The only reason you'd want to keep it is to know when a task was completed, but since we now track that independently, no need for it! This has the added benefit of preventing the need to manually remove a due date when completing a task early so no email notification is sent. Nice!
+
 ## New in v6.1
 
 Detailed views for tasks, this is now where due dates are set and removed, where tasks are renamed, and, NEW FEATURE, where you can set notes for each task. The calendar and rename toggles in the list have been replaced with a toggle for the detailed view.

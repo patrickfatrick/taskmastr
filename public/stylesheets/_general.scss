@@ -22,8 +22,8 @@ body {
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 1;
-  background-color: $deepBlue;
-  color: $white;
+  background-color: $deepBlue !important;
+  color: $white !important;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
   box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
@@ -47,10 +47,10 @@ body {
 #app-container {
 	@extend html;
 	color: $black;
-	@include transition(all 1s ease-out);
-	@include background(linear-gradient($nightDark, $nightLight, $brightDark, $brightLight));
+	@include transition(all 2s ease-out);
+	@include background(linear-gradient($nightDark, $nightLight, $orchid, $sunset, $brightDark, $brightLight));
 	background-position: bottom;
-	background-size: auto 300%;
+	background-size: auto 500%;
 	&.darkmode {
 		background-position: top;
 		color: $white;

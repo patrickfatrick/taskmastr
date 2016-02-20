@@ -178,11 +178,17 @@ export default {
   },
   completeTask (store, index, bool) {
     const tasks = store.state.user.current.items
+    const dateCompleted = (bool) ? gregorian.reform().to('iso') : null
     const n = (tasks[index].complete) ? 0 : -1
     const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
       ? _.findIndex(tasks, {complete: true}) + n
       : tasks.length
     store.dispatch('SET_TASK_COMPLETE', index, bool)
+    store.dispatch('SET_DATE_COMPLETED', index, dateCompleted)
+    if (bool) {
+      store.dispatch('SET_TASK_DUE_DATE', index, null)
+      store.dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
+    }
     store.dispatch('SORT_TASKS', index, newIndex)
     store.dispatch('SET_SAVE_BUTTON', true)
   },

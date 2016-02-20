@@ -274,6 +274,94 @@ describe('ItemDetails.vue', function () {
     done()
   })
 
+  it('should not display dates or due date differences if task.dateCompleted', (done) => {
+    ItemDetails.computed.tasks.restore()
+    delete ItemDetails.computed.task
+    sinon.stub(ItemDetails.computed, 'tasks').returns([
+      {
+        id: 'itemid',
+        item: 'Item 1',
+        current: true,
+        complete: true,
+        dueDate: null,
+        dateCompleted: 'date',
+        _delete: false,
+        _dueDateDifference: null,
+        _detailsToggled: true
+      }
+    ])
+    ItemDetails.computed.task = () => {
+      return {
+        id: 'itemid',
+        item: 'Item 1',
+        current: true,
+        complete: true,
+        dueDate: null,
+        dateCompleted: 'date',
+        _delete: true,
+        _dueDateDifference: null,
+        _detailsToggled: true
+      }
+    }
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': ItemDetails
+      }
+    }).$mount()
+
+    vm.$el.querySelector('.task-details-container').children[0].classList.contains('hidden').should.be.false
+    vm.$el.querySelector('.task-details-container').children[1].classList.contains('hidden').should.be.false
+    vm.$el.querySelector('.task-details-container').children[2].classList.contains('hidden').should.be.true
+    vm.$el.querySelector('.task-details-container').children[3].classList.contains('hidden').should.be.true
+
+    done()
+  })
+
+  it('should display dates and due date differences if !task.dateCompleted', (done) => {
+    ItemDetails.computed.tasks.restore()
+    delete ItemDetails.computed.task
+    sinon.stub(ItemDetails.computed, 'tasks').returns([
+      {
+        id: 'itemid',
+        item: 'Item 1',
+        current: true,
+        complete: false,
+        dueDate: '2016-01-02T13:00:00.000Z',
+        dateCompleted: null,
+        _delete: false,
+        _dueDateDifference: null,
+        _detailsToggled: true
+      }
+    ])
+    ItemDetails.computed.task = () => {
+      return {
+        id: 'itemid',
+        item: 'Item 1',
+        current: true,
+        complete: false,
+        dueDate: '2016-01-02T13:00:00.000Z',
+        dateCompleted: null,
+        _delete: true,
+        _dueDateDifference: null,
+        _detailsToggled: true
+      }
+    }
+    const vm = new Vue({
+      template: '<div><test></test></div>',
+      components: {
+        'test': ItemDetails
+      }
+    }).$mount()
+
+    vm.$el.querySelector('.task-details-container').children[0].classList.contains('hidden').should.be.false
+    vm.$el.querySelector('.task-details-container').children[1].classList.contains('hidden').should.be.true
+    vm.$el.querySelector('.task-details-container').children[2].classList.contains('hidden').should.be.false
+    vm.$el.querySelector('.task-details-container').children[3].classList.contains('hidden').should.be.false
+
+    done()
+  })
+
   it('should display dates if due date is tomorrow', (done) => {
     ItemDetails.computed.tasks.restore()
     delete ItemDetails.computed.task

@@ -108,6 +108,36 @@ describe('Items.vue', function () {
   })
 
   it('should respond to complete _delete and current and _dueDateDifference properties', (done) => {
+    Items.computed.tasks.restore()
+    sinon.stub(Items.computed, 'tasks').returns([
+      {
+        id: 'itemid',
+        item: 'Item 1',
+        current: false,
+        complete: false,
+        _delete: true,
+        _dueDateDifference: 1,
+        _detailsToggled: false
+      },
+      {
+        id: 'itemid2',
+        item: 'Item 2',
+        current: true,
+        complete: false,
+        _delete: false,
+        _dueDateDifference: -1,
+        _detailsToggled: false
+      },
+      {
+        id: 'itemid3',
+        item: 'Item 3',
+        current: true,
+        complete: true,
+        _delete: false,
+        _dueDateDifference: null,
+        _detailsToggled: false
+      }
+    ])
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -118,6 +148,7 @@ describe('Items.vue', function () {
     vm.$el.querySelector('.table-body').children[1].classList.contains('active').should.be.true
     vm.$el.querySelectorAll('.details-button > i')[0].classList.contains('fa-pencil-square-o').should.be.true
     vm.$el.querySelectorAll('.details-button > i')[1].classList.contains('fa-exclamation-triangle').should.be.true
+    vm.$el.querySelectorAll('.details-button > i')[2].classList.contains('fa-pencil-square-o').should.be.true
 
     done()
   })

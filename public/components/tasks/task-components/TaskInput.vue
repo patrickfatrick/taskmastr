@@ -93,6 +93,7 @@ export default {
         complete: false,
         dateCreated: gregorian.reform(new Date()).to('iso'),
         dueDate: dueDate,
+        dateCompleted: '',
         notes: '',
         _dueDateDifference: null,
         _delete: false,

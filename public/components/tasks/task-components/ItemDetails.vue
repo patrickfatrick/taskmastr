@@ -8,13 +8,18 @@
       <input class="task-name mousetrap" type="text" :value="task.item" @change="rename($event, $index)"></input>
     </div>
     <div class="task-details-container">
-      <div class="task-create task-details-panel"><span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}</div>
-      <div class="task-due task-details-panel">
+      <div class="task-create task-details-panel">
+        <span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}
+      </div>
+      <div class="task-complete task-details-panel" :class="{'hidden': !task.dateCompleted}">
+        <span class="task-label">Completed on</span>{{reformatDate(task.dateCompleted)}}
+      </div>
+      <div class="task-due task-details-panel" :class="{'hidden': !!task.complete}">
         <span class="task-label" :class="{'hidden': !task.dueDate}">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
         <span class="task-label" :class="{'hidden': task.dueDate}">Set a due date&nbsp;</span>
         <datepicker :task="task" :index="index"></datepicker>
       </div>
-      <div class="task-details-panel">
+      <div class="task-details-panel" :class="{'hidden': !!task.complete}">
         <div class="due-in" :class="{'hidden': !(task._dueDateDifference > 0)}">
           <span :class="{'hidden': !(task._dueDateDifference > 1)}"><span class="task-label">which is</span>{{task._dueDateDifference}} days <span class="task-label">from now</span></span>
           <span :class="{'hidden': !(task._dueDateDifference === 1)}"><span class="task-label">which is</span>tomorrow</span>

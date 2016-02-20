@@ -138,6 +138,39 @@ describe('task mutations', () => {
     state.user.current.items[1].complete.should.be.false
   })
 
+  it('SET_DATE_COMPLETED', () => {
+    let state = {
+      user: {
+        current: {
+          list: 'Current list',
+          current: true,
+          items: [
+            {
+              item: 'Current task',
+              current: true,
+              complete: false,
+              dateCompleted: ''
+            },
+            {
+              item: 'Not current task',
+              current: false,
+              complete: false,
+              dateCompleted: ''
+            }
+          ]
+        }
+      }
+    }
+
+    taskMutations.SET_DATE_COMPLETED(state, 1, 'date')
+
+    state.user.current.items[1].dateCompleted.should.equal('date')
+
+    taskMutations.SET_DATE_COMPLETED(state, 1, '')
+
+    state.user.current.items[1].dateCompleted.should.equal('')
+  })
+
   it('SET_TASK_DELETE', () => {
     let state = {
       user: {
