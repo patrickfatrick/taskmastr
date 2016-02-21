@@ -29,9 +29,10 @@
 	@include row();
 	color: $white;
 	font-size: 1.2rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
 	@include media(min-width $medlarge) {
-		margin-bottom: 3rem;
+		margin-bottom: 2rem;
 	}
 }
 
