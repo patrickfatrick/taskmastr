@@ -68,7 +68,7 @@
         @include omega(4n);
       }
       .overdue {
-        color: $red;
+        color: $sunsetOrange;
       }
       .due-today {
         color: $grassStain;
@@ -108,7 +108,7 @@
       width: auto;
       cursor: pointer;
       text-transform: lowercase;
-      color: $red;
+      color: $sunsetOrange;
       i {
         margin-right: 0.5rem;
       }

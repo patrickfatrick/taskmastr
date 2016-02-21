@@ -63,15 +63,15 @@
 					color: $orchid * 0.7;
 				}
 				.table-data.utils .details-button.active.overdue {
-					color: $red * 0.7;
+					color: $sunsetOrange * 0.7;
 				}
 			}
 		}
 		&.deleting {
-			background: $red !important;
+			background: $sunsetOrange !important;
 			color: $white !important;
 			&.active {
-				background: $red !important;
+				background: $sunsetOrange !important;
 			}
 			.utils .details-button.active {
 				color: $white !important;
@@ -86,6 +86,7 @@
 		@include media(min-width $medium) {
 			&:hover:not(.complete):not(.active) {
 				background-color: $deepBlue;
+				color: $white;
 			}
 		}
 	}
@@ -154,7 +155,7 @@
 			color: $orchid;
 		}
 		.details-button.overdue {
-			color: $red;
+			color: $sunsetOrange;
 		}
 	}
 }

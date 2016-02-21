@@ -71,6 +71,9 @@
 	@include placeholder {
 		color: $dimGray * 1.8;
 	}
+	&:focus {
+		border-color: $deepBlue;
+	}
 }
 
 #list-button {
@@ -99,13 +102,14 @@
 	text-transform: lowercase;
 	height: 2.5rem;
 	border-radius: 20px;
-	background-color: $red;
+	background-color: $sunsetOrange;
 	color: $white;
+	border: 1px solid #bdbdbd;
 	&:hover {
-		@include background(linear-gradient(($red * 0.9), $red));
+		@include background(linear-gradient(($sunsetOrange * 0.9), $sunsetOrange));
 	}
 	&:active {
-		background: $red * 0.9;
+		background: $sunsetOrange * 0.9;
 	}
 	i {
 		margin-right: 1rem;

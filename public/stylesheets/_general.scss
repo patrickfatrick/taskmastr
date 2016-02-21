@@ -47,13 +47,39 @@ body {
 #app-container {
 	@extend html;
 	color: $black;
-	@include transition(all 2s ease-out);
-	@include background(linear-gradient($nightDark, $nightLight, $orchid, $sunset, $brightDark, $brightLight));
+	@include transition(all 2s ease-out); 
+	@include background(linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight));
 	background-position: bottom;
 	background-size: auto 500%;
+	#todo-line #create-todo {
+		&:focus {
+			border-color: $sunray;
+		}
+	}
+	.table .table-row {
+		&.active {
+			background-color: $sunray;
+		}
+		&.active.complete {
+			background-color: $rust;
+		}
+	}
 	&.darkmode {
 		background-position: top;
 		color: $white;
+		#todo-line #create-todo {
+			&:focus {
+				border-color: $astroTurf;
+			}
+		}
+		.table .table-row {
+			&.active {
+				background-color: $astroTurf;
+			}
+			&.active.complete {
+				background-color: $grassStain;
+			}
+		}
 	}
 	.view {
 		@extend html;
@@ -128,7 +154,7 @@ a{
 		@include transition(border-color 500ms ease-out);
 		&.ng-invalid.tried,
 		&.invalid {
-			border-color: $red !important;
+			border-color: $sunsetOrange;
 			@include animation(rubberBand 500ms);
 		}
 		&.disabled {
@@ -138,7 +164,7 @@ a{
 			color: $slateGray;
 		}
 		&:focus {
-			border-color: $deepBlue !important;
+			border-color: $deepBlue;
 		}
 	}
 	button.submit {
