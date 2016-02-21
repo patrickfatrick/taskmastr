@@ -24,8 +24,15 @@ describe('extractDate', () => {
     extract.should.have.property('dueDate', '2016-01-05T00:00:00.000Z')
   })
 
-  it('works with colloquial dates', () => {
-    const string = 'see you on Jan 9, 2016'
+  it('works with colloquial dates (no punctuation)', () => {
+    const string = 'see you on Jan 9 2016'
+    const extract = extractDate(string)
+    extract.should.have.property('item', 'See you')
+    extract.should.have.property('dueDate', gregorian.reform('Jan 9, 2016').set(0, 'h').to('iso'))
+  })
+
+  it('works with colloquial dates (with punctuation)', () => {
+    const string = 'see you on Jan. 9, 2016'
     const extract = extractDate(string)
     extract.should.have.property('item', 'See you')
     extract.should.have.property('dueDate', gregorian.reform('Jan 9, 2016').set(0, 'h').to('iso'))

@@ -1,5 +1,5 @@
 import gregorian from 'gregorian'
-import date from 'date.js'
+import datejs from 'date.js'
 
 /**
 * Takes a string containing a human-readable date, and outputs the string and a date object
@@ -8,33 +8,19 @@ import date from 'date.js'
 * @returns {Date}           the corresponding due date
 */
 export default function (string) {
-  const keywords = [
-    'next', ' on ', 'tomorrow',
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
-    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
-    'January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
-    'january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
-    ' Jan ', ' Feb ', ' Mar ', ' Apr ', ' May ', ' Jun ', ' Jul ', ' Aug ', ' Sept ', ' Oct ', ' Nov ', ' Dec ',
-    ' jan ', ' feb ', ' mar ', ' apr ', ' may ', ' jun ', ' jul ', ' aug ', ' sept ', ' oct ', ' nov ', ' dec ',
-    ' 01/', ' 02/', ' 03/', ' 04/', ' 05/', ' 06/', ' 07/', ' 08/', ' 09/', ' 10/',
-    ' 11/', ' 12/', ' 13/', ' 14/', ' 15/', ' 16/', ' 17/', ' 18/', ' 19/', ' 20/',
-    ' 21/', ' 22/', ' 23/', ' 24/', ' 25/', ' 26/', ' 27/', ' 28/', ' 29/', ' 30/', ' 31/',
-    ' 2015-', ' 2016-', '2017-', '2018-', '2019-', '2020-'
-  ]
+  const re = /(tomorrow)|(((next|on)\W)?((week|month|year)|([mM]onday|[tT]uesday|[wW]ednesday|[tT]hursday|[fF]riday|[sS]aturday|[sS]unday)))|((on\W)?([jJ]an(uary)?|[fF]eb(ruary)?|[mM]ar(ch)?|[aA]pr(il)?|[mM]ay|[jJ]une?|[jJ]uly?|[aA]ug(ust)?|[sS]ept(ember)?|[oO]ct(ober)?|[nN]ov(ember)?|[dD]ec(ember)?)\.?\W(0?[1-9]|[12][0-9]|3[01])(th|st|rd|nd)?,?\W(19|20)\d\d)|((on\W)?(((19|20)\d\d)([- /.])(0[1-9]|1[012])\28(0[1-9]|[12][0-9]|3[01])|((0?[1-9]|1[012])([- /.])(0?[1-9]|[12][0-9]|3[01])\33((19|20)\d\d))|((0?[1-9]|[12][0-9]|3[01])([- /.])(0?[1-9]|1[012])\39((19|20)\d\d))))$/g
 
-  let keyword
+  let found = string.search(re)
+  if (found === -1) found = undefined
 
-  keywords.some((word) => {
-    const index = string.indexOf(word)
-    if (index !== -1) {
-      keyword = index
-      return true
-    }
-  })
+  const item = string.slice(0, found).replace(/^\w/g, string.charAt(0).toUpperCase())
+  const date = gregorian.reform(string.slice(found, string.length))
+  const dueDate = (date.reagent())
+    ? date.set(0, 'h').to('iso')
+    : gregorian.reform(datejs(string.slice(found, string.length))).to('iso')
 
-  let dueDate = gregorian.reform(string.slice(keyword, string.length))
-  let item
-  dueDate = (dueDate.reagent()) ? dueDate.set(0, 'h').recite() : date(string.slice(keyword, string.length))
-  item = string.slice(0, 1).toUpperCase() + string.slice(1, keyword)
-  return {item: item.trim(), dueDate: gregorian.reform(dueDate).to('iso')}
+  return {
+    item: item.trim(),
+    dueDate: dueDate
+  }
 }
