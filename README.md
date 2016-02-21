@@ -1,4 +1,13 @@
 # taskmastr
+
+[![Circle CI](https://circleci.com/gh/patrickfatrick/taskmastr.svg?style=shield)](https://circleci.com/gh/patrickfatrick/taskmastr)
+[![codecov.io](https://codecov.io/github/patrickfatrick/taskmastr/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/taskmastr?branch=master)
+[![bitHound Score](https://www.bithound.io/github/patrickfatrick/taskmastr/badges/score.svg)](https://www.bithound.io/github/patrickfatrick/taskmastr)
+[![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/taskmastr/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/taskmastr/master/dependencies/npm)
+[![MIT License][license-image]][license-url]
+
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 Yet another task management web app, this one is built with the VENM stack (Vue, Express, Node, MongoDB). You can find a hosted version of this at [taskmastr.co](https://www.taskmastr.co)
 
 While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
