@@ -6,13 +6,15 @@ var config = require('../config')
 var agenda = require('../services/agenda')
 var userService = require('../services/user-service')
 
+function setCookieAge (req, res, next) {
+  if (req.body.rememberMe) {
+    req.session.cookie.maxAge = config.cookieMaxAge
+  }
+  next()
+}
+
 router.post('/login',
-  function (req, res, next) {
-    if (req.body.rememberMe) {
-      req.session.cookie.maxAge = config.cookieMaxAge
-    }
-    next()
-  },
+  setCookieAge,
   function (req, res, next) {
     // console.log(req.body)
     return passport.authenticate('local', {
@@ -39,12 +41,7 @@ router.post('/login',
 )
 
 router.post('/create',
-  function (req, res, next) {
-    if (req.body.rememberMe) {
-      req.session.cookie.maxAge = config.cookieMaxAge
-    }
-    next()
-  },
+  setCookieAge,
   function (req, res, next) {
     // console.log(req.body)
     var username = req.body.username
