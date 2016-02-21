@@ -91,7 +91,7 @@ _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday
 
 taskmastr is distributable under the terms of the [GNU GPL v3](./LICENSE).
 
-[license-image]: https://openclipart.org/download/89185/button-gpl-source.svg
+[license-image]: https://img.shields.io/badge/license-GNU%20GPL%20version%203-blue.svg?style=flat-square)
 [license-url]: LICENSE
 
 ## Screenshots
