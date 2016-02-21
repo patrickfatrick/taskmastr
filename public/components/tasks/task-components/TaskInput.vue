@@ -88,7 +88,7 @@ export default {
       }
       this.addTask({
         id: hat(),
-        item: task,
+        item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
         current: !(_.find(this.user.current.items, {current: true})),
         complete: false,
         dateCreated: gregorian.reform(new Date()).to('iso'),

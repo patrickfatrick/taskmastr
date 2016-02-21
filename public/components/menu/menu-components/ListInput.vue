@@ -45,7 +45,7 @@ export default {
       if (!this.isValid) return
       this.addList({
         id: hat(),
-        list: list,
+        list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
         current: false,
         _delete: false
