@@ -144,7 +144,6 @@ router.post('/write', function (req, res, next) {
         'data.agendaID': item.id
       }, function (err) {
         if (err) return next(err)
-        console.log(user.username + ' => Agenda removed: ' + item.id)
         if (item.dueDate) {
           item.dueDate = new Date(item.dueDate)
           if (item.dueDate <= Date.now()) return true
