@@ -14,6 +14,7 @@ var userSchema = new Schema({
           current: {type: Boolean},
           complete: {type: Boolean},
           dateCreated: {type: Date},
+          dateCompleted: {type: Date},
           dueDate: {type: Date},
           notes: {type: String},
           _id: false
