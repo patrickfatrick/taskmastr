@@ -113,6 +113,9 @@
 			@include span-columns(14 of 21);
 		}
 		@include media(min-width $medsmall) {
+			@include span-columns(15 of 21);
+		}
+		@include media(min-width $large) {
 			@include span-columns(16 of 21);
 		}
 		button {
@@ -145,6 +148,9 @@
 			@include span-columns(5 of 21);
 		}
 		@include media(min-width $medsmall) {
+			@include span-columns(4 of 21);
+		}
+		@include media(min-width $large) {
 			@include span-columns(3 of 21);
 		}
 		.sort-button {
