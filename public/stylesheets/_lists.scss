@@ -93,7 +93,6 @@
 	i {
 		cursor: pointer;
 		font-size: 1rem !important;
-		padding: 0.2rem;
 		@include media(min-width $small) {
 			font-size: 1.2rem !important;
 		}
