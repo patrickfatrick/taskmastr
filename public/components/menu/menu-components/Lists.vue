@@ -8,7 +8,7 @@
         </div>
         <div class="utils table-data">
           <button class="sort-button sort-handle" title="Sort list">
-            <i class="fa fa-arrows-v sort"></i>
+            <i class="sort-handle fa fa-arrows-v sort"></i>
           </button>
           <button class="rename-button" title="Rename list" @click.prevent="renameToggle($index)">
             <i class="fa fa-pencil"></i>

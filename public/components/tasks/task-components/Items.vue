@@ -16,7 +16,7 @@
             <i class="fa" :class="{'fa-pencil-square-o': !task._dueDateDifference || task._dueDateDifference > 0 || task.complete, 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete}"></i>
           </button>
           <button class="sort-button sort-handle" title="Sort task">
-            <i class="fa fa-arrows-v"></i>
+            <i class="sort-handle fa fa-arrows-v"></i>
           </button>
           <button class="delete-button" title="Delete task" @click.prevent="deleteTask($index)">
             <i class="fa" :class="{'fa-trash-o': !task._delete, 'fa-undo': task._delete}"></i>
