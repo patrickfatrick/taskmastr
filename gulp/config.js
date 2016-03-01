@@ -38,7 +38,7 @@ module.exports = {
     }
   },
   nodemon: {
-    script: 'bin/www',
+    script: 'app.js',
     ext: 'js',
     env: {
       NODE_ENV: process.env.NODE_ENV

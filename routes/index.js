@@ -1,24 +1,39 @@
-var express = require('express')
-var router = express.Router()
+var http = require('http')
 
 /* GET home page. */
-router.get('/', function (req, res) {
-  var vm = {
-    title: 'taskmastr',
-    error: req.flash('error'),
-    env: process.env.NODE_ENV
+var index = {
+  index: function * (next) {
+    try {
+      var vm = {
+        title: 'taskmastr',
+        error: this.request.flash('error'),
+        env: process.env.NODE_ENV
+      }
+      this.render({
+        index: vm
+      })
+    } catch (e) {
+      this.status = 500
+      this.body = e.message || http.STATUS_CODES[this.status]
+    }
+    yield next
+  },
+  sessionData: function * (next) {
+    try {
+      var user = this.request.user
+      if (!user) return this.throw(204)
+      console.log('Sending user ' + user.username + '... OK')
+      this.body = {
+        username: user.username,
+        darkmode: user.darkmode,
+        tasks: (user.tasks.length) ? user.tasks : user.todos
+      }
+    } catch (e) {
+      this.status = 500
+      this.body = e.message || http.STATUS_CODES[this.status]
+    }
+    yield next
   }
-  res.render('index', vm)
-})
+}
 
-router.get('/session-data', function (req, res) {
-  if (!req.user) return res.sendStatus(204)
-  console.log('Sending user ' + req.user.username + '... OK')
-  return res.send({
-    username: req.user.username,
-    darkmode: req.user.darkmode,
-    tasks: (req.user.tasks.length) ? req.user.tasks : req.user.todos
-  })
-})
-
-module.exports = router
+module.exports = index

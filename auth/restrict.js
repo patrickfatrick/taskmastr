@@ -1,8 +1,7 @@
-module.exports = function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    console.log(req)
-    res.sendStatus(401)
-  } else {
-    return next()
+module.exports = function * (next) {
+  if (!this.request.isAuthenticated()) {
+    console.log(this.request)
+    this.throw(401, 'Unauthorized')
   }
+  yield next
 }

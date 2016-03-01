@@ -1,119 +1,136 @@
-var express = require('express')
+var koa = require('koa')
+
+// Middleware and helpers
 var path = require('path')
-var favicon = require('serve-favicon')
-var logger = require('morgan')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var compression = require('compression')
+var compress = require('koa-compress')
+var session = require('koa-generic-session')
+var MongoStore = require('koa-generic-session-mongo')
+var serve = require('koa-static')
+var parse = require('koa-bodyparser')
+var views = require('koa-views')
+var router = require('koa-router')
+var logger = require('koa-logger')
+var favicon = require('koa-favicon')
+var flash = require('koa-flash')
 var mongoose = require('mongoose')
-var passport = require('passport')
-var expressSession = require('express-session')
-var flash = require('connect-flash')
-var connectMongo = require('connect-mongo')
-var agendaUI = require('agenda-ui')
+var passport = require('koa-passport')
 var agenda = require('./services/agenda')
 
-var MongoStore = connectMongo(expressSession)
-var passportConfig = require('./auth/passport-config')
-var restrict = require('./auth/restrict')
-passportConfig()
-
+// Import configs
 var config = require('./config')
-var routes = require('./routes/index')
-var users = require('./routes/users')
+var passportConfig = require('./auth/passport-config')
 
+// Import routes
+var index = require('./routes/index')
+// var users = require('./routes/users')
+// var restrict = require('./auth/restrict')
+
+var app = koa()
+
+passportConfig()
 mongoose.connect(config.mongoUri)
-var app = express()
 
-app.use(compression(config.compression))
+// Logger
+app.use(logger())
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade')
+// Compression
+app.use(compress(config.compress))
 
-// uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/public/images/favicon.ico'))
-app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: false
-}))
-app.use(cookieParser('suzy eats a suzy snack'))
-
-app.use(express.static(path.join(__dirname, 'public')))
-
-app.use(expressSession({
+// Sessions
+app.keys = ['suzy eats a suzy snack']
+app.use(session({
+  key: 'koa.sid',
   cookie: {
     maxAge: null
   },
-  name: 'connect.sid',
-  secret: 'suzy eats a suzy snack',
-  saveUninitialized: false,
-  resave: false,
   store: new MongoStore({
-    mongooseConnection: mongoose.connection
+    url: config.mongoUri,
+    collection: 'sessions'
   })
 }))
 
+app.use(function * (next) {
+  // ignore favicon
+  if (this.path === '/favicon.ico') return
+
+  var n = this.session.views || 0
+  this.session.views = ++n
+
+  yield next
+})
+
+// Bodyparser
+app.use(parse())
+
+// uncomment after placing your favicon in /public
+app.use(favicon(path.join(__dirname, '/public/images/favicon.ico')))
+
+// Flash
 app.use(flash())
+
+// Initialize Passport
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/', routes)
-app.use('/users', users)
-app.get('/agenda-ui', function (req, res, next) {
-  if (!req.isAuthenticated() || req.user.username !== 'patrick.fricano@icloud.com') {
-    // res.sendStatus(401)
-    var err = new Error('You\'re unauthorized to view this page.')
-    err.status = 401
-    next(err)
-  } else {
-    next()
+// Views
+app.use(views(path.join(__dirname, '/views'), {
+  map: {
+    html: 'jade'
   }
-})
-app.use('/agenda-ui', agendaUI(agenda, {
-  poll: 180000
 }))
 
+// Serve static
+app.use(serve(path.join(__dirname, 'public')))
+
+// Routes
+app.use(router(app))
+app.get('/', index.index)
+// app.get('/session-data', index.sessionData)
+// app.use('/users', users)
+
+// Initialize Agenda
 agenda.on('ready', function () {
-  // Uncomment to test agenda
-  // agenda.every('3 minutes', 'Agenda running')
   agenda.start()
 })
 
-app.use(restrict)
+// app.use(restrict)
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('The page you\'re looking for does not exist.')
-  err.status = 404
-  next(err)
-})
+// app.use(function * (next) {
+//   this.throw(404, 'The page you\'re looking for does not exist.')
+//   yield next
+// })
 
 // error handlers
 
 // development error handler
 // will print stacktrace
-// start livereload server
-if (app.get('env') === 'development') {
-  app.use(function (err, req, res) {
-    res.status(err.status || 500)
-    res.render('error', {
-      message: err.message,
-      error: err
-    })
-  })
-}
+// if (app.env === 'development') {
+//   app.use(function * () {
+//     this.response.statusCode = this.response.statusCode || 500)
+//     this.body = {
+//       error: {
+//         message: err.message,
+//         error: err
+//       }
+//     }
+//   })
+// }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function (err, req, res) {
-  res.status(err.status || 500)
-  res.render('error', {
-    status: err.status,
-    message: err.message,
-    error: err
-  })
-})
+// app.use(function * () {
+//   this.response.statusCode = this.response.statusCode || 500)
+//   this.body = {
+//     error: {
+//       status: err.status,
+//       message: err.message,
+//       error: err
+//     }
+//   }
+// })
+
+app.listen(config.koa.port)
+console.log('Listening on port ' + config.koa.port)
 
 module.exports = app

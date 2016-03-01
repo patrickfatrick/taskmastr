@@ -1,4 +1,4 @@
-/* global describe it beforeEach afterEach sinon*/
+/* global describe it beforeEach afterEach sinon */
 import chai from 'chai'
 import {getSession, login, create, reset, forgot, logout, save} from '../../public/services/user-services'
 
