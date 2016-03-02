@@ -8,7 +8,7 @@ var MongoStore = require('koa-generic-session-mongo')
 var serve = require('koa-static')
 var parse = require('koa-bodyparser')
 var views = require('koa-views')
-var router = require('koa-router')
+var router = require('koa-router')()
 var logger = require('koa-logger')
 var favicon = require('koa-favicon')
 var flash = require('koa-flash')
@@ -16,14 +16,15 @@ var mongoose = require('mongoose')
 var passport = require('koa-passport')
 var agenda = require('./services/agenda')
 
-// Import configs
+// Import configs and auth middleware
 var config = require('./config')
 var passportConfig = require('./auth/passport-config')
+var restrict = require('./auth/restrict')
 
 // Import routes
 var index = require('./routes/index')
-// var users = require('./routes/users')
-// var restrict = require('./auth/restrict')
+var users = require('./routes/users')
+var sessions = require('./routes/sessions')
 
 var app = koa()
 
@@ -73,23 +74,29 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Views
-app.use(views(path.join(__dirname, '/views'), {
-  map: {
-    html: 'jade'
-  }
+app.use(views(path.join(__dirname, 'views'), {
+  extension: 'jade'
 }))
 
 // Serve static
 app.use(serve(path.join(__dirname, 'public')))
 
 // Routes
-app.use(router(app))
-app.get('/', index.index)
-// app.get('/session-data', index.sessionData)
-// app.use('/users', users)
+router.get('/', index.index)
+router.get('/sessions/get', sessions.get)
+router.post('/users/login', users.setCookieAge, users.login)
+router.put('/users/create', users.setCookieAge, users.create)
+router.post('/users/forgot', users.forgot)
+router.post('/users/reset', users.reset)
+// router.post('/users/write', users.write)
+router.post('/users/logout', users.logout)
+app.use(router.routes())
 
 // Initialize Agenda
 agenda.on('ready', function () {
+  agenda.cancel({
+    name: 'Agenda running'
+  })
   agenda.start()
 })
 

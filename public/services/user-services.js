@@ -32,7 +32,7 @@ export function login (username, key, rememberMe, cb) {
 
 export function create (username, key, rememberMe, cb) {
   return window.fetch('/users/create', {
-    method: 'post',
+    method: 'put',
     credentials: 'same-origin',
     headers: {
       'Accept': 'application/json',
@@ -131,7 +131,7 @@ export function logout (cb) {
 }
 
 export function getSession (cb) {
-  return window.fetch('/session-data', {
+  return window.fetch('/sessions/get', {
     method: 'get',
     credentials: 'same-origin'
   })

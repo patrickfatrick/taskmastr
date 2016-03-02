@@ -2,9 +2,9 @@ var bcrypt = require('bcrypt')
 var hat = require('hat')
 var User = require('../models/user').User
 
-exports.addUser = function (user, next) {
-  bcrypt.hash(user.key, 10, function (err, hash) {
-    if (err) return next(err)
+exports.addUser = function * (user) {
+  var result = yield bcrypt.hash(user.key, 10, function * (err, hash) {
+    if (err) throw err
     user.key = hash
     var newUser = new User({
       username: user.username.toLowerCase(),
@@ -12,13 +12,11 @@ exports.addUser = function (user, next) {
       tasks: user.tasks,
       darkmode: user.darkmode
     })
-    newUser.save(function (err, user) {
-      if (err) {
-        return next(err)
-      }
-      next(err, user)
-    })
+    yield newUser.save()
+    return newUser
   })
+  console.log(result)
+  return result
 }
 
 exports.findUser = function (username, next) {
