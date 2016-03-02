@@ -36,9 +36,7 @@ var users = {
     var ctx = this
     var user = ctx.request.body
     try {
-      console.log(userService.addUser(user))
       var result = yield userService.addUser(user)
-      console.log(result)
       if (!result) ctx.throw(500, 'Something bad happened')
       console.log(result.username + ' not found.')
       console.log('Creating user ' + result.username + ' ... OK')
@@ -61,25 +59,21 @@ var users = {
   forgot: function * (next) {
     var ctx = this
     try {
-      yield userService.findUser(ctx.request.body.username, function * (err, user) {
-        if (err) throw (err)
-        if (!user) {
-          console.log('No user: ' + user.username)
-          ctx.throw(401, 'No user found.')
-        }
-        yield userService.setToken(user, function * (err, user) {
-          if (err) throw err
-          // console.log(user)
-          agenda.now('Reset Email', {
-            username: user.username,
-            resetToken: user.resetToken,
-            host: ctx.request.origin
-          })
-          this.body = {
-            emailSent: true
-          }
-        })
+      var user = yield userService.findUser(ctx.request.body.username)
+      if (!user) {
+        console.log('No user: ' + user.username)
+        ctx.throw(401, 'No user found.')
+      }
+      var result = yield userService.setToken(user)
+      // console.log(user)
+      agenda.now('Reset Email', {
+        username: result.username,
+        resetToken: result.resetToken,
+        host: ctx.request.origin
       })
+      this.body = {
+        emailSent: true
+      }
     } catch (e) {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
@@ -119,7 +113,7 @@ var users = {
       // HACK: cancel agendas for deleted tasks
       // Realtime should address
       async.each(deleteAgendas, function * (id, callback) {
-        yield agenda.cancel({
+        agenda.cancel({
           'data.agendaID': id
         }, function (err) {
           if (err) throw err
@@ -135,7 +129,7 @@ var users = {
       async.each(user.tasks, function * (task, callback) {
         yield async.each(task.items, function * (item) {
           // console.log(item)
-          yield agenda.cancel({
+          agenda.cancel({
             'data.agendaID': item.id
           }, function (err) {
             if (err) throw err
@@ -155,11 +149,10 @@ var users = {
         }, callback())
       }, function * (err) {
         if (err) throw err
-        yield userService.updateUser(user, function * (err, user) {
-          if (err) return next(err)
-          console.log('Saving user ' + user.username + '... OK')
-          this.body = {username: user.username}
-        })
+        var result = yield userService.updateUser(user)
+        if (!result) ctx.throw(500, 'Something bad happened')
+        console.log('Saving user ' + user.username + '... OK')
+        this.body = {username: user.username}
       })
     } catch (e) {
       this.status = e.status || 500

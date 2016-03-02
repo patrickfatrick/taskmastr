@@ -88,7 +88,7 @@ router.post('/users/login', users.setCookieAge, users.login)
 router.put('/users/create', users.setCookieAge, users.create)
 router.post('/users/forgot', users.forgot)
 router.post('/users/reset', users.reset)
-// router.post('/users/write', users.write)
+router.post('/users/write', users.write)
 router.post('/users/logout', users.logout)
 app.use(router.routes())
 

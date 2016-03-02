@@ -3,62 +3,72 @@ var hat = require('hat')
 var User = require('../models/user').User
 
 exports.addUser = function * (user) {
-  var result = yield bcrypt.hash(user.key, 10, function * (err, hash) {
-    if (err) throw err
-    user.key = hash
-    var newUser = new User({
-      username: user.username.toLowerCase(),
-      key: user.key,
-      tasks: user.tasks,
-      darkmode: user.darkmode
+  return new Promise(function (resolve, reject) {
+    bcrypt.hash(user.key, 10, function (err, hash) {
+      if (err) reject(err)
+      var newUser = new User({
+        username: user.username.toLowerCase(),
+        key: hash,
+        tasks: user.tasks,
+        darkmode: user.darkmode
+      })
+      newUser.save(function (err, user) {
+        if (err) reject(err)
+        resolve(user)
+      })
     })
-    yield newUser.save()
-    return newUser
-  })
-  console.log(result)
-  return result
-}
-
-exports.findUser = function (username, next) {
-  User.findOne({
-    username: username.toLowerCase()
-  }, function (err, user) {
-    next(err, user)
   })
 }
 
-exports.updateUser = function (user, next) {
-  User.findOneAndUpdate({
-    username: user.username.toLowerCase()
-  }, {
-    $set: {
-      tasks: user.tasks,
-      darkmode: user.darkmode,
-      dateModified: user.dateModified
-    },
-    // remove legacy todos
-    $unset: {
-      todos: ''
-    }
-  }, {
-    new: true
-  }, function (err, user) {
-    next(err, user)
+exports.findUser = function (username) {
+  return new Promise(function (resolve, reject) {
+    User.findOne({
+      username: username.toLowerCase()
+    }, function (err, user) {
+      if (err) reject(err)
+      resolve(user)
+    })
+  })
+}
+
+exports.updateUser = function (user) {
+  return new Promise(function (resolve, reject) {
+    User.findOneAndUpdate({
+      username: user.username.toLowerCase()
+    }, {
+      $set: {
+        tasks: user.tasks,
+        darkmode: user.darkmode,
+        dateModified: user.dateModified
+      },
+      // remove legacy todos
+      $unset: {
+        todos: ''
+      }
+    }, {
+      new: true
+    }, function (err, user) {
+      if (err) reject(err)
+      resolve(user)
+    })
   })
 }
 
 exports.setToken = function (user, next) {
-  User.findOneAndUpdate({
-    username: user.username.toLowerCase()
-  }, {
-    $set: {
-      resetToken: hat(),
-      resetDate: Date.now() + 3600000
-    }
-  }, {
-    new: true
-  }, function (err, user) {
-    next(err, user)
+  return new Promise(function (resolve, reject) {
+    User.findOneAndUpdate({
+      username: user.username.toLowerCase()
+    }, {
+      $set: {
+        resetToken: hat(),
+        resetDate: Date.now() + 3600000
+      }
+    }, {
+      new: true
+    }, function (err, user) {
+      if (err) reject(err)
+      resolve(user)
+    })
   })
 }
 
