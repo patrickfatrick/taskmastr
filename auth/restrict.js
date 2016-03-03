@@ -1,7 +1,8 @@
 module.exports = function * (next) {
-  if (this.isAuthenticated()) {
-    yield next
+  if (!this.isAuthenticated()) {
+    this.status = 401
+    this.body = this.status
   } else {
-    this.redirect('/')
+    return next()
   }
 }

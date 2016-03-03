@@ -1,28 +1,23 @@
-module.exports = function () {
-  var passport = require('passport')
-  var LocalStrategy = require('passport-local').Strategy
-  var userService = require('../services/user-service')
-  var bcrypt = require('bcrypt')
+var passport = require('koa-passport')
+var LocalStrategy = require('passport-local').Strategy
+var userService = require('../services/user-service')
+var bcrypt = require('bcrypt')
 
+module.exports = function () {
   passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'key',
     passReqToCallback: true
   }, function (req, username, key, next) {
-    // console.log(username + ' ' + key)
-    userService.findUser(username, function (err, user) {
-      if (err) {
-        return next(err)
-      }
+    userService.findUser(username)
+    .then(function (user) {
       if (!user) {
         console.log('No user named ' + username)
         return next(null, null)
       }
       console.log('User ' + username + ' found. Validating...')
       bcrypt.compare(key, user.key, function (err, same) {
-        if (err) {
-          return next(err)
-        }
+        if (err) return next(err)
         if (!same) {
           console.log('Passwords don\'t match')
           // console.log('user key: ' + user.key)
@@ -39,10 +34,9 @@ module.exports = function () {
   })
 
   passport.deserializeUser(function (username, next) {
-    userService.findUser(username,
-      function (err, user) {
-        next(err, user)
-      }
-    )
+    userService.findUser(username)
+    .then(function (user) {
+      next(null, user)
+    })
   })
 }

@@ -11,15 +11,13 @@ var views = require('koa-views')
 var router = require('koa-router')()
 var logger = require('koa-logger')
 var favicon = require('koa-favicon')
-var flash = require('koa-flash')
 var mongoose = require('mongoose')
 var passport = require('koa-passport')
 var agenda = require('./services/agenda')
 
 // Import configs and auth middleware
 var config = require('./config')
-var passportConfig = require('./auth/passport-config')
-var restrict = require('./auth/restrict')
+var auth = require('./auth/auth')
 
 // Import routes
 var index = require('./routes/index')
@@ -28,7 +26,7 @@ var sessions = require('./routes/sessions')
 
 var app = koa()
 
-passportConfig()
+auth()
 mongoose.connect(config.mongoUri)
 
 // Logger
@@ -50,28 +48,23 @@ app.use(session({
   })
 }))
 
-app.use(function * (next) {
-  // ignore favicon
-  if (this.path === '/favicon.ico') return
-
-  var n = this.session.views || 0
-  this.session.views = ++n
-
-  yield next
-})
-
 // Bodyparser
 app.use(parse())
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, '/public/images/favicon.ico')))
 
-// Flash
-app.use(flash())
-
 // Initialize Passport
 app.use(passport.initialize())
 app.use(passport.session())
+
+// Initialize Agenda
+agenda.on('ready', function () {
+  agenda.cancel({
+    name: 'Agenda running'
+  })
+  agenda.start()
+})
 
 // Views
 app.use(views(path.join(__dirname, 'views'), {
@@ -86,23 +79,16 @@ router.get('/', index.index)
 router.get('/sessions/get', sessions.get)
 router.post('/users/login', users.setCookieAge, users.login)
 router.put('/users/create', users.setCookieAge, users.create)
+router.post('/users/write', users.write)
 router.post('/users/forgot', users.forgot)
 router.post('/users/reset', users.reset)
-router.post('/users/write', users.write)
-router.post('/users/logout', users.logout)
+router.get('/users/logout', users.logout)
 app.use(router.routes())
-
-// Initialize Agenda
-agenda.on('ready', function () {
-  agenda.cancel({
-    name: 'Agenda running'
-  })
-  agenda.start()
-})
+app.use(router.allowedMethods())
 
 // app.use(restrict)
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 // app.use(function * (next) {
 //   this.throw(404, 'The page you\'re looking for does not exist.')
 //   yield next
@@ -112,32 +98,20 @@ agenda.on('ready', function () {
 
 // development error handler
 // will print stacktrace
-// if (app.env === 'development') {
-//   app.use(function * () {
-//     this.response.statusCode = this.response.statusCode || 500)
-//     this.body = {
-//       error: {
-//         message: err.message,
-//         error: err
-//       }
-//     }
-//   })
-// }
-
-// production error handler
-// no stacktraces leaked to user
-// app.use(function * () {
-//   this.response.statusCode = this.response.statusCode || 500)
-//   this.body = {
-//     error: {
-//       status: err.status,
-//       message: err.message,
-//       error: err
-//     }
-//   }
-// })
+if (app.env === 'development') {
+  app.use(function * (next) {
+    if (this.response.status < 200 || this.response.status > 299) {
+      this.status = this.response.status || 500
+      this.state = {
+        error: {
+          message: this.response.message,
+          error: this.status
+        }
+      }
+      yield this.render('error')
+    }
+  })
+}
 
 app.listen(config.koa.port)
 console.log('Listening on port ' + config.koa.port)
-
-module.exports = app

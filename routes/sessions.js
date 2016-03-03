@@ -1,6 +1,6 @@
 var http = require('http')
 
-/* GET home page. */
+/* GET session */
 var sessions = {
   get: function * (next) {
     try {

@@ -12,9 +12,9 @@ exports.addUser = function * (user) {
         tasks: user.tasks,
         darkmode: user.darkmode
       })
-      newUser.save(function (err, user) {
+      newUser.save(function (err, result) {
         if (err) reject(err)
-        resolve(user)
+        resolve(result)
       })
     })
   })
@@ -73,30 +73,31 @@ exports.setToken = function (user, next) {
 }
 
 exports.resetPassword = function (user, next) {
-  bcrypt.hash(user.newKey, 10, function (err, hash) {
-    if (err) return next(err)
-    User.findOne({
-      resetToken: user.token
-    }, function (err, user) {
-      if (err) return next(err, err)
-      if (!user) return next(null, null)
-      var username = user.username
-      var newKey = hash
-      if (Date.now() > user.resetDate) {
-        return next(err, null)
-      }
-      User.findOneAndUpdate({
-        username: username
-      }, {
-        $set: {
-          key: newKey,
-          resetToken: null
-        }
+  return new Promise(function (resolve, reject) {
+    bcrypt.hash(user.newKey, 10, function (err, hash) {
+      if (err) reject(err)
+      User.findOne({
+        resetToken: user.token
       }, function (err, user) {
-        if (err) return console.log(err)
-        console.log('User ' + user.username + ' updated')
+        if (err) reject(err)
+        if (!user) reject(401)
+        var newKey = hash
+        if (Date.now() > user.resetDate) {
+          return next(err, null)
+        }
+        User.findOneAndUpdate({
+          username: user.username
+        }, {
+          $set: {
+            key: newKey,
+            resetToken: null
+          }
+        }, function (err, user) {
+          if (err) reject(err)
+          console.log('User ' + user.username + ' updated')
+          resolve(user)
+        })
       })
-      next(err, user)
     })
   })
 }
