@@ -31,7 +31,6 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
-    yield next
   },
   create: function * (next) {
     var ctx = this
@@ -55,7 +54,6 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
-    yield next
   },
   write: function * (next) {
     var ctx = this
@@ -75,7 +73,6 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
-    yield next
   },
   forgot: function * (next) {
     var ctx = this
@@ -99,7 +96,6 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
-    yield next
   },
   reset: function * (next) {
     var ctx = this
@@ -120,13 +116,11 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
-    yield next
   },
   logout: function * (next) {
     this.logout()
     this.session = null
     this.redirect('/')
-    yield next
   }
 }
 

@@ -3,6 +3,6 @@ module.exports = function * (next) {
     this.status = 401
     this.body = this.status
   } else {
-    return next()
+    yield next
   }
 }

@@ -16,7 +16,6 @@ var sessions = {
       this.status = e.status || 500
       this.body = e.statusCode || http.STATUS_CODES[this.status]
     }
-    yield next
   }
 }
 

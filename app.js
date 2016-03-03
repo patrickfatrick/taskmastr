@@ -18,6 +18,7 @@ var agenda = require('./services/agenda-service')
 // Import configs and auth middleware
 var config = require('./config')
 var auth = require('./auth/auth')
+var restrict = require('./auth/restrict')
 
 // Import routes
 var index = require('./routes/index')
@@ -77,6 +78,7 @@ app.use(serve(path.join(__dirname, 'public')))
 
 // Routes
 router.get('/', index.index)
+router.get('/404', index.fourOhFour)
 router.get('/sessions/get', sessions.get)
 router.post('/users/login', users.setCookieAge, users.login)
 router.put('/users/create', users.setCookieAge, users.create)
@@ -87,19 +89,14 @@ router.get('/users/logout', users.logout)
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-// app.use(restrict)
+app.use(restrict)
 
 // 404
 app.use(function * (next) {
-  if (this.response.status === 404) {
-    this.state = {
-      error: {
-        message: this.response.message,
-        error: this.response.status
-      }
-    }
-    yield this.render('error')
+  if (this.status === 404) {
+    this.redirect('/404')
   }
+  yield next
 })
 
 app.listen(config.koa.port)
