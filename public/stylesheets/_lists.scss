@@ -81,7 +81,7 @@
 			@include animation(bounceInLeft 400ms);
 		}
 		&.item-leave {
-			@include animation(bounceOutLeft 400ms);
+			@include animation(bounceOutRight 400ms);
 		}
 		@include media(min-width $medium) {
 			&:hover:not(.complete):not(.active) {

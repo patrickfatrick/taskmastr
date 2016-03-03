@@ -13,7 +13,7 @@ var logger = require('koa-logger')
 var favicon = require('koa-favicon')
 var mongoose = require('mongoose')
 var passport = require('koa-passport')
-var agenda = require('./services/agenda')
+var agenda = require('./services/agenda-service')
 
 // Import configs and auth middleware
 var config = require('./config')
@@ -40,7 +40,8 @@ app.keys = ['suzy eats a suzy snack']
 app.use(session({
   key: 'koa.sid',
   cookie: {
-    maxAge: null
+    maxAge: null,
+    signed: false
   },
   store: new MongoStore({
     url: config.mongoUri,
@@ -88,30 +89,18 @@ app.use(router.allowedMethods())
 
 // app.use(restrict)
 
-// Catch 404 and forward to error handler
-// app.use(function * (next) {
-//   this.throw(404, 'The page you\'re looking for does not exist.')
-//   yield next
-// })
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.env === 'development') {
-  app.use(function * (next) {
-    if (this.response.status < 200 || this.response.status > 299) {
-      this.status = this.response.status || 500
-      this.state = {
-        error: {
-          message: this.response.message,
-          error: this.status
-        }
+// 404
+app.use(function * (next) {
+  if (this.response.status === 404) {
+    this.state = {
+      error: {
+        message: this.response.message,
+        error: this.response.status
       }
-      yield this.render('error')
     }
-  })
-}
+    yield this.render('error')
+  }
+})
 
 app.listen(config.koa.port)
 console.log('Listening on port ' + config.koa.port)

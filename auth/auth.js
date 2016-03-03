@@ -12,10 +12,10 @@ module.exports = function () {
     userService.findUser(username)
     .then(function (user) {
       if (!user) {
-        console.log('No user named ' + username)
+        console.log(username + ' => No user named ' + username)
         return next(null, null)
       }
-      console.log('User ' + username + ' found. Validating...')
+      console.log(username + ' => Found. Validating...')
       bcrypt.compare(key, user.key, function (err, same) {
         if (err) return next(err)
         if (!same) {
@@ -23,7 +23,7 @@ module.exports = function () {
           // console.log('user key: ' + user.key)
           return next(null, 401)
         }
-        console.log('Validating ' + username + '... OK')
+        console.log(username + ' => Validating... OK')
         next(null, user)
       })
     })

@@ -6,7 +6,7 @@ var sessions = {
     try {
       var user = this.req.user
       if (!user) return this.throw(204)
-      console.log('Sending user ' + user.username + '... OK')
+      console.log(user.username + ' => Sending user... OK')
       this.body = {
         username: user.username,
         darkmode: user.darkmode,

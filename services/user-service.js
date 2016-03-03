@@ -94,7 +94,7 @@ exports.resetPassword = function (user, next) {
           }
         }, function (err, user) {
           if (err) reject(err)
-          console.log('User ' + user.username + ' updated')
+          console.log(user.username + ' => Password updated')
           resolve(user)
         })
       })

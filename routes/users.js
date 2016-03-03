@@ -1,7 +1,7 @@
 var http = require('http')
 var passport = require('koa-passport')
-var async = require('async')
-var agenda = require('../services/agenda')
+var agenda = require('../services/agenda-service')
+var agendaHelpers = require('../services/agenda-helpers')
 var userService = require('../services/user-service')
 var config = require('../config')
 
@@ -20,7 +20,7 @@ var users = {
         if (!user) ctx.throw(204, 'No user found.')
         if (user === 401) ctx.throw(401, 'Invalid password.')
         yield ctx.login(user)
-        console.log('Sending user ' + user.username + '... OK')
+        console.log(user.username + ' => Sending user... OK')
         ctx.body = {
           username: user.username,
           darkmode: user.darkmode,
@@ -39,7 +39,7 @@ var users = {
     try {
       var result = yield userService.addUser(user)
       if (!result.username) ctx.throw(500, 'Something bad happened')
-      console.log('Creating user ' + result.username + ' ... OK')
+      console.log(result.username + ' => Creating user... OK')
       yield ctx.login(result)
       agenda.now('Welcome Email', {
         username: user.username,
@@ -63,52 +63,14 @@ var users = {
       var user = ctx.request.body.user
       var deleteAgendas = ctx.request.body.deleteAgendas
 
-      // Cancel agendas for deleted tasks
-      async.each(deleteAgendas, function (id, callback) {
-        agenda.cancel({
-          'data.agendaID': id
-        }, function (err) {
-          if (err) throw err
-          console.log(user.username + ' => Agenda removed: ' + id)
-          callback()
-        })
-      }, function (err) {
-        if (err) throw err
-        console.log('All deleted agendas removed successfully')
-      })
+      yield agendaHelpers.deleteAgendas(user, deleteAgendas)
+      yield agendaHelpers.remakeAgendas(user, ctx.request.origin)
 
-      // Cancel current agendas and make new ones
-      async.each(user.tasks, function (task, callback) {
-        async.each(task.items, function (item) {
-          // console.log(item)
-          agenda.cancel({
-            'data.agendaID': item.id
-          }, function (err) {
-            if (err) throw err
-            if (item.dueDate) {
-              item.dueDate = new Date(item.dueDate)
-              if (item.dueDate <= Date.now()) return true
-              console.log(user.username + ' => Agenda scheduled: ' + item.id + ' ' + item.dueDate)
-              agenda.schedule(item.dueDate, 'Notification Email', {
-                agendaID: item.id,
-                username: user.username,
-                item: item.item,
-                host: ctx.request.origin,
-                date: item.dueDate
-              })
-            }
-          })
-        }, callback())
-      }, function (err) {
-        if (err) throw err
-        userService.updateUser(user)
-        .then(function (result) {
-          if (!result.username) ctx.throw(500, 'Something bad happened')
-          console.log('Saving user ' + user.username + '... OK')
-          ctx.status = 200
-          ctx.body = {username: user.username}
-        })
-      })
+      var result = yield userService.updateUser(user)
+      if (!result.username) ctx.throw(500, 'Something bad happened')
+      console.log(user.username + ' => Saving user... OK')
+      ctx.status = 200
+      ctx.body = {username: user.username}
     } catch (e) {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
@@ -124,7 +86,7 @@ var users = {
         ctx.throw(401, 'No user found.')
       }
       var result = yield userService.setToken(user)
-      if (!result) ctx.throw(500, 'Something bad happened.')
+      if (!result.username) ctx.throw(500, 'Something bad happened.')
       agenda.now('Reset Email', {
         username: result.username,
         resetToken: result.resetToken,
@@ -137,19 +99,19 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
+    yield next
   },
   reset: function * (next) {
     var ctx = this
     try {
       var token = ctx.request.body.token
       var newKey = ctx.request.body.newKey
-      console.log('Reset token: ' + token)
+      // console.log('Reset token: ' + token)
       // console.log('New Key: ' + newKey)
       var result = yield userService.resetPassword({
         token: token,
         newKey: newKey
       })
-      if (!result) ctx.throw(500, 'Something bad happened.')
       if (!result) ctx.throw(401)
       ctx.body = {
         username: result.username
@@ -158,10 +120,12 @@ var users = {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
+    yield next
   },
   logout: function * (next) {
     this.logout()
     this.session = null
+    this.redirect('/')
     yield next
   }
 }
