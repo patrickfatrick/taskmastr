@@ -13,7 +13,7 @@ var runCommand = function (command) {
 }
 
 gulp.task('mongo-start', function (cb) {
-  var command = 'mongod --dbpath ' + config.dir
+  var command = 'mkdir -p data && mongod --dbpath ' + config.dir
   runCommand(command)
   return cb()
 })

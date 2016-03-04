@@ -26,8 +26,9 @@ taskmastr has...
 
 - Username/Password authentication.
 - Email notifications when assigning a task a due date.
-- Session storage for up to 30 days (useful for phone usage).
+- Session storage for up to 30 days.
 - Delete, reorder, and rename tasks or lists.
+- Due dates and email notifications on the day of.
 - 5-second undo when deleting a task or list.
 - Night mode for those of us who work when we should be sleeping.
 - Bright mode for those of us who are afraid of the dark.
@@ -35,6 +36,17 @@ taskmastr has...
 - Keyboard shortcuts allow you to control basically everything.
 
 taskmastr is updated regularly with new features
+
+## Installation
+
+To install and run it locally:
+
+```bash
+$ git clone git@github.com:patrickfatrick/taskmastr.git
+$ cd taskmastr
+$ npm install
+$ npm run dev
+```
 
 # Changelog
 
@@ -88,16 +100,6 @@ Try:
 This feature really does not and should not work for every single imaginable date format so it's up to you to stay sensible about it. It also does not work for dates in the past. Use the datepicker for that. And while we're on the subject of the datepicker, while you can set up a date in the past you will of course not receive any notification for it. The idea here is really more for allowing you to see when the task was due, after the fact.
 
 _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday' will not work, use 'next week' when you mean one week from today. Same goes for 'next month' for one month from today, and 'next year' for... well, you know.
-
-## Installation
-
-To install and run it locally:
-
-```bash
-$ git clone git@github.com:patrickfatrick/taskmastr.git
-$ npm install
-$ npm run dev
-```
 
 ## License
 
