@@ -148,6 +148,7 @@ export function getSession (cb) {
     cb(null, response)
   })
   .catch((err) => {
+    console.log(err)
     if (err.response.status === 204) return cb('No session data found.', err.response)
     cb(err, err.response)
   })
