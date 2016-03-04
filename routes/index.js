@@ -6,9 +6,12 @@ var index = {
     yield this.render('index')
   },
   fourOhFour: function * (next) {
+    this.message = (this.response.status === 404)
+      ? 'The page you\'re looking for doesn\'t exist.'
+      : this.response.message
     this.state = {
       error: {
-        message: this.response.message,
+        message: this.message,
         status: this.response.status
       }
     }
