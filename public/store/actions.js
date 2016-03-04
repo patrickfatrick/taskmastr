@@ -153,19 +153,20 @@ export default {
     const task = tasks[index]
     if (!task._delete) {
       timeoutID = setTimeout(() => {
-        let prevTask = tasks[index - 1]
-        let nextTask = tasks[index + 1]
+        const deleteTask = _.findIndex(tasks, {id: task.id})
+        const prevTask = deleteTask - 1
+        const nextTask = deleteTask + 1
         if (task.current) {
           if (task.current && index === (tasks.length - 1)) {
-            store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, prevTask))
+            store.dispatch('SET_CURRENT_TASK', prevTask)
           } else {
-            store.dispatch('SET_CURRENT_TASK', _.findIndex(tasks, nextTask))
+            store.dispatch('SET_CURRENT_TASK', nextTask)
           }
         }
         store.dispatch('DELETE_AGENDA', task.id)
         store.dispatch('UPDATE_DELETE_QUEUE', task.id, null)
-        store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), false)
-        store.dispatch('REMOVE_TASK', _.findIndex(tasks, {id: task.id}))
+        store.dispatch('SET_TASK_DELETE', deleteTask, false)
+        store.dispatch('REMOVE_TASK', deleteTask)
         store.dispatch('SET_SAVE_BUTTON', true)
       }, 5000)
       store.dispatch('UPDATE_DELETE_QUEUE', task.id, timeoutID)
