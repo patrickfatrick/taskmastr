@@ -18,7 +18,6 @@ var agenda = require('./services/agenda-service')
 // Import configs and auth middleware
 var config = require('./config')
 var auth = require('./auth/auth')
-var restrict = require('./auth/restrict')
 
 // Import routes
 var index = require('./routes/index')
@@ -93,8 +92,6 @@ router.post('/users/reset', users.reset)
 router.get('/users/logout', users.logout)
 app.use(router.routes())
 app.use(router.allowedMethods())
-
-app.use(restrict)
 
 // 404
 app.use(function * (next) {
