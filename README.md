@@ -8,9 +8,7 @@
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-Yet another task management web app, this one is built with the VENM stack (Vue, Express, Node, MongoDB). You can find a hosted version of this at [taskmastr.co](https://www.taskmastr.co)
-
-While taskmastr definitely does fall under the category of "projects intended to learn stuff with", it's also a pretty decent web-based task manager at this point.
+The server and front-end for [taskmastr.co](https://www.taskmastr.co) -- a web task manager built with Node, Koa, Mongo, Vue.
 
 Please see [the wiki](https://patrickfatrick.gitbooks.io/taskmastr/content/) for information on how to use taskmastr.
 
@@ -39,6 +37,10 @@ taskmastr has...
 taskmastr is updated regularly with new features
 
 # Changelog
+
+## New in v6.3
+
+Switched from Express to Koa.
 
 ## New in v6.2
 
@@ -86,6 +88,16 @@ Try:
 This feature really does not and should not work for every single imaginable date format so it's up to you to stay sensible about it. It also does not work for dates in the past. Use the datepicker for that. And while we're on the subject of the datepicker, while you can set up a date in the past you will of course not receive any notification for it. The idea here is really more for allowing you to see when the task was due, after the fact.
 
 _One more note about shortcuts:_ If today is Saturday, putting in 'next saturday' will not work, use 'next week' when you mean one week from today. Same goes for 'next month' for one month from today, and 'next year' for... well, you know.
+
+## Installation
+
+To install and run it locally:
+
+```bash
+$ git clone git@github.com:patrickfatrick/taskmastr.git
+$ npm install
+$ npm run dev
+```
 
 ## License
 

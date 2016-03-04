@@ -4,7 +4,7 @@
   "engines": {
     "node": "5.6.0"
   },
-  "description": "A simple web-based todo list using the VENM stack (Vue, Express, Node, Mongo)",
+  "description": "A web task manager built with Node, Koa, Mongo, Vue",
   "homepage": "http://www.taskmastr.co",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
