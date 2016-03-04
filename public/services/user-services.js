@@ -136,6 +136,7 @@ export function getSession (cb) {
     credentials: 'same-origin'
   })
   .then((response) => {
+    console.log(response)
     if (response.status !== 200) {
       let error = new Error(response.statusText)
       error.response = response
