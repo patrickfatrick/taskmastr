@@ -13,7 +13,7 @@ agenda.define('Welcome Email', function (job, done) {
   var data = job.attrs.data
   var options = {
     auth: {
-      api_key: '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'
+      api_key: process.env.SENDGRID_API_KEY
     }
   }
   var mailer = nodemailer.createTransport(sgTransport(options))
@@ -34,7 +34,7 @@ agenda.define('Reset Email', function (job, done) {
   var data = job.attrs.data
   var options = {
     auth: {
-      api_key: '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'
+      api_key: process.env.SENDGRID_API_KEY
     }
   }
   var mailer = nodemailer.createTransport(sgTransport(options))
@@ -74,7 +74,7 @@ agenda.define('Notification Email', function (job, done) {
   }
   var options = {
     auth: {
-      api_key: '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'
+      api_key: process.env.SENDGRID_API_KEY
     }
   }
   var mailer = nodemailer.createTransport(sgTransport(options))
