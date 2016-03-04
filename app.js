@@ -78,6 +78,11 @@ app.use(serve(path.join(__dirname, 'public')))
 
 // Routes
 router.get('/', index.index)
+router.redirect('/app', '/')
+router.redirect('/login', '/')
+router.redirect('/create', '/')
+router.redirect('/reset', '/')
+router.redirect('/forgot', '/')
 router.get('/404', index.fourOhFour)
 router.get('/sessions/get', sessions.get)
 router.post('/users/login', users.setCookieAge, users.login)
