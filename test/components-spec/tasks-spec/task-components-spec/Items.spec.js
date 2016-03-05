@@ -221,7 +221,7 @@ describe('Items.vue', function () {
     done()
   })
 
-  it('should call setCurrentTask on up', (done) => {
+  it('should call setCurrentTask on ctrl+,', (done) => {
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -230,14 +230,14 @@ describe('Items.vue', function () {
     }).$mount()
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
-    Mousetrap.trigger('up')
+    Mousetrap.trigger('ctrl+,')
     vm.$children[0].setCurrentTask.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentTask.restore()
     done()
   })
 
-  it('should call setCurrentTask on down', (done) => {
+  it('should call setCurrentTask on ctrl+.', (done) => {
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -246,8 +246,8 @@ describe('Items.vue', function () {
     }).$mount()
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
-    Mousetrap.trigger('down')
-    vm.$children[0].setCurrentTask.calledWith(1).should.be.true
+    Mousetrap.trigger('ctrl+.')
+    vm.$children[0].setCurrentTask.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentTask.restore()
     done()

@@ -267,7 +267,7 @@ describe('Lists.vue', function () {
     done()
   })
 
-  it('should call setCurrentList on alt+up', (done) => {
+  it('should call setCurrentList on alt+,', (done) => {
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -276,14 +276,14 @@ describe('Lists.vue', function () {
     }).$mount()
     sinon.stub(vm.$children[0], 'setCurrentList')
 
-    Mousetrap.trigger('alt+up')
+    Mousetrap.trigger('alt+,')
     vm.$children[0].setCurrentList.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentList.restore()
     done()
   })
 
-  it('should call setCurrentList on alt+down', (done) => {
+  it('should call setCurrentList on alt+.', (done) => {
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -292,8 +292,8 @@ describe('Lists.vue', function () {
     }).$mount()
     sinon.stub(vm.$children[0], 'setCurrentList')
 
-    Mousetrap.trigger('alt+down')
-    vm.$children[0].setCurrentList.calledWith(1).should.be.true
+    Mousetrap.trigger('alt+.')
+    vm.$children[0].setCurrentList.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentList.restore()
     done()

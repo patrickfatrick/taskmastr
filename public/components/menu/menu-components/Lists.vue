@@ -87,15 +87,17 @@ export default {
   },
   compiled () {
     // Keyboard bindings
-    Mousetrap.bind('alt+up', () => {
+    Mousetrap.bind('alt+,', (e) => {
+      if (e.preventDefault) e.preventDefault()
       let index = (_.findIndex(this.lists, {current: true}) === 0)
-        ? 0
+        ? this.lists.length - 1
         : _.findIndex(this.lists, 'current', true) - 1
       this.setCurrentList(index)
     })
-    Mousetrap.bind('alt+down', () => {
+    Mousetrap.bind('alt+.', (e) => {
+      if (e.preventDefault) e.preventDefault()
       let index = (_.findIndex(this.lists, {current: true}) === this.lists.length - 1)
-        ? this.lists.length - 1
+        ? 0
         : _.findIndex(this.lists, 'current', true) + 1
       this.setCurrentList(index)
     })

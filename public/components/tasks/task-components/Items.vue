@@ -88,19 +88,19 @@ export default {
   },
   compiled () {
     // Keyboard bindings
-    Mousetrap.bind('up', (e) => {
+    Mousetrap.bind('ctrl+,', (e) => {
       if (e.preventDefault) e.preventDefault()
       let index = _.findIndex(this.tasks, {current: true})
       index = (index === 0)
-        ? 0
+        ? this.tasks.length - 1
         : index - 1
       this.setCurrentTask(index)
     })
-    Mousetrap.bind('down', (e) => {
+    Mousetrap.bind('ctrl+.', (e) => {
       if (e.preventDefault) e.preventDefault()
       let index = _.findIndex(this.tasks, {current: true})
       index = (index === this.tasks.length - 1)
-        ? this.tasks.length - 1
+        ? 0
         : index + 1
       this.setCurrentTask(index)
     })
