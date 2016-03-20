@@ -20,12 +20,18 @@ export default {
     },
     auth () {
       return store.state.auth
+    },
+    user () {
+      return store.state.user
+    },
+    current () {
+      return store.state.user.current
     }
   },
   ready () {
     store.actions.getSession()
     .then(() => {
-      if (this.auth) this.$route.router.go('/app')
+      if (this.auth) this.$route.router.go('/app/list/' + this.current.id)
     })
   }
 }

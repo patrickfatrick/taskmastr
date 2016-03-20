@@ -1,13 +1,16 @@
 <template>
   <div id="content">
     <div class="container">
-    <div class="prompt-container">
-      <div id="todo-prompt">What needs doing?</div>
-      <task-input></task-input>
-    </div>
-    <menu-toggle></menu-toggle>
-    <items></items>
-    <i id="loading" class="fa fa-cog fa-spin" v-if="user.key || !user.tasks"></i>
+      <div class="prompt-container">
+        <div id="todo-prompt">What needs doing?</div>
+        <task-input></task-input>
+      </div>
+      <menu-toggle></menu-toggle>
+      <items></items>
+      <div class="no-list" v-if="user.key || !user.current.items">
+        <i id="loading" class="fa fa-cog fa-spin"></i>
+        <div>You're not viewing a list. Please click on one in the menu to the left.</div>
+      </div>
     </div>
     <save></save>
   </div>
@@ -32,6 +35,15 @@ export default {
     TaskInput,
     Items,
     Save
+  },
+  methods: {
+    setCurrentList: store.actions.setCurrentList
+  },
+  route: {
+    data (transition) {
+      console.log(transition)
+      this.setCurrentList(transition.to.params.listid)
+    }
   }
 }
 

@@ -19,7 +19,6 @@ module.exports = function (karma) {
     basePath: '',
     files: [
       'node_modules/es6-promise/dist/es6-promise.js',
-      'node_modules/whatwg-fetch/fetch.js',
       'test/index.js'
     ],
     frameworks: ['mocha', 'sinon-stub-promise', 'sinon', 'chai'],

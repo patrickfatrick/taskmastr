@@ -4,7 +4,7 @@
       <div class="table-row" v-for="list in lists" :class="{'deleting': list._delete, 'current': list.current}" name="list{{$index + 1}}" transition="item">
         <div class="task-cell table-data">
           <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(renameToggled === $index)}" @keyup.enter="renameToggle(null)" @blur="renameToggle(null)"></input>
-          <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="setCurrentList($index)" @dblclick="renameToggle($index)">{{list.list}}</button>
+          <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="navigateToList(list.id)" @dblclick="renameToggle($index)">{{list.list}}</button>
         </div>
         <div class="utils table-data">
           <button class="sort-button sort-handle" title="Sort list">
@@ -51,6 +51,9 @@ export default {
     sortLists: store.actions.sortLists,
     setSaveButton: store.actions.setSaveButton,
     renameList: store.actions.renameList,
+    navigateToList (id) {
+      this.$route.router.go('/app/list/' + id)
+    },
     rename (e, index) {
       if (!e.target.value) {
         e.target.value = this.lists[index].list
@@ -92,14 +95,14 @@ export default {
       let index = (_.findIndex(this.lists, {current: true}) === 0)
         ? this.lists.length - 1
         : _.findIndex(this.lists, 'current', true) - 1
-      this.setCurrentList(index)
+      this.navigateToList(this.lists[index].id)
     })
     Mousetrap.bind('alt+.', (e) => {
       if (e.preventDefault) e.preventDefault()
       let index = (_.findIndex(this.lists, {current: true}) === this.lists.length - 1)
         ? 0
         : _.findIndex(this.lists, 'current', true) + 1
-      this.setCurrentList(index)
+      this.navigateToList(this.lists[index].id)
     })
     Mousetrap.bind('alt+backspace', () => {
       this.deleteList(_.findIndex(this.lists, {current: true}))

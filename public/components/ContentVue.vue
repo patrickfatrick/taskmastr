@@ -1,7 +1,7 @@
 <template>
   <div>
     <menu></menu>
-    <tasks></tasks>
+    <router-view></router-view>
   </div>
 </template>
 

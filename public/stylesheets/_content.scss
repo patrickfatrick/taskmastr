@@ -146,8 +146,9 @@
 
 #loading {
 	margin-top: 3rem;
+	margin-bottom: 2rem;
 	font-size: 5rem;
-	@include span-columns(14);
+	@include span-columns(14 of 14);
 }
 
 .hidden {

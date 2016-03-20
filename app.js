@@ -5,6 +5,7 @@ var path = require('path')
 var compress = require('koa-compress')
 var session = require('koa-generic-session')
 var MongoStore = require('koa-generic-session-mongo')
+var RethinkSession = require('koa-generic-session-rethinkdb')
 var serve = require('koa-static')
 var parse = require('koa-bodyparser')
 var views = require('koa-views')
@@ -24,10 +25,21 @@ var index = require('./routes/index')
 var users = require('./routes/users')
 var sessions = require('./routes/sessions')
 
+// Rethinkdbdash
+const r = require(path.join(__dirname, '/r'))
+
 var app = koa()
 
 auth()
 mongoose.connect(config.mongoUri)
+
+// Set up Rethinkdb session store
+var sessionStore = new RethinkSession({
+  connection: r,
+  db: config.rethinkSession.db,
+  table: config.rethinkSession.table
+})
+sessionStore.setup()
 
 // Logger
 app.use(logger())
@@ -43,10 +55,7 @@ app.use(session({
     maxAge: null,
     signed: false
   },
-  store: new MongoStore({
-    url: config.mongoUri,
-    collection: 'sessions'
-  })
+  store: sessionStore
 }))
 
 // Bodyparser
@@ -101,5 +110,26 @@ app.use(function * (next) {
   yield next
 })
 
-app.listen(config.koa.port)
-console.log('Listening on port ' + config.koa.port)
+r.init(config.rethinkdb, [
+  {
+    name: 'sessions',
+    indexes: ['dateCreated', 'sid']
+  },
+  {
+    name: 'lists',
+    indexes: ['dateCreated']
+  },
+  {
+    name: 'users',
+    indexes: ['dateCreated']
+  }
+])
+.then(() => {
+  console.log('DB, tables, and index are available, starting koa...')
+  startKoa()
+})
+
+function startKoa () {
+  app.listen(config.koa.port)
+  console.log('Listening on port ' + config.koa.port)
+}

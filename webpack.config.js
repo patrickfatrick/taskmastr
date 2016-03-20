@@ -1,11 +1,12 @@
 var webpack = require('webpack')
+var path = require('path')
 
 module.exports = {
   entry: [
     './public/main.js'
   ],
   output: {
-    path: __dirname + '/public/dist/',
+    path: path.join(__dirname, '/public/dist/'),
     publicPath: 'http://localhost:8080/public/dist/',
     filename: 'bundle.js'
   },
@@ -42,9 +43,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      'Promise': 'imports?this=>global!exports?global.Promise!es6-promise',
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
-      'window.fetch': 'exports?self.fetch!whatwg-fetch'
+      'Promise': 'imports?this=>global!exports?global.Promise!es6-promise'
     })
   ]
 }

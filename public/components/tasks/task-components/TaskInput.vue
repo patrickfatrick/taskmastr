@@ -12,7 +12,7 @@
 <script>
 
 import _ from 'lodash'
-import hat from 'hat'
+import harsh from 'harsh'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
@@ -87,7 +87,7 @@ export default {
         dueDate = ''
       }
       this.addTask({
-        id: hat(),
+        id: harsh.hash().hashes[0],
         item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
         current: !(_.find(this.user.current.items, {current: true})),
         complete: false,

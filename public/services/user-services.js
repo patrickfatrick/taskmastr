@@ -1,3 +1,5 @@
+import 'isomorphic-fetch'
+
 export function login (username, key, rememberMe, cb) {
   return window.fetch('/users/login', {
     method: 'post',
@@ -57,6 +59,7 @@ export function create (username, key, rememberMe, cb) {
     cb(null, response)
   })
   .catch((err) => {
+    if (err.response.status === 400) return cb('User already exists', err.response)
     cb(err, err.response)
   })
 }

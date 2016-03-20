@@ -9,7 +9,7 @@
 
 <script>
 
-import hat from 'hat'
+import harsh from 'harsh'
 import Mousetrap from 'mousetrap'
 import store from '../../../store/store'
 
@@ -44,7 +44,7 @@ export default {
       this.setListAttempt(true)
       if (!this.isValid) return
       this.addList({
-        id: hat(),
+        id: harsh.hash().hashes[0],
         list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
         current: false,

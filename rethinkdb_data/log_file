@@ -1,0 +1,128 @@
+2016-03-19T20:50:16.763299000 0.217283s notice: Recursively removing directory /Users/pfricano/Sites/taskmastr/rethinkdb_data/tmp
+2016-03-19T20:50:16.764835000 0.218823s notice: Initializing directory /Users/pfricano/Sites/taskmastr/rethinkdb_data
+2016-03-19T20:50:16.764935000 0.218917s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/pfricano/Sites/taskmastr/rethinkdb_data' did not already exist or is empty.)
+2016-03-19T20:50:16.764971000 0.218953s notice: Running rethinkdb 2.2.5 (CLANG 7.0.2 (clang-700.1.81))...
+2016-03-19T20:50:16.770670000 0.224654s notice: Running on Darwin 14.5.0 x86_64
+2016-03-19T20:50:16.770749000 0.224731s notice: Loading data from directory /Users/pfricano/Sites/taskmastr/rethinkdb_data
+2016-03-19T20:50:25.111540000 8.565783s info: Automatically using cache size of 201 MB
+2016-03-19T20:50:25.112050000 8.566292s notice: Listening for intracluster connections on port 29015
+2016-03-19T20:50:25.113381000 8.567622s notice: Listening for client driver connections on port 28015
+2016-03-19T20:50:25.113502000 8.567744s notice: Listening for administrative HTTP connections on port 8080
+2016-03-19T20:50:25.113506000 8.567748s notice: Listening on addresses: 127.0.0.1, ::1
+2016-03-19T20:50:25.113507000 8.567749s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-03-19T20:50:25.113514000 8.567756s notice: Server ready, "patrickfricano_local_vhd" ce750cca-9ac6-465f-85d1-3ad829182e72
+2016-03-19T20:50:48.504518000 31.959540s notice: Server got SIGINT from pid 3462, uid 94054470; shutting down...
+2016-03-19T20:50:48.504704000 31.959725s notice: Shutting down client connections...
+2016-03-19T20:50:48.504831000 31.959852s notice: All client connections closed.
+2016-03-19T20:50:48.504838000 31.959859s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-03-19T20:50:48.505287000 31.960308s notice: Storage engine shut down.
+2016-03-19T20:55:06.625862000 0.245803s notice: Running rethinkdb 2.2.5 (CLANG 7.0.2 (clang-700.1.81))...
+2016-03-19T20:55:06.636453000 0.256389s notice: Running on Darwin 14.5.0 x86_64
+2016-03-19T20:55:06.636523000 0.256458s notice: Loading data from directory /Users/pfricano/Sites/taskmastr/rethinkdb_data
+2016-03-19T20:55:09.020494000 2.640494s info: Automatically using cache size of 100 MB
+2016-03-19T20:55:09.020504000 2.640504s warn: Cache size is very low and may impact performance.
+2016-03-19T20:55:09.021035000 2.641034s notice: Listening for intracluster connections on port 29015
+2016-03-19T20:55:09.022431000 2.642431s notice: Listening for client driver connections on port 28015
+2016-03-19T20:55:09.022575000 2.642574s notice: Listening for administrative HTTP connections on port 8080
+2016-03-19T20:55:09.022579000 2.642578s notice: Listening on addresses: 127.0.0.1, ::1
+2016-03-19T20:55:09.022579001 2.642579s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-03-19T20:55:09.022582000 2.642582s notice: Server ready, "patrickfricano_local_vhd" ce750cca-9ac6-465f-85d1-3ad829182e72
+2016-03-19T20:57:10.859662000 124.483822s notice: Server got SIGINT from pid 3462, uid 94054470; shutting down...
+2016-03-19T20:57:10.859996000 124.484155s notice: Shutting down client connections...
+2016-03-19T20:57:10.864692000 124.488852s notice: All client connections closed.
+2016-03-19T20:57:10.864711000 124.488870s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-03-19T20:57:10.865222000 124.489382s notice: Storage engine shut down.
+2016-03-19T20:57:26.337744000 0.335145s notice: Running rethinkdb 2.2.5 (CLANG 7.0.2 (clang-700.1.81))...
+2016-03-19T20:57:26.343417000 0.340813s notice: Running on Darwin 14.5.0 x86_64
+2016-03-19T20:57:26.343458000 0.340854s notice: Loading data from directory /Users/pfricano/Sites/taskmastr/rethinkdb_data
+2016-03-19T20:57:28.111735000 2.109196s info: Automatically using cache size of 227 MB
+2016-03-19T20:57:28.112196000 2.109656s notice: Listening for intracluster connections on port 29015
+2016-03-19T20:57:28.113661000 2.111121s notice: Listening for client driver connections on port 28015
+2016-03-19T20:57:28.113794000 2.111254s notice: Listening for administrative HTTP connections on port 8080
+2016-03-19T20:57:28.113798000 2.111258s notice: Listening on addresses: 127.0.0.1, ::1
+2016-03-19T20:57:28.113799000 2.111259s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-03-19T20:57:28.113802000 2.111262s notice: Server ready, "patrickfricano_local_vhd" ce750cca-9ac6-465f-85d1-3ad829182e72
+2016-03-19T20:58:20.839274000 54.838554s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Added replica on this server.
+2016-03-19T20:58:20.983900000 54.983181s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Added replica on this server.
+2016-03-19T20:58:21.179276000 55.178557s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Added replica on this server.
+2016-03-19T20:58:21.933968000 55.933313s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Starting a new Raft election for term 1.
+2016-03-19T20:58:22.202327000 56.201672s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Starting a new Raft election for term 1.
+2016-03-19T20:58:22.421012000 56.420357s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Starting a new Raft election for term 1.
+2016-03-19T20:58:22.557811000 56.557156s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: This server is Raft leader for term 1. Latest log index is 0.
+2016-03-19T20:58:22.834364000 56.833709s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: This server is Raft leader for term 1. Latest log index is 0.
+2016-03-19T20:58:23.037345000 57.036690s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: This server is Raft leader for term 1. Latest log index is 0.
+2016-03-19T20:58:29.481464000 63.481069s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T20:58:29.815893000 63.815499s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T20:58:30.991062000 64.990733s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:10:21.011598000 775.035573s notice: Server got SIGINT from pid 3462, uid 94054470; shutting down...
+2016-03-19T21:10:21.011864000 775.035838s notice: Shutting down client connections...
+2016-03-19T21:10:21.017637000 775.041612s notice: All client connections closed.
+2016-03-19T21:10:21.017643000 775.041617s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-03-19T21:10:21.028378000 775.052352s notice: Storage engine shut down.
+2016-03-19T21:19:22.069017000 0.312412s notice: Running rethinkdb 2.2.5 (CLANG 7.0.2 (clang-700.1.81))...
+2016-03-19T21:19:22.084944000 0.328335s notice: Running on Darwin 14.5.0 x86_64
+2016-03-19T21:19:22.084988000 0.328377s notice: Loading data from directory /Users/pfricano/Sites/taskmastr/rethinkdb_data
+2016-03-19T21:19:25.893210000 4.136731s info: Automatically using cache size of 100 MB
+2016-03-19T21:19:25.893221000 4.136740s warn: Cache size is very low and may impact performance.
+2016-03-19T21:19:25.893759000 4.137279s notice: Listening for intracluster connections on port 29015
+2016-03-19T21:19:26.687536000 4.931121s notice: Listening for client driver connections on port 28015
+2016-03-19T21:19:26.687747000 4.931332s notice: Listening for administrative HTTP connections on port 8080
+2016-03-19T21:19:26.687749000 4.931333s notice: Listening on addresses: 127.0.0.1, ::1
+2016-03-19T21:19:26.687762000 4.931346s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-03-19T21:19:26.687766000 4.931350s notice: Server ready, "patrickfricano_local_vhd" ce750cca-9ac6-465f-85d1-3ad829182e72
+2016-03-19T21:19:27.658173000 5.901758s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Starting a new Raft election for term 2.
+2016-03-19T21:19:27.781298000 6.024883s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Starting a new Raft election for term 2.
+2016-03-19T21:19:28.056928000 6.300513s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Starting a new Raft election for term 2.
+2016-03-19T21:19:31.628029000 9.871744s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: This server is Raft leader for term 2. Latest log index is 3.
+2016-03-19T21:19:31.628115000 9.871830s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: This server is Raft leader for term 2. Latest log index is 4.
+2016-03-19T21:19:31.628147000 9.871861s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: This server is Raft leader for term 2. Latest log index is 4.
+2016-03-19T21:19:57.748210000 35.992835s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:19:57.748785000 35.993409s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:19:57.749648000 35.994273s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:22:11.802542000 170.051783s notice: Someone asked for the nonwhitelisted file "/webpack-dev-server.js".  If this should be accessible, add it to the static web assets.
+2016-03-19T21:22:11.809881000 170.059121s notice: Someone asked for the nonwhitelisted file "/public/dist/bundle.js".  If this should be accessible, add it to the static web assets.
+2016-03-19T21:22:43.432112000 201.682393s notice: Someone asked for the nonwhitelisted file "/webpack-dev-server.js".  If this should be accessible, add it to the static web assets.
+2016-03-19T21:22:43.432243000 201.682523s notice: Someone asked for the nonwhitelisted file "/public/dist/bundle.js".  If this should be accessible, add it to the static web assets.
+2016-03-19T21:28:57.971852000 576.235001s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:28:57.972362000 576.235510s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:28:57.972372000 576.235520s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:36:18.390937000 1016.669167s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:36:18.391053000 1016.669283s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:36:18.391624000 1016.669854s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:38:14.405040000 1132.687300s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:38:14.405989000 1132.688249s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:38:14.407163000 1132.689423s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:46:03.136586000 1601.434864s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:46:03.137265000 1601.435543s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:46:03.137272000 1601.435550s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:47:09.866858000 1668.167399s notice: Server got SIGINT from pid 3462, uid 94054470; shutting down...
+2016-03-19T21:47:09.867165000 1668.167705s notice: Shutting down client connections...
+2016-03-19T21:47:09.872107000 1668.172648s notice: All client connections closed.
+2016-03-19T21:47:09.872117000 1668.172656s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-03-19T21:47:09.885191000 1668.185731s notice: Storage engine shut down.
+2016-03-19T21:47:27.139642000 0.297700s notice: Running rethinkdb 2.2.5 (CLANG 7.0.2 (clang-700.1.81))...
+2016-03-19T21:47:27.145021000 0.303075s notice: Running on Darwin 14.5.0 x86_64
+2016-03-19T21:47:27.145080000 0.303133s notice: Loading data from directory /Users/pfricano/Sites/taskmastr/rethinkdb_data
+2016-03-19T21:47:28.429640000 1.587758s info: Automatically using cache size of 137 MB
+2016-03-19T21:47:28.430488000 1.588606s notice: Listening for intracluster connections on port 29015
+2016-03-19T21:47:28.728782000 1.886900s notice: Listening for client driver connections on port 28015
+2016-03-19T21:47:28.729080000 1.887199s notice: Listening for administrative HTTP connections on port 8080
+2016-03-19T21:47:28.729085000 1.887203s notice: Listening on addresses: 127.0.0.1, ::1
+2016-03-19T21:47:28.729107000 1.887224s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-03-19T21:47:28.729117000 1.887235s notice: Server ready, "patrickfricano_local_vhd" ce750cca-9ac6-465f-85d1-3ad829182e72
+2016-03-19T21:47:29.771330000 2.929512s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Starting a new Raft election for term 3.
+2016-03-19T21:47:30.521073000 3.679255s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Starting a new Raft election for term 3.
+2016-03-19T21:47:30.685506000 3.843688s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Starting a new Raft election for term 3.
+2016-03-19T21:47:33.904266000 7.062578s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: This server is Raft leader for term 3. Latest log index is 7.
+2016-03-19T21:47:33.904333000 7.062644s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: This server is Raft leader for term 3. Latest log index is 7.
+2016-03-19T21:47:33.904360000 7.062671s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: This server is Raft leader for term 3. Latest log index is 7.
+2016-03-19T21:47:55.431877000 28.590899s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:47:55.432283000 28.591305s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:47:55.432846000 28.591869s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:50:49.850893000 203.015863s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:50:49.851358000 203.016328s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:50:49.851825000 203.016794s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:51:02.346348000 215.511770s info: Table 7938dfd2-eace-4084-b2cd-1866c7f8c505: Configuration is changing.
+2016-03-19T21:51:02.346518000 215.511940s info: Table c113fd07-5f8d-47e2-8f2d-fc104ed0f2ad: Configuration is changing.
+2016-03-19T21:51:02.348432000 215.513854s info: Table 0e0a203e-2b0a-41c3-97b5-2b01f406e3eb: Configuration is changing.
+2016-03-19T21:52:08.713845000 281.881530s notice: Server got SIGINT from pid 3462, uid 94054470; shutting down...

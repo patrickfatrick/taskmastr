@@ -6,6 +6,7 @@ import ContentVue from './components/ContentVue.vue'
 import ResetVue from './components/ResetVue.vue'
 import CreateVue from './components/CreateVue.vue'
 import ForgotVue from './components/ForgotVue.vue'
+import Tasks from './components/tasks/Tasks.vue'
 import store from './store/store'
 
 // Debug mode. Turned off in production builds
@@ -29,7 +30,15 @@ router.map({
   '/app': {
     name: 'Content',
     component: ContentVue,
-    auth: true
+    auth: true,
+    subRoutes: {
+      '/': {
+        component: Tasks
+      },
+      '/list/:listid': {
+        component: Tasks
+      }
+    }
   },
   '/reset': {
     name: 'Reset',

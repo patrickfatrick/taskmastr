@@ -36,6 +36,11 @@ var users = {
     var ctx = this
     var user = ctx.request.body
     try {
+      var found = yield userService.findUser(user.username)
+      if (found) {
+        console.log(found.username + ' => Already a user')
+        ctx.throw(400, 'User already exists')
+      }
       var result = yield userService.addUser(user)
       if (!result.username) ctx.throw(500, 'Something bad happened')
       console.log(result.username + ' => Creating user... OK')
@@ -50,7 +55,6 @@ var users = {
         tasks: result.tasks
       }
     } catch (e) {
-      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }

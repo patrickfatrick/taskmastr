@@ -34,6 +34,9 @@ export default {
     user () {
       return store.state.user
     },
+    current () {
+      return store.state.user.current
+    },
     forgot () {
       return store.state.forgot
     },
@@ -63,10 +66,10 @@ export default {
       if (!this.isValid) return
       this.createUser(username, key, rememberMe)
       .then(() => {
-        this.saveUser()
         if (this.auth) {
+          this.saveUser()
           setTimeout(() => {
-            this.$route.router.go('/app')
+            this.$route.router.go('/app/list/' + this.current.id)
           }, 250)
         }
       })

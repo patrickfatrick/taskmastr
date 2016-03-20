@@ -31,6 +31,9 @@ export default {
     user () {
       return store.state.user
     },
+    current () {
+      return store.state.user.current
+    },
     reset () {
       return store.state.reset
     },
@@ -65,7 +68,7 @@ export default {
       .then(() => {
         if (this.auth) {
           setTimeout(() => {
-            this.$route.router.go('/app')
+            this.$route.router.go('/app/list/' + this.current.id)
           }, 250)
         }
         if (this.create && !this.auth) {

@@ -21,6 +21,7 @@ export default {
   setCreate: 'SET_CREATE',
   setInvalidKey: 'SET_INVALID_KEY',
   setLoginAttempt: 'SET_LOGIN_ATTEMPT',
+  setCreateFail: 'SET_FORGOT_FAIL',
   setForgotAttempt: 'SET_FORGOT_ATTEMPT',
   setForgotEmail: 'SET_FORGOT_EMAIL',
   setForgotFail: 'SET_FORGOT_FAIL',
@@ -49,8 +50,8 @@ export default {
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', taskMap)
       let current = _.findIndex(taskMap, {current: true})
-        ? _.findIndex(taskMap, {current: true})
-        : 0
+        ? _.find(taskMap, {current: true}).id
+        : taskMap[0].id
       store.dispatch('SET_CURRENT_LIST', current)
       store.dispatch('SET_AUTH', response.username)
       return response.username
@@ -69,8 +70,8 @@ export default {
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', taskMap)
       let current = _.findIndex(taskMap, {current: true})
-        ? _.findIndex(taskMap, {current: true})
-        : 0
+        ? _.find(taskMap, {current: true}).id
+        : taskMap[0].id
       store.dispatch('SET_CURRENT_LIST', current)
       store.dispatch('SET_AUTH', response.username)
       return response.username
@@ -78,13 +79,20 @@ export default {
   },
   createUser: (store, username, key, rememberMe) => {
     return create(username, key, rememberMe, (err, response) => {
-      if (err) return err
+      console.log(response, err)
+      if (err) {
+        if (response.status === 400) {
+          store.dispatch('SET_CREATE_FAIL', err)
+          store.dispatch('SET_CONFIRM_ATTEMPT', true)
+          return
+        }
+      }
       store.dispatch('SET_USERNAME', response.username)
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_CONFIRM', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', [defaultList])
-      store.dispatch('SET_CURRENT_LIST', 0)
+      store.dispatch('SET_CURRENT_LIST', store.state.user.tasks[0].id)
       store.dispatch('SET_AUTH', response.username)
       return response.username
     })
@@ -239,9 +247,9 @@ export default {
         }
         if (list.current) {
           if (list.current && index === (lists.length - 1)) {
-            store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, prevList))
+            store.dispatch('SET_CURRENT_LIST', _.find(lists, prevList).id)
           } else {
-            store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, nextList))
+            store.dispatch('SET_CURRENT_LIST', _.find(lists, nextList).id)
           }
         }
         _.each(list.items, (item) => {
