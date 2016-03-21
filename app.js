@@ -4,7 +4,6 @@ var koa = require('koa')
 var path = require('path')
 var compress = require('koa-compress')
 var session = require('koa-generic-session')
-var MongoStore = require('koa-generic-session-mongo')
 var RethinkSession = require('koa-generic-session-rethinkdb')
 var serve = require('koa-static')
 var parse = require('koa-bodyparser')
@@ -23,6 +22,7 @@ var auth = require('./auth/auth')
 // Import routes
 var index = require('./routes/index')
 var users = require('./routes/users')
+var lists = require('./routes/lists')
 var sessions = require('./routes/sessions')
 
 // Rethinkdbdash
@@ -99,6 +99,9 @@ router.post('/users/write', users.write)
 router.post('/users/forgot', users.forgot)
 router.post('/users/reset', users.reset)
 router.get('/users/logout', users.logout)
+router.get('/lists/:listid', lists.get)
+router.put('/lists/create', lists.create)
+router.delete('/lists/:listid/delete', lists.delete)
 app.use(router.routes())
 app.use(router.allowedMethods())
 
@@ -117,11 +120,11 @@ r.init(config.rethinkdb, [
   },
   {
     name: 'lists',
-    indexes: ['dateCreated']
+    indexes: ['dateCreated', 'listid']
   },
   {
     name: 'users',
-    indexes: ['dateCreated']
+    indexes: ['dateCreated', 'username']
   }
 ])
 .then(() => {

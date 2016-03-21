@@ -1,103 +1,74 @@
 var bcrypt = require('bcrypt')
 var hat = require('hat')
-var User = require('../models/user').User
+var r = require('../r')
 
-exports.addUser = function * (user) {
+exports.addUser = function (user) {
   return new Promise(function (resolve, reject) {
     bcrypt.hash(user.key, 10, function (err, hash) {
       if (err) reject(err)
-      var newUser = new User({
+      var newUser = {
         username: user.username.toLowerCase(),
         key: hash,
-        tasks: user.tasks,
         darkmode: user.darkmode
-      })
-      newUser.save(function (err, result) {
-        if (err) reject(err)
-        resolve(result)
-      })
+      }
+      r.table('users').insert(newUser, {returnChanges: true})
+      .then((result) => resolve(result.changes[0]['new_val']))
+      .catch((err) => reject(err))
     })
   })
 }
 
 exports.findUser = function (username) {
   return new Promise(function (resolve, reject) {
-    User.findOne({
-      username: username.toLowerCase()
-    }, function (err, user) {
-      if (err) reject(err)
-      resolve(user)
+    r.table('users').getAll(username.toLowerCase(), {index: 'username'})
+    .then((result) => {
+      if (!result.length) resolve(null)
+      resolve(result[0])
     })
+    .catch((err) => reject(err))
   })
 }
 
-exports.updateUser = function (user) {
+exports.updateUser = function (username, body) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndUpdate({
-      username: user.username.toLowerCase()
-    }, {
-      $set: {
-        tasks: user.tasks,
-        darkmode: user.darkmode,
-        dateModified: user.dateModified
-      },
-      // remove legacy todos
-      $unset: {
-        todos: ''
-      }
-    }, {
-      new: true
-    }, function (err, user) {
-      if (err) reject(err)
-      resolve(user)
-    })
+    r.table('users').getAll(username.toLowerCase(), { index: 'username' })
+    .update(body, { returnChanges: true })
+    .then((result) => resolve(result.changes[0]['new_val']))
+    .catch((err) => reject(err))
   })
 }
 
-exports.setToken = function (user, next) {
+exports.setToken = function (user) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndUpdate({
-      username: user.username.toLowerCase()
+    r.table('users').getAll(user.username.toLowerCase(), {index: 'username'})
+    .update({
+      resetToken: hat(),
+      resetDate: Date.now() + 1000 * 60 * 60
     }, {
-      $set: {
-        resetToken: hat(),
-        resetDate: Date.now() + 3600000
-      }
-    }, {
-      new: true
-    }, function (err, user) {
-      if (err) reject(err)
-      resolve(user)
+      returnChanges: true
     })
+    .then((result) => resolve(result.changes[0]['new_val']))
+    .catch((err) => reject(err))
   })
 }
 
-exports.resetPassword = function (user, next) {
+exports.resetPassword = function (user) {
   return new Promise(function (resolve, reject) {
+    if (Date.now() > user.resetDate) reject()
     bcrypt.hash(user.newKey, 10, function (err, hash) {
       if (err) reject(err)
-      User.findOne({
-        resetToken: user.token
-      }, function (err, user) {
-        if (err) reject(err)
-        if (!user) reject(401)
-        var newKey = hash
-        if (Date.now() > user.resetDate) {
-          return next(err, null)
-        }
-        User.findOneAndUpdate({
-          username: user.username
-        }, {
-          $set: {
-            key: newKey,
-            resetToken: null
-          }
-        }, function (err, user) {
-          if (err) reject(err)
-          console.log(user.username + ' => Password updated')
-          resolve(user)
-        })
+      r.table('users').filter(r.row('resetToken').eq(user.token))
+      .update({
+        key: hash,
+        resetToken: null
+      }, {
+        returnChanges: true
       })
+      .then((result) => {
+        if (!result.changes) resolve(null)
+        resolve(result.changes[0]['new_val'])
+      })
+      .catch((err) => reject(err))
     })
   })
 }

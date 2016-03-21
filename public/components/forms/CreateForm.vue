@@ -16,6 +16,7 @@ import KeyInput from './form-components/KeyInput.vue'
 import ConfirmInput from './form-components/ConfirmInput.vue'
 import RememberMe from './form-components/RememberMe.vue'
 import ForgotPassword from './form-components/ForgotPassword.vue'
+import defaultList from '../../helper-utilities/default-list'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -60,6 +61,8 @@ export default {
   },
   methods: {
     saveUser: store.actions.saveUser,
+    addList: store.actions.addList,
+    setCurrentList: store.actions.setCurrentList,
     loginUser: store.actions.loginUser,
     createUser: store.actions.createUser,
     create (username, key, rememberMe) {
@@ -67,9 +70,10 @@ export default {
       this.createUser(username, key, rememberMe)
       .then(() => {
         if (this.auth) {
-          this.saveUser()
+          this.addList({...defaultList, owner: this.user.username, users: []})
+          this.setCurrentList(defaultList)
           setTimeout(() => {
-            this.$route.router.go('/app/list/' + this.current.id)
+            this.$route.router.go('/app/list/' + defaultList.id)
           }, 250)
         }
       })

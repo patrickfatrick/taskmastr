@@ -44,7 +44,8 @@ export function create (username, key, rememberMe, cb) {
       username: username,
       key: key,
       rememberMe: rememberMe,
-      darkmode: true
+      darkmode: true,
+      tasks: []
     })
   })
   .then((response) => {

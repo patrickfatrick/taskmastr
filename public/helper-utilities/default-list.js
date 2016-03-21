@@ -7,6 +7,7 @@ export default {
   id: hashes.hashes[0],
   list: 'Your first list',
   current: true,
+  _delete: false,
   items: [
     {
       id: hashes.hashes[1],

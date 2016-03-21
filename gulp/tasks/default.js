@@ -1,3 +1,3 @@
 var gulp = require('gulp')
 
-gulp.task('default', ['mongo-start', 'rethinkdb', 'serve', 'webpack', 'watch'])
+gulp.task('default', ['mongo-start', 'serve', 'webpack', 'watch'])

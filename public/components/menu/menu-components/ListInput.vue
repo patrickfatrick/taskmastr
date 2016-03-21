@@ -48,6 +48,8 @@ export default {
         list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
         current: false,
+        owner: this.user.username,
+        users: [],
         _delete: false
       })
       this.setListAttempt(false)

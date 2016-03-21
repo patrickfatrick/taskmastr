@@ -37,12 +37,12 @@ export default {
     Save
   },
   methods: {
+    mountList: store.actions.mountList,
     setCurrentList: store.actions.setCurrentList
   },
   route: {
     data (transition) {
-      console.log(transition)
-      this.setCurrentList(transition.to.params.listid)
+      this.mountList(transition.to.params.listid)
     }
   }
 }

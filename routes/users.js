@@ -112,11 +112,13 @@ var users = {
         token: token,
         newKey: newKey
       })
-      if (!result) ctx.throw(401)
+      if (!result) ctx.throw(401, 'Invalid link')
+      console.log(result.username + ' => Password updated')
       ctx.body = {
         username: result.username
       }
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }

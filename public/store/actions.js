@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import gregorian from 'gregorian'
 import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services'
-import defaultList from '../helper-utilities/default-list'
+import {createList, getList, deleteList} from '../services/list-services'
 import mapTasks from '../helper-utilities/map-tasks'
 
 let timeoutID
@@ -49,10 +49,7 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', taskMap)
-      let current = _.findIndex(taskMap, {current: true})
-        ? _.find(taskMap, {current: true}).id
-        : taskMap[0].id
-      store.dispatch('SET_CURRENT_LIST', current)
+      store.dispatch('SET_CURRENT_LIST', _.find(taskMap, {current: true}) || taskMap[0])
       store.dispatch('SET_AUTH', response.username)
       return response.username
     })
@@ -69,17 +66,13 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
       store.dispatch('SET_TASKS', taskMap)
-      let current = _.findIndex(taskMap, {current: true})
-        ? _.find(taskMap, {current: true}).id
-        : taskMap[0].id
-      store.dispatch('SET_CURRENT_LIST', current)
+      store.dispatch('SET_CURRENT_LIST', _.find(taskMap, {current: true}) || taskMap[0])
       store.dispatch('SET_AUTH', response.username)
       return response.username
     })
   },
   createUser: (store, username, key, rememberMe) => {
     return create(username, key, rememberMe, (err, response) => {
-      console.log(response, err)
       if (err) {
         if (response.status === 400) {
           store.dispatch('SET_CREATE_FAIL', err)
@@ -91,8 +84,6 @@ export default {
       store.dispatch('SET_KEY', '')
       store.dispatch('SET_CONFIRM', '')
       store.dispatch('SET_DARKMODE', response.darkmode)
-      store.dispatch('SET_TASKS', [defaultList])
-      store.dispatch('SET_CURRENT_LIST', store.state.user.tasks[0].id)
       store.dispatch('SET_AUTH', response.username)
       return response.username
     })
@@ -223,9 +214,31 @@ export default {
   setNewList: 'SET_NEW_LIST',
   setListAttempt: 'SET_LIST_ATTEMPT',
   renameList: 'RENAME_LIST',
+  mountList: ({ dispatch }, id) => {
+    return getList(id, (err, response) => {
+      if (err) return console.error(err)
+      dispatch('SET_CURRENT_LIST', response)
+    })
+  },
   addList: (store, list) => {
-    store.dispatch('ADD_LIST', list)
-    store.dispatch('SET_SAVE_BUTTON', true)
+    const userList = {
+      id: list.id,
+      list: list.list,
+      current: false,
+      _delete: false,
+      items: []
+    }
+    const user = {
+      username: store.state.user.username,
+      tasks: [
+        userList,
+        ...store.state.user.tasks
+      ]
+    }
+    store.dispatch('ADD_LIST', userList)
+    return createList(list, user, (err, response) => {
+      if (err) return store.dispatch('REMOVE_LIST', 0)
+    })
   },
   removeList: (store, index) => {
     store.dispatch('REMOVE_LIST', index)
@@ -245,11 +258,12 @@ export default {
           store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
           return
         }
+        // Reassign current list
         if (list.current) {
           if (list.current && index === (lists.length - 1)) {
-            store.dispatch('SET_CURRENT_LIST', _.find(lists, prevList).id)
+            store.dispatch('SET_CURRENT_LIST', _.find(lists, prevList))
           } else {
-            store.dispatch('SET_CURRENT_LIST', _.find(lists, nextList).id)
+            store.dispatch('SET_CURRENT_LIST', _.find(lists, nextList))
           }
         }
         _.each(list.items, (item) => {
@@ -258,7 +272,15 @@ export default {
         store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)
         store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
         store.dispatch('REMOVE_LIST', _.findIndex(lists, {id: list.id}))
-        store.dispatch('SET_SAVE_BUTTON', true)
+        const user = {
+          username: store.state.user.username,
+          tasks: store.state.user.tasks.filter((v) => {
+            return v.id !== list.id
+          })
+        }
+        return deleteList(list.id, user, (err, response) => {
+          if (err) return store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, {id: list.id}))
+        })
       }, 5000)
       store.dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)
       store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), true)

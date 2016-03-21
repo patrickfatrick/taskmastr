@@ -10,7 +10,7 @@ var sessions = {
       this.body = {
         username: user.username,
         darkmode: user.darkmode,
-        tasks: (user.tasks.length) ? user.tasks : user.todos
+        tasks: user.tasks || []
       }
     } catch (e) {
       this.status = e.status || 500

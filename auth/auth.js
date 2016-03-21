@@ -15,7 +15,7 @@ module.exports = function () {
         console.log(username + ' => No user named ' + username)
         return next(null, null)
       }
-      console.log(username + ' => Found. Validating...')
+      console.log(user.username + ' => Found. Validating...')
       bcrypt.compare(key, user.key, function (err, same) {
         if (err) return next(err)
         if (!same) {
