@@ -23,6 +23,7 @@ var auth = require('./auth/auth')
 var index = require('./routes/index')
 var users = require('./routes/users')
 var lists = require('./routes/lists')
+var items = require('./routes/items')
 var sessions = require('./routes/sessions')
 
 // Rethinkdbdash
@@ -102,6 +103,9 @@ router.get('/users/logout', users.logout)
 router.get('/lists/:listid', lists.get)
 router.put('/lists/create', lists.create)
 router.delete('/lists/:listid/delete', lists.delete)
+router.post('/lists/:listid/update', lists.update)
+router.put('/lists/:listid/items/create', items.create)
+router.delete('/lists/:listid/items/:itemid/delete', items.delete)
 app.use(router.routes())
 app.use(router.allowedMethods())
 

@@ -156,7 +156,8 @@ export function getSession (cb) {
   })
 }
 
-export function save (user, deleteAgendas, cb) {
+export function save (username, body, cb) {
+  if (username === 'mrormrstestperson@taskmastr.co') return { success: true }
   return window.fetch('/users/write', {
     method: 'post',
     credentials: 'same-origin',
@@ -164,10 +165,7 @@ export function save (user, deleteAgendas, cb) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      user: user,
-      deleteAgendas: deleteAgendas
-    })
+    body: JSON.stringify({ username, body })
   })
   .then((response) => {
     if (response.status !== 200) {

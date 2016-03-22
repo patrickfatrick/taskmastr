@@ -60,7 +60,6 @@ export default {
         return
       }
       this.renameList(index, e.target.value.trim())
-      this.setSaveButton(true)
     },
     renameToggle (index, e) {
       if (this.renameToggled === index) {

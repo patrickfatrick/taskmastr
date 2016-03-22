@@ -1,10 +1,9 @@
 import _ from 'lodash'
 import gregorian from 'gregorian'
 import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services'
-import {createList, getList, deleteList} from '../services/list-services'
+import {createList, getList, deleteList, updateList} from '../services/list-services'
+import {createItem, deleteItem} from '../services/item-services'
 import mapTasks from '../helper-utilities/map-tasks'
-
-let timeoutID
 
 export default {
   /**
@@ -35,7 +34,10 @@ export default {
   setSaveButton: 'SET_SAVE_BUTTON',
   setDarkmode: (store, bool) => {
     store.dispatch('SET_DARKMODE', bool)
-    store.dispatch('SET_SAVE_BUTTON', true)
+    return save(store.state.user.username, { darkmode: bool }, (err, res) => {
+      if (err) store.dispatch('SET_DARKMODE', !bool)
+      return res
+    })
   },
   getSession: (store) => {
     return getSession((err, response) => {
@@ -141,20 +143,28 @@ export default {
   },
   addTask: (store, task) => {
     store.dispatch('ADD_TASK', task)
-    store.dispatch('SET_SAVE_BUTTON', true)
+    return createItem(store.state.user.current.id, task, (err, res) => {
+      if (err) return store.dispatch('REMOVE_TASK', 0)
+      return res
+    })
   },
   removeTask: (store, index) => {
     store.dispatch('REMOVE_TASK', index)
     store.dispatch('SET_SAVE_BUTTON', true)
   },
   deleteTask (store, index) {
+    const listID = store.state.user.current.id
     const tasks = store.state.user.current.items
     const task = tasks[index]
     if (!task._delete) {
+      let timeoutID
       timeoutID = setTimeout(() => {
+        // Get the next and previous lists after timeout,
+        // in case indices change in the five-second window
         const deleteTask = _.findIndex(tasks, {id: task.id})
         const prevTask = deleteTask - 1
         const nextTask = deleteTask + 1
+        // Reassign current item
         if (task.current) {
           if (task.current && index === (tasks.length - 1)) {
             store.dispatch('SET_CURRENT_TASK', prevTask)
@@ -162,11 +172,15 @@ export default {
             store.dispatch('SET_CURRENT_TASK', nextTask)
           }
         }
+        // Optimistically delete the item from the store before request is made
         store.dispatch('DELETE_AGENDA', task.id)
         store.dispatch('UPDATE_DELETE_QUEUE', task.id, null)
         store.dispatch('SET_TASK_DELETE', deleteTask, false)
         store.dispatch('REMOVE_TASK', deleteTask)
-        store.dispatch('SET_SAVE_BUTTON', true)
+        return deleteItem(listID, task.id, deleteTask, (err, response) => {
+          // Revert the change if request fails
+          if (err) store.dispatch('ADD_TASK', task)
+        })
       }, 5000)
       store.dispatch('UPDATE_DELETE_QUEUE', task.id, timeoutID)
       store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), true)
@@ -209,18 +223,31 @@ export default {
   /**
    * List Actions
    */
-  setCurrentList: 'SET_CURRENT_LIST',
   setMenuToggled: 'SET_MENU_TOGGLED',
   setNewList: 'SET_NEW_LIST',
   setListAttempt: 'SET_LIST_ATTEMPT',
-  renameList: 'RENAME_LIST',
-  mountList: ({ dispatch }, id) => {
+  setCurrentList: 'SET_CURRENT_LIST',
+  renameList: ({ dispatch, state }, index, name) => {
+    dispatch('RENAME_LIST', index, name)
+    const list = state.user.tasks[index]
+    return updateList(state.user, list.id, { list: list.list }, (err, res) => {
+      // TODO: Find a way to revert the change
+      if (err) return
+      return res
+    })
+  },
+  mountList: ({ dispatch, state }, id) => {
     return getList(id, (err, response) => {
       if (err) return console.error(err)
       dispatch('SET_CURRENT_LIST', response)
+      return save(state.user.username, { tasks: state.user.tasks }, (err, res) => {
+        // TODO: Revert the change
+        if (err) return
+        return res
+      })
     })
   },
-  addList: (store, list) => {
+  addList: ({ dispatch, state }, list) => {
     const userList = {
       id: list.id,
       list: list.list,
@@ -229,69 +256,69 @@ export default {
       items: []
     }
     const user = {
-      username: store.state.user.username,
+      username: state.user.username,
       tasks: [
         userList,
-        ...store.state.user.tasks
+        ...state.user.tasks
       ]
     }
-    store.dispatch('ADD_LIST', userList)
+    dispatch('ADD_LIST', userList)
     return createList(list, user, (err, response) => {
-      if (err) return store.dispatch('REMOVE_LIST', 0)
+      if (err) return dispatch('REMOVE_LIST', 0)
     })
   },
-  removeList: (store, index) => {
-    store.dispatch('REMOVE_LIST', index)
-    store.dispatch('SET_SAVE_BUTTON', true)
-  },
-  deleteList (store, index) {
-    const lists = store.state.user.tasks
+  deleteList ({ dispatch, state }, index) {
+    const lists = state.user.tasks
     const list = lists[index]
     if (lists.length === 1) return
     if (!list._delete) {
+      let timeoutID
       timeoutID = setTimeout(() => {
+        // Get the next and previous lists after timeout,
+        // in case indices change in the five-second window
         let prevList = lists[index - 1]
         let nextList = lists[index + 1]
-        // Do not allow if it's the only list
+        // Stop procedure if it's the only list
         if (lists.length === 1) {
-          store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)
-          store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
+          dispatch('UPDATE_DELETE_QUEUE', list.id, null)
+          dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
           return
         }
         // Reassign current list
         if (list.current) {
           if (list.current && index === (lists.length - 1)) {
-            store.dispatch('SET_CURRENT_LIST', _.find(lists, prevList))
+            dispatch('SET_CURRENT_LIST', _.find(lists, prevList))
           } else {
-            store.dispatch('SET_CURRENT_LIST', _.find(lists, nextList))
+            dispatch('SET_CURRENT_LIST', _.find(lists, nextList))
           }
         }
-        _.each(list.items, (item) => {
-          store.dispatch('DELETE_AGENDA', item.id)
-        })
-        store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)
-        store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
-        store.dispatch('REMOVE_LIST', _.findIndex(lists, {id: list.id}))
+        // Optimistically change the client's store before we've made the request
+        dispatch('UPDATE_DELETE_QUEUE', list.id, null)
+        dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
+        dispatch('REMOVE_LIST', _.findIndex(lists, {id: list.id}))
         const user = {
-          username: store.state.user.username,
-          tasks: store.state.user.tasks.filter((v) => {
+          username: state.user.username,
+          tasks: state.user.tasks.filter((v) => {
             return v.id !== list.id
           })
         }
         return deleteList(list.id, user, (err, response) => {
-          if (err) return store.dispatch('SET_CURRENT_LIST', _.findIndex(lists, {id: list.id}))
+          // Revert the change if request fails
+          if (err) dispatch('ADD_LIST', list)
         })
       }, 5000)
-      store.dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)
-      store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), true)
+      dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)
+      dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), true)
     } else {
-      clearTimeout(store.state.deleteQueue[list.id])
-      store.dispatch('UPDATE_DELETE_QUEUE', list.id, null)
-      store.dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
+      clearTimeout(state.deleteQueue[list.id])
+      dispatch('UPDATE_DELETE_QUEUE', list.id, null)
+      dispatch('SET_LIST_DELETE', _.findIndex(lists, {id: list.id}), false)
     }
   },
-  sortLists (store, oldIndex, newIndex) {
-    store.dispatch('SORT_LISTS', oldIndex, newIndex)
-    store.dispatch('SET_SAVE_BUTTON', true)
+  sortLists ({ dispatch, state }, oldIndex, newIndex) {
+    dispatch('SORT_LISTS', oldIndex, newIndex)
+    return save(state.user.username, { tasks: state.user.tasks }, (err, res) => {
+      if (err) return dispatch('SORT_LISTS', newIndex, oldIndex)
+    })
   }
 }

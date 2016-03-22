@@ -62,9 +62,45 @@ export function deleteList (id, user, cb) {
     body: JSON.stringify({ user })
   })
   .then((response) => {
+    if (response.status !== 200) {
+      let error = new Error(response.statusText)
+      error.response = response
+      throw error
+    }
+    return response.json()
+  })
+  .then((response) => {
     cb(null, response)
   })
   .catch((err) => {
+    console.log(err)
+    cb(err, err.response)
+  })
+}
+
+export function updateList (user, listId, listBody, cb) {
+  return window.fetch(`/lists/${listId}/update`, {
+    method: 'post',
+    credentials: 'same-origin',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ user, listId, listBody })
+  })
+  .then((response) => {
+    if (response.status !== 200) {
+      let error = new Error(response.statusText)
+      error.response = response
+      throw error
+    }
+    return response.json()
+  })
+  .then((response) => {
+    cb(null, response)
+  })
+  .catch((err) => {
+    console.log(err)
     cb(err, err.response)
   })
 }

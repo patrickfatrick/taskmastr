@@ -11,7 +11,7 @@ exports.addUser = function (user) {
         key: hash,
         darkmode: user.darkmode
       }
-      r.table('users').insert(newUser, {returnChanges: true})
+      r.table('users').insert(newUser, { returnChanges: true })
       .then((result) => resolve(result.changes[0]['new_val']))
       .catch((err) => reject(err))
     })
@@ -20,7 +20,7 @@ exports.addUser = function (user) {
 
 exports.findUser = function (username) {
   return new Promise(function (resolve, reject) {
-    r.table('users').getAll(username.toLowerCase(), {index: 'username'})
+    r.table('users').getAll(username.toLowerCase(), { index: 'username' })
     .then((result) => {
       if (!result.length) resolve(null)
       resolve(result[0])
@@ -33,14 +33,14 @@ exports.updateUser = function (username, body) {
   return new Promise(function (resolve, reject) {
     r.table('users').getAll(username.toLowerCase(), { index: 'username' })
     .update(body, { returnChanges: true })
-    .then((result) => resolve(result.changes[0]['new_val']))
+    .then((result) => resolve(result))
     .catch((err) => reject(err))
   })
 }
 
 exports.setToken = function (user) {
   return new Promise(function (resolve, reject) {
-    r.table('users').getAll(user.username.toLowerCase(), {index: 'username'})
+    r.table('users').getAll(user.username.toLowerCase(), { index: 'username' })
     .update({
       resetToken: hat(),
       resetDate: Date.now() + 1000 * 60 * 60

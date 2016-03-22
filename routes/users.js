@@ -1,7 +1,6 @@
 var http = require('http')
 var passport = require('koa-passport')
 var agenda = require('../services/agenda-service')
-var agendaHelpers = require('../services/agenda-helpers')
 var userService = require('../services/user-service')
 var config = require('../config')
 
@@ -62,17 +61,14 @@ var users = {
   write: function * (next) {
     var ctx = this
     try {
-      var user = ctx.request.body.user
-      var deleteAgendas = ctx.request.body.deleteAgendas
+      var username = ctx.request.body.username
+      var body = ctx.request.body.body
 
-      yield agendaHelpers.deleteAgendas(user, deleteAgendas)
-      yield agendaHelpers.remakeAgendas(user, ctx.request.origin)
-
-      var result = yield userService.updateUser(user)
-      if (!result.username) ctx.throw(500, 'Something bad happened')
-      console.log(user.username + ' => Saving user... OK')
+      var result = yield userService.updateUser(username, body)
+      if (!result) ctx.throw(500, 'Something bad happened')
+      console.log(username + ' => Saving user... OK')
       ctx.status = 200
-      ctx.body = {username: user.username}
+      ctx.body = { success: true }
     } catch (e) {
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
