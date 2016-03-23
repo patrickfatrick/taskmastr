@@ -1,24 +1,7 @@
-# Dependency directory
-# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
-
-#Bower dependencies
-public/bower
-
-#jspm dependencies
-public/jspm_packages
-
-#data
 data
-
-#sass-cache
 .sass-cache
-
-#DS_Store
 .DS_Store
-
-#debug
 npm-debug.log
-
-#coverage
 coverage
+rethinkdb_data
