@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import gregorian from 'gregorian'
-import {getSession, login, create, reset, forgot, logout, save} from '../services/user-services'
+import {getSession, login, create, reset, forgot, logout, updateUser} from '../services/user-services'
 import {createList, getList, deleteList, updateList} from '../services/list-services'
-import {createItem, deleteItem} from '../services/item-services'
+import {createItem, updateItem, deleteItem} from '../services/item-services'
 import mapTasks from '../helper-utilities/map-tasks'
 
 export default {
@@ -34,7 +34,7 @@ export default {
   setSaveButton: 'SET_SAVE_BUTTON',
   setDarkmode: (store, bool) => {
     store.dispatch('SET_DARKMODE', bool)
-    return save(store.state.user.username, { darkmode: bool }, (err, res) => {
+    return updateUser(store.state.user.username, { darkmode: bool }, (err, res) => {
       if (err) store.dispatch('SET_DARKMODE', !bool)
       return res
     })
@@ -120,7 +120,7 @@ export default {
     // handle "try it" account
     if (user.username === 'mrormrstestperson@taskmastr.co') return store.dispatch('SET_SAVE_BUTTON', false)
     let deleteAgendas = store.state.deleteAgendas
-    return save(user, deleteAgendas, (err, response) => {
+    return updateUser(user, deleteAgendas, (err, response) => {
       if (err) return store.dispatch('SET_SAVE_BUTTON', true)
       return store.dispatch('SET_SAVE_BUTTON', false)
     })
@@ -133,13 +133,54 @@ export default {
   setPlaceholder: 'SET_PLACEHOLDER',
   setTaskAttempt: 'SET_TASK_ATTEMPT',
   setTaskDelete: 'SET_TASK_DELETE',
-  renameTask: 'RENAME_TASK',
   deleteAgenda: 'DELETE_AGENDA',
-  toggleDetails: 'TOGGLE_DETAILS',
-  setTaskDueDate: 'SET_TASK_DUE_DATE',
-  setTaskNotes (store, index, notes) {
-    store.dispatch('SET_TASK_NOTES', index, notes)
-    store.dispatch('SET_SAVE_BUTTON', true)
+  setTaskDueDate ({ dispatch, state }, index, date) {
+    const listID = state.user.current.id
+    const item = state.user.current.items[index]
+    const username = state.user.username
+    const oldDate = item.dueDate
+    const oldDueDateDifference = item._dueDateDifference
+    dispatch('SET_TASK_DUE_DATE', index, date)
+    return updateItem(listID, item.id, index, item, username, (err, res) => {
+      if (err) {
+        dispatch('SET_TASK_DUE_DATE', index, oldDate)
+        dispatch('SET_DUE_DATE_DIFFERENCE', index, oldDueDateDifference)
+        return
+      }
+      return res
+    })
+  },
+  renameTask ({ dispatch, state }, index, name) {
+    const listID = state.user.current.id
+    const item = state.user.current.items[index]
+    const username = state.user.username
+    const oldName = item.item
+    dispatch('RENAME_TASK', index, name)
+    return updateItem(listID, item.id, index, item, username, (err, res) => {
+      if (err) return dispatch('RENAME_TASK', index, oldName)
+      return res
+    })
+  },
+  toggleDetails ({ dispatch, state }, index, bool) {
+    const listID = state.user.current.id
+    const item = state.user.current.items[index]
+    const username = state.user.username
+    dispatch('TOGGLE_DETAILS', index, bool)
+    return updateItem(listID, item.id, index, item, username, (err, res) => {
+      if (err) return dispatch('TOGGLE_DETAILS', !bool)
+      return res
+    })
+  },
+  setTaskNotes ({ dispatch, state }, index, notes) {
+    const listID = state.user.current.id
+    const item = state.user.current.items[index]
+    const username = state.user.username
+    const oldNotes = item.notes
+    dispatch('SET_TASK_NOTES', index, notes)
+    return updateItem(listID, item.id, index, item, username, (err, res) => {
+      if (err) return dispatch('SET_TASK_NOTES', index, oldNotes)
+      return res
+    })
   },
   addTask: (store, task) => {
     store.dispatch('ADD_TASK', task)
@@ -147,10 +188,6 @@ export default {
       if (err) return store.dispatch('REMOVE_TASK', 0)
       return res
     })
-  },
-  removeTask: (store, index) => {
-    store.dispatch('REMOVE_TASK', index)
-    store.dispatch('SET_SAVE_BUTTON', true)
   },
   deleteTask (store, index) {
     const listID = store.state.user.current.id
@@ -190,25 +227,42 @@ export default {
       store.dispatch('SET_TASK_DELETE', _.findIndex(tasks, {id: task.id}), false)
     }
   },
-  completeTask (store, index, bool) {
-    const tasks = store.state.user.current.items
+  completeTask ({ dispatch, state }, index, bool) {
+    const tasks = state.user.current.items
     const dateCompleted = (bool) ? gregorian.reform().to('iso') : null
     const n = (tasks[index].complete) ? 0 : -1
     const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
       ? _.findIndex(tasks, {complete: true}) + n
       : tasks.length
-    store.dispatch('SET_TASK_COMPLETE', index, bool)
-    store.dispatch('SET_DATE_COMPLETED', index, dateCompleted)
+    dispatch('SET_TASK_COMPLETE', index, bool)
+    dispatch('SET_DATE_COMPLETED', index, dateCompleted)
     if (bool) {
-      store.dispatch('SET_TASK_DUE_DATE', index, null)
-      store.dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
+      dispatch('SET_TASK_DUE_DATE', index, null)
+      dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
     }
-    store.dispatch('SORT_TASKS', index, newIndex)
-    store.dispatch('SET_SAVE_BUTTON', true)
+    dispatch('SORT_TASKS', index, newIndex)
+
+    const list = state.user.current
+    const items = state.user.current.items
+    return updateList(state.user, list.id, { items: items }, (err, res) => {
+      if (err) {
+        dispatch('SORT_TASKS', newIndex, index)
+        dispatch('SET_TASK_COMPLETE', index, !bool)
+        dispatch('SET_DATE_COMPLETED', index, (!bool) ? gregorian.reform().to('iso') : null)
+        return
+      }
+      return res
+    })
   },
-  sortTasks (store, oldIndex, newIndex) {
-    store.dispatch('SORT_TASKS', oldIndex, newIndex)
-    store.dispatch('SET_SAVE_BUTTON', true)
+  sortTasks ({ dispatch, state }, oldIndex, newIndex) {
+    dispatch('SORT_TASKS', oldIndex, newIndex)
+
+    const list = state.user.current
+    const items = state.user.current.items
+    return updateList(state.user, list.id, { items: items }, (err, res) => {
+      if (err) return dispatch('SORT_TASKS', newIndex, oldIndex)
+      return res
+    })
   },
   setDueDateDifference (store, index, dueDate) {
     if (!dueDate) {
@@ -240,7 +294,7 @@ export default {
     return getList(id, (err, response) => {
       if (err) return console.error(err)
       dispatch('SET_CURRENT_LIST', response)
-      return save(state.user.username, { tasks: state.user.tasks }, (err, res) => {
+      return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
         // TODO: Revert the change
         if (err) return
         return res
@@ -317,7 +371,7 @@ export default {
   },
   sortLists ({ dispatch, state }, oldIndex, newIndex) {
     dispatch('SORT_LISTS', oldIndex, newIndex)
-    return save(state.user.username, { tasks: state.user.tasks }, (err, res) => {
+    return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
       if (err) return dispatch('SORT_LISTS', newIndex, oldIndex)
     })
   }

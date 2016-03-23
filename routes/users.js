@@ -33,7 +33,7 @@ var users = {
   },
   create: function * (next) {
     var ctx = this
-    var user = ctx.request.body
+    var user = this.request.body
     try {
       var found = yield userService.findUser(user.username)
       if (found) {
@@ -58,12 +58,12 @@ var users = {
       this.body = e.message || http.STATUS_CODES[this.status]
     }
   },
-  write: function * (next) {
+  update: function * (next) {
     var ctx = this
-    try {
-      var username = ctx.request.body.username
-      var body = ctx.request.body.body
+    var username = this.params.username
+    var body = this.request.body
 
+    try {
       var result = yield userService.updateUser(username, body)
       if (!result) ctx.throw(500, 'Something bad happened')
       console.log(username + ' => Saving user... OK')
@@ -76,8 +76,10 @@ var users = {
   },
   forgot: function * (next) {
     var ctx = this
+    var username = this.params.username
+
     try {
-      var user = yield userService.findUser(ctx.request.body.username)
+      var user = yield userService.findUser(username)
       if (!user) {
         console.log('No user: ' + user.username)
         ctx.throw(401, 'No user found.')
@@ -99,9 +101,9 @@ var users = {
   },
   reset: function * (next) {
     var ctx = this
+    var token = this.request.body.token
+    var newKey = this.request.body.newKey
     try {
-      var token = ctx.request.body.token
-      var newKey = ctx.request.body.newKey
       // console.log('Reset token: ' + token)
       // console.log('New Key: ' + newKey)
       var result = yield userService.resetPassword({

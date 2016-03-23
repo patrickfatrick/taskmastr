@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     setDueDateDifference: store.actions.setDueDateDifference,
-    setSaveButton: store.actions.setSaveButton,
     setTaskDueDate: store.actions.setTaskDueDate,
     reformatDate (date) {
       this.setDueDate(this.index, gregorian.reform(date).to('iso'))
@@ -46,7 +45,6 @@ export default {
       if (!this.tasks[index].dueDate) {
         this.picker.setDate('')
         this.setDueDateDifference(this.index, null)
-        this.setSaveButton(true)
       }
     }
   },
@@ -58,7 +56,6 @@ export default {
       onSelect: function () {
         this.setDueDate(this.index, gregorian.reform(this.picker._d).set(6, 'h').to('iso'))
         this.setDueDateDifference(this.index, this.task.dueDate)
-        this.setSaveButton(true)
       }.bind(this)
     })
     // set task due date on generation (when task is created)

@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     setTaskNotes: store.actions.setTaskNotes,
-    setSaveButton: store.actions.setSaveButton,
     toggleDetails: store.actions.toggleDetails,
     setDueDateDifference: store.actions.setDueDateDifference,
     renameTask: store.actions.renameTask,
@@ -73,7 +72,6 @@ export default {
         return
       }
       this.renameTask(this.index, e.target.value.trim())
-      this.setSaveButton(true)
     },
     reformatDate (date) {
       return gregorian.reform(date).to('M d, yyyy')

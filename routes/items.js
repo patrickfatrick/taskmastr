@@ -17,6 +17,42 @@ var items = {
       this.body = e.message || http.STATUS_CODES[this.status]
     }
   },
+  update: function * (next) {
+    var ctx = this
+    var listid = this.params.listid
+    var itemid = this.params.itemid
+    var username = this.request.body.username
+    var index = this.request.body.index
+    var item = this.request.body.item
+
+    try {
+      var result = yield itemService.updateItem(listid, index, item)
+      if (!result) ctx.throw(500, 'Something bad happened at updateItem')
+
+      // Cancel whatever the current agenda is, make a new one
+      agenda.cancel({
+        'data.agendaID': itemid
+      }, function (err) {
+        if (err) throw err
+        if (item.dueDate) {
+          item.dueDate = new Date(item.dueDate)
+          if (item.dueDate <= Date.now()) return
+          console.log(`${username} => Agenda scheduled: ${itemid} ${item.dueDate}`)
+          agenda.schedule(item.dueDate, 'Notification Email', {
+            agendaID: itemid,
+            username: username,
+            item: item.item,
+            host: ctx.origin,
+            date: item.dueDate
+          })
+        }
+      })
+      ctx.body = result
+    } catch (e) {
+      this.status = e.status || 500
+      this.body = e.message || http.STATUS_CODES[this.status]
+    }
+  },
   delete: function * (next) {
     var ctx = this
     var listid = this.params.listid
@@ -26,6 +62,7 @@ var items = {
     try {
       var result = yield itemService.deleteItem(listid, index)
       if (!result) ctx.throw(500, 'Something bad happened at deleteItem')
+
       // Cancel agenda if it exists
       agenda.cancel({
         'data.agendaID': itemid

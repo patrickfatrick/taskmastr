@@ -96,8 +96,8 @@ router.get('/404', index.fourOhFour)
 router.get('/sessions/get', sessions.get)
 router.post('/users/login', users.setCookieAge, users.login)
 router.put('/users/create', users.setCookieAge, users.create)
-router.post('/users/write', users.write)
-router.post('/users/forgot', users.forgot)
+router.post('/users/:username/update', users.update)
+router.post('/users/:username/forgot', users.forgot)
 router.post('/users/reset', users.reset)
 router.get('/users/logout', users.logout)
 router.get('/lists/:listid', lists.get)
@@ -105,6 +105,7 @@ router.put('/lists/create', lists.create)
 router.delete('/lists/:listid/delete', lists.delete)
 router.post('/lists/:listid/update', lists.update)
 router.put('/lists/:listid/items/create', items.create)
+router.post('/lists/:listid/items/:itemid/update', items.update)
 router.delete('/lists/:listid/items/:itemid/delete', items.delete)
 app.use(router.routes())
 app.use(router.allowedMethods())
@@ -124,11 +125,11 @@ r.init(config.rethinkdb, [
   },
   {
     name: 'lists',
-    indexes: ['dateCreated', 'listid']
+    indexes: ['dateCreated', 'dateModified', 'listid']
   },
   {
     name: 'users',
-    indexes: ['dateCreated', 'username']
+    indexes: ['dateCreated', 'dateModified', 'username']
   }
 ])
 .then(() => {

@@ -66,16 +66,13 @@ export function create (username, key, rememberMe, cb) {
 }
 
 export function forgot (username, cb) {
-  return window.fetch('/users/forgot', {
+  return window.fetch(`/users/${username}/forgot`, {
     method: 'post',
     credentials: 'same-origin',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username: username
-    })
+    }
   })
   .then((response) => {
     if (response.status !== 200) {
@@ -156,16 +153,16 @@ export function getSession (cb) {
   })
 }
 
-export function save (username, body, cb) {
+export function updateUser (username, body, cb) {
   if (username === 'mrormrstestperson@taskmastr.co') return { success: true }
-  return window.fetch('/users/write', {
+  return window.fetch(`/users/${username}/update`, {
     method: 'post',
     credentials: 'same-origin',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ username, body })
+    body: JSON.stringify(body)
   })
   .then((response) => {
     if (response.status !== 200) {
