@@ -11,7 +11,6 @@ var views = require('koa-views')
 var router = require('koa-router')()
 var logger = require('koa-logger')
 var favicon = require('koa-favicon')
-var mongoose = require('mongoose')
 var passport = require('koa-passport')
 var agenda = require('./services/agenda-service')
 
@@ -32,7 +31,6 @@ const r = require(path.join(__dirname, '/r'))
 var app = koa()
 
 auth()
-mongoose.connect(config.mongoUri)
 
 // Set up Rethinkdb session store
 var sessionStore = new RethinkSession({

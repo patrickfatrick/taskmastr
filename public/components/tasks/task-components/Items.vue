@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     tasks () {
-      return store.state.user.current.items
+      return store.state.current.items
     },
     deleteAgendas () {
       return store.state.deleteAgendas

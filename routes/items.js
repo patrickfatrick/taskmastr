@@ -7,10 +7,25 @@ var items = {
     var ctx = this
     var listid = this.params.listid
     var item = this.request.body.item
+    var username = this.request.body.username
 
     try {
       var result = yield itemService.addItem(listid, item)
       if (!result) ctx.throw(500, 'Something bad happened at addItem')
+      if (item.dueDate) {
+        console.log(item.dueDate)
+        const dueDate = new Date(item.dueDate)
+        if (dueDate >= Date.now()) {
+          console.log(`${username} => Agenda scheduled: ${item.id} ${item.dueDate}`)
+          agenda.schedule(dueDate, 'Notification Email', {
+            agendaID: item.id,
+            username: username,
+            item: item.item,
+            host: ctx.origin,
+            date: dueDate
+          })
+        }
+      }
       ctx.body = result
     } catch (e) {
       this.status = e.status || 500
@@ -35,15 +50,15 @@ var items = {
       }, function (err) {
         if (err) throw err
         if (item.dueDate) {
-          item.dueDate = new Date(item.dueDate)
+          const dueDate = new Date(item.dueDate)
           if (item.dueDate <= Date.now()) return
-          console.log(`${username} => Agenda scheduled: ${itemid} ${item.dueDate}`)
+          console.log(`${username} => Agenda scheduled: ${itemid} ${dueDate}`)
           agenda.schedule(item.dueDate, 'Notification Email', {
             agendaID: itemid,
             username: username,
             item: item.item,
             host: ctx.origin,
-            date: item.dueDate
+            date: dueDate
           })
         }
       })

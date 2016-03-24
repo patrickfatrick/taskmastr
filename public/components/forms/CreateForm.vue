@@ -36,7 +36,7 @@ export default {
       return store.state.user
     },
     current () {
-      return store.state.user.current
+      return store.state.current
     },
     forgot () {
       return store.state.forgot

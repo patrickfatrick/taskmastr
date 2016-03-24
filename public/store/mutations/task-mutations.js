@@ -3,14 +3,14 @@ import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, 
 
 export const taskMutations = {
   [SET_CURRENT_TASK] (state, index) {
-    _.set(_.find(state.user.current.items, {current: true}), 'current', false)
-    _.set(state, 'user.current.items[' + index + '].current', true)
+    _.set(_.find(state.current.items, {current: true}), 'current', false)
+    _.set(state, 'current.items[' + index + '].current', true)
   },
   [ADD_TASK] (state, task) {
-    state.user.current.items.unshift(task)
+    state.current.items.unshift(task)
   },
   [REMOVE_TASK] (state, index) {
-    state.user.current.items.splice(index, 1)
+    state.current.items.splice(index, 1)
   },
   [SET_NEW_TASK] (state, task) {
     _.set(state, 'newTask', task)
@@ -22,19 +22,19 @@ export const taskMutations = {
     _.set(state, 'taskAttempt', bool)
   },
   [SET_TASK_COMPLETE] (state, index, bool) {
-    _.set(state, 'user.current.items[' + index + '].complete', bool)
+    _.set(state, 'current.items[' + index + '].complete', bool)
   },
   [SET_DATE_COMPLETED] (state, index, date) {
-    _.set(state, 'user.current.items[' + index + '].dateCompleted', date)
+    _.set(state, 'current.items[' + index + '].dateCompleted', date)
   },
   [SET_TASK_DELETE] (state, index, bool) {
-    _.set(state, 'user.current.items[' + index + ']._delete', bool)
+    _.set(state, 'current.items[' + index + ']._delete', bool)
   },
   [RENAME_TASK] (state, index, name) {
-    _.set(state, 'user.current.items[' + index + '].item', name)
+    _.set(state, 'current.items[' + index + '].item', name)
   },
   [SET_TASK_DUE_DATE] (state, index, date) {
-    _.set(state, 'user.current.items[' + index + '].dueDate', date)
+    _.set(state, 'current.items[' + index + '].dueDate', date)
   },
   [DELETE_AGENDA] (state, id) {
     state.deleteAgendas.push(id)
@@ -43,16 +43,17 @@ export const taskMutations = {
     _.set(state, 'deleteQueue[' + id + ']', val)
   },
   [SORT_TASKS] (state, oldIndex, newIndex) {
-    let spliced = state.user.current.items.splice(oldIndex, 1)
-    state.user.current.items.splice(newIndex, 0, spliced[0])
+    let spliced = state.current.items.splice(oldIndex, 1)
+    state.current.items.splice(newIndex, 0, spliced[0])
   },
   [TOGGLE_DETAILS] (state, index, bool) {
-    _.set(state, 'user.current.items[' + index + ']._detailsToggled', bool)
+    // _.set(state, 'current.items[' + index + ']._detailsToggled', bool)
+    _.set(state, 'detailsToggled', index)
   },
   [SET_TASK_NOTES] (state, index, notes) {
-    _.set(state, 'user.current.items[' + index + '].notes', notes)
+    _.set(state, 'current.items[' + index + '].notes', notes)
   },
   [SET_DUE_DATE_DIFFERENCE] (state, index, n) {
-    _.set(state, 'user.current.items[' + index + ']._dueDateDifference', n)
+    _.set(state, 'current.items[' + index + ']._dueDateDifference', n)
   }
 }

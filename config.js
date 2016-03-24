@@ -3,16 +3,15 @@ module.exports = {
     port: process.env.PORT || 3000
   },
   rethinkdb: {
-    host: 'localhost',
+    host: process.env.RETHINKDB_HOST || 'localhost',
     port: 28015,
-    authKey: '',
+    authKey: process.env.RETHINKDB_AUTH || '',
     db: 'taskmastr'
   },
   rethinkSession: {
     db: 'taskmastr',
     table: 'sessions'
   },
-  mongoUri: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr',
   agendaOptions: {
     db: {
       address: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr',

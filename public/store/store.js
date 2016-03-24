@@ -15,10 +15,10 @@ export default new Vuex.Store({
       resetKey: '',
       resetConfirmKey: '',
       darkmode: false,
-      tasks: [],
-      current: {
-        items: []
-      }
+      tasks: []
+    },
+    current: {
+      items: []
     },
     wiki: '//patrickfatrick.gitbooks.io/taskmastr/content/',
     repo: '//github.com/patrickfatrick/taskmastr',
@@ -47,6 +47,7 @@ export default new Vuex.Store({
     newList: '',
     newTask: '',
     placeholder: '',
+    detailsToggled: null,
     testUser: 'mrormrstestperson@taskmastr.co',
     testKey: 'S41iVAtINGREsIdUE-278'
   },

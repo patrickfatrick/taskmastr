@@ -32,7 +32,7 @@ export default {
       return store.state.user
     },
     current () {
-      return store.state.user.current
+      return store.state.current
     },
     reset () {
       return store.state.reset

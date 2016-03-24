@@ -25,6 +25,9 @@ export default {
     user () {
       return store.state.user
     },
+    current () {
+      return store.state.current
+    },
     newTask () {
       return store.state.newTask
     },
@@ -89,7 +92,7 @@ export default {
       this.addTask({
         id: harsh.hash().hashes[0],
         item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
-        current: !(_.find(this.user.current.items, {current: true})),
+        current: !(_.find(this.current.items, {current: true})),
         complete: false,
         dateCreated: gregorian.reform(new Date()).to('iso'),
         dueDate: dueDate,

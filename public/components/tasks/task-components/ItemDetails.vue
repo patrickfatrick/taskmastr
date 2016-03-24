@@ -1,11 +1,11 @@
 <template>
-  <div class="mask" v-if="task._detailsToggled" transition="mask" @click="toggleDetails(index, false)"></div>
-  <div class="task-details" v-if="task._detailsToggled" :class="{'toggled': task._detailsToggled}" transition="details">
-    <button class="task-details-close" @click.prevent="toggleDetails(index, false)">
+  <div class="mask" v-if="detailsToggled === index" transition="mask" @click="toggleDetails(index)"></div>
+  <div class="task-details" v-if="detailsToggled === index" :class="{'toggled': detailsToggled === index}" transition="details">
+    <button class="task-details-close" @click.prevent="toggleDetails(index)">
       <i class="fa fa-times"></i>
     </button>
     <div class="task-name-container">
-      <input class="task-name mousetrap" type="text" :value="task.item" @change="rename($event, $index)"></input>
+      <input class="task-name mousetrap" type="text" :value="task.item" @change="rename($event, index)"></input>
     </div>
     <div class="task-details-container">
       <div class="task-create task-details-panel">
@@ -54,7 +54,10 @@ export default {
   },
   computed: {
     tasks () {
-      return store.state.user.current.items
+      return store.state.current.items
+    },
+    detailsToggled () {
+      return store.state.detailsToggled
     }
   },
   props: {
@@ -71,7 +74,7 @@ export default {
         e.target.value = this.task.item
         return
       }
-      this.renameTask(this.index, e.target.value.trim())
+      this.renameTask(index, e.target.value.trim())
     },
     reformatDate (date) {
       return gregorian.reform(date).to('M d, yyyy')

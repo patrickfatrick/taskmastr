@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 
-export function createItem (listid, item, cb) {
+export function createItem (listid, item, username, cb) {
   return window.fetch(`/lists/${listid}/items/create`, {
     method: 'put',
     credentials: 'same-origin',
@@ -8,7 +8,7 @@ export function createItem (listid, item, cb) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ item })
+    body: JSON.stringify({ item: item, username: username })
   })
   .then((response) => {
     if (response.status !== 200) {

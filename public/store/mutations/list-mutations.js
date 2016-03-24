@@ -6,7 +6,7 @@ export const listMutations = {
     _.set(_.find(state.user.tasks, {current: true}), 'current', false)
     const index = _.findIndex(state.user.tasks, {id: list.id})
     _.set(state, `user.tasks[${index}].current`, true)
-    _.set(state, 'user.current', list)
+    _.set(state, 'current', list)
   },
   [SET_MENU_TOGGLED] (state, bool) {
     _.set(state, 'menuToggled', bool)

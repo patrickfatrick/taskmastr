@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     current () {
-      return store.state.user.current
+      return store.state.current
     },
     lists () {
       return store.state.user.tasks
