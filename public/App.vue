@@ -29,8 +29,12 @@ export default {
     }
   },
   ready () {
+    const listID = this.$route.params.listid
     store.actions.getSession()
     .then(() => {
+      console.log(listID)
+      // Opt to route to the listid if provided
+      if (this.auth && listID) return this.$route.router.go('/app/list/' + listID)
       if (this.auth) this.$route.router.go('/app/list/' + this.current.id)
     })
   }

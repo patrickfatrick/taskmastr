@@ -276,9 +276,10 @@ export default {
     })
   },
   mountList: ({ dispatch, state }, id) => {
+    console.log(id)
     return getList(id, (err, response) => {
       if (err) return console.error(err)
-      const oldCurrent = _.find(state.user.tasks, {current: true})
+      const oldCurrent = _.find(state.user.tasks, { current: true })
       dispatch('SET_CURRENT_LIST', response)
       return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
         if (err) return dispatch('SET_CURRENT_LIST', oldCurrent)
