@@ -7,7 +7,7 @@
       </div>
       <menu-toggle></menu-toggle>
       <items></items>
-      <div class="no-list" v-if="user.key || !current.items">
+      <div id="no-list" v-if="user.key || !current.items">
         <i id="loading" class="fa fa-cog fa-spin"></i>
         <div>You're not viewing a list. Please click on one in the menu to the left.</div>
       </div>
@@ -37,8 +37,7 @@ export default {
     Items
   },
   methods: {
-    mountList: store.actions.mountList,
-    setCurrentList: store.actions.setCurrentList
+    mountList: store.actions.mountList
   },
   route: {
     data (transition) {
