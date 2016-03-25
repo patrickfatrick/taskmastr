@@ -85,11 +85,7 @@ export default {
 
     // Keyboard bindings
     Mousetrap.bind('ctrl+d', () => {
-      if (_.findIndex(this.tasks, {current: true}) !== _.findIndex(this.tasks, {_detailsToggled: true})) {
-        this.toggleDetails(_.findIndex(this.tasks, {_detailsToggled: true}), false)
-      }
-      let index = _.findIndex(this.tasks, {current: true})
-      this.toggleDetails(index, !(this.tasks[index]._detailsToggled))
+      this.toggleDetails(_.findIndex(this.tasks, {current: true}))
     })
   }
 }

@@ -9,7 +9,7 @@
           </button>
         </div>
         <div class="task-cell table-data">
-          <button class="name" title="{{task.item}}" @click="setCurrentTask($index)" @dblclick.prevent="toggleDetails($index, true)">{{task.item}}</button>
+          <button class="name" title="{{task.item}}" @click="setCurrentTask($index)" @dblclick.prevent="toggleDetails($index)">{{task.item}}</button>
         </div>
         <div class="utils table-data">
           <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails($index, true)" v-bind:class="{'active': task.dueDate, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
