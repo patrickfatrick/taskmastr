@@ -22,7 +22,7 @@ import { setTaskDueDate, setDueDateDifference } from '../../../store/task-store/
 export default {
   vuex: {
     getters: {
-      tasks: (state) => state.task.current.items
+      tasks: (state) => state.current.items
     },
     actions: {
       setTaskDueDate,

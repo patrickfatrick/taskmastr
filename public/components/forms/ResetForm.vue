@@ -14,10 +14,10 @@ import ResetConfirmInput from './form-components/ResetConfirmInput.vue'
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      auth: (state) => state.user.auth,
-      current: (state) => state.task.current,
-      resetToken: (state) => state.user.resetToken
+      user: (state) => state.user,
+      auth: (state) => state.auth,
+      current: (state) => state.current,
+      resetToken: (state) => state.resetToken
     },
     actions: {
       loginPassword,

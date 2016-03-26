@@ -32,7 +32,7 @@ import Logout from '../misc/Logout.vue'
 export default {
   vuex: {
     getters: {
-      menuToggled: (state) => state.list.menuToggled,
+      menuToggled: (state) => state.menuToggled,
       wiki: (state) => state.wiki,
       repo: (state) => state.repo
     }

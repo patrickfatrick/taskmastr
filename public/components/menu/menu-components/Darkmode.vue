@@ -13,7 +13,7 @@ import { setDarkmode } from '../../../store/user-store/user-actions'
 export default {
   vuex: {
     getters: {
-      darkmode: (state) => state.user.user.darkmode
+      darkmode: (state) => state.user.darkmode
     },
     actions: {
       setDarkmode

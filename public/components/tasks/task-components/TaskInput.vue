@@ -23,11 +23,11 @@ import placeholders from '../../../helper-utilities/placeholders'
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      current: (state) => state.task.current,
-      newTask: (state) => state.task.newTask,
-      taskAttempt: (state) => state.task.taskAttempt,
-      placeholder: (state) => state.task.placeholder
+      user: (state) => state.user,
+      current: (state) => state.current,
+      newTask: (state) => state.newTask,
+      taskAttempt: (state) => state.taskAttempt,
+      placeholder: (state) => state.placeholder
     },
     actions: {
       setNewTask,

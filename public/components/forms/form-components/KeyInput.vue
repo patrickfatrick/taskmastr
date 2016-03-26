@@ -18,10 +18,10 @@ import { setKey, setLoginAttempt } from '../../../store/user-store/user-actions'
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      create: (state) => state.user.create,
-      invalidKey: (state) => state.user.create,
-      loginAttempt: (state) => state.user.loginAttempt
+      user: (state) => state.user,
+      create: (state) => state.create,
+      invalidKey: (state) => state.create,
+      loginAttempt: (state) => state.loginAttempt
     },
     actions: {
       setKey,

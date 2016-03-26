@@ -29,7 +29,6 @@ export function renameList ({ dispatch, state }, index, name) {
 }
 
 export function mountList ({ dispatch, state }, id) {
-  console.log(id)
   return getList(id, (err, response) => {
     if (err) return console.error(err)
     const oldCurrent = _.find(state.user.tasks, { current: true })

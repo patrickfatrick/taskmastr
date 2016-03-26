@@ -13,8 +13,8 @@ import { setForgot } from '../../../store/user-store/user-actions'
 export default {
   vuex: {
     getters: {
-      forgot: (state) => state.user.forgot,
-      create: (state) => state.user.create
+      forgot: (state) => state.forgot,
+      create: (state) => state.create
     },
     actions: {
       setForgot

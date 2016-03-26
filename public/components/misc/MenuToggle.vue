@@ -14,7 +14,7 @@ import { setMenuToggled } from '../../store/list-store/list-actions'
 export default {
   vuex: {
     getters: {
-      menuToggled: (state) => state.list.menuToggled
+      menuToggled: (state) => state.menuToggled
     },
     actions: {
       setMenuToggled

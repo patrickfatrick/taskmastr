@@ -25,8 +25,8 @@ import Items from './task-components/Items.vue'
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      current: (state) => state.task.current
+      user: (state) => state.user,
+      current: (state) => state.current
     },
     actions: {
       mountList

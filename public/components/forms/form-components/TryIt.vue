@@ -10,7 +10,7 @@ export default {
   vuex: {
     getters: {
       wiki: (state) => state.wiki,
-      auth: (state) => state.user.auth,
+      auth: (state) => state.auth,
       testUser: (state) => state.testUser,
       testKey: (state) => state.testKey
     },

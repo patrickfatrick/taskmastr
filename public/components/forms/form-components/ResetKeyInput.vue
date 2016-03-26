@@ -17,9 +17,9 @@ import { setResetKey } from '../../../store/user-store/user-actions'
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      resetAttempt: (state) => state.user.resetAttempt,
-      resetFail: (state) => state.user.resetFail
+      user: (state) => state.user,
+      resetAttempt: (state) => state.resetAttempt,
+      resetFail: (state) => state.resetFail
     },
     actions: {
       setResetKey

@@ -16,9 +16,9 @@ import { addList, setNewList, setListAttempt } from '../../../store/list-store/l
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      newList: (state) => state.list.newList,
-      listAttempt: (state) => state.list.listAttempt
+      user: (state) => state.user,
+      newList: (state) => state.newList,
+      listAttempt: (state) => state.listAttempt
     },
     actions: {
       addList,

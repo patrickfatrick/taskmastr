@@ -23,11 +23,11 @@ const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@(
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      auth: (state) => state.user.auth,
-      current: (state) => state.task.current,
-      forgot: (state) => state.user.forgot,
-      rememberMe: (state) => state.user.rememberMe
+      user: (state) => state.user,
+      auth: (state) => state.auth,
+      current: (state) => state.current,
+      forgot: (state) => state.forgot,
+      rememberMe: (state) => state.rememberMe
     },
     actions: {
       saveUser,

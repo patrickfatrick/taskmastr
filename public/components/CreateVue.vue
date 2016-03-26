@@ -24,9 +24,9 @@ import TryIt from './forms/form-components/TryIt.vue'
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      init: (state) => state.user.init,
-      auth: (state) => state.user.auth
+      user: (state) => state.user,
+      init: (state) => state.init,
+      auth: (state) => state.auth
     }
   },
   components: {

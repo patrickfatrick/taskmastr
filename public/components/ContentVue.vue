@@ -13,7 +13,7 @@ import Menu from './menu/Menu.vue'
 export default {
   vuex: {
     getters: {
-      auth: (state) => state.user.auth
+      auth: (state) => state.auth
     }
   },
   components: {

@@ -21,15 +21,15 @@ import { setUsername, setForgotAttempt } from '../../../store/user-store/user-ac
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      create: (state) => state.user.create,
-      confirmAttempt: (state) => state.user.confirmAttempt,
-      createFail: (state) => state.user.createFail,
-      forgot: (state) => state.user.forgot,
-      forgotAttempt: (state) => state.user.forgotAttempt,
-      forgotEmail: (state) => state.user.forgotEmail,
-      forgotFail: (state) => state.user.forgotFail,
-      loginAttempt: (state) => state.user.loginAttempt
+      user: (state) => state.user,
+      create: (state) => state.create,
+      confirmAttempt: (state) => state.confirmAttempt,
+      createFail: (state) => state.createFail,
+      forgot: (state) => state.forgot,
+      forgotAttempt: (state) => state.forgotAttempt,
+      forgotEmail: (state) => state.forgotEmail,
+      forgotFail: (state) => state.forgotFail,
+      loginAttempt: (state) => state.loginAttempt
     },
     actions: {
       setUsername,

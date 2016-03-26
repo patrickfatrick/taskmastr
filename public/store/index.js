@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './user-store'
 import list from './list-store'
 import task from './task-store'
+import mutations from './mutations'
 
 Vue.use(Vuex)
 
@@ -13,11 +14,10 @@ export default new Vuex.Store({
     repo: '//github.com/patrickfatrick/taskmastr',
     testUser: 'mrormrstestperson@taskmastr.co',
     testKey: 'S41iVAtINGREsIdUE-278',
-    deleteQueue: {}
+    deleteQueue: {},
+    ...user,
+    ...list,
+    ...task
   },
-  modules: {
-    user,
-    list,
-    task
-  }
+  mutations
 })

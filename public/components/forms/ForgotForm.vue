@@ -16,7 +16,7 @@ const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@(
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user
+      user: (state) => state.user
     },
     actions: {
       forgotPassword

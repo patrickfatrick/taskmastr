@@ -32,8 +32,8 @@ import { deleteList, setCurrentList, sortLists, renameList } from '../../../stor
 export default {
   vuex: {
     getters: {
-      current: (state) => state.task.current,
-      lists: (state) => state.user.user.tasks
+      current: (state) => state.current,
+      lists: (state) => state.user.tasks
     },
     actions: {
       deleteList,

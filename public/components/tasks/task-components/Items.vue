@@ -39,8 +39,8 @@ import ItemDetails from './ItemDetails.vue'
 export default {
   vuex: {
     getters: {
-      tasks: (state) => state.task.current.items,
-      deleteAgendas: (state) => state.task.deleteAgendas
+      tasks: (state) => state.current.items,
+      deleteAgendas: (state) => state.deleteAgendas
     },
     actions: {
       setCurrentTask,

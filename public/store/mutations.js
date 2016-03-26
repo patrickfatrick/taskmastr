@@ -1,9 +1,9 @@
-import {userMutations} from './mutations/user-mutations'
-import {taskMutations} from './mutations/task-mutations'
-import {listMutations} from './mutations/list-mutations'
+import userMutations from './user-store/user-mutations'
+import taskMutations from './task-store/task-mutations'
+import listMutations from './list-store/list-mutations'
 
-export default [
-  userMutations,
-  taskMutations,
-  listMutations
-]
+export default {
+  ...userMutations,
+  ...taskMutations,
+  ...listMutations
+}

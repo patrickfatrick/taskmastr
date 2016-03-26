@@ -14,9 +14,9 @@ import { setResetConfirmKey, setResetAttempt } from '../../../store/user-store/u
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      resetAttempt: (state) => state.user.resetAttempt,
-      resetFail: (state) => state.user.resetFail
+      user: (state) => state.user,
+      resetAttempt: (state) => state.resetAttempt,
+      resetFail: (state) => state.resetFail
     },
     actions: {
       setResetConfirmKey,

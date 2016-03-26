@@ -13,7 +13,7 @@ import { setRememberMe } from '../../../store/user-store/user-actions'
 export default {
   vuex: {
     getters: {
-      rememberMe: (state) => state.user.rememberMe
+      rememberMe: (state) => state.rememberMe
     },
     actions: {
       setRememberMe

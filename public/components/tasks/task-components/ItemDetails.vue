@@ -51,8 +51,8 @@ import Datepicker from './Datepicker.vue'
 export default {
   vuex: {
     getters: {
-      tasks: (state) => state.task.current.items,
-      detailsToggled: (state) => state.task.detailsToggled
+      tasks: (state) => state.current.items,
+      detailsToggled: (state) => state.detailsToggled
     },
     actions: {
       setTaskNotes,

@@ -145,11 +145,11 @@ export function getSession (cb) {
     return response.json()
   })
   .then((response) => {
-    cb(null, response)
+    return cb(null, response)
   })
   .catch((err) => {
     if (err.response.status === 204) return cb('No session data found.', err.response)
-    cb(err, err.response)
+    return cb(err, err.response)
   })
 }
 

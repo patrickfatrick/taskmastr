@@ -19,9 +19,9 @@ import { setConfirm, setConfirmAttempt } from '../../../store/user-store/user-ac
 export default {
   vuex: {
     getters: {
-      user: (state) => state.user.user,
-      loginAttempt: (state) => state.user.loginAttempt,
-      confirmAttempt: (state) => state.user.confirmAttempt
+      user: (state) => state.user,
+      loginAttempt: (state) => state.loginAttempt,
+      confirmAttempt: (state) => state.confirmAttempt
     },
     actions: {
       setConfirm,

@@ -16,10 +16,10 @@ import { getUserSession } from './store/user-store/user-actions'
 export default {
   vuex: {
     getters: {
-      user: ({ user }) => user.user,
-      auth: ({ user }) => user.auth,
-      darkmode: ({ user }) => user.user.darkmode,
-      current: ({ task }) => task.current
+      user: (state) => state.user,
+      auth: (state) => state.auth,
+      darkmode: (state) => state.user.darkmode,
+      current: (state) => state.current
     },
     actions: {
       getUserSession
@@ -29,7 +29,6 @@ export default {
     const listID = this.$route.params.listid
     this.getUserSession()
     .then(() => {
-      console.log(listID)
       // Opt to route to the listid if provided
       if (this.auth && listID) return this.$route.router.go('/app/list/' + listID)
       if (this.auth) this.$route.router.go('/app/list/' + this.current.id)
