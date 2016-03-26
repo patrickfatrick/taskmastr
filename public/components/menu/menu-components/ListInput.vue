@@ -11,19 +11,22 @@
 
 import harsh from 'harsh'
 import Mousetrap from 'mousetrap'
-import store from '../../../store/store'
+import { addList, setNewList, setListAttempt } from '../../../store/list-store/list-actions'
 
 export default {
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      newList: (state) => state.list.newList,
+      listAttempt: (state) => state.list.listAttempt
+    },
+    actions: {
+      addList,
+      setNewList,
+      setListAttempt
+    }
+  },
   computed: {
-    newList () {
-      return store.state.newList
-    },
-    listAttempt () {
-      return store.state.listAttempt
-    },
-    user () {
-      return store.state.user
-    },
     validate () {
       return {
         newListRequired: !!this.newList.trim()
@@ -37,9 +40,6 @@ export default {
     }
   },
   methods: {
-    addList: store.actions.addList,
-    setNewList: store.actions.setNewList,
-    setListAttempt: store.actions.setListAttempt,
     addNewList (list) {
       this.setListAttempt(true)
       if (!this.isValid) return

@@ -12,27 +12,23 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setResetKey } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      resetAttempt: (state) => state.user.resetAttempt,
+      resetFail: (state) => state.user.resetFail
     },
-    resetAttempt () {
-      return store.state.resetAttempt
-    },
-    resetFail () {
-      return store.state.resetFail
+    actions: {
+      setResetKey
     }
   },
   props: {
     require: Boolean,
     match: Boolean,
     token: Boolean
-  },
-  methods: {
-    setResetKey: store.actions.setResetKey
   }
 }
 

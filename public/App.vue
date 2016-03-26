@@ -11,26 +11,23 @@
 
 <script>
 
-import store from './store/store'
+import { getUserSession } from './store/user-store/user-actions'
 
 export default {
-  computed: {
-    darkmode () {
-      return store.state.user.darkmode
+  vuex: {
+    getters: {
+      user: ({ user }) => user.user,
+      auth: ({ user }) => user.auth,
+      darkmode: ({ user }) => user.user.darkmode,
+      current: ({ task }) => task.current
     },
-    auth () {
-      return store.state.auth
-    },
-    user () {
-      return store.state.user
-    },
-    current () {
-      return store.state.current
+    actions: {
+      getUserSession
     }
   },
   ready () {
     const listID = this.$route.params.listid
-    store.actions.getSession()
+    this.getUserSession()
     .then(() => {
       console.log(listID)
       // Opt to route to the listid if provided

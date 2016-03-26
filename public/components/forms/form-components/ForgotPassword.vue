@@ -8,19 +8,19 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setForgot } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    forgot () {
-      return store.state.forgot
+  vuex: {
+    getters: {
+      forgot: (state) => state.user.forgot,
+      create: (state) => state.user.create
     },
-    create () {
-      return store.state.create
+    actions: {
+      setForgot
     }
   },
   methods: {
-    setForgot: store.actions.setForgot,
     toggleForgot (bool) {
       this.setForgot(bool)
       if (!this.forgot && this.create) return this.$route.router.go('/create')

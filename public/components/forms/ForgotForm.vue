@@ -7,21 +7,26 @@
 
 <script>
 
-import store from '../../store/store'
+import { forgotPassword } from '../../store/user-store/user-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import ForgotPassword from './form-components/ForgotPassword.vue'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
+  vuex: {
+    getters: {
+      user: (state) => state.user.user
+    },
+    actions: {
+      forgotPassword
+    }
+  },
   components: {
     UsernameInput,
     ForgotPassword
   },
   computed: {
-    user () {
-      return store.state.user
-    },
     validate () {
       return {
         usernameEmail: emailRE.test(this.user.username),
@@ -36,7 +41,6 @@ export default {
     }
   },
   methods: {
-    forgotPassword: store.actions.forgotPassword,
     forgot (username) {
       if (!this.isValid) return
       this.forgotPassword(username)

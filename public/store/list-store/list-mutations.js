@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import {SET_CURRENT_LIST, SET_MENU_TOGGLED, ADD_LIST, REMOVE_LIST, SET_NEW_LIST, SET_LIST_ATTEMPT, RENAME_LIST, SET_LIST_DELETE, SORT_LISTS} from '../mutation-types'
 
-export const listMutations = {
+export default {
   [SET_CURRENT_LIST] (state, list) {
     _.set(_.find(state.user.tasks, {current: true}), 'current', false)
     const index = _.findIndex(state.user.tasks, {id: list.id})

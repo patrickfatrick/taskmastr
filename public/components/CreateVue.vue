@@ -18,20 +18,15 @@
 
 <script>
 
-import store from '../store/store'
 import CreateForm from './forms/CreateForm.vue'
 import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
-    },
-    init () {
-      return store.state.init
-    },
-    auth () {
-      return store.state.auth
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      init: (state) => state.user.init,
+      auth: (state) => state.user.auth
     }
   },
   components: {

@@ -9,16 +9,16 @@
 <script>
 
 import Mousetrap from 'mousetrap'
-import store from '../../store/store'
+import { setMenuToggled } from '../../store/list-store/list-actions'
 
 export default {
-  computed: {
-    menuToggled () {
-      return store.state.menuToggled
+  vuex: {
+    getters: {
+      menuToggled: (state) => state.list.menuToggled
+    },
+    actions: {
+      setMenuToggled
     }
-  },
-  methods: {
-    setMenuToggled: store.actions.setMenuToggled
   },
   compiled () {
     Mousetrap.bind('alt+right', () => {

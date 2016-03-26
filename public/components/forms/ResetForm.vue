@@ -7,28 +7,28 @@
 
 <script>
 
-import store from '../../store/store'
+import { loginPassword, resetPassword } from '../../store/user-store/user-actions'
 import ResetKeyInput from './form-components/ResetKeyInput.vue'
 import ResetConfirmInput from './form-components/ResetConfirmInput.vue'
 
 export default {
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      auth: (state) => state.user.auth,
+      current: (state) => state.task.current,
+      resetToken: (state) => state.user.resetToken
+    },
+    actions: {
+      loginPassword,
+      resetPassword
+    }
+  },
   components: {
     ResetKeyInput,
     ResetConfirmInput
   },
   computed: {
-    auth () {
-      return store.state.auth
-    },
-    user () {
-      return store.state.user
-    },
-    current () {
-      return store.state.current
-    },
-    resetToken () {
-      return store.state.resetToken
-    },
     validate () {
       return {
         passwordRequired: !!this.user.resetKey.trim(),
@@ -44,8 +44,6 @@ export default {
     }
   },
   methods: {
-    loginUser: store.actions.loginUser,
-    resetPassword: store.actions.resetPassword,
     reset (resetToken, resetKey) {
       if (!this.isValid) return
       this.resetPassword(resetToken, resetKey)

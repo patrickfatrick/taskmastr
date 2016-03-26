@@ -1,6 +1,6 @@
 <template>
   <div id="logout-container">
-    <button id="logout" title="Log out" @click.prevent="logout">
+    <button id="logout" title="Log out" @click.prevent="logoutUser">
       <i id="power-off" class="fa fa-power-off"></i>
       <label for="power-off">Log out</label>
     </button>
@@ -10,11 +10,15 @@
 <script>
 
 import Mousetrap from 'mousetrap'
-import store from '../../store/store'
+import { logoutUser } from '../../store/user-store/user-actions'
 
 export default {
+  vuex: {
+    actions: {
+      logoutUser
+    }
+  },
   methods: {
-    logoutUser: store.actions.logoutUser,
     logout () {
       this.logoutUser()
     }

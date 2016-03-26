@@ -14,26 +14,22 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setConfirm, setConfirmAttempt } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      loginAttempt: (state) => state.user.loginAttempt,
+      confirmAttempt: (state) => state.user.confirmAttempt
     },
-    loginAttempt () {
-      return store.state.loginAttempt
-    },
-    confirmAttempt () {
-      return store.state.confirmAttempt
+    actions: {
+      setConfirm,
+      setConfirmAttempt
     }
   },
   props: {
     match: Boolean
-  },
-  methods: {
-    setConfirm: store.actions.setConfirm,
-    setConfirmAttempt: store.actions.setConfirmAttempt
   }
 }
 

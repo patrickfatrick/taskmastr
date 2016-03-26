@@ -27,9 +27,21 @@
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import store from '../../../store/store'
+import { deleteList, setCurrentList, sortLists, renameList } from '../../../store/list-store/list-actions'
 
 export default {
+  vuex: {
+    getters: {
+      current: (state) => state.task.current,
+      lists: (state) => state.user.user.tasks
+    },
+    actions: {
+      deleteList,
+      setCurrentList,
+      sortLists,
+      renameList
+    }
+  },
   data () {
     return {
       renameToggled: null,
@@ -37,20 +49,7 @@ export default {
       dragStart: null
     }
   },
-  computed: {
-    current () {
-      return store.state.current
-    },
-    lists () {
-      return store.state.user.tasks
-    }
-  },
   methods: {
-    deleteList: store.actions.deleteList,
-    setCurrentList: store.actions.setCurrentList,
-    sortLists: store.actions.sortLists,
-    setSaveButton: store.actions.setSaveButton,
-    renameList: store.actions.renameList,
     navigateToList (id) {
       this.$route.router.go('/app/list/' + id)
     },

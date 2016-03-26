@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_DATE_COMPLETED, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, DELETE_AGENDA, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
 
-export const taskMutations = {
+export default {
   [SET_CURRENT_TASK] (state, index) {
     _.set(_.find(state.current.items, {current: true}), 'current', false)
     _.set(state, 'current.items[' + index + '].current', true)

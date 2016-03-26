@@ -19,34 +19,26 @@
 
 <script>
 
-import store from '../store/store'
+import { setForgot } from '../store/user-store/user-actions'
 import ForgotForm from './forms/ForgotForm.vue'
 import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      init: (state) => state.user.init,
+      auth: (state) => state.user.auth,
+      reset: (state) => state.user.reset,
+      forgot: (state) => state.user.forgot
     },
-    reset () {
-      return store.state.reset
-    },
-    init () {
-      return store.state.init
-    },
-    auth () {
-      return store.state.auth
-    },
-    forgot () {
-      return store.state.forgot
+    actions: {
+      setForgot
     }
   },
   components: {
     ForgotForm,
     TryIt
-  },
-  methods: {
-    setForgot: store.actions.setForgot
   },
   compiled () {
     if (this.$route.path === '/forgot' && !this.forgot) return this.setForgot(true)

@@ -16,45 +16,29 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setUsername, setForgotAttempt } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      create: (state) => state.user.create,
+      confirmAttempt: (state) => state.user.confirmAttempt,
+      createFail: (state) => state.user.createFail,
+      forgot: (state) => state.user.forgot,
+      forgotAttempt: (state) => state.user.forgotAttempt,
+      forgotEmail: (state) => state.user.forgotEmail,
+      forgotFail: (state) => state.user.forgotFail,
+      loginAttempt: (state) => state.user.loginAttempt
     },
-    create () {
-      return store.state.create
-    },
-    confirmAttempt () {
-      return store.state.confirmAttempt
-    },
-    createFail () {
-      return store.state.createFail
-    },
-    forgot () {
-      return store.state.forgot
-    },
-    forgotAttempt () {
-      return store.state.forgotAttempt
-    },
-    forgotEmail () {
-      return store.state.forgotEmail
-    },
-    forgotFail () {
-      return store.state.forgotFail
-    },
-    loginAttempt () {
-      return store.state.loginAttempt
+    actions: {
+      setUsername,
+      setForgotAttempt
     }
   },
   props: {
     validate: Boolean,
     require: Boolean
-  },
-  methods: {
-    setUsername: store.actions.setUsername,
-    setForgotAttempt: store.actions.setForgotAttempt
   }
 }
 

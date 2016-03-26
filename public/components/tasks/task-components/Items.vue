@@ -33,10 +33,23 @@
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import store from '../../../store/store'
+import { setCurrentTask, deleteTask, completeTask, sortTasks, toggleDetails } from '../../../store/task-store/task-actions'
 import ItemDetails from './ItemDetails.vue'
 
 export default {
+  vuex: {
+    getters: {
+      tasks: (state) => state.task.current.items,
+      deleteAgendas: (state) => state.task.deleteAgendas
+    },
+    actions: {
+      setCurrentTask,
+      deleteTask,
+      completeTask,
+      sortTasks,
+      toggleDetails
+    }
+  },
   data () {
     return {
       drake: null,
@@ -46,21 +59,7 @@ export default {
   components: {
     ItemDetails
   },
-  computed: {
-    tasks () {
-      return store.state.current.items
-    },
-    deleteAgendas () {
-      return store.state.deleteAgendas
-    }
-  },
   methods: {
-    setCurrentTask: store.actions.setCurrentTask,
-    deleteTask: store.actions.deleteTask,
-    completeTask: store.actions.completeTask,
-    sortTasks: store.actions.sortTasks,
-    setSaveButton: store.actions.setSaveButton,
-    toggleDetails: store.actions.toggleDetails,
     _drag (drake) {
       drake.on('drag', (el) => {
         this.dragStart = this._index(el)

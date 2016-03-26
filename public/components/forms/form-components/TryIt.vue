@@ -4,25 +4,21 @@
 
 <script>
 
-import store from '../../../store/store'
+import { loginUser } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    wiki () {
-      return store.state.wiki
+  vuex: {
+    getters: {
+      wiki: (state) => state.wiki,
+      auth: (state) => state.user.auth,
+      testUser: (state) => state.testUser,
+      testKey: (state) => state.testKey
     },
-    auth () {
-      return store.state.auth
-    },
-    testUser () {
-      return store.state.testUser
-    },
-    testKey () {
-      return store.state.testKey
+    actions: {
+      loginUser
     }
   },
   methods: {
-    loginUser: store.actions.loginUser,
     loginTestUser (username, key, rememberMe) {
       this.loginUser(username, key, rememberMe)
       .then(() => {

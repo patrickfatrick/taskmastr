@@ -9,7 +9,7 @@
 
 <script>
 
-import store from '../../store/store'
+import { loginUser } from '../../store/user-store/user-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import KeyInput from './form-components/KeyInput.vue'
 import RememberMe from './form-components/RememberMe.vue'
@@ -18,6 +18,20 @@ import ForgotPassword from './form-components/ForgotPassword.vue'
 const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      auth: (state) => state.user.auth,
+      current: (state) => state.task.current,
+      reset: (state) => state.user.reset,
+      forgot: (state) => state.user.forgot,
+      create: (state) => state.user.create,
+      rememberMe: (state) => state.user.rememberMe
+    },
+    actions: {
+      loginUser
+    }
+  },
   components: {
     UsernameInput,
     KeyInput,
@@ -25,27 +39,6 @@ export default {
     ForgotPassword
   },
   computed: {
-    auth () {
-      return store.state.auth
-    },
-    user () {
-      return store.state.user
-    },
-    current () {
-      return store.state.current
-    },
-    reset () {
-      return store.state.reset
-    },
-    forgot () {
-      return store.state.forgot
-    },
-    create () {
-      return store.state.create
-    },
-    rememberMe () {
-      return store.state.rememberMe
-    },
     validate () {
       return {
         usernameEmail: emailRE.test(this.user.username),
@@ -61,7 +54,6 @@ export default {
     }
   },
   methods: {
-    loginUser: store.actions.loginUser,
     login (username, key, rememberMe) {
       if (!this.isValid) return
       this.loginUser(username, key, rememberMe)

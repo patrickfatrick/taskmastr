@@ -16,27 +16,29 @@ import harsh from 'harsh'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
-import store from '../../../store/store'
+import { setNewTask, setPlaceholder, setTaskAttempt, setTaskDueDate, setDueDateDifference, addTask } from '../../../store/task-store/task-actions'
 import extractDate from '../../../helper-utilities/extract-date'
 import placeholders from '../../../helper-utilities/placeholders'
 
 export default {
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      current: (state) => state.task.current,
+      newTask: (state) => state.task.newTask,
+      taskAttempt: (state) => state.task.taskAttempt,
+      placeholder: (state) => state.task.placeholder
+    },
+    actions: {
+      setNewTask,
+      setPlaceholder,
+      setTaskAttempt,
+      setTaskDueDate,
+      setDueDateDifference,
+      addTask
+    }
+  },
   computed: {
-    user () {
-      return store.state.user
-    },
-    current () {
-      return store.state.current
-    },
-    newTask () {
-      return store.state.newTask
-    },
-    taskAttempt () {
-      return store.state.taskAttempt
-    },
-    placeholder () {
-      return store.state.placeholder
-    },
     validate () {
       return {
         newTaskRequired: !!this.newTask.trim()
@@ -50,12 +52,6 @@ export default {
     }
   },
   methods: {
-    setNewTask: store.actions.setNewTask,
-    setPlaceholder: store.actions.setPlaceholder,
-    setTaskAttempt: store.actions.setTaskAttempt,
-    setTaskDueDate: store.actions.setTaskDueDate,
-    setDueDateDifference: store.actions.setDueDateDifference,
-    addTask: store.actions.addTask,
     addNewTask (task) {
       this.setTaskAttempt(true)
       if (!this.isValid) return

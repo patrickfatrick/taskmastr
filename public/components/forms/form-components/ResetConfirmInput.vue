@@ -9,23 +9,19 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setResetConfirmKey, setResetAttempt } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      resetAttempt: (state) => state.user.resetAttempt,
+      resetFail: (state) => state.user.resetFail
     },
-    resetAttempt () {
-      return store.state.resetAttempt
-    },
-    resetFail () {
-      return store.state.resetFail
+    actions: {
+      setResetConfirmKey,
+      setResetAttempt
     }
-  },
-  methods: {
-    setResetConfirmKey: store.actions.setResetConfirmKey,
-    setResetAttempt: store.actions.setResetAttempt
   },
   props: {
     match: Boolean

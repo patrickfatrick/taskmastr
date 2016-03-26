@@ -8,16 +8,16 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setRememberMe } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    rememberMe () {
-      return store.state.rememberMe
+  vuex: {
+    getters: {
+      rememberMe: (state) => state.user.rememberMe
+    },
+    actions: {
+      setRememberMe
     }
-  },
-  methods: {
-    setRememberMe: store.actions.setRememberMe
   }
 }
 

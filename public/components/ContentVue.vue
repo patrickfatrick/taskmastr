@@ -7,14 +7,13 @@
 
 <script>
 
-import store from '../store/store'
 import Tasks from './tasks/Tasks.vue'
 import Menu from './menu/Menu.vue'
 
 export default {
-  computed: {
-    auth () {
-      return store.state.auth
+  vuex: {
+    getters: {
+      auth: (state) => state.user.auth
     }
   },
   components: {

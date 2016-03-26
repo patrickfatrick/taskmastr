@@ -51,7 +51,7 @@ export function getList (id, cb) {
   })
 }
 
-export function deleteList (id, user, cb) {
+export function removeList (id, user, cb) {
   return window.fetch(`/lists/${id}/delete`, {
     method: 'delete',
     credentials: 'same-origin',

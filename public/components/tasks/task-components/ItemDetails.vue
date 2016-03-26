@@ -45,30 +45,30 @@
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
-import store from '../../../store/store'
+import { setTaskNotes, toggleDetails, setDueDateDifference, renameTask } from '../../../store/task-store/task-actions'
 import Datepicker from './Datepicker.vue'
 
 export default {
+  vuex: {
+    getters: {
+      tasks: (state) => state.task.current.items,
+      detailsToggled: (state) => state.task.detailsToggled
+    },
+    actions: {
+      setTaskNotes,
+      toggleDetails,
+      setDueDateDifference,
+      renameTask
+    }
+  },
   components: {
     Datepicker
-  },
-  computed: {
-    tasks () {
-      return store.state.current.items
-    },
-    detailsToggled () {
-      return store.state.detailsToggled
-    }
   },
   props: {
     'index': Number,
     'task': Object
   },
   methods: {
-    setTaskNotes: store.actions.setTaskNotes,
-    toggleDetails: store.actions.toggleDetails,
-    setDueDateDifference: store.actions.setDueDateDifference,
-    renameTask: store.actions.renameTask,
     rename (e, index) {
       if (!e.target.value) {
         e.target.value = this.task.item

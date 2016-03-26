@@ -13,26 +13,20 @@
 
 <script>
 
-import store from '../../../store/store'
+import { setKey, setLoginAttempt } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      create: (state) => state.user.create,
+      invalidKey: (state) => state.user.create,
+      loginAttempt: (state) => state.user.loginAttempt
     },
-    create () {
-      return store.state.create
-    },
-    invalidKey () {
-      return store.state.invalidKey
-    },
-    loginAttempt () {
-      return store.state.loginAttempt
+    actions: {
+      setKey,
+      setLoginAttempt
     }
-  },
-  methods: {
-    setKey: store.actions.setKey,
-    setLoginAttempt: store.actions.setLoginAttempt
   },
   props: {
     require: Boolean

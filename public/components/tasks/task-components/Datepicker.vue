@@ -17,17 +17,21 @@
 
 import Pikaday from 'pikaday'
 import gregorian from 'gregorian'
-import store from '../../../store/store'
+import { setTaskDueDate, setDueDateDifference } from '../../../store/task-store/task-actions'
 
 export default {
+  vuex: {
+    getters: {
+      tasks: (state) => state.task.current.items
+    },
+    actions: {
+      setTaskDueDate,
+      setDueDateDifference
+    }
+  },
   data () {
     return {
       picker: null
-    }
-  },
-  computed: {
-    tasks () {
-      return store.state.current.items
     }
   },
   props: {
@@ -35,8 +39,6 @@ export default {
     'task': Object
   },
   methods: {
-    setDueDateDifference: store.actions.setDueDateDifference,
-    setTaskDueDate: store.actions.setTaskDueDate,
     reformatDate (date) {
       this.setDueDate(this.index, gregorian.reform(date).to('iso'))
     },

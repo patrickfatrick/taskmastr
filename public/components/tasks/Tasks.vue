@@ -17,27 +17,25 @@
 
 <script>
 
-import store from '../../store/store'
+import { mountList } from '../../store/list-store/list-actions'
 import MenuToggle from '../misc/MenuToggle.vue'
 import TaskInput from './task-components/TaskInput.vue'
 import Items from './task-components/Items.vue'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      current: (state) => state.task.current
     },
-    current () {
-      return store.state.current
+    actions: {
+      mountList
     }
   },
   components: {
     MenuToggle,
     TaskInput,
     Items
-  },
-  methods: {
-    mountList: store.actions.mountList
   },
   route: {
     data (transition) {

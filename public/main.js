@@ -7,7 +7,7 @@ import ResetVue from './components/ResetVue.vue'
 import CreateVue from './components/CreateVue.vue'
 import ForgotVue from './components/ForgotVue.vue'
 import Tasks from './components/tasks/Tasks.vue'
-import store from './store/store'
+import store from './store'
 
 // Debug mode. Turned off in production builds
 Vue.config.debug = process.env.NODE_ENV !== 'production'
@@ -15,6 +15,7 @@ Vue.config.debug = process.env.NODE_ENV !== 'production'
 Vue.use(Router)
 
 var app = Vue.extend({
+  store,
   components: {
     app: App
   }

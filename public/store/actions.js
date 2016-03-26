@@ -30,7 +30,6 @@ export default {
   setResetFail: 'SET_RESET_FAIL',
   setResetKey: 'SET_RESET_KEY',
   setResetConfirmKey: 'SET_RESET_CONFIRM_KEY',
-  setSaveButton: 'SET_SAVE_BUTTON',
   setDarkmode: (store, bool) => {
     store.dispatch('SET_DARKMODE', bool)
     return updateUser(store.state.user.username, { darkmode: bool }, (err, res) => {

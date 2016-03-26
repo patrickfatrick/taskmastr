@@ -8,16 +8,16 @@
 <script>
 
 import Mousetrap from 'mousetrap'
-import store from '../../../store/store'
+import { setDarkmode } from '../../../store/user-store/user-actions'
 
 export default {
-  computed: {
-    darkmode () {
-      return store.state.user.darkmode
+  vuex: {
+    getters: {
+      darkmode: (state) => state.user.user.darkmode
+    },
+    actions: {
+      setDarkmode
     }
-  },
-  methods: {
-    setDarkmode: store.actions.setDarkmode
   },
   compiled () {
     Mousetrap.bind('command+m', (e) => {

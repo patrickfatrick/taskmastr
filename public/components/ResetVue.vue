@@ -18,29 +18,25 @@
 
 <script>
 
-import store from '../store/store'
+import { setReset, setResetToken } from '../store/user-store/user-actions'
 import ResetForm from './forms/ResetForm.vue'
 import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
-  computed: {
-    user () {
-      return store.state.user
+  vuex: {
+    getters: {
+      user: (state) => state.user.user,
+      init: (state) => state.user.init,
+      auth: (state) => state.user.auth
     },
-    init () {
-      return store.state.init
-    },
-    auth () {
-      return store.state.auth
+    actions: {
+      setReset,
+      setResetToken
     }
   },
   components: {
     ResetForm,
     TryIt
-  },
-  methods: {
-    setReset: store.actions.setReset,
-    setResetToken: store.actions.setResetToken
   },
   compiled () {
     if (this.$route.query.token) this.setResetToken(this.$route.query.token)
