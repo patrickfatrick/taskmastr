@@ -1,6 +1,6 @@
 /* global describe it */
 import chai from 'chai'
-import {listMutations} from '../../public/store/mutations/list-mutations'
+import listMutations from '../../public/store/list-store/list-mutations'
 
 chai.should()
 describe('list mutations', () => {
@@ -9,18 +9,25 @@ describe('list mutations', () => {
       user: {
         tasks: [
           {
+            id: 'list1',
             list: 'Current list',
             current: true
           },
           {
+            id: 'list2',
             list: 'Not current list',
             current: false
           }
         ]
       }
     }
+    const list = {
+      id: 'list2',
+      list: 'Not current list',
+      current: false
+    }
 
-    listMutations.SET_CURRENT_LIST(state, 1)
+    listMutations.SET_CURRENT_LIST(state, list)
 
     state.user.tasks[0].current.should.be.false
     state.user.tasks[1].current.should.be.true

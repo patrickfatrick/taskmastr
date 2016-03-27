@@ -154,7 +154,7 @@ export function getSession (cb) {
 }
 
 export function updateUser (username, body, cb) {
-  if (username === 'mrormrstestperson@taskmastr.co') return { success: true }
+  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
   return window.fetch(`/users/${username}/update`, {
     method: 'post',
     credentials: 'same-origin',

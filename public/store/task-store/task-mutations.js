@@ -46,7 +46,7 @@ export default {
     let spliced = state.current.items.splice(oldIndex, 1)
     state.current.items.splice(newIndex, 0, spliced[0])
   },
-  [TOGGLE_DETAILS] (state, index, bool) {
+  [TOGGLE_DETAILS] (state, index) {
     // _.set(state, 'current.items[' + index + ']._detailsToggled', bool)
     _.set(state, 'detailsToggled', index)
   },

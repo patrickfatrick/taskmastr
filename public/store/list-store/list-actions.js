@@ -95,9 +95,10 @@ export function deleteList ({ dispatch, state }, index) {
           return v.id !== list.id
         })
       }
-      return removeList(list.id, user, (err, response) => {
+      return removeList(list.id, user, (err, res) => {
         // Revert the change if request fails
         if (err) dispatch('ADD_LIST', list)
+        return res
       })
     }, 5000)
     dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)
