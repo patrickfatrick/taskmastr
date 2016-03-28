@@ -33,14 +33,13 @@
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import { setCurrentTask, deleteTask, completeTask, sortTasks, toggleDetails } from '../../../store/task-store/task-actions'
+import { setCurrentTask, deleteTask, completeTask, sortTasks, toggleDetails } from '../../../store/item-store/item-actions'
 import ItemDetails from './ItemDetails.vue'
 
 export default {
   vuex: {
     getters: {
-      tasks: (state) => state.current.items,
-      deleteAgendas: (state) => state.deleteAgendas
+      tasks: (state) => state.current.items
     },
     actions: {
       setCurrentTask,

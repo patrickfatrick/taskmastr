@@ -17,7 +17,7 @@
 
 import Pikaday from 'pikaday'
 import gregorian from 'gregorian'
-import { setTaskDueDate, setDueDateDifference } from '../../../store/task-store/task-actions'
+import { setTaskDueDate, setDueDateDifference } from '../../../store/item-store/item-actions'
 
 export default {
   vuex: {

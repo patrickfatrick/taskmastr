@@ -25,7 +25,7 @@ exports.updateItem = function (listid, index, item) {
     r.table('lists').get(listid).update({
       'items': r.row('items').changeAt(index, item)
     })
-    .then((result) => resolve({success: true}))
+    .then((result) => resolve({ success: true }))
     .catch((err) => reject(err))
   })
 }

@@ -19,10 +19,6 @@ export function setTaskDelete ({ dispatch }, bool) {
   dispatch('SET_TASK_DELETE', bool)
 }
 
-export function deleteAgenda ({ dispatch }, id) {
-  dispatch('DELETE_AGENDA', id)
-}
-
 export function setCurrentTask ({ dispatch, state }, index) {
   const list = state.current
   const items = state.current.items
@@ -108,7 +104,6 @@ export function deleteTask ({ dispatch, state }, index) {
         }
       }
       // Optimistically delete the item from the store before request is made
-      dispatch('DELETE_AGENDA', task.id)
       dispatch('UPDATE_DELETE_QUEUE', task.id, null)
       dispatch('SET_TASK_DELETE', deleteTask, false)
       dispatch('REMOVE_TASK', deleteTask)
@@ -165,13 +160,13 @@ export function sortTasks ({ dispatch, state }, oldIndex, newIndex) {
   })
 }
 
-export function setDueDateDifference (store, index, dueDate) {
+export function setDueDateDifference ({ dispatch }, index, dueDate) {
   if (!dueDate) {
-    store.dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
+    dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
     return
   }
   const today = gregorian.reform(new Date()).set(6, 'h').recite()
   dueDate = new Date(dueDate)
   let diff = Math.floor(Math.round((dueDate - today) / 1000 / 60 / 60 / 24))
-  store.dispatch('SET_DUE_DATE_DIFFERENCE', index, diff)
+  dispatch('SET_DUE_DATE_DIFFERENCE', index, diff)
 }

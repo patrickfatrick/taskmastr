@@ -1,22 +1,123 @@
 /* global describe it */
 import chai from 'chai'
-import {testAction} from '../test-action'
-import actions from '../../../public/store/actions'
+import { testAction } from '../test-action'
+import itemActionsInjector from 'inject!../../../public/store/item-store/item-actions'
 
 chai.should()
 
 describe('sortTasks', () => {
-  it('dispatches SORT_TASKS and SET_SAVE_BUTTON when moving down', (done) => {
-    testAction(actions.sortTasks, [0, 1], {}, [
-      {name: 'SORT_TASKS', payload: [0, 1]},
-      {name: 'SET_SAVE_BUTTON', payload: [true]}
+  it('dispatches SORT_TASKS when moving down', (done) => {
+    const itemActions = itemActionsInjector({
+      '../../services/list-services': {
+        updateList (username, listid, tasks, cb) {
+          cb(null, { success: true })
+        }
+      }
+    })
+
+    const state = {
+      user: {
+        username: 'username'
+      },
+      current: {
+        id: 'listid',
+        list: 'List 1',
+        items: [
+          {
+            id: 'itemid',
+            item: 'Item 1',
+            complete: false,
+            _delete: false
+          },
+          {
+            id: 'itemid2',
+            item: 'Item 2',
+            complete: true,
+            _delete: false
+          }
+        ]
+      }
+    }
+
+    testAction(itemActions.sortTasks, [0, 1], state, [
+      { name: 'SORT_TASKS', payload: [0, 1] }
     ], done)
   })
 
-  it('dispatches SORT_TASKS and SET_SAVE_BUTTON when moving up', (done) => {
-    testAction(actions.sortTasks, [1, 0], {}, [
-      {name: 'SORT_TASKS', payload: [1, 0]},
-      {name: 'SET_SAVE_BUTTON', payload: [true]}
+  it('dispatches SORT_TASKS when moving up', (done) => {
+    const itemActions = itemActionsInjector({
+      '../../services/list-services': {
+        updateList (username, listid, tasks, cb) {
+          cb(null, { sucess: true })
+        }
+      }
+    })
+
+    const state = {
+      user: {
+        username: 'username'
+      },
+      current: {
+        id: 'listid',
+        list: 'List 1',
+        items: [
+          {
+            id: 'itemid',
+            item: 'Item 1',
+            complete: false,
+            _delete: false
+          },
+          {
+            id: 'itemid2',
+            item: 'Item 2',
+            complete: true,
+            _delete: false
+          }
+        ]
+      }
+    }
+
+    testAction(itemActions.sortTasks, [1, 0], state, [
+      { name: 'SORT_TASKS', payload: [1, 0] }
+    ], done)
+  })
+
+  it('dispatches SORT_TASKS twice on error', (done) => {
+    const itemActions = itemActionsInjector({
+      '../../services/list-services': {
+        updateList (username, listid, tasks, cb) {
+          cb('Error!', { status: 500 })
+        }
+      }
+    })
+
+    const state = {
+      user: {
+        username: 'username'
+      },
+      current: {
+        id: 'listid',
+        list: 'List 1',
+        items: [
+          {
+            id: 'itemid',
+            item: 'Item 1',
+            complete: false,
+            _delete: false
+          },
+          {
+            id: 'itemid2',
+            item: 'Item 2',
+            complete: true,
+            _delete: false
+          }
+        ]
+      }
+    }
+
+    testAction(itemActions.sortTasks, [0, 1], state, [
+      { name: 'SORT_TASKS', payload: [0, 1] },
+      { name: 'SORT_TASKS', payload: [1, 0] }
     ], done)
   })
 })

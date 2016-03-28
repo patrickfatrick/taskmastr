@@ -1,6 +1,6 @@
 /* global describe it */
 import chai from 'chai'
-import taskMutations from '../../public/store/task-store/task-mutations'
+import taskMutations from '../../public/store/item-store/item-mutations'
 
 chai.should()
 describe('task mutations', () => {

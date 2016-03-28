@@ -16,7 +16,7 @@ import harsh from 'harsh'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
-import { setNewTask, setPlaceholder, setTaskAttempt, setTaskDueDate, setDueDateDifference, addTask } from '../../../store/task-store/task-actions'
+import { setNewTask, setPlaceholder, setTaskAttempt, setTaskDueDate, setDueDateDifference, addTask } from '../../../store/item-store/item-actions'
 import extractDate from '../../../helper-utilities/extract-date'
 import placeholders from '../../../helper-utilities/placeholders'
 

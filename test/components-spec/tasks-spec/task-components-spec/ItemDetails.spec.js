@@ -1,17 +1,22 @@
 /* global it describe sinon assert beforeEach afterEach */
 import chai from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import Mousetrap from 'mousetrap'
 import ItemDetails from '../../../../public/components/tasks/task-components/ItemDetails.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
 chai.should()
 describe('ItemDetails.vue', function () {
   let clock
+  let items
 
   beforeEach(() => {
     const start = 'Jan 1, 2016 00:00:000 UTC'
     clock = sinon.useFakeTimers(Date.parse(start))
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -32,8 +37,9 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: -1,
         _detailsToggled: false
       }
-    ])
-    ItemDetails.computed.task = () => {
+    ]
+
+    ItemDetails.computed.task = function () {
       return {
         id: 'itemid',
         item: 'Item 1',
@@ -45,40 +51,37 @@ describe('ItemDetails.vue', function () {
         _detailsToggled: false
       }
     }
-    ItemDetails.computed.index = () => {
+
+    ItemDetails.computed.index = function () {
       return 0
     }
   })
 
   afterEach(() => {
     clock.restore()
-    ItemDetails.computed.tasks.restore()
+    items = []
     delete ItemDetails.computed.task
     delete ItemDetails.computed.index
   })
 
   it('should inherit the tasks property from the state', () => {
-    ItemDetails.computed.tasks().should.be.an.instanceof(Array)
+    ItemDetails.vuex.getters.tasks({ current: { items: [] } }).should.be.an.instanceof(Array)
   })
 
   it('should inherit a setTaskNotes action from the store', () => {
-    ItemDetails.methods.setTaskNotes.should.be.an.instanceof(Function)
-  })
-
-  it('should inherit a setSaveButton action from the store', () => {
-    ItemDetails.methods.setSaveButton.should.be.an.instanceof(Function)
+    ItemDetails.vuex.actions.setTaskNotes.should.be.an.instanceof(Function)
   })
 
   it('should inherit a toggleDetails action from the store', () => {
-    ItemDetails.methods.toggleDetails.should.be.an.instanceof(Function)
+    ItemDetails.vuex.actions.toggleDetails.should.be.an.instanceof(Function)
   })
 
   it('should inherit a setDueDateDifference action from the store', () => {
-    ItemDetails.methods.setDueDateDifference.should.be.an.instanceof(Function)
+    ItemDetails.vuex.actions.setDueDateDifference.should.be.an.instanceof(Function)
   })
 
   it('should inherit a renameTask action from the store', () => {
-    ItemDetails.methods.renameTask.should.be.an.instanceof(Function)
+    ItemDetails.vuex.actions.renameTask.should.be.an.instanceof(Function)
   })
 
   it('should have a rename method', () => {
@@ -91,6 +94,16 @@ describe('ItemDetails.vue', function () {
 
   it('should render with initial state', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -105,6 +118,16 @@ describe('ItemDetails.vue', function () {
 
   it('should reformat date on reformatDate', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -117,9 +140,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should call renameTask on .task-name change', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -140,20 +162,29 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: -1,
         _detailsToggled: false
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: null,
-        _delete: true,
-        _dueDateDifference: 1,
-        _detailsToggled: true
-      }
-    }
+    ]
+
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: null,
+      _delete: true,
+      _dueDateDifference: 1,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -176,9 +207,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should not call renameTask if null', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -199,20 +229,28 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: -1,
         _detailsToggled: false
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: null,
-        _delete: true,
-        _dueDateDifference: 1,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: null,
+      _delete: true,
+      _dueDateDifference: 1,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -235,9 +273,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should not display dates or due date differences if !task.dueDate', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -248,20 +285,28 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: null,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: null,
-        _delete: true,
-        _dueDateDifference: null,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: null,
+      _delete: true,
+      _dueDateDifference: null,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -275,9 +320,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should not display dates or due date differences if task.dateCompleted', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -289,21 +333,29 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: null,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: true,
-        dueDate: null,
-        dateCompleted: 'date',
-        _delete: true,
-        _dueDateDifference: null,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: true,
+      dueDate: null,
+      dateCompleted: 'date',
+      _delete: true,
+      _dueDateDifference: null,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -319,9 +371,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should display dates and due date differences if !task.dateCompleted', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -333,21 +384,29 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: null,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: '2016-01-02T13:00:00.000Z',
-        dateCompleted: null,
-        _delete: true,
-        _dueDateDifference: null,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: '2016-01-02T13:00:00.000Z',
+      dateCompleted: null,
+      _delete: true,
+      _dueDateDifference: null,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -363,9 +422,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should display dates if due date is tomorrow', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -376,20 +434,28 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: 1,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: '2016-01-02T13:00:00.000Z',
-        _delete: true,
-        _dueDateDifference: 1,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: '2016-01-02T13:00:00.000Z',
+      _delete: true,
+      _dueDateDifference: 1,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -409,9 +475,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should display dates if due date is more than one day in the future', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -422,19 +487,17 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: 2,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: '2016-01-03T13:00:00.000Z',
-        _delete: true,
-        _dueDateDifference: 2,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: '2016-01-03T13:00:00.000Z',
+      _delete: true,
+      _dueDateDifference: 2,
+      _detailsToggled: true
+    })
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -455,9 +518,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should display dates if due date was yesterday', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -468,20 +530,28 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: -1,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: '2015-12-31T13:00:00.000Z',
-        _delete: true,
-        _dueDateDifference: -1,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: '2015-12-31T13:00:00.000Z',
+      _delete: true,
+      _dueDateDifference: -1,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -501,9 +571,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should display dates if due date was more than one day in the past', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -514,20 +583,28 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: -2,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: '2015-12-30T13:00:00.000Z',
-        _delete: true,
-        _dueDateDifference: -2,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: '2015-12-30T13:00:00.000Z',
+      _delete: true,
+      _dueDateDifference: -2,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -547,9 +624,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should display dates if due date is today', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -560,20 +636,28 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: 0,
         _detailsToggled: true
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: '2016-01-01T13:00:00.000Z',
-        _delete: true,
-        _dueDateDifference: 0,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: '2016-01-01T13:00:00.000Z',
+      _delete: true,
+      _dueDateDifference: 0,
+      _detailsToggled: true
+    })
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails
@@ -591,9 +675,8 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should not call renameTask if null', (done) => {
-    ItemDetails.computed.tasks.restore()
-    delete ItemDetails.computed.task
-    sinon.stub(ItemDetails.computed, 'tasks').returns([
+    ItemDetails.computed.task.restore()
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -614,19 +697,17 @@ describe('ItemDetails.vue', function () {
         _dueDateDifference: -1,
         _detailsToggled: false
       }
-    ])
-    ItemDetails.computed.task = () => {
-      return {
-        id: 'itemid',
-        item: 'Item 1',
-        current: true,
-        complete: false,
-        dueDate: null,
-        _delete: true,
-        _dueDateDifference: 1,
-        _detailsToggled: true
-      }
-    }
+    ]
+    sinon.stub(ItemDetails.computed, 'task').returns({
+      id: 'itemid',
+      item: 'Item 1',
+      current: true,
+      complete: false,
+      dueDate: null,
+      _delete: true,
+      _dueDateDifference: 1,
+      _detailsToggled: true
+    })
     const vm = new Vue({
       template: '<div><test></test></div>',
       components: {
@@ -651,6 +732,16 @@ describe('ItemDetails.vue', function () {
 
   it('should call toggleDetails on ctrl+d', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': ItemDetails

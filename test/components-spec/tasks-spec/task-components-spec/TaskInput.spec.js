@@ -1,7 +1,11 @@
 /* global it describe sinon beforeEach afterEach */
 import chai from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import TaskInput from '../../../../public/components/tasks/task-components/TaskInput.vue'
+import store from '../../../../public/store'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
 chai.should()
 describe('TaskInput.vue', function () {
@@ -17,15 +21,15 @@ describe('TaskInput.vue', function () {
   })
 
   it('should inherit the newTask property from the state', () => {
-    TaskInput.computed.newTask().should.equal('')
+    TaskInput.vuex.getters.newTask({ newTask: '' }).should.equal('')
   })
 
   it('should inherit the taskAttempt property from the state', () => {
-    TaskInput.computed.taskAttempt().should.equal(false)
+    TaskInput.vuex.getters.taskAttempt({ taskAttempt: false }).should.equal(false)
   })
 
   it('should inherit the user property from the state', () => {
-    TaskInput.computed.user().should.be.an.instanceof(Object)
+    TaskInput.vuex.getters.user({ user: {} }).should.be.an.instanceof(Object)
   })
 
   it('should have a validate property', () => {
@@ -37,15 +41,15 @@ describe('TaskInput.vue', function () {
   })
 
   it('should inherit a setNewTask action from the store', () => {
-    TaskInput.methods.setNewTask.should.be.an.instanceof(Function)
+    TaskInput.vuex.actions.setNewTask.should.be.an.instanceof(Function)
   })
 
   it('should inherit a setPlaceholder action from the store', () => {
-    TaskInput.methods.setPlaceholder.should.be.an.instanceof(Function)
+    TaskInput.vuex.actions.setPlaceholder.should.be.an.instanceof(Function)
   })
 
   it('should inherit a setTaskAttempt action from the store', () => {
-    TaskInput.methods.setTaskAttempt.should.be.an.instanceof(Function)
+    TaskInput.vuex.actions.setTaskAttempt.should.be.an.instanceof(Function)
   })
 
   it('should have an addTask method', () => {
@@ -54,6 +58,7 @@ describe('TaskInput.vue', function () {
 
   it('should render with initial state', (done) => {
     const vm = new Vue({
+      store,
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -66,8 +71,15 @@ describe('TaskInput.vue', function () {
 
   it('should respond to changes in the state', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(false)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
+
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -77,15 +89,20 @@ describe('TaskInput.vue', function () {
     vm.$el.querySelector('#create-todo').classList.contains('invalid').should.be.true
 
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
     done()
   })
 
   it('should call addTask and setPlaceholder on form submit', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('New task')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: 'New task'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -101,16 +118,20 @@ describe('TaskInput.vue', function () {
     vm.$children[0].addTask.restore()
     vm.$children[0].setPlaceholder.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 
   it('should call addTask with a dueDate shortcut on form submit', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('Remind me to new task tomorrow')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: 'Remind me to new task tomorrow'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -124,16 +145,20 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 
   it('should call addTask with a shorter dueDate shortcut on form submit', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('/r new task tomorrow')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: '/r new task tomorrow'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -147,16 +172,20 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 
   it('should call addTask with a dueDate shortcut for tomorrow on form submit', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('/t new task')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: '/t new task'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -170,16 +199,22 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 
   it('should call addTask with a dueDate shortcut for next week on form submit', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('/w new task')
+    sinon.stub(TaskInput.vuex.getters, 'taskAttempt').returns(true)
+    sinon.stub(TaskInput.vuex.getters, 'newTask').returns('/w new task')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: '/w new task'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -193,17 +228,23 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
+    TaskInput.vuex.getters.taskAttempt.restore()
+    TaskInput.vuex.getters.newTask.restore()
     done()
   })
 
   it('should call addTask with a dueDate shortcut for next month on form submit', (done) => {
     clock.tick(86400000)
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('/m new task')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: '/m new task'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -217,17 +258,21 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 
   it('should call addTask with a dueDate shortcut for next year on form submit', (done) => {
     clock.tick(86400000)
     sinon.stub(TaskInput.computed, 'isValid').returns(true)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('/y new task')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: '/y new task'
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -241,16 +286,20 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 
   it('should do nothing if !isValid', (done) => {
     sinon.stub(TaskInput.computed, 'isValid').returns(false)
-    sinon.stub(TaskInput.computed, 'taskAttempt').returns(true)
-    sinon.stub(TaskInput.computed, 'newTask').returns('')
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          taskAttempt: true,
+          newTask: ''
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': TaskInput
@@ -263,8 +312,6 @@ describe('TaskInput.vue', function () {
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
-    TaskInput.computed.taskAttempt.restore()
-    TaskInput.computed.newTask.restore()
     done()
   })
 })

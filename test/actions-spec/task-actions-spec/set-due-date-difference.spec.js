@@ -1,7 +1,7 @@
 /* global describe it sinon beforeEach afterEach*/
 import chai from 'chai'
-import {testAction} from '../test-action'
-import actions from '../../../public/store/actions'
+import { testAction } from '../test-action'
+import { setDueDateDifference } from '../../../public/store/item-store/item-actions'
 
 chai.should()
 
@@ -20,7 +20,7 @@ describe('setDueDateDifference', () => {
     const dueDate = Date.parse(new Date()) + (1000 * 60 * 60 * 24)
     const index = 0
 
-    testAction(actions.setDueDateDifference, [index, dueDate], {}, [
+    testAction(setDueDateDifference, [index, dueDate], {}, [
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, 1]}
     ], done)
   })
@@ -29,7 +29,7 @@ describe('setDueDateDifference', () => {
     const dueDate = Date.parse(new Date()) - (1000 * 60 * 60 * 24)
     const index = 0
 
-    testAction(actions.setDueDateDifference, [index, dueDate], {}, [
+    testAction(setDueDateDifference, [index, dueDate], {}, [
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, -1]}
     ], done)
   })
@@ -38,7 +38,7 @@ describe('setDueDateDifference', () => {
     const dueDate = null
     const index = 0
 
-    testAction(actions.setDueDateDifference, [index, dueDate], {}, [
+    testAction(setDueDateDifference, [index, dueDate], {}, [
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null]}
     ], done)
   })

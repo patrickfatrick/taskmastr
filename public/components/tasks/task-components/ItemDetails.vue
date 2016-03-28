@@ -45,7 +45,7 @@
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
-import { setTaskNotes, toggleDetails, setDueDateDifference, renameTask } from '../../../store/task-store/task-actions'
+import { setTaskNotes, toggleDetails, setDueDateDifference, renameTask } from '../../../store/item-store/item-actions'
 import Datepicker from './Datepicker.vue'
 
 export default {

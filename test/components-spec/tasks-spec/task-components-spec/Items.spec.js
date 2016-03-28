@@ -1,13 +1,18 @@
 /* global it describe sinon assert beforeEach afterEach*/
 import chai from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import Mousetrap from 'mousetrap'
 import Items from '../../../../public/components/tasks/task-components/Items.vue'
+import store from '../../../../public/store'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
 chai.should()
 describe('Items.vue', function () {
+  let items
   beforeEach(() => {
-    sinon.stub(Items.computed, 'tasks').returns([
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -26,11 +31,11 @@ describe('Items.vue', function () {
         _dueDateDifference: -1,
         _detailsToggled: false
       }
-    ])
+    ]
   })
 
   afterEach(() => {
-    Items.computed.tasks.restore()
+    items = []
   })
 
   it('should have a dragStart property', () => {
@@ -38,31 +43,23 @@ describe('Items.vue', function () {
   })
 
   it('should inherit the tasks property from the state', () => {
-    Items.computed.tasks().should.be.an.instanceof(Array)
-  })
-
-  it('should inherit the deleteAgendas property from the state', () => {
-    Items.computed.deleteAgendas().should.be.an.instanceof(Array)
+    Items.vuex.getters.tasks({ current: { items: [] } }).should.be.an.instanceof(Array)
   })
 
   it('should inherit a deleteTask action from the store', () => {
-    Items.methods.deleteTask.should.be.an.instanceof(Function)
+    Items.vuex.actions.deleteTask.should.be.an.instanceof(Function)
   })
 
   it('should inherit a setCurrentTask action from the store', () => {
-    Items.methods.setCurrentTask.should.be.an.instanceof(Function)
+    Items.vuex.actions.setCurrentTask.should.be.an.instanceof(Function)
   })
 
   it('should inherit a sortTasks action from the store', () => {
-    Items.methods.sortTasks.should.be.an.instanceof(Function)
-  })
-
-  it('should inherit a setSaveButton action from the store', () => {
-    Items.methods.setSaveButton.should.be.an.instanceof(Function)
+    Items.vuex.actions.sortTasks.should.be.an.instanceof(Function)
   })
 
   it('should inherit a toggleDetails action from the store', () => {
-    Items.methods.toggleDetails.should.be.an.instanceof(Function)
+    Items.vuex.actions.toggleDetails.should.be.an.instanceof(Function)
   })
 
   it('should have a _drag method', () => {
@@ -78,9 +75,8 @@ describe('Items.vue', function () {
   })
 
   it('should render with initial state', (done) => {
-    Items.computed.tasks.restore()
-    sinon.stub(Items.computed, 'tasks').returns([])
     const vm = new Vue({
+      store,
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -94,6 +90,16 @@ describe('Items.vue', function () {
 
   it('should render rows with tasks', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -108,8 +114,7 @@ describe('Items.vue', function () {
   })
 
   it('should respond to complete _delete and current and _dueDateDifference properties', (done) => {
-    Items.computed.tasks.restore()
-    sinon.stub(Items.computed, 'tasks').returns([
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -137,8 +142,19 @@ describe('Items.vue', function () {
         _dueDateDifference: null,
         _detailsToggled: false
       }
-    ])
+    ]
+
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -155,6 +171,16 @@ describe('Items.vue', function () {
 
   it('should call setCurrentTask method on click', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -171,6 +197,16 @@ describe('Items.vue', function () {
 
   it('should call toggleDetails on dblclick', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -183,7 +219,7 @@ describe('Items.vue', function () {
     dblclick.initEvent('dblclick', true, true, window)
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    vm.$children[0].toggleDetails.calledWith(0, true).should.be.true
+    vm.$children[0].toggleDetails.calledWith(0).should.be.true
 
     vm.$children[0].toggleDetails.restore()
     done()
@@ -191,6 +227,16 @@ describe('Items.vue', function () {
 
   it('should call toggleDetails method on click', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -207,6 +253,16 @@ describe('Items.vue', function () {
 
   it('should call completeTask on click', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -223,6 +279,16 @@ describe('Items.vue', function () {
 
   it('should call setCurrentTask on ctrl+,', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -239,6 +305,16 @@ describe('Items.vue', function () {
 
   it('should call setCurrentTask on ctrl+.', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -255,6 +331,16 @@ describe('Items.vue', function () {
 
   it('should call deleteTask on ctrl+backspace', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -271,6 +357,16 @@ describe('Items.vue', function () {
 
   it('should call sortTasks on ctrl+command+up', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -286,8 +382,7 @@ describe('Items.vue', function () {
   })
 
   it('should not call sortTasks on ctrl+command+up if first task', (done) => {
-    Items.computed.tasks.restore()
-    sinon.stub(Items.computed, 'tasks').returns([
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -300,8 +395,19 @@ describe('Items.vue', function () {
         current: false,
         _delete: false
       }
-    ])
+    ]
+
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -317,8 +423,7 @@ describe('Items.vue', function () {
   })
 
   it('should call sortTasks on ctrl+command+down', (done) => {
-    Items.computed.tasks.restore()
-    sinon.stub(Items.computed, 'tasks').returns([
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -331,8 +436,19 @@ describe('Items.vue', function () {
         current: false,
         _delete: false
       }
-    ])
+    ]
+
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -349,6 +465,16 @@ describe('Items.vue', function () {
 
   it('should not call sortTasks on ctrl+command+down if last task', (done) => {
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -364,8 +490,7 @@ describe('Items.vue', function () {
   })
 
   it('should handle moving non-complete to complete on sortTasks', (done) => {
-    Items.computed.tasks.restore()
-    sinon.stub(Items.computed, 'tasks').returns([
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -382,8 +507,19 @@ describe('Items.vue', function () {
         _delete: false,
         _dueDateDifference: -1
       }
-    ])
+    ]
+
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items
@@ -399,8 +535,7 @@ describe('Items.vue', function () {
   })
 
   it('should handle moving complete to non-complete on sortTasks', (done) => {
-    Items.computed.tasks.restore()
-    sinon.stub(Items.computed, 'tasks').returns([
+    items = [
       {
         id: 'itemid',
         item: 'Item 1',
@@ -417,8 +552,19 @@ describe('Items.vue', function () {
         _delete: false,
         _dueDateDifference: -1
       }
-    ])
+    ]
+
     const vm = new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Items

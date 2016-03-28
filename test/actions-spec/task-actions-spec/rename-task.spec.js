@@ -5,69 +5,63 @@ import itemActionsInjector from 'inject!../../../public/store/item-store/item-ac
 
 chai.should()
 
-describe('addTask', () => {
-  it('dispatches ADD_TASK', (done) => {
+describe('renameTask', () => {
+  it('dispatches RENAME_TASK', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        createItem (listid, task, username, cb) {
+        updateItem (listid, itemid, index, item, username, cb) {
           cb(null, { success: true })
         }
       }
     })
 
-    const state = {
+    let state = {
       user: {
         username: 'username'
       },
       current: {
         id: 'listid',
         list: 'List 1',
-        current: true,
-        _delete: false,
-        items: []
+        items: [
+          {
+            id: 'itemid',
+            item: 'Item 1'
+          }
+        ]
       }
     }
-
-    const task = {
-      id: 'id',
-      item: 'New task'
-    }
-
-    testAction(itemActions.addTask, [task], state, [
-      { name: 'ADD_TASK', payload: [task] }
+    testAction(itemActions.renameTask, [0, 'Item 0'], state, [
+      { name: 'RENAME_TASK', payload: [0, 'Item 0'] }
     ], done)
   })
 
-  it('dispatches ADD_TASK and REMOVE_TASK on error', (done) => {
+  it('dispatches RENAME_TASK twice on error', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        createItem (listid, task, username, cb) {
+        updateItem (listid, itemid, index, item, username, cb) {
           cb('Error!', { status: 500 })
         }
       }
     })
 
-    const state = {
+    let state = {
       user: {
         username: 'username'
       },
       current: {
         id: 'listid',
         list: 'List 1',
-        current: true,
-        _delete: false,
-        items: []
+        items: [
+          {
+            id: 'itemid',
+            item: 'Item 1'
+          }
+        ]
       }
     }
-
-    const task = {
-      id: 'id',
-      item: 'New task'
-    }
-
-    testAction(itemActions.addTask, [task], state, [
-      { name: 'ADD_TASK', payload: [task] },
-      { name: 'REMOVE_TASK', payload: [0] }
+    testAction(itemActions.renameTask, [0, 'Item 0'], state, [
+      { name: 'RENAME_TASK', payload: [0, 'Item 0'] },
+      { name: 'RENAME_TASK', payload: [0, 'Item 1'] }
     ], done)
   })
 })
