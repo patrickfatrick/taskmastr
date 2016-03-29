@@ -20,7 +20,7 @@ export default {
     getters: {
       user: (state) => state.user,
       create: (state) => state.create,
-      invalidKey: (state) => state.create,
+      invalidKey: (state) => state.invalidKey,
       loginAttempt: (state) => state.loginAttempt
     },
     actions: {

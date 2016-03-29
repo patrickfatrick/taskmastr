@@ -10,7 +10,8 @@
 
 <script>
 
-import { saveUser, addList, setCurrentList, loginUser, createUser } from '../../store/user-store/user-actions'
+import { saveUser, loginUser, createUser } from '../../store/user-store/user-actions'
+import { addList, setCurrentList } from '../../store.list-store/list-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import KeyInput from './form-components/KeyInput.vue'
 import ConfirmInput from './form-components/ConfirmInput.vue'
