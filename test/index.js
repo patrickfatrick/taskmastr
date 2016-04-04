@@ -1,3 +1,7 @@
+// Set Vue to silent to suppress warnings unless VUE_DEBUG
+var Vue = require('vue')
+Vue.config.silent = !(process.env.VUE_DEBUG)
+
 // require all test files using special Webpack feature
 // https://webpack.github.io/docs/context.html#require-context
 var testsContext = require.context('.', true, /\.spec$/)

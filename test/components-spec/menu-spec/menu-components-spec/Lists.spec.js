@@ -1,13 +1,37 @@
-/* global it describe sinon assert beforeEach afterEach*/
-import chai from 'chai'
+/* global it describe sinon beforeEach afterEach*/
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import Mousetrap from 'mousetrap'
 import Lists from '../../../../public/components/menu/menu-components/Lists.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('Lists.vue', function () {
+  let lists
+
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes,
+          user: {
+            ...state.user,
+            tasks: lists
+          }
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': Lists
+      }
+    }).$mount()
+  }
+
   beforeEach(() => {
-    sinon.stub(Lists.computed, 'lists').returns([
+    lists = [
       {
         id: 'listid',
         list: 'List 1',
@@ -32,11 +56,11 @@ describe('Lists.vue', function () {
           }
         ]
       }
-    ])
+    ]
   })
 
   afterEach(() => {
-    Lists.computed.lists.restore()
+    lists = []
   })
 
   it('should have a renameToggled property', () => {
@@ -48,116 +72,88 @@ describe('Lists.vue', function () {
   })
 
   it('should inherit the current property from the state', () => {
-    Lists.computed.current().should.be.an.instanceof(Object)
+    assert.isObject(Lists.vuex.getters.current({ current: {} }))
   })
 
   it('should inherit the lists property from the state', () => {
-    Lists.computed.lists().should.be.an.instanceof(Array)
+    assert.isArray(Lists.vuex.getters.lists({ user: { tasks: [] } }))
   })
 
   it('should inherit a deleteList action from the store', () => {
-    Lists.methods.deleteList.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.vuex.actions.deleteList)
   })
 
   it('should inherit a setCurrentList action from the store', () => {
-    Lists.methods.setCurrentList.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.vuex.actions.setCurrentList)
   })
 
   it('should inherit a sortLists action from the store', () => {
-    Lists.methods.sortLists.should.be.an.instanceof(Function)
-  })
-
-  it('should inherit a setSaveButton action from the store', () => {
-    Lists.methods.setSaveButton.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.vuex.actions.sortLists)
   })
 
   it('should have a renameList method', () => {
-    Lists.methods.renameList.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.methods.renameList)
   })
 
   it('should have a renameToggle method', () => {
-    Lists.methods.renameToggle.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.methods.renameToggle)
   })
 
   it('should have a _drag method', () => {
-    Lists.methods._drag.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.methods._drag)
   })
 
   it('should have a _drop method', () => {
-    Lists.methods._drop.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.methods._drop)
   })
 
   it('should have a _index method', () => {
-    Lists.methods._index.should.be.an.instanceof(Function)
+    assert.isFunction(Lists.methods._index)
   })
 
   it('should render with initial state', (done) => {
-    Lists.computed.lists.restore()
-    sinon.stub(Lists.computed, 'lists').returns([])
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    lists = []
+    const vm = mountVm()
 
-    vm.$el.querySelector('.table-body').children.should.have.length(0)
+    assert.lengthOf(vm.$el.querySelector('.table-body').children, 0)
 
     done()
   })
 
   it('should render rows with lists', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('.table-body').children.should.have.length(2)
-    vm.$el.querySelector('.table-body').children[0].getAttribute('name').should.equal('list1')
-    vm.$el.querySelector('.table-body').children[1].getAttribute('name').should.equal('list2')
+    assert.lengthOf(vm.$el.querySelector('.table-body').children, 2)
+    assert.deepEqual(vm.$el.querySelector('.table-body').children[0].getAttribute('name'), 'list1')
+    assert.deepEqual(vm.$el.querySelector('.table-body').children[1].getAttribute('name'), 'list2')
 
     done()
   })
 
   it('should respond to _delete and current properties', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('.table-body').children[0].classList.contains('deleting').should.be.true
-    vm.$el.querySelector('.table-body').children[1].classList.contains('current').should.be.true
+    assert.isTrue(vm.$el.querySelector('.table-body').children[0].classList.contains('deleting'))
+    assert.isTrue(vm.$el.querySelector('.table-body').children[1].classList.contains('current'))
 
     done()
   })
 
-  it('should call setCurrentList method on click', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
-    sinon.stub(vm.$children[0], 'setCurrentList')
+  it('should call navigateToList method on click', (done) => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'navigateToList')
 
     vm.$el.querySelectorAll('.name')[0].click()
-    vm.$children[0].setCurrentList.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
-    vm.$children[0].setCurrentList.restore()
+    vm.$children[0].navigateToList.restore()
     done()
   })
 
   it('should call renameToggle method on dblclick', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'renameToggle')
 
     let dblclick
@@ -165,10 +161,10 @@ describe('Lists.vue', function () {
     dblclick.initEvent('dblclick', true, true, window)
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    vm.$children[0].renameToggle.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].renameToggle.calledWith(0))
     Vue.nextTick(() => {
       vm.$children[0].renameToggled.should.equal(0)
-      vm.$el.querySelectorAll('.name')[0].classList.contains('hidden').should.be.true
+      assert.isTrue(vm.$el.querySelectorAll('.name')[0].classList.contains('hidden'))
     })
 
     vm.$children[0].renameToggle.restore()
@@ -176,12 +172,8 @@ describe('Lists.vue', function () {
   })
 
   it('should reset renameToggle when called on current renameToggle index', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'renameToggle')
 
     let dblclick
@@ -189,15 +181,15 @@ describe('Lists.vue', function () {
     dblclick.initEvent('dblclick', true, true, window)
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    vm.$children[0].renameToggle.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].renameToggle.calledWith(0))
 
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    vm.$children[0].renameToggle.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].renameToggle.calledWith(0))
 
     Vue.nextTick(() => {
       assert.isNull(vm.$children[0].renameToggled)
-      vm.$el.querySelectorAll('.name')[0].classList.contains('hidden').should.be.false
+      assert.isFalse(vm.$el.querySelectorAll('.name')[0].classList.contains('hidden'))
     })
 
     vm.$children[0].renameToggle.restore()
@@ -205,12 +197,8 @@ describe('Lists.vue', function () {
   })
 
   it('should call renameList on .rename change', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'renameList')
 
     let change
@@ -219,19 +207,15 @@ describe('Lists.vue', function () {
     vm.$el.querySelectorAll('.rename')[0].value = 'List 11'
     vm.$el.querySelectorAll('.rename')[0].dispatchEvent(change)
 
-    vm.$children[0].renameList.calledWith(0, 'List 11').should.be.true
+    assert.isTrue(vm.$children[0].renameList.calledWith(0, 'List 11'))
 
     vm.$children[0].renameList.restore()
     done()
   })
 
   it('should not call renameList if null', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'renameList')
 
     let change
@@ -240,19 +224,15 @@ describe('Lists.vue', function () {
     vm.$el.querySelectorAll('.rename')[0].value = ''
     vm.$el.querySelectorAll('.rename')[0].dispatchEvent(change)
 
-    vm.$children[0].renameList.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].renameList.calledOnce)
 
     vm.$children[0].renameList.restore()
     done()
   })
 
   it('sets renameToggled to null on blur', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'renameToggle')
 
     let blur
@@ -260,96 +240,75 @@ describe('Lists.vue', function () {
     blur.initEvent('blur', true, true, window)
     vm.$el.querySelectorAll('.rename')[0].dispatchEvent(blur)
 
-    vm.$children[0].renameToggle.calledWith(null).should.be.true
+    assert.isTrue(vm.$children[0].renameToggle.calledWith(null))
     assert.isNull(vm.$children[0].renameToggled)
 
     vm.$children[0].renameToggle.restore()
     done()
   })
 
-  it('should call setCurrentList on alt+,', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
-    sinon.stub(vm.$children[0], 'setCurrentList')
+  it('should call navigateToList on alt+,', (done) => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'navigateToList')
 
     Mousetrap.trigger('alt+,')
-    vm.$children[0].setCurrentList.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
-    vm.$children[0].setCurrentList.restore()
+    vm.$children[0].navigateToList.restore()
     done()
   })
 
-  it('should call setCurrentList on alt+.', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
-    sinon.stub(vm.$children[0], 'setCurrentList')
+  it('should call navigateToList on alt+.', (done) => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'navigateToList')
 
     Mousetrap.trigger('alt+.')
-    vm.$children[0].setCurrentList.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
-    vm.$children[0].setCurrentList.restore()
+    vm.$children[0].navigateToList.restore()
     done()
   })
 
   it('should call deleteList on alt+backspace', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'deleteList')
 
     Mousetrap.trigger('alt+backspace')
-    vm.$children[0].deleteList.calledWith(1).should.be.true
+    assert.isTrue(vm.$children[0].deleteList.calledWith(1))
 
     vm.$children[0].deleteList.restore()
     done()
   })
 
   it('should call renameToggle on alt+/', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'renameToggle')
 
     Mousetrap.trigger('alt+/')
-    vm.$children[0].renameToggle.calledWith(1).should.be.true
+    assert.isTrue(vm.$children[0].renameToggle.calledWith(1))
 
     vm.$children[0].renameToggle.restore()
     done()
   })
 
   it('should call sortLists on alt+command+up', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+up')
-    vm.$children[0].sortLists.calledWith(1, 0).should.be.true
+    assert.isTrue(vm.$children[0].sortLists.calledWith(1, 0))
 
     vm.$children[0].sortLists.restore()
     done()
   })
 
   it('should not call sortLists on alt+command+up if first list', (done) => {
-    Lists.computed.lists.restore()
-    sinon.stub(Lists.computed, 'lists').returns([
+    lists = [
       {
         id: 'listid',
         list: 'List 1',
@@ -374,25 +333,21 @@ describe('Lists.vue', function () {
           }
         ]
       }
-    ])
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    ]
+
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+up')
-    vm.$children[0].sortLists.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].sortLists.calledOnce)
 
     vm.$children[0].sortLists.restore()
     done()
   })
 
   it('should call sortLists on alt+command+down', (done) => {
-    Lists.computed.lists.restore()
-    sinon.stub(Lists.computed, 'lists').returns([
+    lists = [
       {
         id: 'listid',
         list: 'List 1',
@@ -417,33 +372,26 @@ describe('Lists.vue', function () {
           }
         ]
       }
-    ])
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    ]
+
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+down')
-    vm.$children[0].sortLists.calledWith(0, 1).should.be.true
+    assert.isTrue(vm.$children[0].sortLists.calledWith(0, 1))
 
     vm.$children[0].sortLists.restore()
     done()
   })
 
   it('should not call sortLists on alt+command+down if last list', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Lists
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortLists')
 
     Mousetrap.trigger('alt+command+down')
-    vm.$children[0].sortLists.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].sortLists.calledOnce)
 
     vm.$children[0].sortLists.restore()
     done()

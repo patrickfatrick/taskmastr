@@ -1,6 +1,6 @@
 <template>
   <div id="logout-container">
-    <button id="logout" title="Log out" @click.prevent="logoutUser">
+    <button id="logout" title="Log out" @click.prevent="logout">
       <i id="power-off" class="fa fa-power-off"></i>
       <label for="power-off">Log out</label>
     </button>

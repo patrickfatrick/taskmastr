@@ -11,6 +11,26 @@ import mutations from '../../../../public/store/mutations'
 chai.should()
 describe('Items.vue', function () {
   let items
+
+  function mountVm () {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          current: {
+            ...state.current,
+            items: items
+          }
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': Items
+      }
+    }).$mount()
+  }
+
   beforeEach(() => {
     items = [
       {
@@ -74,7 +94,7 @@ describe('Items.vue', function () {
     Items.methods._index.should.be.an.instanceof(Function)
   })
 
-  it('should render with initial state', (done) => {
+  it('should render with initial state', () => {
     const vm = new Vue({
       store,
       template: '<div><test></test></div>',
@@ -84,36 +104,17 @@ describe('Items.vue', function () {
     }).$mount()
 
     vm.$el.querySelector('.table-body').children.should.have.length(0)
-
-    done()
   })
 
-  it('should render rows with tasks', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should render rows with tasks', () => {
+    const vm = mountVm()
 
     vm.$el.querySelector('.table-body').children.should.have.length(2)
     vm.$el.querySelector('.table-body').children[0].getAttribute('name').should.equal('task1')
     vm.$el.querySelector('.table-body').children[1].getAttribute('name').should.equal('task2')
-
-    done()
   })
 
-  it('should respond to complete _delete and current and _dueDateDifference properties', (done) => {
+  it('should respond to complete _delete and current and _dueDateDifference properties', () => {
     items = [
       {
         id: 'itemid',
@@ -144,74 +145,29 @@ describe('Items.vue', function () {
       }
     ]
 
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+    const vm = mountVm()
+
     vm.$el.querySelector('.table-body').children[0].classList.contains('deleting').should.be.true
     vm.$el.querySelector('.table-body').children[1].classList.contains('active').should.be.true
     vm.$el.querySelectorAll('.details-button > i')[0].classList.contains('fa-pencil-square-o').should.be.true
     vm.$el.querySelectorAll('.details-button > i')[1].classList.contains('fa-exclamation-triangle').should.be.true
     vm.$el.querySelectorAll('.details-button > i')[2].classList.contains('fa-pencil-square-o').should.be.true
-
-    done()
   })
 
-  it('should call setCurrentTask method on click', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call setCurrentTask method on click', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
     vm.$el.querySelectorAll('.name')[0].click()
     vm.$children[0].setCurrentTask.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentTask.restore()
-    done()
   })
 
-  it('should call toggleDetails on dblclick', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call toggleDetails on dblclick', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'toggleDetails')
 
     let dblclick
@@ -222,166 +178,75 @@ describe('Items.vue', function () {
     vm.$children[0].toggleDetails.calledWith(0).should.be.true
 
     vm.$children[0].toggleDetails.restore()
-    done()
   })
 
-  it('should call toggleDetails method on click', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call toggleDetails method on click', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'toggleDetails')
 
     vm.$el.querySelectorAll('.details-button')[0].click()
     vm.$children[0].toggleDetails.calledWith(0, true).should.be.true
 
     vm.$children[0].toggleDetails.restore()
-    done()
   })
 
-  it('should call completeTask on click', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call completeTask on click', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'completeTask')
 
     vm.$el.querySelectorAll('.complete')[0].click()
     vm.$children[0].completeTask.calledWith(0, true).should.be.true
 
     vm.$children[0].completeTask.restore()
-    done()
   })
 
-  it('should call setCurrentTask on ctrl+,', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call setCurrentTask on ctrl+,', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
     Mousetrap.trigger('ctrl+,')
     vm.$children[0].setCurrentTask.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentTask.restore()
-    done()
   })
 
-  it('should call setCurrentTask on ctrl+.', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call setCurrentTask on ctrl+.', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
     Mousetrap.trigger('ctrl+.')
     vm.$children[0].setCurrentTask.calledWith(0).should.be.true
 
     vm.$children[0].setCurrentTask.restore()
-    done()
   })
 
-  it('should call deleteTask on ctrl+backspace', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call deleteTask on ctrl+backspace', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'deleteTask')
 
     Mousetrap.trigger('ctrl+backspace')
     vm.$children[0].deleteTask.calledWith(1).should.be.true
 
     vm.$children[0].deleteTask.restore()
-    done()
   })
 
-  it('should call sortTasks on ctrl+command+up', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should call sortTasks on ctrl+command+up', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
     vm.$children[0].sortTasks.calledWith(1, 0).should.be.true
 
     vm.$children[0].sortTasks.restore()
-    done()
   })
 
-  it('should not call sortTasks on ctrl+command+up if first task', (done) => {
+  it('should not call sortTasks on ctrl+command+up if first task', () => {
     items = [
       {
         id: 'itemid',
@@ -397,32 +262,17 @@ describe('Items.vue', function () {
       }
     ]
 
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
     vm.$children[0].sortTasks.calledOnce.should.be.false
 
     vm.$children[0].sortTasks.restore()
-    done()
   })
 
-  it('should call sortTasks on ctrl+command+down', (done) => {
+  it('should call sortTasks on ctrl+command+down', () => {
     items = [
       {
         id: 'itemid',
@@ -438,58 +288,28 @@ describe('Items.vue', function () {
       }
     ]
 
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
     vm.$children[0].sortTasks.calledWith(0, 1).should.be.true
 
     vm.$children[0].sortTasks.restore()
-    done()
   })
 
-  it('should not call sortTasks on ctrl+command+down if last task', (done) => {
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+  it('should not call sortTasks on ctrl+command+down if last task', () => {
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
     vm.$children[0].sortTasks.calledOnce.should.be.false
 
     vm.$children[0].sortTasks.restore()
-    done()
   })
 
-  it('should handle moving non-complete to complete on sortTasks', (done) => {
+  it('should handle moving non-complete to complete on sortTasks', () => {
     items = [
       {
         id: 'itemid',
@@ -509,32 +329,17 @@ describe('Items.vue', function () {
       }
     ]
 
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
     vm.$children[0].sortTasks.calledOnce.should.be.false
 
     vm.$children[0].sortTasks.restore()
-    done()
   })
 
-  it('should handle moving complete to non-complete on sortTasks', (done) => {
+  it('should handle moving complete to non-complete on sortTasks', () => {
     items = [
       {
         id: 'itemid',
@@ -554,28 +359,13 @@ describe('Items.vue', function () {
       }
     ]
 
-    const vm = new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Items
-      }
-    }).$mount()
+    const vm = mountVm()
+
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
     vm.$children[0].sortTasks.calledOnce.should.be.false
 
     vm.$children[0].sortTasks.restore()
-    done()
   })
 })

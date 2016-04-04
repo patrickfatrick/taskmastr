@@ -36,6 +36,7 @@ export default {
       setForgot
     }
   },
+  computed: {}, // Explicitly create computed property for test mocking
   components: {
     ForgotForm,
     TryIt

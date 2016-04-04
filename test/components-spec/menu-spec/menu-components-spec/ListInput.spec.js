@@ -1,112 +1,96 @@
 /* global it describe sinon */
-import chai from 'chai'
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import ListInput from '../../../../public/components/menu/menu-components/ListInput.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('ListInput.vue', function () {
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': ListInput
+      }
+    }).$mount()
+  }
+
   it('should inherit the newList property from the state', () => {
-    ListInput.computed.newList().should.equal('')
+    assert.deepEqual(ListInput.vuex.getters.newList({ newList: '' }), '')
   })
 
   it('should inherit the listAttempt property from the state', () => {
-    ListInput.computed.listAttempt().should.equal(false)
+    assert.isFalse(ListInput.vuex.getters.listAttempt({ listAttempt: false }))
   })
 
   it('should inherit the user property from the state', () => {
-    ListInput.computed.user().should.be.an.instanceof(Object)
+    assert.isObject(ListInput.vuex.getters.user({ user: {} }))
   })
 
   it('should have a validate property', () => {
-    ListInput.computed.validate.should.be.an.instanceof(Function)
+    assert.isFunction(ListInput.computed.validate)
   })
 
   it('should have an isValid property', () => {
-    ListInput.computed.isValid.should.be.an.instanceof(Function)
+    assert.isFunction(ListInput.computed.isValid)
   })
 
   it('should inherit a setNewList action from the store', () => {
-    ListInput.methods.setNewList.should.be.an.instanceof(Function)
+    assert.isFunction(ListInput.vuex.actions.setNewList)
   })
 
   it('should inherit a setListAttempt action from the store', () => {
-    ListInput.methods.setListAttempt.should.be.an.instanceof(Function)
+    assert.isFunction(ListInput.vuex.actions.setListAttempt)
   })
 
   it('should have an addList method', () => {
-    ListInput.methods.addList.should.be.an.instanceof(Function)
+    assert.isFunction(ListInput.methods.addList)
   })
 
-  it('should render with initial state', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ListInput
-      }
-    }).$mount()
+  it('should render with initial state', () => {
+    const vm = mountVm()
 
-    vm.$el.querySelector('#create-list').classList.contains('invalid').should.be.false
-    done()
+    assert.isFalse(vm.$el.querySelector('#create-list').classList.contains('invalid'))
   })
 
-  it('should respond to changes in the state', (done) => {
+  it('should respond to changes in the state', () => {
     sinon.stub(ListInput.computed, 'isValid').returns(false)
-    sinon.stub(ListInput.computed, 'listAttempt').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ListInput
-      }
-    }).$mount()
+    const vm = mountVm({ listAttempt: true })
 
-    vm.$el.querySelector('#create-list').classList.contains('invalid').should.be.true
+    assert.isTrue(vm.$el.querySelector('#create-list').classList.contains('invalid'))
 
     ListInput.computed.isValid.restore()
-    ListInput.computed.listAttempt.restore()
-    done()
   })
 
-  it('should call addList on form submit', (done) => {
+  it('should call addList on form submit', () => {
     sinon.stub(ListInput.computed, 'isValid').returns(true)
-    sinon.stub(ListInput.computed, 'listAttempt').returns(true)
-    sinon.stub(ListInput.computed, 'newList').returns('New list')
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ListInput
-      }
-    }).$mount()
+    const vm = mountVm({ listAttempt: true, newList: 'New list' })
     sinon.stub(vm.$children[0], 'addList')
 
     vm.$el.querySelector('#list-button').click()
-    vm.$children[0].addList.calledOnce.should.be.true
+    assert.isTrue(vm.$children[0].addList.calledOnce)
 
     vm.$children[0].addList.restore()
     ListInput.computed.isValid.restore()
-    ListInput.computed.listAttempt.restore()
-    ListInput.computed.newList.restore()
-    done()
   })
 
-  it('should do nothing if !isValid', (done) => {
+  it('should do nothing if !isValid', () => {
     sinon.stub(ListInput.computed, 'isValid').returns(false)
-    sinon.stub(ListInput.computed, 'listAttempt').returns(true)
-    sinon.stub(ListInput.computed, 'newList').returns('')
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ListInput
-      }
-    }).$mount()
+    const vm = mountVm({ listAttempt: true, newList: '' })
     sinon.stub(vm.$children[0], 'addList')
 
     vm.$el.querySelector('#list-button').click()
-    vm.$children[0].addList.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].addList.calledOnce)
 
     vm.$children[0].addList.restore()
     ListInput.computed.isValid.restore()
-    ListInput.computed.listAttempt.restore()
-    ListInput.computed.newList.restore()
-    done()
   })
 })

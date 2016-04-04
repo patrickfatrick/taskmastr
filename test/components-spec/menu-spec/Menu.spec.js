@@ -1,29 +1,42 @@
-/* global it describe assert sinon */
-import chai from 'chai'
+/* global it describe */
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import Menu from '../../../public/components/menu/Menu.vue'
+import state from '../../../public/store/state'
+import mutations from '../../../public/store/mutations'
 
-chai.should()
 describe('Menu.vue', function () {
-  it('should inherit the menuToggled property from the state', () => {
-    Menu.computed.menuToggled().should.be.false
-  })
-
-  it('should inherit the wiki property from the state', () => {
-    Menu.computed.wiki().should.equal('//patrickfatrick.gitbooks.io/taskmastr/content/')
-  })
-
-  it('should inherit the repo property from the state', () => {
-    Menu.computed.repo().should.equal('//github.com/patrickfatrick/taskmastr')
-  })
-
-  it('should render with initial state and component tree', () => {
-    const vm = new Vue({
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
       template: '<div><test></test></div>',
       components: {
         'test': Menu
       }
     }).$mount()
+  }
+
+  it('should inherit the menuToggled property from the state', () => {
+    assert.isFalse(Menu.vuex.getters.menuToggled({ menuToggled: false }))
+  })
+
+  it('should inherit the wiki property from the state', () => {
+    assert.deepEqual(Menu.vuex.getters.wiki({ wiki: '//patrickfatrick.gitbooks.io/taskmastr/content/' }), '//patrickfatrick.gitbooks.io/taskmastr/content/')
+  })
+
+  it('should inherit the repo property from the state', () => {
+    assert.deepEqual(Menu.vuex.getters.repo({ repo: '//github.com/patrickfatrick/taskmastr' }), '//github.com/patrickfatrick/taskmastr')
+  })
+
+  it('should render with initial state and component tree', () => {
+    const vm = mountVm()
 
     assert.isNotNull(vm.$el.querySelector('#menu'))
     assert.isNotNull(vm.$el.querySelector('#menu-tools'))
@@ -33,20 +46,12 @@ describe('Menu.vue', function () {
     assert.isNotNull(vm.$el.querySelector('#dark-mode'))
     assert.isNotNull(vm.$el.querySelector('#lists-list'))
     assert.isNotNull(vm.$el.querySelector('#logout-container'))
-    vm.$el.querySelector('#menu').classList.contains('toggled').should.be.false
+    assert.isFalse(vm.$el.querySelector('#menu').classList.contains('toggled'))
   })
 
   it('should respond to changes in the state', () => {
-    sinon.stub(Menu.computed, 'menuToggled').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': Menu
-      }
-    }).$mount()
+    const vm = mountVm({ menuToggled: true })
 
-    vm.$el.querySelector('#menu').classList.contains('toggled').should.be.true
-
-    Menu.computed.menuToggled.restore()
+    assert.isTrue(vm.$el.querySelector('#menu').classList.contains('toggled'))
   })
 })

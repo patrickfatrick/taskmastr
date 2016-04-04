@@ -1,5 +1,5 @@
 <template>
-  <form id="create-form" name="createForm" v-if="!forgot && ($route.name === 'Create')" action="/users/create" novalidate @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)">
+  <form id="create-form" name="createForm" action="/users/create" novalidate @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <key-input :require="validate.passwordRequired"></key-input>
     <confirm-input :match="validate.confirmMatch"></confirm-input>
@@ -10,7 +10,7 @@
 
 <script>
 
-import { saveUser, loginUser, createUser } from '../../store/user-store/user-actions'
+import { loginUser, createUser } from '../../store/user-store/user-actions'
 import { addList, setCurrentList } from '../../store/list-store/list-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import KeyInput from './form-components/KeyInput.vue'
@@ -31,7 +31,6 @@ export default {
       rememberMe: (state) => state.rememberMe
     },
     actions: {
-      saveUser,
       addList,
       setCurrentList,
       loginUser,

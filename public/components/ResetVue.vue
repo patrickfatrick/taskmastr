@@ -34,6 +34,7 @@ export default {
       setResetToken
     }
   },
+  computed: {}, // Explicitly create computed property for test mocking
   components: {
     ResetForm,
     TryIt

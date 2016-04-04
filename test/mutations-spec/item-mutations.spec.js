@@ -3,7 +3,7 @@ import chai from 'chai'
 import taskMutations from '../../public/store/item-store/item-mutations'
 
 chai.should()
-describe('task mutations', () => {
+describe('item mutations', () => {
   it('SET_CURRENT_TASK', () => {
     let state = {
       current: {
@@ -239,33 +239,6 @@ describe('task mutations', () => {
     taskMutations.SET_TASK_DUE_DATE(state, 1, today)
 
     state.current.items[0].dueDate.should.equal(today)
-  })
-
-  it('DELETE_AGENDA', () => {
-    let state = {
-      current: {
-        list: 'Current list',
-        current: true,
-        items: [
-          {
-            id: 'id1',
-            item: 'Current task',
-            current: true
-          },
-          {
-            id: 'id2',
-            item: 'Not current task',
-            current: false
-          }
-        ]
-      },
-      deleteAgendas: []
-    }
-
-    taskMutations.DELETE_AGENDA(state, 'id1')
-    taskMutations.DELETE_AGENDA(state, 'id2')
-
-    state.deleteAgendas.should.contain.members(['id1', 'id2'])
   })
 
   it('UPDATE_DELETE_QUEUE', () => {
