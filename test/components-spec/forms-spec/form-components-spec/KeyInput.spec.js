@@ -1,9 +1,11 @@
-/* global it describe assert sinon */
-import chai from 'chai'
+/* global it describe sinon */
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import KeyInput from '../../../../public/components/forms/form-components/KeyInput.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('KeyInput.vue', function () {
   // mock vue-router
   KeyInput.computed.$route = () => {
@@ -12,98 +14,91 @@ describe('KeyInput.vue', function () {
     }
   }
 
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': KeyInput
+      }
+    }).$mount()
+  }
+
   it('should inherit the keyInput property from the state', () => {
-    KeyInput.computed.user().should.be.an.instanceof(Object)
+    assert.isObject(KeyInput.vuex.getters.user({ user: {} }))
   })
 
   it('should inherit the create property from the state', () => {
-    KeyInput.computed.create().should.be.false
+    assert.isFalse(KeyInput.vuex.getters.create({ create: false }))
   })
 
   it('should inherit the invalidKey property from the state', () => {
-    KeyInput.computed.invalidKey().should.be.false
+    assert.isFalse(KeyInput.vuex.getters.invalidKey({ invalidKey: false }))
   })
 
   it('should inherit the loginAttempt property from the state', () => {
-    KeyInput.computed.loginAttempt().should.be.false
+    assert.isFalse(KeyInput.vuex.getters.loginAttempt({ loginAttempt: false }))
   })
 
-  it('should have a setLoginAttempt method', () => {
-    KeyInput.methods.setLoginAttempt.should.be.an.instanceof(Function)
+  it('should inherit the setLoginAttempt action from the store', () => {
+    assert.isFunction(KeyInput.vuex.actions.setLoginAttempt)
   })
 
   it('should render with initial state', () => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': KeyInput
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('#key').classList.contains('invalid').should.be.false
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
+    assert.isFalse(vm.$el.querySelector('#key').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
   })
 
-  it('should respond to changes in the state (loginAttempt, invalidKey)', (done) => {
+  it('should respond to changes in the state (loginAttempt, invalidKey)', () => {
     KeyInput.computed.require = () => {
       return true
     }
-    sinon.stub(KeyInput.computed, 'loginAttempt').returns(true)
-    sinon.stub(KeyInput.computed, 'invalidKey').returns('Invalid password')
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': KeyInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      loginAttempt: true,
+      invalidKey: 'Invalid password'
+    })
 
-    vm.$el.querySelector('#key').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.false
+    assert.isTrue(vm.$el.querySelector('#key').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
 
     delete KeyInput.computed.require
-    KeyInput.computed.loginAttempt.restore()
-    KeyInput.computed.invalidKey.restore()
-    done()
   })
 
-  it('should respond to changes in the state (loginAttempt, require)', (done) => {
+  it('should respond to changes in the state (loginAttempt, require)', () => {
     KeyInput.computed.require = () => {
       return false
     }
-    sinon.stub(KeyInput.computed, 'loginAttempt').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': KeyInput
-      }
-    }).$mount()
-
-    vm.$el.querySelector('#key').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-
-    delete KeyInput.computed.require
-    KeyInput.computed.loginAttempt.restore()
-    done()
-  })
-
-  it('should call setLoginAttempt on button push', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': KeyInput
-      }
-    }).$mount()
-
-    vm.$el.querySelector('#key-button').click()
-    Vue.nextTick(() => {
-      vm.$children[0].loginAttempt.should.be.true
+    const vm = mountVm({
+      loginAttempt: true
     })
 
-    vm.$children[0].setLoginAttempt(false)
-    done()
+    assert.isTrue(vm.$el.querySelector('#key').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+
+    delete KeyInput.computed.require
+  })
+
+  it('should call setLoginAttempt on button push', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'setLoginAttempt')
+
+    vm.$el.querySelector('#key-button').click()
+
+    assert.isTrue(vm.$children[0].setLoginAttempt.calledWith(true))
+
+    vm.$children[0].setLoginAttempt.restore()
   })
 
   it('key-button should not render on /create', () => {
@@ -112,12 +107,8 @@ describe('KeyInput.vue', function () {
         path: '/create'
       }
     }
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': KeyInput
-      }
-    }).$mount()
+
+    const vm = mountVm()
 
     assert.isNull(vm.$el.querySelector('#key-button'))
   })

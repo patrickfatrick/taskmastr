@@ -19,13 +19,16 @@ describe('deleteTask', () => {
   it('dispatches task deletion mutations when not current nor _delete', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        deleteItem (listid, taskid, deleteTask, cb) {
+        deleteItem (listid, taskid, deleteTask, username, cb) {
           cb(null, { success: true })
         }
       }
     })
 
     const state = {
+      user: {
+        username: 'username'
+      },
       current: {
         id: 'listid',
         list: 'List 1',
@@ -60,13 +63,16 @@ describe('deleteTask', () => {
   it('dispatches task deletion mutations when index is 0 and current', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        deleteItem (listid, taskid, deleteTask, cb) {
+        deleteItem (listid, taskid, deleteTask, username, cb) {
           cb(null, { success: true })
         }
       }
     })
 
     const state = {
+      user: {
+        username: 'username'
+      },
       current: {
         id: 'listid',
         list: 'List 1',
@@ -103,13 +109,16 @@ describe('deleteTask', () => {
   it('dispatches task deletion mutations when index is last and current', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        deleteItem (listid, taskid, deleteTask, cb) {
+        deleteItem (listid, taskid, deleteTask, username, cb) {
           cb(null, { success: true })
         }
       }
     })
 
     const state = {
+      user: {
+        username: 'username'
+      },
       current: {
         id: 'listid',
         list: 'List 1',
@@ -147,13 +156,16 @@ describe('deleteTask', () => {
   it('undoes task deletion mutations when _delete', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        deleteItem (listid, taskid, deleteTask, cb) {
+        deleteItem (listid, taskid, deleteTask, username, cb) {
           cb(null, { success: true })
         }
       }
     })
 
     let state = {
+      user: {
+        username: 'username'
+      },
       current: {
         id: 'listid',
         list: 'List 1',
@@ -188,13 +200,16 @@ describe('deleteTask', () => {
   it('dispatches ADD_TASK on error', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        deleteItem (listid, taskid, deleteTask, cb) {
+        deleteItem (listid, taskid, deleteTask, username, cb) {
           cb('Error!', { status: false })
         }
       }
     })
 
     const state = {
+      user: {
+        username: 'username'
+      },
       current: {
         id: 'listid',
         list: 'List 1',

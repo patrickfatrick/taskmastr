@@ -28,6 +28,7 @@ export default {
       setLoginAttempt
     }
   },
+  computed: {},
   props: {
     require: Boolean
   }

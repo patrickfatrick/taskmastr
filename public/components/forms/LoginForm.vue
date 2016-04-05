@@ -22,7 +22,7 @@ export default {
     getters: {
       user: (state) => state.user,
       auth: (state) => state.auth,
-      current: (state) => state.task.current,
+      current: (state) => state.current,
       reset: (state) => state.reset,
       forgot: (state) => state.forgot,
       create: (state) => state.create,

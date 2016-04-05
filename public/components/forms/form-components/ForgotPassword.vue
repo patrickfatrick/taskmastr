@@ -20,6 +20,7 @@ export default {
       setForgot
     }
   },
+  computed: {},
   methods: {
     toggleForgot (bool) {
       this.setForgot(bool)

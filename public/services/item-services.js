@@ -1,6 +1,8 @@
 import 'isomorphic-fetch'
+import status from './status'
 
 export function createItem (listid, item, username, cb) {
+  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
   return window.fetch(`/lists/${listid}/items/create`, {
     method: 'put',
     credentials: 'same-origin',
@@ -10,14 +12,8 @@ export function createItem (listid, item, username, cb) {
     },
     body: JSON.stringify({ item: item, username: username })
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })
@@ -27,6 +23,7 @@ export function createItem (listid, item, username, cb) {
 }
 
 export function updateItem (listid, itemid, index, item, username, cb) {
+  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
   return window.fetch(`/lists/${listid}/items/${itemid}/update`, {
     method: 'post',
     credentials: 'same-origin',
@@ -36,14 +33,8 @@ export function updateItem (listid, itemid, index, item, username, cb) {
     },
     body: JSON.stringify({ index: index, item: item, username: username })
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })
@@ -52,7 +43,8 @@ export function updateItem (listid, itemid, index, item, username, cb) {
   })
 }
 
-export function deleteItem (listid, itemid, index, cb) {
+export function deleteItem (listid, itemid, index, username, cb) {
+  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
   return window.fetch(`/lists/${listid}/items/${itemid}/delete`, {
     method: 'delete',
     credentials: 'same-origin',
@@ -62,14 +54,8 @@ export function deleteItem (listid, itemid, index, cb) {
     },
     body: JSON.stringify({ index: index })
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })

@@ -1,9 +1,11 @@
 /* global it describe sinon */
-import chai from 'chai'
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import ForgotPassword from '../../../../public/components/forms/form-components/ForgotPassword.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('ForgotPassword.vue', function () {
   // mock vue-router
   ForgotPassword.computed.$route = () => {
@@ -16,117 +18,93 @@ describe('ForgotPassword.vue', function () {
     }
   }
 
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': ForgotPassword
+      }
+    }).$mount()
+  }
+
   it('should inherit the forgot property from the state', () => {
-    ForgotPassword.computed.forgot().should.be.false
+    assert.isFalse(ForgotPassword.vuex.getters.forgot({ forgot: false }))
   })
 
   it('should inherit the create property from the state', () => {
-    ForgotPassword.computed.create().should.be.false
+    assert.isFalse(ForgotPassword.vuex.getters.create({ create: false }))
   })
 
   it('should have a setForgot method', () => {
-    ForgotPassword.methods.setForgot.should.be.an.instanceof(Function)
-  })
-
-  it('should have a setForgot method', () => {
-    ForgotPassword.methods.toggleForgot.should.be.an.instanceof(Function)
+    assert.isFunction(ForgotPassword.vuex.actions.setForgot)
   })
 
   it('should render with initial state', () => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotPassword
-      }
-    }).$mount()
-    vm.$el.querySelector('.fa').classList.contains('fa-square-o').should.be.true
-    vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.false
+    const vm = mountVm()
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-square-o'))
+    assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-check-square-o'))
   })
 
-  it('should respond to changes in the state', (done) => {
-    sinon.stub(ForgotPassword.computed, 'forgot').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotPassword
-      }
-    }).$mount()
+  it('should respond to changes in the state', () => {
+    const vm = mountVm({ forgot: true })
 
-    vm.$children[0].forgot.should.be.true
-    vm.$el.querySelector('.fa').classList.contains('fa-square-o').should.be.false
-    vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.true
-
-    ForgotPassword.computed.forgot.restore()
-    done()
+    assert.isTrue(vm.$children[0].forgot)
+    assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-square-o'))
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-check-square-o'))
   })
 
-  it('should route to /forgot on forgot', (done) => {
-    sinon.stub(ForgotPassword.computed, 'forgot').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotPassword
-      }
-    }).$mount()
+  it('should route to /forgot on forgot', () => {
+    const vm = mountVm({ forgot: true })
 
     sinon.stub(vm.$children[0].$route.router, 'go')
     sinon.stub(vm.$children[0], 'setForgot')
 
     vm.$children[0].toggleForgot(true)
-    vm.$children[0].setForgot.calledWith(true).should.be.true
-    vm.$children[0].$route.router.go.calledWith('/forgot').should.be.true
+    assert.isTrue(vm.$children[0].setForgot.calledWith(true))
+    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/forgot'))
 
     vm.$children[0].$route.router.go.restore()
     vm.$children[0].setForgot.restore()
-    ForgotPassword.computed.forgot.restore()
-    done()
   })
 
-  it('should route to /create on !forgot and create', (done) => {
-    sinon.stub(ForgotPassword.computed, 'forgot').returns(false)
-    sinon.stub(ForgotPassword.computed, 'create').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotPassword
-      }
-    }).$mount()
+  it('should route to /create on !forgot and create', () => {
+    const vm = mountVm({
+      forgot: false,
+      create: true
+    })
 
     sinon.stub(vm.$children[0].$route.router, 'go')
     sinon.stub(vm.$children[0], 'setForgot')
 
     vm.$children[0].toggleForgot(false)
-    vm.$children[0].setForgot.calledWith(false).should.be.true
-    vm.$children[0].$route.router.go.calledWith('/create').should.be.true
+    assert.isTrue(vm.$children[0].setForgot.calledWith(false))
+    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/create'))
 
     vm.$children[0].$route.router.go.restore()
     vm.$children[0].setForgot.restore()
-    ForgotPassword.computed.create.restore()
-    ForgotPassword.computed.forgot.restore()
-    done()
   })
 
-  it('should route to /login on !forgot and !create', (done) => {
-    sinon.stub(ForgotPassword.computed, 'forgot').returns(false)
-    sinon.stub(ForgotPassword.computed, 'create').returns(false)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotPassword
-      }
-    }).$mount()
+  it('should route to /login on !forgot and !create', () => {
+    const vm = mountVm({
+      forgot: false,
+      create: false
+    })
 
     sinon.stub(vm.$children[0].$route.router, 'go')
     sinon.stub(vm.$children[0], 'setForgot')
 
     vm.$children[0].toggleForgot(false)
-    vm.$children[0].setForgot.calledWith(false).should.be.true
-    vm.$children[0].$route.router.go.calledWith('/login').should.be.true
+    assert.isTrue(vm.$children[0].setForgot.calledWith(false))
+    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/login'))
 
     vm.$children[0].$route.router.go.restore()
     vm.$children[0].setForgot.restore()
-    ForgotPassword.computed.create.restore()
-    ForgotPassword.computed.forgot.restore()
-    done()
   })
 })

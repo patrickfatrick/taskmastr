@@ -1,44 +1,48 @@
-/* global it describe sinon */
-import chai from 'chai'
+/* global it describe */
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import RememberMe from '../../../../public/components/forms/form-components/RememberMe.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('RememberMe.vue', function () {
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': RememberMe
+      }
+    }).$mount()
+  }
+
   it('should inherit the rememberMe property from the state', () => {
-    RememberMe.computed.rememberMe().should.be.false
+    assert.isFalse(RememberMe.vuex.getters.rememberMe({ rememberMe: false }))
   })
 
   it('should have a setRememberMe method', () => {
-    RememberMe.methods.setRememberMe.should.be.an.instanceof(Function)
+    assert.isFunction(RememberMe.vuex.actions.setRememberMe)
   })
 
   it('should render with initial state', () => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': RememberMe
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('.fa').classList.contains('fa-square-o').should.be.true
-    vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.false
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-square-o'))
+    assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-check-square-o'))
   })
 
-  it('should respond to changes in the state', (done) => {
-    sinon.stub(RememberMe.computed, 'rememberMe').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': RememberMe
-      }
-    }).$mount()
+  it('should respond to changes in the state', () => {
+    const vm = mountVm({ rememberMe: true })
 
-    vm.$children[0].rememberMe.should.be.true
-    vm.$el.querySelector('.fa').classList.contains('fa-square-o').should.be.false
-    vm.$el.querySelector('.fa').classList.contains('fa-check-square-o').should.be.true
-
-    RememberMe.computed.rememberMe.restore()
-    done()
+    assert.isTrue(vm.$children[0].rememberMe)
+    assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-square-o'))
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-check-square-o'))
   })
 })

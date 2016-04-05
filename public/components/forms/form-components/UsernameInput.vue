@@ -36,6 +36,7 @@ export default {
       setForgotAttempt
     }
   },
+  computed: {},
   props: {
     validate: Boolean,
     require: Boolean

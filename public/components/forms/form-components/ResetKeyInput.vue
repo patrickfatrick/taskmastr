@@ -25,6 +25,7 @@ export default {
       setResetKey
     }
   },
+  computed: {},
   props: {
     require: Boolean,
     match: Boolean,

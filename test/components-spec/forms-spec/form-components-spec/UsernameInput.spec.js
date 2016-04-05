@@ -1,9 +1,11 @@
-/* global it describe sinon */
-import chai from 'chai'
+/* global it describe */
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import UsernameInput from '../../../../public/components/forms/form-components/UsernameInput.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('UsernameInput.vue', function () {
   // mock vue-router
   UsernameInput.computed.$route = () => {
@@ -12,133 +14,165 @@ describe('UsernameInput.vue', function () {
     }
   }
 
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': UsernameInput
+      }
+    }).$mount()
+  }
+
   it('should inherit the user property from the state', () => {
-    UsernameInput.computed.user().should.be.an.instanceof(Object)
+    assert.isObject(UsernameInput.vuex.getters.user({ user: {} }))
   })
 
   it('should inherit the forgot property from the state', () => {
-    UsernameInput.computed.forgot().should.be.false
+    assert.isFalse(UsernameInput.vuex.getters.forgot({ forgot: false }))
   })
 
   it('should inherit the forgotEmail property from the state', () => {
-    UsernameInput.computed.forgotEmail().should.be.false
+    assert.isFalse(UsernameInput.vuex.getters.forgotEmail({ forgotEmail: false }))
   })
 
   it('should inherit the forgotFail property from the state', () => {
-    UsernameInput.computed.forgotFail().should.be.false
+    assert.isFalse(UsernameInput.vuex.getters.forgotFail({ forgotFail: false }))
+  })
+
+  it('should inherit the confirmAttempt property from the state', () => {
+    assert.isFalse(UsernameInput.vuex.getters.confirmAttempt({ confirmAttempt: false }))
+  })
+
+  it('should inherit the createFail property from the state', () => {
+    assert.isFalse(UsernameInput.vuex.getters.createFail({ createFail: false }))
   })
 
   it('should inherit the loginAttempt property from the state', () => {
-    UsernameInput.computed.loginAttempt().should.be.false
+    assert.isFalse(UsernameInput.vuex.getters.loginAttempt({ loginAttempt: false }))
   })
 
   it('should have a setForgotAttempt method', () => {
-    UsernameInput.methods.setForgotAttempt.should.be.an.instanceof(Function)
+    assert.isFunction(UsernameInput.vuex.actions.setForgotAttempt)
   })
 
   it('should render with initial state', () => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': UsernameInput
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('#user').classList.contains('invalid').should.be.false
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isFalse(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
   })
 
-  it('should respond to changes in the state (loginAttempt, !require)', (done) => {
+  it('should respond to changes in the state (loginAttempt, !require)', () => {
     UsernameInput.computed.require = () => {
       return false
     }
     UsernameInput.computed.validate = () => {
       return false
     }
-    sinon.stub(UsernameInput.computed, 'loginAttempt').returns(true)
-    sinon.stub(UsernameInput.computed, 'forgotAttempt').returns(false)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': UsernameInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      loginAttempt: true,
+      forgotAttempt: false
+    })
 
-    vm.$el.querySelector('#user').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
-    UsernameInput.computed.loginAttempt.restore()
-    UsernameInput.computed.forgotAttempt.restore()
-    done()
   })
 
-  it('should respond to changes in the state (forgotAttempt, !require)', (done) => {
+  it('should respond to changes in the state (forgotAttempt, !require)', () => {
     UsernameInput.computed.require = () => {
       return false
     }
     UsernameInput.computed.validate = () => {
       return false
     }
-    sinon.stub(UsernameInput.computed, 'loginAttempt').returns(false)
-    sinon.stub(UsernameInput.computed, 'forgotAttempt').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': UsernameInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      loginAttempt: false,
+      forgotAttempt: true
+    })
 
-    vm.$el.querySelector('#user').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
-    UsernameInput.computed.loginAttempt.restore()
-    UsernameInput.computed.forgotAttempt.restore()
-    done()
   })
 
-  it('should respond to changes in the state (loginAttempt, !validate)', (done) => {
+  it('should respond to changes in the state (loginAttempt, !validate)', () => {
     UsernameInput.computed.require = () => {
       return true
     }
     UsernameInput.computed.validate = () => {
       return false
     }
-    sinon.stub(UsernameInput.computed, 'loginAttempt').returns(true)
-    sinon.stub(UsernameInput.computed, 'forgotAttempt').returns(false)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': UsernameInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      loginAttempt: true,
+      forgotAttempt: false
+    })
 
-    vm.$el.querySelector('#user').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
-    UsernameInput.computed.loginAttempt.restore()
-    UsernameInput.computed.forgotAttempt.restore()
-    done()
   })
 
-  it('should respond to changes in the state (forgotAttempt, forgotFail)', (done) => {
+  it('should respond to changes in the state (confirmAttempt, createFail)', () => {
+    // mock vue-router
+    UsernameInput.computed.$route = () => {
+      return {
+        path: '/create'
+      }
+    }
+    UsernameInput.computed.require = () => {
+      return true
+    }
+    UsernameInput.computed.validate = () => {
+      return true
+    }
+
+    const vm = mountVm({
+      confirmAttempt: true,
+      createFail: 'Create fail'
+    })
+
+    assert.isFalse(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+
+    delete UsernameInput.computed.require
+    delete UsernameInput.computed.validate
+  })
+
+  it('should respond to changes in the state (forgotAttempt, forgotFail)', () => {
     // mock vue-router
     UsernameInput.computed.$route = () => {
       return {
@@ -151,31 +185,24 @@ describe('UsernameInput.vue', function () {
     UsernameInput.computed.validate = () => {
       return true
     }
-    sinon.stub(UsernameInput.computed, 'forgotAttempt').returns(true)
-    sinon.stub(UsernameInput.computed, 'forgotFail').returns('Forgot fail')
-    sinon.stub(UsernameInput.computed, 'forgotEmail').returns(false)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': UsernameInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      forgotAttempt: true,
+      forgotFail: 'Forgot fail',
+      forgotEmail: false
+    })
 
-    vm.$el.querySelector('#user').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
 
     delete UsernameInput.computed.require
-    delete UsernameInput.computed.validatematch
-    UsernameInput.computed.forgotAttempt.restore()
-    UsernameInput.computed.forgotFail.restore()
-    UsernameInput.computed.forgotEmail.restore()
-    done()
+    delete UsernameInput.computed.validate
   })
 
-  it('should respond to changes in the state (forgotAttempt, forgotEmail)', (done) => {
+  it('should respond to changes in the state (forgotAttempt, forgotEmail)', () => {
     // mock vue-router
     UsernameInput.computed.$route = () => {
       return {
@@ -188,27 +215,20 @@ describe('UsernameInput.vue', function () {
     UsernameInput.computed.validate = () => {
       return true
     }
-    sinon.stub(UsernameInput.computed, 'forgotAttempt').returns(true)
-    sinon.stub(UsernameInput.computed, 'forgotFail').returns(false)
-    sinon.stub(UsernameInput.computed, 'forgotEmail').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': UsernameInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      forgotAttempt: true,
+      forgotFail: false,
+      forgotEmail: true
+    })
 
-    vm.$el.querySelector('#user').classList.contains('invalid').should.be.false
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.false
+    assert.isFalse(vm.$el.querySelector('#user').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
-    UsernameInput.computed.forgotAttempt.restore()
-    UsernameInput.computed.forgotFail.restore()
-    UsernameInput.computed.forgotEmail.restore()
-    done()
   })
 })

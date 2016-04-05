@@ -107,7 +107,7 @@ export function deleteTask ({ dispatch, state }, index) {
       dispatch('UPDATE_DELETE_QUEUE', task.id, null)
       dispatch('SET_TASK_DELETE', deleteTask, false)
       dispatch('REMOVE_TASK', deleteTask)
-      return deleteItem(listID, task.id, deleteTask, (err, response) => {
+      return deleteItem(listID, task.id, deleteTask, state.user.username, (err, response) => {
         // Revert the change if request fails
         if (err) dispatch('ADD_TASK', task)
       })

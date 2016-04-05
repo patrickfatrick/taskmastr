@@ -7,7 +7,7 @@
 
 <script>
 
-import { loginPassword, resetPassword } from '../../store/user-store/user-actions'
+import { loginUser, resetPassword } from '../../store/user-store/user-actions'
 import ResetKeyInput from './form-components/ResetKeyInput.vue'
 import ResetConfirmInput from './form-components/ResetConfirmInput.vue'
 
@@ -20,7 +20,7 @@ export default {
       resetToken: (state) => state.resetToken
     },
     actions: {
-      loginPassword,
+      loginUser,
       resetPassword
     }
   },

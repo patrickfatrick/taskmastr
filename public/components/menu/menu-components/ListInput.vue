@@ -10,6 +10,7 @@
 <script>
 
 import harsh from 'harsh'
+import gregorian from 'gregorian'
 import Mousetrap from 'mousetrap'
 import { addList, setNewList, setListAttempt } from '../../../store/list-store/list-actions'
 
@@ -49,6 +50,7 @@ export default {
         items: [],
         current: false,
         owner: this.user.username,
+        dateCreated: gregorian.reform(new Date()).to('iso'),
         users: [],
         _delete: false
       })

@@ -1,4 +1,6 @@
 import 'isomorphic-fetch'
+import gregorian from 'gregorian'
+import status from './status'
 
 export function login (username, key, rememberMe, cb) {
   return window.fetch('/users/login', {
@@ -14,14 +16,8 @@ export function login (username, key, rememberMe, cb) {
       rememberMe: rememberMe
     })
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })
@@ -45,17 +41,12 @@ export function create (username, key, rememberMe, cb) {
       key: key,
       rememberMe: rememberMe,
       darkmode: true,
+      dateCreated: gregorian.reform(new Date()).to('iso'),
       tasks: []
     })
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })
@@ -66,6 +57,7 @@ export function create (username, key, rememberMe, cb) {
 }
 
 export function forgot (username, cb) {
+  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
   return window.fetch(`/users/${username}/forgot`, {
     method: 'post',
     credentials: 'same-origin',
@@ -74,14 +66,8 @@ export function forgot (username, cb) {
       'Content-Type': 'application/json'
     }
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })
@@ -104,14 +90,8 @@ export function reset (token, newKey, cb) {
       newKey: newKey
     })
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })
@@ -136,14 +116,8 @@ export function getSession (cb) {
     method: 'get',
     credentials: 'same-origin'
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     return cb(null, response)
   })
@@ -164,14 +138,8 @@ export function updateUser (username, body, cb) {
     },
     body: JSON.stringify(body)
   })
-  .then((response) => {
-    if (response.status !== 200) {
-      let error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-    return response.json()
-  })
+  .then(status)
+  .then((response) => response.json())
   .then((response) => {
     cb(null, response)
   })

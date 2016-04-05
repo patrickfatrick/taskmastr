@@ -1,43 +1,56 @@
-/* global it describe sinon */
-import chai from 'chai'
+/* global it describe */
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import ResetKeyInput from '../../../../public/components/forms/form-components/ResetKeyInput.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('ResetKeyInput.vue', function () {
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': ResetKeyInput
+      }
+    }).$mount()
+  }
+
   it('should inherit the user property from the state', () => {
-    ResetKeyInput.computed.user().should.be.an.instanceof(Object)
+    assert.isObject(ResetKeyInput.vuex.getters.user({ user: {} }))
   })
 
   it('should inherit the resetAttempt property from the state', () => {
-    ResetKeyInput.computed.resetAttempt().should.be.false
+    assert.isFalse(ResetKeyInput.vuex.getters.resetAttempt({ resetAttempt: false }))
   })
 
   it('should inherit the resetFail property from the state', () => {
-    ResetKeyInput.computed.resetFail().should.be.false
+    assert.isFalse(ResetKeyInput.vuex.getters.resetFail({ resetFail: false }))
   })
 
   it('should render with initial state', () => {
     ResetKeyInput.computed.token = () => {
       return 'token'
     }
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetKeyInput
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('#reset-key').classList.contains('invalid').should.be.false
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isFalse(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
 
     delete ResetKeyInput.computed.token
   })
 
-  it('should respond to changes in the state (resetAttempt, resetFail)', (done) => {
+  it('should respond to changes in the state (resetAttempt, resetFail)', () => {
     ResetKeyInput.computed.require = () => {
       return true
     }
@@ -47,30 +60,23 @@ describe('ResetKeyInput.vue', function () {
     ResetKeyInput.computed.token = () => {
       return 'token'
     }
-    sinon.stub(ResetKeyInput.computed, 'resetAttempt').returns(true)
-    sinon.stub(ResetKeyInput.computed, 'resetFail').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetKeyInput
-      }
-    }).$mount()
+    const vm = mountVm({
+      resetAttempt: true,
+      resetFail: true
+    })
 
-    vm.$el.querySelector('#reset-key').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isTrue(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
 
     delete ResetKeyInput.computed.require
     delete ResetKeyInput.computed.match
     delete ResetKeyInput.computed.token
-    ResetKeyInput.computed.resetAttempt.restore()
-    ResetKeyInput.computed.resetFail.restore()
-    done()
   })
 
-  it('should respond to changes in the state (resetAttempt, !require)', (done) => {
+  it('should respond to changes in the state (resetAttempt, !require)', () => {
     ResetKeyInput.computed.require = () => {
       return false
     }
@@ -80,28 +86,20 @@ describe('ResetKeyInput.vue', function () {
     ResetKeyInput.computed.token = () => {
       return 'token'
     }
-    sinon.stub(ResetKeyInput.computed, 'resetAttempt').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetKeyInput
-      }
-    }).$mount()
+    const vm = mountVm({ resetAttempt: true })
 
-    vm.$el.querySelector('#reset-key').classList.contains('invalid').should.be.true
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isTrue(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
 
     delete ResetKeyInput.computed.require
     delete ResetKeyInput.computed.match
     delete ResetKeyInput.computed.token
-    ResetKeyInput.computed.resetAttempt.restore()
-    done()
   })
 
-  it('should respond to changes in the state (resetAttempt, !match)', (done) => {
+  it('should respond to changes in the state (resetAttempt, !match)', () => {
     ResetKeyInput.computed.require = () => {
       return true
     }
@@ -111,28 +109,20 @@ describe('ResetKeyInput.vue', function () {
     ResetKeyInput.computed.token = () => {
       return 'token'
     }
-    sinon.stub(ResetKeyInput.computed, 'resetAttempt').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetKeyInput
-      }
-    }).$mount()
+    const vm = mountVm({ resetAttempt: true })
 
-    vm.$el.querySelector('#reset-key').classList.contains('invalid').should.be.false
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.false
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.true
+    assert.isFalse(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
 
     delete ResetKeyInput.computed.require
     delete ResetKeyInput.computed.match
     delete ResetKeyInput.computed.token
-    ResetKeyInput.computed.resetAttempt.restore()
-    done()
   })
 
-  it('should respond to changes in the state (resetAttempt, token)', (done) => {
+  it('should respond to changes in the state (resetAttempt, token)', () => {
     ResetKeyInput.computed.require = () => {
       return true
     }
@@ -142,24 +132,16 @@ describe('ResetKeyInput.vue', function () {
     ResetKeyInput.computed.token = () => {
       return false
     }
-    sinon.stub(ResetKeyInput.computed, 'resetAttempt').returns(false)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetKeyInput
-      }
-    }).$mount()
+    const vm = mountVm({ resetAttempt: false })
 
-    vm.$el.querySelector('#reset-key').classList.contains('invalid').should.be.false
-    vm.$el.querySelector('.error-text').children[0].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[1].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[2].classList.contains('hidden').should.be.true
-    vm.$el.querySelector('.error-text').children[3].classList.contains('hidden').should.be.false
+    assert.isFalse(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
 
     delete ResetKeyInput.computed.require
     delete ResetKeyInput.computed.match
     delete ResetKeyInput.computed.token
-    ResetKeyInput.computed.resetAttempt.restore()
-    done()
   })
 })

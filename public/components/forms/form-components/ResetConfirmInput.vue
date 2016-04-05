@@ -23,6 +23,7 @@ export default {
       setResetAttempt
     }
   },
+  computed: {},
   props: {
     match: Boolean
   }

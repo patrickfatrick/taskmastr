@@ -1,70 +1,70 @@
 /* global it describe sinon */
-import chai from 'chai'
+import { assert } from 'chai'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import ResetConfirmInput from '../../../../public/components/forms/form-components/ResetConfirmInput.vue'
+import state from '../../../../public/store/state'
+import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('ResetConfirmInput.vue', function () {
+  function mountVm (changes) {
+    return new Vue({
+      store: new Vuex.Store({
+        state: {
+          ...state,
+          ...changes
+        },
+        mutations
+      }),
+      template: '<div><test></test></div>',
+      components: {
+        'test': ResetConfirmInput
+      }
+    }).$mount()
+  }
+
   it('should inherit the user property from the state', () => {
-    ResetConfirmInput.computed.user().should.be.an.instanceof(Object)
+    assert.isObject(ResetConfirmInput.vuex.getters.user({ user: {} }))
   })
 
   it('should inherit the resetAttempt property from the state', () => {
-    ResetConfirmInput.computed.resetAttempt().should.be.false
+    assert.isFalse(ResetConfirmInput.vuex.getters.resetAttempt({ resetAttempt: false }))
   })
 
   it('should inherit the resetFail property from the state', () => {
-    ResetConfirmInput.computed.resetFail().should.be.false
+    assert.isFalse(ResetConfirmInput.vuex.getters.resetFail({ resetFail: false }))
   })
 
-  it('should have a setResetAttempt method', () => {
-    ResetConfirmInput.methods.setResetAttempt.should.be.an.instanceof(Function)
+  it('should inherit the setResetAttempt method from the store', () => {
+    assert.isFunction(ResetConfirmInput.vuex.actions.setResetAttempt)
   })
 
   it('should render with initial state', () => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetConfirmInput
-      }
-    }).$mount()
+    const vm = mountVm()
 
-    vm.$el.querySelector('#reset-confirm').classList.contains('invalid').should.be.false
+    assert.isFalse(vm.$el.querySelector('#reset-confirm').classList.contains('invalid'))
   })
 
-  it('should respond to changes in the state', (done) => {
+  it('should respond to changes in the state', () => {
     ResetConfirmInput.computed.match = () => {
       return false
     }
-    sinon.stub(ResetConfirmInput.computed, 'resetAttempt').returns(true)
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetConfirmInput
-      }
-    }).$mount()
+    const vm = mountVm({ resetAttempt: true })
 
-    vm.$el.querySelector('#reset-confirm').classList.contains('invalid').should.be.true
+    assert.isTrue(vm.$el.querySelector('#reset-confirm').classList.contains('invalid'))
 
     delete ResetConfirmInput.computed.match
-    ResetConfirmInput.computed.resetAttempt.restore()
-    done()
   })
 
-  it('should call setResetAttempt on button push', (done) => {
-    const vm = new Vue({
-      template: '<div><test></test></div>',
-      components: {
-        'test': ResetConfirmInput
-      }
-    }).$mount()
+  it('should call setResetAttempt on button push', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'setResetAttempt')
 
     vm.$el.querySelector('#reset-button').click()
 
-    Vue.nextTick(() => {
-      vm.$children[0].resetAttempt.should.be.true
-    })
-    vm.$children[0].setResetAttempt(false)
-    done()
+    assert.isTrue(vm.$children[0].setResetAttempt.calledWith(true))
+
+    vm.$children[0].setResetAttempt.restore()
   })
 })
