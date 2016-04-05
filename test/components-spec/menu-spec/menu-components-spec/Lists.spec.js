@@ -91,6 +91,10 @@ describe('Lists.vue', function () {
     assert.isFunction(Lists.vuex.actions.sortLists)
   })
 
+  it('should have a removeList method', () => {
+    assert.isFunction(Lists.methods.removeList)
+  })
+
   it('should have a renameList method', () => {
     assert.isFunction(Lists.methods.renameList)
   })
@@ -111,35 +115,29 @@ describe('Lists.vue', function () {
     assert.isFunction(Lists.methods._index)
   })
 
-  it('should render with initial state', (done) => {
+  it('should render with initial state', () => {
     lists = []
     const vm = mountVm()
 
     assert.lengthOf(vm.$el.querySelector('.table-body').children, 0)
-
-    done()
   })
 
-  it('should render rows with lists', (done) => {
+  it('should render rows with lists', () => {
     const vm = mountVm()
 
     assert.lengthOf(vm.$el.querySelector('.table-body').children, 2)
     assert.deepEqual(vm.$el.querySelector('.table-body').children[0].getAttribute('name'), 'list1')
     assert.deepEqual(vm.$el.querySelector('.table-body').children[1].getAttribute('name'), 'list2')
-
-    done()
   })
 
-  it('should respond to _delete and current properties', (done) => {
+  it('should respond to _delete and current properties', () => {
     const vm = mountVm()
 
     assert.isTrue(vm.$el.querySelector('.table-body').children[0].classList.contains('deleting'))
     assert.isTrue(vm.$el.querySelector('.table-body').children[1].classList.contains('current'))
-
-    done()
   })
 
-  it('should call navigateToList method on click', (done) => {
+  it('should call navigateToList method on click', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'navigateToList')
@@ -148,10 +146,9 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
     vm.$children[0].navigateToList.restore()
-    done()
   })
 
-  it('should call renameToggle method on dblclick', (done) => {
+  it('should call renameToggle method on dblclick', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'renameToggle')
@@ -168,10 +165,9 @@ describe('Lists.vue', function () {
     })
 
     vm.$children[0].renameToggle.restore()
-    done()
   })
 
-  it('should reset renameToggle when called on current renameToggle index', (done) => {
+  it('should reset renameToggle when called on current renameToggle index', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'renameToggle')
@@ -193,10 +189,9 @@ describe('Lists.vue', function () {
     })
 
     vm.$children[0].renameToggle.restore()
-    done()
   })
 
-  it('should call renameList on .rename change', (done) => {
+  it('should call renameList on .rename change', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'renameList')
@@ -210,10 +205,9 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].renameList.calledWith(0, 'List 11'))
 
     vm.$children[0].renameList.restore()
-    done()
   })
 
-  it('should not call renameList if null', (done) => {
+  it('should not call renameList if null', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'renameList')
@@ -227,10 +221,9 @@ describe('Lists.vue', function () {
     assert.isFalse(vm.$children[0].renameList.calledOnce)
 
     vm.$children[0].renameList.restore()
-    done()
   })
 
-  it('sets renameToggled to null on blur', (done) => {
+  it('sets renameToggled to null on blur', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'renameToggle')
@@ -244,10 +237,34 @@ describe('Lists.vue', function () {
     assert.isNull(vm.$children[0].renameToggled)
 
     vm.$children[0].renameToggle.restore()
-    done()
   })
 
-  it('should call navigateToList on alt+,', (done) => {
+  it('should call removeList on trash can click', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'removeList')
+
+    vm.$el.querySelectorAll('.delete-button')[1].click()
+    assert.isTrue(vm.$children[0].removeList.calledWith(1))
+
+    vm.$children[0].removeList.restore()
+  })
+
+  it('should call deleteList and navigateToList on removeList', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'deleteList').callsArgWith(1, 'listid')
+    sinon.stub(vm.$children[0], 'navigateToList')
+
+    vm.$children[0].removeList(1)
+    assert.isTrue(vm.$children[0].deleteList.calledWith(1))
+    assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
+
+    vm.$children[0].deleteList.restore()
+    vm.$children[0].navigateToList.restore()
+  })
+
+  it('should call navigateToList on alt+,', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'navigateToList')
@@ -256,10 +273,9 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
     vm.$children[0].navigateToList.restore()
-    done()
   })
 
-  it('should call navigateToList on alt+.', (done) => {
+  it('should call navigateToList on alt+.', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'navigateToList')
@@ -268,22 +284,20 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
     vm.$children[0].navigateToList.restore()
-    done()
   })
 
-  it('should call deleteList on alt+backspace', (done) => {
+  it('should call removeList on alt+backspace', () => {
     const vm = mountVm()
 
-    sinon.stub(vm.$children[0], 'deleteList')
+    sinon.stub(vm.$children[0], 'removeList')
 
     Mousetrap.trigger('alt+backspace')
-    assert.isTrue(vm.$children[0].deleteList.calledWith(1))
+    assert.isTrue(vm.$children[0].removeList.calledWith(1))
 
-    vm.$children[0].deleteList.restore()
-    done()
+    vm.$children[0].removeList.restore()
   })
 
-  it('should call renameToggle on alt+/', (done) => {
+  it('should call renameToggle on alt+/', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'renameToggle')
@@ -292,10 +306,9 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].renameToggle.calledWith(1))
 
     vm.$children[0].renameToggle.restore()
-    done()
   })
 
-  it('should call sortLists on alt+command+up', (done) => {
+  it('should call sortLists on alt+command+up', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'sortLists')
@@ -304,10 +317,9 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].sortLists.calledWith(1, 0))
 
     vm.$children[0].sortLists.restore()
-    done()
   })
 
-  it('should not call sortLists on alt+command+up if first list', (done) => {
+  it('should not call sortLists on alt+command+up if first list', () => {
     lists = [
       {
         id: 'listid',
@@ -343,10 +355,9 @@ describe('Lists.vue', function () {
     assert.isFalse(vm.$children[0].sortLists.calledOnce)
 
     vm.$children[0].sortLists.restore()
-    done()
   })
 
-  it('should call sortLists on alt+command+down', (done) => {
+  it('should call sortLists on alt+command+down', () => {
     lists = [
       {
         id: 'listid',
@@ -382,10 +393,9 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].sortLists.calledWith(0, 1))
 
     vm.$children[0].sortLists.restore()
-    done()
   })
 
-  it('should not call sortLists on alt+command+down if last list', (done) => {
+  it('should not call sortLists on alt+command+down if last list', () => {
     const vm = mountVm()
 
     sinon.stub(vm.$children[0], 'sortLists')
@@ -394,6 +404,5 @@ describe('Lists.vue', function () {
     assert.isFalse(vm.$children[0].sortLists.calledOnce)
 
     vm.$children[0].sortLists.restore()
-    done()
   })
 })

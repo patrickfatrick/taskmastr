@@ -13,7 +13,7 @@
           <button class="rename-button" title="Rename list" @click.prevent="renameToggle($index)">
             <i class="fa fa-pencil"></i>
           </button>
-          <button class="delete-button" title="Delete list" @click.prevent="deleteList($index)">
+          <button class="delete-button" title="Delete list" @click.prevent="removeList($index)">
             <i class="fa" :class="{'fa-trash-o': !list._delete, 'fa-undo': list._delete}"></i>
           </button>
         </div>
@@ -50,6 +50,11 @@ export default {
     }
   },
   methods: {
+    removeList (index) {
+      this.deleteList(index, (id) => {
+        this.navigateToList(id)
+      })
+    },
     navigateToList (id) {
       this.$route.router.go('/app/list/' + id)
     },
@@ -103,7 +108,7 @@ export default {
       this.navigateToList(this.lists[index].id)
     })
     Mousetrap.bind('alt+backspace', () => {
-      this.deleteList(_.findIndex(this.lists, {current: true}))
+      this.removeList(_.findIndex(this.lists, {current: true}))
     })
     Mousetrap.bind('alt+/', () => {
       this.renameToggle(_.findIndex(this.lists, {current: true}))

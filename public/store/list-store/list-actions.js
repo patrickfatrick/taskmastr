@@ -60,7 +60,7 @@ export function addList ({ dispatch, state }, list) {
   })
 }
 
-export function deleteList ({ dispatch, state }, index) {
+export function deleteList ({ dispatch, state }, index, cb) {
   const lists = state.user.tasks
   const list = lists[index]
   if (lists.length === 1) return
@@ -98,7 +98,7 @@ export function deleteList ({ dispatch, state }, index) {
       return removeList(list.id, user, (err, res) => {
         // Revert the change if request fails
         if (err) dispatch('ADD_LIST', list)
-        return res
+        cb(_.find(lists, { current: true }).id)
       })
     }, 5000)
     dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)
