@@ -50,6 +50,7 @@ export default {
       dragStart: null
     }
   },
+  computed: {},
   methods: {
     removeList (index) {
       this.deleteList(index, (id) => {
@@ -57,7 +58,7 @@ export default {
       })
     },
     navigateToList (id) {
-      this.unmountList()
+      if (this.current.id !== id) this.unmountList()
       this.$route.router.go('/app/list/' + id)
     },
     rename (e, index) {

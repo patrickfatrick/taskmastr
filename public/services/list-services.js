@@ -59,7 +59,6 @@ export function removeList (id, user, cb) {
     cb(null, response)
   })
   .catch((err) => {
-    console.log(err)
     cb(err, err.response)
   })
 }

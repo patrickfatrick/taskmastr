@@ -1,12 +1,11 @@
-/* global it describe sinon beforeEach afterEach */
-import chai from 'chai'
+/* global it sinon describe beforeEach afterEach */
+import { assert } from 'chai'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import TaskInput from '../../../../public/components/tasks/task-components/TaskInput.vue'
 import state from '../../../../public/store/state'
 import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('TaskInput.vue', function () {
   let clock
 
@@ -36,45 +35,45 @@ describe('TaskInput.vue', function () {
   })
 
   it('should inherit the newTask property from the state', () => {
-    TaskInput.vuex.getters.newTask({ newTask: '' }).should.equal('')
+    assert.deepEqual(TaskInput.vuex.getters.newTask({ newTask: '' }), '')
   })
 
   it('should inherit the taskAttempt property from the state', () => {
-    TaskInput.vuex.getters.taskAttempt({ taskAttempt: false }).should.equal(false)
+    assert.isFalse(TaskInput.vuex.getters.taskAttempt({ taskAttempt: false }))
   })
 
   it('should inherit the user property from the state', () => {
-    TaskInput.vuex.getters.user({ user: {} }).should.be.an.instanceof(Object)
+    assert.isObject(TaskInput.vuex.getters.user({ user: {} }))
   })
 
   it('should have a validate property', () => {
-    TaskInput.computed.validate.should.be.an.instanceof(Function)
+    assert.isFunction(TaskInput.computed.validate)
   })
 
   it('should have an isValid property', () => {
-    TaskInput.computed.isValid.should.be.an.instanceof(Function)
+    assert.isFunction(TaskInput.computed.isValid)
   })
 
   it('should inherit a setNewTask action from the store', () => {
-    TaskInput.vuex.actions.setNewTask.should.be.an.instanceof(Function)
+    assert.isFunction(TaskInput.vuex.actions.setNewTask)
   })
 
   it('should inherit a setPlaceholder action from the store', () => {
-    TaskInput.vuex.actions.setPlaceholder.should.be.an.instanceof(Function)
+    assert.isFunction(TaskInput.vuex.actions.setPlaceholder)
   })
 
   it('should inherit a setTaskAttempt action from the store', () => {
-    TaskInput.vuex.actions.setTaskAttempt.should.be.an.instanceof(Function)
+    assert.isFunction(TaskInput.vuex.actions.setTaskAttempt)
   })
 
   it('should have an addTask method', () => {
-    TaskInput.methods.addTask.should.be.an.instanceof(Function)
+    assert.isFunction(TaskInput.methods.addTask)
   })
 
   it('should render with initial state', () => {
     const vm = mountVm({})
 
-    vm.$el.querySelector('#create-todo').classList.contains('invalid').should.be.false
+    assert.isFalse(vm.$el.querySelector('#create-todo').classList.contains('invalid'))
   })
 
   it('should respond to changes in the state', () => {
@@ -82,7 +81,7 @@ describe('TaskInput.vue', function () {
 
     const vm = mountVm({ taskAttempt: true })
 
-    vm.$el.querySelector('#create-todo').classList.contains('invalid').should.be.true
+    assert.isTrue(vm.$el.querySelector('#create-todo').classList.contains('invalid'))
 
     TaskInput.computed.isValid.restore()
   })
@@ -95,8 +94,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'setPlaceholder')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.calledOnce.should.be.true
-    vm.$children[0].setPlaceholder.calledOnce.should.be.true
+    assert.isTrue(vm.$children[0].addTask.calledOnce)
+    assert.isTrue(vm.$children[0].setPlaceholder.calledOnce)
 
     vm.$children[0].addTask.restore()
     vm.$children[0].setPlaceholder.restore()
@@ -110,8 +109,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
-    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-01T13:00:00.000Z')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].item, 'New task')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].dueDate, '2016-01-01T13:00:00.000Z')
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
@@ -125,8 +124,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
-    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-01T13:00:00.000Z')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].item, 'New task')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].dueDate, '2016-01-01T13:00:00.000Z')
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
@@ -140,8 +139,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
-    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-01T13:00:00.000Z')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].item, 'New task')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].dueDate, '2016-01-01T13:00:00.000Z')
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
@@ -157,8 +156,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
-    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-01-04T13:00:00.000Z')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].item, 'New task')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].dueDate, '2016-01-04T13:00:00.000Z')
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
@@ -175,8 +174,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
-    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2016-02-01T13:00:00.000Z')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].item, 'New task')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].dueDate, '2016-02-01T13:00:00.000Z')
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
@@ -191,8 +190,8 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.args[0][0].item.should.equal('New task')
-    vm.$children[0].addTask.args[0][0].dueDate.should.equal('2017-01-01T13:00:00.000Z')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].item, 'New task')
+    assert.deepEqual(vm.$children[0].addTask.args[0][0].dueDate, '2017-01-01T13:00:00.000Z')
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()
@@ -206,7 +205,7 @@ describe('TaskInput.vue', function () {
     sinon.stub(vm.$children[0], 'addTask')
 
     vm.$el.querySelector('#task-button').click()
-    vm.$children[0].addTask.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].addTask.calledOnce)
 
     vm.$children[0].addTask.restore()
     TaskInput.computed.isValid.restore()

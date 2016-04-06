@@ -27,6 +27,7 @@ module.exports = function (karma) {
       'karma-sourcemap-loader',
       'karma-mocha',
       'karma-chai',
+      'karma-sinon',
       'karma-coverage',
       'karma-mocha-reporter',
       'karma-phantomjs-launcher',
@@ -34,7 +35,6 @@ module.exports = function (karma) {
       'karma-firefox-launcher',
       'karma-safari-launcher',
       'karma-opera-launcher',
-      'karma-sinon',
       'karma-sinon-stub-promise'
     ],
     browsers: ['PhantomJS'], // 'Chrome', 'Safari', 'Firefox', 'Opera'

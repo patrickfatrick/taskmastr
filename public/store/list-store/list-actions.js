@@ -74,26 +74,27 @@ export function deleteList ({ dispatch, state }, index, cb) {
     timeoutID = setTimeout(() => {
       // Get the next and previous lists after timeout,
       // in case indices change in the five-second window
-      let prevList = lists[index - 1]
-      let nextList = lists[index + 1]
+      // Note: Switching to `state.user.tasks` in the timeout
+      // Because the lists might have changed; reassign var `lists`?
+      const curIndex = _.findIndex(state.user.tasks, { id: list.id })
+      const prevList = state.user.tasks[curIndex - 1]
+      const nextList = state.user.tasks[curIndex + 1]
       // Stop procedure if it's the only list
-      if (lists.length === 1) {
+      if (state.user.tasks.length === 1) {
         dispatch('UPDATE_DELETE_QUEUE', list.id, null)
-        dispatch('SET_LIST_DELETE', _.findIndex(lists, { id: list.id }), false)
+        dispatch('SET_LIST_DELETE', curIndex, false)
         return
       }
       // Reassign current list
+      let newCurrent
       if (list.current) {
-        if (list.current && index === (lists.length - 1)) {
-          dispatch('SET_CURRENT_LIST', _.find(lists, prevList))
-        } else {
-          dispatch('SET_CURRENT_LIST', _.find(lists, nextList))
-        }
+        newCurrent = (list.current && curIndex === (state.user.tasks.length - 1)) ? prevList : nextList
+        dispatch('SET_CURRENT_LIST', newCurrent)
       }
       // Optimistically change the client's store before we've made the request
       dispatch('UPDATE_DELETE_QUEUE', list.id, null)
-      dispatch('SET_LIST_DELETE', _.findIndex(lists, { id: list.id }), false)
-      dispatch('REMOVE_LIST', _.findIndex(lists, { id: list.id }))
+      dispatch('SET_LIST_DELETE', _.findIndex(state.user.tasks, { id: list.id }), false)
+      dispatch('REMOVE_LIST', _.findIndex(state.user.tasks, { id: list.id }))
       const user = {
         username: state.user.username,
         tasks: state.user.tasks.filter((v) => {
@@ -103,7 +104,7 @@ export function deleteList ({ dispatch, state }, index, cb) {
       return removeList(list.id, user, (err, res) => {
         // Revert the change if request fails
         if (err) dispatch('ADD_LIST', list)
-        cb(_.find(lists, { current: true }).id)
+        cb(_.find(state.user.tasks, { current: true }).id)
       })
     }, 5000)
     dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)

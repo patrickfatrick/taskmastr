@@ -35,6 +35,7 @@ var lists = {
   delete: function * (next) {
     var ctx = this
     var user = ctx.request.body.user
+    console.log(user.tasks)
     try {
       var result = listService.deleteList(ctx.params.listid)
       var userResult = userService.updateUser(user.username, { tasks: user.tasks })

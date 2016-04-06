@@ -1,5 +1,5 @@
-/* global it describe sinon assert beforeEach afterEach*/
-import chai from 'chai'
+/* global it describe sinon beforeEach afterEach*/
+import { assert } from 'chai'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Mousetrap from 'mousetrap'
@@ -8,7 +8,6 @@ import store from '../../../../public/store'
 import state from '../../../../public/store/state'
 import mutations from '../../../../public/store/mutations'
 
-chai.should()
 describe('Items.vue', function () {
   let items
 
@@ -63,35 +62,35 @@ describe('Items.vue', function () {
   })
 
   it('should inherit the tasks property from the state', () => {
-    Items.vuex.getters.tasks({ current: { items: [] } }).should.be.an.instanceof(Array)
+    assert.isArray(Items.vuex.getters.tasks({ current: { items: [] } }))
   })
 
   it('should inherit a deleteTask action from the store', () => {
-    Items.vuex.actions.deleteTask.should.be.an.instanceof(Function)
+    assert.isFunction(Items.vuex.actions.deleteTask)
   })
 
   it('should inherit a setCurrentTask action from the store', () => {
-    Items.vuex.actions.setCurrentTask.should.be.an.instanceof(Function)
+    assert.isFunction(Items.vuex.actions.setCurrentTask)
   })
 
   it('should inherit a sortTasks action from the store', () => {
-    Items.vuex.actions.sortTasks.should.be.an.instanceof(Function)
+    assert.isFunction(Items.vuex.actions.sortTasks)
   })
 
   it('should inherit a toggleDetails action from the store', () => {
-    Items.vuex.actions.toggleDetails.should.be.an.instanceof(Function)
+    assert.isFunction(Items.vuex.actions.toggleDetails)
   })
 
   it('should have a _drag method', () => {
-    Items.methods._drag.should.be.an.instanceof(Function)
+    assert.isFunction(Items.methods._drag)
   })
 
   it('should have a _drop method', () => {
-    Items.methods._drop.should.be.an.instanceof(Function)
+    assert.isFunction(Items.methods._drop)
   })
 
   it('should have a _index method', () => {
-    Items.methods._index.should.be.an.instanceof(Function)
+    assert.isFunction(Items.methods._index)
   })
 
   it('should render with initial state', () => {
@@ -109,9 +108,9 @@ describe('Items.vue', function () {
   it('should render rows with tasks', () => {
     const vm = mountVm()
 
-    vm.$el.querySelector('.table-body').children.should.have.length(2)
-    vm.$el.querySelector('.table-body').children[0].getAttribute('name').should.equal('task1')
-    vm.$el.querySelector('.table-body').children[1].getAttribute('name').should.equal('task2')
+    assert.lengthOf(vm.$el.querySelector('.table-body').children, 2)
+    assert.deepEqual(vm.$el.querySelector('.table-body').children[0].getAttribute('name'), 'task1')
+    assert.deepEqual(vm.$el.querySelector('.table-body').children[1].getAttribute('name'), 'task2')
   })
 
   it('should respond to complete _delete and current and _dueDateDifference properties', () => {
@@ -147,11 +146,11 @@ describe('Items.vue', function () {
 
     const vm = mountVm()
 
-    vm.$el.querySelector('.table-body').children[0].classList.contains('deleting').should.be.true
-    vm.$el.querySelector('.table-body').children[1].classList.contains('active').should.be.true
-    vm.$el.querySelectorAll('.details-button > i')[0].classList.contains('fa-pencil-square-o').should.be.true
-    vm.$el.querySelectorAll('.details-button > i')[1].classList.contains('fa-exclamation-triangle').should.be.true
-    vm.$el.querySelectorAll('.details-button > i')[2].classList.contains('fa-pencil-square-o').should.be.true
+    assert.isTrue(vm.$el.querySelector('.table-body').children[0].classList.contains('deleting'))
+    assert.isTrue(vm.$el.querySelector('.table-body').children[1].classList.contains('active'))
+    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[0].classList.contains('fa-pencil-square-o'))
+    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[1].classList.contains('fa-exclamation-triangle'))
+    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[2].classList.contains('fa-pencil-square-o'))
   })
 
   it('should call setCurrentTask method on click', () => {
@@ -160,7 +159,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
     vm.$el.querySelectorAll('.name')[0].click()
-    vm.$children[0].setCurrentTask.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].setCurrentTask.calledWith(0))
 
     vm.$children[0].setCurrentTask.restore()
   })
@@ -175,7 +174,7 @@ describe('Items.vue', function () {
     dblclick.initEvent('dblclick', true, true, window)
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    vm.$children[0].toggleDetails.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].toggleDetails.calledWith(0))
 
     vm.$children[0].toggleDetails.restore()
   })
@@ -186,7 +185,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'toggleDetails')
 
     vm.$el.querySelectorAll('.details-button')[0].click()
-    vm.$children[0].toggleDetails.calledWith(0, true).should.be.true
+    assert.isTrue(vm.$children[0].toggleDetails.calledWith(0, true))
 
     vm.$children[0].toggleDetails.restore()
   })
@@ -197,7 +196,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'completeTask')
 
     vm.$el.querySelectorAll('.complete')[0].click()
-    vm.$children[0].completeTask.calledWith(0, true).should.be.true
+    assert.isTrue(vm.$children[0].completeTask.calledWith(0, true))
 
     vm.$children[0].completeTask.restore()
   })
@@ -208,7 +207,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
     Mousetrap.trigger('ctrl+,')
-    vm.$children[0].setCurrentTask.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].setCurrentTask.calledWith(0))
 
     vm.$children[0].setCurrentTask.restore()
   })
@@ -219,7 +218,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'setCurrentTask')
 
     Mousetrap.trigger('ctrl+.')
-    vm.$children[0].setCurrentTask.calledWith(0).should.be.true
+    assert.isTrue(vm.$children[0].setCurrentTask.calledWith(0))
 
     vm.$children[0].setCurrentTask.restore()
   })
@@ -230,7 +229,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'deleteTask')
 
     Mousetrap.trigger('ctrl+backspace')
-    vm.$children[0].deleteTask.calledWith(1).should.be.true
+    assert.isTrue(vm.$children[0].deleteTask.calledWith(1))
 
     vm.$children[0].deleteTask.restore()
   })
@@ -241,7 +240,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
-    vm.$children[0].sortTasks.calledWith(1, 0).should.be.true
+    assert.isTrue(vm.$children[0].sortTasks.calledWith(1, 0))
 
     vm.$children[0].sortTasks.restore()
   })
@@ -267,7 +266,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
-    vm.$children[0].sortTasks.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].sortTasks.calledOnce)
 
     vm.$children[0].sortTasks.restore()
   })
@@ -293,7 +292,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
-    vm.$children[0].sortTasks.calledWith(0, 1).should.be.true
+    assert.isTrue(vm.$children[0].sortTasks.calledWith(0, 1))
 
     vm.$children[0].sortTasks.restore()
   })
@@ -304,7 +303,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
-    vm.$children[0].sortTasks.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].sortTasks.calledOnce)
 
     vm.$children[0].sortTasks.restore()
   })
@@ -334,7 +333,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
-    vm.$children[0].sortTasks.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].sortTasks.calledOnce)
 
     vm.$children[0].sortTasks.restore()
   })
@@ -364,7 +363,7 @@ describe('Items.vue', function () {
     sinon.stub(vm.$children[0], 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
-    vm.$children[0].sortTasks.calledOnce.should.be.false
+    assert.isFalse(vm.$children[0].sortTasks.calledOnce)
 
     vm.$children[0].sortTasks.restore()
   })

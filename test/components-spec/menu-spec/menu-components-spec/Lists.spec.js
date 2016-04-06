@@ -10,6 +10,17 @@ import mutations from '../../../../public/store/mutations'
 describe('Lists.vue', function () {
   let lists
 
+  // Mock vue-router
+  Lists.computed.$route = () => {
+    return {
+      router: {
+        go (location) {
+          return location
+        }
+      }
+    }
+  }
+
   function mountVm (changes) {
     return new Vue({
       store: new Vuex.Store({
@@ -262,6 +273,34 @@ describe('Lists.vue', function () {
 
     vm.$children[0].deleteList.restore()
     vm.$children[0].navigateToList.restore()
+  })
+
+  it('should call unmountList on navigateToList', () => {
+    const vm = mountVm({ current: lists[1] })
+
+    sinon.stub(vm.$children[0], 'unmountList')
+    sinon.stub(vm.$children[0].$route.router, 'go').returns(true)
+
+    vm.$children[0].navigateToList('listid')
+    assert.isTrue(vm.$children[0].unmountList.calledOnce)
+    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/app/list/listid'))
+
+    vm.$children[0].unmountList.restore()
+    vm.$children[0].$route.router.go.restore()
+  })
+
+  it('should not call unmountList on navigateToList if id === current.id', () => {
+    const vm = mountVm({ current: lists[1] })
+
+    sinon.stub(vm.$children[0], 'unmountList')
+    sinon.stub(vm.$children[0].$route.router, 'go').returns(true)
+
+    vm.$children[0].navigateToList('listid2')
+    assert.isFalse(vm.$children[0].unmountList.calledOnce)
+    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/app/list/listid2'))
+
+    vm.$children[0].unmountList.restore()
+    vm.$children[0].$route.router.go.restore()
   })
 
   it('should call navigateToList on alt+,', () => {

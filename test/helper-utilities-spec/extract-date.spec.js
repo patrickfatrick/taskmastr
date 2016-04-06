@@ -1,4 +1,4 @@
-/* global describe it sinon beforeEach afterEach */
+/* global describe sinon it beforeEach afterEach */
 import chai from 'chai'
 import gregorian from 'gregorian'
 import extractDate from '../../public/helper-utilities/extract-date'
