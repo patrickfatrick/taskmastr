@@ -27,7 +27,7 @@
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import { deleteList, setCurrentList, sortLists, renameList } from '../../../store/list-store/list-actions'
+import { deleteList, setCurrentList, sortLists, renameList, unmountList } from '../../../store/list-store/list-actions'
 
 export default {
   vuex: {
@@ -39,7 +39,8 @@ export default {
       deleteList,
       setCurrentList,
       sortLists,
-      renameList
+      renameList,
+      unmountList
     }
   },
   data () {
@@ -56,6 +57,7 @@ export default {
       })
     },
     navigateToList (id) {
+      this.unmountList()
       this.$route.router.go('/app/list/' + id)
     },
     rename (e, index) {

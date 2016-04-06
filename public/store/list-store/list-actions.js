@@ -29,7 +29,6 @@ export function renameList ({ dispatch, state }, index, name) {
 }
 
 export function mountList ({ dispatch, state }, id) {
-  dispatch('SET_CURRENT_LIST', null)
   return getList(id, (err, response) => {
     if (err) return dispatch('SET_INVALID_LIST', err)
     const oldCurrent = _.find(state.user.tasks, { current: true })
@@ -40,6 +39,10 @@ export function mountList ({ dispatch, state }, id) {
       return res
     })
   })
+}
+
+export function unmountList ({ dispatch, state }, id) {
+  dispatch('SET_CURRENT_LIST', null)
 }
 
 export function addList ({ dispatch, state }, list) {

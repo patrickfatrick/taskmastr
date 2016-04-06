@@ -41,7 +41,6 @@ describe('mountList', () => {
     })
 
     testAction(listActions.mountList, [0], state, [
-      { name: 'SET_CURRENT_LIST', payload: [null] },
       { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] },
       { name: 'SET_INVALID_LIST', payload: [false] }
     ], done)
@@ -82,7 +81,6 @@ describe('mountList', () => {
     })
 
     testAction(listActions.mountList, [0], state, [
-      { name: 'SET_CURRENT_LIST', payload: [null] },
       { name: 'SET_INVALID_LIST', payload: ['Error!'] }
     ], done)
   })
@@ -122,7 +120,6 @@ describe('mountList', () => {
     })
 
     testAction(listActions.mountList, [0], state, [
-      { name: 'SET_CURRENT_LIST', payload: [null] },
       { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] },
       { name: 'SET_INVALID_LIST', payload: [false] },
       { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[0]] }
