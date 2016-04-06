@@ -50,6 +50,14 @@ $ npm run dev
 
 # Changelog
 
+## New in v7.0
+
+Backend changes mostly, but the app now saves your changes as you go, no more need to save. There are also URLs for each list. If you have the link to a list, you can go straight to it now.
+
+This essentially decoupled the list from the user. Lists are now saved in a separate table, and a user essentially subscribes to the list.
+
+There will be plenty more work in this area, mainly in the sense that the next major release will focus on collaboration, multiple users being able to subscribe to a list. Stay tuned!
+
 ## New in v6.3
 
 Switched from Express to Koa.

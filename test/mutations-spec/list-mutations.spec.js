@@ -31,6 +31,11 @@ describe('list mutations', () => {
 
     state.user.tasks[0].current.should.be.false
     state.user.tasks[1].current.should.be.true
+
+    listMutations.SET_CURRENT_LIST(state, null)
+
+    state.user.tasks[0].current.should.be.false
+    state.user.tasks[1].current.should.be.false
   })
 
   it('SET_MENU_TOGGLED', () => {
@@ -163,5 +168,15 @@ describe('list mutations', () => {
     state.user.tasks[0].list.should.equal('New list')
     state.user.tasks[1].list.should.equal('Not current list')
     state.user.tasks[2].list.should.equal('Current list')
+  })
+
+  it('SET_INVALID_LIST', () => {
+    const state = {
+      invalidList: false
+    }
+
+    listMutations.SET_INVALID_LIST(state, 'Error!')
+
+    state.invalidList.should.equal('Error!')
   })
 })

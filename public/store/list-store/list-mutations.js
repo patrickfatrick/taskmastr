@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_MENU_TOGGLED, SET_NEW_LIST, SET_LIST_ATTEMPT, ADD_LIST, REMOVE_LIST, RENAME_LIST, SET_LIST_DELETE, SORT_LISTS, SET_CURRENT_LIST} from '../mutation-types'
+import {SET_MENU_TOGGLED, SET_NEW_LIST, SET_LIST_ATTEMPT, ADD_LIST, REMOVE_LIST, RENAME_LIST, SET_LIST_DELETE, SORT_LISTS, SET_CURRENT_LIST, SET_INVALID_LIST} from '../mutation-types'
 
 export default {
   [SET_MENU_TOGGLED] (state, bool) {
@@ -29,8 +29,12 @@ export default {
   },
   [SET_CURRENT_LIST] (state, list) {
     _.set(_.find(state.user.tasks, {current: true}), 'current', false)
+    if (!list) return
     const index = _.findIndex(state.user.tasks, {id: list.id})
     _.set(state, `user.tasks[${index}].current`, true)
     _.set(state, 'current', list)
+  },
+  [SET_INVALID_LIST] (state, err) {
+    _.set(state, 'invalidList', err)
   }
 }

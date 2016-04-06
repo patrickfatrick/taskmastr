@@ -9,7 +9,7 @@
       <items></items>
       <div id="no-list" v-if="user.key || !current.items">
         <i id="loading" class="fa fa-cog fa-spin"></i>
-        <div>You're not viewing a list. Please click on one in the menu to the left.</div>
+        <div id="invalid-list" v-if="invalidList">{{ invalidList }}</div>
       </div>
     </div>
   </div>
@@ -26,7 +26,8 @@ export default {
   vuex: {
     getters: {
       user: (state) => state.user,
-      current: (state) => state.current
+      current: (state) => state.current,
+      invalidList: (state) => state.invalidList
     },
     actions: {
       mountList

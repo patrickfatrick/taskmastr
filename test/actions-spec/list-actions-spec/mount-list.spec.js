@@ -41,7 +41,49 @@ describe('mountList', () => {
     })
 
     testAction(listActions.mountList, [0], state, [
-      { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] }
+      { name: 'SET_CURRENT_LIST', payload: [null] },
+      { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] },
+      { name: 'SET_INVALID_LIST', payload: [false] }
+    ], done)
+  })
+
+  it('dispatches SET_INVALID_LIST on error', (done) => {
+    const state = {
+      user: {
+        username: 'username',
+        tasks: [
+          {
+            id: 'listid',
+            list: 'List 1',
+            current: true,
+            _delete: false
+          },
+          {
+            id: 'listid2',
+            list: 'List 2',
+            current: false,
+            _delete: false
+          }
+        ]
+      }
+    }
+
+    const listActions = listActionsInjector({
+      '../../services/user-services': {
+        updateUser (username, body, cb) {
+          cb('Error!', { status: 500 })
+        }
+      },
+      '../../services/list-services': {
+        getList (id, cb) {
+          cb('Error!', { status: 404 })
+        }
+      }
+    })
+
+    testAction(listActions.mountList, [0], state, [
+      { name: 'SET_CURRENT_LIST', payload: [null] },
+      { name: 'SET_INVALID_LIST', payload: ['Error!'] }
     ], done)
   })
 
@@ -80,7 +122,9 @@ describe('mountList', () => {
     })
 
     testAction(listActions.mountList, [0], state, [
+      { name: 'SET_CURRENT_LIST', payload: [null] },
       { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] },
+      { name: 'SET_INVALID_LIST', payload: [false] },
       { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[0]] }
     ], done)
   })

@@ -37,6 +37,7 @@ export function getList (id, cb) {
     cb(null, response)
   })
   .catch((err) => {
+    if (err.response.status === 404) return cb('You\'re not viewing a list. Please click on one in the menu to the left.', err.response)
     cb(err, err.response)
   })
 }
