@@ -29,7 +29,7 @@ export default {
   },
   [SET_CURRENT_LIST] (state, list) {
     _.set(_.find(state.user.tasks, {current: true}), 'current', false)
-    if (!list) return
+    if (!list) return _.set(state, 'current', {})
     const index = _.findIndex(state.user.tasks, {id: list.id})
     _.set(state, `user.tasks[${index}].current`, true)
     _.set(state, 'current', list)
