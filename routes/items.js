@@ -53,7 +53,7 @@ var items = {
           const dueDate = new Date(item.dueDate)
           if (dueDate <= Date.now()) return
           console.log(`${username} => Agenda scheduled: ${itemid} ${dueDate}`)
-          agenda.schedule(item.dueDate, 'Notification Email', {
+          agenda.schedule(dueDate, 'Notification Email', {
             agendaID: itemid,
             username: username,
             item: item.item,
