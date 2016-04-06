@@ -81,7 +81,7 @@ app.use(views(path.join(__dirname, 'views'), {
 }))
 
 // Serve static
-app.use(serve(path.join(__dirname, 'public'), { maxage: 1000 * 60 * 60 * 24, gzip: true }))
+app.use(serve(path.join(__dirname, 'public'), config.static))
 
 // Routes
 router.get('/', index.index)

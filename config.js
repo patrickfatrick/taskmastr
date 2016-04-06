@@ -1,4 +1,10 @@
+const singleDay = 1000 * 60 * 60 * 24
+
 module.exports = {
+  static: {
+    maxage: singleDay,
+    gzip: true
+  },
   koa: {
     port: process.env.PORT || 3000
   },
@@ -18,7 +24,7 @@ module.exports = {
       collection: 'agendaJobs'
     }
   },
-  cookieMaxAge: 30 * 24 * 3600 * 1000,
+  cookieMaxAge: singleDay * 30,
   compress: {
     filter: function (content_type) {
       return /text/i.test(content_type)
