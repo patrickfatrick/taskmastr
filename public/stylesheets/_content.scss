@@ -9,6 +9,23 @@
 	}
 }
 
+#test-user-banner {
+	width: 100%;
+	min-height: 3rem;
+	padding: 1rem;
+	position: fixed;
+	font-size: 1rem;
+	background-color: $sunsetOrange;
+	color: $white;
+	z-index: 3;
+	@include media(max-width $medium) {
+		bottom: 0;
+	}
+	@include media(min-width $medium) {
+		top: 0;
+	}
+}
+
 .container {
 	@extend html;
 	position: initial;

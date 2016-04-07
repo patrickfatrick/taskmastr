@@ -38,6 +38,7 @@ describe('Tasks.vue', function () {
   it('should render with initial state and component tree', () => {
     const vm = mountVm()
 
+    assert.isNull(vm.$el.querySelector('#test-user-banner'))
     assert.isNotNull(vm.$el.querySelector('#content'))
     assert.isNotNull(vm.$el.querySelector('#icon-menu'))
     assert.isNotNull(vm.$el.querySelector('#todo-line'))
@@ -49,11 +50,24 @@ describe('Tasks.vue', function () {
   it('should respond to changes in the state', () => {
     const vm = mountVm({ user: { key: 'password' }, invalidList: 'Error!' })
 
+    assert.isNull(vm.$el.querySelector('#test-user-banner'))
     assert.isNotNull(vm.$el.querySelector('#content'))
     assert.isNotNull(vm.$el.querySelector('#icon-menu'))
     assert.isNotNull(vm.$el.querySelector('#todo-line'))
     assert.isNotNull(vm.$el.querySelector('#task-list'))
     assert.isNotNull(vm.$el.querySelector('#no-list'))
     assert.isNotNull(vm.$el.querySelector('#invalid-list'))
+  })
+
+  it('should respond to changes in the state (try-it account)', () => {
+    const vm = mountVm({ user: { username: 'mrormrstestperson@taskmastr.co' } })
+
+    assert.isNotNull(vm.$el.querySelector('#test-user-banner'))
+    assert.isNotNull(vm.$el.querySelector('#content'))
+    assert.isNotNull(vm.$el.querySelector('#icon-menu'))
+    assert.isNotNull(vm.$el.querySelector('#todo-line'))
+    assert.isNotNull(vm.$el.querySelector('#task-list'))
+    assert.isNull(vm.$el.querySelector('#no-list'))
+    assert.isNull(vm.$el.querySelector('#invalid-list'))
   })
 })
