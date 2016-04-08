@@ -11,3 +11,8 @@ test:
 general:
   artifacts:
     - ./coverage
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: taskmastr-app

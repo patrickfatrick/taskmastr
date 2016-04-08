@@ -60,7 +60,7 @@ app.use(session({
 // Bodyparser
 app.use(parse())
 
-// uncomment after placing your favicon in /public
+// Favicon
 app.use(favicon(path.join(__dirname, '/public/images/favicon.ico')))
 
 // Initialize Passport
@@ -81,7 +81,7 @@ app.use(views(path.join(__dirname, 'views'), {
 }))
 
 // Serve static
-app.use(serve(path.join(__dirname, 'public'), config.static))
+app.use(serve(path.join(__dirname, 'public')))
 
 // Routes
 router.get('/', index.index)
