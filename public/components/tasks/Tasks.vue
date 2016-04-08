@@ -1,7 +1,7 @@
 <template>
   <div id="content">
     <div id="test-user-banner" v-if="user.username === 'mrormrstestperson@taskmastr.co'">
-      FYI: You're currently logged into the Try It account, and no changes will be saved.
+      FYI: You're currently logged into the Try It account, and no changes will not be saved.
     </div>
     <div class="container">
       <div class="prompt-container">
