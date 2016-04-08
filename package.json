@@ -20,7 +20,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "TZ=MST karma start",
     "postinstall": "npm install async debug",
-    "deploy": "npm run build && git push github master"
+    "deploy": "npm run build && git add . && git commit -m 'build' && git push github master"
   },
   "dependencies": {
     "agenda": "^0.8.0",
