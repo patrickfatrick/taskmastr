@@ -81,7 +81,7 @@ app.use(views(path.join(__dirname, 'views'), {
 }))
 
 // Serve static
-app.use(serve(path.join(__dirname, 'public')))
+app.use(serve(path.join(__dirname, 'public'), config.static))
 
 // Routes
 router.get('/', index.index)
