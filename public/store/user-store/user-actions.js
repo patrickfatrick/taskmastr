@@ -81,6 +81,10 @@ export function setResetKey ({ dispatch }, str) {
   dispatch('SET_RESET_KEY', str)
 }
 
+export function setResetConfirmKey ({ dispatch }, str) {
+  dispatch('SET_RESET_CONFIRM_KEY', str)
+}
+
 export function setResetToken ({ dispatch }, str) {
   dispatch('SET_RESET_TOKEN', str)
 }
