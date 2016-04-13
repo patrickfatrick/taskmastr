@@ -1,10 +1,12 @@
-var http = require('http')
-var passport = require('koa-passport')
-var agenda = require('../services/agenda-service')
-var userService = require('../services/user-service')
-var config = require('../config')
+'use strict'
 
-var users = {
+const http = require('http')
+const passport = require('koa-passport')
+const agenda = require('../services/agenda-service')
+const userService = require('../services/user-service')
+const config = require('../config')
+
+const users = {
   setCookieAge: function * (next) {
     if (this.request.body.rememberMe) {
       this.session.cookie.maxage = config.cookieMaxAge
@@ -12,7 +14,7 @@ var users = {
     yield next
   },
   login: function * (next) {
-    var ctx = this
+    const ctx = this
     try {
       yield passport.authenticate('local', function * (err, user, info) {
         if (err) throw err
@@ -32,15 +34,15 @@ var users = {
     }
   },
   create: function * (next) {
-    var ctx = this
-    var user = this.request.body
+    const ctx = this
+    const user = this.request.body
     try {
-      var found = yield userService.findUser(user.username)
+      const found = yield userService.findUser(user.username)
       if (found) {
         console.log(found.username + ' => Already a user')
         ctx.throw(400, 'User already exists')
       }
-      var result = yield userService.addUser(user)
+      const result = yield userService.addUser(user)
       if (!result.username) ctx.throw(500, 'Something bad happened')
       console.log(result.username + ' => Creating user... OK')
       yield ctx.login(result)
@@ -59,12 +61,12 @@ var users = {
     }
   },
   update: function * (next) {
-    var ctx = this
-    var username = this.params.username
-    var body = this.request.body
+    const ctx = this
+    const username = this.params.username
+    const body = this.request.body
 
     try {
-      var result = yield userService.updateUser(username, body)
+      const result = yield userService.updateUser(username, body)
       if (!result) ctx.throw(500, 'Something bad happened')
       console.log(username + ' => Saving user... OK')
       ctx.status = 200
@@ -75,16 +77,16 @@ var users = {
     }
   },
   forgot: function * (next) {
-    var ctx = this
-    var username = this.params.username
+    const ctx = this
+    const username = this.params.username
 
     try {
-      var user = yield userService.findUser(username)
+      const user = yield userService.findUser(username)
       if (!user) {
         console.log('No user: ' + user.username)
         ctx.throw(401, 'No user found.')
       }
-      var result = yield userService.setToken(user)
+      const result = yield userService.setToken(user)
       if (!result.username) ctx.throw(500, 'Something bad happened.')
       agenda.now('Reset Email', {
         username: result.username,
@@ -100,13 +102,13 @@ var users = {
     }
   },
   reset: function * (next) {
-    var ctx = this
-    var token = this.request.body.token
-    var newKey = this.request.body.newKey
+    const ctx = this
+    const token = this.request.body.token
+    const newKey = this.request.body.newKey
     try {
       // console.log('Reset token: ' + token)
       // console.log('New Key: ' + newKey)
-      var result = yield userService.resetPassword({
+      const result = yield userService.resetPassword({
         token: token,
         newKey: newKey
       })

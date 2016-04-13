@@ -1,7 +1,7 @@
-var path = require('path')
-var config = require(path.join(__dirname, '/config'))
+const path = require('path')
+const config = require(path.join(__dirname, '/config'))
 
-var r = require('rethinkdbdash')(config.rethinkdb)
+const r = require('rethinkdbdash')(config.rethinkdb)
 require('rethinkdb-init')(r)
 
 module.exports = r

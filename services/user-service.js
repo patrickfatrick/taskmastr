@@ -1,10 +1,12 @@
-var bcrypt = require('bcrypt')
-var hat = require('hat')
-var r = require('../r')
+'use strict'
+
+const bcrypt = require('bcrypt')
+const hat = require('hat')
+const r = require('../r')
 
 exports.addUser = function (user) {
-  return new Promise(function (resolve, reject) {
-    bcrypt.hash(user.key, 10, function (err, hash) {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(user.key, 10, (err, hash) => {
       if (err) reject(err)
       var newUser = {
         username: user.username.toLowerCase(),
@@ -47,9 +49,9 @@ exports.setToken = function (user) {
 }
 
 exports.resetPassword = function (user) {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     if (Date.now() > user.resetDate) reject()
-    bcrypt.hash(user.newKey, 10, function (err, hash) {
+    bcrypt.hash(user.newKey, 10, (err, hash) => {
       if (err) reject(err)
       r.table('users').filter(r.row('resetToken').eq(user.token))
       .update({

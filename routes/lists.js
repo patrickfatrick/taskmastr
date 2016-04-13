@@ -1,14 +1,16 @@
-var http = require('http')
-var async = require('async')
-var userService = require('../services/user-service')
-var listService = require('../services/list-service')
-var agenda = require('../services/agenda-service')
+'use strict'
 
-var lists = {
+const http = require('http')
+const async = require('async')
+const userService = require('../services/user-service')
+const listService = require('../services/list-service')
+const agenda = require('../services/agenda-service')
+
+const lists = {
   get: function * (next) {
-    var ctx = this
+    const ctx = this
     try {
-      var result = yield listService.getList(ctx.params.listid)
+      const result = yield listService.getList(ctx.params.listid)
       if (!result) ctx.throw(404, 'List not found')
       ctx.body = result
     } catch (e) {
@@ -17,12 +19,12 @@ var lists = {
     }
   },
   create: function * (next) {
-    var ctx = this
-    var list = this.request.body.list
-    var user = this.request.body.user
+    const ctx = this
+    const list = this.request.body.list
+    const user = this.request.body.user
     try {
-      var result = listService.addList(list)
-      var userResult = userService.updateUser(user.username, { tasks: user.tasks })
+      const result = listService.addList(list)
+      const userResult = userService.updateUser(user.username, { tasks: user.tasks })
       yield [result, userResult]
       if (!result) ctx.throw(500, 'Something bad happened at addList')
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
@@ -33,13 +35,13 @@ var lists = {
     }
   },
   delete: function * (next) {
-    var ctx = this
-    var user = ctx.request.body.user
+    const ctx = this
+    const user = ctx.request.body.user
     console.log(user.tasks)
     try {
-      var result = listService.deleteList(ctx.params.listid)
-      var userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      var results = yield [result, userResult]
+      const result = listService.deleteList(ctx.params.listid)
+      const userResult = userService.updateUser(user.username, { tasks: user.tasks })
+      const results = yield [result, userResult]
       if (!result) ctx.throw(404, 'List not found')
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
 
@@ -66,13 +68,13 @@ var lists = {
     }
   },
   update: function * (next) {
-    var ctx = this
-    var user = ctx.request.body.user
-    var listId = ctx.params.listid
-    var listBody = ctx.request.body.listBody
+    const ctx = this
+    const user = ctx.request.body.user
+    const listId = ctx.params.listid
+    const listBody = ctx.request.body.listBody
     try {
-      var result = listService.updateList(listId, listBody)
-      var userResult = userService.updateUser(user.username, { tasks: user.tasks })
+      const result = listService.updateList(listId, listBody)
+      const userResult = userService.updateUser(user.username, { tasks: user.tasks })
       yield [result, userResult]
       if (!result) ctx.throw(500, 'Something bad happened at addList')
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')

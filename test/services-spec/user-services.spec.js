@@ -221,7 +221,7 @@ describe('user-services', () => {
   })
 
   it('getSession invokes a callback on success', (done) => {
-    fetchMock.mock('/sessions/get', {
+    fetchMock.mock('/sessions', {
       status: 200,
       body: {
         username: 'username'
@@ -229,7 +229,7 @@ describe('user-services', () => {
     })
 
     getSession((err, response) => {
-      assert.isTrue(fetchMock.called('/sessions/get'))
+      assert.isTrue(fetchMock.called('/sessions'))
       assert.isNull(err)
       assert.deepEqual(response.username, 'username')
     })
@@ -240,10 +240,10 @@ describe('user-services', () => {
   })
 
   it('getSession throws an error on 204', (done) => {
-    fetchMock.mock('/sessions/get', 204)
+    fetchMock.mock('/sessions', 204)
 
     getSession((err, response) => {
-      assert.isTrue(fetchMock.called('/sessions/get'))
+      assert.isTrue(fetchMock.called('/sessions'))
       assert.isOk(response.ok)
       assert.deepEqual(err, 'No session data found.')
     })
@@ -254,10 +254,10 @@ describe('user-services', () => {
   })
 
   it('getSession throws on error', (done) => {
-    fetchMock.mock('/sessions/get', 500)
+    fetchMock.mock('/sessions', 500)
 
     getSession((err, response) => {
-      assert.isTrue(fetchMock.called('/sessions/get'))
+      assert.isTrue(fetchMock.called('/sessions'))
       assert.isNotOk(response.ok)
       assert.isNotNull(err)
     })

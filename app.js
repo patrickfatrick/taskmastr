@@ -1,39 +1,41 @@
-var koa = require('koa')
+'use strict'
+
+const koa = require('koa')
 
 // Middleware and helpers
-var path = require('path')
-var compress = require('koa-compress')
-var session = require('koa-generic-session')
-var RethinkSession = require('koa-generic-session-rethinkdb')
-var serve = require('koa-static')
-var parse = require('koa-bodyparser')
-var views = require('koa-views')
-var router = require('koa-router')()
-var logger = require('koa-logger')
-var favicon = require('koa-favicon')
-var passport = require('koa-passport')
-var agenda = require('./services/agenda-service')
+const path = require('path')
+const compress = require('koa-compress')
+const session = require('koa-generic-session')
+const RethinkSession = require('koa-generic-session-rethinkdb')
+const serve = require('koa-static')
+const parse = require('koa-bodyparser')
+const views = require('koa-views')
+const router = require('koa-router')()
+const logger = require('koa-logger')
+const favicon = require('koa-favicon')
+const passport = require('koa-passport')
+const agenda = require('./services/agenda-service')
 
 // Import configs and auth middleware
-var config = require('./config')
-var auth = require('./auth/auth')
+const config = require('./config')
+const auth = require('./auth/auth')
 
 // Import routes
-var index = require('./routes/index')
-var users = require('./routes/users')
-var lists = require('./routes/lists')
-var items = require('./routes/items')
-var sessions = require('./routes/sessions')
+const index = require('./routes/index')
+const users = require('./routes/users')
+const lists = require('./routes/lists')
+const items = require('./routes/items')
+const sessions = require('./routes/sessions')
 
-// Rethinkdbdash
-const r = require(path.join(__dirname, '/r'))
+// Rethinkdb instance
+const r = require('./r')
 
-var app = koa()
+const app = koa()
 
 auth()
 
 // Set up Rethinkdb session store
-var sessionStore = new RethinkSession({
+const sessionStore = new RethinkSession({
   connection: r,
   db: config.rethinkSession.db,
   table: config.rethinkSession.table
@@ -91,7 +93,7 @@ router.redirect('/create', '/')
 router.redirect('/reset', '/')
 router.redirect('/forgot', '/')
 router.get('/404', index.fourOhFour)
-router.get('/sessions/get', sessions.get)
+router.get('/sessions', sessions.get)
 router.post('/users/login', users.setCookieAge, users.login)
 router.put('/users/create', users.setCookieAge, users.create)
 router.post('/users/:username/update', users.update)

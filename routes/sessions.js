@@ -1,10 +1,11 @@
-var http = require('http')
+'use strict'
 
-/* GET session */
-var sessions = {
+const http = require('http')
+
+const sessions = {
   get: function * (next) {
     try {
-      var user = this.req.user
+      const user = this.req.user
       if (!user) return this.throw(204)
       console.log(user.username + ' => Sending user... OK')
       this.body = {

@@ -1,50 +1,52 @@
-var config = require('../config')
-var Agenda = require('agenda')
-var agenda = new Agenda(config.agendaOptions)
-var nodemailer = require('nodemailer')
-var sgTransport = require('nodemailer-sendgrid-transport')
+'use strict'
 
-agenda.define('Agenda running', function (job, done) {
+const config = require('../config')
+const Agenda = require('agenda')
+const agenda = new Agenda(config.agendaOptions)
+const nodemailer = require('nodemailer')
+const sgTransport = require('nodemailer-sendgrid-transport')
+
+agenda.define('Agenda running', (job, done) => {
   console.log('Agenda running at ' + new Date())
   done()
 })
 
-agenda.define('Welcome Email', function (job, done) {
-  var data = job.attrs.data
-  var options = {
+agenda.define('Welcome Email', (job, done) => {
+  const data = job.attrs.data
+  const options = {
     auth: {
       api_key: process.env.SENDGRID_API_KEY
     }
   }
-  var mailer = nodemailer.createTransport(sgTransport(options))
-  var email = {
+  const mailer = nodemailer.createTransport(sgTransport(options))
+  const email = {
     to: data.username,
     from: 'taskmastr <do-not-reply@taskmastr.co>',
     subject: 'Greetings from taskmastr',
     text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + data.host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the taskmastr wiki if you have\'nt already! https://patrickfatrick.gitbooks.io/taskmastr/content/\n'
   }
-  mailer.sendMail(email, function (err) {
+  mailer.sendMail(email, (err) => {
     if (err) return done(err)
     console.log(data.username + ' => Welcome email sent')
     done()
   })
 })
 
-agenda.define('Reset Email', function (job, done) {
-  var data = job.attrs.data
-  var options = {
+agenda.define('Reset Email', (job, done) => {
+  const data = job.attrs.data
+  const options = {
     auth: {
       api_key: process.env.SENDGRID_API_KEY
     }
   }
-  var mailer = nodemailer.createTransport(sgTransport(options))
-  var email = {
+  const mailer = nodemailer.createTransport(sgTransport(options))
+  const email = {
     to: data.username,
     from: 'taskmastr <do-not-reply@taskmastr.co>',
     subject: 'taskmastr Password Reset',
     text: 'Hi there,\n\n' + 'You\'ve received this email because you or someone else requested to reset the password for your account.\n\n' + 'Please click on the following link to create a new password:\n\n' + data.host + '/#!/reset?token=' + data.resetToken + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged. This link becomes invalid once you reset your password, or after one hour whichever comes first.\n\n' + 'Sincerely,\n\ntaskmastr\n'
   }
-  mailer.sendMail(email, function (err) {
+  mailer.sendMail(email, (err) => {
     if (err) return done(err)
     console.log(data.username + ' => Password reset email sent')
     done()
@@ -52,9 +54,9 @@ agenda.define('Reset Email', function (job, done) {
 })
 
 agenda.define('Notification Email', function (job, done) {
-  var data = job.attrs.data
-  var monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  var dateStr = data.date.getDate()
+  const data = job.attrs.data
+  const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  let dateStr = data.date.getDate()
   switch (data.date.getDate()) {
     case 1:
     case 21:
@@ -72,13 +74,13 @@ agenda.define('Notification Email', function (job, done) {
     default:
       dateStr += 'th'
   }
-  var options = {
+  const options = {
     auth: {
       api_key: process.env.SENDGRID_API_KEY
     }
   }
-  var mailer = nodemailer.createTransport(sgTransport(options))
-  var email = {
+  const mailer = nodemailer.createTransport(sgTransport(options))
+  const email = {
     to: data.username,
     from: 'taskmastr <do-not-reply@taskmastr.co>',
     subject: 'taskmastr Notification: "' + data.item + '"',

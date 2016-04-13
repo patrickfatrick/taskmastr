@@ -112,7 +112,7 @@ export function logout (cb) {
 }
 
 export function getSession (cb) {
-  return window.fetch('/sessions/get', {
+  return window.fetch('/sessions', {
     method: 'get',
     credentials: 'same-origin'
   })

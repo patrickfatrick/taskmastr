@@ -1,4 +1,6 @@
-var r = require('../r')
+'use strict'
+
+const r = require('../r')
 
 exports.getList = function (id) {
   return r.table('lists').get(id)

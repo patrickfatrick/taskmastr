@@ -1,4 +1,6 @@
-var webpackConfig = require('./webpack.config.js')
+'use strict'
+
+const webpackConfig = require('./webpack.config.js')
 delete webpackConfig.entry
 delete webpackConfig.plugins
 

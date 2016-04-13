@@ -1,16 +1,18 @@
-var http = require('http')
-var agenda = require('../services/agenda-service')
-var itemService = require('../services/item-service')
+'use strict'
 
-var items = {
+const http = require('http')
+const agenda = require('../services/agenda-service')
+const itemService = require('../services/item-service')
+
+const items = {
   create: function * (next) {
-    var ctx = this
-    var listid = this.params.listid
-    var item = this.request.body.item
-    var username = this.request.body.username
+    const ctx = this
+    const listid = this.params.listid
+    const item = this.request.body.item
+    const username = this.request.body.username
 
     try {
-      var result = yield itemService.addItem(listid, item)
+      const result = yield itemService.addItem(listid, item)
       if (!result) ctx.throw(500, 'Something bad happened at addItem')
       if (item.dueDate) {
         console.log(item.dueDate)
@@ -33,15 +35,15 @@ var items = {
     }
   },
   update: function * (next) {
-    var ctx = this
-    var listid = this.params.listid
-    var itemid = this.params.itemid
-    var username = this.request.body.username
-    var index = this.request.body.index
-    var item = this.request.body.item
+    const ctx = this
+    const listid = this.params.listid
+    const itemid = this.params.itemid
+    const username = this.request.body.username
+    const index = this.request.body.index
+    const item = this.request.body.item
 
     try {
-      var result = yield itemService.updateItem(listid, index, item)
+      const result = yield itemService.updateItem(listid, index, item)
       if (!result) ctx.throw(500, 'Something bad happened at updateItem')
 
       // Cancel whatever the current agenda is, make a new one
@@ -69,13 +71,13 @@ var items = {
     }
   },
   delete: function * (next) {
-    var ctx = this
-    var listid = this.params.listid
-    var itemid = this.params.itemid
-    var index = this.request.body.index
+    const ctx = this
+    const listid = this.params.listid
+    const itemid = this.params.itemid
+    const index = this.request.body.index
 
     try {
-      var result = yield itemService.deleteItem(listid, index)
+      const result = yield itemService.deleteItem(listid, index)
       if (!result) ctx.throw(500, 'Something bad happened at deleteItem')
 
       // Cancel agenda if it exists

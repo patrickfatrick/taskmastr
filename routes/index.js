@@ -1,5 +1,6 @@
-/* GET home page. */
-var index = {
+'use strict'
+
+const index = {
   index: function * (next) {
     this.state.title = 'taskmastr'
     this.state.env = process.env.NODE_ENV
