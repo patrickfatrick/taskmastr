@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const hat = require('hat')
-const r = require('../r')
+const User = require('../models/User')
 
 exports.addUser = function (user) {
   return new Promise((resolve, reject) => {
@@ -11,9 +11,10 @@ exports.addUser = function (user) {
       var newUser = {
         username: user.username.toLowerCase(),
         key: hash,
-        darkmode: user.darkmode
+        darkmode: user.darkmode,
+        dateCreated: new Date().toISOString()
       }
-      r.table('users').insert(newUser, { returnChanges: true })
+      User.insert(newUser, { returnChanges: true }).run()
       .then((result) => resolve(result.changes[0]['new_val']))
       .catch((err) => reject(err))
     })
@@ -21,7 +22,7 @@ exports.addUser = function (user) {
 }
 
 exports.findUser = function (username) {
-  return r.table('users').getAll(username.toLowerCase(), { index: 'username' })
+  return User.getAll(username.toLowerCase(), { index: 'username' }).run()
   .then((result) => {
     if (!result.length) return null
     return result[0]
@@ -30,20 +31,22 @@ exports.findUser = function (username) {
 }
 
 exports.updateUser = function (username, body) {
-  return r.table('users').getAll(username.toLowerCase(), { index: 'username' })
-  .update(body, { returnChanges: true })
+  body.dateModified = new Date().toISOString()
+  return User.getAll(username.toLowerCase(), { index: 'username' })
+  .update(body, { returnChanges: true }).run()
   .then((result) => result)
   .catch((err) => err)
 }
 
 exports.setToken = function (user) {
-  return r.table('users').getAll(user.username.toLowerCase(), { index: 'username' })
+  return User.getAll(user.username.toLowerCase(), { index: 'username' })
   .update({
+    dateModified: new Date().toISOString(),
     resetToken: hat(),
     resetDate: Date.now() + 1000 * 60 * 60
   }, {
     returnChanges: true
-  })
+  }).run()
   .then((result) => result.changes[0]['new_val'])
   .catch((err) => err)
 }
@@ -53,13 +56,14 @@ exports.resetPassword = function (user) {
     if (Date.now() > user.resetDate) reject()
     bcrypt.hash(user.newKey, 10, (err, hash) => {
       if (err) reject(err)
-      r.table('users').filter(r.row('resetToken').eq(user.token))
+      User.filter({ resetToken: user.token })
       .update({
+        dateModified: new Date().toISOString(),
         key: hash,
         resetToken: null
       }, {
         returnChanges: true
-      })
+      }).run()
       .then((result) => {
         if (!result.changes) resolve(null)
         resolve(result.changes[0]['new_val'])

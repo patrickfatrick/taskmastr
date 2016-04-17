@@ -28,7 +28,7 @@ const items = require('./routes/items')
 const sessions = require('./routes/sessions')
 
 // Rethinkdb instance
-const r = require('./r')
+const r = require('./thinky').r
 
 const app = koa()
 
@@ -118,26 +118,28 @@ app.use(function * (next) {
   yield next
 })
 
-r.init(config.rethinkdb, [
-  {
-    name: 'sessions',
-    indexes: ['dateCreated', 'sid']
-  },
-  {
-    name: 'lists',
-    indexes: ['dateCreated', 'dateModified', 'listid']
-  },
-  {
-    name: 'users',
-    indexes: ['dateCreated', 'dateModified', 'username']
-  }
-])
+// Create session table
+r.table('sessions').indexWait('sid').run()
 .then(() => {
   console.log('DB, tables, and index are available, starting koa...')
   startKoa()
+})
+.catch(() => {
+  r.tableCreate('sessions').run()
+  .then(() => {
+    r.table('sessions').indexCreate('sid').run()
+    .then(() => {
+      console.log('DB, tables, and index are available, starting koa...')
+      startKoa()
+    })
+  })
 })
 
 function startKoa () {
   app.listen(config.koa.port)
   console.log('Listening on port ' + config.koa.port)
 }
+
+// console.log('DB, tables, and index are available, starting koa...')
+// app.listen(config.koa.port)
+// console.log('Listening on port ' + config.koa.port)
