@@ -7,7 +7,7 @@ const User = thinky.createModel('users', {
   dateModified: type.date(),
   id: type.string(),
   key: type.string(),
-  resetDate: type.string(),
+  resetDate: type.date(),
   resetToken: type.string(),
   tasks: [
     {
