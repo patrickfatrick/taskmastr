@@ -24,7 +24,7 @@ exports.addUser = function (user) {
 exports.findUser = function (username) {
   return User.get(username.toLowerCase()).run()
   .then((result) => result)
-  .catch((err) => err)
+  .catch(() => null)
 }
 
 exports.updateUser = function (username, body) {
