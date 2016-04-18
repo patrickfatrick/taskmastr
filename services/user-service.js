@@ -22,21 +22,24 @@ exports.addUser = function (user) {
 }
 
 exports.findUser = function (username) {
-  return User.get(username.toLowerCase()).run()
-  .then((result) => result)
-  .catch(() => null)
+  return User.getAll(username.toLowerCase(), { index: 'username' }).run()
+  .then((result) => {
+    if (!result.length) return null
+    return result[0]
+  })
+  .catch((err) => err)
 }
 
 exports.updateUser = function (username, body) {
   body.dateModified = new Date().toISOString()
-  return User.get(username.toLowerCase())
+  return User.getAll(username.toLowerCase(), { index: 'username' })
   .update(body, { returnChanges: true }).run()
   .then((result) => result)
   .catch((err) => err)
 }
 
 exports.setToken = function (user) {
-  return User.get(user.username.toLowerCase())
+  return User.getAll(user.username.toLowerCase(), { index: 'username' })
   .update({
     dateModified: new Date().toISOString(),
     resetToken: hat(),
