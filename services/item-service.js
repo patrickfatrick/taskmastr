@@ -10,7 +10,9 @@ exports.addItem = function (listid, item) {
     items: r.row('items').prepend(item)
   }).run()
   .then((result) => ({ success: true }))
-  .catch((err) => err)
+  .catch((err) => {
+    throw new Error(err)
+  })
 }
 
 exports.deleteItem = function (listid, index) {
@@ -19,7 +21,9 @@ exports.deleteItem = function (listid, index) {
     items: r.row('items').deleteAt(index)
   }).run()
   .then((result) => ({ success: true }))
-  .catch((err) => err)
+  .catch((err) => {
+    throw new Error(err)
+  })
 }
 
 exports.updateItem = function (listid, index, item) {
@@ -28,5 +32,7 @@ exports.updateItem = function (listid, index, item) {
     items: r.row('items').changeAt(index, item)
   }).run()
   .then((result) => ({ success: true }))
-  .catch((err) => err)
+  .catch((err) => {
+    throw new Error(err)
+  })
 }

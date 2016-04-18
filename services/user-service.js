@@ -24,19 +24,24 @@ exports.addUser = function (user) {
 exports.findUser = function (username) {
   return User.get(username.toLowerCase()).run()
   .then((result) => result)
-  .catch((err) => err)
+  .catch((err) => {
+    if (err.name === 'DocumentNotFoundError') return null
+    throw new Error(err)
+  })
 }
 
 exports.updateUser = function (username, body) {
   body.dateModified = new Date().toISOString()
-  return User.getAll(username.toLowerCase(), { index: 'username' })
+  return User.get(username.toLowerCase())
   .update(body, { returnChanges: true }).run()
   .then((result) => result)
-  .catch((err) => err)
+  .catch((err) => {
+    throw new Error(err)
+  })
 }
 
 exports.setToken = function (user) {
-  return User.getAll(user.username.toLowerCase(), { index: 'username' })
+  return User.get(user.username.toLowerCase())
   .update({
     dateModified: new Date().toISOString(),
     resetToken: hat(),
@@ -45,7 +50,9 @@ exports.setToken = function (user) {
     returnChanges: true
   }).run()
   .then((result) => result.changes[0]['new_val'])
-  .catch((err) => err)
+  .catch((err) => {
+    throw new Error(err)
+  })
 }
 
 exports.resetPassword = function (user) {
