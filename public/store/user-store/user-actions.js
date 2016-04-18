@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {getSession, login, create, reset, forgot, logout, updateUser} from '../../services/user-services'
+import { getSession, login, create, reset, forgot, logout, updateUser } from '../../services/user-services'
 
 export function setInit ({ dispatch }, bool) {
   dispatch('SET_INIT', bool)

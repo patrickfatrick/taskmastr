@@ -9,7 +9,7 @@
 
 <script>
 
-import harsh from 'harsh'
+import { hash } from 'harsh'
 import gregorian from 'gregorian'
 import Mousetrap from 'mousetrap'
 import { addList, setNewList, setListAttempt } from '../../../store/list-store/list-actions'
@@ -45,7 +45,7 @@ export default {
       this.setListAttempt(true)
       if (!this.isValid) return
       this.addList({
-        id: harsh.hash().hashes[0],
+        id: hash().hashes[0],
         list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
         current: false,

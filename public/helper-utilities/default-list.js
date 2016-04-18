@@ -1,7 +1,7 @@
-import harsh from 'harsh'
+import { bunch } from 'harsh'
 import gregorian from 'gregorian'
 
-const hashes = harsh.bunch(11)
+const hashes = bunch(11)
 
 export default {
   id: hashes.hashes[0],
