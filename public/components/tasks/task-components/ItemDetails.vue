@@ -65,8 +65,8 @@ export default {
     Datepicker
   },
   props: {
-    'index': Number,
-    'task': Object
+    index: Number,
+    task: Object
   },
   methods: {
     rename (e, index) {

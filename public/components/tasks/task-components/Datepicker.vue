@@ -35,8 +35,8 @@ export default {
     }
   },
   props: {
-    'index': Number,
-    'task': Object
+    index: Number,
+    task: Object
   },
   methods: {
     reformatDate (date) {
