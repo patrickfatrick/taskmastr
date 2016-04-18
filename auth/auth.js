@@ -13,6 +13,7 @@ module.exports = function () {
   }, (req, username, key, next) => {
     userService.findUser(username)
     .then((user) => {
+      console.log(user)
       if (!user) {
         console.log(username + ' => No user named ' + username)
         return next(null, null)
