@@ -22,11 +22,8 @@ exports.addUser = function (user) {
 }
 
 exports.findUser = function (username) {
-  return User.getAll(username.toLowerCase(), { index: 'username' }).run()
-  .then((result) => {
-    if (!result.length) return null
-    return result[0]
-  })
+  return User.get(username.toLowerCase()).run()
+  .then((result) => result)
   .catch((err) => err)
 }
 
