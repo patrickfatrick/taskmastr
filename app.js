@@ -118,7 +118,7 @@ app.use(function * (next) {
   yield next
 })
 
-// Create session table
+// Create session table, start up Koa when it's been made.
 r.table('sessions').indexWait('sid').run()
 .then(() => {
   console.log('DB, tables, and index are available, starting koa...')
@@ -139,7 +139,3 @@ function startKoa () {
   app.listen(config.koa.port)
   console.log('Listening on port ' + config.koa.port)
 }
-
-// console.log('DB, tables, and index are available, starting koa...')
-// app.listen(config.koa.port)
-// console.log('Listening on port ' + config.koa.port)
