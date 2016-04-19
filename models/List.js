@@ -2,7 +2,7 @@ const thinky = require('../thinky')
 const type = thinky.type
 
 const List = thinky.createModel('lists', {
-  _delete: type.boolean(),
+  _delete: type.any(), // TODO: Why is this throwing an error when `boolean`
   current: type.boolean(),
   dateCreated: type.date(),
   dateModified: type.date(),

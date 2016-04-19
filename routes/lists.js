@@ -37,14 +37,12 @@ const lists = {
   delete: function * (next) {
     const ctx = this
     const user = ctx.request.body.user
-    console.log(user.tasks)
     try {
       const result = listService.deleteList(ctx.params.listid)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
       const results = yield [result, userResult]
       if (!result) ctx.throw(404, 'List not found')
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
-
       // Round up the ids of each item and cancel their agenda tasks
       async.each(results[0]['old_val'].items, (v, cb) => {
         agenda.cancel({

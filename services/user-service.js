@@ -26,6 +26,7 @@ exports.findUser = function (username) {
   .then((result) => result)
   .catch((err) => {
     if (err.name === 'DocumentNotFoundError') return null
+    console.log(err)
     throw new Error(err)
   })
 }
@@ -33,9 +34,10 @@ exports.findUser = function (username) {
 exports.updateUser = function (username, body) {
   body.dateModified = new Date().toISOString()
   return User.get(username.toLowerCase())
-  .update(body, { returnChanges: true }).run()
+  .update(body).run()
   .then((result) => result)
   .catch((err) => {
+    console.log(err)
     throw new Error(err)
   })
 }
@@ -46,11 +48,10 @@ exports.setToken = function (user) {
     dateModified: new Date().toISOString(),
     resetToken: hat(),
     resetDate: Date.now() + 1000 * 60 * 60
-  }, {
-    returnChanges: true
   }).run()
-  .then((result) => result.changes[0]['new_val'])
+  .then((result) => result)
   .catch((err) => {
+    console.log(err)
     throw new Error(err)
   })
 }
@@ -65,12 +66,10 @@ exports.resetPassword = function (user) {
         dateModified: new Date().toISOString(),
         key: hash,
         resetToken: null
-      }, {
-        returnChanges: true
       }).run()
       .then((result) => {
-        if (!result.changes) resolve(null)
-        resolve(result.changes[0]['new_val'])
+        if (!result[0]) resolve(null)
+        resolve(result[0])
       })
       .catch((err) => reject(err))
     })
