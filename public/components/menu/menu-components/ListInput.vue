@@ -52,7 +52,7 @@ export default {
         owner: this.user.username,
         dateCreated: gregorian.reform(new Date()).to('iso'),
         users: [],
-        _delete: false
+        _deleting: false
       })
       this.setListAttempt(false)
       this.setNewList('')

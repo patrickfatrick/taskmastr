@@ -16,7 +16,7 @@ describe('deleteList', () => {
     clock.restore()
   })
 
-  it('dispatches list deletion mutations when not current nor _delete', (done) => {
+  it('dispatches list deletion mutations when not current nor _deleting', (done) => {
     const listActions = listActionsInjector({
       '../../services/list-services': {
         removeList (id, user, cb) {
@@ -32,7 +32,7 @@ describe('deleteList', () => {
           {
             id: 'listid',
             list: 'List 1',
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid',
@@ -43,7 +43,7 @@ describe('deleteList', () => {
           {
             id: 'listid2',
             list: 'List 2',
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid2',
@@ -82,7 +82,7 @@ describe('deleteList', () => {
             id: 'listid',
             list: 'List 1',
             current: true,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid',
@@ -94,7 +94,7 @@ describe('deleteList', () => {
             id: 'listid2',
             list: 'List 2',
             current: false,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid2',
@@ -133,7 +133,7 @@ describe('deleteList', () => {
             id: 'listid',
             list: 'List 1',
             current: false,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid',
@@ -145,7 +145,7 @@ describe('deleteList', () => {
             id: 'listid2',
             list: 'List 2',
             current: true,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid2',
@@ -184,7 +184,7 @@ describe('deleteList', () => {
             id: 'listid',
             list: 'List 1',
             current: true,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid',
@@ -216,7 +216,7 @@ describe('deleteList', () => {
             id: 'listid',
             list: 'List 1',
             current: true,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid',
@@ -228,7 +228,7 @@ describe('deleteList', () => {
             id: 'listid2',
             list: 'List 2',
             current: false,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid2',
@@ -277,7 +277,7 @@ describe('deleteList', () => {
             id: 'listid',
             list: 'List 1',
             current: false,
-            _delete: true,
+            _deleting: true,
             items: [
               {
                 id: 'itemid',
@@ -289,7 +289,7 @@ describe('deleteList', () => {
             id: 'listid2',
             list: 'List 2',
             current: true,
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid2',
@@ -325,7 +325,7 @@ describe('deleteList', () => {
           {
             id: 'listid',
             list: 'List 1',
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid',
@@ -336,7 +336,7 @@ describe('deleteList', () => {
           {
             id: 'listid2',
             list: 'List 2',
-            _delete: false,
+            _deleting: false,
             items: [
               {
                 id: 'itemid2',

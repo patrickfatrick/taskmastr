@@ -14,6 +14,7 @@ const lists = {
       if (!result) ctx.throw(404, 'List not found')
       ctx.body = result
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -30,6 +31,7 @@ const lists = {
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
       ctx.body = result
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -40,11 +42,13 @@ const lists = {
     try {
       const result = listService.deleteList(ctx.params.listid)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [result, userResult]
+      yield [result, userResult]
+      console.log(result)
       if (!result) ctx.throw(404, 'List not found')
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
+
       // Round up the ids of each item and cancel their agenda tasks
-      async.each(results[0]['old_val'].items, (v, cb) => {
+      async.each(result.items, (v, cb) => {
         agenda.cancel({
           'data.agendaID': v.id
         }, (err) => {
@@ -54,13 +58,14 @@ const lists = {
         })
       }, function (err) {
         if (err) ctx.throw(err)
-        console.log(`${results[0]['old_val'].id} => All deleted agendas removed successfully`)
+        console.log(`${result.id} => All deleted agendas removed successfully`)
       })
 
       ctx.body = {
         success: true
       }
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -76,10 +81,9 @@ const lists = {
       yield [result, userResult]
       if (!result) ctx.throw(500, 'Something bad happened at addList')
       if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
-      ctx.body = {
-        success: true
-      }
+      ctx.body = result
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }

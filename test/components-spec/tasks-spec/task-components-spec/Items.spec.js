@@ -37,7 +37,7 @@ describe('Items.vue', function () {
         item: 'Item 1',
         current: false,
         complete: false,
-        _delete: true,
+        _deleting: true,
         _dueDateDifference: 1,
         _detailsToggled: false
       },
@@ -46,7 +46,7 @@ describe('Items.vue', function () {
         item: 'Item 2',
         current: true,
         complete: false,
-        _delete: false,
+        _deleting: false,
         _dueDateDifference: -1,
         _detailsToggled: false
       }
@@ -113,14 +113,14 @@ describe('Items.vue', function () {
     assert.deepEqual(vm.$el.querySelector('.table-body').children[1].getAttribute('name'), 'task2')
   })
 
-  it('should respond to complete _delete and current and _dueDateDifference properties', () => {
+  it('should respond to complete _deleting and current and _dueDateDifference properties', () => {
     items = [
       {
         id: 'itemid',
         item: 'Item 1',
         current: false,
         complete: false,
-        _delete: true,
+        _deleting: true,
         _dueDateDifference: 1,
         _detailsToggled: false
       },
@@ -129,7 +129,7 @@ describe('Items.vue', function () {
         item: 'Item 2',
         current: true,
         complete: false,
-        _delete: false,
+        _deleting: false,
         _dueDateDifference: -1,
         _detailsToggled: false
       },
@@ -138,7 +138,7 @@ describe('Items.vue', function () {
         item: 'Item 3',
         current: true,
         complete: true,
-        _delete: false,
+        _deleting: false,
         _dueDateDifference: null,
         _detailsToggled: false
       }
@@ -251,13 +251,13 @@ describe('Items.vue', function () {
         id: 'itemid',
         item: 'Item 1',
         current: true,
-        _delete: true
+        _deleting: true
       },
       {
         id: 'itemid2',
         item: 'Item 2',
         current: false,
-        _delete: false
+        _deleting: false
       }
     ]
 
@@ -277,13 +277,13 @@ describe('Items.vue', function () {
         id: 'itemid',
         item: 'Item 1',
         current: true,
-        _delete: true
+        _deleting: true
       },
       {
         id: 'itemid2',
         item: 'Item 2',
         current: false,
-        _delete: false
+        _deleting: false
       }
     ]
 
@@ -315,7 +315,7 @@ describe('Items.vue', function () {
         item: 'Item 1',
         current: true,
         complete: false,
-        _delete: true,
+        _deleting: true,
         _dueDateDifference: 1
       },
       {
@@ -323,7 +323,7 @@ describe('Items.vue', function () {
         item: 'Item 2',
         current: false,
         complete: true,
-        _delete: false,
+        _deleting: false,
         _dueDateDifference: -1
       }
     ]
@@ -345,7 +345,7 @@ describe('Items.vue', function () {
         item: 'Item 1',
         current: false,
         complete: false,
-        _delete: true,
+        _deleting: true,
         _dueDateDifference: 1
       },
       {
@@ -353,7 +353,7 @@ describe('Items.vue', function () {
         item: 'Item 2',
         current: true,
         complete: true,
-        _delete: false,
+        _deleting: false,
         _dueDateDifference: -1
       }
     ]

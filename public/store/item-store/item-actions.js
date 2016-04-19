@@ -87,7 +87,7 @@ export function deleteTask ({ dispatch, state }, index) {
   const listID = state.current.id
   const tasks = state.current.items
   const task = tasks[index]
-  if (!task._delete) {
+  if (!task._deleting) {
     let timeoutID
     timeoutID = setTimeout(() => {
       // Get the next and previous lists after timeout,

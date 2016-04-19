@@ -1,7 +1,7 @@
 <template>
   <div id="lists-list" class="table" v-show="lists">
     <div class="table-body" v-el:dragula>
-      <div class="table-row" v-for="list in lists" :class="{'deleting': list._delete, 'current': list.current}" name="list{{$index + 1}}" transition="item">
+      <div class="table-row" v-for="list in lists" :class="{'deleting': list._deleting, 'current': list.current}" name="list{{$index + 1}}" transition="item">
         <div class="task-cell table-data">
           <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(renameToggled === $index)}" @keyup.enter="renameToggle(null)" @blur="renameToggle(null)"></input>
           <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="navigateToList(list.id)" @dblclick="renameToggle($index)">{{list.list}}</button>
@@ -14,7 +14,7 @@
             <i class="fa fa-pencil"></i>
           </button>
           <button class="delete-button" title="Delete list" @click.prevent="removeList($index)">
-            <i class="fa" :class="{'fa-trash-o': !list._delete, 'fa-undo': list._delete}"></i>
+            <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
           </button>
         </div>
       </div>

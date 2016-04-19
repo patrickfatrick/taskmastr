@@ -11,7 +11,6 @@ exports.addItem = function (listid, item) {
   }).run()
   .then((result) => ({ success: true }))
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }
@@ -23,7 +22,6 @@ exports.deleteItem = function (listid, index) {
   }).run()
   .then((result) => ({ success: true }))
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }
@@ -35,7 +33,6 @@ exports.updateItem = function (listid, index, item) {
   }).run()
   .then((result) => ({ success: true }))
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }

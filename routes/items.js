@@ -30,6 +30,7 @@ const items = {
       }
       ctx.body = result
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -66,6 +67,7 @@ const items = {
       })
       ctx.body = result
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -89,6 +91,7 @@ const items = {
       })
       ctx.body = result
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }

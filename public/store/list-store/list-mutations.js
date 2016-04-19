@@ -21,7 +21,7 @@ export default {
     _.set(state, 'user.tasks[' + index + '].list', name)
   },
   [SET_LIST_DELETE] (state, index, bool) {
-    _.set(state, 'user.tasks[' + index + ']._delete', bool)
+    _.set(state, 'user.tasks[' + index + ']._deleting', bool)
   },
   [SORT_LISTS] (state, oldIndex, newIndex) {
     let spliced = state.user.tasks.splice(oldIndex, 1)

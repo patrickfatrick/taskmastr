@@ -50,7 +50,7 @@ export function addList ({ dispatch, state }, list) {
     id: list.id,
     list: list.list,
     current: false,
-    _delete: false
+    _deleting: false
   }
   const user = {
     username: state.user.username,
@@ -69,7 +69,7 @@ export function deleteList ({ dispatch, state }, index, cb) {
   const lists = state.user.tasks
   const list = lists[index]
   if (lists.length === 1) return
-  if (!list._delete) {
+  if (!list._deleting) {
     let timeoutID
     timeoutID = setTimeout(() => {
       // Get the next and previous lists after timeout,

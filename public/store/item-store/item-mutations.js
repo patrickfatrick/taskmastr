@@ -28,7 +28,7 @@ export default {
     _.set(state, 'current.items[' + index + '].dateCompleted', date)
   },
   [SET_TASK_DELETE] (state, index, bool) {
-    _.set(state, 'current.items[' + index + ']._delete', bool)
+    _.set(state, 'current.items[' + index + ']._deleting', bool)
   },
   [RENAME_TASK] (state, index, name) {
     _.set(state, 'current.items[' + index + '].item', name)

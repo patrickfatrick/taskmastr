@@ -26,7 +26,6 @@ exports.findUser = function (username) {
   .then((result) => result)
   .catch((err) => {
     if (err.name === 'DocumentNotFoundError') return null
-    console.log(err)
     throw new Error(err)
   })
 }
@@ -37,7 +36,6 @@ exports.updateUser = function (username, body) {
   .update(body).run()
   .then((result) => result)
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }
@@ -51,7 +49,6 @@ exports.setToken = function (user) {
   }).run()
   .then((result) => result)
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }

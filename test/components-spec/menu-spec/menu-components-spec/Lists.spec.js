@@ -47,7 +47,7 @@ describe('Lists.vue', function () {
         id: 'listid',
         list: 'List 1',
         current: false,
-        _delete: true,
+        _deleting: true,
         items: [
           {
             id: 'itemid',
@@ -59,7 +59,7 @@ describe('Lists.vue', function () {
         id: 'listid2',
         list: 'List 2',
         current: true,
-        _delete: false,
+        _deleting: false,
         items: [
           {
             id: 'itemid2',
@@ -141,7 +141,7 @@ describe('Lists.vue', function () {
     assert.deepEqual(vm.$el.querySelector('.table-body').children[1].getAttribute('name'), 'list2')
   })
 
-  it('should respond to _delete and current properties', () => {
+  it('should respond to _deleting and current properties', () => {
     const vm = mountVm()
 
     assert.isTrue(vm.$el.querySelector('.table-body').children[0].classList.contains('deleting'))
@@ -364,7 +364,7 @@ describe('Lists.vue', function () {
         id: 'listid',
         list: 'List 1',
         current: true,
-        _delete: true,
+        _deleting: true,
         items: [
           {
             id: 'itemid',
@@ -376,7 +376,7 @@ describe('Lists.vue', function () {
         id: 'listid2',
         list: 'List 2',
         current: false,
-        _delete: false,
+        _deleting: false,
         items: [
           {
             id: 'itemid2',
@@ -402,7 +402,7 @@ describe('Lists.vue', function () {
         id: 'listid',
         list: 'List 1',
         current: true,
-        _delete: true,
+        _deleting: true,
         items: [
           {
             id: 'itemid',
@@ -414,7 +414,7 @@ describe('Lists.vue', function () {
         id: 'listid2',
         list: 'List 2',
         current: false,
-        _delete: false,
+        _deleting: false,
         items: [
           {
             id: 'itemid2',

@@ -14,6 +14,7 @@ const sessions = {
         tasks: user.tasks || []
       }
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.statusCode || http.STATUS_CODES[this.status]
     }

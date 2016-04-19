@@ -95,7 +95,7 @@ export default {
         dateCompleted: '',
         notes: '',
         _dueDateDifference: null,
-        _delete: false,
+        _deleting: false,
         _detailsToggled: false
       })
       this.setTaskAttempt(false)

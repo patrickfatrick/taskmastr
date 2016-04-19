@@ -16,7 +16,7 @@ describe('deleteTask', () => {
     clock.restore()
   })
 
-  it('dispatches task deletion mutations when not current nor _delete', (done) => {
+  it('dispatches task deletion mutations when not current nor _deleting', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
         deleteItem (listid, taskid, deleteTask, username, cb) {
@@ -37,13 +37,13 @@ describe('deleteTask', () => {
             id: 'itemid',
             item: 'Item 1',
             complete: false,
-            _delete: false
+            _deleting: false
           },
           {
             id: 'itemid2',
             item: 'Item 2',
             complete: true,
-            _delete: false
+            _deleting: false
           }
         ]
       }
@@ -82,14 +82,14 @@ describe('deleteTask', () => {
             item: 'Item 1',
             complete: false,
             current: true,
-            _delete: false
+            _deleting: false
           },
           {
             id: 'itemid2',
             item: 'Item 2',
             complete: true,
             current: false,
-            _delete: false
+            _deleting: false
           }
         ]
       }
@@ -128,14 +128,14 @@ describe('deleteTask', () => {
             item: 'Item 1',
             complete: false,
             current: false,
-            _delete: false
+            _deleting: false
           },
           {
             id: 'itemid2',
             item: 'Item 2',
             complete: true,
             current: true,
-            _delete: false
+            _deleting: false
           }
         ]
       }
@@ -175,14 +175,14 @@ describe('deleteTask', () => {
             item: 'Item 1',
             complete: false,
             current: true,
-            _delete: true
+            _deleting: true
           },
           {
             id: 'itemid2',
             item: 'Item 2',
             complete: true,
             current: false,
-            _delete: false
+            _deleting: false
           }
         ]
       },
@@ -218,13 +218,13 @@ describe('deleteTask', () => {
             id: 'itemid',
             item: 'Item 1',
             complete: false,
-            _delete: false
+            _deleting: false
           },
           {
             id: 'itemid2',
             item: 'Item 2',
             complete: true,
-            _delete: false
+            _deleting: false
           }
         ]
       }

@@ -181,11 +181,11 @@ describe('item mutations', () => {
 
     taskMutations.SET_TASK_DELETE(state, 0, true)
 
-    state.current.items[0]._delete.should.be.true
+    state.current.items[0]._deleting.should.be.true
 
     taskMutations.SET_TASK_DELETE(state, 0, false)
 
-    state.current.items[0]._delete.should.be.false
+    state.current.items[0]._deleting.should.be.false
   })
 
   it('RENAME_TASK', () => {

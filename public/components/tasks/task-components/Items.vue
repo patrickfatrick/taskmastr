@@ -1,7 +1,7 @@
 <template>
   <div id="task-list" class="table" v-show='tasks'>
     <div class="table-body" v-el:dragula>
-      <div v-for="task in tasks" class="task table-row" name="task{{$index + 1}}" :class="{'deleting': task._delete, 'complete': task.complete, 'active': task.current}" transition="item">
+      <div v-for="task in tasks" class="task table-row" name="task{{$index + 1}}" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" transition="item">
         <div class="table-header">
           <input class="check" type="checkbox" :value="task.complete"></input>
           <button class="complete" title="Complete task" @click.prevent="completeTask($index, !task.complete)">
@@ -19,7 +19,7 @@
             <i class="sort-handle fa fa-arrows-v"></i>
           </button>
           <button class="delete-button" title="Delete task" @click.prevent="deleteTask($index)">
-            <i class="fa" :class="{'fa-trash-o': !task._delete, 'fa-undo': task._delete}"></i>
+            <i class="fa" :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}"></i>
           </button>
         </div>
       </div>

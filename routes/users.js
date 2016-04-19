@@ -29,6 +29,7 @@ const users = {
         }
       }).call(this, next)
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -56,6 +57,7 @@ const users = {
         tasks: result.tasks
       }
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -72,6 +74,7 @@ const users = {
       ctx.status = 200
       ctx.body = { success: true }
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }
@@ -97,6 +100,7 @@ const users = {
         emailSent: true
       }
     } catch (e) {
+      console.log(e)
       this.status = e.status || 500
       this.body = e.message || http.STATUS_CODES[this.status]
     }

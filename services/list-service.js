@@ -1,6 +1,5 @@
 'use strict'
 
-// const r = require('../r')
 const List = require('../models/List')
 
 exports.getList = function (id) {
@@ -8,26 +7,30 @@ exports.getList = function (id) {
   .then((result) => result)
   .catch((err) => {
     if (err.name === 'DocumentNotFoundError') return null
-    console.log(err)
     throw new Error(err)
   })
 }
 
 exports.addList = function (list) {
   list.dateCreated = new Date().toISOString()
-  return List.insert(list).run()
-  .then(() => ({ success: true }))
+  console.log(list)
+  return List.save(list)
+  .then((result) => ({ success: true }))
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }
 
 exports.deleteList = function (id) {
-  return List.get(id).delete({ returnChanges: true }).run()
-  .then((result) => result.changes[0])
+  return List.get(id)
+  .then((list) => {
+    list.delete()
+    .then((result) => {
+      console.log(result)
+      return result
+    })
+  })
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }
@@ -36,9 +39,8 @@ exports.updateList = function (id, body) {
   body.dateModified = new Date().toISOString()
   return List.get(id)
   .update(body).run()
-  .then(() => ({ success: true }))
+  .then((result) => ({ success: true }))
   .catch((err) => {
-    console.log(err)
     throw new Error(err)
   })
 }

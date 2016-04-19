@@ -8,7 +8,7 @@ export const mockUser = {
       id: 'list1',
       list: 'Current list',
       current: true,
-      _delete: false,
+      _deleting: false,
       items: [
         {
           id: 'item1',
@@ -20,7 +20,7 @@ export const mockUser = {
           dueDate: 'a date',
           notes: '',
           _dueDateDifference: null,
-          _delete: false,
+          _deleting: false,
           _detailsToggled: false
         },
         {
@@ -33,7 +33,7 @@ export const mockUser = {
           dueDate: 'a date',
           notes: '',
           _dueDateDifference: null,
-          _delete: false,
+          _deleting: false,
           _detailsToggled: false
         }
       ]
@@ -42,7 +42,7 @@ export const mockUser = {
       id: 'list2',
       list: 'Not current list',
       current: false,
-      _delete: false,
+      _deleting: false,
       items: []
     }
   ]

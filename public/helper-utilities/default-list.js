@@ -7,7 +7,7 @@ export default {
   id: hashes.hashes[0],
   list: 'Your first list',
   current: true,
-  _delete: false,
+  _deleting: false,
   items: [
     {
       id: hashes.hashes[1],
@@ -19,7 +19,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -32,7 +32,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -45,7 +45,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -58,7 +58,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -71,7 +71,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -84,7 +84,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -97,7 +97,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -110,7 +110,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -123,7 +123,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     },
     {
@@ -136,7 +136,7 @@ export default {
       dueDate: null,
       notes: '',
       _dueDateDifference: null,
-      _delete: false,
+      _deleting: false,
       _detailsToggled: false
     }
   ]

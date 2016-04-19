@@ -48,7 +48,7 @@ describe('addList', () => {
       id: 'listid2',
       list: 'List 2',
       current: false,
-      _delete: false
+      _deleting: false
     }
 
     testAction(listActions.addList, [newList], state, [
@@ -98,7 +98,7 @@ describe('addList', () => {
       id: 'listid2',
       list: 'List 2',
       current: false,
-      _delete: false
+      _deleting: false
     }
 
     testAction(listActions.addList, [newList], state, [

@@ -114,12 +114,12 @@ describe('list mutations', () => {
           {
             list: 'Current list',
             current: true,
-            _delete: false
+            _deleting: false
           },
           {
             list: 'Not current list',
             current: false,
-            _delete: false
+            _deleting: false
           }
         ]
       }
@@ -127,11 +127,11 @@ describe('list mutations', () => {
 
     listMutations.SET_LIST_DELETE(state, 0, true)
 
-    state.user.tasks[0]._delete.should.be.true
+    state.user.tasks[0]._deleting.should.be.true
 
     listMutations.SET_LIST_DELETE(state, 0, false)
 
-    state.user.tasks[0]._delete.should.be.false
+    state.user.tasks[0]._deleting.should.be.false
   })
 
   it('SORT_LISTS', () => {
@@ -141,17 +141,17 @@ describe('list mutations', () => {
           {
             list: 'Current list',
             current: true,
-            _delete: false
+            _deleting: false
           },
           {
             list: 'Not current list',
             current: false,
-            _delete: false
+            _deleting: false
           },
           {
             list: 'New list',
             current: false,
-            _delete: false
+            _deleting: false
           }
         ]
       }
