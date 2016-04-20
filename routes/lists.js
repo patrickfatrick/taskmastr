@@ -28,8 +28,7 @@ const lists = {
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
       const results = yield [result, userResult]
       if (!results[0]) ctx.throw(500, 'Something bad happened at addList')
-      if (!result[1]) ctx.throw(500, 'Something bad happened at updateUser')
-      console.log(results[0])
+      if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
       ctx.body = results[0]
     } catch (e) {
       console.log(e)
