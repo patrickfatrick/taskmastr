@@ -24,7 +24,7 @@ const List = thinky.createModel('lists', {
   list: type.string(),
   owner: type.string(),
   users: [type.string()],
-  _deleting: type.boolean().default(false) // TODO: Why is this throwing an error when `boolean`
+  _deleting: type.boolean()
 })
 
 List.ensureIndex('dateCreated')
