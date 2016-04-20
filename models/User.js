@@ -1,5 +1,6 @@
 const thinky = require('../thinky')
 const type = thinky.type
+const List = require('./List')
 
 const User = thinky.createModel('users', {
   darkmode: type.boolean(),

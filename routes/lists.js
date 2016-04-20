@@ -26,10 +26,11 @@ const lists = {
     try {
       const result = listService.addList(list)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      yield [result, userResult]
-      if (!result) ctx.throw(500, 'Something bad happened at addList')
-      if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
-      ctx.body = result
+      const results = yield [result, userResult]
+      if (!results[0]) ctx.throw(500, 'Something bad happened at addList')
+      if (!result[1]) ctx.throw(500, 'Something bad happened at updateUser')
+      console.log(results[0])
+      ctx.body = results[0]
     } catch (e) {
       console.log(e)
       this.status = e.status || 500
@@ -42,13 +43,12 @@ const lists = {
     try {
       const result = listService.deleteList(ctx.params.listid)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      yield [result, userResult]
-      console.log(result)
-      if (!result) ctx.throw(404, 'List not found')
-      if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
+      const results = yield [result, userResult]
+      if (!results[0]) ctx.throw(404, 'List not found')
+      if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
 
       // Round up the ids of each item and cancel their agenda tasks
-      async.each(result.items, (v, cb) => {
+      async.each(results[0].items, (v, cb) => {
         agenda.cancel({
           'data.agendaID': v.id
         }, (err) => {
@@ -58,7 +58,7 @@ const lists = {
         })
       }, function (err) {
         if (err) ctx.throw(err)
-        console.log(`${result.id} => All deleted agendas removed successfully`)
+        console.log(`${results[0].id} => All deleted agendas removed successfully`)
       })
 
       ctx.body = {
@@ -78,10 +78,10 @@ const lists = {
     try {
       const result = listService.updateList(listId, listBody)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      yield [result, userResult]
-      if (!result) ctx.throw(500, 'Something bad happened at addList')
-      if (!userResult) ctx.throw(500, 'Something bad happened at updateUser')
-      ctx.body = result
+      const results = yield [result, userResult]
+      if (!results[0]) ctx.throw(500, 'Something bad happened at updateList')
+      if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
+      ctx.body = results[0]
     } catch (e) {
       console.log(e)
       this.status = e.status || 500

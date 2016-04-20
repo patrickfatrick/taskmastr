@@ -2,17 +2,17 @@ const thinky = require('../thinky')
 const type = thinky.type
 
 const List = thinky.createModel('lists', {
-  current: type.boolean().default(false),
+  current: type.boolean(),
   dateCreated: type.date().default(new Date().toISOString()),
   dateModified: type.date(),
   id: type.string(),
   items: [
     {
-      _deleting: type.boolean().default(false),
+      _deleting: type.boolean(),
       _detailsToggled: type.boolean(),
       _dueDateDifference: type.number(),
-      complete: type.boolean().default(false),
-      current: type.boolean().default(false),
+      complete: type.boolean(),
+      current: type.boolean(),
       dateCompleted: type.string(),
       dateCreated: type.date().default(new Date().toISOString()),
       dueDate: type.string(),

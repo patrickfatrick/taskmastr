@@ -13,7 +13,6 @@ exports.getList = function (id) {
 
 exports.addList = function (list) {
   list.dateCreated = new Date().toISOString()
-  console.log(list)
   return List.save(list)
   .then((result) => ({ success: true }))
   .catch((err) => {
@@ -23,13 +22,8 @@ exports.addList = function (list) {
 
 exports.deleteList = function (id) {
   return List.get(id)
-  .then((list) => {
-    list.delete()
-    .then((result) => {
-      console.log(result)
-      return result
-    })
-  })
+  .then((list) => list.delete())
+  .then((result) => result)
   .catch((err) => {
     throw new Error(err)
   })
