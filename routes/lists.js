@@ -24,9 +24,9 @@ const lists = {
     const list = this.request.body.list
     const user = this.request.body.user
     try {
-      const result = listService.addList(list)
+      const listResult = listService.addList(list)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [result, userResult]
+      const results = yield [listResult, userResult]
       if (!results[0]) ctx.throw(500, 'Something bad happened at addList')
       if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
       ctx.body = results[0]
@@ -40,9 +40,9 @@ const lists = {
     const ctx = this
     const user = ctx.request.body.user
     try {
-      const result = listService.deleteList(ctx.params.listid)
+      const listResult = listService.deleteList(ctx.params.listid)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [result, userResult]
+      const results = yield [listResult, userResult]
       if (!results[0]) ctx.throw(404, 'List not found')
       if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
 
@@ -75,9 +75,9 @@ const lists = {
     const listId = ctx.params.listid
     const listBody = ctx.request.body.listBody
     try {
-      const result = listService.updateList(listId, listBody)
+      const listResult = listService.updateList(listId, listBody)
       const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [result, userResult]
+      const results = yield [listResult, userResult]
       if (!results[0]) ctx.throw(500, 'Something bad happened at updateList')
       if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
       ctx.body = results[0]
