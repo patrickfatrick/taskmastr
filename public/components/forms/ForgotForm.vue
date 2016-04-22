@@ -1,5 +1,5 @@
 <template>
-  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate @submit.prevent="forgot(user.username)">
+  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate @submit.prevent="forgot(user.username.trim())">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <forgot-password></forgot-password>
     <div class="button-container">
@@ -38,7 +38,7 @@ export default {
   computed: {
     validate () {
       return {
-        usernameEmail: emailRE.test(this.user.username),
+        usernameEmail: emailRE.test(this.user.username.trim()),
         usernameRequired: !!this.user.username.trim()
       }
     },

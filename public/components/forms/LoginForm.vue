@@ -1,5 +1,5 @@
 <template>
-  <form id="user-form" name="userForm" action="/users/login" novalidate @submit.prevent="login(user.username, user.key, rememberMe, isValid)">
+  <form id="user-form" name="userForm" action="/users/login" novalidate @submit.prevent="login(user.username.trim(), user.key, rememberMe, isValid)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <key-input :require="validate.passwordRequired"></key-input>
     <remember-me></remember-me>
@@ -50,7 +50,7 @@ export default {
   computed: {
     validate () {
       return {
-        usernameEmail: emailRE.test(this.user.username),
+        usernameEmail: emailRE.test(this.user.username.trim()),
         usernameRequired: !!this.user.username.trim(),
         passwordRequired: !!this.user.key.trim()
       }
