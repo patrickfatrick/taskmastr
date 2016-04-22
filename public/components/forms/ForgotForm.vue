@@ -2,14 +2,21 @@
   <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate @submit.prevent="forgot(user.username)">
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <forgot-password></forgot-password>
+    <div class="button-container">
+      <button id="forgot-button" class="submit button" type="submit" @click="setForgotAttempt(true)">
+        Go
+      </button>
+      <try-it></try-it>
+    </div>
   </form>
 </template>
 
 <script>
 
-import { forgotPassword } from '../../store/user-store/user-actions'
+import { forgotPassword, setForgotAttempt } from '../../store/user-store/user-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import ForgotPassword from './form-components/ForgotPassword.vue'
+import TryIt from './form-components/TryIt.vue'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -19,12 +26,14 @@ export default {
       user: (state) => state.user
     },
     actions: {
-      forgotPassword
+      forgotPassword,
+      setForgotAttempt
     }
   },
   components: {
     UsernameInput,
-    ForgotPassword
+    ForgotPassword,
+    TryIt
   },
   computed: {
     validate () {

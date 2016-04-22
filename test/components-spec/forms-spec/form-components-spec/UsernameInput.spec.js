@@ -58,10 +58,6 @@ describe('UsernameInput.vue', function () {
     assert.isFalse(UsernameInput.vuex.getters.loginAttempt({ loginAttempt: false }))
   })
 
-  it('should have a setForgotAttempt method', () => {
-    assert.isFunction(UsernameInput.vuex.actions.setForgotAttempt)
-  })
-
   it('should render with initial state', () => {
     const vm = mountVm()
 

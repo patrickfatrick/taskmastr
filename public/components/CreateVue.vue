@@ -10,7 +10,6 @@
           <p>Confirm your password to create a new account.</p>
         </div>
         <create-form></create-form>
-        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -19,7 +18,6 @@
 <script>
 
 import CreateForm from './forms/CreateForm.vue'
-import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   vuex: {
@@ -30,8 +28,7 @@ export default {
     }
   },
   components: {
-    CreateForm,
-    TryIt
+    CreateForm
   }
 }
 

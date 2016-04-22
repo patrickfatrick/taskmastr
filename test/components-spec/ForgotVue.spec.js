@@ -65,7 +65,6 @@ describe('ForgotVue.vue', function () {
     assert.isNotNull(vm.$el.querySelector('.mask'))
     assert.isNotNull(vm.$el.querySelector('#key-modal'))
     assert.isNotNull(vm.$el.querySelector('#forgot-form'))
-    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
   })
 
   it('should respond to changes in the state (init)', () => {

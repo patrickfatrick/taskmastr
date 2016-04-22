@@ -70,15 +70,12 @@
 				margin-left: 0;
 			}
 			.prompt-line {
-				@include span-columns(10 of 12);
+				@include span-columns(12 of 12);
 				@include media(min-width $medium) {
 					@include span-columns(8 of 12);
 					@include shift(2 of 12);
 				}
 			}
-		}
-		button {
-			padding: 1px 3px 4px 5px
 		}
 		#remember, 
 		#forgot-password, 
@@ -89,7 +86,7 @@
 			@include span-columns(12 of 12);
 			@include media(min-width $medium) {
 				margin-top: 0.5rem;
-				@include span-columns(10 of 12);
+				@include span-columns(8 of 12);
 				@include shift(2 of 12);				
 			}
 			i {
@@ -104,9 +101,44 @@
 				margin-top: 0.5rem;
 			}
 		}
-		#try-it-button {
+		button {
+			padding: 1px 3px 4px 5px
+		}
+		.button-container {
+			@include span-columns(12 of 12);
+			position: relative;
+		}
+		.button {
 			margin-top: 2rem;
 			padding-top: 3px;
+			width: 60px;
+			@include center;
+			@include media(min-width $medium) {
+				width: 100px;
+			}
+		}
+		#try-it {
+			font-family: $raleway;
+			font-size: 0.8rem;
+			display: inline-block;
+			position: absolute;
+			bottom: 2px;
+			margin-left: 1rem;
+		}
+		#try-it-button {
+			text-transform: lowercase;
+			font-size: 1rem;
+			padding: 0.5rem;
+			border-radius: 4px;
+			@include transition(all 100ms ease-out);
+			&:hover {
+				color: $white;
+				background-color: $deepBlue;
+			}
+			&:active {
+				background-color: $deepBlue * 0.8;
+				@include transition(unset);
+			}
 		}
 	}
 }

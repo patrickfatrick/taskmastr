@@ -11,7 +11,6 @@
           <p>If so, log in now, or create one below!</p>
         </div>
         <login-form></login-form>
-        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -20,7 +19,6 @@
 <script>
 
 import LoginForm from './forms/LoginForm.vue'
-import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   vuex: {
@@ -31,8 +29,7 @@ export default {
     }
   },
   components: {
-    LoginForm,
-    TryIt
+    LoginForm
   }
 }
 

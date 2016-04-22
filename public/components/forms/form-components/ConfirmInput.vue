@@ -6,15 +6,12 @@
   </div>
   <div id="confirm-line" class="prompt-line">
     <input id="confirm" class="prompt" type="password" name="password" placeholder="Password" :value="user.confirm" @input="setConfirm($event.target.value)" :class="{'invalid': confirmAttempt && !match}"></input>
-    <button id="confirm-button" class="submit" type="submit" @click="setConfirmAttempt(true)">
-      <i class="fa fa-arrow-right"></i>
-    </button>
   </div>
 </template>
 
 <script>
 
-import { setConfirm, setConfirmAttempt } from '../../../store/user-store/user-actions'
+import { setConfirm } from '../../../store/user-store/user-actions'
 
 export default {
   vuex: {
@@ -24,8 +21,7 @@ export default {
       confirmAttempt: (state) => state.confirmAttempt
     },
     actions: {
-      setConfirm,
-      setConfirmAttempt
+      setConfirm
     }
   },
   props: {

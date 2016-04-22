@@ -80,12 +80,17 @@ describe('ResetForm.vue', function () {
     assert.isFunction(ResetForm.vuex.actions.loginUser)
   })
 
+  it('should inherit the setResetAttempt method from the store', () => {
+    assert.isFunction(ResetForm.vuex.actions.setResetAttempt)
+  })
+
   it('should render with initial state and component tree', () => {
     const vm = mountVm()
 
     assert.isNotNull(vm.$el.querySelector('#reset-form'))
     assert.isNotNull(vm.$el.querySelector('#reset-key-line'))
     assert.isNotNull(vm.$el.querySelector('#reset-confirm-line'))
+    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
   })
 
   it('should reset password and log in to app if isValid', () => {
@@ -260,5 +265,17 @@ describe('ResetForm.vue', function () {
     assert.isTrue(vm.$children[0].validate.confirmMatch)
     assert.isTrue(vm.$children[0].validate.tokenRequired)
     assert.isTrue(vm.$children[0].isValid)
+  })
+
+  it('should call setResetAttempt on button push', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'setResetAttempt')
+
+    vm.$el.querySelector('#reset-button').click()
+
+    assert.isTrue(vm.$children[0].setResetAttempt.calledWith(true))
+
+    vm.$children[0].setResetAttempt.restore()
   })
 })

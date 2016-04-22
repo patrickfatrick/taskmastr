@@ -4,16 +4,23 @@
     <key-input :require="validate.passwordRequired"></key-input>
     <remember-me></remember-me>
     <forgot-password></forgot-password>
+    <div class="button-container">
+      <button id="key-button" class="submit button" type="submit" @click="setLoginAttempt(true)">
+        Go
+      </button>
+      <try-it></try-it>
+    </div>
   </form>
 </template>
 
 <script>
 
-import { loginUser } from '../../store/user-store/user-actions'
+import { loginUser, setLoginAttempt } from '../../store/user-store/user-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import KeyInput from './form-components/KeyInput.vue'
 import RememberMe from './form-components/RememberMe.vue'
 import ForgotPassword from './form-components/ForgotPassword.vue'
+import TryIt from './form-components/TryIt.vue'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -29,14 +36,16 @@ export default {
       rememberMe: (state) => state.rememberMe
     },
     actions: {
-      loginUser
+      loginUser,
+      setLoginAttempt
     }
   },
   components: {
     UsernameInput,
     KeyInput,
     RememberMe,
-    ForgotPassword
+    ForgotPassword,
+    TryIt
   },
   computed: {
     validate () {

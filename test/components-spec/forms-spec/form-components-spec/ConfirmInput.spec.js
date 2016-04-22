@@ -1,4 +1,4 @@
-/* global it describe sinon */
+/* global it describe */
 import { assert } from 'chai'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -35,10 +35,6 @@ describe('ConfirmInput.vue', function () {
     assert.isFalse(ConfirmInput.vuex.getters.confirmAttempt({ confirmAttempt: false }))
   })
 
-  it('should have a setConfirmAttempt method', () => {
-    assert.isFunction(ConfirmInput.vuex.actions.setConfirmAttempt)
-  })
-
   it('should render with initial state', () => {
     const vm = mountVm()
 
@@ -52,17 +48,5 @@ describe('ConfirmInput.vue', function () {
     assert.isTrue(vm.$el.querySelector('#confirm').classList.contains('invalid'))
 
     ConfirmInput.props.match = undefined
-  })
-
-  it('should call setConfirmAttempt on button push', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'setConfirmAttempt')
-
-    vm.$el.querySelector('#confirm-button').click()
-
-    assert.isTrue(vm.$children[0].setConfirmAttempt.calledWith(true))
-
-    vm.$children[0].setConfirmAttempt.restore()
   })
 })

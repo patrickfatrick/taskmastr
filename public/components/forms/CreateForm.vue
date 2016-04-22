@@ -5,18 +5,25 @@
     <confirm-input :match="validate.confirmMatch"></confirm-input>
     <remember-me></remember-me>
     <forgot-password></forgot-password>
+    <div class="button-container">
+      <button id="confirm-button" class="submit button" type="submit" @click="setConfirmAttempt(true)">
+        Go
+      </button>
+      <try-it></try-it>
+    </div>
   </form>
 </template>
 
 <script>
 
-import { loginUser, createUser } from '../../store/user-store/user-actions'
+import { loginUser, createUser, setConfirmAttempt } from '../../store/user-store/user-actions'
 import { addList, setCurrentList } from '../../store/list-store/list-actions'
 import UsernameInput from './form-components/UsernameInput.vue'
 import KeyInput from './form-components/KeyInput.vue'
 import ConfirmInput from './form-components/ConfirmInput.vue'
 import RememberMe from './form-components/RememberMe.vue'
 import ForgotPassword from './form-components/ForgotPassword.vue'
+import TryIt from './form-components/TryIt.vue'
 import defaultList from '../../helper-utilities/default-list'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -34,7 +41,8 @@ export default {
       addList,
       setCurrentList,
       loginUser,
-      createUser
+      createUser,
+      setConfirmAttempt
     }
   },
   components: {
@@ -42,7 +50,8 @@ export default {
     KeyInput,
     ConfirmInput,
     RememberMe,
-    ForgotPassword
+    ForgotPassword,
+    TryIt
   },
   computed: {
     validate () {

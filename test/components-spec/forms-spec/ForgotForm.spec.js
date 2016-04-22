@@ -52,12 +52,19 @@ describe('ForgotForm.vue', function () {
     assert.isFunction(ForgotForm.vuex.actions.forgotPassword)
   })
 
+  it('should inherit the setForgotAttempt method from the store', () => {
+    assert.isFunction(ForgotForm.vuex.actions.setForgotAttempt)
+  })
+
   it('should render with initial state and component tree', () => {
     const vm = mountVm()
 
     assert.isNotNull(vm.$el.querySelector('#forgot-form'))
     assert.isNotNull(vm.$el.querySelector('#user-line'))
     assert.isNotNull(vm.$el.querySelector('#forgot-password'))
+    assert.isNotNull(vm.$el.querySelector('#forgot-button'))
+    assert.isNotNull(vm.$el.querySelector('#forgot-button'))
+    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
   })
 
   it('should call forgotPassword if isValid', () => {
@@ -119,5 +126,17 @@ describe('ForgotForm.vue', function () {
     assert.isTrue(vm.$children[0].validate.usernameRequired)
     assert.isTrue(vm.$children[0].validate.usernameEmail)
     assert.isTrue(vm.$children[0].isValid)
+  })
+
+  it('should call setForgotAttempt on button push', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'setForgotAttempt')
+
+    vm.$el.querySelector('#forgot-button').click()
+
+    assert.isTrue(vm.$children[0].setForgotAttempt.calledWith(true))
+
+    vm.$children[0].setForgotAttempt.restore()
   })
 })

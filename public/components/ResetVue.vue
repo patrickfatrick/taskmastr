@@ -10,7 +10,6 @@
           <p>Go ahead and create your new password below</p>
         </div>
         <reset-form></reset-form>
-        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -20,7 +19,6 @@
 
 import { setReset, setResetToken } from '../store/user-store/user-actions'
 import ResetForm from './forms/ResetForm.vue'
-import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   vuex: {
@@ -36,8 +34,7 @@ export default {
   },
   computed: {}, // Explicitly create computed property for test mocking
   components: {
-    ResetForm,
-    TryIt
+    ResetForm
   },
   compiled () {
     if (this.$route.query.token) this.setResetToken(this.$route.query.token)

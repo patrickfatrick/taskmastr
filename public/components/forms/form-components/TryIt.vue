@@ -1,5 +1,7 @@
 <template>
-  <button id="try-it-button" class="button" title="Try it" @click="loginTestUser(testUser, testKey, false)">Try it</button>
+  <span id="try-it">
+    Or <button id="try-it-button" title="Try it" @click="loginTestUser(testUser, testKey, false)">Try it out</button>
+  </span>
 </template>
 
 <script>

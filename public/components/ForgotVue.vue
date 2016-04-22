@@ -11,7 +11,6 @@
           <p>Fill in your email address and we'll send you a reset link.</p>
         </div>
         <forgot-form></forgot-form>
-        <try-it></try-it>
       </div>
     </div>
   </div>
@@ -21,7 +20,6 @@
 
 import { setForgot } from '../store/user-store/user-actions'
 import ForgotForm from './forms/ForgotForm.vue'
-import TryIt from './forms/form-components/TryIt.vue'
 
 export default {
   vuex: {
@@ -38,8 +36,7 @@ export default {
   },
   computed: {}, // Explicitly create computed property for test mocking
   components: {
-    ForgotForm,
-    TryIt
+    ForgotForm
   },
   compiled () {
     if (this.$route.path === '/forgot' && !this.forgot) return this.setForgot(true)

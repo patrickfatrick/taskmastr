@@ -87,6 +87,10 @@ describe('LoginForm.vue', function () {
     assert.isFunction(LoginForm.vuex.actions.loginUser)
   })
 
+  it('should inherit the setLoginAttempt method from the store', () => {
+    assert.isFunction(LoginForm.vuex.actions.setLoginAttempt)
+  })
+
   it('should render with initial state and component tree', () => {
     const vm = mountVm()
 
@@ -95,6 +99,8 @@ describe('LoginForm.vue', function () {
     assert.isNotNull(vm.$el.querySelector('#key-line'))
     assert.isNotNull(vm.$el.querySelector('#remember-me'))
     assert.isNotNull(vm.$el.querySelector('#forgot-password'))
+    assert.isNotNull(vm.$el.querySelector('#key-button'))
+    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
   })
 
   it('should log in to app if isValid', () => {
@@ -232,5 +238,17 @@ describe('LoginForm.vue', function () {
     assert.isTrue(vm.$children[0].validate.usernameEmail)
     assert.isTrue(vm.$children[0].validate.passwordRequired)
     assert.isTrue(vm.$children[0].isValid)
+  })
+
+  it('should call setLoginAttempt on button push', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'setLoginAttempt')
+
+    vm.$el.querySelector('#key-button').click()
+
+    assert.isTrue(vm.$children[0].setLoginAttempt.calledWith(true))
+
+    vm.$children[0].setLoginAttempt.restore()
   })
 })

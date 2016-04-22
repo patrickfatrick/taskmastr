@@ -1,4 +1,4 @@
-/* global it describe sinon */
+/* global it describe */
 import { assert } from 'chai'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -46,10 +46,6 @@ describe('KeyInput.vue', function () {
     assert.isFalse(KeyInput.vuex.getters.loginAttempt({ loginAttempt: false }))
   })
 
-  it('should inherit the setLoginAttempt action from the store', () => {
-    assert.isFunction(KeyInput.vuex.actions.setLoginAttempt)
-  })
-
   it('should render with initial state', () => {
     const vm = mountVm()
 
@@ -87,29 +83,5 @@ describe('KeyInput.vue', function () {
     assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
 
     delete KeyInput.computed.require
-  })
-
-  it('should call setLoginAttempt on button push', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'setLoginAttempt')
-
-    vm.$el.querySelector('#key-button').click()
-
-    assert.isTrue(vm.$children[0].setLoginAttempt.calledWith(true))
-
-    vm.$children[0].setLoginAttempt.restore()
-  })
-
-  it('key-button should not render on /create', () => {
-    KeyInput.computed.$route = () => {
-      return {
-        path: '/create'
-      }
-    }
-
-    const vm = mountVm()
-
-    assert.isNull(vm.$el.querySelector('#key-button'))
   })
 })

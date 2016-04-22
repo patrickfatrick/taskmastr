@@ -5,15 +5,12 @@
   </div>
   <div id="key-line" class="prompt-line">
     <input id="key" class="prompt" type="password" name="password" placeholder="Password" :value="user.key" @input="setKey($event.target.value)" :class="{'invalid': loginAttempt && (!require || invalidKey)}"></input>
-    <button id="key-button" class="submit" type="submit" v-if="$route.path !== '/create'" @click="setLoginAttempt(true)">
-      <i class="fa fa-arrow-right"></i>
-    </button>
   </div>
 </template>
 
 <script>
 
-import { setKey, setLoginAttempt } from '../../../store/user-store/user-actions'
+import { setKey } from '../../../store/user-store/user-actions'
 
 export default {
   vuex: {
@@ -24,8 +21,7 @@ export default {
       loginAttempt: (state) => state.loginAttempt
     },
     actions: {
-      setKey,
-      setLoginAttempt
+      setKey
     }
   },
   computed: {},

@@ -72,7 +72,7 @@ describe('TryIt.vue', function () {
   it('should render with initial state', () => {
     const vm = mountVm()
 
-    assert.deepEqual(vm.$el.querySelector('#try-it-button').textContent, 'Try it')
+    assert.deepEqual(vm.$el.querySelector('#try-it-button').textContent, 'Try it out')
   })
 
   it('should log in to the test account on loginTestUser', () => {

@@ -8,15 +8,12 @@
   </div>
   <div id="user-line" class="prompt-line">
     <input id="user" class="prompt" type="text" name="username" placeholder="Email" :value="user.username" @input="setUsername($event.target.value)" :class="{'invalid': (loginAttempt || forgotAttempt) && (!require || !validate || forgotFail)}"></input>
-    <button id="forgot-button" class="submit" type="submit" v-if="$route.path ==='/forgot'" @click="setForgotAttempt(true)">
-      <i class="fa fa-arrow-right"></i>
-    </button>
   </div>
 </template>
 
 <script>
 
-import { setUsername, setForgotAttempt } from '../../../store/user-store/user-actions'
+import { setUsername } from '../../../store/user-store/user-actions'
 
 export default {
   vuex: {
@@ -32,8 +29,7 @@ export default {
       loginAttempt: (state) => state.loginAttempt
     },
     actions: {
-      setUsername,
-      setForgotAttempt
+      setUsername
     }
   },
   computed: {},

@@ -87,6 +87,10 @@ describe('CreateForm.vue', function () {
     assert.isFunction(CreateForm.vuex.actions.createUser)
   })
 
+  it('should inherit the setConfirmAttempt method from the store', () => {
+    assert.isFunction(CreateForm.vuex.actions.setConfirmAttempt)
+  })
+
   it('should render with initial state and component tree', () => {
     const vm = mountVm()
 
@@ -96,6 +100,8 @@ describe('CreateForm.vue', function () {
     assert.isNotNull(vm.$el.querySelector('#confirm-line'))
     assert.isNotNull(vm.$el.querySelector('#remember-me'))
     assert.isNotNull(vm.$el.querySelector('#forgot-password'))
+    assert.isNotNull(vm.$el.querySelector('#confirm-button'))
+    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
   })
 
   it('should create user and log in to app if isValid', () => {
@@ -226,5 +232,17 @@ describe('CreateForm.vue', function () {
     assert.isTrue(vm.$children[0].validate.passwordRequired)
     assert.isTrue(vm.$children[0].validate.confirmMatch)
     assert.isTrue(vm.$children[0].isValid)
+  })
+
+  it('should call setConfirmAttempt on button push', () => {
+    const vm = mountVm()
+
+    sinon.stub(vm.$children[0], 'setConfirmAttempt')
+
+    vm.$el.querySelector('#confirm-button').click()
+
+    assert.isTrue(vm.$children[0].setConfirmAttempt.calledWith(true))
+
+    vm.$children[0].setConfirmAttempt.restore()
   })
 })

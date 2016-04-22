@@ -2,14 +2,21 @@
   <form id="reset-form" name="resetForm" action="/users/reset" novalidate @submit.prevent="reset(resetToken, user.resetKey)">
     <reset-key-input :require="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
     <reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
+    <div class="button-container">
+      <button id="reset-button" class="submit button" type="submit" @click="setResetAttempt(true)">
+        Go
+      </button>
+      <try-it></try-it>
+    </div>
   </form>
 </template>
 
 <script>
 
-import { loginUser, resetPassword } from '../../store/user-store/user-actions'
+import { loginUser, resetPassword, setResetAttempt } from '../../store/user-store/user-actions'
 import ResetKeyInput from './form-components/ResetKeyInput.vue'
 import ResetConfirmInput from './form-components/ResetConfirmInput.vue'
+import TryIt from './form-components/TryIt.vue'
 
 export default {
   vuex: {
@@ -21,12 +28,14 @@ export default {
     },
     actions: {
       loginUser,
-      resetPassword
+      resetPassword,
+      setResetAttempt
     }
   },
   components: {
     ResetKeyInput,
-    ResetConfirmInput
+    ResetConfirmInput,
+    TryIt
   },
   computed: {
     validate () {
