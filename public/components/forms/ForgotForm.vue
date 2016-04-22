@@ -3,7 +3,7 @@
     <username-input :validate="validate.usernameEmail" :require="validate.usernameRequired"></username-input>
     <forgot-password></forgot-password>
     <div class="button-container">
-      <button id="forgot-button" class="submit button" type="submit" @click="setForgotAttempt(true)">
+      <button id="forgot-button" class="submit button" type="submit" title="Submit" @click="setForgotAttempt(true)">
         Go
       </button>
       <try-it></try-it>

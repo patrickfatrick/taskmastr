@@ -57,15 +57,14 @@ $large: 1200px;
 }
 
 @mixin button-effect($color, $bottomHover, $bottomActive) {
-	box-shadow: 2px 2px 0 $color * 0.8;
-	&:hover {
+	box-shadow: 0 4px 0 $color * 0.8;
+	&:hover,
+	&:focus {
 		bottom: $bottomHover;
-		left: -2px;
-		box-shadow: 4px 4px 0 $color * 0.8;
+		box-shadow: 0 (4px + $bottomHover) 0 $color * 0.8;
 	}
 	&:active {
 		bottom: $bottomActive;
-		left: 0;
-		box-shadow: 2px 2px 0 $color * 0.8;
+		box-shadow: 0 4px 0 $color * 0.8;
 	}
 }

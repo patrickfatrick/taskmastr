@@ -3,7 +3,7 @@
     <reset-key-input :require="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
     <reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
     <div class="button-container">
-      <button id="reset-button" class="submit button" type="submit" @click="setResetAttempt(true)">
+      <button id="reset-button" class="submit button" type="submit" title="Submit" @click="setResetAttempt(true)">
         Go
       </button>
       <try-it></try-it>

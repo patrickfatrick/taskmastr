@@ -186,7 +186,7 @@ a {
 		padding: 1px 3px 3px 4px;
 		border: none;
 		outline: none;
-		@include button-effect($orchid, 2px, 0);
+		@include button-effect($orchid, 3px, 0);
 	}
 }
 
@@ -205,7 +205,7 @@ a {
 	outline: 0;
 	border-radius: 20px;
 	@include center;
-	@include button-effect($orchid, 2px, 0);
+	@include button-effect($orchid, 3px, 0);
 }
 
 .check {

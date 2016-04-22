@@ -5,7 +5,7 @@
     <remember-me></remember-me>
     <forgot-password></forgot-password>
     <div class="button-container">
-      <button id="key-button" class="submit button" type="submit" @click="setLoginAttempt(true)">
+      <button id="key-button" class="submit button" type="submit" title="Submit" @click="setLoginAttempt(true)">
         Go
       </button>
       <try-it></try-it>

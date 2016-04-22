@@ -6,7 +6,7 @@
     <remember-me></remember-me>
     <forgot-password></forgot-password>
     <div class="button-container">
-      <button id="confirm-button" class="submit button" type="submit" @click="setConfirmAttempt(true)">
+      <button id="confirm-button" class="submit button" type="submit" title="Submit" @click="setConfirmAttempt(true)">
         Go
       </button>
       <try-it></try-it>
