@@ -1,7 +1,9 @@
 <template>
   <div id="forgot-password">
-    <input id="forgot" class="check" name="forgot" type="checkbox" :value="forgot"></input>
-    <i class="fa" :class="{'fa-check-square-o': forgot, 'fa-square-o': !forgot}" @click="toggleForgot(!forgot)"></i>
+    <input id="forgot" class="check" name="forgot" type="checkbox" tabindex="-1" :value="forgot"></input>
+    <button title="Forgot Password" @click.prevent="toggleForgot(!forgot)">
+      <i class="fa" :class="{'fa-check-square-o': forgot, 'fa-square-o': !forgot}"></i>
+    </button>
     <label for="forgot">Forgot your password?</label>
   </div>
 </template>

@@ -89,16 +89,18 @@
 				@include span-columns(8 of 12);
 				@include shift(2 of 12);				
 			}
-			i {
-				width: 0.8rem;
-				margin-right: 1rem;
-			}
 		}
 		#remember, 
 		#forgot-password {
 			margin-top: 1rem;
 			@include media(min-width $medium) {
 				margin-top: 0.5rem;
+			}
+			button {
+				margin-right: 1rem;
+				&:focus {
+					color: $deepBlue;
+				}
 			}
 		}
 		button {
