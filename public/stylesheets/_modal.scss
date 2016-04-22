@@ -136,6 +136,7 @@
 				background-color: $deepBlue;
 			}
 			&:active {
+				color: $white;
 				background-color: $deepBlue * 0.8;
 				@include transition(unset);
 			}
