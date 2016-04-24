@@ -1,6 +1,6 @@
 <template>
   <span id="try-it">
-    Or <button id="try-it-button" title="Try it" @click="loginTestUser(testUser, testKey, false)">Try it out</button>
+    Or <button id="try-it-button" title="Try it" type="button" @click="loginTestUser(testUser, testKey, false)">Try it out</button>
   </span>
 </template>
 
