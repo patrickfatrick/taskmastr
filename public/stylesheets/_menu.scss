@@ -79,7 +79,7 @@
 
 #list-button {
 	background: $deepBlue;
-	@include button-effect($deepBlue, 3px, 0);
+	@include button-effect($deepBlue, 3px, -3px);
 }
 
 #logout-container {

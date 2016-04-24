@@ -65,6 +65,6 @@ $large: 1200px;
 	}
 	&:active {
 		bottom: $bottomActive;
-		box-shadow: 0 4px 0 $color * 0.8;
+		box-shadow: none;
 	}
 }

@@ -140,27 +140,6 @@
 	}
 }
 
-#todo-button {
-	background: $deepBlue;
-	@include button-effect($deepBlue, 2px, 0);
-}
-
-#save-button {
-	background-color: $deepBlue;
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 20px;
-	z-index: 10;
-	@include button-effect($deepBlue, 22px, 20px);
-	&.save-enter {
-		@include animation(bounceIn 300ms);
-	}
-	&.save-leave {
-		@include animation(bounceOut 300ms);
-	}
-}
-
 #loading {
 	margin-top: 3rem;
 	margin-bottom: 2rem;
