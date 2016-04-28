@@ -25,6 +25,7 @@
   "dependencies": {
     "agenda": "^0.8.0",
     "animate.scss": "0.0.6",
+    "animatewithsass": "^3.2.1",
     "async": "^1.5.2",
     "bcrypt": "^0.8.6",
     "chalk": "^1.1.3",

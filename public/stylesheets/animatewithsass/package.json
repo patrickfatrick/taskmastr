@@ -1,0 +1,77 @@
+{
+  "_args": [
+    [
+      "animatewithsass",
+      "/Users/patrick/Projects/taskmastr"
+    ]
+  ],
+  "_from": "animatewithsass@latest",
+  "_id": "animatewithsass@3.2.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/animatewithsass",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "email": "michael.wolbert@gmail.com",
+    "name": "mchlbrnd"
+  },
+  "_npmVersion": "2.13.5",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "animatewithsass",
+    "raw": "animatewithsass",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/animatewithsass/-/animatewithsass-3.2.1.tgz",
+  "_shasum": "4ae833f5b852377c6e8fd574c4223334dfee8c19",
+  "_shrinkwrap": null,
+  "_spec": "animatewithsass",
+  "_where": "/Users/patrick/Projects/taskmastr",
+  "author": {
+    "email": "@geoffreygraham",
+    "name": "geoffgraham"
+  },
+  "bugs": {
+    "url": "https://github.com/geoffgraham/animate.scss/issues"
+  },
+  "dependencies": {},
+  "description": "A SASS port of Dan Eden's Animate.css",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "4ae833f5b852377c6e8fd574c4223334dfee8c19",
+    "tarball": "https://registry.npmjs.org/animatewithsass/-/animatewithsass-3.2.1.tgz"
+  },
+  "gitHead": "f04891e370a58dbc30491039fd76640d8e5503f6",
+  "homepage": "https://github.com/geoffgraham/animate.scss#readme",
+  "keywords": [
+    "animate.scss",
+    "animate.css",
+    "animate"
+  ],
+  "license": "MIT",
+  "main": "animate.scss",
+  "maintainers": [
+    {
+      "email": "michael.wolbert@gmail.com",
+      "name": "mchlbrnd"
+    }
+  ],
+  "name": "animatewithsass",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoffgraham/animate.scss.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.2.1"
+}
