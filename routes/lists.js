@@ -1,5 +1,6 @@
 'use strict'
 
+const chalk = require('chalk')
 const http = require('http')
 const async = require('async')
 const userService = require('../services/user-service')
@@ -19,73 +20,60 @@ const lists = {
       this.body = e.message || http.STATUS_CODES[this.status]
     }
   },
-  create: function * (next) {
-    const ctx = this
-    const list = this.request.body.list
-    const user = this.request.body.user
-    try {
-      const listResult = listService.addList(list)
-      const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [listResult, userResult]
-      if (!results[0]) ctx.throw(500, 'Something bad happened at addList')
-      if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
-      ctx.body = results[0]
-    } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
-    }
+  create: function (payload) {
+    const list = payload.list
+    const user = payload.user
+
+    const listResult = listService.addList(list)
+    const userResult = userService.updateUser(user.username, { tasks: user.tasks })
+    return Promise.all([listResult, userResult])
+    .then((results) => {
+      if (!results[0]) throw new Error('Something bad happened at addList')
+      if (!results[1]) throw new Error('Something bad happened at updateUser')
+      return results
+    })
   },
-  delete: function * (next) {
-    const ctx = this
-    const user = ctx.request.body.user
-    try {
-      const listResult = listService.deleteList(ctx.params.listid)
-      const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [listResult, userResult]
-      if (!results[0]) ctx.throw(404, 'List not found')
-      if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
+  delete: function (payload) {
+    const user = payload.user
+
+    const listResult = listService.deleteList(payload.listid)
+    const userResult = userService.updateUser(user.username, { tasks: user.tasks })
+    return Promise.all([listResult, userResult])
+    .then((results) => {
+      if (!results[0]) throw new Error('List not found')
+      if (!results[1]) throw new Error('Something bad happened at updateUser')
 
       // Round up the ids of each item and cancel their agenda tasks
       async.each(results[0].items, (v, cb) => {
         agenda.cancel({
           'data.agendaID': v.id
         }, (err) => {
-          if (err) ctx.throw(err)
+          if (err) throw new Error(err)
           console.log(user.username + ' => Agenda removed: ' + v.id)
           cb()
         })
       }, function (err) {
-        if (err) ctx.throw(err)
-        console.log(`${results[0].id} => All deleted agendas removed successfully`)
+        if (err) throw new Error(err)
+        console.log(`List agendas removed ${chalk.gray(results[0].id)}`)
       })
 
-      ctx.body = {
-        success: true
-      }
-    } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
-    }
+      return results
+    })
   },
-  update: function * (next) {
-    const ctx = this
-    const user = ctx.request.body.user
-    const listId = ctx.params.listid
-    const listBody = ctx.request.body.listBody
-    try {
-      const listResult = listService.updateList(listId, listBody)
-      const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-      const results = yield [listResult, userResult]
-      if (!results[0]) ctx.throw(500, 'Something bad happened at updateList')
-      if (!results[1]) ctx.throw(500, 'Something bad happened at updateUser')
-      ctx.body = results[0]
-    } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
-    }
+  update: function (payload) {
+    const user = payload.user
+    const listid = payload.listid
+    const listBody = payload.listBody
+
+    const listResult = listService.updateList(listid, listBody)
+    const userResult = userService.updateUser(user.username, { tasks: user.tasks })
+
+    return Promise.all([listResult, userResult])
+    .then((results) => {
+      if (!results[0]) throw new Error('Something bad happened at updateList')
+      if (!results[1]) throw new Error('Something bad happened at updateUser')
+      return results
+    })
   }
 }
 

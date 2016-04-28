@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import socket from '../../socket.js'
 import { getSession, login, create, reset, forgot, logout, updateUser } from '../../services/user-services'
 
 export function setInit ({ dispatch }, bool) {
@@ -89,6 +90,10 @@ export function setResetToken ({ dispatch }, str) {
   dispatch('SET_RESET_TOKEN', str)
 }
 
+export function setDisconnect ({ dispatch }, bool) {
+  dispatch('SET_DISCONNECT', bool)
+}
+
 export function setDarkmode ({ dispatch, state }, bool) {
   dispatch('SET_DARKMODE', bool)
   return updateUser(state.user.username, { darkmode: bool }, (err, res) => {
@@ -110,6 +115,7 @@ export function getUserSession ({ dispatch }) {
     dispatch('SET_TASKS', tasks)
     dispatch('SET_CURRENT_LIST', _.find(tasks, { current: true }) || tasks[0])
     dispatch('SET_AUTH', response.username)
+    socket.emit('join', response.username)
     return response.username
   })
 }
@@ -127,6 +133,7 @@ export function loginUser ({ dispatch }, username, key, rememberMe) {
     dispatch('SET_TASKS', tasks)
     dispatch('SET_CURRENT_LIST', _.find(tasks, { current: true }) || tasks[0])
     dispatch('SET_AUTH', response.username)
+    socket.emit('join', response.username)
     return response.username
   })
 }
@@ -145,6 +152,7 @@ export function createUser ({ dispatch }, username, key, rememberMe) {
     dispatch('SET_CONFIRM', '')
     dispatch('SET_DARKMODE', response.darkmode)
     dispatch('SET_AUTH', response.username)
+    socket.emit('join', response.username)
     return response.username
   })
 }
@@ -160,6 +168,7 @@ export function resetPassword ({ dispatch }, token, key) {
   return reset(token, key, (err, response) => {
     if (err) return dispatch('SET_RESET_FAIL', err)
     dispatch('SET_USERNAME', response.username)
+    socket.emit('join', response.username)
     return response.username
   })
 }

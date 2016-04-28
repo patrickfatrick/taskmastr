@@ -1,7 +1,10 @@
 <template>
   <div id="content">
-    <div id="test-user-banner" v-if="user.username === 'mrormrstestperson@taskmastr.co'">
-      FYI: You're currently logged into the Try It account, and changes will not be saved.
+    <div id="warning-banner" v-if="user.username === 'mrormrstestperson@taskmastr.co' || disconnect">
+      <div v-if="user.username === 'mrormrstestperson@taskmastr.co'">FYI: You're currently logged into the Try It account, and changes will not be saved.</div>
+      <div v-if="disconnect && (user.username !== 'mrormrstestperson@taskmastr.co')">
+        Socket connection broken. <button @click="refresh()">Refresh now</button>
+      </div>
     </div>
     <div class="container">
       <div class="prompt-container">
@@ -30,7 +33,8 @@ export default {
     getters: {
       user: (state) => state.user,
       current: (state) => state.current,
-      invalidList: (state) => state.invalidList
+      invalidList: (state) => state.invalidList,
+      disconnect: (state) => state.disconnect
     },
     actions: {
       mountList
@@ -44,6 +48,12 @@ export default {
   route: {
     data (transition) {
       this.mountList(transition.to.params.listid)
+    }
+  },
+  methods: {
+    refresh () {
+      console.log('sup')
+      window.location.href = '/'
     }
   }
 }

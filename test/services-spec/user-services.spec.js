@@ -1,7 +1,8 @@
-/* global describe it */
+/* global describe it sinon */
 import { assert } from 'chai'
 import 'isomorphic-fetch'
 import fetchMock from 'fetch-mock'
+import socket from '../../public/socket'
 import { login, create, forgot, reset, logout, getSession, updateUser } from '../../public/services/user-services'
 
 describe('user-services', () => {
@@ -268,46 +269,38 @@ describe('user-services', () => {
   })
 
   it('updateUser invokes a callback on success', (done) => {
-    fetchMock.mock('/users/username/update', {
-      status: 200,
-      body: {
-        username: 'username'
-      }
-    })
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     updateUser('username', { darkmode: true }, (err, response) => {
-      assert.isTrue(fetchMock.called('/users/username/update'))
+      assert.isTrue(socket.emit.calledWith('update-user'))
+      assert.deepEqual(response, 'ok')
       assert.isNull(err)
-      assert.deepEqual(response.username, 'username')
-    })
-    .then(() => {
-      fetchMock.restore()
+      socket.emit.restore()
       done()
     })
   })
 
   it('updateUser throws an error on error', (done) => {
-    fetchMock.mock('/users/username/update', 500)
+    sinon.stub(socket, 'emit').yields({ message: 'Error!' }, null)
 
     updateUser('username', { darkmode: true }, (err, response) => {
-      assert.isTrue(fetchMock.called('/users/username/update'))
+      assert.isTrue(socket.emit.calledWith('update-user'))
       assert.isNotNull(err)
-      assert.isNotOk(response.ok)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.deepEqual(err.message, 'Error!')
+      assert.deepEqual(response, 'Error!')
+      socket.emit.restore()
       done()
     })
   })
 
   it('updateUser does nothing if test user', (done) => {
-    fetchMock.mock('/users/username/update', 200)
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     updateUser('mrormrstestperson@taskmastr.co', { darkmode: true }, (err, response) => {
-      assert.isFalse(fetchMock.called('/users/username/update'))
-      assert.isTrue(response.success)
+      assert.isFalse(socket.emit.called)
+      assert.isOk(response)
       assert.isNull(err)
-      fetchMock.restore()
+      socket.emit.restore()
       done()
     })
   })

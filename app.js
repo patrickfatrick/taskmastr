@@ -20,6 +20,9 @@ const agenda = require('./services/agenda-service')
 const config = require('./config')
 const auth = require('./auth/auth')
 
+// Socket.io instance
+const io = require('./io')
+
 // Import routes
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -136,6 +139,9 @@ r.table('sessions').indexWait('sid').run()
 })
 
 function startKoa () {
+  // Attach socket.io instance to app
+  io.attach(app)
+
   app.listen(config.koa.port)
   console.log('Listening on port ' + config.koa.port)
 }

@@ -7,6 +7,7 @@ export default {
   repo: '//github.com/patrickfatrick/taskmastr',
   testUser: 'mrormrstestperson@taskmastr.co',
   testKey: 'S41iVAtINGREsIdUE-278',
+  disconnect: false,
   deleteQueue: {},
   ...user,
   ...list,

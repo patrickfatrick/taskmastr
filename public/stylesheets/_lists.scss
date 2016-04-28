@@ -77,12 +77,6 @@
 				color: $white !important;
 			}
 		}
-		&.item-enter {
-			@include animation(bounceInLeft 400ms);
-		}
-		&.item-leave {
-			@include animation(bounceOutLeft 400ms);
-		}
 		@include media(min-width $medium) {
 			&:hover:not(.complete):not(.active) {
 				background-color: $deepBlue;

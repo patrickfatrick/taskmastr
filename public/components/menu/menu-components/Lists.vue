@@ -58,7 +58,7 @@ export default {
       })
     },
     navigateToList (id) {
-      if (this.current.id !== id) this.unmountList()
+      if (this.current.id !== id) this.unmountList(this.current.id)
       this.$route.router.go('/app/list/' + id)
     },
     rename (e, index) {

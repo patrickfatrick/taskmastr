@@ -33,7 +33,7 @@ exports.updateList = function (id, body) {
   body.dateModified = new Date().toISOString()
   return List.get(id)
   .update(body).run()
-  .then((result) => ({ success: true }))
+  .then((result) => result)
   .catch((err) => {
     throw new Error(err)
   })

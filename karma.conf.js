@@ -21,6 +21,7 @@ module.exports = function (karma) {
     basePath: '',
     files: [
       'node_modules/es6-promise/dist/es6-promise.js',
+      'public/dist/socket.io-client/socket.io.js',
       'test/index.js'
     ],
     frameworks: ['mocha', 'sinon-stub-promise', 'sinon', 'chai'],

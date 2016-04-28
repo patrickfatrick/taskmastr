@@ -1,5 +1,6 @@
 import 'isomorphic-fetch'
 import gregorian from 'gregorian'
+import socket from '../socket'
 import status from './status'
 
 export function login (username, key, rememberMe, cb) {
@@ -129,21 +130,8 @@ export function getSession (cb) {
 
 export function updateUser (username, body, cb) {
   if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
-  return window.fetch(`/users/${username}/update`, {
-    method: 'post',
-    credentials: 'same-origin',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  })
-  .then(status)
-  .then((response) => response.json())
-  .then((response) => {
+  socket.emit('update-user', { username, body }, (err, response) => {
+    if (err) return cb(err, err.message)
     cb(null, response)
-  })
-  .catch((err) => {
-    cb(err, err.response)
   })
 }

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import socket from '../../socket.js'
 import { updateUser } from '../../services/user-services'
 import {createList, getList, removeList, updateList} from '../../services/list-services'
 
@@ -29,11 +30,15 @@ export function renameList ({ dispatch, state }, index, name) {
 }
 
 export function mountList ({ dispatch, state }, id) {
+  const oldCurrent = _.find(state.user.tasks, { current: true })
   return getList(id, (err, response) => {
     if (err) return dispatch('SET_INVALID_LIST', err)
-    const oldCurrent = _.find(state.user.tasks, { current: true })
     dispatch('SET_CURRENT_LIST', response)
     dispatch('SET_INVALID_LIST', false)
+    socket.emit('join', id)
+    socket.on('change', (data) => {
+      dispatch('SET_CURRENT_LIST', data)
+    })
     return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
       if (err) return dispatch('SET_CURRENT_LIST', oldCurrent)
       return res
@@ -42,6 +47,7 @@ export function mountList ({ dispatch, state }, id) {
 }
 
 export function unmountList ({ dispatch, state }, id) {
+  socket.emit('leave', id)
   dispatch('SET_CURRENT_LIST', null)
 }
 

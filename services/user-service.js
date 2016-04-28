@@ -1,7 +1,7 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
-const hat = require('hat')
+const harsh = require('harsh')
 const User = require('../models/User')
 
 exports.addUser = function (user) {
@@ -44,7 +44,7 @@ exports.setToken = function (user) {
   return User.get(user.username.toLowerCase())
   .update({
     dateModified: new Date().toISOString(),
-    resetToken: hat(),
+    resetToken: harsh.hash().hashes[0],
     resetDate: Date.now() + 1000 * 60 * 60
   }).run()
   .then((result) => result)

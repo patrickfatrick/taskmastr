@@ -60,10 +60,6 @@ export default {
         this.setDueDateDifference(this.index, this.task.dueDate)
       }.bind(this)
     })
-    // set task due date on generation (when task is created)
-    if (this.task.dueDate) {
-      this.setDueDate(this.index, gregorian.reform(this.picker._d).set(6, 'h').to('iso'))
-    }
   }
 }
 

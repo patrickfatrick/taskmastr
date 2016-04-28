@@ -11,7 +11,10 @@
 
 <script>
 
-import { getUserSession } from './store/user-store/user-actions'
+import _ from 'lodash'
+import socket from './socket'
+import { getUserSession, setDarkmode, setTasks, setDisconnect } from './store/user-store/user-actions'
+import { unmountList } from './store/list-store/list-actions'
 
 export default {
   vuex: {
@@ -22,10 +25,33 @@ export default {
       current: (state) => state.current
     },
     actions: {
-      getUserSession
+      getUserSession,
+      setDarkmode,
+      setTasks,
+      unmountList,
+      setDisconnect
+    }
+  },
+  methods: {
+    navigateToList (id) {
+      if (this.current.id !== id) this.unmountList(this.current.id)
+      this.$route.router.go('/app/list/' + id)
     }
   },
   ready () {
+    socket.on('updated', (data) => {
+      const currentID = _.find(data.tasks, { current: true }).id
+      this.setTasks(data.tasks)
+      if (this.user.darkmode !== data.darkmode) this.setDarkmode(data.darkmode)
+      if (this.current.id !== currentID) this.navigateToList(currentID)
+    })
+    socket.on('deleted', (data) => {
+      const currentID = _.find(data.tasks, { current: true }).id
+      if (this.current.id !== currentID) this.navigateToList(currentID)
+    })
+    socket.on('disconnect', () => {
+      this.setDisconnect(true)
+    })
     const listID = this.$route.params.listid
     this.getUserSession()
     .then(() => {

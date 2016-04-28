@@ -45,7 +45,6 @@ const users = {
       }
       const result = yield userService.addUser(user)
       if (!result.username) ctx.throw(500, 'Something bad happened')
-      console.log(result.username + ' => Creating user... OK')
       yield ctx.login(result)
       agenda.now('Welcome Email', {
         username: user.username,
@@ -62,22 +61,14 @@ const users = {
       this.body = e.message || http.STATUS_CODES[this.status]
     }
   },
-  update: function * (next) {
-    const ctx = this
-    const username = this.params.username
-    const body = this.request.body
-
-    try {
-      const result = yield userService.updateUser(username, body)
-      if (!result) ctx.throw(500, 'Something bad happened')
-      console.log(username + ' => Saving user... OK')
-      ctx.status = 200
-      ctx.body = { success: true }
-    } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
-    }
+  update: function (payload) {
+    const username = payload.username
+    const body = payload.body
+    return userService.updateUser(username, body)
+    .then((result) => {
+      if (!result) throw new Error('Something bad happened at updateUser')
+      return result
+    })
   },
   forgot: function * (next) {
     const ctx = this
@@ -110,8 +101,6 @@ const users = {
     const token = this.request.body.token
     const newKey = this.request.body.newKey
     try {
-      // console.log('Reset token: ' + token)
-      // console.log('New Key: ' + newKey)
       const result = yield userService.resetPassword({
         token: token,
         newKey: newKey

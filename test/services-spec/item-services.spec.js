@@ -1,141 +1,113 @@
-/* global describe it */
+/* global describe it sinon */
 import { assert } from 'chai'
-import 'isomorphic-fetch'
-import fetchMock from 'fetch-mock'
+import socket from '../../public/socket'
 import { createItem, updateItem, deleteItem } from '../../public/services/item-services'
 
 describe('item-services', () => {
   it('createItem invokes a callback on success', (done) => {
-    fetchMock.mock('/lists/listid/items/create', {
-      status: 200,
-      body: {
-        success: true
-      }
-    })
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     createItem('listid', { item: 'Item' }, 'username', (err, response) => {
-      assert.isTrue(fetchMock.called('/lists/listid/items/create'))
+      assert.isTrue(socket.emit.calledWith('create-item'))
       assert.isNull(err)
-      assert.isTrue(response.success)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.deepEqual(response, 'ok')
+      socket.emit.restore()
       done()
     })
   })
 
   it('createItem throws on error', (done) => {
-    fetchMock.mock('/lists/listid/items/create', 500)
+    sinon.stub(socket, 'emit').yields({ message: 'Error!' }, null)
 
     createItem('listid', { item: 'Item' }, 'username', (err, response) => {
-      assert.isTrue(fetchMock.called('/lists/listid/items/create'))
-      assert.isNotNull(err)
-      assert.isNotOk(response.ok)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.isTrue(socket.emit.calledWith('create-item'))
+      assert.deepEqual(err.message, 'Error!')
+      assert.deepEqual(response, 'Error!')
+      socket.emit.restore()
       done()
     })
   })
 
   it('createItem does nothing if test user', (done) => {
-    fetchMock.mock('/lists/listid/items/create', 200)
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     createItem('listid', { item: 'Item' }, 'mrormrstestperson@taskmastr.co', (err, response) => {
-      assert.isFalse(fetchMock.called('/lists/listid/items/create'))
+      assert.isFalse(socket.emit.called)
       assert.isNull(err)
-      assert.isTrue(response.success)
-      fetchMock.restore()
+      assert.isOk(response)
+      socket.emit.restore()
       done()
     })
   })
 
   it('updateItem invokes a callback on success', (done) => {
-    fetchMock.mock('/lists/listid/items/itemid/update', {
-      status: 200,
-      body: {
-        success: true
-      }
-    })
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     updateItem('listid', 'itemid', 0, { item: 'Item' }, 'username', (err, response) => {
-      assert.isTrue(fetchMock.called('/lists/listid/items/itemid/update'))
+      assert.isTrue(socket.emit.calledWith('update-item'))
       assert.isNull(err)
-      assert.isTrue(response.success)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.deepEqual(response, 'ok')
+      socket.emit.restore()
       done()
     })
   })
 
   it('updateItem throws on error', (done) => {
-    fetchMock.mock('/lists/listid/items/itemid/update', 500)
+    sinon.stub(socket, 'emit').yields({ message: 'Error!' }, null)
 
     updateItem('listid', 'itemid', 0, { item: 'Item' }, 'username', (err, response) => {
-      assert.isTrue(fetchMock.called('/lists/listid/items/itemid/update'))
-      assert.isNotNull(err)
-      assert.isNotOk(response.ok)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.isTrue(socket.emit.calledWith('update-item'))
+      assert.deepEqual(err.message, 'Error!')
+      assert.deepEqual(response, 'Error!')
+      socket.emit.restore()
       done()
     })
   })
 
   it('updateItem does nothing if test user', (done) => {
-    fetchMock.mock('/lists/listid/items/itemid/update', 200)
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     updateItem('listid', 'itemid', 0, { item: 'Item' }, 'mrormrstestperson@taskmastr.co', (err, response) => {
-      assert.isFalse(fetchMock.called('/lists/listid/items/itemid/update'))
+      assert.isFalse(socket.emit.called)
       assert.isNull(err)
-      assert.isTrue(response.success)
-      fetchMock.restore()
+      assert.isOk(response)
+      socket.emit.restore()
       done()
     })
   })
 
   it('deleteItem invokes a callback on success', (done) => {
-    fetchMock.mock('/lists/listid/items/itemid/delete', {
-      status: 200,
-      body: {
-        success: true
-      }
-    })
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     deleteItem('listid', 'itemid', 0, 'username', (err, response) => {
-      assert.isTrue(fetchMock.called('/lists/listid/items/itemid/delete'))
+      assert.isTrue(socket.emit.calledWith('delete-item'))
       assert.isNull(err)
-      assert.isTrue(response.success)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.deepEqual(response, 'ok')
+      socket.emit.restore()
       done()
     })
   })
 
   it('deleteItem throws on error', (done) => {
-    fetchMock.mock('/lists/listid/items/itemid/delete', 500)
+    sinon.stub(socket, 'emit').yields({ message: 'Error!' }, null)
 
     deleteItem('listid', 'itemid', 0, 'username', (err, response) => {
-      assert.isTrue(fetchMock.called('/lists/listid/items/itemid/delete'))
-      assert.isNotNull(err)
-      assert.isNotOk(response.ok)
-    })
-    .then(() => {
-      fetchMock.restore()
+      assert.isTrue(socket.emit.calledWith('delete-item'))
+      assert.deepEqual(err.message, 'Error!')
+      assert.deepEqual(response, 'Error!')
+      socket.emit.restore()
       done()
     })
   })
 
   it('deleteItem does nothing if test user', (done) => {
-    fetchMock.mock('/lists/listid/items/itemid/delete', 200)
+    sinon.stub(socket, 'emit').yields(null, 'ok')
 
     deleteItem('listid', 'itemid', 0, 'mrormrstestperson@taskmastr.co', (err, response) => {
-      assert.isFalse(fetchMock.called('/lists/listid/items/itemid/delete'))
+      assert.isFalse(socket.emit.called)
       assert.isNull(err)
-      assert.isTrue(response.success)
-      fetchMock.restore()
+      assert.isOk(response)
+      socket.emit.restore()
       done()
     })
   })
