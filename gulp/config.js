@@ -67,7 +67,7 @@ module.exports = {
     publicPath: '/public/dist/',
     hot: true,
     noInfo: true,
-    stats: {colors: true}
+    stats: { colors: true }
   },
   socketIO: {
     src: './node_modules/socket.io-client/**/*',
