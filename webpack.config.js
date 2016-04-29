@@ -9,7 +9,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, '/public/dist/'),
-    publicPath: 'http://localhost:8080/public/dist/',
+    publicPath: 'http://localhost:8888/public/dist/',
     filename: 'bundle.js'
   },
   module: {
