@@ -37,7 +37,7 @@ io.on('update-user', (ctx, payload) => {
       ctx.acknowledge(null, result)
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} POST ${chalk.gray('/users/' + payload.username)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })
@@ -53,7 +53,7 @@ io.on('create-list', (ctx, payload) => {
       ctx.acknowledge(null, results[0])
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} PUT ${chalk.gray('/lists/' + payload.list.id)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })
@@ -69,7 +69,7 @@ io.on('update-list', (ctx, payload) => {
       ctx.acknowledge(null, results[0])
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} POST ${chalk.gray('/lists/' + payload.listid)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })
@@ -85,7 +85,7 @@ io.on('delete-list', (ctx, payload) => {
       ctx.acknowledge(null, results[0])
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} DELETE ${chalk.gray('/lists/' + payload.listid)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })
@@ -100,7 +100,7 @@ io.on('delete-item', (ctx, payload) => {
       ctx.acknowledge(null, result)
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} DELETE ${chalk.gray('/lists/' + payload.listid + '/items/' + payload.itemid)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })
@@ -115,7 +115,7 @@ io.on('update-item', (ctx, payload) => {
       ctx.acknowledge(null, result)
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} POST ${chalk.gray('/lists/' + payload.listid + '/items/' + payload.itemid)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })
@@ -130,7 +130,7 @@ io.on('create-item', (ctx, payload) => {
       ctx.acknowledge(null, result)
     })
   } catch (err) {
-    console.log(err)
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} PUT ${chalk.gray('/lists/' + payload.listid + '/items/' + payload.item.id)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })

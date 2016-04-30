@@ -127,7 +127,7 @@ export function completeTask ({ dispatch, state }, index, bool) {
   const n = (tasks[index].complete) ? 0 : -1
   const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
     ? _.findIndex(tasks, {complete: true}) + n
-    : tasks.length
+    : tasks.length - 1
   dispatch('SET_TASK_COMPLETE', index, bool)
   dispatch('SET_DATE_COMPLETED', index, dateCompleted)
   if (bool) {
@@ -140,9 +140,9 @@ export function completeTask ({ dispatch, state }, index, bool) {
   const items = state.current.items
   return updateList(state.user, list.id, { items: items }, (err, res) => {
     if (err) {
+      dispatch('SET_TASK_COMPLETE', newIndex, !bool)
+      dispatch('SET_DATE_COMPLETED', newIndex, (!bool) ? gregorian.reform().to('iso') : null)
       dispatch('SORT_TASKS', newIndex, index)
-      dispatch('SET_TASK_COMPLETE', index, !bool)
-      dispatch('SET_DATE_COMPLETED', index, (!bool) ? gregorian.reform().to('iso') : null)
       return
     }
     return res

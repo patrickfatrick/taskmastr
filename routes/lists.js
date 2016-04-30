@@ -67,7 +67,6 @@ const lists = {
 
     const listResult = listService.updateList(listid, listBody)
     const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-
     return Promise.all([listResult, userResult])
     .then((results) => {
       if (!results[0]) throw new Error('Something bad happened at updateList')
