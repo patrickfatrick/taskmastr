@@ -97,7 +97,7 @@ describe('completeTask', () => {
       {name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z']},
       {name: 'SET_TASK_DUE_DATE', payload: [0, null]},
       {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null]},
-      {name: 'SORT_TASKS', payload: [0, 2]}
+      {name: 'SORT_TASKS', payload: [0, 1]}
     ], done)
   })
 
@@ -220,9 +220,9 @@ describe('completeTask', () => {
       { name: 'SET_TASK_DUE_DATE', payload: [0, null] },
       { name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null] },
       { name: 'SORT_TASKS', payload: [0, 0] },
-      { name: 'SORT_TASKS', payload: [0, 0] },
       { name: 'SET_TASK_COMPLETE', payload: [0, false] },
-      { name: 'SET_DATE_COMPLETED', payload: [0, null] }
+      { name: 'SET_DATE_COMPLETED', payload: [0, null] },
+      { name: 'SORT_TASKS', payload: [0, 0] }
     ], done)
   })
 
@@ -266,9 +266,9 @@ describe('completeTask', () => {
       { name: 'SET_TASK_COMPLETE', payload: [0, false] },
       { name: 'SET_DATE_COMPLETED', payload: [0, null] },
       { name: 'SORT_TASKS', payload: [0, 0] },
-      { name: 'SORT_TASKS', payload: [0, 0] },
       { name: 'SET_TASK_COMPLETE', payload: [0, true] },
-      { name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z'] }
+      { name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z'] },
+      { name: 'SORT_TASKS', payload: [0, 0] }
     ], done)
   })
 })
