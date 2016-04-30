@@ -7,11 +7,11 @@
           <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="navigateToList(list.id)" @dblclick="renameToggle($index)">{{list.list}}</button>
         </div>
         <div class="utils table-data">
-          <button class="sort-button sort-handle" title="Sort list">
-            <i class="sort-handle fa fa-arrows-v sort"></i>
-          </button>
           <button class="rename-button" title="Rename list" @click.prevent="renameToggle($index)">
             <i class="fa fa-pencil"></i>
+          </button>
+          <button class="sort-button sort-handle" title="Sort list">
+            <i class="sort-handle fa fa-arrows-v sort"></i>
           </button>
           <button class="delete-button" title="Delete list" @click.prevent="removeList($index)">
             <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
