@@ -42,8 +42,8 @@ exports.updateList = function (id, body) {
 }
 
 exports.updateListAt = function (id, user) {
-  // body.dateModified = new Date().toISOString()
   return List.get(id).update({
+    dateModified: new Date().toISOString(),
     users: r.row('users').changeAt(_.findIndex(r.row('users'), { username: user.username }), user)
   }).run()
   .then((result) => result)
