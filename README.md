@@ -48,6 +48,8 @@ $ npm install
 $ npm run dev
 ```
 
+`$ npm run sync` will run it with browsersync at port 9000 which is helpful for editing .scss files. At some point I will wrap that up into Webpack but for now this works.
+
 # Changelog
 
 ## New in v7.0

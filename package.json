@@ -17,6 +17,7 @@
     "start": "node ./app.js",
     "mongo": "mongod --dbpath ./data",
     "dev": "NODE_ENV=development gulp",
+    "sync": "NODE_ENV=development gulp sync",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "TZ=MST karma start",
     "postinstall": "npm install async debug",
