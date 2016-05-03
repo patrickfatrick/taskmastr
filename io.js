@@ -91,6 +91,7 @@ io.on('delete-list', (ctx, payload) => {
 })
 
 io.on('delete-item', (ctx, payload) => {
+  console.log(ctx)
   console.log(`${chalk.magenta('[socket]')} ${chalk.gray('<--')} DELETE ${chalk.gray('/lists/' + payload.listid + '/items/' + payload.itemid)} ${chalk.cyan(new Date().toISOString())}`)
   try {
     return items.delete(payload)
@@ -131,6 +132,52 @@ io.on('create-item', (ctx, payload) => {
     })
   } catch (err) {
     console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} PUT ${chalk.gray('/lists/' + payload.listid + '/items/' + payload.item.id)} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
+    ctx.acknowledge(err, null)
+  }
+})
+
+io.on('invite-user', (ctx, payload) => {
+  console.log(`${chalk.magenta('[socket]')} ${chalk.gray('<--')} POST ${chalk.gray('/lists/' + payload.listid + '/invite-user')} ${chalk.cyan(new Date().toISOString())}`)
+  try {
+    return lists.invite(payload)
+    .then((result) => {
+      console.log(`${chalk.magenta('[socket]')} ${chalk.gray('-->')} POST ${chalk.gray('/lists/' + payload.listid + '/invite-user')} ${chalk.cyan(new Date().toISOString())}`)
+      ctx.socket.socket.broadcast.emit('users-change', { listid: result.id, users: result.users })
+      ctx.acknowledge(null, result)
+    })
+  } catch (err) {
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} POST ${chalk.gray('/lists/' + payload.listid + '/invite-user')} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
+    ctx.acknowledge(err, null)
+  }
+})
+
+io.on('remove-user', (ctx, payload) => {
+  console.log(`${chalk.magenta('[socket]')} ${chalk.gray('<--')} POST ${chalk.gray('/lists/' + payload.listid + '/remove-user/')} ${chalk.cyan(new Date().toISOString())}`)
+  try {
+    return lists.removeUser(payload)
+    .then((result) => {
+      console.log(`${chalk.magenta('[socket]')} ${chalk.gray('-->')} POST ${chalk.gray('/lists/' + payload.listid + '/remove-user')} ${chalk.cyan(new Date().toISOString())}`)
+      ctx.socket.socket.broadcast.emit('users-change', { listid: result.id, users: result.users })
+      ctx.acknowledge(null, result)
+    })
+  } catch (err) {
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} POST ${chalk.gray('/lists/' + payload.listid + '/remove-user')} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
+    ctx.acknowledge(err, null)
+  }
+})
+
+io.on('confirm-user', (ctx, payload) => {
+  console.log(`${chalk.magenta('[socket]')} ${chalk.gray('<--')} POST ${chalk.gray('/lists/' + payload.listid + '/confirm-user/')} ${chalk.cyan(new Date().toISOString())}`)
+  try {
+    return lists.confirmUser(payload)
+    .then((result) => {
+      console.log(result)
+      console.log(`${chalk.magenta('[socket]')} ${chalk.gray('-->')} POST ${chalk.gray('/lists/' + payload.listid + '/confirm-user')} ${chalk.cyan(new Date().toISOString())}`)
+      ctx.socket.socket.emit('users-change', result)
+      ctx.acknowledge(null, result)
+    })
+  } catch (err) {
+    console.log(`${chalk.magenta('[socket]')} ${chalk.red('ERROR')} POST ${chalk.gray('/lists/' + payload.listid + '/confirm-user')} ${chalk.red(err)} ${chalk.cyan(new Date().toISOString())}`)
     ctx.acknowledge(err, null)
   }
 })

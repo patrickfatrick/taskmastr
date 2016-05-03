@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_MENU_TOGGLED, SET_NEW_LIST, SET_LIST_ATTEMPT, ADD_LIST, REMOVE_LIST, RENAME_LIST, SET_LIST_DELETE, SORT_LISTS, SET_CURRENT_LIST, SET_INVALID_LIST} from '../mutation-types'
+import {SET_MENU_TOGGLED, SET_NEW_LIST, SET_LIST_ATTEMPT, ADD_LIST, REMOVE_LIST, RENAME_LIST, SET_LIST_DELETE, SORT_LISTS, SET_CURRENT_LIST, SET_INVALID_LIST, TOGGLE_LIST_DETAILS, ADD_LIST_USER, REMOVE_LIST_USER, SET_USERS, SET_USER_STATUS} from '../mutation-types'
 
 export default {
   [SET_MENU_TOGGLED] (state, bool) {
@@ -36,5 +36,21 @@ export default {
   },
   [SET_INVALID_LIST] (state, err) {
     _.set(state, 'invalidList', err)
+  },
+  [TOGGLE_LIST_DETAILS] (state, id) {
+    _.set(state, 'listDetailsToggled', id)
+  },
+  [ADD_LIST_USER] (state, index, user) {
+    state.user.tasks[index].users.push(user)
+  },
+  [REMOVE_LIST_USER] (state, index, user) {
+    state.user.tasks[index].users.splice(_.findIndex(state.user.tasks[index].users, user), 1)
+  },
+  [SET_USERS] (state, index, users) {
+    _.set(state, `user.tasks[${index}].users`, users)
+  },
+  [SET_USER_STATUS] (state, index, username, status) {
+    const userIndex = _.findIndex(state.user.tasks[index].users, { username })
+    _.set(state, `user.tasks[${index}].users[${userIndex}]`, { status })
   }
 }

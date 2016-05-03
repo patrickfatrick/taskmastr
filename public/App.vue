@@ -14,7 +14,7 @@
 import _ from 'lodash'
 import socket from './socket'
 import { getUserSession, setDarkmode, setTasks, setDisconnect } from './store/user-store/user-actions'
-import { unmountList } from './store/list-store/list-actions'
+import { unmountList, setUsers } from './store/list-store/list-actions'
 
 export default {
   vuex: {
@@ -29,7 +29,8 @@ export default {
       setDarkmode,
       setTasks,
       unmountList,
-      setDisconnect
+      setDisconnect,
+      setUsers
     }
   },
   methods: {
@@ -39,6 +40,7 @@ export default {
     }
   },
   ready () {
+    // Socket events
     socket.on('updated', (data) => {
       const currentID = _.find(data.tasks, { current: true }).id
       this.setTasks(data.tasks)
@@ -52,10 +54,19 @@ export default {
     socket.on('disconnect', () => {
       this.setDisconnect(true)
     })
+    socket.on('users-change', (data) => {
+      console.log(data)
+      const listIndex = _.findIndex(this.user.tasks, { 'id': data.listid })
+      if (listIndex !== -1) this.setUsers(listIndex, data.users)
+    })
+
+    // Get session and reroute
     const listID = this.$route.params.listid
+    const newUser = this.$route.params.newuser
     this.getUserSession()
     .then(() => {
       // Opt to route to the listid if provided
+      if (this.auth && listID && newUser) return this.$route.router.go('/app/list/' + listID + '/newuser/' + newUser)
       if (this.auth && listID) return this.$route.router.go('/app/list/' + listID)
       if (this.auth) this.$route.router.go('/app/list/' + this.current.id)
     })

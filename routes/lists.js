@@ -73,6 +73,41 @@ const lists = {
       if (!results[1]) throw new Error('Something bad happened at updateUser')
       return results
     })
+  },
+  invite: function (payload) {
+    const username = payload.username
+    const users = payload.users
+    const listid = payload.listid
+    return listService.updateList(listid, users)
+    .then((result) => {
+      if (!result) throw new Error('Something bad happened at updateList')
+      agenda.now('List Invite Email', {
+        username: username,
+        owner: result.owner,
+        list: result.list,
+        listid: listid,
+        host: (process.env.NODE_ENV === 'production') ? 'https://www.taskmastr.co' : 'http://localhost:9000'
+      })
+      return result
+    })
+  },
+  removeUser: function (payload) {
+    const users = payload.users
+    const listid = payload.listid
+    return listService.updateList(listid, users)
+    .then((result) => {
+      if (!result) throw new Error('Something bad happened at updateList')
+      return result
+    })
+  },
+  confirmUser: function (payload) {
+    const user = payload.listUser
+    const listid = payload.listid
+    return listService.updateListAt(listid, user)
+    .then((result) => {
+      if (!result) throw new Error('Something bad happened at updateList')
+      return result
+    })
   }
 }
 

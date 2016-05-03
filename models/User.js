@@ -9,14 +9,10 @@ const User = thinky.createModel('users', {
   key: type.string(),
   resetDate: type.date(),
   resetToken: type.string(),
-  tasks: [
-    {
-      _delete: type.boolean(),
-      current: type.boolean(),
-      id: type.string(),
-      list: type.string()
-    }
-  ],
+  tasks: [ type.object().schema({
+    id: type.string(),
+    current: type.boolean()
+  }).removeExtra() ],
   username: type.string()
 }, {
   pk: 'username'

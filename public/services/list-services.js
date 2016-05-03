@@ -44,3 +44,27 @@ export function updateList (user, listid, listBody, cb) {
     cb(null, response)
   })
 }
+
+export function inviteUser (user, listid, username, users, cb) {
+  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  socket.emit('invite-user', { listid, username, users }, (err, response) => {
+    if (err) return cb(err, err.message)
+    cb(null, response)
+  })
+}
+
+export function removeUser (user, listid, users, cb) {
+  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  socket.emit('remove-user', { listid, users }, (err, response) => {
+    if (err) return cb(err, err.message)
+    cb(null, response)
+  })
+}
+
+export function confirmUser (user, listid, listUser, cb) {
+  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  socket.emit('confirm-user', { listid, listUser }, (err, response) => {
+    if (err) return cb(err, err.message)
+    cb(null, response)
+  })
+}

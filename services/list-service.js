@@ -1,5 +1,7 @@
 'use strict'
 
+const _ = require('lodash')
+const r = require('../thinky').r
 const List = require('../models/List')
 
 exports.getList = function (id) {
@@ -30,9 +32,20 @@ exports.deleteList = function (id) {
 }
 
 exports.updateList = function (id, body) {
-  body.dateModified = new Date().toISOString()
+  // body.dateModified = new Date().toISOString()
   return List.get(id)
   .update(body).run()
+  .then((result) => result)
+  .catch((err) => {
+    throw new Error(err)
+  })
+}
+
+exports.updateListAt = function (id, user) {
+  // body.dateModified = new Date().toISOString()
+  return List.get(id).update({
+    users: r.row('users').changeAt(_.findIndex(r.row('users'), { username: user.username }), user)
+  }).run()
   .then((result) => result)
   .catch((err) => {
     throw new Error(err)

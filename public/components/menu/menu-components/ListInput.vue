@@ -1,6 +1,6 @@
 <template>
   <form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addNewList(newList.trim())">
-    <input id="create-list" class="prompt mousetrap" type="text" name="todoInput" :value="newList" v-on:change="setNewList($event.target.value)" v-bind:class="{'invalid': !isValid && listAttempt}" placeholder="New List" v-el:listinput></input>
+    <input id="create-list" class="prompt mousetrap" type="text" title="List Input" :value="newList" v-on:change="setNewList($event.target.value)" v-bind:class="{'invalid': !isValid && listAttempt}" placeholder="New List" v-el:listinput></input>
     <button id="list-button" class="submit" title="Create task" type="submit">
       <i class="fa fa-arrow-down"></i>
     </button>

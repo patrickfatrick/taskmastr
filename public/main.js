@@ -38,6 +38,9 @@ router.map({
       },
       '/list/:listid': {
         component: Tasks
+      },
+      'list/:listid/newuser/:newuser': {
+        component: Tasks
       }
     }
   },

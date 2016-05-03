@@ -4,6 +4,6 @@ var config = require('../config').jade
 
 gulp.task('jade', function (cb) {
   gulp.src(config.src)
-  .pipe(browserSync.stream())
+   .pipe(browserSync.stream())
   return cb()
 })

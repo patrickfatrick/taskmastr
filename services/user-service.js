@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt')
 const harsh = require('harsh')
+const r = require('../thinky').r
 const User = require('../models/User')
 
 exports.addUser = function (user) {
@@ -23,6 +24,13 @@ exports.addUser = function (user) {
 
 exports.findUser = function (username) {
   return User.get(username.toLowerCase()).run()
+  .then((result) => {
+    return r.table('users').get(username.toLowerCase()).merge({
+      tasks: r.row('tasks').eqJoin('id', r.table('lists'), { ordered: true })
+        .pluck({ left: true, right: ['_deleting', 'dateCreated', 'dateModified', 'list', 'owner', 'users'] })
+        .zip()
+    }).run()
+  })
   .then((result) => result)
   .catch((err) => {
     if (err.name === 'DocumentNotFoundError') return null
@@ -32,8 +40,14 @@ exports.findUser = function (username) {
 
 exports.updateUser = function (username, body) {
   body.dateModified = new Date().toISOString()
-  return User.get(username.toLowerCase())
-  .update(body).run()
+  return User.get(username.toLowerCase()).update(body).run()
+  .then((result) => {
+    return r.table('users').get(username.toLowerCase()).merge({
+      tasks: r.row('tasks').eqJoin('id', r.table('lists'), { ordered: true })
+        .pluck({ left: true, right: ['_deleting', 'dateCreated', 'dateModified', 'list', 'owner', 'users'] })
+        .zip()
+    }).run()
+  })
   .then((result) => result)
   .catch((err) => {
     throw new Error(err)

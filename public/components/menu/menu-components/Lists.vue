@@ -2,21 +2,25 @@
   <div id="lists-list" class="table" v-show="lists">
     <div class="table-body" v-el:dragula>
       <div class="table-row" v-for="list in lists" :class="{'deleting': list._deleting, 'current': list.current}" name="list{{$index + 1}}" transition="item">
-        <div class="task-cell table-data">
-          <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(renameToggled === $index)}" @keyup.enter="renameToggle(null)" @blur="renameToggle(null)"></input>
-          <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(renameToggled !== $index)}" @click.prevent="navigateToList(list.id)" @dblclick="renameToggle($index)">{{list.list}}</button>
+        <div class="initial-view">
+          <div class="task-cell table-data">
+            <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
+            <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)" @dblclick="toggleDetails(list.id)">{{list.list}}</button>
+          </div>
+          <div class="utils table-data">
+            <button class="rename-button" title="Rename list" @click.prevent="toggleDetails(list.id)">
+              <i class="fa fa-pencil-square"></i>
+            </button>
+            <button class="sort-button sort-handle" title="Sort list">
+              <i class="sort-handle fa fa-arrows-v sort"></i>
+            </button>
+            <button class="delete-button" title="Delete list" v-if="list.owner === username" @click.prevent="removeList($index)">
+              <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
+            </button>
+            <i class="fa fa-lock" v-if="list.owner !== username"></i>
+          </div>
         </div>
-        <div class="utils table-data">
-          <button class="rename-button" title="Rename list" @click.prevent="renameToggle($index)">
-            <i class="fa fa-pencil"></i>
-          </button>
-          <button class="sort-button sort-handle" title="Sort list">
-            <i class="sort-handle fa fa-arrows-v sort"></i>
-          </button>
-          <button class="delete-button" title="Delete list" @click.prevent="removeList($index)">
-            <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
-          </button>
-        </div>
+        <list-details :index="$index" :list="list"></list-details>
       </div>
     </div>
   </div>
@@ -27,21 +31,28 @@
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import { deleteList, setCurrentList, sortLists, renameList, unmountList } from '../../../store/list-store/list-actions'
+import { deleteList, setCurrentList, sortLists, renameList, unmountList, toggleListDetails } from '../../../store/list-store/list-actions'
+import ListDetails from './ListDetails.vue'
 
 export default {
   vuex: {
     getters: {
+      username: (state) => state.user.username,
       current: (state) => state.current,
-      lists: (state) => state.user.tasks
+      lists: (state) => state.user.tasks,
+      listDetailsToggled: (state) => state.listDetailsToggled
     },
     actions: {
       deleteList,
       setCurrentList,
       sortLists,
       renameList,
-      unmountList
+      unmountList,
+      toggleListDetails
     }
+  },
+  components: {
+    ListDetails
   },
   data () {
     return {
@@ -68,12 +79,11 @@ export default {
       }
       this.renameList(index, e.target.value.trim())
     },
-    renameToggle (index, e) {
-      if (this.renameToggled === index) {
-        this.renameToggled = null
-        return
+    toggleDetails (id) {
+      if (this.listDetailsToggled === id) {
+        return this.toggleListDetails(null)
       }
-      this.renameToggled = index
+      this.toggleListDetails(id)
     },
     _drag (drake) {
       drake.on('drag', (el) => {

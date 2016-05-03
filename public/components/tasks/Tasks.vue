@@ -23,7 +23,7 @@
 
 <script>
 
-import { mountList } from '../../store/list-store/list-actions'
+import { mountList, confirmListUser } from '../../store/list-store/list-actions'
 import MenuToggle from '../misc/MenuToggle.vue'
 import TaskInput from './task-components/TaskInput.vue'
 import Items from './task-components/Items.vue'
@@ -37,7 +37,8 @@ export default {
       disconnect: (state) => state.disconnect
     },
     actions: {
-      mountList
+      mountList,
+      confirmListUser
     }
   },
   components: {
@@ -47,12 +48,15 @@ export default {
   },
   route: {
     data (transition) {
+      if (transition.to.params.newuser) {
+        this.confirmListUser(transition.to.params.listid, transition.to.params.newuser)
+        this.$route.router.go('/app/list/' + transition.to.params.listid)
+      }
       this.mountList(transition.to.params.listid)
     }
   },
   methods: {
     refresh () {
-      console.log('sup')
       window.location.href = '/'
     }
   }

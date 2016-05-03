@@ -1,6 +1,6 @@
 <template>
   <form id="todo-line" class="prompt-line" name="todoForm" novalidate @submit.prevent="addNewTask(newTask.trim())">
-    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" name="todoInput" :value="newTask" @change="setNewTask($event.target.value)" :class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
+    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" title="Task Input" :value="newTask" @change="setNewTask($event.target.value)" :class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
     <div class="button-container">
       <button id="task-button" class="submit" title="Create task" type="submit">
         <i class="fa fa-arrow-down "></i>

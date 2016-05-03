@@ -56,8 +56,9 @@
     "nodemailer-sendgrid-transport": "^0.2.0",
     "passport-local": "^1.0.0",
     "pikaday": "^1.4.0",
+    "rethinkdbdash": "^2.3.5",
     "socket.io": "^1.4.5",
-    "thinky": "^2.3.0",
+    "thinky": "^2.3.2",
     "vue": "^1.0.21",
     "vue-router": "^0.7.13",
     "vuex": "^0.6.3"

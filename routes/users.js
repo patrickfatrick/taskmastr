@@ -25,7 +25,7 @@ const users = {
         ctx.body = {
           username: user.username,
           darkmode: user.darkmode,
-          tasks: (user.tasks.length) ? user.tasks : user.todos
+          tasks: user.tasks
         }
       }).call(this, next)
     } catch (e) {

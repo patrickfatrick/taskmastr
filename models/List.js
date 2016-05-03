@@ -2,7 +2,6 @@ const thinky = require('../thinky')
 const type = thinky.type
 
 const List = thinky.createModel('lists', {
-  current: type.boolean(),
   dateCreated: type.date().default(new Date().toISOString()),
   dateModified: type.date(),
   id: type.string(),
@@ -23,7 +22,10 @@ const List = thinky.createModel('lists', {
   ],
   list: type.string(),
   owner: type.string(),
-  users: [type.string()],
+  users: [{
+    username: type.string(),
+    status: type.string()
+  }],
   _deleting: type.boolean()
 })
 

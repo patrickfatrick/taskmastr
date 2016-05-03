@@ -1,160 +1,271 @@
 .table {
-	@include display(table);
-	margin-top: 1rem;
-	text-align: left;
-	@include center;
-	&#task-list {
-		position: relative;
-		margin-top: 1rem;
-		margin-bottom: 5rem;
-		// fixes for safari
-		float: none !important;
-		@include fill-parent();
-		&:last-child {
-			margin-right: auto !important;
-		}
-		@include media(min-width $medium) {
-			width: 700px;
-		}
-		@include media(min-width $large) {
-			width: 800px;
-		}
-	}
-	&#lists-list {
-		margin-bottom: 5rem;
-		@include fill-parent();
-		.table-header {
-			display: none;
-		}
-		.table-row.current {
-			background: $deepBlue;
-		}
-		.table-row:hover:not(.current) {
-			background: inherit;
-		}
-		.table-data.task-cell {
-			@include span-columns(13 of 21);
-		}
-		.table-data.utils {
-			@include span-columns(8 of 21);
-		}
-	}
-	.table-body {
-		@include outer-container;
-	}
-	.table-row {
-		@include row();
-		@include transition(unset);
-		&.complete {
-			color: $completeGray;
-			background: transparent;
-			font-style: italic;
-			.table-data.utils .details-button.active {
-				color: $completeGray;
-			}
-		}
-		&.active {
-			background-color: $astroTurf;
-			color: $black;
-			&.complete {
-				background-color: $grassStain;
-				color: $completeGray * 0.7;
-				.table-data.utils .details-button.active {
-					color: $orchid * 0.7;
-				}
-				.table-data.utils .details-button.active.overdue {
-					color: $sunsetOrange * 0.7;
-				}
-			}
-		}
-		&.deleting {
-			background: $sunsetOrange !important;
-			color: $white !important;
-			&.active {
-				background: $sunsetOrange !important;
-			}
-			.utils .details-button.active {
-				color: $white !important;
-			}
-		}
-		@include media(min-width $medium) {
-			&:hover:not(.complete):not(.active) {
-				background-color: $deepBlue;
-				color: $white;
-			}
-		}
-	}
-	i {
-		cursor: pointer;
-		font-size: 1rem !important;
-		@include media(min-width $small) {
-			font-size: 1.2rem !important;
-		}
-	}
+  @include display(table);
+  margin-top: 1rem;
+  text-align: left;
+  word-wrap: break-word;
+  @include center;
+  &#task-list {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 5rem;
+    // fixes for safari
+    float: none !important;
+    @include fill-parent();
+    &:last-child {
+      margin-right: auto !important;
+    }
+    @include media(min-width $medium) {
+      width: 700px;
+    }
+    @include media(min-width $large) {
+      width: 800px;
+    }
+  }
+  &#lists-list {
+    margin-bottom: 5rem;
+    @include fill-parent();
+    .table-header {
+      display: none;
+    }
+    .table-row.current {
+      background: $deepBlue;
+    }
+    .table-row:hover:not(.current) {
+      background: inherit;
+    }
+    .initial-view {
+      @include row();
+      .table-data.task-cell {
+        @include span-columns(13 of 21);
+      }
+      .table-data.utils {
+        @include span-columns(8 of 21);
+      }
+    }
+    .list-details {
+      max-height: 0;
+      overflow: hidden;
+      background-color: $orchid * 0.9;
+      @include transition(max-height 150ms ease-out);
+      &.toggled {
+        max-height: 1000px;
+        @include transition(max-height 250ms ease-in);
+      }
+    }
+    .list-details-inner {
+      padding: 2rem 1rem;
+      font-size: 1rem;
+      height: auto;
+      color: $white * 0.9;
+      span.list-label {
+        font-size: 0.8rem;
+      }
+    }
+    input[type = text] {
+      line-height: 1.4rem;
+      font-size: inherit;
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid $oceanBlue;
+      @include selection(true) {
+        background-color: $deepBlue;
+        color: $white;
+      }
+    }
+    .user-list {
+      @include outer-container();
+      margin-top: 2rem;
+      .user-name {
+        @include span-columns(17 of 21);
+        max-width: 172px;
+      }
+      .user-remove-button-container {
+        @include span-columns(4 of 21);
+      }
+      .owner-heading,
+      .user-heading {
+        font-family: $raleway;
+        font-size: 1.2rem;
+        color: $white;
+      }
+      .owner-heading {
+        margin-bottom: 0.3rem;
+      }
+      .user-heading {
+        margin-top: 1rem;
+      }
+      .user-list-inner,
+      .no-users {
+        margin-top: 0.3rem;
+      }
+      .user-row {
+        @include span-columns(21 of 21);
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+      }
+      .user-pending {
+        font-style: italic;
+      }
+      .no-users {
+        font-style: italic;
+        color: $white * 0.8;
+      }
+      .user-remove-button-container {
+        text-align: center;
+      }
+      .user-remove-button {
+        color: $white;
+        background-color: $sunsetOrange;
+        margin-left: 0.5rem;
+        margin-left: 0.5rem;
+        padding: 1px 2px 3px 1px;
+        border-radius: 4px;
+        width: 2rem;
+        border: 1px solid #bdbdbd;
+        &:hover {
+          @include background(linear-gradient(($sunsetOrange * 0.9), $sunsetOrange));
+        }
+        &:active {
+          background: $sunsetOrange * 0.9;
+        }
+      }
+      .new-user {
+        margin-top: 1rem;
+        @include span-columns(21 of 21)
+      }
+      .new-user-input {
+        border-bottom: 2px solid $oceanBlue;
+        color: $white;
+        @include placeholder {
+          color: $white * 0.9;
+        }
+        @include span-columns(17 of 21);
+      }
+      .new-user-button-container {
+        @include omega();
+        @include span-columns(4 of 21);
+        text-align: center;
+      }
+      .new-user-button {
+        width: 2rem;
+        padding: 0.2rem;
+        color: $black;
+        border-radius: 4px;
+        background-color: $astroTurf;
+        &:hover {
+          @include background(linear-gradient(($astroTurf * 0.9), $astroTurf));
+        }
+        &:active {
+          background: $astroTurf * 0.9;
+        }
+      }
+    }
+  }
+  .table-body {
+    @include outer-container;
+  }
+  .table-row {
+    @include row();
+    @include transition(unset);
+    &.complete {
+      color: $completeGray;
+      background: transparent;
+      font-style: italic;
+      .table-data.utils .details-button.active {
+        color: $completeGray;
+      }
+    }
+    &.active {
+      background-color: $astroTurf;
+      color: $black;
+      &.complete {
+        background-color: $grassStain;
+        color: $completeGray * 0.7;
+        .table-data.utils .details-button.active {
+          color: $orchid * 0.7;
+        }
+        .table-data.utils .details-button.active.overdue {
+          color: $sunsetOrange * 0.7;
+        }
+      }
+    }
+    &.deleting {
+      background: $sunsetOrange !important;
+      color: $white !important;
+      &.active {
+        background: $sunsetOrange !important;
+      }
+      .utils .details-button.active {
+        color: $white !important;
+      }
+    }
+    @include media(min-width $medium) {
+      &:hover:not(.complete):not(.active) {
+        background-color: $deepBlue;
+        color: $white;
+      }
+    }
+  }
+  i {
+    cursor: pointer;
+    font-size: 1rem !important;
+    @include media(min-width $small) {
+      font-size: 1.2rem !important;
+    }
+  }
   .table-data,
-	.table-header {
-		padding: 0.5rem;
-	}
-	.table-header {
-		width: 3rem;
-		text-align: center;
-		@include span-columns(2 of 21);
-	}
-	.table-data.task-cell {
-		word-wrap: break-word;
-		@include span-columns(13 of 21);
-		@include media(min-width $small) {
-			@include span-columns(14 of 21);
-		}
-		@include media(min-width $medsmall) {
-			@include span-columns(15 of 21);
-		}
-		@include media(min-width $large) {
-			@include span-columns(16 of 21);
-		}
-		button {
-			font-family: inherit;
-			font-style: inherit;
-			width: 100%;
-			text-align: left;
-			vertical-align: middle;
-		}
-		input.rename {
-			line-height: 1.4rem;
-			font-size: inherit;
-			width: 100%;
-			background: transparent;
-			border: none;
-			border-bottom: 2px solid $oceanBlue;
-			@include selection(true) {
-				background-color: $deepBlue;
-				color: $white;
-			}
-		}
-	}
-	.table-data.utils {
-		padding-left: 0;
-		padding-right: 0;
-		text-align: center;
-		@include omega();
-		@include span-columns(6 of 21)
-		@include media(min-width $small) {
-			@include span-columns(5 of 21);
-		}
-		@include media(min-width $medsmall) {
-			@include span-columns(4 of 21);
-		}
-		@include media(min-width $large) {
-			@include span-columns(3 of 21);
-		}
-		.sort-button {
-			padding: 0 5px 0 5px;
-		}
-		.details-button.active {
-			color: $orchid;
-		}
-		.details-button.overdue {
-			color: $sunsetOrange;
-		}
-	}
+  .table-header {
+    padding: 0.5rem;
+  }
+  .table-header {
+    width: 3rem;
+    text-align: center;
+    @include span-columns(2 of 21);
+  }
+  .table-data.task-cell {
+    word-wrap: break-word;
+    @include span-columns(13 of 21);
+    @include media(min-width $small) {
+      @include span-columns(14 of 21);
+    }
+    @include media(min-width $medsmall) {
+      @include span-columns(15 of 21);
+    }
+    @include media(min-width $large) {
+      @include span-columns(16 of 21);
+    }
+    button {
+      font-family: inherit;
+      font-style: inherit;
+      width: 100%;
+      text-align: left;
+      vertical-align: middle;
+    }
+  }
+  .table-data.utils {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    @include omega();
+    @include span-columns(6 of 21)
+    @include media(min-width $small) {
+      @include span-columns(5 of 21);
+    }
+    @include media(min-width $medsmall) {
+      @include span-columns(4 of 21);
+    }
+    @include media(min-width $large) {
+      @include span-columns(3 of 21);
+    }
+    .sort-button {
+      padding: 0 5px 0 5px;
+    }
+    .details-button.active {
+      color: $orchid;
+    }
+    .details-button.overdue {
+      color: $sunsetOrange;
+    }
+  }
 }

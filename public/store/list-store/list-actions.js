@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import socket from '../../socket.js'
 import { updateUser } from '../../services/user-services'
-import {createList, getList, removeList, updateList} from '../../services/list-services'
+import { createList, getList, removeList, updateList, inviteUser, removeUser, confirmUser } from '../../services/list-services'
 
 export function setMenuToggled ({ dispatch }, bool) {
   dispatch('SET_MENU_TOGGLED', bool)
@@ -17,6 +17,10 @@ export function setListAttempt ({ dispatch }, bool) {
 
 export function setCurrentList ({ dispatch }, obj) {
   dispatch('SET_CURRENT_LIST', obj)
+}
+
+export function toggleListDetails ({ dispatch }, id) {
+  dispatch('TOGGLE_LIST_DETAILS', id)
 }
 
 export function renameList ({ dispatch, state }, index, name) {
@@ -53,10 +57,13 @@ export function unmountList ({ dispatch, state }, id) {
 
 export function addList ({ dispatch, state }, list) {
   const userList = {
+    _deleting: false,
+    current: false,
+    dateCreated: list.dateCreated,
     id: list.id,
     list: list.list,
-    current: false,
-    _deleting: false
+    owner: state.user.username,
+    users: []
   }
   const user = {
     username: state.user.username,
@@ -127,4 +134,50 @@ export function sortLists ({ dispatch, state }, oldIndex, newIndex) {
   return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
     if (err) return dispatch('SORT_LISTS', newIndex, oldIndex)
   })
+}
+
+export function addListUser ({ dispatch, state }, index, user) {
+  const list = state.user.tasks[index]
+  dispatch('ADD_LIST_USER', index, user)
+  inviteUser(state.user, list.id, user.username, { users: list.users }, (err, response) => {
+    if (err) dispatch('REMOVE_LIST_USER', index, user)
+    return response
+  })
+}
+
+export function removeListUser ({ dispatch, state }, index, user) {
+  const list = state.user.tasks[index]
+  dispatch('REMOVE_LIST_USER', index, user)
+  removeUser(state.user, list.id, { users: list.users }, (err, response) => {
+    if (err) dispatch('ADD_LIST_USER', index, user)
+    return response
+  })
+}
+
+export function confirmListUser ({ dispatch, state }, listid, username) {
+  const listUser = {
+    username: username,
+    status: 'active'
+  }
+  confirmUser(state.user, listid, listUser, (err, response) => {
+    if (err) dispatch('SET_USER_STATUS', listid, username, 'pending')
+    const userList = {
+      _deleting: false,
+      current: false,
+      dateCreated: response.dateCreated,
+      id: response.id,
+      list: response.list,
+      owner: response.owner,
+      users: response.users
+    }
+    dispatch('ADD_LIST', userList)
+    return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
+      if (err) return dispatch('REMOVE_LIST', _.findIndex(state.user.tasks, { id: listid }))
+      return res
+    })
+  })
+}
+
+export function setUsers ({ dispatch }, index, users) {
+  dispatch('SET_USERS', index, users)
 }

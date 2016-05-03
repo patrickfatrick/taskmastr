@@ -2,5 +2,6 @@ export default {
   menuToggled: false,
   listAttempt: false,
   newList: '',
-  invalidList: false
+  invalidList: false,
+  listDetailsToggled: null
 }

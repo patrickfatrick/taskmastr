@@ -21,7 +21,7 @@ const items = {
             agendaID: item.id,
             username: username,
             item: item.item,
-            host: (process.env.NODE_ENV === 'production') ? 'taskmastr.co' : 'localhost:3000',
+            host: (process.env.NODE_ENV === 'production') ? 'https://www.taskmastr.co' : 'http://localhost:9000',
             date: dueDate
           })
         }
@@ -54,7 +54,7 @@ const items = {
             agendaID: itemid,
             username: username,
             item: item.item,
-            host: (process.env.NODE_ENV === 'production') ? 'taskmastr.co' : 'localhost:3000',
+            host: (process.env.NODE_ENV === 'production') ? 'https://www.taskmastr.co' : 'http://localhost:9000',
             date: dueDate
           })
         }

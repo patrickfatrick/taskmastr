@@ -93,4 +93,26 @@ agenda.define('Notification Email', function (job, done) {
   })
 })
 
+agenda.define('List Invite Email', (job, done) => {
+  const data = job.attrs.data
+
+  const options = {
+    auth: {
+      api_key: process.env.SENDGRID_API_KEY
+    }
+  }
+  const mailer = nodemailer.createTransport(sgTransport(options))
+  const email = {
+    to: data.username,
+    from: 'taskmastr <do-not-reply@taskmastr.co>',
+    subject: `taskmastr List Invitation: "${data.list}"`,
+    text: `Hello!\n\nYou\'re receiving this email because you were invited to a taskmastr list called "${data.list}" by ${data.owner}.\n\nYou can ignore this invitation by simply discarding this email. If you'd like to join this list just click on the following link: ${data.host}/#!/app/list/${data.listid}/newuser/${data.username}\n\nSincerely,\n\ntaskmastr\n`
+  }
+  mailer.sendMail(email, function (err) {
+    if (err) return done(err)
+    console.log(`${data.username} => List Invite Email sent => ${data.listid}`)
+    done()
+  })
+})
+
 module.exports = agenda
