@@ -91,7 +91,6 @@ io.on('delete-list', (ctx, payload) => {
 })
 
 io.on('delete-item', (ctx, payload) => {
-  console.log(ctx)
   console.log(`${chalk.magenta('[socket]')} ${chalk.gray('<--')} DELETE ${chalk.gray('/lists/' + payload.listid + '/items/' + payload.itemid)} ${chalk.cyan(new Date().toISOString())}`)
   try {
     return items.delete(payload)

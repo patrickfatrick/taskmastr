@@ -8,6 +8,7 @@ import CreateVue from './components/CreateVue.vue'
 import ForgotVue from './components/ForgotVue.vue'
 import Tasks from './components/tasks/Tasks.vue'
 import store from './store'
+require('./stylesheets/styles.scss')
 
 // Debug mode. Turned off in production builds
 Vue.config.debug = process.env.NODE_ENV !== 'production'
