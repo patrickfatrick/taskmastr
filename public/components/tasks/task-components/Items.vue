@@ -12,8 +12,8 @@
           <button class="name" title="{{task.item}}" @click="setCurrentTask($index)" @dblclick.prevent="toggleDetails($index)">{{task.item}}</button>
         </div>
         <div class="utils table-data">
-          <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails($index, true)" v-bind:class="{'active': task.dueDate, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
-            <i class="fa" :class="{'fa-pencil-square': !task._dueDateDifference || task._dueDateDifference > 0 || task.complete, 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete}"></i>
+          <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails($index, true)" v-bind:class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
+            <i class="fa" :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}"></i>
           </button>
           <button class="sort-button sort-handle" title="Sort task">
             <i class="sort-handle fa fa-arrows-v"></i>

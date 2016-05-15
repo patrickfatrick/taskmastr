@@ -78,7 +78,7 @@ export function addList ({ dispatch, state }, list) {
   })
 }
 
-export function deleteList ({ dispatch, state }, index, cb) {
+export function deleteList ({ dispatch, state }, index, delay, perm, cb) {
   const lists = state.user.tasks
   const list = lists[index]
   if (lists.length === 1) return
@@ -114,12 +114,12 @@ export function deleteList ({ dispatch, state }, index, cb) {
           return v.id !== list.id
         })
       }
-      return removeList(list.id, user, (err, res) => {
+      return removeList(list.id, user, perm, (err, res) => {
         // Revert the change if request fails
         if (err) dispatch('ADD_LIST', list)
         cb(_.find(state.user.tasks, { current: true }).id)
       })
-    }, 5000)
+    }, delay)
     dispatch('UPDATE_DELETE_QUEUE', list.id, timeoutID)
     dispatch('SET_LIST_DELETE', _.findIndex(lists, { id: list.id }), true)
   } else {
@@ -160,7 +160,7 @@ export function confirmListUser ({ dispatch, state }, listid, username) {
     status: 'active'
   }
   confirmUser(state.user, listid, listUser, (err, response) => {
-    if (err) dispatch('SET_USER_STATUS', listid, username, 'pending')
+    if (err) return dispatch('SET_USER_STATUS', listid, username, 'pending')
     const userList = {
       _deleting: false,
       current: false,

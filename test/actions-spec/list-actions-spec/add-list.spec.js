@@ -41,14 +41,20 @@ describe('addList', () => {
           id: 'itemid2',
           item: 'Item 2'
         }
-      ]
+      ],
+      dateCreated: 'somedate',
+      owner: 'username',
+      users: []
     }
 
     const userNewList = {
       id: 'listid2',
       list: 'List 2',
       current: false,
-      _deleting: false
+      _deleting: false,
+      dateCreated: 'somedate',
+      owner: 'username',
+      users: []
     }
 
     testAction(listActions.addList, [newList], state, [
@@ -91,14 +97,20 @@ describe('addList', () => {
           id: 'itemid2',
           item: 'Item 2'
         }
-      ]
+      ],
+      dateCreated: 'somedate',
+      owner: 'username',
+      users: []
     }
 
     const userNewList = {
       id: 'listid2',
       list: 'List 2',
       current: false,
-      _deleting: false
+      _deleting: false,
+      dateCreated: 'somedate',
+      owner: 'username',
+      users: []
     }
 
     testAction(listActions.addList, [newList], state, [

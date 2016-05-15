@@ -88,7 +88,7 @@ agenda.define('Notification Email', function (job, done) {
   }
   mailer.sendMail(email, function (err) {
     if (err) return done(err)
-    console.log(data.username + ' => Notification sent => ' + data.agendaID)
+    console.log(`${data.username} => Notification sent => ${data.agendaID}`)
     done()
   })
 })

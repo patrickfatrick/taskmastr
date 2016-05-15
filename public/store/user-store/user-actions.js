@@ -175,6 +175,6 @@ export function resetPassword ({ dispatch }, token, key) {
 
 export function logoutUser () {
   return logout(() => {
-    window.location.href = '/'
+    window.location.assign('/')
   })
 }

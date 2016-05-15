@@ -312,7 +312,7 @@ describe('deleteList', () => {
   it('dispatches ADD_LIST on error', (done) => {
     const listActions = listActionsInjector({
       '../../services/list-services': {
-        removeList (id, user, cb) {
+        removeList (id, user, perm, cb) {
           cb('Error!', { status: 500 })
         }
       }
@@ -349,7 +349,7 @@ describe('deleteList', () => {
     }
 
     testAction(listActions.deleteList, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 6] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 5] },
       { name: 'SET_LIST_DELETE', payload: [0, true] },
       { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null] },
       { name: 'SET_LIST_DELETE', payload: [0, false] },

@@ -64,7 +64,7 @@ export default {
   computed: {},
   methods: {
     removeList (index) {
-      this.deleteList(index, (id) => {
+      this.deleteList(index, 5000, true, (id) => {
         this.navigateToList(id)
       })
     },
@@ -123,9 +123,6 @@ export default {
     Mousetrap.bind('alt+backspace', () => {
       this.removeList(_.findIndex(this.lists, {current: true}))
     })
-    Mousetrap.bind('alt+/', () => {
-      this.renameToggle(_.findIndex(this.lists, {current: true}))
-    })
     Mousetrap.bind('alt+command+down', () => {
       const currentIndex = _.findIndex(this.lists, {current: true})
       if (currentIndex === this.lists.length - 1) return
@@ -135,6 +132,9 @@ export default {
       const currentIndex = _.findIndex(this.lists, {current: true})
       if (currentIndex === 0) return
       this.sortLists(currentIndex, currentIndex - 1)
+    })
+    Mousetrap.bind('alt+d', () => {
+      this.toggleDetails(_.find(this.lists, {current: true}).id)
     })
   },
   ready () {

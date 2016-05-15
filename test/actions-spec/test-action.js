@@ -9,6 +9,7 @@ export const testAction = (action, args, state, expectedMutations, done) => {
       mutation.payload.should.deep.equal(payload)
     }
     count++
+
     if (count >= expectedMutations.length) {
       done()
     }

@@ -50,7 +50,7 @@ describe('deleteTask', () => {
     }
 
     testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 7] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 6] },
       { name: 'SET_TASK_DELETE', payload: [0, true] },
       { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
       { name: 'SET_TASK_DELETE', payload: [0, false] },
@@ -95,7 +95,7 @@ describe('deleteTask', () => {
       }
     }
     testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 8] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 7] },
       { name: 'SET_TASK_DELETE', payload: [0, true] },
       { name: 'SET_CURRENT_TASK', payload: [1] },
       { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
@@ -142,7 +142,7 @@ describe('deleteTask', () => {
     }
 
     testAction(itemActions.deleteTask, [1], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid2', 9] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid2', 8] },
       { name: 'SET_TASK_DELETE', payload: [1, true] },
       { name: 'SET_CURRENT_TASK', payload: [0] },
       { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid2', null] },
@@ -231,7 +231,7 @@ describe('deleteTask', () => {
     }
 
     testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 10] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 9] },
       { name: 'SET_TASK_DELETE', payload: [0, true] },
       { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
       { name: 'SET_TASK_DELETE', payload: [0, false] },

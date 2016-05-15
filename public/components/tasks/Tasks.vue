@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     refresh () {
-      window.location.href = '/'
+      window.location.assign('/')
     }
   }
 }

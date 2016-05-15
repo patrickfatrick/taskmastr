@@ -148,9 +148,9 @@ describe('Items.vue', function () {
 
     assert.isTrue(vm.$el.querySelector('.table-body').children[0].classList.contains('deleting'))
     assert.isTrue(vm.$el.querySelector('.table-body').children[1].classList.contains('active'))
-    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[0].classList.contains('fa-pencil-square-o'))
+    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[0].classList.contains('fa-pencil-square'))
     assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[1].classList.contains('fa-exclamation-triangle'))
-    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[2].classList.contains('fa-pencil-square-o'))
+    assert.isTrue(vm.$el.querySelectorAll('.details-button > i')[2].classList.contains('fa-pencil-square'))
   })
 
   it('should call setCurrentTask method on click', () => {

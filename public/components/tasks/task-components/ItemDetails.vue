@@ -10,9 +10,11 @@
     <div class="task-details-container">
       <div class="task-create task-details-panel">
         <span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}
+        <span class="task-label">by {{(task.createdBy === username) ? 'You' : task.createdBy}}</span>
       </div>
       <div class="task-complete task-details-panel" :class="{'hidden': !task.dateCompleted}">
         <span class="task-label">Completed on</span>{{reformatDate(task.dateCompleted)}}
+        <span class="task-label">by {{(task.completedBy === username) ? 'You' : task.completedBy}}</span>
       </div>
       <div class="task-due task-details-panel" :class="{'hidden': !!task.complete}">
         <span class="task-label" :class="{'hidden': !task.dueDate}">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
@@ -51,6 +53,7 @@ import Datepicker from './Datepicker.vue'
 export default {
   vuex: {
     getters: {
+      username: (state) => state.user.username,
       tasks: (state) => state.current.items,
       detailsToggled: (state) => state.detailsToggled
     },

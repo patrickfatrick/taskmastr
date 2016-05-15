@@ -18,7 +18,7 @@ export default function (string) {
   const dueDate = (date.reagent())
     ? date.set(0, 'h').to('iso')
     : gregorian.reform(datejs(string.slice(found, string.length))).to('iso')
-  console.log(item, found)
+
   return {
     item: item.trim(),
     dueDate: dueDate

@@ -33,14 +33,15 @@ const items = {
   update: function (payload) {
     const listid = payload.listid
     const itemid = payload.itemid
-    const username = payload.username
     const index = payload.index
     const item = payload.item
 
     return itemService.updateItem(listid, index, item)
     .then((result) => {
       if (!result) throw new Error('Something bad happened at updateItem')
-
+      var recipients = result.users.map((user) => {
+        return user.username
+      }).concat(result.owner)
       // Cancel whatever the current agenda is, make a new one
       agenda.cancel({
         'data.agendaID': itemid
@@ -49,10 +50,10 @@ const items = {
         if (item.dueDate) {
           const dueDate = new Date(item.dueDate)
           if (dueDate <= Date.now()) return
-          console.log(`${chalk.green(username)} Agenda scheduled ${chalk.gray(itemid)} ${chalk.cyan(item.dueDate)}`)
+          console.log(`${chalk.green(recipients.join(', '))} Agenda scheduled ${chalk.gray(itemid)} ${chalk.cyan(item.dueDate)}`)
           agenda.schedule(dueDate, 'Notification Email', {
             agendaID: itemid,
-            username: username,
+            username: recipients,
             item: item.item,
             host: (process.env.NODE_ENV === 'production') ? 'https://www.taskmastr.co' : 'http://localhost:3000',
             date: dueDate

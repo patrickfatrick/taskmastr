@@ -11,6 +11,8 @@ const List = thinky.createModel('lists', {
       _detailsToggled: type.boolean(),
       _dueDateDifference: type.number(),
       complete: type.boolean(),
+      completedBy: type.string(),
+      createdBy: type.string(),
       current: type.boolean(),
       dateCompleted: type.string(),
       dateCreated: type.date().default(new Date().toISOString()),

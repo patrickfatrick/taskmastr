@@ -21,7 +21,7 @@ describe('Lists.vue', function () {
     }
   }
 
-  function mountVm (changes) {
+  function mountVm (changes, userChanges) {
     return new Vue({
       store: new Vuex.Store({
         state: {
@@ -29,6 +29,7 @@ describe('Lists.vue', function () {
           ...changes,
           user: {
             ...state.user,
+            ...userChanges,
             tasks: lists
           }
         },
@@ -53,7 +54,8 @@ describe('Lists.vue', function () {
             id: 'itemid',
             item: 'Item 1'
           }
-        ]
+        ],
+        owner: 'username'
       },
       {
         id: 'listid2',
@@ -65,7 +67,8 @@ describe('Lists.vue', function () {
             id: 'itemid2',
             item: 'Item 2'
           }
-        ]
+        ],
+        owner: 'username'
       }
     ]
   })
@@ -74,8 +77,8 @@ describe('Lists.vue', function () {
     lists = []
   })
 
-  it('should have a renameToggled property', () => {
-    assert.isNull(Lists.data().renameToggled)
+  it('should inherit a listDetailsToggled property from the state', () => {
+    assert.isNull(Lists.vuex.getters.listDetailsToggled({ listDetailsToggled: null }))
   })
 
   it('should have a dragStart property', () => {
@@ -102,16 +105,32 @@ describe('Lists.vue', function () {
     assert.isFunction(Lists.vuex.actions.sortLists)
   })
 
+  it('should inherit a renameList action from the store', () => {
+    assert.isFunction(Lists.vuex.actions.renameList)
+  })
+
+  it('should inherit a unmountList action from the store', () => {
+    assert.isFunction(Lists.vuex.actions.unmountList)
+  })
+
+  it('should inherit a toggleListDetails action from the store', () => {
+    assert.isFunction(Lists.vuex.actions.toggleListDetails)
+  })
+
   it('should have a removeList method', () => {
     assert.isFunction(Lists.methods.removeList)
   })
 
-  it('should have a renameList method', () => {
-    assert.isFunction(Lists.methods.renameList)
+  it('should have a rename method', () => {
+    assert.isFunction(Lists.methods.rename)
   })
 
-  it('should have a renameToggle method', () => {
-    assert.isFunction(Lists.methods.renameToggle)
+  it('should have a toggleDetails method', () => {
+    assert.isFunction(Lists.methods.toggleDetails)
+  })
+
+  it('should have a navigateToList method', () => {
+    assert.isFunction(Lists.methods.navigateToList)
   })
 
   it('should have a _drag method', () => {
@@ -159,47 +178,47 @@ describe('Lists.vue', function () {
     vm.$children[0].navigateToList.restore()
   })
 
-  it('should call renameToggle method on dblclick', () => {
+  it('should call toggleListDetails method on dblclick', () => {
     const vm = mountVm()
 
-    sinon.stub(vm.$children[0], 'renameToggle')
+    sinon.stub(vm.$children[0], 'toggleListDetails')
 
     let dblclick
     dblclick = document.createEvent('HTMLEvents')
     dblclick.initEvent('dblclick', true, true, window)
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    assert.isTrue(vm.$children[0].renameToggle.calledWith(0))
+    assert.isTrue(vm.$children[0].toggleListDetails.calledWith('listid'))
     Vue.nextTick(() => {
-      vm.$children[0].renameToggled.should.equal(0)
+      vm.$children[0].listDetailsToggled.should.deepEqual('listid')
       assert.isTrue(vm.$el.querySelectorAll('.name')[0].classList.contains('hidden'))
     })
 
-    vm.$children[0].renameToggle.restore()
+    vm.$children[0].toggleListDetails.restore()
   })
 
-  it('should reset renameToggle when called on current renameToggle index', () => {
+  it('should reset toggleListDetails when called on current toggleListDetails index', () => {
     const vm = mountVm()
 
-    sinon.stub(vm.$children[0], 'renameToggle')
+    sinon.stub(vm.$children[0], 'toggleListDetails')
 
     let dblclick
     dblclick = document.createEvent('HTMLEvents')
     dblclick.initEvent('dblclick', true, true, window)
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    assert.isTrue(vm.$children[0].renameToggle.calledWith(0))
+    assert.isTrue(vm.$children[0].toggleListDetails.calledWith('listid'))
 
     vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
 
-    assert.isTrue(vm.$children[0].renameToggle.calledWith(0))
+    assert.isTrue(vm.$children[0].toggleListDetails.calledWith('listid'))
 
     Vue.nextTick(() => {
-      assert.isNull(vm.$children[0].renameToggled)
+      assert.isNull(vm.$children[0].listDetailsToggled)
       assert.isFalse(vm.$el.querySelectorAll('.name')[0].classList.contains('hidden'))
     })
 
-    vm.$children[0].renameToggle.restore()
+    vm.$children[0].toggleListDetails.restore()
   })
 
   it('should call renameList on .rename change', () => {
@@ -234,24 +253,8 @@ describe('Lists.vue', function () {
     vm.$children[0].renameList.restore()
   })
 
-  it('sets renameToggled to null on blur', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'renameToggle')
-
-    let blur
-    blur = document.createEvent('HTMLEvents')
-    blur.initEvent('blur', true, true, window)
-    vm.$el.querySelectorAll('.rename')[0].dispatchEvent(blur)
-
-    assert.isTrue(vm.$children[0].renameToggle.calledWith(null))
-    assert.isNull(vm.$children[0].renameToggled)
-
-    vm.$children[0].renameToggle.restore()
-  })
-
   it('should call removeList on trash can click', () => {
-    const vm = mountVm()
+    const vm = mountVm({ placeholder: 'dont mind me none' }, { username: 'username' })
 
     sinon.stub(vm.$children[0], 'removeList')
 
@@ -264,11 +267,11 @@ describe('Lists.vue', function () {
   it('should call deleteList and navigateToList on removeList', () => {
     const vm = mountVm()
 
-    sinon.stub(vm.$children[0], 'deleteList').callsArgWith(1, 'listid')
+    sinon.stub(vm.$children[0], 'deleteList').callsArgWith(3, 'listid')
     sinon.stub(vm.$children[0], 'navigateToList')
 
     vm.$children[0].removeList(1)
-    assert.isTrue(vm.$children[0].deleteList.calledWith(1))
+    assert.isTrue(vm.$children[0].deleteList.calledWith(1, 5000, true))
     assert.isTrue(vm.$children[0].navigateToList.calledWith('listid'))
 
     vm.$children[0].deleteList.restore()
@@ -334,17 +337,6 @@ describe('Lists.vue', function () {
     assert.isTrue(vm.$children[0].removeList.calledWith(1))
 
     vm.$children[0].removeList.restore()
-  })
-
-  it('should call renameToggle on alt+/', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'renameToggle')
-
-    Mousetrap.trigger('alt+/')
-    assert.isTrue(vm.$children[0].renameToggle.calledWith(1))
-
-    vm.$children[0].renameToggle.restore()
   })
 
   it('should call sortLists on alt+command+up', () => {

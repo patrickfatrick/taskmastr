@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_DATE_COMPLETED, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
+import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_COMPLETED_BY, SET_DATE_COMPLETED, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
 
 export default {
   [SET_CURRENT_TASK] (state, index) {
@@ -27,6 +27,9 @@ export default {
   [SET_DATE_COMPLETED] (state, index, date) {
     _.set(state, 'current.items[' + index + '].dateCompleted', date)
   },
+  [SET_COMPLETED_BY] (state, index, username) {
+    _.set(state, `current.items[${index}].completedBy`, username)
+  },
   [SET_TASK_DELETE] (state, index, bool) {
     _.set(state, 'current.items[' + index + ']._deleting', bool)
   },
@@ -44,7 +47,6 @@ export default {
     state.current.items.splice(newIndex, 0, spliced[0])
   },
   [TOGGLE_DETAILS] (state, index) {
-    // _.set(state, 'current.items[' + index + ']._detailsToggled', bool)
     _.set(state, 'detailsToggled', index)
   },
   [SET_TASK_NOTES] (state, index, notes) {

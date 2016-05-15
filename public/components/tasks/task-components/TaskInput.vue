@@ -88,11 +88,13 @@ export default {
       this.addTask({
         id: hash().hashes[0],
         item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
+        createdBy: this.user.username,
         current: !(_.find(this.current.items, {current: true})),
         complete: false,
         dateCreated: gregorian.reform(new Date()).to('iso'),
         dueDate: dueDate,
         dateCompleted: '',
+        completedBy: '',
         notes: '',
         _dueDateDifference: null,
         _deleting: false,

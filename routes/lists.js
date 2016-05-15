@@ -13,6 +13,10 @@ const lists = {
     try {
       const result = yield listService.getList(ctx.params.listid)
       if (!result) ctx.throw(404, 'List not found')
+      const inUserList = result.users.some((user) => {
+        return user.username === ctx.req.user.username
+      })
+      if (result.owner !== ctx.req.user.username && !inUserList) ctx.throw(403, 'Not cool, bro')
       ctx.body = result
     } catch (e) {
       console.log(e)
@@ -35,27 +39,28 @@ const lists = {
   },
   delete: function (payload) {
     const user = payload.user
-
-    const listResult = listService.deleteList(payload.listid)
+    const listResult = (payload.permanent) ? listService.deleteList(payload.listid) : { success: true }
     const userResult = userService.updateUser(user.username, { tasks: user.tasks })
     return Promise.all([listResult, userResult])
     .then((results) => {
       if (!results[0]) throw new Error('List not found')
       if (!results[1]) throw new Error('Something bad happened at updateUser')
 
-      // Round up the ids of each item and cancel their agenda tasks
-      async.each(results[0].items, (v, cb) => {
-        agenda.cancel({
-          'data.agendaID': v.id
-        }, (err) => {
+      if (!results[0].success) {
+        // Round up the ids of each item and cancel their agenda tasks
+        async.each(results[0].items, (v, cb) => {
+          agenda.cancel({
+            'data.agendaID': v.id
+          }, (err) => {
+            if (err) throw new Error(err)
+            console.log(user.username + ' => Agenda removed: ' + v.id)
+            cb()
+          })
+        }, function (err) {
           if (err) throw new Error(err)
-          console.log(user.username + ' => Agenda removed: ' + v.id)
-          cb()
+          console.log(`List agendas removed ${chalk.gray(results[0].id)}`)
         })
-      }, function (err) {
-        if (err) throw new Error(err)
-        console.log(`List agendas removed ${chalk.gray(results[0].id)}`)
-      })
+      }
 
       return results
     })

@@ -124,12 +124,14 @@ export function deleteTask ({ dispatch, state }, index) {
 export function completeTask ({ dispatch, state }, index, bool) {
   const tasks = state.current.items
   const dateCompleted = (bool) ? gregorian.reform().to('iso') : null
+  const completedBy = (bool) ? state.user.username : null
   const n = (tasks[index].complete) ? 0 : -1
   const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
     ? _.findIndex(tasks, {complete: true}) + n
     : tasks.length - 1
   dispatch('SET_TASK_COMPLETE', index, bool)
   dispatch('SET_DATE_COMPLETED', index, dateCompleted)
+  dispatch('SET_COMPLETED_BY', index, completedBy)
   if (bool) {
     dispatch('SET_TASK_DUE_DATE', index, null)
     dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
@@ -142,6 +144,7 @@ export function completeTask ({ dispatch, state }, index, bool) {
     if (err) {
       dispatch('SET_TASK_COMPLETE', newIndex, !bool)
       dispatch('SET_DATE_COMPLETED', newIndex, (!bool) ? gregorian.reform().to('iso') : null)
+      dispatch('SET_COMPLETED_BY', newIndex, (!bool) ? state.user.username : null)
       dispatch('SORT_TASKS', newIndex, index)
       return
     }

@@ -17,6 +17,7 @@ export function getList (id, cb) {
   })
   .catch((err) => {
     if (err.response.status === 404) return cb('You\'re not viewing a list. Please click on one in the menu to the left.', err.response)
+    if (err.response.status === 403) return cb('You\'re not authorized to view this list.', err.response)
     cb(err, err.response)
   })
 }
@@ -29,9 +30,9 @@ export function createList (list, user, cb) {
   })
 }
 
-export function removeList (listid, user, cb) {
+export function removeList (listid, user, permanent, cb) {
   if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
-  socket.emit('delete-list', { listid, user }, (err, response) => {
+  socket.emit('delete-list', { listid, user, permanent }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
   })
