@@ -1,10 +1,6 @@
 machine:
   node:
-    version: 5
-dependencies:
-  pre:
-    - npm cache clear
-    - npm install npm@'>=3.7.2' -g
+    version: 6
 test:
   post:
     - cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
