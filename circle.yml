@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 6
+    version: 5
 test:
   post:
     - cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
