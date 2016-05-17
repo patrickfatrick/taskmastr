@@ -163,7 +163,7 @@ export function confirmListUser ({ dispatch, state }, listid, username) {
     if (err) return dispatch('SET_USER_STATUS', listid, username, 'pending')
     const userList = {
       _deleting: false,
-      current: false,
+      current: true,
       dateCreated: response.dateCreated,
       id: response.id,
       list: response.list,

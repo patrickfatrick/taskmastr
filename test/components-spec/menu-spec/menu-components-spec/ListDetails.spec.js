@@ -64,7 +64,7 @@ describe('ListDetails.vue', function () {
   })
 
   it('should have a newUser property', () => {
-    assert.isNull(ListDetails.computed.newUser())
+    assert.isNull(ListDetails.data().newUser)
   })
 
   it('should have a validate property', () => {
@@ -171,16 +171,15 @@ describe('ListDetails.vue', function () {
     }
 
     sinon.stub(ListDetails.computed, 'isValid').returns(true)
-    sinon.stub(ListDetails.computed, 'newUser').returns('notusername@domain.com')
     const vm = mountVm({ user: { username: 'username' } })
     sinon.stub(vm.$children[0], 'addNewListUser')
 
+    vm.$children[0].changeNewUser('notusername@domain.com')
     vm.$el.querySelector('.new-user-button').click()
     assert.isTrue(vm.$children[0].addNewListUser.calledWith(0, 'notusername@domain.com'))
 
     vm.$children[0].addNewListUser.restore()
     ListDetails.computed.isValid.restore()
-    ListDetails.computed.newUser.restore()
   })
 
   it('should call removeListUser on button click', () => {
@@ -231,36 +230,29 @@ describe('ListDetails.vue', function () {
   })
 
   it('should validate newUser as an email address', () => {
-    sinon.stub(ListDetails.computed, 'newUser').returns('notusername')
     const vm = mountVm({ user: { username: 'username' } }, 'notusername')
 
-    console.log(vm.$children[0].newUser)
+    vm.$children[0].changeNewUser('notusername')
     assert.isFalse(vm.$children[0].validate.newUserEmail)
     assert.isTrue(vm.$children[0].validate.notYourEmail)
     assert.isFalse(vm.$children[0].isValid)
-
-    ListDetails.computed.newUser.restore()
   })
 
   it('should validate newUser as not your email address', () => {
-    sinon.stub(ListDetails.computed, 'newUser').returns('username')
     const vm = mountVm({ user: { username: 'username' } })
 
+    vm.$children[0].changeNewUser('username')
     assert.isFalse(vm.$children[0].validate.newUserEmail)
     assert.isFalse(vm.$children[0].validate.notYourEmail)
     assert.isFalse(vm.$children[0].isValid)
-
-    ListDetails.computed.newUser.restore()
   })
 
   it('isValid should return true if validate is all true', () => {
-    sinon.stub(ListDetails.computed, 'newUser').returns('notusername@domain.com')
     const vm = mountVm({ user: { username: 'username' } })
 
+    vm.$children[0].changeNewUser('notusername@domain.com')
     assert.isTrue(vm.$children[0].validate.newUserEmail)
     assert.isTrue(vm.$children[0].validate.notYourEmail)
     assert.isTrue(vm.$children[0].isValid)
-
-    ListDetails.computed.newUser.restore()
   })
 })

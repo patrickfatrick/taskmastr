@@ -44,7 +44,7 @@ describe('confirmListUser', () => {
       dateCreated: 'somedate',
       owner: 'username',
       users: [],
-      current: false,
+      current: true,
       _deleting: false
     }
 
@@ -104,7 +104,7 @@ describe('confirmListUser', () => {
       dateCreated: 'somedate',
       owner: 'username',
       users: [],
-      current: false,
+      current: true,
       _deleting: false
     }
 

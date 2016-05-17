@@ -186,7 +186,7 @@ describe('Lists.vue', function () {
     let dblclick
     dblclick = document.createEvent('HTMLEvents')
     dblclick.initEvent('dblclick', true, true, window)
-    vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
+    vm.$el.querySelectorAll('.task-cell')[0].dispatchEvent(dblclick)
 
     assert.isTrue(vm.$children[0].toggleListDetails.calledWith('listid'))
     Vue.nextTick(() => {
@@ -205,7 +205,7 @@ describe('Lists.vue', function () {
     let dblclick
     dblclick = document.createEvent('HTMLEvents')
     dblclick.initEvent('dblclick', true, true, window)
-    vm.$el.querySelectorAll('.name')[0].dispatchEvent(dblclick)
+    vm.$el.querySelectorAll('.task-cell')[0].dispatchEvent(dblclick)
 
     assert.isTrue(vm.$children[0].toggleListDetails.calledWith('listid'))
 

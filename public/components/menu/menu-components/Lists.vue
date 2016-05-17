@@ -3,9 +3,9 @@
     <div class="table-body" v-el:dragula>
       <div class="table-row" v-for="list in lists" :class="{'deleting': list._deleting, 'current': list.current}" name="list{{$index + 1}}" transition="item">
         <div class="initial-view">
-          <div class="task-cell table-data">
+          <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
             <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
-            <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)" @dblclick="toggleDetails(list.id)">{{list.list}}</button>
+            <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)">{{list.list}}</button>
           </div>
           <div class="utils table-data">
             <button class="rename-button" title="Rename list" @click.prevent="toggleDetails(list.id)">

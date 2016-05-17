@@ -161,7 +161,7 @@ io.on('remove-user', (ctx, payload) => {
     return lists.removeUser(payload)
     .then((result) => {
       logIt(false, ctx.event, '/lists/' + payload.listid + '/remove-user/')
-      ctx.socket.socket.broadcast.emit('users-change', { list: result, removed: true })
+      io.broadcast('users-change', { list: result, removed: true })
       ctx.acknowledge(null, result)
     })
   } catch (err) {
