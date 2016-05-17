@@ -91,7 +91,7 @@ const lists = {
         owner: result.owner,
         list: result.list,
         listid: listid,
-        host: (process.env.NODE_ENV === 'production') ? 'https://www.taskmastr.co' : 'http://localhost:3000'
+        host: (process.env.NODE_ENV === 'production') ? 'https://taskmastr.co' : 'http://localhost:3000'
       })
       return result
     })
