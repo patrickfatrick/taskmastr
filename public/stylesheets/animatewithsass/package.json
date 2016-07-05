@@ -1,11 +1,11 @@
 {
   "_args": [
     [
-      "animatewithsass",
+      "animatewithsass@^3.2.1",
       "/Users/patrick/Projects/taskmastr"
     ]
   ],
-  "_from": "animatewithsass@latest",
+  "_from": "animatewithsass@>=3.2.1 <4.0.0",
   "_id": "animatewithsass@3.2.1",
   "_inCache": true,
   "_installable": true,
@@ -19,11 +19,11 @@
   "_phantomChildren": {},
   "_requested": {
     "name": "animatewithsass",
-    "raw": "animatewithsass",
-    "rawSpec": "",
+    "raw": "animatewithsass@^3.2.1",
+    "rawSpec": "^3.2.1",
     "scope": null,
-    "spec": "latest",
-    "type": "tag"
+    "spec": ">=3.2.1 <4.0.0",
+    "type": "range"
   },
   "_requiredBy": [
     "/"
@@ -31,7 +31,7 @@
   "_resolved": "https://registry.npmjs.org/animatewithsass/-/animatewithsass-3.2.1.tgz",
   "_shasum": "4ae833f5b852377c6e8fd574c4223334dfee8c19",
   "_shrinkwrap": null,
-  "_spec": "animatewithsass",
+  "_spec": "animatewithsass@^3.2.1",
   "_where": "/Users/patrick/Projects/taskmastr",
   "author": {
     "email": "@geoffreygraham",

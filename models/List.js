@@ -30,7 +30,7 @@ const List = thinky.createModel('lists', {
   }],
   _deleting: type.boolean()
 })
-
+List.something
 List.ensureIndex('dateCreated')
 List.ensureIndex('dateModified')
 

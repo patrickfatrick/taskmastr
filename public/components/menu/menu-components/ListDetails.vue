@@ -29,7 +29,7 @@
           </div>
           <div class="no-users" v-if="!list.users.length">It's just you in here!</div>
           <div class="new-user" v-if="list.owner === username">
-            <form id="new-user-form-{{list.id}}" @submit.prevent="addNewListUser(index, newUser.trim())">
+            <form id="new-user-form-{{list.id}}" @submit.prevent="addNewListUser(index, newUser.trim().toLowerCase())">
               <input type="text" title="Invite new user" placeholder="Invite someone" class="new-user-input" :value="newUser" @change="changeNewUser($event.target.value)">
               <div class="new-user-button-container">
                 <button type="submit" title="Invite" class="new-user-button"><i class="fa fa-user-plus"></i></button>

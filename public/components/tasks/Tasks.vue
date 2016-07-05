@@ -49,7 +49,7 @@ export default {
   route: {
     data (transition) {
       if (transition.to.params.newuser) {
-        this.confirmListUser(transition.to.params.listid, transition.to.params.newuser)
+        this.confirmListUser(transition.to.params.listid, transition.to.params.newuser.toLowerCase())
         this.$route.router.go('/app/list/' + transition.to.params.listid)
       }
       this.mountList(transition.to.params.listid)
