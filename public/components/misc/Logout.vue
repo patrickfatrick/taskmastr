@@ -23,7 +23,7 @@ export default {
       this.logoutUser()
     }
   },
-  compiled () {
+  mounted () {
     Mousetrap.bind('command+esc', (e) => {
       if (e.preventDefault) e.preventDefault()
       return this.logout()

@@ -46,18 +46,19 @@ export default {
     TaskInput,
     Items
   },
-  route: {
-    data (transition) {
-      if (transition.to.params.newuser) {
-        this.confirmListUser(transition.to.params.listid, transition.to.params.newuser.toLowerCase())
-        this.$route.router.go('/app/list/' + transition.to.params.listid)
-      }
-      this.mountList(transition.to.params.listid)
-    }
+  watch: {
+    '$route': 'routeWatcher'
   },
   methods: {
     refresh () {
       window.location.assign('/')
+    },
+    routeWatcher () {
+      if (this.$route.params.newuser) {
+        this.confirmListUser(this.$route.params.listid, this.$route.params.newuser.toLowerCase())
+        this.$route.router.push('/app/list/' + this.$route.params.listid)
+      }
+      this.mountList(this.$route.params.listid)
     }
   }
 }

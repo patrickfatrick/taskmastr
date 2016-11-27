@@ -1,7 +1,7 @@
 <template>
   <span>
-    <input class="datepicker-input" type="text" name="datepicker" :value="task.dueDate" readonly="true" v-el:pikaday></input>
-    <button class="datepicker-toggle" title="Toggle datepicker" v-el:pikatrigger :class="{'active': task.dueDate}">
+    <input class="datepicker-input" type="text" name="datepicker" :value="task.dueDate" readonly="true" ref="pikaday"></input>
+    <button class="datepicker-toggle" title="Toggle datepicker" ref="pikatrigger" :class="{'active': task.dueDate}">
       <i class="fa" :class="{'fa-calendar-check-o': task.dueDate, 'fa-calendar-plus-o': !task.dueDate}"></i>
     </button>
     <div class="remove-due-date" v-if="task.dueDate">
@@ -50,10 +50,10 @@ export default {
       }
     }
   },
-  compiled () {
+  mounted () {
     this.picker = new Pikaday({
-      field: this.$els.pikaday,
-      trigger: this.$els.pikatrigger,
+      field: this.$refs.pikaday,
+      trigger: this.$refs.pikatrigger,
       yearRange: 1,
       onSelect: function () {
         this.setDueDate(this.index, gregorian.reform(this.picker._d).set(6, 'h').to('iso'))

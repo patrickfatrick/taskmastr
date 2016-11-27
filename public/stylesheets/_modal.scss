@@ -21,7 +21,7 @@
 	&.modal-enter {
 		@include animation(bounceInDown 500ms);
 	}
-	&.modal-leave {
+	&.modal-leave-active {
 		@include animation(bounceOutUp 750ms);
 	}
 	&.invalid {
@@ -156,7 +156,7 @@
 	&.mask-enter {
 		@include animation(fadeIn 300ms);
 	}
-	&.mask-leave {
+	&.mask-leave-active {
 		@include animation(fadeOut 750ms);
 	}
 }

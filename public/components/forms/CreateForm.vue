@@ -78,7 +78,7 @@ export default {
           this.addList({...defaultList, owner: this.user.username, users: []})
           this.setCurrentList(defaultList)
           setTimeout(() => {
-            this.$route.router.go('/app/list/' + defaultList.id)
+            this.$route.router.push('/app/list/' + defaultList.id)
           }, 250)
         }
       })

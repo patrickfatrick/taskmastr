@@ -1,27 +1,29 @@
 <template>
   <div id="lists-list" class="table" v-show="lists">
-    <div class="table-body" v-el:dragula>
-      <div class="table-row" v-for="list in lists" :class="{'deleting': list._deleting, 'current': list.current}" name="list{{$index + 1}}" transition="item">
-        <div class="initial-view">
-          <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
-            <input class="rename" type="text" :value="list.list" @change="rename($event, $index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
-            <button href="#{{list.list}}" class="name" title="{{list.list}}" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)">{{list.list}}</button>
+    <div class="table-body" ref="dragula">
+      <transition name="item">
+        <div class="table-row" v-for="(list, index) in lists" :class="{'deleting': list._deleting, 'current': list.current}" :name="'list' + index + 1">
+          <div class="initial-view">
+            <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
+              <input class="rename" type="text" :value="list.list" @change="rename($event, index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
+              <button :href="'#' + list.list" class="name" :title="list.list" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)">{{list.list}}</button>
+            </div>
+            <div class="utils table-data">
+              <button class="rename-button" title="Rename list" @click.prevent="toggleDetails(list.id)">
+                <i class="fa fa-pencil-square"></i>
+              </button>
+              <button class="sort-button sort-handle" title="Sort list">
+                <i class="sort-handle fa fa-arrows-v sort"></i>
+              </button>
+              <button class="delete-button" title="Delete list" v-if="list.owner === username" @click.prevent="removeList(index)">
+                <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
+              </button>
+              <i class="fa fa-lock" v-if="list.owner !== username"></i>
+            </div>
           </div>
-          <div class="utils table-data">
-            <button class="rename-button" title="Rename list" @click.prevent="toggleDetails(list.id)">
-              <i class="fa fa-pencil-square"></i>
-            </button>
-            <button class="sort-button sort-handle" title="Sort list">
-              <i class="sort-handle fa fa-arrows-v sort"></i>
-            </button>
-            <button class="delete-button" title="Delete list" v-if="list.owner === username" @click.prevent="removeList($index)">
-              <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
-            </button>
-            <i class="fa fa-lock" v-if="list.owner !== username"></i>
-          </div>
+          <list-details :index="index" :list="list"></list-details>
         </div>
-        <list-details :index="$index" :list="list"></list-details>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -70,7 +72,7 @@ export default {
     },
     navigateToList (id) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      this.$route.router.go('/app/list/' + id)
+      this.$route.router.push('/app/list/' + id)
     },
     rename (e, index) {
       if (!e.target.value) {
@@ -104,7 +106,7 @@ export default {
       return index
     }
   },
-  compiled () {
+  mounted () {
     // Keyboard bindings
     Mousetrap.bind('alt+,', (e) => {
       if (e.preventDefault) e.preventDefault()
@@ -136,19 +138,20 @@ export default {
     Mousetrap.bind('alt+d', () => {
       this.toggleDetails(_.find(this.lists, {current: true}).id)
     })
-  },
-  ready () {
-    this.drake = dragula({
-      containers: [this.$els.dragula],
-      revertOnSpill: true,
-      mirrorContainer: this.$els.dragula,
-      moves: (el, source, handle) => {
-        if (handle.classList.contains('sort-handle')) return true
-        return false
-      }
+
+    this.nextTick(() => {
+      this.drake = dragula({
+        containers: [this.$refs.dragula],
+        revertOnSpill: true,
+        mirrorContainer: this.$refs.dragula,
+        moves: (el, source, handle) => {
+          if (handle.classList.contains('sort-handle')) return true
+          return false
+        }
+      })
+      this._drag(this.drake)
+      this._drop(this.drake)
     })
-    this._drag(this.drake)
-    this._drop(this.drake)
   }
 }
 

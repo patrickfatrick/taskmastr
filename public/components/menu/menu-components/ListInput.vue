@@ -1,6 +1,6 @@
 <template>
   <form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addNewList(newList.trim())">
-    <input id="create-list" class="prompt mousetrap" type="text" title="List Input" :value="newList" v-on:change="setNewList($event.target.value)" v-bind:class="{'invalid': !isValid && listAttempt}" placeholder="New List" v-el:listinput></input>
+    <input id="create-list" class="prompt mousetrap" type="text" title="List Input" :value="newList" v-on:change="setNewList($event.target.value)" :class="{'invalid': !isValid && listAttempt}" placeholder="New List" ref="listinput"></input>
     <button id="list-button" class="submit" title="Create task" type="submit">
       <i class="fa fa-arrow-down"></i>
     </button>
@@ -58,10 +58,10 @@ export default {
       this.setNewList('')
     }
   },
-  compiled () {
+  mounted () {
     Mousetrap.bind('alt+f', (e) => {
       if (e.preventDefault) e.preventDefault()
-      this.$els.listinput.focus()
+      this.$refs.listinput.focus()
     })
   }
 }

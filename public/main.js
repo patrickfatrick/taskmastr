@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import App from './App.vue'
 import LoginVue from './components/LoginVue.vue'
 import ContentVue from './components/ContentVue.vue'
@@ -10,63 +10,69 @@ import Tasks from './components/tasks/Tasks.vue'
 import store from './store'
 require('./stylesheets/styles.scss')
 
-// Debug mode. Turned off in production builds
-Vue.config.debug = process.env.NODE_ENV !== 'production'
+Vue.use(VueRouter)
 
-Vue.use(Router)
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginVue
+    },
+    {
+      path: '/app',
+      name: 'Content',
+      component: ContentVue,
+      auth: true,
+      children: [
+        {
+          path: '/',
+          component: Tasks
+        },
+        {
+          path: '/list/:listid',
+          component: Tasks
+        },
+        {
+          path: 'list/:listid/newuser/:newuser',
+          component: Tasks
+        }
+      ]
+    },
+    {
+      path: '/reset',
+      name: 'Reset',
+      component: ResetVue
+    },
+    {
+      path: '/create',
+      name: 'Create',
+      component: CreateVue
+    },
+    {
+      path: '/forgot',
+      name: 'Forgot',
+      component: ForgotVue
+    },
+    {
+      path: '*',
+      redirect: '/login'
+    }
+  ]
+})
 
-var app = Vue.extend({
+router.beforeEach((to, from, next) => {
+  if (!to.auth && store.state.auth) return next({ path: '/app' })
+  if (to.auth && !store.state.auth) return next({ path: '/login' })
+  next()
+})
+
+const app = new Vue({
   store,
+  router,
   components: {
     app: App
   }
 })
 
-var router = new Router()
-
-router.map({
-  '/login': {
-    name: 'Login',
-    component: LoginVue
-  },
-  '/app': {
-    name: 'Content',
-    component: ContentVue,
-    auth: true,
-    subRoutes: {
-      '/': {
-        component: Tasks
-      },
-      '/list/:listid': {
-        component: Tasks
-      },
-      'list/:listid/newuser/:newuser': {
-        component: Tasks
-      }
-    }
-  },
-  '/reset': {
-    name: 'Reset',
-    component: ResetVue
-  },
-  '/create': {
-    name: 'Create',
-    component: CreateVue
-  },
-  '/forgot': {
-    name: 'Forgot',
-    component: ForgotVue
-  }
-})
-
-router.redirect({
-  '*': '/login'
-})
-
-router.beforeEach((transition) => {
-  if (!transition.to.auth && store.state.auth) return router.go('/app')
-  if (transition.to.auth && !store.state.auth) return router.go('/login')
-  transition.next()
-})
-
-router.start(app, 'body')
+app.$mount('body')

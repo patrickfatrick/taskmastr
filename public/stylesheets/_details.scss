@@ -28,7 +28,7 @@
   &.details-enter {
     @include animation(bounceInDown 250ms);
   }
-  &.details-leave {
+  &.details-leave-active {
     @include animation(bounceOutUp 250ms);
   }
   .task-details-close {

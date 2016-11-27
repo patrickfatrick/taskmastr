@@ -20,7 +20,7 @@ export default {
       setMenuToggled
     }
   },
-  compiled () {
+  mounted () {
     Mousetrap.bind('alt+right', () => {
       this.setMenuToggled(true)
     })

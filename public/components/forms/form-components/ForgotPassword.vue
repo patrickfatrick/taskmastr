@@ -26,9 +26,9 @@ export default {
   methods: {
     toggleForgot (bool) {
       this.setForgot(bool)
-      if (!this.forgot && this.create) return this.$route.router.go('/create')
-      if (!this.forgot) return this.$route.router.go('/login')
-      this.$route.router.go('/forgot')
+      if (!this.forgot && this.create) return this.$route.router.push('/create')
+      if (!this.forgot) return this.$route.router.push('/login')
+      this.$route.router.push('/forgot')
     }
   }
 }
