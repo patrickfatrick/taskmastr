@@ -115,4 +115,8 @@ agenda.define('List Invite Email', (job, done) => {
   })
 })
 
+agenda.on('fail', function (err, job) {
+  console.log('Agenda email job failed with error: %s', err.message)
+})
+
 module.exports = agenda

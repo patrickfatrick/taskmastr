@@ -1,11 +1,10 @@
 <template>
-  <div id="app-container" v-bind:class="{'darkmode': darkmode}">
-    <router-view
-      class="view"
-      keep-alive
-      transition
-      transition-mode="out-in">
-    </router-view>
+  <div id="app-container" :class="{'darkmode': darkmode}">
+    <transition>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
