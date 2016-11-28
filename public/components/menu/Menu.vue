@@ -23,20 +23,18 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 import Darkmode from './menu-components/Darkmode.vue'
 import ListInput from './menu-components/ListInput.vue'
 import Lists from './menu-components/Lists.vue'
 import Logout from '../misc/Logout.vue'
 
 export default {
-  vuex: {
-    getters: {
-      menuToggled: (state) => state.menuToggled,
-      wiki: (state) => state.wiki,
-      repo: (state) => state.repo
-    }
-  },
+  computed: mapState({
+    menuToggled: (state) => state.menuToggled,
+    wiki: (state) => state.wiki,
+    repo: (state) => state.repo
+  }),
   components: {
     Darkmode,
     ListInput,
@@ -44,5 +42,4 @@ export default {
     Logout
   }
 }
-
 </script>

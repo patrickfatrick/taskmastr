@@ -9,34 +9,30 @@
 </template>
 
 <script>
-
 import _ from 'lodash'
 import socket from './socket'
-import { getUserSession, setDarkmode, setTasks, setDisconnect } from './store/user-store/user-actions'
-import { unmountList, setUsers, deleteList } from './store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      auth: (state) => state.auth,
-      darkmode: (state) => state.user.darkmode,
-      current: (state) => state.current
-    },
-    actions: {
-      getUserSession,
-      setDarkmode,
-      setTasks,
-      deleteList,
-      unmountList,
-      setDisconnect,
-      setUsers
-    }
-  },
+  computed: mapState({
+    user: (state) => state.user,
+    auth: (state) => state.auth,
+    darkmode: (state) => state.user.darkmode,
+    current: (state) => state.current
+  }),
   methods: {
+    ...mapActions([
+      'getUserSession',
+      'setDarkmode',
+      'setTasks',
+      'deleteList',
+      'unmountList',
+      'setDisconnect',
+      'setUsers'
+    ]),
     navigateToList (id) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      this.$route.router.push('/app/list/' + id)
+      this.$router.push('/app/list/' + id)
     }
   },
   mounted () {
@@ -76,12 +72,11 @@ export default {
       this.getUserSession()
       .then(() => {
         // Opt to route to the listid if provided
-        if (this.auth && listID && newUser) return this.$route.router.push('/app/list/' + listID + '/newuser/' + newUser)
-        if (this.auth && listID) return this.$route.router.push('/app/list/' + listID)
-        if (this.auth) this.$route.router.push('/app/list/' + this.current.id)
+        if (this.auth && listID && newUser) return this.$router.push('/app/list/' + listID + '/newuser/' + newUser)
+        if (this.auth && listID) return this.$router.push('/app/list/' + listID)
+        if (this.auth) this.$router.push('/app/list/' + this.current.id)
       })
     })
   }
 }
-
 </script>

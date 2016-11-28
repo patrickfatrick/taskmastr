@@ -6,7 +6,7 @@
           <div class="initial-view">
             <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
               <input class="rename" type="text" :value="list.list" @change="rename($event, index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
-              <button :href="'#' + list.list" class="name" :title="list.list" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)">{{list.list}}</button>
+              <button :href="'#' + list.id" class="name" :title="list.list" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)">{{list.list}}</button>
             </div>
             <div class="utils table-data">
               <button class="rename-button" title="Rename list" @click.prevent="toggleDetails(list.id)">
@@ -29,30 +29,13 @@
 </template>
 
 <script>
-
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import { deleteList, setCurrentList, sortLists, renameList, unmountList, toggleListDetails } from '../../../store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 import ListDetails from './ListDetails.vue'
 
 export default {
-  vuex: {
-    getters: {
-      username: (state) => state.user.username,
-      current: (state) => state.current,
-      lists: (state) => state.user.tasks,
-      listDetailsToggled: (state) => state.listDetailsToggled
-    },
-    actions: {
-      deleteList,
-      setCurrentList,
-      sortLists,
-      renameList,
-      unmountList,
-      toggleListDetails
-    }
-  },
   components: {
     ListDetails
   },
@@ -63,23 +46,35 @@ export default {
       dragStart: null
     }
   },
-  computed: {},
+  computed: mapState({
+    username: (state) => state.user.username,
+    current: (state) => state.current,
+    lists: (state) => state.user.tasks,
+    listDetailsToggled: (state) => state.listDetailsToggled
+  }),
   methods: {
+    ...mapActions([
+      'deleteList',
+      'setCurrentList',
+      'sortLists',
+      'renameList',
+      'unmountList',
+      'toggleListDetails'
+    ]),
     removeList (index) {
-      this.deleteList(index, 5000, true, (id) => {
-        this.navigateToList(id)
-      })
+      this.deleteList({ index, delay: 5000, perm: true, cb: (id) => this.navigateToList(id) })
     },
     navigateToList (id) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      this.$route.router.push('/app/list/' + id)
+      console.log(this.$router)
+      this.$router.push({ path: '/app/list/' + id })
     },
     rename (e, index) {
       if (!e.target.value) {
         e.target.value = this.lists[index].list
         return
       }
-      this.renameList(index, e.target.value.trim())
+      this.renameList({ index, name: e.target.value.trim() })
     },
     toggleDetails (id) {
       if (this.listDetailsToggled === id) {
@@ -96,7 +91,7 @@ export default {
       drake.on('drop', (el) => {
         let oldIndex = this.dragStart
         let newIndex = this._index(el)
-        this.sortLists(oldIndex, newIndex)
+        this.sortLists({ oldIndex, newIndex })
       })
     },
     _index (el) {
@@ -139,7 +134,7 @@ export default {
       this.toggleDetails(_.find(this.lists, {current: true}).id)
     })
 
-    this.nextTick(() => {
+    this.$nextTick(() => {
       this.drake = dragula({
         containers: [this.$refs.dragula],
         revertOnSpill: true,
@@ -154,5 +149,4 @@ export default {
     })
   }
 }
-
 </script>

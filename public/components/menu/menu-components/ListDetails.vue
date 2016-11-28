@@ -23,7 +23,7 @@
               {{ (user.username.trim() === username) ? 'You' : truncateUsername(user.username, 20) }} <span class="list-label user-pending" v-if="user.status === 'pending'">(pending)</span>
             </div>
             <div class="user-remove-button-container">
-              <button class="user-remove-button" title="Remove user" v-if="username === list.owner || user.username.trim() === username.trim()" @click.prevent="removeListUser(index, user)"><i class="fa fa-times"></i></button>
+              <button class="user-remove-button" title="Remove user" v-if="username === list.owner || user.username.trim() === username.trim()" @click.prevent="removeListUser({ index, user })"><i class="fa fa-times"></i></button>
               <i class="fa fa-lock" v-if="username !== list.owner && user.username.trim() !== username.trim()"></i>
             </div>
           </div>
@@ -43,29 +43,22 @@
 </template>
 
 <script>
-
 import gregorian from 'gregorian'
-import { addListUser, removeListUser } from '../../../store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 
-const emailRE = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const emailRE = /^(([^<>()[\]\\.,:\s@"]+(\.[^<>()[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
-  vuex: {
-    getters: {
-      username: (state) => state.user.username,
-      listDetailsToggled: (state) => state.listDetailsToggled
-    },
-    actions: {
-      addListUser,
-      removeListUser
-    }
-  },
   data () {
     return {
       newUser: null
     }
   },
   computed: {
+    ...mapState({
+      username: (state) => state.user.username,
+      listDetailsToggled: (state) => state.listDetailsToggled
+    }),
     validate () {
       return {
         newUserEmail: emailRE.test(this.newUser.trim()),
@@ -84,6 +77,10 @@ export default {
     list: Object
   },
   methods: {
+    ...mapActions([
+      'addListUser',
+      'removeListUser'
+    ]),
     changeNewUser (val) {
       this.newUser = val
     },
@@ -96,10 +93,9 @@ export default {
     },
     addNewListUser (index, user) {
       if (!this.isValid) return
-      this.addListUser(index, { username: user, status: 'pending' })
+      this.addListUser({ index, user: { username: user, status: 'pending' } })
       this.newUser = ''
     }
   }
 }
-
 </script>

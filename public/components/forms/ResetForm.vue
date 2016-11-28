@@ -1,6 +1,6 @@
 <template>
   <form id="reset-form" name="resetForm" action="/users/reset" novalidate @submit.prevent="reset(resetToken, user.resetKey)">
-    <reset-key-input :require="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
+    <reset-key-input :required="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
     <reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
     <div class="button-container">
       <button id="reset-button" class="submit button" type="submit" title="Submit" @click="setResetAttempt(true)">
@@ -12,32 +12,24 @@
 </template>
 
 <script>
-
-import { loginUser, resetPassword, setResetAttempt } from '../../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 import ResetKeyInput from './form-components/ResetKeyInput.vue'
 import ResetConfirmInput from './form-components/ResetConfirmInput.vue'
 import TryIt from './form-components/TryIt.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      auth: (state) => state.auth,
-      current: (state) => state.current,
-      resetToken: (state) => state.resetToken
-    },
-    actions: {
-      loginUser,
-      resetPassword,
-      setResetAttempt
-    }
-  },
   components: {
     ResetKeyInput,
     ResetConfirmInput,
     TryIt
   },
   computed: {
+    ...mapState({
+      user: (state) => state.user,
+      auth: (state) => state.auth,
+      current: (state) => state.current,
+      resetToken: (state) => state.resetToken
+    }),
     validate () {
       return {
         passwordRequired: !!this.user.resetKey.trim(),
@@ -53,6 +45,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'loginUser',
+      'resetPassword',
+      'setResetAttempt'
+    ]),
     reset (resetToken, resetKey) {
       if (!this.isValid) return
       this.resetPassword(resetToken, resetKey)
@@ -63,12 +60,11 @@ export default {
       .then(() => {
         if (this.auth) {
           setTimeout(() => {
-            this.$route.router.push('/app/list/' + this.current.id)
+            this.$router.push('/app/list/' + this.current.id)
           }, 250)
         }
       })
     }
   }
 }
-
 </script>

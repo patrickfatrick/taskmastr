@@ -20,30 +20,25 @@
 </template>
 
 <script>
-
-import { setReset, setResetToken } from '../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 import ResetForm from './forms/ResetForm.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      init: (state) => state.init,
-      auth: (state) => state.auth
-    },
-    actions: {
-      setReset,
-      setResetToken
-    }
-  },
-  computed: {}, // Explicitly create computed property for test mocking
+  computed: mapState({
+    user: (state) => state.user,
+    init: (state) => state.init,
+    auth: (state) => state.auth
+  }),
   components: {
     ResetForm
   },
+  methods: mapActions([
+    'setReset',
+    'setResetToken'
+  ]),
   mounted () {
     if (this.$route.query.token) this.setResetToken(this.$route.query.token)
     if (this.$route.name === 'Reset') return this.setReset(true)
   }
 }
-
 </script>

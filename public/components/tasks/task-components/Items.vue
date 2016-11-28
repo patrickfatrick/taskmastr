@@ -1,66 +1,65 @@
 <template>
-  <div id="task-list" class="table" v-show='tasks'>
-    <div class="table-body" ref="dragula">
-      <transition name="item">
-        <div v-for="(task, index) in tasks" class="task table-row" :name="'task' + index + 1" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
-          <div class="table-header">
-            <input class="check" type="checkbox" :value="task.complete"></input>
-            <button class="complete" title="Complete task" @click.prevent="completeTask(index, !task.complete)">
-              <i class="fa" :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"></i>
-            </button>
+  <div>
+    <div id="task-list" class="table" v-show='tasks'>
+      <div class="table-body" ref="dragula">
+        <transition name="item">
+          <div v-for="(task, index) in tasks" class="task table-row" :name="'task' + index + 1" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
+            <div class="table-header">
+              <input class="check" type="checkbox" :value="task.complete"></input>
+              <button class="complete" title="Complete task" @click.prevent="completeTask({ index, bool: !task.complete })">
+                <i class="fa" :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"></i>
+              </button>
+            </div>
+            <div class="task-cell table-data">
+              <button class="name" :title="task.item" @click="setCurrentTask(index)" @dblclick.prevent="toggleDetails(index)">{{task.item}}</button>
+            </div>
+            <div class="utils table-data">
+              <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails(index, true)" v-bind:class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
+                <i class="fa" :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}"></i>
+              </button>
+              <button class="sort-button sort-handle" title="Sort task">
+                <i class="sort-handle fa fa-arrows-v"></i>
+              </button>
+              <button class="delete-button" title="Delete task" @click.prevent="deleteTask(index)">
+                <i class="fa" :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}"></i>
+              </button>
+            </div>
           </div>
-          <div class="task-cell table-data">
-            <button class="name" :title="task.item" @click="setCurrentTask(index)" @dblclick.prevent="toggleDetails(index)">{{task.item}}</button>
-          </div>
-          <div class="utils table-data">
-            <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails(index, true)" v-bind:class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
-              <i class="fa" :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}"></i>
-            </button>
-            <button class="sort-button sort-handle" title="Sort task">
-              <i class="sort-handle fa fa-arrows-v"></i>
-            </button>
-            <button class="delete-button" title="Delete task" @click.prevent="deleteTask(index)">
-              <i class="fa" :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}"></i>
-            </button>
-          </div>
-        </div>
-      </transition>
+        </transition>
+      </div>
     </div>
+    <item-details v-for="task in tasks" :index="index" :task="task"></item-details>
   </div>
-  <item-details v-for="task in tasks" :index="index" :task="task"></item-details>
 </template>
 
 <script>
-
 import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
-import { setCurrentTask, deleteTask, completeTask, sortTasks, toggleDetails } from '../../../store/item-store/item-actions'
+import { mapState, mapActions } from 'vuex'
 import ItemDetails from './ItemDetails.vue'
 
 export default {
-  vuex: {
-    getters: {
-      tasks: (state) => state.current.items
-    },
-    actions: {
-      setCurrentTask,
-      deleteTask,
-      completeTask,
-      sortTasks,
-      toggleDetails
-    }
-  },
   data () {
     return {
       drake: null,
       dragStart: null
     }
   },
+  computed: mapState({
+    tasks: (state) => state.current.items
+  }),
   components: {
     ItemDetails
   },
   methods: {
+    ...mapActions([
+      'setCurrentTask',
+      'deleteTask',
+      'completeTask',
+      'sortTasks',
+      'toggleDetails'
+    ]),
     _drag (drake) {
       drake.on('drag', (el) => {
         this.dragStart = this._index(el)
@@ -76,7 +75,7 @@ export default {
           if (this.tasks[oldIndex].complete && newIndex < completeIndex) return this.drake.cancel()
           if (!this.tasks[oldIndex].complete && newIndex >= completeIndex) return this.drake.cancel()
         }
-        this.sortTasks(oldIndex, newIndex)
+        this.sortTasks({ oldIndex, newIndex })
       })
     },
     _index (el) {
@@ -108,7 +107,7 @@ export default {
       this.deleteTask(_.findIndex(this.tasks, {current: true}))
     })
     Mousetrap.bind('ctrl+c', () => {
-      this.completeTask(_.findIndex(this.tasks, {current: true}), !(_.find(this.tasks, {current: true}).complete))
+      this.completeTask({ index: _.findIndex(this.tasks, {current: true}), bool: !(_.find(this.tasks, {current: true}).complete) })
     })
     Mousetrap.bind('ctrl+command+down', () => {
       const completeIndex = _.findIndex(this.tasks, {complete: true})
@@ -119,7 +118,7 @@ export default {
       }
       if (currentIndex === this.tasks.length - 1) return
 
-      this.sortTasks(currentIndex, currentIndex + 1)
+      this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
     })
     Mousetrap.bind('ctrl+command+up', () => {
       const completeIndex = _.findIndex(this.tasks, {complete: true})
@@ -130,7 +129,7 @@ export default {
       }
       if (currentIndex === 0) return
 
-      this.sortTasks(currentIndex, currentIndex - 1)
+      this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex - 1 })
     })
 
     this.$nextTick(() => {
@@ -148,5 +147,4 @@ export default {
     })
   }
 }
-
 </script>

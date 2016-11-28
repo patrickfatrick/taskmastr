@@ -20,20 +20,17 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 import CreateForm from './forms/CreateForm.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      init: (state) => state.init,
-      auth: (state) => state.auth
-    }
-  },
+  computed: mapState({
+    user: (state) => state.user,
+    init: (state) => state.init,
+    auth: (state) => state.auth
+  }),
   components: {
     CreateForm
   }
 }
-
 </script>

@@ -14,39 +14,36 @@
 </template>
 
 <script>
-
 import Pikaday from 'pikaday'
 import gregorian from 'gregorian'
-import { setTaskDueDate, setDueDateDifference } from '../../../store/item-store/item-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      tasks: (state) => state.current.items
-    },
-    actions: {
-      setTaskDueDate,
-      setDueDateDifference
-    }
-  },
   data () {
     return {
       picker: null
     }
   },
+  computed: mapState({
+    tasks: (state) => state.current.items
+  }),
   props: {
     index: Number,
     task: Object
   },
   methods: {
+    ...mapActions([
+      'setTaskDueDate',
+      'setDueDateDifference'
+    ]),
     reformatDate (date) {
       this.setDueDate(this.index, gregorian.reform(date).to('iso'))
     },
     setDueDate (index, date) {
-      this.setTaskDueDate(index, date)
+      this.setTaskDueDate({ index, date })
       if (!this.tasks[index].dueDate) {
         this.picker.setDate('')
-        this.setDueDateDifference(this.index, null)
+        this.setDueDateDifference({ index: this.index, dueDate: null })
       }
     }
   },
@@ -57,10 +54,9 @@ export default {
       yearRange: 1,
       onSelect: function () {
         this.setDueDate(this.index, gregorian.reform(this.picker._d).set(6, 'h').to('iso'))
-        this.setDueDateDifference(this.index, this.task.dueDate)
+        this.setDueDateDifference({ index: this.index, dueDate: this.task.dueDate })
       }.bind(this)
     })
   }
 }
-
 </script>

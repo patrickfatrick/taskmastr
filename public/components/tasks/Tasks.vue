@@ -22,25 +22,18 @@
 </template>
 
 <script>
-
-import { mountList, confirmListUser } from '../../store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 import MenuToggle from '../misc/MenuToggle.vue'
 import TaskInput from './task-components/TaskInput.vue'
 import Items from './task-components/Items.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      current: (state) => state.current,
-      invalidList: (state) => state.invalidList,
-      disconnect: (state) => state.disconnect
-    },
-    actions: {
-      mountList,
-      confirmListUser
-    }
-  },
+  computed: mapState({
+    user: (state) => state.user,
+    current: (state) => state.current,
+    invalidList: (state) => state.invalidList,
+    disconnect: (state) => state.disconnect
+  }),
   components: {
     MenuToggle,
     TaskInput,
@@ -50,17 +43,20 @@ export default {
     '$route': 'routeWatcher'
   },
   methods: {
+    ...mapActions([
+      'mountList',
+      'confirmListUser'
+    ]),
     refresh () {
       window.location.assign('/')
     },
     routeWatcher () {
       if (this.$route.params.newuser) {
-        this.confirmListUser(this.$route.params.listid, this.$route.params.newuser.toLowerCase())
-        this.$route.router.push('/app/list/' + this.$route.params.listid)
+        this.confirmListUser({ listid: this.$route.params.listid, username: this.$route.params.newuser.toLowerCase() })
+        this.$router.push('/app/list/' + this.$route.params.listid)
       }
       this.mountList(this.$route.params.listid)
     }
   }
 }
-
 </script>

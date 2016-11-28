@@ -5,24 +5,19 @@
 </template>
 
 <script>
-
-import { setResetConfirmKey } from '../../../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      resetAttempt: (state) => state.resetAttempt,
-      resetFail: (state) => state.resetFail
-    },
-    actions: {
-      setResetConfirmKey
-    }
-  },
-  computed: {},
+  computed: mapState({
+    user: (state) => state.user,
+    resetAttempt: (state) => state.resetAttempt,
+    resetFail: (state) => state.resetFail
+  }),
   props: {
     match: Boolean
-  }
+  },
+  methods: mapActions([
+    'setResetConfirmKey'
+  ])
 }
-
 </script>

@@ -5,35 +5,30 @@
 </template>
 
 <script>
-
-import { loginUser } from '../../../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      wiki: (state) => state.wiki,
-      auth: (state) => state.auth,
-      testUser: (state) => state.testUser,
-      testKey: (state) => state.testKey,
-      current: (state) => state.current
-    },
-    actions: {
-      loginUser
-    }
-  },
-  computed: {},
+  computed: mapState({
+    wiki: (state) => state.wiki,
+    auth: (state) => state.auth,
+    testUser: (state) => state.testUser,
+    testKey: (state) => state.testKey,
+    current: (state) => state.current
+  }),
   methods: {
+    ...mapActions([
+      'loginUser'
+    ]),
     loginTestUser (username, key, rememberMe) {
       this.loginUser(username, key, rememberMe)
       .then(() => {
         if (this.auth) {
           setTimeout(() => {
-            this.$route.router.push('/app/list/' + this.current.id)
+            this.$router.push('/app/list/' + this.current.id)
           }, 250)
         }
       })
     }
   }
 }
-
 </script>

@@ -8,17 +8,14 @@
 </template>
 
 <script>
-
 import Mousetrap from 'mousetrap'
-import { logoutUser } from '../../store/user-store/user-actions'
+import { mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    actions: {
-      logoutUser
-    }
-  },
   methods: {
+    ...mapActions([
+      'logoutUser'
+    ]),
     logout () {
       this.logoutUser()
     }
@@ -30,5 +27,4 @@ export default {
     })
   }
 }
-
 </script>

@@ -10,35 +10,24 @@
 </template>
 
 <script>
-
 import _ from 'lodash'
 import { hash } from 'harsh'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
-import { setNewTask, setPlaceholder, setTaskAttempt, setTaskDueDate, setDueDateDifference, addTask } from '../../../store/item-store/item-actions'
+import { mapState, mapActions } from 'vuex'
 import extractDate from '../../../helper-utilities/extract-date'
 import placeholders from '../../../helper-utilities/placeholders'
 
 export default {
-  vuex: {
-    getters: {
+  computed: {
+    ...mapState({
       user: (state) => state.user,
       current: (state) => state.current,
       newTask: (state) => state.newTask,
       taskAttempt: (state) => state.taskAttempt,
       placeholder: (state) => state.placeholder
-    },
-    actions: {
-      setNewTask,
-      setPlaceholder,
-      setTaskAttempt,
-      setTaskDueDate,
-      setDueDateDifference,
-      addTask
-    }
-  },
-  computed: {
+    }),
     validate () {
       return {
         newTaskRequired: !!this.newTask.trim()
@@ -52,6 +41,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'setNewTask',
+      'setPlaceholder',
+      'setTaskAttempt',
+      'addTask'
+    ]),
     addNewTask (task) {
       this.setTaskAttempt(true)
       if (!this.isValid) return
@@ -115,5 +110,4 @@ export default {
     })
   }
 }
-
 </script>

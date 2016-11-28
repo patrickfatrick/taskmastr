@@ -21,20 +21,17 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 import LoginForm from './forms/LoginForm.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      init: (state) => state.init,
-      auth: (state) => state.auth
-    }
-  },
+  computed: mapState({
+    user: (state) => state.user,
+    init: (state) => state.init,
+    auth: (state) => state.auth
+  }),
   components: {
     LoginForm
   }
 }
-
 </script>

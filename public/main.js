@@ -15,29 +15,29 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     {
-      path: '/login',
-      name: 'Login',
-      component: LoginVue
-    },
-    {
       path: '/app',
       name: 'Content',
       component: ContentVue,
       auth: true,
       children: [
         {
-          path: '/',
-          component: Tasks
-        },
-        {
-          path: '/list/:listid',
-          component: Tasks
-        },
-        {
           path: 'list/:listid/newuser/:newuser',
+          component: Tasks
+        },
+        {
+          path: 'list/:listid',
+          component: Tasks
+        },
+        {
+          path: '',
           component: Tasks
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginVue
     },
     {
       path: '/reset',
@@ -61,18 +61,16 @@ const router = new VueRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (!to.auth && store.state.auth) return next({ path: '/app' })
-  if (to.auth && !store.state.auth) return next({ path: '/login' })
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   console.log(to)
+//   if (!to.auth && store.state.auth) return next({ path: '/app' })
+//   if (to.auth && !store.state.auth) return next({ path: '/login' })
+//   next()
+// })
 
-const app = new Vue({
+const app = new Vue(Vue.util.extend({
   store,
-  router,
-  components: {
-    app: App
-  }
-})
+  router
+}, App))
 
-app.$mount('body')
+app.$mount('app')

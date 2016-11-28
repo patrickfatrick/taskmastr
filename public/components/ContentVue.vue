@@ -1,25 +1,22 @@
 <template>
   <div>
-    <menu></menu>
+    <menu-widget></menu-widget>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 import Tasks from './tasks/Tasks.vue'
-import Menu from './menu/Menu.vue'
+import MenuWidget from './menu/Menu.vue'
 
 export default {
-  vuex: {
-    getters: {
-      auth: (state) => state.auth
-    }
-  },
+  computed: mapState({
+    auth: (state) => state.auth
+  }),
   components: {
-    Menu,
+    MenuWidget,
     Tasks
   }
 }
-
 </script>

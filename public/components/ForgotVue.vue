@@ -21,30 +21,25 @@
 </template>
 
 <script>
-
-import { setForgot } from '../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 import ForgotForm from './forms/ForgotForm.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      init: (state) => state.init,
-      auth: (state) => state.auth,
-      reset: (state) => state.reset,
-      forgot: (state) => state.forgot
-    },
-    actions: {
-      setForgot
-    }
-  },
-  computed: {}, // Explicitly create computed property for test mocking
+  computed: mapState({
+    user: (state) => state.user,
+    init: (state) => state.init,
+    auth: (state) => state.auth,
+    reset: (state) => state.reset,
+    forgot: (state) => state.forgot
+  }),
   components: {
     ForgotForm
   },
+  methods: mapActions([
+    'setForgot'
+  ]),
   mounted () {
     if (this.$route.path === '/forgot' && !this.forgot) return this.setForgot(true)
   }
 }
-
 </script>

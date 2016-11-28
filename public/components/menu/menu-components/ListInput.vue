@@ -8,26 +8,18 @@
 </template>
 
 <script>
-
 import { hash } from 'harsh'
 import gregorian from 'gregorian'
 import Mousetrap from 'mousetrap'
-import { addList, setNewList, setListAttempt } from '../../../store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
+  computed: {
+    ...mapState({
       user: (state) => state.user,
       newList: (state) => state.newList,
       listAttempt: (state) => state.listAttempt
-    },
-    actions: {
-      addList,
-      setNewList,
-      setListAttempt
-    }
-  },
-  computed: {
+    }),
     validate () {
       return {
         newListRequired: !!this.newList.trim()
@@ -41,6 +33,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'addList',
+      'setNewList',
+      'setListAttempt'
+    ]),
     addNewList (list) {
       this.setListAttempt(true)
       if (!this.isValid) return
@@ -65,5 +62,4 @@ export default {
     })
   }
 }
-
 </script>

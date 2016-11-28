@@ -3,87 +3,87 @@ import gregorian from 'gregorian'
 import { updateList } from '../../services/list-services'
 import { createItem, updateItem, deleteItem } from '../../services/item-services'
 
-export function setNewTask ({ dispatch }, str) {
-  dispatch('SET_NEW_TASK', str)
+export function setNewTask ({ commit }, str) {
+  commit('SET_NEW_TASK', str)
 }
 
-export function setPlaceholder ({ dispatch }, str) {
-  dispatch('SET_PLACEHOLDER', str)
+export function setPlaceholder ({ commit }, str) {
+  commit('SET_PLACEHOLDER', str)
 }
 
-export function setTaskAttempt ({ dispatch }, bool) {
-  dispatch('SET_TASK_ATTEMPT', bool)
+export function setTaskAttempt ({ commit }, bool) {
+  commit('SET_TASK_ATTEMPT', bool)
 }
 
-export function setTaskDelete ({ dispatch }, bool) {
-  dispatch('SET_TASK_DELETE', bool)
+export function setTaskDelete ({ commit }, bool) {
+  commit('SET_TASK_DELETE', bool)
 }
 
-export function setCurrentTask ({ dispatch, state }, index) {
+export function setCurrentTask ({ commit, state }, index) {
   const list = state.current
   const items = state.current.items
   const oldIndex = _.findIndex(state.current.items, { current: true })
-  dispatch('SET_CURRENT_TASK', index)
+  commit('SET_CURRENT_TASK', index)
   return updateList(state.user, list.id, { items: items }, (err, res) => {
-    if (err) return dispatch('SET_CURRENT_TASK', oldIndex)
+    if (err) return commit('SET_CURRENT_TASK', oldIndex)
     return res
   })
 }
 
-export function toggleDetails ({ dispatch, state }, index) {
-  if (state.detailsToggled === index) return dispatch('TOGGLE_DETAILS', null)
-  dispatch('TOGGLE_DETAILS', index)
+export function toggleDetails ({ commit, state }, index) {
+  if (state.detailsToggled === index) return commit('TOGGLE_DETAILS', null)
+  commit('TOGGLE_DETAILS', index)
 }
 
-export function setTaskDueDate ({ dispatch, state }, index, date) {
+export function setTaskDueDate ({ commit, state }, { index, date }) {
   const listID = state.current.id
   const item = state.current.items[index]
   const username = state.user.username
   const oldDate = item.dueDate
   const oldDueDateDifference = item._dueDateDifference
-  dispatch('SET_TASK_DUE_DATE', index, date)
+  commit('SET_TASK_DUE_DATE', index, date)
   return updateItem(listID, item.id, index, item, username, (err, res) => {
     if (err) {
-      dispatch('SET_TASK_DUE_DATE', index, oldDate)
-      dispatch('SET_DUE_DATE_DIFFERENCE', index, oldDueDateDifference)
+      commit('SET_TASK_DUE_DATE', index, oldDate)
+      commit('SET_DUE_DATE_DIFFERENCE', index, oldDueDateDifference)
       return
     }
     return res
   })
 }
 
-export function renameTask ({ dispatch, state }, index, name) {
+export function renameTask ({ commit, state }, { index, name }) {
   const listID = state.current.id
   const item = state.current.items[index]
   const username = state.user.username
   const oldName = item.item
-  dispatch('RENAME_TASK', index, name)
+  commit('RENAME_TASK', index, name)
   return updateItem(listID, item.id, index, item, username, (err, res) => {
-    if (err) return dispatch('RENAME_TASK', index, oldName)
+    if (err) return commit('RENAME_TASK', index, oldName)
     return res
   })
 }
 
-export function setTaskNotes ({ dispatch, state }, index, notes) {
+export function setTaskNotes ({ commit, state }, { index, notes }) {
   const listID = state.current.id
   const item = state.current.items[index]
   const username = state.user.username
   const oldNotes = item.notes
-  dispatch('SET_TASK_NOTES', index, notes)
+  commit('SET_TASK_NOTES', index, notes)
   return updateItem(listID, item.id, index, item, username, (err, res) => {
-    if (err) return dispatch('SET_TASK_NOTES', index, oldNotes)
+    if (err) return commit('SET_TASK_NOTES', index, oldNotes)
     return res
   })
 }
-export function addTask ({ dispatch, state }, task) {
-  dispatch('ADD_TASK', task)
+export function addTask ({ commit, state }, task) {
+  commit('ADD_TASK', task)
   return createItem(state.current.id, task, state.user.username, (err, res) => {
-    if (err) return dispatch('REMOVE_TASK', 0)
+    if (err) return commit('REMOVE_TASK', 0)
     return res
   })
 }
 
-export function deleteTask ({ dispatch, state }, index) {
+export function deleteTask ({ commit, state }, index) {
   const listID = state.current.id
   const tasks = state.current.items
   const task = tasks[index]
@@ -98,30 +98,30 @@ export function deleteTask ({ dispatch, state }, index) {
       // Reassign current item
       if (task.current) {
         if (task.current && index === (tasks.length - 1)) {
-          dispatch('SET_CURRENT_TASK', prevTask)
+          commit('SET_CURRENT_TASK', prevTask)
         } else {
-          dispatch('SET_CURRENT_TASK', nextTask)
+          commit('SET_CURRENT_TASK', nextTask)
         }
       }
       // Optimistically delete the item from the store before request is made
-      dispatch('UPDATE_DELETE_QUEUE', task.id, null)
-      dispatch('SET_TASK_DELETE', deleteTask, false)
-      dispatch('REMOVE_TASK', deleteTask)
+      commit('UPDATE_DELETE_QUEUE', task.id, null)
+      commit('SET_TASK_DELETE', deleteTask, false)
+      commit('REMOVE_TASK', deleteTask)
       return deleteItem(listID, task.id, deleteTask, state.user.username, (err, response) => {
         // Revert the change if request fails
-        if (err) dispatch('ADD_TASK', task)
+        if (err) commit('ADD_TASK', task)
       })
     }, 5000)
-    dispatch('UPDATE_DELETE_QUEUE', task.id, timeoutID)
-    dispatch('SET_TASK_DELETE', _.findIndex(tasks, { id: task.id }), true)
+    commit('UPDATE_DELETE_QUEUE', task.id, timeoutID)
+    commit('SET_TASK_DELETE', _.findIndex(tasks, { id: task.id }), true)
   } else {
     clearTimeout(state.deleteQueue[task.id])
-    dispatch('UPDATE_DELETE_QUEUE', task.id, null)
-    dispatch('SET_TASK_DELETE', _.findIndex(tasks, { id: task.id }), false)
+    commit('UPDATE_DELETE_QUEUE', task.id, null)
+    commit('SET_TASK_DELETE', _.findIndex(tasks, { id: task.id }), false)
   }
 }
 
-export function completeTask ({ dispatch, state }, index, bool) {
+export function completeTask ({ commit, state }, { index, bool }) {
   const tasks = state.current.items
   const dateCompleted = (bool) ? gregorian.reform().to('iso') : null
   const completedBy = (bool) ? state.user.username : null
@@ -129,47 +129,47 @@ export function completeTask ({ dispatch, state }, index, bool) {
   const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
     ? _.findIndex(tasks, {complete: true}) + n
     : tasks.length - 1
-  dispatch('SET_TASK_COMPLETE', index, bool)
-  dispatch('SET_DATE_COMPLETED', index, dateCompleted)
-  dispatch('SET_COMPLETED_BY', index, completedBy)
+  commit('SET_TASK_COMPLETE', index, bool)
+  commit('SET_DATE_COMPLETED', index, dateCompleted)
+  commit('SET_COMPLETED_BY', index, completedBy)
   if (bool) {
-    dispatch('SET_TASK_DUE_DATE', index, null)
-    dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
+    commit('SET_TASK_DUE_DATE', index, null)
+    commit('SET_DUE_DATE_DIFFERENCE', index, null)
   }
-  dispatch('SORT_TASKS', index, newIndex)
+  commit('SORT_TASKS', index, newIndex)
 
   const list = state.current
   const items = state.current.items
   return updateList(state.user, list.id, { items: items }, (err, res) => {
     if (err) {
-      dispatch('SET_TASK_COMPLETE', newIndex, !bool)
-      dispatch('SET_DATE_COMPLETED', newIndex, (!bool) ? gregorian.reform().to('iso') : null)
-      dispatch('SET_COMPLETED_BY', newIndex, (!bool) ? state.user.username : null)
-      dispatch('SORT_TASKS', newIndex, index)
+      commit('SET_TASK_COMPLETE', newIndex, !bool)
+      commit('SET_DATE_COMPLETED', newIndex, (!bool) ? gregorian.reform().to('iso') : null)
+      commit('SET_COMPLETED_BY', newIndex, (!bool) ? state.user.username : null)
+      commit('SORT_TASKS', newIndex, index)
       return
     }
     return res
   })
 }
 
-export function sortTasks ({ dispatch, state }, oldIndex, newIndex) {
-  dispatch('SORT_TASKS', oldIndex, newIndex)
+export function sortTasks ({ commit, state }, { oldIndex, newIndex }) {
+  commit('SORT_TASKS', oldIndex, newIndex)
 
   const list = state.current
   const items = state.current.items
   return updateList(state.user, list.id, { items: items }, (err, res) => {
-    if (err) return dispatch('SORT_TASKS', newIndex, oldIndex)
+    if (err) return commit('SORT_TASKS', newIndex, oldIndex)
     return res
   })
 }
 
-export function setDueDateDifference ({ dispatch }, index, dueDate) {
+export function setDueDateDifference ({ commit }, { index, dueDate }) {
   if (!dueDate) {
-    dispatch('SET_DUE_DATE_DIFFERENCE', index, null)
+    commit('SET_DUE_DATE_DIFFERENCE', index, null)
     return
   }
   const today = gregorian.reform(new Date()).set(6, 'h').recite()
   dueDate = new Date(dueDate)
   let diff = Math.floor(Math.round((dueDate - today) / 1000 / 60 / 60 / 24))
-  dispatch('SET_DUE_DATE_DIFFERENCE', index, diff)
+  commit('SET_DUE_DATE_DIFFERENCE', index, diff)
 }
