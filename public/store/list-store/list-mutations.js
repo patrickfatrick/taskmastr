@@ -17,13 +17,13 @@ export default {
   [REMOVE_LIST] (state, index) {
     state.user.tasks.splice(index, 1)
   },
-  [RENAME_LIST] (state, index, name) {
+  [RENAME_LIST] (state, { index, name }) {
     _.set(state, 'user.tasks[' + index + '].list', name)
   },
-  [SET_LIST_DELETE] (state, index, bool) {
+  [SET_LIST_DELETE] (state, { index, bool }) {
     _.set(state, 'user.tasks[' + index + ']._deleting', bool)
   },
-  [SORT_LISTS] (state, oldIndex, newIndex) {
+  [SORT_LISTS] (state, { oldIndex, newIndex }) {
     let spliced = state.user.tasks.splice(oldIndex, 1)
     state.user.tasks.splice(newIndex, 0, spliced[0])
   },
@@ -40,16 +40,16 @@ export default {
   [TOGGLE_LIST_DETAILS] (state, id) {
     _.set(state, 'listDetailsToggled', id)
   },
-  [ADD_LIST_USER] (state, index, user) {
+  [ADD_LIST_USER] (state, { index, user }) {
     state.user.tasks[index].users.push(user)
   },
-  [REMOVE_LIST_USER] (state, index, user) {
+  [REMOVE_LIST_USER] (state, { index, user }) {
     state.user.tasks[index].users.splice(_.findIndex(state.user.tasks[index].users, user), 1)
   },
-  [SET_USERS] (state, index, users) {
+  [SET_USERS] (state, { index, users }) {
     _.set(state, `user.tasks[${index}].users`, users)
   },
-  [SET_USER_STATUS] (state, index, username, status) {
+  [SET_USER_STATUS] (state, { index, username, status }) {
     const userIndex = _.findIndex(state.user.tasks[index].users, { username })
     _.set(state, `user.tasks[${index}].users[${userIndex}]`, { status })
   }

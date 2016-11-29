@@ -39,9 +39,6 @@ export default {
     TaskInput,
     Items
   },
-  watch: {
-    '$route': 'routeWatcher'
-  },
   methods: {
     ...mapActions([
       'mountList',
@@ -57,6 +54,15 @@ export default {
       }
       this.mountList(this.$route.params.listid)
     }
+  },
+  watch: {
+    '$route': 'routeWatcher'
+  },
+  mounted () {
+    // Wait until we actually have access to the username, otherwise this will throw an error in user-service
+    this.$nextTick(() => {
+      this.routeWatcher()
+    })
   }
 }
 </script>

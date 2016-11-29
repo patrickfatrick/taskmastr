@@ -2,8 +2,8 @@
   <div>
     <div id="task-list" class="table" v-show='tasks'>
       <div class="table-body" ref="dragula">
-        <transition name="item">
-          <div v-for="(task, index) in tasks" class="task table-row" :name="'task' + index + 1" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
+        <transition-group name="item" tag="div">
+          <div v-for="(task, index) in tasks" :key="task.id" class="task table-row" :name="'task' + index + 1" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
             <div class="table-header">
               <input class="check" type="checkbox" :value="task.complete"></input>
               <button class="complete" title="Complete task" @click.prevent="completeTask({ index, bool: !task.complete })">
@@ -25,10 +25,10 @@
               </button>
             </div>
           </div>
-        </transition>
+        </transition-group>
       </div>
     </div>
-    <item-details v-for="task in tasks" :index="index" :task="task"></item-details>
+    <item-details v-for="(task, index) in tasks" :index="index" :task="task"></item-details>
   </div>
 </template>
 

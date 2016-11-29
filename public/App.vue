@@ -30,9 +30,9 @@ export default {
       'setDisconnect',
       'setUsers'
     ]),
-    navigateToList (id) {
+    navigateToList (id, newuser) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      this.$router.push('/app/list/' + id)
+      this.$router.push(`/app/list/${id}${(newuser) ? '/newuser/' + newuser : ''}`)
     }
   },
   mounted () {
@@ -71,10 +71,13 @@ export default {
       const newUser = this.$route.params.newuser
       this.getUserSession()
       .then(() => {
+        console.log(this.auth, listID, newUser)
         // Opt to route to the listid if provided
-        if (this.auth && listID && newUser) return this.$router.push('/app/list/' + listID + '/newuser/' + newUser)
-        if (this.auth && listID) return this.$router.push('/app/list/' + listID)
-        if (this.auth) this.$router.push('/app/list/' + this.current.id)
+        if (this.auth && listID && newUser) return this.navigateToList(listID, newUser)
+        // if (this.auth && listID) return this.$router.push('/app/list/' + listID)
+        // if (this.auth) this.$router.push('/app/list/' + this.current.id)
+        if (this.auth && listID) return this.navigateToList(listID)
+        if (this.auth) this.navigateToList(this.current.id)
       })
     })
   }

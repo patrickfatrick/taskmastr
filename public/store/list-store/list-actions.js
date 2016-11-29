@@ -26,9 +26,9 @@ export function toggleListDetails ({ commit }, id) {
 export function renameList ({ commit, state }, { index, name }) {
   const list = state.user.tasks[index]
   const oldName = list.list
-  commit('RENAME_LIST', index, name)
+  commit('RENAME_LIST', { index, name })
   return updateList(state.user, list.id, { list: list.list }, (err, res) => {
-    if (err) return commit('RENAME_LIST', index, oldName)
+    if (err) return commit('RENAME_LIST', { index, name: oldName })
     return res
   })
 }
@@ -95,7 +95,7 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
       // Stop procedure if it's the only list
       if (state.user.tasks.length === 1) {
         commit('UPDATE_DELETE_QUEUE', list.id, null)
-        commit('SET_LIST_DELETE', curIndex, false)
+        commit('SET_LIST_DELETE', { index: curIndex, bool: false })
         return
       }
       // Reassign current list
@@ -106,7 +106,7 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
       }
       // Optimistically change the client's store before we've made the request
       commit('UPDATE_DELETE_QUEUE', list.id, null)
-      commit('SET_LIST_DELETE', _.findIndex(state.user.tasks, { id: list.id }), false)
+      commit('SET_LIST_DELETE', { index: _.findIndex(state.user.tasks, { id: list.id }), bool: false })
       commit('REMOVE_LIST', _.findIndex(state.user.tasks, { id: list.id }))
       const user = {
         username: state.user.username,
@@ -130,26 +130,26 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
 }
 
 export function sortLists ({ commit, state }, { oldIndex, newIndex }) {
-  commit('SORT_LISTS', oldIndex, newIndex)
+  commit('SORT_LISTS', { oldIndex, newIndex })
   return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
-    if (err) return commit('SORT_LISTS', newIndex, oldIndex)
+    if (err) return commit('SORT_LISTS', { oldIndex: newIndex, newIndex: oldIndex })
   })
 }
 
 export function addListUser ({ commit, state }, { index, user }) {
   const list = state.user.tasks[index]
-  commit('ADD_LIST_USER', index, user)
+  commit('ADD_LIST_USER', { index, user })
   inviteUser(state.user, list.id, user.username, { users: list.users }, (err, response) => {
-    if (err) commit('REMOVE_LIST_USER', index, user)
+    if (err) commit('REMOVE_LIST_USER', { index, user })
     return response
   })
 }
 
 export function removeListUser ({ commit, state }, { index, user }) {
   const list = state.user.tasks[index]
-  commit('REMOVE_LIST_USER', index, user)
+  commit('REMOVE_LIST_USER', { index, user })
   removeUser(state.user, list.id, { users: list.users }, (err, response) => {
-    if (err) commit('ADD_LIST_USER', index, user)
+    if (err) commit('ADD_LIST_USER', { index, user })
     return response
   })
 }
@@ -160,7 +160,7 @@ export function confirmListUser ({ commit, state }, { listid, username }) {
     status: 'active'
   }
   confirmUser(state.user, listid, listUser, (err, response) => {
-    if (err) return commit('SET_USER_STATUS', listid, username, 'pending')
+    if (err) return commit('SET_USER_STATUS', { index: listid, username, status: 'pending' })
     const userList = {
       _deleting: false,
       current: true,
@@ -179,5 +179,5 @@ export function confirmListUser ({ commit, state }, { listid, username }) {
 }
 
 export function setUsers ({ commit }, { index, users }) {
-  commit('SET_USERS', index, users)
+  commit('SET_USERS', { index, users })
 }

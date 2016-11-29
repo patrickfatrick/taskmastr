@@ -1,7 +1,9 @@
 <template>
   <div>
     <menu-widget></menu-widget>
-    <router-view></router-view>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
