@@ -10,7 +10,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!to.meta.requiresAuth && store.state.auth) return next({ path: '/app' })
+  if (!to.params.listid && store.state.auth) return next({ path: '/app' })
   if (to.meta.requiresAuth && !store.state.auth) return next({ path: '/login' })
   next()
 })

@@ -1,8 +1,8 @@
 <template>
   <div id="lists-list" class="table" v-show="lists">
     <div class="table-body" ref="dragula">
-      <transition name="item">
-        <div class="table-row" v-for="(list, index) in lists" :class="{'deleting': list._deleting, 'current': list.current}" :name="'list' + index + 1">
+      <transition-group name="item" tag="div">
+        <div v-for="(list, index) in lists" :key="list.id" class="table-row"  :class="{'deleting': list._deleting, 'current': list.current}" :name="'list' + index + 1">
           <div class="initial-view">
             <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
               <input class="rename" type="text" :value="list.list" @change="rename($event, index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
@@ -23,7 +23,7 @@
           </div>
           <list-details :index="index" :list="list"></list-details>
         </div>
-      </transition>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -66,7 +66,6 @@ export default {
     },
     navigateToList (id) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      console.log(this.$router)
       this.$router.push({ path: '/app/list/' + id })
     },
     rename (e, index) {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content-vue">
     <menu-widget></menu-widget>
     <transition>
       <router-view></router-view>

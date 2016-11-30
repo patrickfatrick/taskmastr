@@ -13,6 +13,10 @@ body {
 	}
 }
 
+#content-vue {
+	@extend html;
+}
+
 .hidden {
 	display: none !important;
 }
