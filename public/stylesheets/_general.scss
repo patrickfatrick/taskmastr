@@ -21,18 +21,21 @@ body {
 	display: none !important;
 }
 
+.gu-draggable {
+	box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
+	transform: scale(1.05, 1.05);
+	&:not(.active) {
+  	background-color: $deepBlue !important;
+	  color: $white !important;
+  }
+}
 .gu-mirror {
+	@extend .gu-draggable;
+	// transform: scale(1, 1);
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 1;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-  filter: alpha(opacity=80);
-  box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
-  &:not(.active) {
-  	background-color: $deepBlue !important;
-	  color: $white !important;
-  }
 }
 .gu-hide {
   display: none !important;

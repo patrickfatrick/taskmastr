@@ -71,11 +71,8 @@ export default {
       const newUser = this.$route.params.newuser
       this.getUserSession()
       .then(() => {
-        console.log(this.auth, listID, newUser, this.current.id)
         // Opt to route to the listid if provided
         if (this.auth && listID && newUser) return this.navigateToList(listID, newUser)
-        // if (this.auth && listID) return this.$router.push('/app/list/' + listID)
-        // if (this.auth) this.$router.push('/app/list/' + this.current.id)
         if (this.auth && listID) return this.navigateToList(listID)
         if (this.auth) this.navigateToList(this.current.id)
       })

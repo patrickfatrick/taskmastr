@@ -2,28 +2,15 @@
   <div>
     <div id="task-list" class="table" v-show='allTasks'>
       <div class="table-body" ref="dragula">
-        <div v-for="(task, index) in allTasks" :key="task.id" class="task table-row" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
-          <div class="table-header">
-            <input class="check" type="checkbox" :value="task.complete"></input>
-            <button class="complete" title="Complete task" @click.prevent="completeTask({ index, bool: !task.complete })">
-              <i class="fa" :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"></i>
-            </button>
-          </div>
-          <div class="task-cell table-data">
-            <button class="name" :title="task.item" @click="setCurrentTask(index)" @dblclick.prevent="toggleDetails(index)">{{task.item}}</button>
-          </div>
-          <div class="utils table-data">
-            <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails(index, true)" v-bind:class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
-              <i class="fa" :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}"></i>
-            </button>
-            <button class="sort-button sort-handle" title="Sort task">
-              <i class="sort-handle fa fa-arrows-v"></i>
-            </button>
-            <button class="delete-button" title="Delete task" @click.prevent="deleteTask(index)">
-              <i class="fa" :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}"></i>
-            </button>
-          </div>
-        </div>
+        <item v-for="task in activeTasks" :key="task.id" class="task table-row" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" :task="task">
+        </item>
+      </div>
+      <div id="clear-complete-button-container">
+        <button id="clear-complete-button">Clear all complete items</button>
+      </div>
+      <div class="table-body">
+        <item v-for="task in completeTasks" :key="task.id" class="task table-row" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" :task="task">
+        </item>
       </div>
     </div>
     <item-details v-for="(task, index) in allTasks" :index="index" :task="task"></item-details>
@@ -35,6 +22,7 @@ import _ from 'lodash'
 import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
 import { mapGetters, mapActions } from 'vuex'
+import Item from './Item.vue'
 import ItemDetails from './ItemDetails.vue'
 import getParentByClass from '../../../helper-utilities/get-parent-by-class'
 
@@ -51,6 +39,7 @@ export default {
     allTasks: 'getAllTasks'
   }),
   components: {
+    Item,
     ItemDetails
   },
   methods: {
@@ -75,6 +64,7 @@ export default {
           e.stopPropagation()
           upHandler(e)
         }
+        getParentByClass(e.target, 'table-row').classList.remove('gu-draggable')
       }
       function downHandler (e) {
         touchTimeout = window.setTimeout(() => {
@@ -107,12 +97,6 @@ export default {
       drake.on('drop', (el) => {
         let oldIndex = this.dragStart
         let newIndex = this._index(el)
-        // Revert if trying to move complete task into incomplete list and vice versa
-        let completeIndex = _.findIndex(this.tasks, {complete: true})
-        if (completeIndex !== -1) {
-          if (this.tasks[oldIndex].complete && newIndex < completeIndex) return this.drake.cancel()
-          if (!this.tasks[oldIndex].complete && newIndex >= completeIndex) return this.drake.cancel()
-        }
         this.sortTasks({ oldIndex, newIndex })
       })
     }
@@ -121,43 +105,43 @@ export default {
     // Keyboard bindings
     Mousetrap.bind('ctrl+,', (e) => {
       if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.tasks, {current: true})
+      let index = _.findIndex(this.allTasks, {current: true})
       index = (index === 0)
-        ? this.tasks.length - 1
+        ? this.allTasks.length - 1
         : index - 1
       this.setCurrentTask(index)
     })
     Mousetrap.bind('ctrl+.', (e) => {
       if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.tasks, {current: true})
-      index = (index === this.tasks.length - 1)
+      let index = _.findIndex(this.allTasks, {current: true})
+      index = (index === this.allTasks.length - 1)
         ? 0
         : index + 1
       this.setCurrentTask(index)
     })
     Mousetrap.bind('ctrl+backspace', () => {
-      this.deleteTask(_.findIndex(this.tasks, {current: true}))
+      this.deleteTask(_.findIndex(this.allTasks, {current: true}))
     })
     Mousetrap.bind('ctrl+c', () => {
-      this.completeTask({ index: _.findIndex(this.tasks, {current: true}), bool: !(_.find(this.tasks, {current: true}).complete) })
+      this.completeTask({ index: _.findIndex(this.allTasks, {current: true}), bool: !(_.find(this.allTasks, {current: true}).complete) })
     })
     Mousetrap.bind('ctrl+command+down', () => {
-      const completeIndex = _.findIndex(this.tasks, {complete: true})
-      const currentIndex = _.findIndex(this.tasks, {current: true})
+      const completeIndex = _.findIndex(this.allTasks, {complete: true})
+      const currentIndex = _.findIndex(this.allTasks, {current: true})
 
       if (completeIndex !== -1) {
-        if (!this.tasks[currentIndex].complete && currentIndex === completeIndex - 1) return
+        if (!this.allTasks[currentIndex].complete && currentIndex === completeIndex - 1) return
       }
-      if (currentIndex === this.tasks.length - 1) return
+      if (currentIndex === this.allTasks.length - 1) return
 
       this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
     })
     Mousetrap.bind('ctrl+command+up', () => {
-      const completeIndex = _.findIndex(this.tasks, {complete: true})
-      const currentIndex = _.findIndex(this.tasks, {current: true})
+      const completeIndex = _.findIndex(this.allTasks, {complete: true})
+      const currentIndex = _.findIndex(this.allTasks, {current: true})
 
       if (completeIndex !== -1) {
-        if (this.tasks[currentIndex].complete && currentIndex === completeIndex) return
+        if (this.allTasks[currentIndex].complete && currentIndex === completeIndex) return
       }
       if (currentIndex === 0) return
 

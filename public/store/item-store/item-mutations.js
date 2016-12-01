@@ -52,7 +52,7 @@ export default {
   [SET_TASK_NOTES] (state, { index, notes }) {
     _.set(state, 'current.items[' + index + '].notes', notes)
   },
-  [SET_DUE_DATE_DIFFERENCE] (state, index, n) {
+  [SET_DUE_DATE_DIFFERENCE] (state, { index, n }) {
     _.set(state, 'current.items[' + index + ']._dueDateDifference', n)
   }
 }
