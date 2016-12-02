@@ -207,13 +207,6 @@
       }
     }
   }
-  i {
-    cursor: pointer;
-    font-size: 1rem !important;
-    @include media(min-width $small) {
-      font-size: 1.2rem !important;
-    }
-  }
   .table-data,
   .table-header {
     padding: 0.5rem;

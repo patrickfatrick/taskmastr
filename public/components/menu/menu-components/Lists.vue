@@ -32,7 +32,7 @@ import dragula from 'dragula'
 import Mousetrap from 'mousetrap'
 import { mapState, mapActions } from 'vuex'
 import ListDetails from './ListDetails.vue'
-import getParentByClass from '../../../helper-utilities/get-parent-by-class'
+import dragulaMixin from '../../mixins/dragula-mixin'
 
 export default {
   components: {
@@ -40,9 +40,7 @@ export default {
   },
   data () {
     return {
-      renameToggled: null,
-      drake: null,
-      dragStart: null
+      renameToggled: null
     }
   },
   computed: mapState({
@@ -51,6 +49,9 @@ export default {
     lists: (state) => state.user.tasks,
     listDetailsToggled: (state) => state.listDetailsToggled
   }),
+  mixins: [
+    dragulaMixin
+  ],
   methods: {
     ...mapActions([
       'deleteList',
@@ -60,6 +61,9 @@ export default {
       'unmountList',
       'toggleListDetails'
     ]),
+    sortFunction (oldIndex, newIndex) {
+      return this.sortLists({ oldIndex, newIndex })
+    },
     removeList (index) {
       this.deleteList({ index, delay: 5000, perm: true, cb: (id) => this.navigateToList(id) })
     },
@@ -79,55 +83,6 @@ export default {
         return this.toggleListDetails(null)
       }
       this.toggleListDetails(id)
-    },
-    _drag (drake) {
-      drake.on('drag', (el) => {
-        this.dragStart = this._index(el)
-      })
-    },
-    _restrict (el) {
-      let touchTimeout
-      let draggable = false
-
-      function moveHandler (e) {
-        if (!draggable) {
-          e.stopPropagation()
-          upHandler(e)
-        }
-      }
-      function downHandler (e) {
-        touchTimeout = window.setTimeout(() => {
-          draggable = true
-          getParentByClass(e.target, 'table-row').classList.add('gu-draggable')
-        }, 250)
-      }
-      function upHandler (e) {
-        window.clearTimeout(touchTimeout)
-        draggable = false
-        getParentByClass(e.target, 'table-row').classList.remove('gu-draggable')
-      }
-
-      el.addEventListener('touchmove', moveHandler)
-      el.addEventListener('mousemove', moveHandler)
-
-      el.addEventListener('touchstart', downHandler)
-      el.addEventListener('mousedown', downHandler)
-
-      el.addEventListener('touchend', upHandler)
-      el.addEventListener('mouseup', upHandler)
-    },
-    _index (el) {
-      var index = 0
-      if (!el || !el.parentNode) return -1
-      while (el && (el = el.previousElementSibling)) index++
-      return index
-    },
-    _drop (drake) {
-      drake.on('drop', (el) => {
-        let oldIndex = this.dragStart
-        let newIndex = this._index(el)
-        this.sortLists({ oldIndex, newIndex })
-      })
     }
   },
   mounted () {
@@ -168,11 +123,6 @@ export default {
         containers: [this.$refs.dragula],
         revertOnSpill: true,
         mirrorContainer: this.$refs.dragula
-        // ,
-        // moves: (el, source, handle) => {
-        //   if (handle.classList.contains('sort-handle')) return true
-        //   return false
-        // }
       })
       this._drag(this.drake)
       this._drop(this.drake)

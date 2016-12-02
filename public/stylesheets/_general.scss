@@ -21,36 +21,28 @@ body {
 	display: none !important;
 }
 
+// Dragula styles
 .gu-draggable {
 	box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
-	transform: scale(1.05, 1.05);
+  opacity: 0.9;
 	&:not(.active) {
   	background-color: $deepBlue !important;
 	  color: $white !important;
   }
 }
 .gu-mirror {
-	@extend .gu-draggable;
-	// transform: scale(1, 1);
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
-  opacity: 1;
 }
 .gu-hide {
   display: none !important;
 }
 .gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
+  @include user-select(none !important);
 }
 .gu-transit {
   opacity: 0.2;
-  background-color: $deepBlue;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
 }
 
 #app-container {

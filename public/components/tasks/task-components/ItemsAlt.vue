@@ -24,15 +24,9 @@ import Mousetrap from 'mousetrap'
 import { mapGetters, mapActions } from 'vuex'
 import Item from './Item.vue'
 import ItemDetails from './ItemDetails.vue'
-import getParentByClass from '../../../helper-utilities/get-parent-by-class'
+import dragulaMixin from '../../mixins/dragula-mixin'
 
 export default {
-  data () {
-    return {
-      drake: null,
-      dragStart: null
-    }
-  },
   computed: mapGetters({
     activeTasks: 'getActiveTasks',
     completeTasks: 'getCompleteTasks',
@@ -42,6 +36,9 @@ export default {
     Item,
     ItemDetails
   },
+  mixins: [
+    dragulaMixin
+  ],
   methods: {
     ...mapActions([
       'setCurrentTask',
@@ -50,55 +47,8 @@ export default {
       'sortTasks',
       'toggleDetails'
     ]),
-    _drag (drake) {
-      drake.on('drag', (el) => {
-        this.dragStart = this._index(el)
-      })
-    },
-    _restrict (el) {
-      let touchTimeout
-      let draggable = false
-
-      function moveHandler (e) {
-        if (!draggable) {
-          e.stopPropagation()
-          upHandler(e)
-        }
-        getParentByClass(e.target, 'table-row').classList.remove('gu-draggable')
-      }
-      function downHandler (e) {
-        touchTimeout = window.setTimeout(() => {
-          draggable = true
-          getParentByClass(e.target, 'table-row').classList.add('gu-draggable')
-        }, 250)
-      }
-      function upHandler (e) {
-        window.clearTimeout(touchTimeout)
-        draggable = false
-        getParentByClass(e.target, 'table-row').classList.remove('gu-draggable')
-      }
-
-      el.addEventListener('touchmove', moveHandler)
-      el.addEventListener('mousemove', moveHandler)
-
-      el.addEventListener('touchstart', downHandler)
-      el.addEventListener('mousedown', downHandler)
-
-      el.addEventListener('touchend', upHandler)
-      el.addEventListener('mouseup', upHandler)
-    },
-    _index (el) {
-      var index = 0
-      if (!el || !el.parentNode) return -1
-      while (el && (el = el.previousElementSibling)) index++
-      return index
-    },
-    _drop (drake) {
-      drake.on('drop', (el) => {
-        let oldIndex = this.dragStart
-        let newIndex = this._index(el)
-        this.sortTasks({ oldIndex, newIndex })
-      })
+    sortFunction (oldIndex, newIndex) {
+      return this.sortTasks({ oldIndex, newIndex })
     }
   },
   mounted () {
@@ -153,11 +103,6 @@ export default {
         containers: [this.$refs.dragula],
         revertOnSpill: true,
         mirrorContainer: this.$refs.dragula
-        // ,
-        // moves: (el, source, handle) => {
-        //   if (handle.classList.contains('sort-handle')) return true
-        //   return false
-        // }
       })
       this._drag(this.drake)
       this._drop(this.drake)
