@@ -18,9 +18,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import dragula from 'dragula'
-import Mousetrap from 'mousetrap'
 import { mapGetters, mapActions } from 'vuex'
 import Item from './Item.vue'
 import ItemDetails from './ItemDetails.vue'
@@ -41,63 +39,13 @@ export default {
   ],
   methods: {
     ...mapActions([
-      'setCurrentTask',
-      'deleteTask',
-      'completeTask',
-      'sortTasks',
-      'toggleDetails'
+      'sortTasks'
     ]),
     sortFunction (oldIndex, newIndex) {
       return this.sortTasks({ oldIndex, newIndex })
     }
   },
   mounted () {
-    // Keyboard bindings
-    Mousetrap.bind('ctrl+,', (e) => {
-      if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.allTasks, {current: true})
-      index = (index === 0)
-        ? this.allTasks.length - 1
-        : index - 1
-      this.setCurrentTask(index)
-    })
-    Mousetrap.bind('ctrl+.', (e) => {
-      if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.allTasks, {current: true})
-      index = (index === this.allTasks.length - 1)
-        ? 0
-        : index + 1
-      this.setCurrentTask(index)
-    })
-    Mousetrap.bind('ctrl+backspace', () => {
-      this.deleteTask(_.findIndex(this.allTasks, {current: true}))
-    })
-    Mousetrap.bind('ctrl+c', () => {
-      this.completeTask({ index: _.findIndex(this.allTasks, {current: true}), bool: !(_.find(this.allTasks, {current: true}).complete) })
-    })
-    Mousetrap.bind('ctrl+command+down', () => {
-      const completeIndex = _.findIndex(this.allTasks, {complete: true})
-      const currentIndex = _.findIndex(this.allTasks, {current: true})
-
-      if (completeIndex !== -1) {
-        if (!this.allTasks[currentIndex].complete && currentIndex === completeIndex - 1) return
-      }
-      if (currentIndex === this.allTasks.length - 1) return
-
-      this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
-    })
-    Mousetrap.bind('ctrl+command+up', () => {
-      const completeIndex = _.findIndex(this.allTasks, {complete: true})
-      const currentIndex = _.findIndex(this.allTasks, {current: true})
-
-      if (completeIndex !== -1) {
-        if (this.allTasks[currentIndex].complete && currentIndex === completeIndex) return
-      }
-      if (currentIndex === 0) return
-
-      this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex - 1 })
-    })
-
     this.$nextTick(() => {
       this.drake = dragula({
         containers: [this.$refs.dragula],

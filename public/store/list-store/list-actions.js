@@ -94,7 +94,7 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
       const nextList = state.user.tasks[curIndex + 1]
       // Stop procedure if it's the only list
       if (state.user.tasks.length === 1) {
-        commit('UPDATE_DELETE_QUEUE', list.id, null)
+        commit('UPDATE_DELETE_QUEUE', { id: list.id, val: null })
         commit('SET_LIST_DELETE', { index: curIndex, bool: false })
         return
       }
@@ -105,7 +105,7 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
         commit('SET_CURRENT_LIST', newCurrent)
       }
       // Optimistically change the client's store before we've made the request
-      commit('UPDATE_DELETE_QUEUE', list.id, null)
+      commit('UPDATE_DELETE_QUEUE', { id: list.id, val: null })
       commit('SET_LIST_DELETE', { index: _.findIndex(state.user.tasks, { id: list.id }), bool: false })
       commit('REMOVE_LIST', _.findIndex(state.user.tasks, { id: list.id }))
       const user = {
@@ -120,12 +120,12 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
         cb(_.find(state.user.tasks, { current: true }).id)
       })
     }, delay)
-    commit('UPDATE_DELETE_QUEUE', list.id, timeoutID)
-    commit('SET_LIST_DELETE', _.findIndex(lists, { id: list.id }), true)
+    commit('UPDATE_DELETE_QUEUE', { id: list.id, val: timeoutID })
+    commit('SET_LIST_DELETE', { index: _.findIndex(lists, { id: list.id }), bool: true })
   } else {
     clearTimeout(state.deleteQueue[list.id])
-    commit('UPDATE_DELETE_QUEUE', list.id, null)
-    commit('SET_LIST_DELETE', _.findIndex(lists, { id: list.id }), false)
+    commit('UPDATE_DELETE_QUEUE', { id: list.id, val: null })
+    commit('SET_LIST_DELETE', { index: _.findIndex(lists, { id: list.id }), bool: false })
   }
 }
 

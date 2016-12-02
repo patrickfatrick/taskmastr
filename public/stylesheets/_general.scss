@@ -24,9 +24,9 @@ body {
 // Dragula styles
 .gu-draggable {
 	box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
-  opacity: 0.9;
+  opacity: 0.8;
 	&:not(.active) {
-  	background-color: $deepBlue !important;
+  	background-color: $deepBlue * 0.8 !important;
 	  color: $white !important;
   }
 }

@@ -36,10 +36,10 @@
     .initial-view {
       @include row();
       .table-data.task-cell {
-        @include span-columns(13 of 21);
+        @include span-columns(15 of 21);
       }
       .table-data.utils {
-        @include span-columns(8 of 21);
+        @include span-columns(6 of 21);
       }
     }
     .list-details {
@@ -168,6 +168,14 @@
   .table-row {
     @include row();
     @include transition(unset);
+    i {
+      margin-left: 0.1rem;
+      margin-right: 0.1rem;
+      font-size: 1.2rem;
+      @include media(min-width $small) {
+        font-size: inherit;
+      }
+    }
     &.complete {
       color: $completeGray;
       background: transparent;
@@ -218,15 +226,15 @@
   }
   .table-data.task-cell {
     word-wrap: break-word;
-    @include span-columns(13 of 21);
+    @include span-columns(15 of 21);
     @include media(min-width $small) {
-      @include span-columns(14 of 21);
-    }
-    @include media(min-width $medsmall) {
       @include span-columns(15 of 21);
     }
-    @include media(min-width $large) {
+    @include media(min-width $medsmall) {
       @include span-columns(16 of 21);
+    }
+    @include media(min-width $large) {
+      @include span-columns(17 of 21);
     }
     button {
       font-family: inherit;
@@ -241,15 +249,15 @@
     padding-right: 0;
     text-align: center;
     @include omega();
-    @include span-columns(6 of 21)
+    @include span-columns(4 of 21)
     @include media(min-width $small) {
-      @include span-columns(5 of 21);
-    }
-    @include media(min-width $medsmall) {
       @include span-columns(4 of 21);
     }
-    @include media(min-width $large) {
+    @include media(min-width $medsmall) {
       @include span-columns(3 of 21);
+    }
+    @include media(min-width $large) {
+      @include span-columns(2 of 21);
     }
     .sort-button {
       padding: 0 5px 0 5px;

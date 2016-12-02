@@ -1,8 +1,16 @@
 {
   "_args": [
     [
-      "animatewithsass@^3.2.1",
-      "/Users/patrick/Projects/taskmastr"
+      {
+        "raw": "animatewithsass@^3.2.1",
+        "scope": null,
+        "escapedName": "animatewithsass",
+        "name": "animatewithsass",
+        "rawSpec": "^3.2.1",
+        "spec": ">=3.2.1 <4.0.0",
+        "type": "range"
+      },
+      "/Users/pfricano/Projects/taskmastr"
     ]
   ],
   "_from": "animatewithsass@>=3.2.1 <4.0.0",
@@ -12,16 +20,17 @@
   "_location": "/animatewithsass",
   "_nodeVersion": "0.12.7",
   "_npmUser": {
-    "email": "michael.wolbert@gmail.com",
-    "name": "mchlbrnd"
+    "name": "mchlbrnd",
+    "email": "michael.wolbert@gmail.com"
   },
   "_npmVersion": "2.13.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "animatewithsass",
     "raw": "animatewithsass@^3.2.1",
-    "rawSpec": "^3.2.1",
     "scope": null,
+    "escapedName": "animatewithsass",
+    "name": "animatewithsass",
+    "rawSpec": "^3.2.1",
     "spec": ">=3.2.1 <4.0.0",
     "type": "range"
   },
@@ -32,10 +41,10 @@
   "_shasum": "4ae833f5b852377c6e8fd574c4223334dfee8c19",
   "_shrinkwrap": null,
   "_spec": "animatewithsass@^3.2.1",
-  "_where": "/Users/patrick/Projects/taskmastr",
+  "_where": "/Users/pfricano/Projects/taskmastr",
   "author": {
-    "email": "@geoffreygraham",
-    "name": "geoffgraham"
+    "name": "geoffgraham",
+    "email": "@geoffreygraham"
   },
   "bugs": {
     "url": "https://github.com/geoffgraham/animate.scss/issues"
@@ -59,8 +68,8 @@
   "main": "animate.scss",
   "maintainers": [
     {
-      "email": "michael.wolbert@gmail.com",
-      "name": "mchlbrnd"
+      "name": "mchlbrnd",
+      "email": "michael.wolbert@gmail.com"
     }
   ],
   "name": "animatewithsass",
