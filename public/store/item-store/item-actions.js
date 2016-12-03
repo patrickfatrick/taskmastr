@@ -121,6 +121,17 @@ export function deleteTask ({ commit, state }, index) {
   }
 }
 
+export function deleteAllCompleteTasks ({ commit, state, getters }) {
+  getters.getCompleteTasks.forEach((task) => {
+    const index = _.findIndex(state.current.tasks, { id: task.id })
+    commit('REMOVE_TASK', index)
+    return deleteItem(state.current.id, task.id, index, state.user.username, (err, response) => {
+      // Revert the change if request fails
+      if (err) commit('ADD_TASK', task)
+    })
+  })
+}
+
 export function completeTask ({ commit, state }, { index, bool }) {
   const tasks = state.current.items
   const dateCompleted = (bool) ? gregorian.reform().to('iso') : null

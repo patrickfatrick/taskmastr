@@ -1,179 +1,98 @@
 <template>
   <div>
-    <div id="task-list" class="table" v-show='allTasks'>
-      <div class="table-body" ref="dragula">
-        <div v-for="(task, index) in allTasks" :key="task.id" class="task table-row" :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
-          <div class="table-header">
-            <input class="check" type="checkbox" :value="task.complete"></input>
-            <button class="complete" title="Complete task" @click.prevent="completeTask({ index, bool: !task.complete })">
-              <i class="fa" :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"></i>
-            </button>
-          </div>
-          <div class="task-cell table-data">
-            <button class="name" :title="task.item" @click="setCurrentTask(index)" @dblclick.prevent="toggleDetails(index)">{{task.item}}</button>
-          </div>
-          <div class="utils table-data">
-            <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails(index, true)" v-bind:class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
-              <i class="fa" :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}"></i>
-            </button>
-            <button class="sort-button sort-handle" title="Sort task">
-              <i class="sort-handle fa fa-arrows-v"></i>
-            </button>
-            <button class="delete-button" title="Delete task" @click.prevent="deleteTask(index)">
-              <i class="fa" :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}"></i>
-            </button>
-          </div>
-        </div>
+    <div id="task-list"
+      class="table"
+      v-show='allTasks'>
+      <div
+        class="table-body"
+        ref="dragula">
+        <item
+          v-for="task in activeTasks"
+          :key="task.id"
+          class="task table-row" 
+          :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" 
+          :task="task">
+        </item>
+      </div>
+      <div 
+        id="clear-complete-button-container"
+        v-if="completeTasks.length">
+        <button 
+          id="clear-complete-button"
+          :class="{'deleting': deleteAllCompleteTasksTimeout}"
+          @click.prevent="setDeleteTimeout">
+          {{deleteAllCompleteTasksTimeout ? 'Undo' : 'Clear complete items'}}
+        </button>
+      </div>
+      <div class="table-body">
+        <item 
+          v-for="task in completeTasks" 
+          :key="task.id" class="task table-row" 
+          :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" 
+          :task="task">
+        </item>
       </div>
     </div>
-    <item-details v-for="(task, index) in allTasks" :index="index" :task="task"></item-details>
+    <item-details 
+      v-for="(task, index) in allTasks" 
+      :index="index" 
+      :task="task">
+    </item-details>
   </div>
 </template>
 
 <script>
-import _ from 'lodash'
 import dragula from 'dragula'
-import Mousetrap from 'mousetrap'
 import { mapGetters, mapActions } from 'vuex'
+import Item from './Item.vue'
 import ItemDetails from './ItemDetails.vue'
-import getParentByClass from '../../../helper-utilities/get-parent-by-class'
+import dragulaMixin from '../../mixins/dragula-mixin'
 
 export default {
-  data () {
-    return {
-      drake: null,
-      dragStart: null
-    }
-  },
   computed: mapGetters({
     activeTasks: 'getActiveTasks',
     completeTasks: 'getCompleteTasks',
     allTasks: 'getAllTasks'
   }),
+  data () {
+    return {
+      deleteAllCompleteTasksTimeout: false
+    }
+  },
   components: {
+    Item,
     ItemDetails
   },
+  mixins: [
+    dragulaMixin
+  ],
   methods: {
     ...mapActions([
-      'setCurrentTask',
-      'deleteTask',
-      'completeTask',
       'sortTasks',
-      'toggleDetails'
+      'deleteAllCompleteTasks'
     ]),
-    _drag (drake) {
-      drake.on('drag', (el) => {
-        this.dragStart = this._index(el)
-      })
+    sortFunction (oldIndex, newIndex) {
+      return this.sortTasks({ oldIndex, newIndex })
     },
-    _restrict (el) {
-      let touchTimeout
-      let draggable = false
-
-      function moveHandler (e) {
-        if (!draggable) {
-          e.stopPropagation()
-          upHandler(e)
-        }
+    setDeleteTimeout () {
+      if (!this.deleteAllCompleteTasksTimeout) {
+        let timeout = window.setTimeout(() => {
+          this.deleteAllCompleteTasks()
+          this.deleteAllCompleteTasksTimeout = false
+        }, 5000)
+        this.deleteAllCompleteTasksTimeout = timeout
+      } else {
+        window.clearTimeout(this.deleteAllCompleteTasksTimeout)
+        this.deleteAllCompleteTasksTimeout = false
       }
-      function downHandler (e) {
-        touchTimeout = window.setTimeout(() => {
-          draggable = true
-          getParentByClass(e.target, 'table-row').classList.add('gu-draggable')
-        }, 250)
-      }
-      function upHandler (e) {
-        window.clearTimeout(touchTimeout)
-        draggable = false
-        getParentByClass(e.target, 'table-row').classList.remove('gu-draggable')
-      }
-
-      el.addEventListener('touchmove', moveHandler)
-      el.addEventListener('mousemove', moveHandler)
-
-      el.addEventListener('touchstart', downHandler)
-      el.addEventListener('mousedown', downHandler)
-
-      el.addEventListener('touchend', upHandler)
-      el.addEventListener('mouseup', upHandler)
-    },
-    _index (el) {
-      var index = 0
-      if (!el || !el.parentNode) return -1
-      while (el && (el = el.previousElementSibling)) index++
-      return index
-    },
-    _drop (drake) {
-      drake.on('drop', (el) => {
-        let oldIndex = this.dragStart
-        let newIndex = this._index(el)
-        // Revert if trying to move complete task into incomplete list and vice versa
-        let completeIndex = _.findIndex(this.tasks, {complete: true})
-        if (completeIndex !== -1) {
-          if (this.tasks[oldIndex].complete && newIndex < completeIndex) return this.drake.cancel()
-          if (!this.tasks[oldIndex].complete && newIndex >= completeIndex) return this.drake.cancel()
-        }
-        this.sortTasks({ oldIndex, newIndex })
-      })
     }
   },
   mounted () {
-    // Keyboard bindings
-    Mousetrap.bind('ctrl+,', (e) => {
-      if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.tasks, {current: true})
-      index = (index === 0)
-        ? this.tasks.length - 1
-        : index - 1
-      this.setCurrentTask(index)
-    })
-    Mousetrap.bind('ctrl+.', (e) => {
-      if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.tasks, {current: true})
-      index = (index === this.tasks.length - 1)
-        ? 0
-        : index + 1
-      this.setCurrentTask(index)
-    })
-    Mousetrap.bind('ctrl+backspace', () => {
-      this.deleteTask(_.findIndex(this.tasks, {current: true}))
-    })
-    Mousetrap.bind('ctrl+c', () => {
-      this.completeTask({ index: _.findIndex(this.tasks, {current: true}), bool: !(_.find(this.tasks, {current: true}).complete) })
-    })
-    Mousetrap.bind('ctrl+command+down', () => {
-      const completeIndex = _.findIndex(this.tasks, {complete: true})
-      const currentIndex = _.findIndex(this.tasks, {current: true})
-
-      if (completeIndex !== -1) {
-        if (!this.tasks[currentIndex].complete && currentIndex === completeIndex - 1) return
-      }
-      if (currentIndex === this.tasks.length - 1) return
-
-      this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
-    })
-    Mousetrap.bind('ctrl+command+up', () => {
-      const completeIndex = _.findIndex(this.tasks, {complete: true})
-      const currentIndex = _.findIndex(this.tasks, {current: true})
-
-      if (completeIndex !== -1) {
-        if (this.tasks[currentIndex].complete && currentIndex === completeIndex) return
-      }
-      if (currentIndex === 0) return
-
-      this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex - 1 })
-    })
-
     this.$nextTick(() => {
       this.drake = dragula({
         containers: [this.$refs.dragula],
         revertOnSpill: true,
         mirrorContainer: this.$refs.dragula
-        // ,
-        // moves: (el, source, handle) => {
-        //   if (handle.classList.contains('sort-handle')) return true
-        //   return false
-        // }
       })
       this._drag(this.drake)
       this._drop(this.drake)

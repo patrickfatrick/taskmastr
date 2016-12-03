@@ -36,6 +36,29 @@
 	}
 }
 
+#clear-complete-button-container {
+	text-align: center;
+	margin-top: 0.3rem;
+	margin-bottom: 0.3rem;
+	font-size: 1rem;
+	button {
+		color: $white;
+		background-color: rgba(0, 0, 0, 0.2);
+		padding: 0.3rem;
+	  border-radius: 4px;
+	  border: 1px solid $completeGray * 0.6;
+	  &:active {
+    	background-color: rgba(0, 0, 0, 0.4);
+    }
+    &.deleting {
+    	background-color: $sunsetOrange * 0.8;
+    }
+    &:active.deleting {
+    	background-color: $sunsetOrange * 0.6;
+    }
+	}
+}
+
 .container {
 	@extend html;
 	position: initial;

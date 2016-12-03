@@ -25,7 +25,7 @@
 import { mapState, mapActions } from 'vuex'
 import MenuToggle from '../misc/MenuToggle.vue'
 import TaskInput from './task-components/TaskInput.vue'
-import Items from './task-components/ItemsAlt.vue'
+import Items from './task-components/Items.vue'
 
 export default {
   computed: mapState({
