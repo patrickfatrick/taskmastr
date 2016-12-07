@@ -1,4 +1,4 @@
-/* global describe it sinon beforeEach afterEach*/
+/* global describe it sinon beforeEach afterEach */
 import chai from 'chai'
 import { testAction } from '../test-action'
 import { setDueDateDifference } from '../../../public/store/item-store/item-actions'
@@ -20,8 +20,8 @@ describe('setDueDateDifference', () => {
     const dueDate = Date.parse(new Date()) + (1000 * 60 * 60 * 24)
     const index = 0
 
-    testAction(setDueDateDifference, [index, dueDate], {}, [
-      {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, 1]}
+    testAction(setDueDateDifference, { index, dueDate }, {}, [
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: 1 } }
     ], done)
   })
 
@@ -29,8 +29,8 @@ describe('setDueDateDifference', () => {
     const dueDate = Date.parse(new Date()) - (1000 * 60 * 60 * 24)
     const index = 0
 
-    testAction(setDueDateDifference, [index, dueDate], {}, [
-      {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, -1]}
+    testAction(setDueDateDifference, { index, dueDate }, {}, [
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: -1 } }
     ], done)
   })
 
@@ -38,8 +38,8 @@ describe('setDueDateDifference', () => {
     const dueDate = null
     const index = 0
 
-    testAction(setDueDateDifference, [index, dueDate], {}, [
-      {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null]}
+    testAction(setDueDateDifference, { index, dueDate }, {}, [
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: null } }
     ], done)
   })
 })

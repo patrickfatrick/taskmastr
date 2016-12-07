@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{'deleting': list._deleting, 'current': list.current}">
     <div class="initial-view">
       <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
         <input class="rename" type="text" :value="list.list" @change="rename($event, index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
@@ -61,7 +61,7 @@ export default {
     },
     navigateToList (id) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      this.$router.push({ path: '/app/list/' + id })
+      this.$router.push('/app/list/' + id)
     },
     rename (e, index) {
       if (!e.target.value) {
@@ -99,12 +99,12 @@ export default {
     Mousetrap.bind('alt+command+down', () => {
       const currentIndex = _.findIndex(this.lists, {current: true})
       if (currentIndex === this.lists.length - 1) return
-      this.sortLists(currentIndex, currentIndex + 1)
+      this.sortLists({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
     })
     Mousetrap.bind('alt+command+up', () => {
       const currentIndex = _.findIndex(this.lists, {current: true})
       if (currentIndex === 0) return
-      this.sortLists(currentIndex, currentIndex - 1)
+      this.sortLists({ oldIndex: currentIndex, newIndex: currentIndex - 1 })
     })
     Mousetrap.bind('alt+d', () => {
       this.toggleDetails(_.find(this.lists, {current: true}).id)

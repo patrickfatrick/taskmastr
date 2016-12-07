@@ -27,8 +27,8 @@ describe('removeListUser', () => {
       }
     })
 
-    testAction(listActions.removeListUser, [0, { username: 'username' }], state, [
-      { name: 'REMOVE_LIST_USER', payload: [0, { username: 'username' }] }
+    testAction(listActions.removeListUser, { index: 0, user: { username: 'username' } }, state, [
+      { name: 'REMOVE_LIST_USER', payload: { index: 0, user: { username: 'username' } } }
     ], done)
   })
 
@@ -41,9 +41,9 @@ describe('removeListUser', () => {
       }
     })
 
-    testAction(listActions.removeListUser, [0, { username: 'username' }], state, [
-      { name: 'REMOVE_LIST_USER', payload: [0, { username: 'username' }] },
-      { name: 'ADD_LIST_USER', payload: [0, { username: 'username' }] }
+    testAction(listActions.removeListUser, { index: 0, user: { username: 'username' } }, state, [
+      { name: 'REMOVE_LIST_USER', payload: { index: 0, user: { username: 'username' } } },
+      { name: 'ADD_LIST_USER', payload: { index: 0, user: { username: 'username' } } }
     ], done)
   })
 })

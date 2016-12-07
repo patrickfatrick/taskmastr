@@ -15,8 +15,8 @@ describe('forgotPassword', () => {
       }
     })
 
-    testAction(userActions.forgotPassword, ['username'], {}, [
-      {name: 'SET_FORGOT_EMAIL', payload: [true]}
+    testAction(userActions.forgotPassword, 'username', {}, [
+      {name: 'SET_FORGOT_EMAIL', payload: true}
     ], done)
   })
 })

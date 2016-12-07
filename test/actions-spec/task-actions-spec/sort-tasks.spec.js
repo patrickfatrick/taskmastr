@@ -39,8 +39,8 @@ describe('sortTasks', () => {
       }
     }
 
-    testAction(itemActions.sortTasks, [0, 1], state, [
-      { name: 'SORT_TASKS', payload: [0, 1] }
+    testAction(itemActions.sortTasks, { oldIndex: 0, newIndex: 1 }, state, [
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 1 } }
     ], done)
   })
 
@@ -77,8 +77,8 @@ describe('sortTasks', () => {
       }
     }
 
-    testAction(itemActions.sortTasks, [1, 0], state, [
-      { name: 'SORT_TASKS', payload: [1, 0] }
+    testAction(itemActions.sortTasks, { oldIndex: 1, newIndex: 0 }, state, [
+      { name: 'SORT_TASKS', payload: { oldIndex: 1, newIndex: 0 } }
     ], done)
   })
 
@@ -115,9 +115,9 @@ describe('sortTasks', () => {
       }
     }
 
-    testAction(itemActions.sortTasks, [0, 1], state, [
-      { name: 'SORT_TASKS', payload: [0, 1] },
-      { name: 'SORT_TASKS', payload: [1, 0] }
+    testAction(itemActions.sortTasks, { oldIndex: 0, newIndex: 1 }, state, [
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 1 } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 1, newIndex: 0 } }
     ], done)
   })
 })

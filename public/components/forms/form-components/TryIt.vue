@@ -20,7 +20,7 @@ export default {
       'loginUser'
     ]),
     loginTestUser (username, key, rememberMe) {
-      this.loginUser(username, key, rememberMe)
+      this.loginUser({ username, key, rememberMe })
       .then(() => {
         if (this.auth) {
           setTimeout(() => {

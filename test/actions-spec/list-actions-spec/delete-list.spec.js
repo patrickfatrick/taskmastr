@@ -55,12 +55,12 @@ describe('deleteList', () => {
       }
     }
 
-    testAction(listActions.deleteList, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 1] },
-      { name: 'SET_LIST_DELETE', payload: [0, true] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null] },
-      { name: 'SET_LIST_DELETE', payload: [0, false] },
-      { name: 'REMOVE_LIST', payload: [0] }
+    testAction(listActions.deleteList, { index: 0 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: 1 } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: true } },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_LIST', payload: { index: 0 } }
     ], done)
 
     clock.tick(5000)
@@ -105,13 +105,13 @@ describe('deleteList', () => {
         ]
       }
     }
-    testAction(listActions.deleteList, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 2] },
-      { name: 'SET_LIST_DELETE', payload: [0, true] },
-      { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null] },
-      { name: 'SET_LIST_DELETE', payload: [0, false] },
-      { name: 'REMOVE_LIST', payload: [0] }
+    testAction(listActions.deleteList, { index: 0 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: 2 } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: true } },
+      { name: 'SET_CURRENT_LIST', payload: state.user.tasks[1] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_LIST', payload: { index: 0 } }
     ], done)
 
     clock.tick(5000)
@@ -156,13 +156,13 @@ describe('deleteList', () => {
         ]
       }
     }
-    testAction(listActions.deleteList, [1], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid2', 3] },
-      { name: 'SET_LIST_DELETE', payload: [1, true] },
-      { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[0]] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid2', null] },
-      { name: 'SET_LIST_DELETE', payload: [1, false] },
-      { name: 'REMOVE_LIST', payload: [1] }
+    testAction(listActions.deleteList, { index: 1 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid2', val: 3 } },
+      { name: 'SET_LIST_DELETE', payload: { index: 1, bool: true } },
+      { name: 'SET_CURRENT_LIST', payload: state.user.tasks[0] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid2', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 1, bool: false } },
+      { name: 'REMOVE_LIST', payload: 1 }
     ], done)
 
     clock.tick(5000)
@@ -195,7 +195,7 @@ describe('deleteList', () => {
         ]
       }
     }
-    testAction(listActions.deleteList, [0], state, [], done)
+    testAction(listActions.deleteList, { index: 0 }, state, [], done)
 
     clock.tick(5000)
   })
@@ -240,22 +240,22 @@ describe('deleteList', () => {
       }
     }
 
-    testAction(listActions.deleteList, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 4] },
-      { name: 'SET_LIST_DELETE', payload: [0, true] },
-      { name: 'SET_CURRENT_LIST', payload: [state.user.tasks[1]] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null] },
-      { name: 'SET_LIST_DELETE', payload: [0, false] },
-      { name: 'REMOVE_LIST', payload: [0] }
+    testAction(listActions.deleteList, { index: 0 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: 4 } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: true } },
+      { name: 'SET_CURRENT_LIST', payload: state.user.tasks[1] },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_LIST', payload: { index: 0 } }
     ], done)
 
     clock.tick(1000)
 
-    testAction(listActions.deleteList, [1], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid2', 5] },
-      { name: 'SET_LIST_DELETE', payload: [1, true] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid2', null] },
-      { name: 'SET_LIST_DELETE', payload: [1, false] }
+    testAction(listActions.deleteList, { index: 1 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid2', val: 5 } },
+      { name: 'SET_LIST_DELETE', payload: { index: 1, bool: true } },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid2', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 1, bool: false } }
     ], done)
 
     clock.tick(5000)
@@ -303,9 +303,9 @@ describe('deleteList', () => {
         listid: 5
       }
     }
-    testAction(listActions.deleteList, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null] },
-      { name: 'SET_LIST_DELETE', payload: [0, false] }
+    testAction(listActions.deleteList, { index: 0 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: false } }
     ], done)
   })
 
@@ -348,13 +348,13 @@ describe('deleteList', () => {
       }
     }
 
-    testAction(listActions.deleteList, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', 5] },
-      { name: 'SET_LIST_DELETE', payload: [0, true] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['listid', null] },
-      { name: 'SET_LIST_DELETE', payload: [0, false] },
-      { name: 'REMOVE_LIST', payload: [0] },
-      { name: 'ADD_LIST', payload: [state.user.tasks[0]] }
+    testAction(listActions.deleteList, { index: 0 }, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: 5 } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: true } },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'listid', val: null } },
+      { name: 'SET_LIST_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_LIST', payload: { index: 0 } },
+      { name: 'ADD_LIST', payload: state.user.tasks[0] }
     ], done)
 
     clock.tick(5000)

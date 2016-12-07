@@ -52,10 +52,10 @@ export default {
     ]),
     reset (resetToken, resetKey) {
       if (!this.isValid) return
-      this.resetPassword(resetToken, resetKey)
+      this.resetPassword({ token: resetToken, key: resetKey })
       .then(() => {
         if (!this.user.username) return false
-        return this.loginUser(this.user.username, resetKey, false)
+        return this.loginUser({ username: this.user.username, key: resetKey, rememberMe: false })
       })
       .then(() => {
         if (this.auth) {

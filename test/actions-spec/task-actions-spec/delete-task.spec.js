@@ -49,12 +49,12 @@ describe('deleteTask', () => {
       }
     }
 
-    testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 6] },
-      { name: 'SET_TASK_DELETE', payload: [0, true] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
-      { name: 'SET_TASK_DELETE', payload: [0, false] },
-      { name: 'REMOVE_TASK', payload: [0] }
+    testAction(itemActions.deleteTask, 0, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: 6 } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: true } },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: null } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_TASK', payload: 0 }
     ], done)
 
     clock.tick(5000)
@@ -94,13 +94,13 @@ describe('deleteTask', () => {
         ]
       }
     }
-    testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 7] },
-      { name: 'SET_TASK_DELETE', payload: [0, true] },
-      { name: 'SET_CURRENT_TASK', payload: [1] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
-      { name: 'SET_TASK_DELETE', payload: [0, false] },
-      { name: 'REMOVE_TASK', payload: [0] }
+    testAction(itemActions.deleteTask, 0, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: 7 } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: true } },
+      { name: 'SET_CURRENT_TASK', payload: 1 },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: null } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_TASK', payload: 0 }
     ], done)
 
     clock.tick(5000)
@@ -141,13 +141,13 @@ describe('deleteTask', () => {
       }
     }
 
-    testAction(itemActions.deleteTask, [1], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid2', 8] },
-      { name: 'SET_TASK_DELETE', payload: [1, true] },
-      { name: 'SET_CURRENT_TASK', payload: [0] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid2', null] },
-      { name: 'SET_TASK_DELETE', payload: [1, false] },
-      { name: 'REMOVE_TASK', payload: [1] }
+    testAction(itemActions.deleteTask, 1, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid2', val: 8 } },
+      { name: 'SET_TASK_DELETE', payload: { index: 1, bool: true } },
+      { name: 'SET_CURRENT_TASK', payload: { index: 0 } },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid2', val: null } },
+      { name: 'SET_TASK_DELETE', payload: { index: 1, bool: false } },
+      { name: 'REMOVE_TASK', payload: 1 }
     ], done)
 
     clock.tick(5000)
@@ -191,9 +191,9 @@ describe('deleteTask', () => {
       }
     }
 
-    testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
-      { name: 'SET_TASK_DELETE', payload: [0, false] }
+    testAction(itemActions.deleteTask, 0, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: null } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: false } }
     ], done)
   })
 
@@ -230,13 +230,13 @@ describe('deleteTask', () => {
       }
     }
 
-    testAction(itemActions.deleteTask, [0], state, [
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', 9] },
-      { name: 'SET_TASK_DELETE', payload: [0, true] },
-      { name: 'UPDATE_DELETE_QUEUE', payload: ['itemid', null] },
-      { name: 'SET_TASK_DELETE', payload: [0, false] },
-      { name: 'REMOVE_TASK', payload: [0] },
-      { name: 'ADD_TASK', payload: [state.current.items[0]] }
+    testAction(itemActions.deleteTask, 0, state, [
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: 9 } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: true } },
+      { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: null } },
+      { name: 'SET_TASK_DELETE', payload: { index: 0, bool: false } },
+      { name: 'REMOVE_TASK', payload: 0 },
+      { name: 'ADD_TASK', payload: state.current.items[0] }
     ], done)
 
     clock.tick(5000)

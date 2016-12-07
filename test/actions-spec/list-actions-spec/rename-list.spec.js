@@ -29,8 +29,8 @@ describe('renameList', () => {
       }
     }
 
-    testAction(listActions.renameList, [0, 'List 0'], state, [
-      { name: 'RENAME_LIST', payload: [0, 'List 0'] }
+    testAction(listActions.renameList, { index: 0, name: 'List 0' }, state, [
+      { name: 'RENAME_LIST', payload: { index: 0, name: 'List 0' } }
     ], done)
   })
 
@@ -57,9 +57,9 @@ describe('renameList', () => {
       }
     }
 
-    testAction(listActions.renameList, [0, 'List 0'], state, [
-      { name: 'RENAME_LIST', payload: [0, 'List 0'] },
-      { name: 'RENAME_LIST', payload: [0, 'List 1'] }
+    testAction(listActions.renameList, { index: 0, name: 'List 0' }, state, [
+      { name: 'RENAME_LIST', payload: { index: 0, name: 'List 0' } },
+      { name: 'RENAME_LIST', payload: { index: 0, name: 'List 1' } }
     ], done)
   })
 })

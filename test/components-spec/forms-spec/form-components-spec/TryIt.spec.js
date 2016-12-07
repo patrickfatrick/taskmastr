@@ -1,39 +1,9 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import TryIt from '../../../../public/components/forms/form-components/TryIt.vue'
-import state from '../../../../public/store/state'
-import mutations from '../../../../public/store/mutations'
+import mountVm from '../../../mount-vm'
 
-describe('TryIt.vue', function () {
-  // mock vue-router
-  TryIt.computed.$route = () => {
-    return {
-      router: {
-        go (location) {
-          return location
-        }
-      }
-    }
-  }
-
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': TryIt
-      }
-    }).$mount()
-  }
-
+describe('TryItVue', function () {
   let clock
   let promise
 
@@ -46,64 +16,64 @@ describe('TryIt.vue', function () {
   })
 
   it('should inherit the testUser property from the state', () => {
-    assert.deepEqual(TryIt.vuex.getters.testUser({ testUser: 'mrormrstestperson@taskmastr.co' }), 'mrormrstestperson@taskmastr.co')
+    const vm = mountVm(TryIt)
+    assert.strictEqual(vm.testUser, 'mrormrstestperson@taskmastr.co')
   })
 
   it('should inherit the testKey property from the state', () => {
-    assert.deepEqual(TryIt.vuex.getters.testKey({ testKey: 'S41iVAtINGREsIdUE-278' }), 'S41iVAtINGREsIdUE-278')
+    const vm = mountVm(TryIt)
+    assert.strictEqual(vm.testKey, 'S41iVAtINGREsIdUE-278')
   })
 
   it('should inherit the wiki property from the state', () => {
-    assert.deepEqual(TryIt.vuex.getters.wiki({ wiki: '//patrickfatrick.gitbooks.io/taskmastr/content/' }), '//patrickfatrick.gitbooks.io/taskmastr/content/')
+    const vm = mountVm(TryIt)
+    assert.strictEqual(vm.wiki, '//patrickfatrick.gitbooks.io/taskmastr/content/')
   })
 
   it('should inherit the auth property from the state', () => {
-    assert.isFalse(TryIt.vuex.getters.auth({ auth: false }))
+    const vm = mountVm(TryIt)
+    assert.isFalse(vm.auth)
   })
 
   it('should inherit the current property from the state', () => {
-    assert.isObject(TryIt.vuex.getters.current({ current: {} }))
+    const vm = mountVm(TryIt)
+    assert.isObject(vm.current)
   })
 
   it('should have a loginUser method', () => {
-    assert.isFunction(TryIt.vuex.actions.loginUser)
+    const vm = mountVm(TryIt)
+    assert.isFunction(vm.loginUser)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm()
+    const vm = mountVm(TryIt)
 
-    assert.deepEqual(vm.$el.querySelector('#try-it-button').textContent, 'Try it out')
+    assert.strictEqual(vm.$el.querySelector('#try-it-button').textContent, 'Try it out')
   })
 
   it('should log in to the test account on loginTestUser', () => {
-    const vm = mountVm({ auth: 'mrormrstestperson@taskmastr.co' })
-    promise = sinon.stub(vm.$children[0], 'loginUser').returnsPromise()
-
+    const vm = mountVm(TryIt, { auth: 'mrormrstestperson@taskmastr.co' })
+    promise = sinon.stub(vm, 'loginUser').returnsPromise()
     promise.resolves('mrormrstestperson@taskmastr.co')
-    sinon.stub(vm.$children[0].$route.router, 'go')
+    sinon.stub(vm.$router, 'push')
 
-    vm.$children[0].loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false)
-
+    vm.loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false)
     clock.tick(250)
 
-    assert.isTrue(vm.$children[0].$route.router.go.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
-
-    vm.$children[0].$route.router.go.restore()
+    assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
+    vm.$router.push.restore()
   })
 
   it('should call loginTestUser on button push', () => {
-    const vm = mountVm()
-    promise = sinon.stub(vm.$children[0], 'loginUser').returnsPromise()
-
+    const vm = mountVm(TryIt)
+    promise = sinon.stub(vm, 'loginUser').returnsPromise()
     promise.resolves('mrormrstestperson@taskmastr.co')
-    sinon.stub(vm.$children[0], 'loginTestUser')
+    sinon.stub(vm, 'loginTestUser')
 
     vm.$el.querySelector('#try-it-button').click()
-
     clock.tick(250)
 
-    assert.isTrue(vm.$children[0].loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false))
-
-    vm.$children[0].loginTestUser.restore()
+    assert.isTrue(vm.loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false))
+    vm.loginTestUser.restore()
   })
 })

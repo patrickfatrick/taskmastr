@@ -31,8 +31,8 @@ describe('setTaskNotes', () => {
         ]
       }
     }
-    testAction(itemActions.setTaskNotes, [0, 'Notes'], state, [
-      { name: 'SET_TASK_NOTES', payload: [0, 'Notes'] }
+    testAction(itemActions.setTaskNotes, { index: 0, notes: 'Notes' }, state, [
+      { name: 'SET_TASK_NOTES', payload: { index: 0, notes: 'Notes' } }
     ], done)
   })
 
@@ -61,9 +61,9 @@ describe('setTaskNotes', () => {
         ]
       }
     }
-    testAction(itemActions.setTaskNotes, [0, 'Notes'], state, [
-      { name: 'SET_TASK_NOTES', payload: [0, 'Notes'] },
-      { name: 'SET_TASK_NOTES', payload: [0, ''] }
+    testAction(itemActions.setTaskNotes, { index: 0, notes: 'Notes' }, state, [
+      { name: 'SET_TASK_NOTES', payload: { index: 0, notes: 'Notes' } },
+      { name: 'SET_TASK_NOTES', payload: { index: 0, notes: '' } }
     ], done)
   })
 })

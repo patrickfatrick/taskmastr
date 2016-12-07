@@ -1,20 +1,49 @@
 <template>
-  <div>
+  <div
+    class="task table-row" 
+    :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
     <div class="table-header">
-      <input class="check" type="checkbox" :value="task.complete"></input>
-      <button class="complete" title="Complete task" @click.prevent="completeTask({ index, bool: !task.complete })">
-        <i class="fa" :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"></i>
+      <input 
+        class="check" 
+        type="checkbox" 
+        :value="task.complete">
+      </input>
+      <button 
+        class="complete" 
+        title="Complete task" 
+        @click.prevent="completeTask({ index, bool: !task.complete })">
+        <i 
+          class="fa" 
+          :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}">
+        </i>
       </button>
     </div>
     <div class="task-cell table-data">
-      <button class="name" :title="task.item" @click="setCurrentTask(index)" @dblclick.prevent="toggleDetails(index)">{{task.item}}</button>
+      <button 
+        class="name" 
+        :title="task.item" @click="setCurrentTask(index)" 
+        @dblclick.prevent="toggleDetails(index)">{{task.item}}
+      </button>
     </div>
     <div class="utils table-data">
-      <button class="details-button" title="Toggle details pane" @click.prevent="toggleDetails(index, true)" v-bind:class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
-        <i class="fa" :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}"></i>
+      <button 
+        class="details-button" 
+        title="Toggle details pane" 
+        @click.prevent="toggleDetails(index, true)" 
+        :class="{'active': task.dueDate || task.notes, 'overdue': task._dueDateDifference < 0, 'due': task._dueDateDifference === 0}">
+        <i 
+          class="fa" 
+          :class="{'fa-pencil-square': !task.dueDate && (!task._dueDateDifference || task._dueDateDifference > 0 || task.complete), 'fa-exclamation-triangle': task._dueDateDifference < 0 && !task.complete, 'fa-calendar': task.dueDate && task._dueDateDifference >= 0 && !task.complete}">  
+        </i>
       </button>
-      <button class="delete-button" title="Delete task" @click.prevent="deleteTask(index)">
-        <i class="fa" :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}"></i>
+      <button 
+        class="delete-button" 
+        title="Delete task" 
+        @click.prevent="deleteTask(index)">
+        <i 
+          class="fa" 
+          :class="{'fa-trash-o': !task._deleting, 'fa-undo': task._deleting}">
+        </i>
       </button>
     </div>
   </div>
@@ -76,9 +105,8 @@ export default {
       const completeIndex = _.findIndex(this.allTasks, { complete: true })
       const currentIndex = _.findIndex(this.allTasks, { current: true })
 
-      if (completeIndex !== -1) {
-        if (!this.allTasks[currentIndex].complete && currentIndex === completeIndex - 1) return
-      }
+      if (this.allTasks[currentIndex].complete) return
+      if (completeIndex !== -1 && currentIndex === completeIndex - 1) return
       if (currentIndex === this.allTasks.length - 1) return
 
       this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
@@ -87,9 +115,8 @@ export default {
       const completeIndex = _.findIndex(this.allTasks, { complete: true })
       const currentIndex = _.findIndex(this.allTasks, { current: true })
 
-      if (completeIndex !== -1) {
-        if (this.allTasks[currentIndex].complete && currentIndex === completeIndex) return
-      }
+      if (this.allTasks[currentIndex].complete) return
+      if (completeIndex !== -1 && currentIndex === completeIndex) return
       if (currentIndex === 0) return
 
       this.sortTasks({ oldIndex: currentIndex, newIndex: currentIndex - 1 })

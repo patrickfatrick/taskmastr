@@ -15,8 +15,8 @@ describe('setDarkmode', () => {
       }
     })
 
-    testAction(userActions.setDarkmode, [true], {}, [
-      { name: 'SET_DARKMODE', payload: [true] }
+    testAction(userActions.setDarkmode, true, {}, [
+      { name: 'SET_DARKMODE', payload: true }
     ], done)
   })
 
@@ -29,8 +29,8 @@ describe('setDarkmode', () => {
       }
     })
 
-    testAction(userActions.setDarkmode, [false], {}, [
-      { name: 'SET_DARKMODE', payload: [false] }
+    testAction(userActions.setDarkmode, false, {}, [
+      { name: 'SET_DARKMODE', payload: false }
     ], done)
   })
 
@@ -49,9 +49,9 @@ describe('setDarkmode', () => {
       }
     }
 
-    testAction(userActions.setDarkmode, [true], state, [
-      { name: 'SET_DARKMODE', payload: [true] },
-      { name: 'SET_DARKMODE', payload: [false] }
+    testAction(userActions.setDarkmode, true, state, [
+      { name: 'SET_DARKMODE', payload: true },
+      { name: 'SET_DARKMODE', payload: false }
     ], done)
   })
 })

@@ -16,13 +16,13 @@ describe('getSession', () => {
       }
     })
 
-    testAction(userActions.getUserSession, [], {}, [
-      { name: 'SET_USERNAME', payload: ['username'] },
-      { name: 'SET_KEY', payload: [''] },
-      { name: 'SET_DARKMODE', payload: [true] },
-      { name: 'SET_TASKS', payload: [mockUser.tasks] },
-      { name: 'SET_CURRENT_LIST', payload: [mockUser.tasks[0]] },
-      { name: 'SET_AUTH', payload: ['username'] }
+    testAction(userActions.getUserSession, null, {}, [
+      { name: 'SET_USERNAME', payload: 'username' },
+      { name: 'SET_KEY', payload: '' },
+      { name: 'SET_DARKMODE', payload: true },
+      { name: 'SET_TASKS', payload: mockUser.tasks },
+      { name: 'SET_CURRENT_LIST', payload: mockUser.tasks[0] },
+      { name: 'SET_AUTH', payload: 'username' }
     ], done)
   })
 
@@ -35,8 +35,8 @@ describe('getSession', () => {
       }
     })
 
-    testAction(userActions.getUserSession, [], {}, [
-      { name: 'SET_INIT', payload: [true] }
+    testAction(userActions.getUserSession, null, {}, [
+      { name: 'SET_INIT', payload: true }
     ], done)
   })
 })

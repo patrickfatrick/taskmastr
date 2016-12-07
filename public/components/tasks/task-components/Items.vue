@@ -4,13 +4,12 @@
       class="table"
       v-show='allTasks'>
       <div
+        id="active-tasks"
         class="table-body"
         ref="dragula">
         <item
           v-for="task in activeTasks"
-          :key="task.id"
-          class="task table-row" 
-          :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" 
+          :key="task.id" 
           :task="task">
         </item>
       </div>
@@ -24,7 +23,10 @@
           {{deleteAllCompleteTasksTimeout ? 'Undo' : 'Clear complete items'}}
         </button>
       </div>
-      <div class="table-body">
+      <div
+        id="complete-tasks"
+        class="table-body"
+        v-show="!hideCompleteTasks">
         <item 
           v-for="task in completeTasks" 
           :key="task.id" class="task table-row" 
@@ -56,7 +58,8 @@ export default {
   }),
   data () {
     return {
-      deleteAllCompleteTasksTimeout: false
+      deleteAllCompleteTasksTimeout: false,
+      hideCompleteTasks: false
     }
   },
   components: {
@@ -79,11 +82,14 @@ export default {
         let timeout = window.setTimeout(() => {
           this.deleteAllCompleteTasks()
           this.deleteAllCompleteTasksTimeout = false
+          this.hideCompleteTasks = false
         }, 5000)
         this.deleteAllCompleteTasksTimeout = timeout
+        this.hideCompleteTasks = true
       } else {
         window.clearTimeout(this.deleteAllCompleteTasksTimeout)
         this.deleteAllCompleteTasksTimeout = false
+        this.hideCompleteTasks = false
       }
     }
   },
@@ -91,7 +97,7 @@ export default {
     this.$nextTick(() => {
       this.drake = dragula({
         containers: [this.$refs.dragula],
-        revertOnSpill: true,
+        revertOnSpill: false,
         mirrorContainer: this.$refs.dragula
       })
       this._drag(this.drake)

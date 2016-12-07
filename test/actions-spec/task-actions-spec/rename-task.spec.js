@@ -30,8 +30,8 @@ describe('renameTask', () => {
         ]
       }
     }
-    testAction(itemActions.renameTask, [0, 'Item 0'], state, [
-      { name: 'RENAME_TASK', payload: [0, 'Item 0'] }
+    testAction(itemActions.renameTask, { index: 0, name: 'Item 0' }, state, [
+      { name: 'RENAME_TASK', payload: { index: 0, name: 'Item 0' } }
     ], done)
   })
 
@@ -59,9 +59,9 @@ describe('renameTask', () => {
         ]
       }
     }
-    testAction(itemActions.renameTask, [0, 'Item 0'], state, [
-      { name: 'RENAME_TASK', payload: [0, 'Item 0'] },
-      { name: 'RENAME_TASK', payload: [0, 'Item 1'] }
+    testAction(itemActions.renameTask, { index: 0, name: 'Item 0' }, state, [
+      { name: 'RENAME_TASK', payload: { index: 0, name: 'Item 0' } },
+      { name: 'RENAME_TASK', payload: { index: 0, name: 'Item 1' } }
     ], done)
   })
 })

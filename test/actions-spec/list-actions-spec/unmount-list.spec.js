@@ -7,8 +7,8 @@ chai.should()
 
 describe('unmountList', () => {
   it('dispatches SET_CURRENT_LIST', (done) => {
-    testAction(unmountList, [0], {}, [
-      { name: 'SET_CURRENT_LIST', payload: [null] }
+    testAction(unmountList, 0, {}, [
+      { name: 'SET_CURRENT_LIST', payload: null }
     ], done)
   })
 })

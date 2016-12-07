@@ -27,8 +27,8 @@ describe('addListUser', () => {
       }
     })
 
-    testAction(listActions.addListUser, [0, { username: 'username' }], state, [
-      { name: 'ADD_LIST_USER', payload: [0, { username: 'username' }] }
+    testAction(listActions.addListUser, { index: 0, user: { username: 'username' } }, state, [
+      { name: 'ADD_LIST_USER', payload: { index: 0, user: { username: 'username' } } }
     ], done)
   })
 
@@ -41,9 +41,9 @@ describe('addListUser', () => {
       }
     })
 
-    testAction(listActions.addListUser, [0, { username: 'username' }], state, [
-      { name: 'ADD_LIST_USER', payload: [0, { username: 'username' }] },
-      { name: 'REMOVE_LIST_USER', payload: [0, { username: 'username' }] }
+    testAction(listActions.addListUser, { index: 0, user: { username: 'username' } }, state, [
+      { name: 'ADD_LIST_USER', payload: { index: 0, user: { username: 'username' } } },
+      { name: 'REMOVE_LIST_USER', payload: { index: 0, user: { username: 'username' } } }
     ], done)
   })
 })

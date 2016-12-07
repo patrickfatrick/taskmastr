@@ -1,8 +1,18 @@
 <template>
-  <div id="lists-list" class="table" v-show="lists">
-    <div class="table-body" ref="dragula">
-      <div v-for="(list, index) in lists" :key="list.id" class="table-row"  :class="{'deleting': list._deleting, 'current': list.current}">
-        <list :index="index" :list="list"></list>
+  <div 
+    id="lists-list" 
+    class="table" 
+    v-show="lists">
+    <div 
+      class="table-body"
+      ref="dragula">
+      <div 
+        v-for="(list, index) in lists" 
+        :key="list.id" class="table-row">
+        <list 
+          :index="index"
+          :list="list">
+        </list>
       </div>
     </div>
   </div>
@@ -36,7 +46,7 @@ export default {
     this.$nextTick(() => {
       this.drake = dragula({
         containers: [this.$refs.dragula],
-        revertOnSpill: true,
+        revertOnSpill: false,
         mirrorContainer: this.$refs.dragula
       })
       this._drag(this.drake)

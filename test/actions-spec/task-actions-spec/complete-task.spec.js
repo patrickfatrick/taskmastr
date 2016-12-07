@@ -1,4 +1,4 @@
-/* global describe it sinon beforeEach afterEach*/
+/* global describe it sinon beforeEach afterEach */
 import chai from 'chai'
 import { testAction } from '../test-action'
 import itemActionsInjector from 'inject!../../../public/store/item-store/item-actions'
@@ -52,13 +52,13 @@ describe('completeTask', () => {
         ]
       }
     }
-    testAction(itemActions.completeTask, [0, true], state, [
-      {name: 'SET_TASK_COMPLETE', payload: [0, true]},
-      {name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z']},
-      {name: 'SET_COMPLETED_BY', payload: [0, 'username']},
-      {name: 'SET_TASK_DUE_DATE', payload: [0, null]},
-      {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null]},
-      {name: 'SORT_TASKS', payload: [0, 0]}
+    testAction(itemActions.completeTask, { index: 0, bool: true }, state, [
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: true } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: '2016-01-01T00:00:00.000Z' } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: 'username' } },
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 0, date: null } },
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 0 } }
     ], done)
   })
 
@@ -93,13 +93,13 @@ describe('completeTask', () => {
       }
     }
 
-    testAction(itemActions.completeTask, [0, true], state, [
-      {name: 'SET_TASK_COMPLETE', payload: [0, true]},
-      {name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z']},
-      {name: 'SET_COMPLETED_BY', payload: [0, 'username']},
-      {name: 'SET_TASK_DUE_DATE', payload: [0, null]},
-      {name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null]},
-      {name: 'SORT_TASKS', payload: [0, 1]}
+    testAction(itemActions.completeTask, { index: 0, bool: true }, state, [
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: true } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: '2016-01-01T00:00:00.000Z' } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: 'username' } },
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 0, date: null } },
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 1 } }
     ], done)
   })
 
@@ -135,11 +135,11 @@ describe('completeTask', () => {
       }
     }
 
-    testAction(itemActions.completeTask, [0, false], state, [
-      {name: 'SET_TASK_COMPLETE', payload: [0, false]},
-      {name: 'SET_DATE_COMPLETED', payload: [0, null]},
-      {name: 'SET_COMPLETED_BY', payload: [0, null]},
-      {name: 'SORT_TASKS', payload: [0, 0]}
+    testAction(itemActions.completeTask, { index: 0, bool: false }, state, [
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: false } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: null } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 0 } }
     ], done)
   })
 
@@ -173,13 +173,13 @@ describe('completeTask', () => {
         ]
       }
     }
-    testAction(itemActions.completeTask, [1, true], state, [
-      {name: 'SET_TASK_COMPLETE', payload: [1, true]},
-      {name: 'SET_DATE_COMPLETED', payload: [1, '2016-01-01T00:00:00.000Z']},
-      {name: 'SET_COMPLETED_BY', payload: [1, 'username']},
-      {name: 'SET_TASK_DUE_DATE', payload: [1, null]},
-      {name: 'SET_DUE_DATE_DIFFERENCE', payload: [1, null]},
-      {name: 'SORT_TASKS', payload: [1, 0]}
+    testAction(itemActions.completeTask, { index: 1, bool: true }, state, [
+      { name: 'SET_TASK_COMPLETE', payload: { index: 1, bool: true } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 1, date: '2016-01-01T00:00:00.000Z' } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 1, username: 'username' } },
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 1, date: null } },
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 1, n: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 1, newIndex: 0 } }
     ], done)
   })
 
@@ -219,17 +219,17 @@ describe('completeTask', () => {
         ]
       }
     }
-    testAction(itemActions.completeTask, [0, true], state, [
-      { name: 'SET_TASK_COMPLETE', payload: [0, true] },
-      { name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z'] },
-      { name: 'SET_COMPLETED_BY', payload: [0, 'username'] },
-      { name: 'SET_TASK_DUE_DATE', payload: [0, null] },
-      { name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null] },
-      { name: 'SORT_TASKS', payload: [0, 0] },
-      { name: 'SET_TASK_COMPLETE', payload: [0, false] },
-      { name: 'SET_DATE_COMPLETED', payload: [0, null] },
-      { name: 'SET_COMPLETED_BY', payload: [0, null] },
-      { name: 'SORT_TASKS', payload: [0, 0] }
+    testAction(itemActions.completeTask, { index: 0, bool: true }, state, [
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: true } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: '2016-01-01T00:00:00.000Z' } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: 'username' } },
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 0, date: null } },
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 0 } },
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: false } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: null } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 0 } }
     ], done)
   })
 
@@ -270,15 +270,15 @@ describe('completeTask', () => {
         ]
       }
     }
-    testAction(itemActions.completeTask, [0, false], state, [
-      { name: 'SET_TASK_COMPLETE', payload: [0, false] },
-      { name: 'SET_DATE_COMPLETED', payload: [0, null] },
-      { name: 'SET_COMPLETED_BY', payload: [0, null] },
-      { name: 'SORT_TASKS', payload: [0, 0] },
-      { name: 'SET_TASK_COMPLETE', payload: [0, true] },
-      { name: 'SET_DATE_COMPLETED', payload: [0, '2016-01-01T00:00:00.000Z'] },
-      { name: 'SET_COMPLETED_BY', payload: [0, 'username'] },
-      { name: 'SORT_TASKS', payload: [0, 0] }
+    testAction(itemActions.completeTask, { index: 0, bool: false }, state, [
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: false } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: null } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: null } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 0 } },
+      { name: 'SET_TASK_COMPLETE', payload: { index: 0, bool: true } },
+      { name: 'SET_DATE_COMPLETED', payload: { index: 0, date: '2016-01-01T00:00:00.000Z' } },
+      { name: 'SET_COMPLETED_BY', payload: { index: 0, username: 'username' } },
+      { name: 'SORT_TASKS', payload: { oldIndex: 0, newIndex: 0 } }
     ], done)
   })
 })

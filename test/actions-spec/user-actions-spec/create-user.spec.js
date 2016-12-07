@@ -16,12 +16,12 @@ describe('createUser', () => {
       }
     })
 
-    testAction(userActions.createUser, ['username', 'password', false], {}, [
-      { name: 'SET_USERNAME', payload: ['username'] },
-      { name: 'SET_KEY', payload: [''] },
-      { name: 'SET_CONFIRM', payload: [''] },
-      { name: 'SET_DARKMODE', payload: [true] },
-      { name: 'SET_AUTH', payload: ['username'] }
+    testAction(userActions.createUser, { username: 'username', key: 'password', rememberMe: false }, {}, [
+      { name: 'SET_USERNAME', payload: 'username' },
+      { name: 'SET_KEY', payload: '' },
+      { name: 'SET_CONFIRM', payload: '' },
+      { name: 'SET_DARKMODE', payload: true },
+      { name: 'SET_AUTH', payload: 'username' }
     ], done)
   })
 
@@ -34,9 +34,9 @@ describe('createUser', () => {
       }
     })
 
-    testAction(userActions.createUser, ['username', 'password', false], {}, [
-      { name: 'SET_CREATE_FAIL', payload: ['Error'] },
-      { name: 'SET_CONFIRM_ATTEMPT', payload: [true] }
+    testAction(userActions.createUser, { username: 'username', key: 'password', rememberMe: false }, {}, [
+      { name: 'SET_CREATE_FAIL', payload: 'Error' },
+      { name: 'SET_CONFIRM_ATTEMPT', payload: true }
     ], done)
   })
 })

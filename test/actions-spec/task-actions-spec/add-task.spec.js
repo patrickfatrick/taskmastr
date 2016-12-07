@@ -33,8 +33,8 @@ describe('addTask', () => {
       item: 'New task'
     }
 
-    testAction(itemActions.addTask, [task], state, [
-      { name: 'ADD_TASK', payload: [task] }
+    testAction(itemActions.addTask, task, state, [
+      { name: 'ADD_TASK', payload: task }
     ], done)
   })
 
@@ -65,9 +65,9 @@ describe('addTask', () => {
       item: 'New task'
     }
 
-    testAction(itemActions.addTask, [task], state, [
-      { name: 'ADD_TASK', payload: [task] },
-      { name: 'REMOVE_TASK', payload: [0] }
+    testAction(itemActions.addTask, task, state, [
+      { name: 'ADD_TASK', payload: task },
+      { name: 'REMOVE_TASK', payload: 0 }
     ], done)
   })
 })

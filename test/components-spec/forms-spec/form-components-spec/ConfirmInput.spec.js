@@ -1,52 +1,31 @@
 /* global it describe */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import ConfirmInput from '../../../../public/components/forms/form-components/ConfirmInput.vue'
-import state from '../../../../public/store/state'
-import mutations from '../../../../public/store/mutations'
+import mountVm from '../../../mount-vm'
 
-describe('ConfirmInput.vue', function () {
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': ConfirmInput
-      }
-    }).$mount()
-  }
-
+describe('ConfirmInputVue', function () {
   it('should inherit the user property from the state', () => {
-    assert.isObject(ConfirmInput.vuex.getters.user({ user: {} }))
+    const vm = mountVm(ConfirmInput)
+    assert.isObject(vm.user)
   })
 
   it('should inherit the loginAttempt property from the state', () => {
-    assert.isFalse(ConfirmInput.vuex.getters.loginAttempt({ loginAttempt: false }))
+    const vm = mountVm(ConfirmInput)
+    assert.isFalse(vm.loginAttempt)
   })
 
   it('should inherit the confirmAttempt property from the state', () => {
-    assert.isFalse(ConfirmInput.vuex.getters.confirmAttempt({ confirmAttempt: false }))
+    const vm = mountVm(ConfirmInput)
+    assert.isFalse(vm.confirmAttempt)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm()
-
+    const vm = mountVm(ConfirmInput)
     assert.isFalse(vm.$el.querySelector('#confirm').classList.contains('invalid'))
   })
 
   it('should respond to changes in the state', () => {
-    ConfirmInput.props.match = false
-    const vm = mountVm({ confirmAttempt: true })
-
+    const vm = mountVm(ConfirmInput, { confirmAttempt: true }, { match: false })
     assert.isTrue(vm.$el.querySelector('#confirm').classList.contains('invalid'))
-
-    ConfirmInput.props.match = undefined
   })
 })

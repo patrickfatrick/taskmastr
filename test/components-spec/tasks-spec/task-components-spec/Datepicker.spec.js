@@ -1,50 +1,13 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
-import DatepickerInjector from 'inject?../../../store/item-store/item-actions!../../../../public/components/tasks/task-components/Datepicker.vue'
-import state from '../../../../public/store/state'
-import mutations from '../../../../public/store/mutations'
+import Datepicker from '../../../../public/components/tasks/task-components/Datepicker.vue'
+import mountVm from '../../../mount-vm'
 
-const Datepicker = DatepickerInjector({
-  '../../../store/item-store/item-actions': {
-    setTaskDueDate (index, date) {
-      return date
-    },
-    setDueDateDifference (index, n) {
-      return n
-    }
-  }
-})
-
-describe('Datepicker.vue', function () {
+describe('DatepickerVue', function () {
   let clock
   let items
   let task
   let index
-
-  function mountVm () {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test :task="task" :index="index"></test></div>',
-      data: {
-        task,
-        index
-      },
-      components: {
-        'test': Datepicker
-      }
-    }).$mount()
-  }
 
   beforeEach(() => {
     const start = 'Jan 1, 2016 00:00:000 UTC'
@@ -95,27 +58,32 @@ describe('Datepicker.vue', function () {
   })
 
   it('should inherit the tasks property from the state', () => {
-    assert.isArray(Datepicker.vuex.getters.tasks({ current: { items: [] } }))
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    assert.isArray(vm.tasks)
   })
 
   it('should inherit a setDueDateDifference action from the store', () => {
-    assert.isFunction(Datepicker.vuex.actions.setDueDateDifference)
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    assert.isFunction(vm.setDueDateDifference)
   })
 
   it('should inherit a setTaskDueDate action from the store', () => {
-    assert.isFunction(Datepicker.vuex.actions.setTaskDueDate)
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    assert.isFunction(vm.setTaskDueDate)
   })
 
   it('should have a reformatDate method', () => {
-    assert.isFunction(Datepicker.methods.reformatDate)
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    assert.isFunction(vm.reformatDate)
   })
 
   it('should have a setDueDate method', () => {
-    assert.isFunction(Datepicker.methods.setDueDate)
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    assert.isFunction(vm.setDueDate)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm()
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.datepicker-toggle').classList.contains('active'))
     assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-calendar-plus-o'))
@@ -148,7 +116,7 @@ describe('Datepicker.vue', function () {
       _detailsToggled: false
     }
 
-    const vm = mountVm()
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
 
     assert.isTrue(vm.$el.querySelector('.datepicker-toggle').classList.contains('active'))
     assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-calendar-plus-o'))
@@ -157,14 +125,13 @@ describe('Datepicker.vue', function () {
   })
 
   it('should call setDueDate on reformatDate', () => {
-    const vm = mountVm()
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    sinon.stub(vm, 'setDueDate')
 
-    sinon.stub(vm.$children[0], 'setDueDate')
+    vm.reformatDate(new Date())
 
-    vm.$children[0].reformatDate(0, new Date())
-    assert.isTrue(vm.$children[0].setDueDate.calledWith(0, '2016-01-01T00:00:00.000Z'))
-
-    vm.$children[0].setDueDate.restore()
+    assert.isTrue(vm.setDueDate.calledWith(0, '2016-01-01T00:00:00.000Z'))
+    vm.setDueDate.restore()
   })
 
   it('should call setTaskDueDate and on setDueDate', () => {
@@ -192,31 +159,29 @@ describe('Datepicker.vue', function () {
       _detailsToggled: false
     }
 
-    const vm = mountVm()
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    sinon.stub(vm, 'setTaskDueDate')
 
-    sinon.stub(vm.$children[0], 'setTaskDueDate')
+    vm.setDueDate(0, '2016-01-01T00:00:00.000Z')
 
-    vm.$children[0].setDueDate(0, '2016-01-01T00:00:00.000Z')
-    assert.isTrue(vm.$children[0].setTaskDueDate.calledWith(0, '2016-01-01T00:00:00.000Z'))
-
-    vm.$children[0].setTaskDueDate.restore()
+    assert.isTrue(vm.setTaskDueDate.calledWith({ index: 0, date: '2016-01-01T00:00:00.000Z' }))
+    vm.setTaskDueDate.restore()
   })
 
   it('should handle setting a null date', () => {
-    const vm = mountVm()
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    sinon.stub(vm, 'setTaskDueDate')
+    sinon.stub(vm.picker, 'setDate')
+    sinon.stub(vm, 'setDueDateDifference')
 
-    sinon.stub(vm.$children[0], 'setTaskDueDate')
-    sinon.stub(vm.$children[0].picker, 'setDate')
-    sinon.stub(vm.$children[0], 'setDueDateDifference')
+    vm.setDueDate(0, null)
 
-    vm.$children[0].setDueDate(0, null)
-    assert.isTrue(vm.$children[0].setTaskDueDate.calledWith(0, null))
-    assert.isTrue(vm.$children[0].picker.setDate.calledWith(''))
-    assert.isTrue(vm.$children[0].setDueDateDifference.calledWith(0, null))
-
-    vm.$children[0].setTaskDueDate.restore()
-    vm.$children[0].picker.setDate.restore()
-    vm.$children[0].setDueDateDifference.restore()
+    assert.isTrue(vm.setTaskDueDate.calledWith({ index: 0, date: null }))
+    assert.isTrue(vm.picker.setDate.calledWith(''))
+    assert.isTrue(vm.setDueDateDifference.calledWith({ index: 0, dueDate: null }))
+    vm.setTaskDueDate.restore()
+    vm.picker.setDate.restore()
+    vm.setDueDateDifference.restore()
   })
 
   it('should call setDueDate on .remove-due-date click', () => {
@@ -244,13 +209,12 @@ describe('Datepicker.vue', function () {
       _detailsToggled: false
     }
 
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'setDueDate')
+    const vm = mountVm(Datepicker, { current: { items } }, { task, index })
+    sinon.stub(vm, 'setDueDate')
 
     vm.$el.querySelector('.remove-due-date-button').click()
-    assert.isTrue(vm.$children[0].setDueDate.calledWith(0, ''))
 
-    vm.$children[0].setDueDate.restore()
+    assert.isTrue(vm.setDueDate.calledWith(0, ''))
+    vm.setDueDate.restore()
   })
 })

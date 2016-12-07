@@ -164,7 +164,7 @@ export function forgotPassword ({ commit }, username) {
   })
 }
 
-export function resetPassword ({ commit }, token, key) {
+export function resetPassword ({ commit }, { token, key }) {
   return reset(token, key, (err, response) => {
     if (err) return commit('SET_RESET_FAIL', err)
     commit('SET_USERNAME', response.username)

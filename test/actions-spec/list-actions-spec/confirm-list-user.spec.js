@@ -48,8 +48,8 @@ describe('confirmListUser', () => {
       _deleting: false
     }
 
-    testAction(listActions.confirmListUser, ['listid', 'username'], state, [
-      { name: 'ADD_LIST', payload: [userList] }
+    testAction(listActions.confirmListUser, { id: 'listid', username: 'username' }, state, [
+      { name: 'ADD_LIST', payload: userList }
     ], done)
   })
 
@@ -73,8 +73,8 @@ describe('confirmListUser', () => {
       }
     })
 
-    testAction(listActions.confirmListUser, ['listid', 'username'], state, [
-      { name: 'SET_USER_STATUS', payload: ['listid', 'username', 'pending'] }
+    testAction(listActions.confirmListUser, { listid: 'listid', username: 'username' }, state, [
+      { name: 'SET_USER_STATUS', payload: { id: 'listid', username: 'username', status: 'pending' } }
     ], done)
   })
 
@@ -108,9 +108,9 @@ describe('confirmListUser', () => {
       _deleting: false
     }
 
-    testAction(listActions.confirmListUser, ['listid', 'username'], state, [
-      { name: 'ADD_LIST', payload: [userList] },
-      { name: 'REMOVE_LIST', payload: [0] }
+    testAction(listActions.confirmListUser, { id: 'listid', username: 'username' }, state, [
+      { name: 'ADD_LIST', payload: userList },
+      { name: 'REMOVE_LIST', payload: -1 }
     ], done)
   })
 })

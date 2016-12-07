@@ -1,60 +1,45 @@
 /* global it describe sinon */
-import chai from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
 import Logout from '../../../public/components/misc/Logout.vue'
-import state from '../../../public/store/state'
-import mutations from '../../../public/store/mutations'
+import mountVm from '../../mount-vm'
 
-chai.should()
-describe('Logout.vue', function () {
-  function mountVm () {
-    return new Vue({
-      store: new Vuex.Store({
-        state,
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Logout
-      }
-    }).$mount()
-  }
-
+describe('LogoutVue', function () {
   it('should inherit the logout method from the store', () => {
-    Logout.vuex.actions.logoutUser.should.be.an.instanceof(Function)
+    const vm = mountVm(Logout)
+
+    assert.isFunction(vm.logoutUser)
   })
 
   it('should have a logout method', () => {
-    Logout.methods.logout.should.be.an.instanceof(Function)
+    const vm = mountVm(Logout)
+
+    assert.isFunction(vm.logout)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm()
+    const vm = mountVm(Logout)
 
-    vm.$el.querySelector('label').textContent.should.equal('Log out')
+    assert.strictEqual(vm.$el.querySelector('label').textContent, 'Log out')
   })
 
   it('should call logout on button click', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'logoutUser')
+    const vm = mountVm(Logout)
+    sinon.stub(vm, 'logoutUser')
 
     vm.$el.querySelector('#logout').click()
-    vm.$children[0].logoutUser.calledOnce.should.be.true
 
-    vm.$children[0].logoutUser.restore()
+    assert.isTrue(vm.logoutUser.calledOnce)
+    vm.logoutUser.restore()
   })
 
   it('should call logout on command+esc', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'logoutUser')
+    const vm = mountVm(Logout)
+    sinon.stub(vm, 'logoutUser')
 
     Mousetrap.trigger('command+esc')
-    vm.$children[0].logoutUser.calledOnce.should.be.true
 
-    vm.$children[0].logoutUser.restore()
+    assert.isTrue(vm.logoutUser.calledOnce)
+    vm.logoutUser.restore()
   })
 })

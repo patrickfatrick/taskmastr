@@ -32,8 +32,8 @@ describe('setTaskDueDate', () => {
         ]
       }
     }
-    testAction(itemActions.setTaskDueDate, [0, '2016-01-01T00:00:00.000Z'], state, [
-      { name: 'SET_TASK_DUE_DATE', payload: [0, '2016-01-01T00:00:00.000Z'] }
+    testAction(itemActions.setTaskDueDate, { index: 0, date: '2016-01-01T00:00:00.000Z' }, state, [
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 0, date: '2016-01-01T00:00:00.000Z' } }
     ], done)
   })
 
@@ -63,10 +63,10 @@ describe('setTaskDueDate', () => {
         ]
       }
     }
-    testAction(itemActions.setTaskDueDate, [0, '2016-01-01T00:00:00.000Z'], state, [
-      { name: 'SET_TASK_DUE_DATE', payload: [0, '2016-01-01T00:00:00.000Z'] },
-      { name: 'SET_TASK_DUE_DATE', payload: [0, ''] },
-      { name: 'SET_DUE_DATE_DIFFERENCE', payload: [0, null] }
+    testAction(itemActions.setTaskDueDate, { index: 0, date: '2016-01-01T00:00:00.000Z' }, state, [
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 0, date: '2016-01-01T00:00:00.000Z' } },
+      { name: 'SET_TASK_DUE_DATE', payload: { index: 0, date: '' } },
+      { name: 'SET_DUE_DATE_DIFFERENCE', payload: { index: 0, n: null } }
     ], done)
   })
 })

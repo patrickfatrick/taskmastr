@@ -160,7 +160,7 @@ export function confirmListUser ({ commit, state }, { listid, username }) {
     status: 'active'
   }
   confirmUser(state.user, listid, listUser, (err, response) => {
-    if (err) return commit('SET_USER_STATUS', { index: listid, username, status: 'pending' })
+    if (err) return commit('SET_USER_STATUS', { id: listid, username, status: 'pending' })
     const userList = {
       _deleting: false,
       current: true,

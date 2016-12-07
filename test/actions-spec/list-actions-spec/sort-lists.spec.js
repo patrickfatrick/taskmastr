@@ -21,8 +21,8 @@ describe('sortLists', () => {
       }
     }
 
-    testAction(listActions.sortLists, [0, 1], state, [
-      { name: 'SORT_LISTS', payload: [0, 1] }
+    testAction(listActions.sortLists, { oldIndex: 0, newIndex: 1 }, state, [
+      { name: 'SORT_LISTS', payload: { oldIndex: 0, newIndex: 1 } }
     ], done)
   })
 
@@ -41,8 +41,8 @@ describe('sortLists', () => {
       }
     }
 
-    testAction(listActions.sortLists, [1, 0], state, [
-      { name: 'SORT_LISTS', payload: [1, 0] }
+    testAction(listActions.sortLists, { oldIndex: 1, newIndex: 0 }, state, [
+      { name: 'SORT_LISTS', payload: { oldIndex: 1, newIndex: 0 } }
     ], done)
   })
 
@@ -61,9 +61,9 @@ describe('sortLists', () => {
       }
     }
 
-    testAction(listActions.sortLists, [0, 1], state, [
-      { name: 'SORT_LISTS', payload: [0, 1] },
-      { name: 'SORT_LISTS', payload: [1, 0] }
+    testAction(listActions.sortLists, { oldIndex: 0, newIndex: 1 }, state, [
+      { name: 'SORT_LISTS', payload: { oldIndex: 0, newIndex: 1 } },
+      { name: 'SORT_LISTS', payload: { oldIndex: 1, newIndex: 0 } }
     ], done)
   })
 })

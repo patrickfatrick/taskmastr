@@ -57,8 +57,8 @@ describe('addList', () => {
       users: []
     }
 
-    testAction(listActions.addList, [newList], state, [
-      { name: 'ADD_LIST', payload: [userNewList] }
+    testAction(listActions.addList, newList, state, [
+      { name: 'ADD_LIST', payload: userNewList }
     ], done)
   })
 
@@ -113,8 +113,8 @@ describe('addList', () => {
       users: []
     }
 
-    testAction(listActions.addList, [newList], state, [
-      { name: 'ADD_LIST', payload: [userNewList] },
+    testAction(listActions.addList, newList, state, [
+      { name: 'ADD_LIST', payload: userNewList },
       { name: 'REMOVE_LIST', payload: [0] }
     ], done)
   })

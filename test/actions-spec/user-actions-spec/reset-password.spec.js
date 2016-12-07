@@ -15,8 +15,8 @@ describe('resetPassword', () => {
       }
     })
 
-    testAction(userActions.resetPassword, ['token', 'newKey'], {}, [
-      {name: 'SET_USERNAME', payload: ['username']}
+    testAction(userActions.resetPassword, { token: 'token', key: 'newKey' }, {}, [
+      {name: 'SET_USERNAME', payload: 'username'}
     ], done)
   })
 
@@ -29,8 +29,8 @@ describe('resetPassword', () => {
       }
     })
 
-    testAction(userActions.resetPassword, ['token', 'newKey'], {}, [
-      {name: 'SET_RESET_FAIL', payload: ['Invalid link']}
+    testAction(userActions.resetPassword, { token: 'token', key: 'newKey' }, {}, [
+      {name: 'SET_RESET_FAIL', payload: 'Invalid link'}
     ], done)
   })
 })

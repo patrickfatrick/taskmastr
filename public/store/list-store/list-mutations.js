@@ -49,8 +49,8 @@ export default {
   [SET_USERS] (state, { index, users }) {
     _.set(state, `user.tasks[${index}].users`, users)
   },
-  [SET_USER_STATUS] (state, { index, username, status }) {
-    const userIndex = _.findIndex(state.user.tasks[index].users, { username })
-    _.set(state, `user.tasks[${index}].users[${userIndex}]`, { status })
+  [SET_USER_STATUS] (state, { id, username, status }) {
+    const userIndex = _.findIndex(state.user.tasks[id].users, { username })
+    _.set(state, `user.tasks[${id}].users[${userIndex}]`, { status })
   }
 }

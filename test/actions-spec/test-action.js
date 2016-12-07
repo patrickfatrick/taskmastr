@@ -1,8 +1,8 @@
 // helper modified from http://vuex.vuejs.org/en/testing.html
 export const testAction = (action, args, state, expectedMutations, done) => {
   let count = 0
-  // mock dispatch
-  const dispatch = (name, ...payload) => {
+  // mock commit
+  const commit = (name, payload) => {
     const mutation = expectedMutations[count]
     mutation.name.should.equal(name)
     if (payload) {
@@ -15,7 +15,7 @@ export const testAction = (action, args, state, expectedMutations, done) => {
     }
   }
   // call the action with mocked store and arguments
-  action({dispatch, state}, ...args)
+  action({ commit, state }, args)
 
   // check if nothing should have been dispatched
   if (count === 0) {

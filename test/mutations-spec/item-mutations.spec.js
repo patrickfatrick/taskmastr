@@ -121,11 +121,11 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SET_TASK_COMPLETE(state, 1, true)
+    taskMutations.SET_TASK_COMPLETE(state, { index: 1, bool: true })
 
     state.current.items[1].complete.should.be.true
 
-    taskMutations.SET_TASK_COMPLETE(state, 1, false)
+    taskMutations.SET_TASK_COMPLETE(state, { index: 1, bool: false })
 
     state.current.items[1].complete.should.be.false
   })
@@ -152,11 +152,11 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SET_DATE_COMPLETED(state, 1, 'date')
+    taskMutations.SET_DATE_COMPLETED(state, { index: 1, date: 'date' })
 
     state.current.items[1].dateCompleted.should.equal('date')
 
-    taskMutations.SET_DATE_COMPLETED(state, 1, '')
+    taskMutations.SET_DATE_COMPLETED(state, { index: 1, date: '' })
 
     state.current.items[1].dateCompleted.should.equal('')
   })
@@ -179,11 +179,11 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SET_TASK_DELETE(state, 0, true)
+    taskMutations.SET_TASK_DELETE(state, { index: 0, bool: true })
 
     state.current.items[0]._deleting.should.be.true
 
-    taskMutations.SET_TASK_DELETE(state, 0, false)
+    taskMutations.SET_TASK_DELETE(state, { index: 0, bool: false })
 
     state.current.items[0]._deleting.should.be.false
   })
@@ -206,7 +206,7 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.RENAME_TASK(state, 0, 'New current task')
+    taskMutations.RENAME_TASK(state, { index: 0, name: 'New current task' })
 
     state.current.items[0].item.should.equal('New current task')
   })
@@ -232,11 +232,11 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SET_TASK_DUE_DATE(state, 0, today)
+    taskMutations.SET_TASK_DUE_DATE(state, { index: 0, date: today })
 
     state.current.items[0].dueDate.should.equal(today)
 
-    taskMutations.SET_TASK_DUE_DATE(state, 1, today)
+    taskMutations.SET_TASK_DUE_DATE(state, { index: 1, date: today })
 
     state.current.items[0].dueDate.should.equal(today)
   })
@@ -262,8 +262,8 @@ describe('item mutations', () => {
       deleteQueue: {}
     }
 
-    taskMutations.UPDATE_DELETE_QUEUE(state, 'id1', 1)
-    taskMutations.UPDATE_DELETE_QUEUE(state, 'id2', 2)
+    taskMutations.UPDATE_DELETE_QUEUE(state, { id: 'id1', val: 1 })
+    taskMutations.UPDATE_DELETE_QUEUE(state, { id: 'id2', val: 2 })
 
     state.deleteQueue['id1'].should.equal(1)
     state.deleteQueue['id2'].should.equal(2)
@@ -291,13 +291,13 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SORT_TASKS(state, 2, 0)
+    taskMutations.SORT_TASKS(state, { oldIndex: 2, newIndex: 0 })
 
     state.current.items[0].item.should.equal('New task')
     state.current.items[1].item.should.equal('Current task')
     state.current.items[2].item.should.equal('Not current task')
 
-    taskMutations.SORT_TASKS(state, 1, 2)
+    taskMutations.SORT_TASKS(state, { oldIndex: 1, newIndex: 2 })
 
     state.current.items[0].item.should.equal('New task')
     state.current.items[1].item.should.equal('Not current task')
@@ -338,7 +338,7 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SET_TASK_NOTES(state, 0, 'Some notes')
+    taskMutations.SET_TASK_NOTES(state, { index: 0, notes: 'Some notes' })
 
     state.current.items[0].notes.should.equal('Some notes')
   })
@@ -365,11 +365,11 @@ describe('item mutations', () => {
       }
     }
 
-    taskMutations.SET_DUE_DATE_DIFFERENCE(state, 0, 1)
+    taskMutations.SET_DUE_DATE_DIFFERENCE(state, { index: 0, n: 1 })
 
     state.current.items[0]._dueDateDifference.should.equal(1)
 
-    taskMutations.SET_DUE_DATE_DIFFERENCE(state, 1, -1)
+    taskMutations.SET_DUE_DATE_DIFFERENCE(state, { index: 1, n: -1 })
 
     state.current.items[1]._dueDateDifference.should.equal(-1)
   })

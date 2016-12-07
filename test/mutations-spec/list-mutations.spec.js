@@ -125,11 +125,11 @@ describe('list mutations', () => {
       }
     }
 
-    listMutations.SET_LIST_DELETE(state, 0, true)
+    listMutations.SET_LIST_DELETE(state, { index: 0, bool: true })
 
     state.user.tasks[0]._deleting.should.be.true
 
-    listMutations.SET_LIST_DELETE(state, 0, false)
+    listMutations.SET_LIST_DELETE(state, { index: 0, bool: false })
 
     state.user.tasks[0]._deleting.should.be.false
   })
@@ -157,13 +157,13 @@ describe('list mutations', () => {
       }
     }
 
-    listMutations.SORT_LISTS(state, 2, 0)
+    listMutations.SORT_LISTS(state, { oldIndex: 2, newIndex: 0 })
 
     state.user.tasks[0].list.should.equal('New list')
     state.user.tasks[1].list.should.equal('Current list')
     state.user.tasks[2].list.should.equal('Not current list')
 
-    listMutations.SORT_LISTS(state, 1, 2)
+    listMutations.SORT_LISTS(state, { oldIndex: 1, newIndex: 2 })
 
     state.user.tasks[0].list.should.equal('New list')
     state.user.tasks[1].list.should.equal('Not current list')

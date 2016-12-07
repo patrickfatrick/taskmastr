@@ -1,102 +1,79 @@
 /* global it describe sinon */
-import chai from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
 import MenuToggle from '../../../public/components/misc/MenuToggle.vue'
-import state from '../../../public/store/state'
-import mutations from '../../../public/store/mutations'
+import mountVm from '../../mount-vm'
 
-chai.should()
-describe('MenuToggle.vue', function () {
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': MenuToggle
-      }
-    }).$mount()
-  }
-
+describe('MenuToggleVue', function () {
   it('should inherit the menuToggled property from the store', () => {
-    MenuToggle.vuex.getters.menuToggled({ menuToggled: false }).should.be.false
+    const vm = mountVm(MenuToggle)
+    assert.isFalse(vm.menuToggled)
   })
 
   it('should inherit the setMenuToggled method from the store', () => {
-    MenuToggle.vuex.actions.setMenuToggled.should.be.an.instanceof(Function)
+    const vm = mountVm(MenuToggle)
+    assert.isFunction(vm.setMenuToggled)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm({})
+    const vm = mountVm(MenuToggle)
 
-    vm.$el.querySelector('.fa').classList.contains('fa-bars').should.be.true
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-bars'))
   })
 
   it('should respond to changes in state', () => {
-    const vm = mountVm({ menuToggled: true })
+    const vm = mountVm(MenuToggle, { menuToggled: true })
 
-    vm.$el.querySelector('.fa').classList.contains('fa-times').should.be.true
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-times'))
   })
 
   it('should call setMenuToggled on button click', () => {
-    const vm = mountVm({})
-
-    sinon.stub(vm.$children[0], 'setMenuToggled')
+    const vm = mountVm(MenuToggle)
+    sinon.stub(vm, 'setMenuToggled')
 
     vm.$el.querySelector('button').click()
-    vm.$children[0].setMenuToggled.calledWith(true).should.be.true
 
-    vm.$children[0].setMenuToggled.restore()
+    assert.isTrue(vm.setMenuToggled.calledWith(true))
+    vm.setMenuToggled.restore()
   })
 
   it('should call setMenuToggled with true on alt+right', () => {
-    const vm = mountVm({})
-
-    sinon.stub(vm.$children[0], 'setMenuToggled')
+    const vm = mountVm(MenuToggle, {})
+    sinon.stub(vm, 'setMenuToggled')
 
     Mousetrap.trigger('alt+right')
-    vm.$children[0].setMenuToggled.calledWith(true).should.be.true
 
-    vm.$children[0].setMenuToggled.restore()
+    assert.isTrue(vm.setMenuToggled.calledWith(true))
+    vm.setMenuToggled.restore()
   })
 
   it('should call setMenuToggled with true on alt+right (start on true)', () => {
-    const vm = mountVm({ menuToggled: true })
-
-    sinon.stub(vm.$children[0], 'setMenuToggled')
+    const vm = mountVm(MenuToggle, { menuToggled: true })
+    sinon.stub(vm, 'setMenuToggled')
 
     Mousetrap.trigger('alt+right')
-    vm.$children[0].setMenuToggled.calledWith(true).should.be.true
 
-    vm.$children[0].setMenuToggled.restore()
+    assert.isTrue(vm.setMenuToggled.calledWith(true))
+    vm.setMenuToggled.restore()
   })
 
   it('should call setMenuToggled with false on alt+left', () => {
-    const vm = mountVm({ menuToggled: true })
-
-    sinon.stub(vm.$children[0], 'setMenuToggled')
+    const vm = mountVm(MenuToggle, { menuToggled: true })
+    sinon.stub(vm, 'setMenuToggled')
 
     Mousetrap.trigger('alt+left')
-    vm.$children[0].setMenuToggled.calledWith(false).should.be.true
 
-    vm.$children[0].setMenuToggled.restore()
+    assert.isTrue(vm.setMenuToggled.calledWith(false))
+    vm.setMenuToggled.restore()
   })
 
   it('should call setMenuToggled with false on alt+left (start on false)', () => {
-    const vm = mountVm({})
-
-    sinon.stub(vm.$children[0], 'setMenuToggled')
+    const vm = mountVm(MenuToggle, {})
+    sinon.stub(vm, 'setMenuToggled')
 
     Mousetrap.trigger('alt+left')
-    vm.$children[0].setMenuToggled.calledWith(false).should.be.true
 
-    vm.$children[0].setMenuToggled.restore()
+    assert.isTrue(vm.setMenuToggled.calledWith(false))
+    vm.setMenuToggled.restore()
   })
 })
