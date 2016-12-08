@@ -23,3 +23,7 @@ User.ensureIndex('dateCreated')
 User.ensureIndex('dateModified')
 
 module.exports = User
+
+// Commenting this out for now
+// User.hasAndBelongsToMany(List, 'tasks', 'username', 'id')
+// // const List = require('./List')

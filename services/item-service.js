@@ -1,6 +1,5 @@
 'use strict'
 
-// const r = require('../r')
 const List = require('../models/List')
 const r = require('../thinky').r
 

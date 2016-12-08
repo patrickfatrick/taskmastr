@@ -5,11 +5,50 @@ html {
 
 body {
 	@extend html;
+}
+
+#app-container {
+	@extend html;
+	color: $black;
+	@include transition(all 2s ease-out); 
+	@include background(linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight));
+	background-position: bottom;
+	background-size: auto 500%;
 	text-align: center;
 	font-family: $cardo;
 	font-size: 1rem;
 	@include media(min-width $small) {
 		font-size: 1.4rem;
+	}
+	#todo-line #create-todo {
+		&:focus {
+			border-color: $sunray;
+		}
+	}
+	.table .table-row {
+		&.active {
+			background-color: $sunray;
+		}
+		&.active.complete {
+			background-color: $rust;
+		}
+	}
+	&.darkmode {
+		background-position: top;
+		color: $white;
+		#todo-line #create-todo {
+			&:focus {
+				border-color: $astroTurf;
+			}
+		}
+		.table .table-row {
+			&.active {
+				background-color: $astroTurf;
+			}
+			&.active.complete {
+				background-color: $grassStain;
+			}
+		}
 	}
 }
 
@@ -43,48 +82,6 @@ body {
 }
 .gu-transit {
   opacity: 0.2;
-}
-
-#app-container {
-	@extend html;
-	color: $black;
-	@include transition(all 2s ease-out); 
-	@include background(linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight));
-	background-position: bottom;
-	background-size: auto 500%;
-	#todo-line #create-todo {
-		&:focus {
-			border-color: $sunray;
-		}
-	}
-	.table .table-row {
-		&.active {
-			background-color: $sunray;
-		}
-		&.active.complete {
-			background-color: $rust;
-		}
-	}
-	&.darkmode {
-		background-position: top;
-		color: $white;
-		#todo-line #create-todo {
-			&:focus {
-				border-color: $astroTurf;
-			}
-		}
-		.table .table-row {
-			&.active {
-				background-color: $astroTurf;
-			}
-			&.active.complete {
-				background-color: $grassStain;
-			}
-		}
-	}
-	.view {
-		@extend html;
-	}
 }
 
 input[type='text'],

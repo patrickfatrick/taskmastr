@@ -87,8 +87,8 @@ export function deleteTask ({ commit, state }, index) {
   const listID = state.current.id
   const tasks = state.current.items
   const task = tasks[index]
+  let timeoutID
   if (!task._deleting) {
-    let timeoutID
     timeoutID = setTimeout(() => {
       // Get the next and previous lists after timeout,
       // in case indices change in the five-second window
