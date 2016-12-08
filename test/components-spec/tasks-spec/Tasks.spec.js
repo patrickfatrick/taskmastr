@@ -1,53 +1,39 @@
 /* global it describe */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import Tasks from '../../../public/components/tasks/Tasks.vue'
-import state from '../../../public/store/state'
-import mutations from '../../../public/store/mutations'
+import mountVm from '../../mount-vm'
 
-describe('Tasks.vue', function () {
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': Tasks
-      }
-    }).$mount()
-  }
-
+describe('TasksVue', function () {
   it('should inherit the user property from the state', () => {
-    assert.isObject(Tasks.vuex.getters.user({ user: {} }))
+    const vm = mountVm(Tasks)
+    assert.isObject(vm.user)
   })
 
   it('should inherit the current property from the state', () => {
-    assert.isObject(Tasks.vuex.getters.current({ current: {} }))
+    const vm = mountVm(Tasks)
+    assert.isObject(vm.current)
   })
 
   it('should inherit the invalidList property from the state', () => {
-    assert.isFalse(Tasks.vuex.getters.invalidList({ invalidList: false }))
+    const vm = mountVm(Tasks)
+    assert.isFalse(vm.invalidList)
   })
 
   it('should inherit a mountList method from the state', () => {
-    assert.isFunction(Tasks.vuex.actions.mountList)
+    const vm = mountVm(Tasks)
+    assert.isFunction(vm.mountList)
   })
 
   it('should have a refresh method', () => {
-    assert.isFunction(Tasks.methods.refresh)
+    const vm = mountVm(Tasks)
+    assert.isFunction(vm.refresh)
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm()
+    const vm = mountVm(Tasks)
 
+    assert.strictEqual(vm.$el.getAttribute('id'), 'content')
     assert.isNull(vm.$el.querySelector('#warning-banner'))
-    assert.isNotNull(vm.$el.querySelector('#content'))
     assert.isNotNull(vm.$el.querySelector('#icon-menu'))
     assert.isNotNull(vm.$el.querySelector('#todo-line'))
     assert.isNotNull(vm.$el.querySelector('#task-list'))
@@ -56,10 +42,10 @@ describe('Tasks.vue', function () {
   })
 
   it('should respond to changes in the state', () => {
-    const vm = mountVm({ user: { key: 'password' }, invalidList: 'Error!' })
+    const vm = mountVm(Tasks, { user: { key: 'password' }, invalidList: 'Error!' })
 
+    assert.strictEqual(vm.$el.getAttribute('id'), 'content')
     assert.isNull(vm.$el.querySelector('#warning-banner'))
-    assert.isNotNull(vm.$el.querySelector('#content'))
     assert.isNotNull(vm.$el.querySelector('#icon-menu'))
     assert.isNotNull(vm.$el.querySelector('#todo-line'))
     assert.isNotNull(vm.$el.querySelector('#task-list'))
@@ -68,10 +54,10 @@ describe('Tasks.vue', function () {
   })
 
   it('should respond to changes in the state (try-it account)', () => {
-    const vm = mountVm({ user: { username: 'mrormrstestperson@taskmastr.co' } })
+    const vm = mountVm(Tasks, { user: { username: 'mrormrstestperson@taskmastr.co' } })
 
+    assert.strictEqual(vm.$el.getAttribute('id'), 'content')
     assert.isNotNull(vm.$el.querySelector('#warning-banner'))
-    assert.isNotNull(vm.$el.querySelector('#content'))
     assert.isNotNull(vm.$el.querySelector('#icon-menu'))
     assert.isNotNull(vm.$el.querySelector('#todo-line'))
     assert.isNotNull(vm.$el.querySelector('#task-list'))
@@ -80,10 +66,10 @@ describe('Tasks.vue', function () {
   })
 
   it('should respond to changes in the state (socket disconnect)', () => {
-    const vm = mountVm({ disconnect: true })
+    const vm = mountVm(Tasks, { disconnect: true })
 
+    assert.strictEqual(vm.$el.getAttribute('id'), 'content')
     assert.isNotNull(vm.$el.querySelector('#warning-banner'))
-    assert.isNotNull(vm.$el.querySelector('#content'))
     assert.isNotNull(vm.$el.querySelector('#icon-menu'))
     assert.isNotNull(vm.$el.querySelector('#todo-line'))
     assert.isNotNull(vm.$el.querySelector('#task-list'))

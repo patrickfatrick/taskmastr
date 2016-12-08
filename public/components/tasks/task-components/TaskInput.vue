@@ -1,6 +1,6 @@
 <template>
   <form id="todo-line" class="prompt-line" name="todoForm" novalidate @submit.prevent="addNewTask(newTask.trim())">
-    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" title="Task Input" :value="newTask" @change="setNewTask($event.target.value)" :class="{'invalid': !isValid && taskAttempt}" placeholder="{{placeholder}}" v-el:taskinput></input>
+    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" title="Task Input" :value="newTask" @change="setNewTask($event.target.value)" :class="{'invalid': !isValid && taskAttempt}" :placeholder="placeholder" ref="taskinput"></input>
     <div class="button-container">
       <button id="task-button" class="submit" title="Create task" type="submit">
         <i class="fa fa-arrow-down "></i>
@@ -10,35 +10,24 @@
 </template>
 
 <script>
-
 import _ from 'lodash'
 import { hash } from 'harsh'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import date from 'date.js'
-import { setNewTask, setPlaceholder, setTaskAttempt, setTaskDueDate, setDueDateDifference, addTask } from '../../../store/item-store/item-actions'
+import { mapState, mapActions } from 'vuex'
 import extractDate from '../../../helper-utilities/extract-date'
 import placeholders from '../../../helper-utilities/placeholders'
 
 export default {
-  vuex: {
-    getters: {
+  computed: {
+    ...mapState({
       user: (state) => state.user,
       current: (state) => state.current,
       newTask: (state) => state.newTask,
       taskAttempt: (state) => state.taskAttempt,
       placeholder: (state) => state.placeholder
-    },
-    actions: {
-      setNewTask,
-      setPlaceholder,
-      setTaskAttempt,
-      setTaskDueDate,
-      setDueDateDifference,
-      addTask
-    }
-  },
-  computed: {
+    }),
     validate () {
       return {
         newTaskRequired: !!this.newTask.trim()
@@ -52,6 +41,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'setNewTask',
+      'setPlaceholder',
+      'setTaskAttempt',
+      'addTask'
+    ]),
     addNewTask (task) {
       this.setTaskAttempt(true)
       if (!this.isValid) return
@@ -105,15 +100,14 @@ export default {
       this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
     }
   },
-  compiled () {
+  mounted () {
     this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
 
     // Keyboard bindings
     Mousetrap.bind('ctrl+f', (e) => {
       e.preventDefault()
-      this.$els.taskinput.focus()
+      this.$refs.taskinput.focus()
     })
   }
 }
-
 </script>

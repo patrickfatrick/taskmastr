@@ -18,10 +18,10 @@
 		width: 50%;
 		top: 10%;
 	}
-	&.modal-enter {
+	&.modal-enter-active {
 		@include animation(bounceInDown 500ms);
 	}
-	&.modal-leave {
+	&.modal-leave-active {
 		@include animation(bounceOutUp 750ms);
 	}
 	&.invalid {
@@ -153,10 +153,10 @@
 	background: rgba(0, 0, 0, 0.3);
 	z-index: 4;
 	position: fixed;
-	&.mask-enter {
+	&.mask-enter-active {
 		@include animation(fadeIn 300ms);
 	}
-	&.mask-leave {
+	&.mask-leave-active {
 		@include animation(fadeOut 750ms);
 	}
 }

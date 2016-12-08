@@ -22,44 +22,47 @@
 </template>
 
 <script>
-
-import { mountList, confirmListUser } from '../../store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 import MenuToggle from '../misc/MenuToggle.vue'
 import TaskInput from './task-components/TaskInput.vue'
 import Items from './task-components/Items.vue'
 
 export default {
-  vuex: {
-    getters: {
-      user: (state) => state.user,
-      current: (state) => state.current,
-      invalidList: (state) => state.invalidList,
-      disconnect: (state) => state.disconnect
-    },
-    actions: {
-      mountList,
-      confirmListUser
-    }
-  },
+  computed: mapState({
+    user: (state) => state.user,
+    current: (state) => state.current,
+    invalidList: (state) => state.invalidList,
+    disconnect: (state) => state.disconnect
+  }),
   components: {
     MenuToggle,
     TaskInput,
     Items
   },
-  route: {
-    data (transition) {
-      if (transition.to.params.newuser) {
-        this.confirmListUser(transition.to.params.listid, transition.to.params.newuser.toLowerCase())
-        this.$route.router.go('/app/list/' + transition.to.params.listid)
-      }
-      this.mountList(transition.to.params.listid)
-    }
-  },
   methods: {
+    ...mapActions([
+      'mountList',
+      'confirmListUser'
+    ]),
     refresh () {
       window.location.assign('/')
+    },
+    routeWatcher () {
+      if (this.$route.params.newuser) {
+        this.confirmListUser({ listid: this.$route.params.listid, username: this.$route.params.newuser.toLowerCase() })
+        this.$router.push('/app/list/' + this.$route.params.listid)
+      }
+      this.mountList(this.$route.params.listid)
     }
+  },
+  watch: {
+    '$route': 'routeWatcher'
+  },
+  mounted () {
+    // Wait until we actually have access to the username, otherwise this will throw an error in user-service
+    this.$nextTick(() => {
+      this.routeWatcher()
+    })
   }
 }
-
 </script>

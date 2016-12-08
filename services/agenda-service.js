@@ -106,13 +106,17 @@ agenda.define('List Invite Email', (job, done) => {
     to: data.username,
     from: 'taskmastr <do-not-reply@taskmastr.co>',
     subject: `taskmastr List Invitation: "${data.list}"`,
-    text: `Hello!\n\nYou\'re receiving this email because you were invited to a taskmastr list called "${data.list}" by ${data.owner}.\n\nYou can ignore this invitation by simply discarding this email. If you'd like to join this list just click on the following link: ${data.host}/#!/app/list/${data.listid}/newuser/${data.username}\n\nSincerely,\n\ntaskmastr\n`
+    text: `Hello!\n\nYou're receiving this email because you were invited to a taskmastr list called "${data.list}" by ${data.owner}.\n\nYou can ignore this invitation by simply discarding this email. If you'd like to join this list just click on the following link: ${data.host}/#!/app/list/${data.listid}/newuser/${data.username}\n\nSincerely,\n\ntaskmastr\n`
   }
   mailer.sendMail(email, function (err) {
     if (err) return done(err)
     console.log(`${data.username} => List Invite Email sent => ${data.listid}`)
     done()
   })
+})
+
+agenda.on('fail', function (err, job) {
+  console.log('Agenda email job failed with error: %s', err.message)
 })
 
 module.exports = agenda

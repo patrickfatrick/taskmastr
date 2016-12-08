@@ -1,58 +1,15 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import Mousetrap from 'mousetrap'
-import ItemDetailsInjector from 'inject?../../../store/item-store/item-actions!../../../../public/components/tasks/task-components/ItemDetails.vue'
-import state from '../../../../public/store/state'
-import mutations from '../../../../public/store/mutations'
+import ItemDetails from '../../../../public/components/tasks/task-components/ItemDetails.vue'
+import mountVm from '../../../mount-vm'
+import { change } from '../../../browser-events'
 
-const ItemDetails = ItemDetailsInjector({
-  '../../../store/item-store/item-actions': {
-    setTaskNotes (index, str) {
-      return str
-    },
-    toggleDetails (index) {
-      return index
-    },
-    setDueDateDifference (index, n) {
-      return n
-    },
-    renameTask (index, str) {
-      return str
-    }
-  }
-})
-
-describe('ItemDetails.vue', function () {
+describe('ItemDetailsVue', function () {
   let clock
   let items
   let task
   let index
-
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes,
-          current: {
-            ...state.current,
-            items: items
-          }
-        },
-        mutations
-      }),
-      template: '<div><test :task="task" :index="index"></test></div>',
-      data: {
-        task,
-        index
-      },
-      components: {
-        test: ItemDetails
-      }
-    }).$mount()
-  }
 
   beforeEach(() => {
     const start = 'Jan 1, 2016 00:00:000 UTC'
@@ -100,48 +57,56 @@ describe('ItemDetails.vue', function () {
   })
 
   it('should inherit the tasks property from the state', () => {
-    assert.isArray(ItemDetails.vuex.getters.tasks({ current: { items: [] } }))
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isArray(vm.tasks)
   })
 
   it('should inherit the detailsToggled property from the state', () => {
-    assert.isFalse(ItemDetails.vuex.getters.detailsToggled({ detailsToggled: false }))
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isNull(vm.detailsToggled)
   })
 
   it('should inherit a setTaskNotes action from the store', () => {
-    assert.isFunction(ItemDetails.vuex.actions.setTaskNotes)
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isFunction(vm.setTaskNotes)
   })
 
   it('should inherit a toggleDetails action from the store', () => {
-    assert.isFunction(ItemDetails.vuex.actions.toggleDetails)
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isFunction(vm.toggleDetails)
   })
 
   it('should inherit a setDueDateDifference action from the store', () => {
-    assert.isFunction(ItemDetails.vuex.actions.setDueDateDifference)
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isFunction(vm.setDueDateDifference)
   })
 
   it('should inherit a renameTask action from the store', () => {
-    assert.isFunction(ItemDetails.vuex.actions.renameTask)
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isFunction(vm.renameTask)
   })
 
   it('should have a rename method', () => {
-    assert.isFunction(ItemDetails.methods.rename)
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isFunction(vm.rename)
   })
 
   it('should have a reformatDate method', () => {
-    assert.isFunction(ItemDetails.methods.reformatDate)
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
+    assert.isFunction(vm.reformatDate)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm()
+    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
 
     assert.isNull(vm.$el.querySelector('.mask'))
     assert.isNull(vm.$el.querySelector('.task-details'))
   })
 
   it('should reformat date on reformatDate', () => {
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.deepEqual(vm.$children[0].reformatDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
+    assert.strictEqual(vm.reformatDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
   })
 
   it('should call renameTask on .task-name change', () => {
@@ -176,19 +141,14 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: 1
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
+    sinon.stub(vm, 'renameTask')
 
-    sinon.stub(vm.$children[0], 'renameTask')
+    vm.$el.querySelector('.task-name').value = 'Task 11'
+    vm.$el.querySelector('.task-name').dispatchEvent(change())
 
-    let change
-    change = document.createEvent('HTMLEvents')
-    change.initEvent('change', true, true, window)
-    vm.$el.querySelectorAll('.task-name')[0].value = 'Task 11'
-    vm.$el.querySelectorAll('.task-name')[0].dispatchEvent(change)
-
-    assert.isTrue(vm.$children[0].renameTask.calledWith(0, 'Task 11'))
-
-    vm.$children[0].renameTask.restore()
+    assert.isTrue(vm.renameTask.calledWith({ index: 0, name: 'Task 11' }))
+    vm.renameTask.restore()
   })
 
   it('should not call renameTask if null', () => {
@@ -223,19 +183,14 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: 1
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
+    sinon.stub(vm, 'renameTask')
 
-    sinon.stub(vm.$children[0], 'renameTask')
+    vm.$el.querySelector('.task-name').value = ''
+    vm.$el.querySelector('.task-name').dispatchEvent(change())
 
-    let change
-    change = document.createEvent('HTMLEvents')
-    change.initEvent('change', true, true, window)
-    vm.$el.querySelectorAll('.task-name')[0].value = ''
-    vm.$el.querySelectorAll('.task-name')[0].dispatchEvent(change)
-
-    assert.isFalse(vm.$children[0].renameTask.calledOnce)
-
-    vm.$children[0].renameTask.restore()
+    assert.isFalse(vm.renameTask.calledOnce)
+    vm.renameTask.restore()
   })
 
   it('should not display dates or due date differences if !task.dueDate', () => {
@@ -261,7 +216,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: null
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isTrue(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
     assert.isFalse(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
@@ -291,7 +246,7 @@ describe('ItemDetails.vue', function () {
       _delete: true,
       _dueDateDifference: null
     }
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-details-container').children[0].classList.contains('hidden'))
     assert.isFalse(vm.$el.querySelector('.task-details-container').children[1].classList.contains('hidden'))
@@ -324,7 +279,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: null
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-details-container').children[0].classList.contains('hidden'))
     assert.isTrue(vm.$el.querySelector('.task-details-container').children[1].classList.contains('hidden'))
@@ -355,7 +310,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: 1
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
     assert.include(vm.$el.querySelector('.task-due').textContent, 'Jan 2, 2016')
@@ -390,7 +345,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: 2
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
     assert.include(vm.$el.querySelector('.task-due').textContent, 'Jan 3, 2016')
@@ -425,7 +380,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: -1
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
     assert.include(vm.$el.querySelector('.task-due').textContent, 'Dec 31, 2015')
@@ -460,7 +415,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: -2
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
     assert.include(vm.$el.querySelector('.task-due').textContent, 'Dec 30, 2015')
@@ -495,7 +450,7 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: 0
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
     assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
     assert.include(vm.$el.querySelector('.task-due').textContent, 'Jan 1, 2016')
@@ -537,29 +492,23 @@ describe('ItemDetails.vue', function () {
       _dueDateDifference: 1
     }
 
-    const vm = mountVm({ detailsToggled: 0 })
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
+    sinon.stub(vm, 'renameTask')
 
-    sinon.stub(vm.$children[0], 'renameTask')
-
-    let change
-    change = document.createEvent('HTMLEvents')
-    change.initEvent('change', true, true, window)
     vm.$el.querySelectorAll('.task-name')[0].value = ''
-    vm.$el.querySelectorAll('.task-name')[0].dispatchEvent(change)
+    vm.$el.querySelectorAll('.task-name')[0].dispatchEvent(change())
 
-    assert.isFalse(vm.$children[0].renameTask.calledOnce)
-
-    vm.$children[0].renameTask.restore()
+    assert.isFalse(vm.renameTask.calledOnce)
+    vm.renameTask.restore()
   })
 
   it('should call toggleDetails on ctrl+d', () => {
-    const vm = mountVm({ detailsToggled: 0 })
-
-    sinon.stub(vm.$children[0], 'toggleDetails')
+    const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
+    sinon.stub(vm, 'toggleDetails')
 
     Mousetrap.trigger('ctrl+d')
-    assert.isTrue(vm.$children[0].toggleDetails.calledWith(0))
 
-    vm.$children[0].toggleDetails.restore()
+    assert.isTrue(vm.toggleDetails.calledWith(0))
+    vm.toggleDetails.restore()
   })
 })

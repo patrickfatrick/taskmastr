@@ -1,56 +1,40 @@
 /* global it describe */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import CreateVue from '../../public/components/CreateVue.vue'
-import state from '../../public/store/state'
-import mutations from '../../public/store/mutations'
+import mountVm from '../mount-vm'
 
-describe('CreateVue.vue', function () {
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': CreateVue
-      }
-    }).$mount()
-  }
-
+describe('CreateVue', function () {
   it('should inherit the auth property from the state', () => {
-    assert.isFalse(CreateVue.vuex.getters.auth({ auth: false }))
+    const vm = mountVm(CreateVue)
+    assert.isFalse(vm.auth)
   })
 
   it('should inherit the user property from the state', () => {
-    assert.isObject(CreateVue.vuex.getters.user({ user: {} }))
+    const vm = mountVm(CreateVue)
+    assert.isObject(vm.user)
   })
 
   it('should inherit the init property from the state', () => {
-    assert.isFalse(CreateVue.vuex.getters.init({ init: false }))
+    const vm = mountVm(CreateVue)
+    assert.isFalse(vm.init)
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm({ init: true })
+    const vm = mountVm(CreateVue, { init: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
     assert.isNotNull(vm.$el.querySelector('#key-modal'))
   })
 
   it('should respond to changes in the state (init)', () => {
-    const vm = mountVm()
+    const vm = mountVm(CreateVue)
 
     assert.isNull(vm.$el.querySelector('.mask'))
     assert.isNull(vm.$el.querySelector('#key-modal'))
   })
 
   it('should respond to changes in the state (auth and user.tasks)', () => {
-    const vm = mountVm({
+    const vm = mountVm(CreateVue, {
       init: true,
       auth: 'username@domain.com',
       user: {

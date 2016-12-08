@@ -9,18 +9,14 @@
 </template>
 
 <script>
-
-import { setRememberMe } from '../../../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      rememberMe: (state) => state.rememberMe
-    },
-    actions: {
-      setRememberMe
-    }
-  }
+  computed: mapState({
+    rememberMe: (state) => state.rememberMe
+  }),
+  methods: mapActions([
+    'setRememberMe'
+  ])
 }
-
 </script>

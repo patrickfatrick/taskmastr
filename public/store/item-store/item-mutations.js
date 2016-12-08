@@ -21,38 +21,38 @@ export default {
   [SET_TASK_ATTEMPT] (state, bool) {
     _.set(state, 'taskAttempt', bool)
   },
-  [SET_TASK_COMPLETE] (state, index, bool) {
+  [SET_TASK_COMPLETE] (state, { index, bool }) {
     _.set(state, 'current.items[' + index + '].complete', bool)
   },
-  [SET_DATE_COMPLETED] (state, index, date) {
+  [SET_DATE_COMPLETED] (state, { index, date }) {
     _.set(state, 'current.items[' + index + '].dateCompleted', date)
   },
-  [SET_COMPLETED_BY] (state, index, username) {
+  [SET_COMPLETED_BY] (state, { index, username }) {
     _.set(state, `current.items[${index}].completedBy`, username)
   },
-  [SET_TASK_DELETE] (state, index, bool) {
+  [SET_TASK_DELETE] (state, { index, bool }) {
     _.set(state, 'current.items[' + index + ']._deleting', bool)
   },
-  [RENAME_TASK] (state, index, name) {
+  [RENAME_TASK] (state, { index, name }) {
     _.set(state, 'current.items[' + index + '].item', name)
   },
-  [SET_TASK_DUE_DATE] (state, index, date) {
+  [SET_TASK_DUE_DATE] (state, { index, date }) {
     _.set(state, 'current.items[' + index + '].dueDate', date)
   },
-  [UPDATE_DELETE_QUEUE] (state, id, val) {
+  [UPDATE_DELETE_QUEUE] (state, { id, val }) {
     _.set(state, 'deleteQueue[' + id + ']', val)
   },
-  [SORT_TASKS] (state, oldIndex, newIndex) {
+  [SORT_TASKS] (state, { oldIndex, newIndex }) {
     let spliced = state.current.items.splice(oldIndex, 1)
     state.current.items.splice(newIndex, 0, spliced[0])
   },
   [TOGGLE_DETAILS] (state, index) {
     _.set(state, 'detailsToggled', index)
   },
-  [SET_TASK_NOTES] (state, index, notes) {
+  [SET_TASK_NOTES] (state, { index, notes }) {
     _.set(state, 'current.items[' + index + '].notes', notes)
   },
-  [SET_DUE_DATE_DIFFERENCE] (state, index, n) {
+  [SET_DUE_DATE_DIFFERENCE] (state, { index, n }) {
     _.set(state, 'current.items[' + index + ']._dueDateDifference', n)
   }
 }

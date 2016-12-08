@@ -82,7 +82,7 @@ agenda.on('ready', function () {
 
 // Views
 app.use(views(path.join(__dirname, 'views'), {
-  extension: 'jade'
+  extension: 'pug'
 }))
 
 // Serve static

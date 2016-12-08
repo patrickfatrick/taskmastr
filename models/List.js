@@ -30,8 +30,16 @@ const List = thinky.createModel('lists', {
   }],
   _deleting: type.boolean()
 })
-List.something
+
 List.ensureIndex('dateCreated')
 List.ensureIndex('dateModified')
 
 module.exports = List
+
+// Commenting this out for now
+// const Item = require('./Item')
+// const User = require('./User')
+// const Collaborator = require('./Collaborator')
+// List.hasMany(Item, 'items', 'id', 'listId')
+// List.hasMany(Collaborator, 'users', id, 'listId')
+// List.hasAndBelongsToMany(User, 'collaborators', 'id', 'username')

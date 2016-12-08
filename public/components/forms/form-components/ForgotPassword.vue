@@ -9,28 +9,23 @@
 </template>
 
 <script>
-
-import { setForgot } from '../../../store/user-store/user-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      forgot: (state) => state.forgot,
-      create: (state) => state.create
-    },
-    actions: {
-      setForgot
-    }
-  },
-  computed: {},
+  computed: mapState({
+    forgot: (state) => state.forgot,
+    create: (state) => state.create
+  }),
   methods: {
+    ...mapActions([
+      'setForgot'
+    ]),
     toggleForgot (bool) {
       this.setForgot(bool)
-      if (!this.forgot && this.create) return this.$route.router.go('/create')
-      if (!this.forgot) return this.$route.router.go('/login')
-      this.$route.router.go('/forgot')
+      if (!this.forgot && this.create) return this.$router.push('/create')
+      if (!this.forgot) return this.$router.push('/login')
+      this.$router.push('/forgot')
     }
   }
 }
-
 </script>

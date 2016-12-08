@@ -1,110 +1,80 @@
 /* global it describe sinon */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import ForgotPassword from '../../../../public/components/forms/form-components/ForgotPassword.vue'
-import state from '../../../../public/store/state'
-import mutations from '../../../../public/store/mutations'
+import mountVm from '../../../mount-vm'
 
-describe('ForgotPassword.vue', function () {
-  // mock vue-router
-  ForgotPassword.computed.$route = () => {
-    return {
-      router: {
-        go (location) {
-          return location
-        }
-      }
-    }
-  }
-
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotPassword
-      }
-    }).$mount()
-  }
-
+describe('ForgotPasswordVue', function () {
   it('should inherit the forgot property from the state', () => {
-    assert.isFalse(ForgotPassword.vuex.getters.forgot({ forgot: false }))
+    const vm = mountVm(ForgotPassword)
+    assert.isFalse(vm.forgot)
   })
 
   it('should inherit the create property from the state', () => {
-    assert.isFalse(ForgotPassword.vuex.getters.create({ create: false }))
+    const vm = mountVm(ForgotPassword)
+    assert.isFalse(vm.create)
   })
 
   it('should have a setForgot method', () => {
-    assert.isFunction(ForgotPassword.vuex.actions.setForgot)
+    const vm = mountVm(ForgotPassword)
+    assert.isFunction(vm.setForgot)
   })
 
   it('should render with initial state', () => {
-    const vm = mountVm()
+    const vm = mountVm(ForgotPassword)
     assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-square-o'))
     assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-check-square-o'))
   })
 
   it('should respond to changes in the state', () => {
-    const vm = mountVm({ forgot: true })
+    const vm = mountVm(ForgotPassword, { forgot: true })
 
-    assert.isTrue(vm.$children[0].forgot)
+    assert.isTrue(vm.forgot)
     assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-square-o'))
     assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-check-square-o'))
   })
 
   it('should route to /forgot on forgot', () => {
-    const vm = mountVm({ forgot: true })
+    const vm = mountVm(ForgotPassword, { forgot: true })
+    sinon.stub(vm.$router, 'push')
+    sinon.stub(vm, 'setForgot')
 
-    sinon.stub(vm.$children[0].$route.router, 'go')
-    sinon.stub(vm.$children[0], 'setForgot')
+    vm.toggleForgot(true)
 
-    vm.$children[0].toggleForgot(true)
-    assert.isTrue(vm.$children[0].setForgot.calledWith(true))
-    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/forgot'))
-
-    vm.$children[0].$route.router.go.restore()
-    vm.$children[0].setForgot.restore()
+    assert.isTrue(vm.setForgot.calledWith(true))
+    assert.isTrue(vm.$router.push.calledWith('/forgot'))
+    vm.$router.push.restore()
+    vm.setForgot.restore()
   })
 
   it('should route to /create on !forgot and create', () => {
-    const vm = mountVm({
+    const vm = mountVm(ForgotPassword, {
       forgot: false,
       create: true
     })
+    sinon.stub(vm.$router, 'push')
+    sinon.stub(vm, 'setForgot')
 
-    sinon.stub(vm.$children[0].$route.router, 'go')
-    sinon.stub(vm.$children[0], 'setForgot')
+    vm.toggleForgot(false)
 
-    vm.$children[0].toggleForgot(false)
-    assert.isTrue(vm.$children[0].setForgot.calledWith(false))
-    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/create'))
-
-    vm.$children[0].$route.router.go.restore()
-    vm.$children[0].setForgot.restore()
+    assert.isTrue(vm.setForgot.calledWith(false))
+    assert.isTrue(vm.$router.push.calledWith('/create'))
+    vm.$router.push.restore()
+    vm.setForgot.restore()
   })
 
   it('should route to /login on !forgot and !create', () => {
-    const vm = mountVm({
+    const vm = mountVm(ForgotPassword, {
       forgot: false,
       create: false
     })
+    sinon.stub(vm.$router, 'push')
+    sinon.stub(vm, 'setForgot')
 
-    sinon.stub(vm.$children[0].$route.router, 'go')
-    sinon.stub(vm.$children[0], 'setForgot')
+    vm.toggleForgot(false)
 
-    vm.$children[0].toggleForgot(false)
-    assert.isTrue(vm.$children[0].setForgot.calledWith(false))
-    assert.isTrue(vm.$children[0].$route.router.go.calledWith('/login'))
-
-    vm.$children[0].$route.router.go.restore()
-    vm.$children[0].setForgot.restore()
+    assert.isTrue(vm.setForgot.calledWith(false))
+    assert.isTrue(vm.$router.push.calledWith('/login'))
+    vm.$router.push.restore()
+    vm.setForgot.restore()
   })
 })

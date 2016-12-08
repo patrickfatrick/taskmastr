@@ -32,7 +32,7 @@ exports.deleteList = function (id) {
 }
 
 exports.updateList = function (id, body) {
-  // body.dateModified = new Date().toISOString()
+  body.dateModified = new Date().toISOString()
   return List.get(id)
   .update(body).run()
   .then((result) => result)

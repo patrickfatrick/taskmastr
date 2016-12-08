@@ -1,43 +1,11 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import CreateForm from '../../../public/components/forms/CreateForm.vue'
-import state from '../../../public/store/state'
-import mutations from '../../../public/store/mutations'
+import mountVm from '../../mount-vm'
 
 describe('CreateForm.vue', function () {
   let clock
   let promise
-
-  // mock vue-router
-  CreateForm.computed.$route = () => {
-    return {
-      router: {
-        go (location) {
-          return location
-        }
-      },
-      path: '/create',
-      name: 'Create'
-    }
-  }
-
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': CreateForm
-      }
-    }).$mount()
-  }
 
   beforeEach(() => {
     clock = sinon.useFakeTimers()
@@ -48,53 +16,59 @@ describe('CreateForm.vue', function () {
   })
 
   it('should inherit the auth property from the state', () => {
-    assert.isFalse(CreateForm.vuex.getters.auth({ auth: false }))
+    const vm = mountVm(CreateForm)
+    assert.isFalse(vm.auth)
   })
 
   it('should inherit the user property from the state', () => {
-    assert.isObject(CreateForm.vuex.getters.user({ user: {} }))
+    const vm = mountVm(CreateForm)
+    assert.isObject(vm.user)
   })
 
   it('should inherit the forgot property from the state', () => {
-    assert.isFalse(CreateForm.vuex.getters.forgot({ forgot: false }))
+    const vm = mountVm(CreateForm)
+    assert.isFalse(vm.forgot)
   })
 
   it('should inherit the rememberMe property from the state', () => {
-    assert.isFalse(CreateForm.vuex.getters.rememberMe({ rememberMe: false }))
+    const vm = mountVm(CreateForm)
+    assert.isFalse(vm.rememberMe)
   })
 
   it('should have a validate property', () => {
-    assert.isFunction(CreateForm.computed.validate)
+    const vm = mountVm(CreateForm)
+    assert.deepEqual(vm.validate, { usernameEmail: false, usernameRequired: false, passwordRequired: false, confirmMatch: true })
   })
 
   it('should have an isValid property', () => {
-    assert.isFunction(CreateForm.computed.isValid)
+    const vm = mountVm(CreateForm)
+    assert.isFalse(vm.isValid)
   })
 
   it('should inherit an addList action', () => {
-    assert.isFunction(CreateForm.vuex.actions.addList)
+    const vm = mountVm(CreateForm)
+    assert.isFunction(vm.addList)
   })
 
   it('should inherit an setCurrentList action', () => {
-    assert.isFunction(CreateForm.vuex.actions.setCurrentList)
-  })
-
-  it('should inherit a loginUser action', () => {
-    assert.isFunction(CreateForm.vuex.actions.loginUser)
+    const vm = mountVm(CreateForm)
+    assert.isFunction(vm.setCurrentList)
   })
 
   it('should inherit a createUser action', () => {
-    assert.isFunction(CreateForm.vuex.actions.createUser)
+    const vm = mountVm(CreateForm)
+    assert.isFunction(vm.createUser)
   })
 
   it('should inherit the setConfirmAttempt method from the store', () => {
-    assert.isFunction(CreateForm.vuex.actions.setConfirmAttempt)
+    const vm = mountVm(CreateForm)
+    assert.isFunction(vm.setConfirmAttempt)
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm()
+    const vm = mountVm(CreateForm)
 
-    assert.isNotNull(vm.$el.querySelector('#create-form'))
+    assert.strictEqual(vm.$el.getAttribute('id'), 'create-form')
     assert.isNotNull(vm.$el.querySelector('#user-line'))
     assert.isNotNull(vm.$el.querySelector('#key-line'))
     assert.isNotNull(vm.$el.querySelector('#confirm-line'))
@@ -105,144 +79,125 @@ describe('CreateForm.vue', function () {
   })
 
   it('should create user and log in to app if isValid', () => {
-    sinon.stub(CreateForm.computed, 'validate').returns({
-      usernameEmail: true,
-      usernameRequired: true,
-      passwordRequired: true,
-      confirmMatch: true
+    const vm = mountVm(CreateForm, {
+      auth: 'username@domain.com',
+      user: {
+        username: 'username@domain.com',
+        key: 'password',
+        confirm: 'password'
+      }
     })
-    sinon.stub(CreateForm.computed, 'isValid').returns(true)
-
-    const vm = mountVm({ auth: 'username@domain.com' })
-    promise = sinon.stub(vm.$children[0], 'createUser').returnsPromise()
-
+    promise = sinon.stub(vm, 'createUser').returnsPromise()
     promise.resolves('username@domain.com')
-    sinon.stub(vm.$children[0].$route.router, 'go')
-    sinon.stub(vm.$children[0], 'addList')
-    sinon.stub(vm.$children[0], 'setCurrentList')
+    sinon.stub(vm, 'addList')
+    sinon.stub(vm, 'setCurrentList')
+    sinon.stub(vm.$router, 'push')
 
-    vm.$children[0].create('username@domain.com', 'password', false)
-
+    vm.create('username@domain.com', 'password', false)
     clock.tick(250)
 
-    assert.isTrue(vm.$children[0].createUser.calledWith('username@domain.com', 'password', false))
-    assert.isTrue(vm.$children[0].addList.calledWithMatch({ list: 'Your first list' }))
-    assert.isTrue(vm.$children[0].setCurrentList.calledOnce)
-    assert.isTrue(vm.$children[0].$route.router.go.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
+    assert.isTrue(vm.createUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+    assert.isTrue(vm.addList.calledWithMatch({ list: 'Your first list' }))
+    assert.isTrue(vm.setCurrentList.calledOnce)
+    assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
 
-    CreateForm.computed.validate.restore()
-    CreateForm.computed.isValid.restore()
-    vm.$children[0].$route.router.go.restore()
-    vm.$children[0].addList.restore()
-    vm.$children[0].setCurrentList.restore()
+    vm.$router.push.restore()
+    vm.addList.restore()
+    vm.setCurrentList.restore()
   })
 
   it('should not create user or log in to app if !isValid', () => {
-    sinon.stub(CreateForm.computed, 'validate').returns({
-      usernameEmail: true,
-      usernameRequired: true,
-      passwordRequired: true,
-      confirmMatch: false
-    })
-    sinon.stub(CreateForm.computed, 'isValid').returns(false)
-
-    const vm = mountVm({ auth: 'username@domain.com' })
-    promise = sinon.stub(vm.$children[0], 'createUser').returnsPromise()
-
+    const vm = mountVm(CreateForm)
+    promise = sinon.stub(vm, 'createUser').returnsPromise()
     promise.resolves('username@domain.com')
-    sinon.stub(vm.$children[0].$route.router, 'go')
+    sinon.stub(vm.$router, 'push')
 
-    vm.$children[0].create('username@domain.com', 'password', false)
+    vm.create('username@domain.com', 'password', false)
 
     clock.tick(250)
 
-    assert.isFalse(vm.$children[0].createUser.calledOnce)
-    assert.isFalse(vm.$children[0].$route.router.go.calledOnce)
-
-    CreateForm.computed.validate.restore()
-    CreateForm.computed.isValid.restore()
-    vm.$children[0].$route.router.go.restore()
+    assert.isFalse(vm.createUser.calledOnce)
+    assert.isFalse(vm.$router.push.calledOnce)
+    vm.$router.push.restore()
   })
 
   it('should validate user.username as required', () => {
-    const vm = mountVm({ user: {
+    const vm = mountVm(CreateForm, { user: {
       username: '',
       key: 'password',
       confirm: 'password'
     } })
 
-    assert.isFalse(vm.$children[0].validate.usernameRequired)
-    assert.isFalse(vm.$children[0].validate.usernameEmail)
-    assert.isTrue(vm.$children[0].validate.passwordRequired)
-    assert.isTrue(vm.$children[0].validate.confirmMatch)
-    assert.isFalse(vm.$children[0].isValid)
+    assert.isFalse(vm.validate.usernameRequired)
+    assert.isFalse(vm.validate.usernameEmail)
+    assert.isTrue(vm.validate.passwordRequired)
+    assert.isTrue(vm.validate.confirmMatch)
+    assert.isFalse(vm.isValid)
   })
 
   it('should validate user.username as an email address', () => {
-    const vm = mountVm({ user: {
+    const vm = mountVm(CreateForm, { user: {
       username: 'username',
       key: 'password',
       confirm: 'password'
     } })
 
-    assert.isTrue(vm.$children[0].validate.usernameRequired)
-    assert.isFalse(vm.$children[0].validate.usernameEmail)
-    assert.isTrue(vm.$children[0].validate.passwordRequired)
-    assert.isTrue(vm.$children[0].validate.confirmMatch)
-    assert.isFalse(vm.$children[0].isValid)
+    assert.isTrue(vm.validate.usernameRequired)
+    assert.isFalse(vm.validate.usernameEmail)
+    assert.isTrue(vm.validate.passwordRequired)
+    assert.isTrue(vm.validate.confirmMatch)
+    assert.isFalse(vm.isValid)
   })
 
   it('should validate user.key as required', () => {
-    const vm = mountVm({ user: {
+    const vm = mountVm(CreateForm, { user: {
       username: 'username@domain.com',
       key: '',
       confirm: ''
     } })
 
-    assert.isTrue(vm.$children[0].validate.usernameRequired)
-    assert.isTrue(vm.$children[0].validate.usernameEmail)
-    assert.isFalse(vm.$children[0].validate.passwordRequired)
-    assert.isTrue(vm.$children[0].validate.confirmMatch)
-    assert.isFalse(vm.$children[0].isValid)
+    assert.isTrue(vm.validate.usernameRequired)
+    assert.isTrue(vm.validate.usernameEmail)
+    assert.isFalse(vm.validate.passwordRequired)
+    assert.isTrue(vm.validate.confirmMatch)
+    assert.isFalse(vm.isValid)
   })
 
   it('should validate user.confirm as matching user.key', () => {
-    const vm = mountVm({ user: {
+    const vm = mountVm(CreateForm, { user: {
       username: 'username@domain.com',
       key: 'password',
       confirm: ''
     } })
 
-    assert.isTrue(vm.$children[0].validate.usernameRequired)
-    assert.isTrue(vm.$children[0].validate.usernameEmail)
-    assert.isTrue(vm.$children[0].validate.passwordRequired)
-    assert.isFalse(vm.$children[0].validate.confirmMatch)
-    assert.isFalse(vm.$children[0].isValid)
+    assert.isTrue(vm.validate.usernameRequired)
+    assert.isTrue(vm.validate.usernameEmail)
+    assert.isTrue(vm.validate.passwordRequired)
+    assert.isFalse(vm.validate.confirmMatch)
+    assert.isFalse(vm.isValid)
   })
 
   it('isValid should return true if validate is all true', () => {
-    const vm = mountVm({ user: {
+    const vm = mountVm(CreateForm, { user: {
       username: 'username@domain.com',
       key: 'password',
       confirm: 'password'
     } })
 
-    assert.isTrue(vm.$children[0].validate.usernameRequired)
-    assert.isTrue(vm.$children[0].validate.usernameEmail)
-    assert.isTrue(vm.$children[0].validate.passwordRequired)
-    assert.isTrue(vm.$children[0].validate.confirmMatch)
-    assert.isTrue(vm.$children[0].isValid)
+    assert.isTrue(vm.validate.usernameRequired)
+    assert.isTrue(vm.validate.usernameEmail)
+    assert.isTrue(vm.validate.passwordRequired)
+    assert.isTrue(vm.validate.confirmMatch)
+    assert.isTrue(vm.isValid)
   })
 
   it('should call setConfirmAttempt on button push', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'setConfirmAttempt')
+    const vm = mountVm(CreateForm)
+    sinon.stub(vm, 'setConfirmAttempt')
 
     vm.$el.querySelector('#confirm-button').click()
 
-    assert.isTrue(vm.$children[0].setConfirmAttempt.calledWith(true))
-
-    vm.$children[0].setConfirmAttempt.restore()
+    assert.isTrue(vm.setConfirmAttempt.calledWith(true))
+    vm.setConfirmAttempt.restore()
   })
 })

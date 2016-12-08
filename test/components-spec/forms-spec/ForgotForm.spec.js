@@ -1,65 +1,38 @@
 /* global it describe sinon */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import ForgotForm from '../../../public/components/forms/ForgotForm.vue'
-import state from '../../../public/store/state'
-import mutations from '../../../public/store/mutations'
+import mountVm from '../../mount-vm'
 
 describe('ForgotForm.vue', function () {
-  // mock vue-router
-  ForgotForm.computed.$route = () => {
-    return {
-      router: {
-        go (location) {
-          return location
-        }
-      },
-      path: '/forgot',
-      name: 'Forgot'
-    }
-  }
-
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        'test': ForgotForm
-      }
-    }).$mount()
-  }
-
   it('should inherit the user property from the state', () => {
-    assert.isObject(ForgotForm.vuex.getters.user({ user: {} }))
+    const vm = mountVm(ForgotForm)
+    assert.isObject(vm.user)
   })
 
   it('should have a validate property', () => {
-    assert.isFunction(ForgotForm.computed.validate)
+    const vm = mountVm(ForgotForm)
+    assert.deepEqual(vm.validate, { usernameEmail: false, usernameRequired: false })
   })
 
   it('should have an isValid property', () => {
-    assert.isFunction(ForgotForm.computed.isValid)
+    const vm = mountVm(ForgotForm)
+    assert.isFalse(vm.isValid)
   })
 
   it('should inherit the forgotPassword action from the store', () => {
-    assert.isFunction(ForgotForm.vuex.actions.forgotPassword)
+    const vm = mountVm(ForgotForm)
+    assert.isFunction(vm.forgotPassword)
   })
 
   it('should inherit the setForgotAttempt method from the store', () => {
-    assert.isFunction(ForgotForm.vuex.actions.setForgotAttempt)
+    const vm = mountVm(ForgotForm)
+    assert.isFunction(vm.setForgotAttempt)
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm()
+    const vm = mountVm(ForgotForm)
 
-    assert.isNotNull(vm.$el.querySelector('#forgot-form'))
+    assert.strictEqual(vm.$el.getAttribute('id'), 'forgot-form')
     assert.isNotNull(vm.$el.querySelector('#user-line'))
     assert.isNotNull(vm.$el.querySelector('#forgot-password'))
     assert.isNotNull(vm.$el.querySelector('#forgot-button'))
@@ -68,75 +41,55 @@ describe('ForgotForm.vue', function () {
   })
 
   it('should call forgotPassword if isValid', () => {
-    sinon.stub(ForgotForm.computed, 'validate').returns({
-      usernameEmail: true,
-      usernameRequired: true
-    })
-    sinon.stub(ForgotForm.computed, 'isValid').returns(true)
+    const vm = mountVm(ForgotForm, { user: { username: 'username@domain.com' } })
+    sinon.stub(vm, 'forgotPassword')
 
-    const vm = mountVm()
+    vm.forgot('username@domain.com')
 
-    sinon.stub(vm.$children[0], 'forgotPassword')
-
-    vm.$children[0].forgot('username@domain.com')
-    assert.isTrue(vm.$children[0].forgotPassword.calledWith('username@domain.com'))
-
-    ForgotForm.computed.validate.restore()
-    ForgotForm.computed.isValid.restore()
-    vm.$children[0].forgotPassword.restore()
+    assert.isTrue(vm.forgotPassword.calledWith('username@domain.com'))
+    vm.forgotPassword.restore()
   })
 
   it('should not call forgotPassword if !isValid', () => {
-    sinon.stub(ForgotForm.computed, 'validate').returns({
-      usernameEmail: false,
-      usernameRequired: true
-    })
-    sinon.stub(ForgotForm.computed, 'isValid').returns(false)
+    const vm = mountVm(ForgotForm, { user: { username: 'username' } })
+    sinon.stub(vm, 'forgotPassword')
 
-    const vm = mountVm()
+    vm.forgot('username')
 
-    sinon.stub(vm.$children[0], 'forgotPassword')
-
-    vm.$children[0].forgot('username@domain.com')
-    assert.isFalse(vm.$children[0].forgotPassword.calledOnce)
-
-    ForgotForm.computed.validate.restore()
-    ForgotForm.computed.isValid.restore()
-    vm.$children[0].forgotPassword.restore()
+    assert.isFalse(vm.forgotPassword.calledOnce)
+    vm.forgotPassword.restore()
   })
 
   it('should validate user.username as required', () => {
-    const vm = mountVm({ user: { username: '' } })
+    const vm = mountVm(ForgotForm, { user: { username: '' } })
 
-    assert.isFalse(vm.$children[0].validate.usernameRequired)
-    assert.isFalse(vm.$children[0].validate.usernameEmail)
-    assert.isFalse(vm.$children[0].isValid)
+    assert.isFalse(vm.validate.usernameRequired)
+    assert.isFalse(vm.validate.usernameEmail)
+    assert.isFalse(vm.isValid)
   })
 
   it('should validate user.username as an email address', () => {
-    const vm = mountVm({ user: { username: 'username' } })
+    const vm = mountVm(ForgotForm, { user: { username: 'username' } })
 
-    assert.isTrue(vm.$children[0].validate.usernameRequired)
-    assert.isFalse(vm.$children[0].validate.usernameEmail)
+    assert.isTrue(vm.validate.usernameRequired)
+    assert.isFalse(vm.validate.usernameEmail)
   })
 
   it('isValid should return true if validate is all true', () => {
-    const vm = mountVm({ user: { username: 'username@domain.com' } })
+    const vm = mountVm(ForgotForm, { user: { username: 'username@domain.com' } })
 
-    assert.isTrue(vm.$children[0].validate.usernameRequired)
-    assert.isTrue(vm.$children[0].validate.usernameEmail)
-    assert.isTrue(vm.$children[0].isValid)
+    assert.isTrue(vm.validate.usernameRequired)
+    assert.isTrue(vm.validate.usernameEmail)
+    assert.isTrue(vm.isValid)
   })
 
   it('should call setForgotAttempt on button push', () => {
-    const vm = mountVm()
-
-    sinon.stub(vm.$children[0], 'setForgotAttempt')
+    const vm = mountVm(ForgotForm)
+    sinon.stub(vm, 'setForgotAttempt')
 
     vm.$el.querySelector('#forgot-button').click()
 
-    assert.isTrue(vm.$children[0].setForgotAttempt.calledWith(true))
-
-    vm.$children[0].setForgotAttempt.restore()
+    assert.isTrue(vm.setForgotAttempt.calledWith(true))
+    vm.setForgotAttempt.restore()
   })
 })

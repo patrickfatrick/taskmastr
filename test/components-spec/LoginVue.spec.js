@@ -1,42 +1,26 @@
 /* global it describe */
 import { assert } from 'chai'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import LoginVue from '../../public/components/LoginVue.vue'
-import state from '../../public/store/state'
-import mutations from '../../public/store/mutations'
+import mountVm from '../mount-vm'
 
-describe('LoginVue.vue', function () {
-  function mountVm (changes) {
-    return new Vue({
-      store: new Vuex.Store({
-        state: {
-          ...state,
-          ...changes
-        },
-        mutations
-      }),
-      template: '<div><test></test></div>',
-      components: {
-        test: LoginVue
-      }
-    }).$mount()
-  }
-
+describe('LoginVue', function () {
   it('should inherit the auth property from the state', () => {
-    assert.isFalse(LoginVue.vuex.getters.auth({ auth: false }))
+    const vm = mountVm(LoginVue)
+    assert.isFalse(vm.auth)
   })
 
   it('should inherit the user property from the state', () => {
-    assert.isObject(LoginVue.vuex.getters.user({ user: {} }))
+    const vm = mountVm(LoginVue)
+    assert.isObject(vm.user)
   })
 
   it('should inherit the init property from the state', () => {
-    assert.isFalse(LoginVue.vuex.getters.init({ init: false }))
+    const vm = mountVm(LoginVue)
+    assert.isFalse(vm.init)
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm({ init: true })
+    const vm = mountVm(LoginVue, { init: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
     assert.isNotNull(vm.$el.querySelector('#key-modal'))
@@ -44,14 +28,14 @@ describe('LoginVue.vue', function () {
   })
 
   it('should respond to changes in the state (init)', () => {
-    const vm = mountVm()
+    const vm = mountVm(LoginVue)
 
     assert.isNull(vm.$el.querySelector('.mask'))
     assert.isNull(vm.$el.querySelector('#key-modal'))
   })
 
   it('should respond to changes in the state (auth and user.tasks)', () => {
-    const vm = mountVm({
+    const vm = mountVm(LoginVue, {
       init: true,
       auth: 'username@domain.com',
       user: {

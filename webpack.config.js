@@ -36,6 +36,10 @@ module.exports = {
         loader: 'babel'
       },
       {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
         test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/,
         loader: 'file'
       }

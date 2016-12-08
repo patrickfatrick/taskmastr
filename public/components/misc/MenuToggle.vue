@@ -7,20 +7,17 @@
 </template>
 
 <script>
-
 import Mousetrap from 'mousetrap'
-import { setMenuToggled } from '../../store/list-store/list-actions'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  vuex: {
-    getters: {
-      menuToggled: (state) => state.menuToggled
-    },
-    actions: {
-      setMenuToggled
-    }
-  },
-  compiled () {
+  computed: mapState({
+    menuToggled: (state) => state.menuToggled
+  }),
+  methods: mapActions([
+    'setMenuToggled'
+  ]),
+  mounted () {
     Mousetrap.bind('alt+right', () => {
       this.setMenuToggled(true)
     })
@@ -29,5 +26,4 @@ export default {
     })
   }
 }
-
 </script>

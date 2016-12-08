@@ -1,3 +1,9 @@
+.details-enter-active {
+  @include animation(bounceInDown 250ms);
+}
+.details-leave-active {
+  @include animation(bounceOutUp 250ms);
+}
 .task-details {
   position: fixed;
   background: $gray * 1.4;
@@ -24,12 +30,6 @@
   }
   @include media(min-height 700px) {
     min-height: 600px;
-  }
-  &.details-enter {
-    @include animation(bounceInDown 250ms);
-  }
-  &.details-leave {
-    @include animation(bounceOutUp 250ms);
   }
   .task-details-close {
     margin-top: 1rem;
