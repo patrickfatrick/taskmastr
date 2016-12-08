@@ -15,7 +15,7 @@ const Item = thinky.createModel('items', {
   id: type.string(),
   index: type.number(),
   item: type.string(),
-  notes:w type.string()
+  notes: type.string()
 })
 
 Item.ensureIndex('listId')
