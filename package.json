@@ -1,9 +1,9 @@
 {
   "name": "taskmastr",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "engines": {
-    "node": "6.0.0",
-    "npm": "3.8.3"
+    "node": "7.2.0",
+    "npm": "4.0.3"
   },
   "description": "A web task manager built with Node, Koa, Mongo, Vue",
   "homepage": "http://www.taskmastr.co",
