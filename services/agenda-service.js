@@ -44,7 +44,7 @@ agenda.define('Reset Email', (job, done) => {
     to: data.username,
     from: 'taskmastr <do-not-reply@taskmastr.co>',
     subject: 'taskmastr Password Reset',
-    text: 'Hi there,\n\n' + 'You\'ve received this email because you or someone else requested to reset the password for your account.\n\n' + 'Please click on the following link to create a new password:\n\n' + data.host + '/#!/reset?token=' + data.resetToken + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged. This link becomes invalid once you reset your password, or after one hour whichever comes first.\n\n' + 'Sincerely,\n\ntaskmastr\n'
+    text: 'Hi there,\n\n' + 'You\'ve received this email because you or someone else requested to reset the password for your account.\n\n' + 'Please click on the following link to create a new password:\n\n' + data.host + '/#/reset?token=' + data.resetToken + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged. This link becomes invalid once you reset your password, or after one hour whichever comes first.\n\n' + 'Sincerely,\n\ntaskmastr\n'
   }
   mailer.sendMail(email, (err) => {
     if (err) return done(err)

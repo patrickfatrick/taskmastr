@@ -6,19 +6,19 @@ const r = require('../thinky').r
 const User = require('../models/User')
 
 exports.addUser = function (user) {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(user.key, 10, (err, hash) => {
-      if (err) reject(err)
-      var newUser = {
-        username: user.username.toLowerCase(),
-        key: hash,
-        darkmode: user.darkmode,
-        dateCreated: new Date().toISOString()
-      }
-      User.insert(newUser, { returnChanges: true }).run()
-      .then((result) => resolve(result.changes[0]['new_val']))
-      .catch((err) => reject(err))
-    })
+  bcrypt.hash(user.key, 10)
+  .then((hash) => {
+    return {
+      username: user.username.toLowerCase(),
+      key: hash,
+      darkmode: user.darkmode,
+      dateCreated: new Date().toISOString()
+    }
+  })
+  .then((newUser) => User.insert(newUser, { returnChanges: true }).run())
+  .then((result) => result.changes[0]['new_val'])
+  .catch((err) => {
+    throw new Error(err)
   })
 }
 
@@ -68,21 +68,21 @@ exports.setToken = function (user) {
 }
 
 exports.resetPassword = function (user) {
-  return new Promise((resolve, reject) => {
-    if (Date.now() > user.resetDate) reject()
-    bcrypt.hash(user.newKey, 10, (err, hash) => {
-      if (err) reject(err)
-      User.filter({ resetToken: user.token })
-      .update({
-        dateModified: new Date().toISOString(),
-        key: hash,
-        resetToken: null
-      }).run()
-      .then((result) => {
-        if (!result[0]) resolve(null)
-        resolve(result[0])
-      })
-      .catch((err) => reject(err))
-    })
+  if (Date.now() > user.resetDate) throw new Error('Expired token')
+  return bcrypt.hash(user.newKey, 10)
+  .then((hash) => {
+    return User.filter({ resetToken: user.token })
+    .update({
+      dateModified: new Date().toISOString(),
+      key: hash,
+      resetToken: null
+    }).run()
+  })
+  .then((result) => {
+    if (!result[0]) return null
+    return result[0]
+  })
+  .catch((err) => {
+    throw new Error(err)
   })
 }
