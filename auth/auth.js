@@ -18,8 +18,8 @@ module.exports = function () {
         return next(null, null)
       }
       console.log(user.username + ' => Found. Validating...')
-      bcrypt.compare(key, user.key, (err, same) => {
-        if (err) return next(err)
+      bcrypt.compare(key, user.key)
+      .then((same) => {
         if (!same) {
           console.log('Passwords don\'t match')
           // console.log('user key: ' + user.key)
@@ -28,6 +28,7 @@ module.exports = function () {
         console.log(username + ' => Validating... OK')
         next(null, user)
       })
+      .catch((err) => next(err))
     })
   }))
 
