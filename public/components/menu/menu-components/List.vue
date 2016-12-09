@@ -1,21 +1,53 @@
 <template>
-  <div :class="{'deleting': list._deleting, 'current': list.current}">
+  <div
+    class="list table-row"
+    :class="{'deleting': list._deleting, 'current': list.current}">
     <div class="initial-view">
-      <div class="task-cell table-data" @dblclick="toggleDetails(list.id)">
-        <input class="rename" type="text" :value="list.list" @change="rename($event, index)" :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}"></input>
-        <button :href="'#' + list.id" class="name" :title="list.list" :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}" @click.prevent="navigateToList(list.id)">{{list.list}}</button>
+      <div
+        class="task-cell table-data"
+        @dblclick="toggleDetails(list.id)">
+        <input
+          class="rename"
+          type="text"
+          :value="list.list"
+          @change="rename($event, index)"
+          :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}">
+        </input>
+        <button 
+          :href="'#' + list.id" 
+          class="name" 
+          :title="list.list"
+          :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}"
+          @click.prevent="navigateToList(list.id)">{{list.list}}
+        </button>
       </div>
       <div class="utils table-data">
-        <button class="rename-button" title="Rename list" @click.prevent="toggleDetails(list.id)">
+        <button 
+          class="rename-button"
+          title="Rename list"
+          @click.prevent="toggleDetails(list.id)">
           <i class="fa fa-pencil-square"></i>
         </button>
-        <button class="delete-button" title="Delete list" v-if="list.owner === username" @click.prevent="removeList(index)">
-          <i class="fa" :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}"></i>
+        <button
+          class="delete-button"
+          title="Delete list"
+          v-if="list.owner === username"
+          @click.prevent="removeList(index)">
+          <i 
+            class="fa"
+            :class="{'fa-trash-o': !list._deleting, 'fa-undo': list._deleting}">
+          </i>
         </button>
-        <i class="fa fa-lock" v-if="list.owner !== username"></i>
+        <i 
+          class="fa fa-lock" 
+          v-if="list.owner !== username">
+        </i>
       </div>
     </div>
-    <list-details :index="index" :list="list"></list-details>
+    <list-details
+      :index="index"
+      :list="list">
+    </list-details>
   </div>
 </template>
 
