@@ -91,9 +91,9 @@ export default {
       if (username.length > length) return `${username.substring(0, length)} ...`
       return username
     },
-    addNewListUser (index, user) {
+    addNewListUser (index, username) {
       if (!this.isValid) return
-      this.addListUser({ index, user: { username: user, status: 'pending' } })
+      this.addListUser({ index, user: { username, status: 'pending' } })
       this.newUser = ''
     }
   }
