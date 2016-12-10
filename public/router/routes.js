@@ -12,10 +12,6 @@ export default [
     meta: { requiresAuth: true },
     children: [
       {
-        path: 'list/:listid/newuser/:newuser',
-        component: Tasks
-      },
-      {
         path: 'list/:listid',
         component: Tasks
       },

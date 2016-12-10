@@ -48,8 +48,8 @@ export default {
       window.location.assign('/')
     },
     routeWatcher () {
-      if (this.$route.params.newuser) {
-        this.confirmListUser({ listid: this.$route.params.listid, username: this.$route.params.newuser.toLowerCase() })
+      if (this.$route.query.newuser) {
+        this.confirmListUser({ listid: this.$route.params.listid, username: this.$route.query.newuser.toLowerCase() })
         this.$router.push('/app/list/' + this.$route.params.listid)
       }
       this.mountList(this.$route.params.listid)

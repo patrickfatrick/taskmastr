@@ -32,7 +32,7 @@ export default {
     ]),
     navigateToList (id, newuser) {
       if (this.current.id !== id) this.unmountList(this.current.id)
-      this.$router.push(`/app/list/${id}${(newuser) ? '/newuser/' + newuser : ''}`)
+      this.$router.push(`/app/list/${id}${(newuser) ? '?newuser=' + newuser : ''}`)
     }
   },
   mounted () {
@@ -47,8 +47,13 @@ export default {
       socket.on('list-deleted', (data) => {
         const listIndex = _.findIndex(this.user.tasks, { id: data.listid })
         if ((data.username.trim() === this.user.username.trim() && listIndex !== -1) || data.permanent) {
-          this.deleteList(listIndex, 0, false, (id) => {
-            this.navigateToList(id)
+          this.deleteList({
+            index: listIndex,
+            delay: 0,
+            perm: false,
+            cb: (id) => {
+              this.navigateToList(id)
+            }
           })
         }
       })
@@ -59,16 +64,21 @@ export default {
         const listIndex = _.findIndex(this.user.tasks, { id: data.list.id })
         const userIndex = data.list.users.indexOf(this.user.username)
         if (userIndex === -1 && data.list.owner.trim() !== this.user.username.trim() && listIndex !== -1 && data.removed) {
-          this.deleteList(listIndex, 0, false, (id) => {
-            this.navigateToList(id)
+          this.deleteList({
+            index: listIndex,
+            delay: 0,
+            perm: false,
+            cb: (id) => {
+              this.navigateToList(id)
+            }
           })
         }
-        if (listIndex !== -1) this.setUsers(listIndex, data.list.users)
+        if (listIndex !== -1) this.setUsers({ index: listIndex, users: data.list.users })
       })
 
       // Get session and reroute
       const listID = this.$route.params.listid
-      const newUser = this.$route.params.newuser
+      const newUser = this.$route.query.newuser
       this.getUserSession()
       .then(() => {
         // Opt to route to the listid if provided
