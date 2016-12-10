@@ -150,7 +150,7 @@ describe('ListDetailsVue', function () {
 
     vm.changeNewUser('notusername@domain.com')
     vm.$el.querySelector('.new-user-button').click()
-    assert.isTrue(vm.addNewListUser.calledWith(0, 'notusername@domain.com'))
+    assert.isTrue(vm.addNewListUser.calledWith(0))
 
     vm.addNewListUser.restore()
   })

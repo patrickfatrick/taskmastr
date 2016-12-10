@@ -170,6 +170,7 @@ export function confirmListUser ({ commit, state }, { listid, username }) {
       owner: response.owner,
       users: response.users
     }
+
     commit('ADD_LIST', userList)
     return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
       if (err) return commit('REMOVE_LIST', _.findIndex(state.user.tasks, { id: listid }))

@@ -29,8 +29,8 @@
           </div>
           <div class="no-users" v-if="!list.users.length">It's just you in here!</div>
           <div class="new-user" v-if="list.owner === username">
-            <form :id="'new-user-form-' + list.id" @submit.prevent="addNewListUser(index, newUser.trim().toLowerCase())">
-              <input type="text" title="Invite new user" placeholder="Invite someone" class="new-user-input" :value="newUser" @change="changeNewUser($event.target.value)">
+            <form :id="'new-user-form-' + list.id" @submit.prevent="addNewListUser(index)">
+              <input type="text" title="Invite new user" placeholder="Invite someone" class="new-user-input" :value="newUser" @input="changeNewUser($event.target.value)">
               <div class="new-user-button-container">
                 <button type="submit" title="Invite" class="new-user-button"><i class="fa fa-user-plus"></i></button>
               </div>
@@ -91,9 +91,9 @@ export default {
       if (username.length > length) return `${username.substring(0, length)} ...`
       return username
     },
-    addNewListUser (index, username) {
+    addNewListUser (index) {
       if (!this.isValid) return
-      this.addListUser({ index, user: { username, status: 'pending' } })
+      this.addListUser({ index, user: { username: this.newUser.trim(), status: 'pending' } })
       this.newUser = ''
     }
   }
