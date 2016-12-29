@@ -8,6 +8,7 @@ const fontAwesome = require('node-font-awesome')
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     './src/main.js'
   ],
   output: {
@@ -57,17 +58,18 @@ module.exports = {
   sassLoader: {
     includePaths: neat.with(fontAwesome.scssPath),
     outputStyle: 'compressed'
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      'Promise': 'imports?this=>global!exports?global.Promise!es6-promise/auto'
-    })
-  ]
+  }
+  // ,
+  // plugins: [
+  //   new webpack.ProvidePlugin({
+  //     'Promise': 'imports?this=>global!exports?global.Promise!es6-promise/auto'
+  //   })
+  // ]
 }
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.output.publicPath = '/public/'
-  module.exports.plugins.unshift(
+  module.exports.plugins = [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
@@ -80,7 +82,7 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin('stylesheets/styles.css')
-  )
+  ]
   module.exports.module.loaders.push({
     test: /\.scss$/,
     loader: ExtractTextPlugin.extract('style', 'css?sourceMap!resolve-url!sass?sourceMap')
@@ -88,7 +90,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   module.exports.devtool = '#source-map'
   module.exports.entry.unshift('webpack/hot/dev-server')
-  module.exports.plugins.unshift(new webpack.HotModuleReplacementPlugin())
+  module.exports.plugins = [ new webpack.HotModuleReplacementPlugin() ]
   module.exports.module.loaders.push({
     test: /\.scss$/,
     loader: 'style!css?sourceMap!resolve-url!sass?sourceMap'

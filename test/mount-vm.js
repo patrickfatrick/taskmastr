@@ -7,7 +7,6 @@ import getters from '../src/store/getters'
 import router from '../src/router'
 
 export default function (component, changes, propsData, data) {
-  console.log(Promise)
   return new Vue(Vue.util.extend({
     router,
     propsData,

@@ -20,7 +20,7 @@ module.exports = function (karma) {
   karma.set({
     basePath: '',
     files: [
-      'node_modules/es6-promise/dist/es6-promise.auto.js',
+      'node_modules/babel-polyfill/browser.js',
       'public/socket.io-client/socket.io.js',
       'test/index.js'
     ],

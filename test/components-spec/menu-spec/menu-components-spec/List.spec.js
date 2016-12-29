@@ -137,11 +137,6 @@ describe('ListVue', function () {
     vm.$el.querySelector('.task-cell').dispatchEvent(dblclick())
 
     assert.isTrue(vm.toggleListDetails.calledWith('listid'))
-    vm.$nextTick(() => {
-      assert.strictEqual(vm.listDetailsToggled, 'listid')
-      assert.isTrue(vm.$el.querySelector('.name').classList.contains('hidden'))
-    })
-
     vm.toggleListDetails.restore()
   })
 
