@@ -33,7 +33,7 @@ module.exports = {
   },
   socketIO: {
     src: './node_modules/socket.io-client/**/*',
-    dest: dest + '/socket.io-client'
+    dest: dest + '/javascripts/socket.io-client'
   },
   animate: {
     src: 'node_modules/animatewithsass/**/*',

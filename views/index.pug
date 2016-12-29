@@ -2,9 +2,9 @@ extends layout
 
 block content
   app
-  script(src="/socket.io-client/socket.io.js")
+  script(src="/javascripts/socket.io-client/dist/socket.io.min.js")
   if env === 'development'
     script(src="http://localhost:8888/webpack-dev-server.js")
-    script(src="http://localhost:8888/public/bundle.js")
+    script(src="http://localhost:8888/public/javascripts/bundle.js")
   else
-    script(src="/bundle.js")
+    script(src="/javascripts/bundle.js")

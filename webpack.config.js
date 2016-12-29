@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/public/'),
     publicPath: 'http://localhost:8888/public/',
-    filename: 'bundle.js'
+    filename: 'javascripts/bundle.js'
   },
   module: {
     preLoaders: [
@@ -59,12 +59,6 @@ module.exports = {
     includePaths: neat.with(fontAwesome.scssPath),
     outputStyle: 'compressed'
   }
-  // ,
-  // plugins: [
-  //   new webpack.ProvidePlugin({
-  //     'Promise': 'imports?this=>global!exports?global.Promise!es6-promise/auto'
-  //   })
-  // ]
 }
 
 if (process.env.NODE_ENV === 'production') {
