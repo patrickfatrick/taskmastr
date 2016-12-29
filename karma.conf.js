@@ -21,7 +21,7 @@ module.exports = function (karma) {
     basePath: '',
     files: [
       'node_modules/babel-polyfill/browser.js',
-      'public/socket.io-client/socket.io.js',
+      'public/javascripts/socket.io-client/dist/socket.io.js',
       'test/index.js'
     ],
     frameworks: ['mocha', 'sinon-stub-promise', 'sinon', 'chai'],
