@@ -2,8 +2,8 @@
 import { assert } from 'chai'
 import 'isomorphic-fetch'
 import fetchMock from 'fetch-mock'
-import socket from '../../public/socket'
-import { login, create, forgot, reset, logout, getSession, updateUser } from '../../public/services/user-services'
+import socket from '../../src/socket'
+import { login, create, forgot, reset, logout, getSession, updateUser } from '../../src/services/user-services'
 
 describe('user-services', () => {
   it('login invokes a callback on success', (done) => {

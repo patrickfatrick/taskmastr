@@ -1,7 +1,7 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
-import ItemDetails from '../../../../public/components/tasks/task-components/ItemDetails.vue'
+import ItemDetails from '../../../../src/components/tasks/task-components/ItemDetails.vue'
 import mountVm from '../../../mount-vm'
 import { change } from '../../../browser-events'
 

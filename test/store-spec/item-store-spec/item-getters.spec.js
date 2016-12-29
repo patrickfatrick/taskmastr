@@ -1,6 +1,6 @@
 /* global describe it beforeEach */
 import { assert } from 'chai'
-import { getActiveTasks, getCompleteTasks, getAllTasks } from '../../../public/store/item-store/item-getters'
+import { getActiveTasks, getCompleteTasks, getAllTasks } from '../../../src/store/item-store/item-getters'
 
 describe('item getters', () => {
   let state

@@ -1,7 +1,7 @@
 /* global it describe sinon */
 import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
-import Logout from '../../../public/components/misc/Logout.vue'
+import Logout from '../../../src/components/misc/Logout.vue'
 import mountVm from '../../mount-vm'
 
 describe('LogoutVue', function () {

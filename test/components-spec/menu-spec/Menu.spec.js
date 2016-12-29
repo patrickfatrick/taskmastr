@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import Menu from '../../../public/components/menu/Menu.vue'
+import Menu from '../../../src/components/menu/Menu.vue'
 import mountVm from '../../mount-vm'
 
 describe('MenuVue', function () {

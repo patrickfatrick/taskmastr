@@ -1,7 +1,7 @@
 /* global describe it sinon beforeEach afterEach */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import listActionsInjector from 'inject!../../../../public/store/list-store/list-actions'
+import listActionsInjector from 'inject!../../../../src/store/list-store/list-actions'
 
 chai.should()
 

@@ -1,7 +1,7 @@
 /* global it describe sinon */
 import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
-import Darkmode from '../../../../public/components/menu/menu-components/Darkmode.vue'
+import Darkmode from '../../../../src/components/menu/menu-components/Darkmode.vue'
 import mountVm from '../../../mount-vm'
 
 describe('DarkmodeVue', function () {

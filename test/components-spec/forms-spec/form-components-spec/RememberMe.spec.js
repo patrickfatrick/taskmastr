@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import RememberMe from '../../../../public/components/forms/form-components/RememberMe.vue'
+import RememberMe from '../../../../src/components/forms/form-components/RememberMe.vue'
 import mountVm from '../../../mount-vm'
 
 describe('RememberMeVue', function () {

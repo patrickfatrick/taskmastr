@@ -1,4 +1,4 @@
-import defaultList from '../public/helper-utilities/default-list'
+import defaultList from '../src/helper-utilities/default-list'
 
 export const mockUser = {
   username: 'username',

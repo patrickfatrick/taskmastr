@@ -1,7 +1,7 @@
 /* global describe it sinon */
 import { assert } from 'chai'
-import socket from '../../public/socket'
-import { createItem, updateItem, deleteItem } from '../../public/services/item-services'
+import socket from '../../src/socket'
+import { createItem, updateItem, deleteItem } from '../../src/services/item-services'
 
 describe('item-services', () => {
   it('createItem invokes a callback on success', (done) => {

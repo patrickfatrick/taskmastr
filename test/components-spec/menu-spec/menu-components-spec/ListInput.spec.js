@@ -1,6 +1,6 @@
 /* global it describe sinon */
 import { assert } from 'chai'
-import ListInput from '../../../../public/components/menu/menu-components/ListInput.vue'
+import ListInput from '../../../../src/components/menu/menu-components/ListInput.vue'
 import mountVm from '../../../mount-vm'
 
 describe('ListInputVue', function () {

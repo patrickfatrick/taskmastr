@@ -1,7 +1,7 @@
 /* global describe it sinon beforeEach afterEach */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import { setDueDateDifference } from '../../../../public/store/item-store/item-actions'
+import { setDueDateDifference } from '../../../../src/store/item-store/item-actions'
 
 chai.should()
 

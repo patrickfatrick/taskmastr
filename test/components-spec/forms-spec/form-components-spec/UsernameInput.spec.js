@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import UsernameInput from '../../../../public/components/forms/form-components/UsernameInput.vue'
+import UsernameInput from '../../../../src/components/forms/form-components/UsernameInput.vue'
 import mountVm from '../../../mount-vm'
 
 describe('UsernameInputVue', function () {

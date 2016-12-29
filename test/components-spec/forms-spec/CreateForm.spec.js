@@ -1,6 +1,6 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import CreateForm from '../../../public/components/forms/CreateForm.vue'
+import CreateForm from '../../../src/components/forms/CreateForm.vue'
 import mountVm from '../../mount-vm'
 
 describe('CreateForm.vue', function () {

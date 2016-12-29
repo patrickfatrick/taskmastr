@@ -1,6 +1,6 @@
 /* global it describe sinon */
 import { assert } from 'chai'
-import ForgotVue from '../../public/components/ForgotVue.vue'
+import ForgotVue from '../../src/components/ForgotVue.vue'
 import mountVm from '../mount-vm'
 
 describe('ForgotVue', function () {

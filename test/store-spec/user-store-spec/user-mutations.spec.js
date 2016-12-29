@@ -1,6 +1,6 @@
 /* global describe it */
 import chai from 'chai'
-import userMutations from '../../../public/store/user-store/user-mutations'
+import userMutations from '../../../src/store/user-store/user-mutations'
 
 chai.should()
 describe('user mutations', () => {

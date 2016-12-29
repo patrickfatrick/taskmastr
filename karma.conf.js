@@ -6,7 +6,7 @@ delete webpackConfig.plugins
 
 webpackConfig.module.preLoaders.unshift({
   test: /\.js$/,
-  exclude: /node_modules|public\/dist\/|test/,
+  exclude: /node_modules|public|test/,
   loader: 'isparta'
 })
 
@@ -20,8 +20,8 @@ module.exports = function (karma) {
   karma.set({
     basePath: '',
     files: [
-      'node_modules/es6-promise/dist/es6-promise.js',
-      'public/dist/socket.io-client/socket.io.js',
+      'node_modules/es6-promise/dist/es6-promise.auto.js',
+      'public/socket.io-client/socket.io.js',
       'test/index.js'
     ],
     frameworks: ['mocha', 'sinon-stub-promise', 'sinon', 'chai'],

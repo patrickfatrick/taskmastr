@@ -1,7 +1,7 @@
 /* global it describe sinon */
 import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
-import MenuToggle from '../../../public/components/misc/MenuToggle.vue'
+import MenuToggle from '../../../src/components/misc/MenuToggle.vue'
 import mountVm from '../../mount-vm'
 
 describe('MenuToggleVue', function () {

@@ -1,6 +1,6 @@
 /* global it sinon describe beforeEach afterEach */
 import { assert } from 'chai'
-import TaskInput from '../../../../public/components/tasks/task-components/TaskInput.vue'
+import TaskInput from '../../../../src/components/tasks/task-components/TaskInput.vue'
 import mountVm from '../../../mount-vm'
 
 describe('TaskInputVue', function () {

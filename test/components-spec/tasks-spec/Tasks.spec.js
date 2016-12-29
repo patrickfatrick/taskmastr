@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import Tasks from '../../../public/components/tasks/Tasks.vue'
+import Tasks from '../../../src/components/tasks/Tasks.vue'
 import mountVm from '../../mount-vm'
 
 describe('TasksVue', function () {

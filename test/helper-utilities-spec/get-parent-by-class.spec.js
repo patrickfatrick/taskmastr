@@ -1,6 +1,6 @@
 /* global describe it beforeEach afterEach */
 import { assert } from 'chai'
-import getParentByClass from '../../public/helper-utilities/get-parent-by-class'
+import getParentByClass from '../../src/helper-utilities/get-parent-by-class'
 
 describe('getParentByClass', () => {
   let container

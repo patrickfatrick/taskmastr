@@ -1,7 +1,7 @@
 /* global describe sinon it beforeEach afterEach */
 import chai from 'chai'
 import gregorian from 'gregorian'
-import extractDate from '../../public/helper-utilities/extract-date'
+import extractDate from '../../src/helper-utilities/extract-date'
 
 chai.should()
 

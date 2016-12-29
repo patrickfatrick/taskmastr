@@ -1,5 +1,5 @@
-var dest = './public/dist'
-var src = './public'
+var dest = './public'
+var src = './src'
 
 module.exports = {
   nodemon: {
@@ -13,6 +13,7 @@ module.exports = {
       'data/**/*',
       '.sass-cache/**/*',
       'public/**/*',
+      'src/**/*',
       'gulpfile.js',
       'gulp/**/*',
       'views/**/*',
@@ -25,7 +26,7 @@ module.exports = {
   },
   webpack: {
     contentBase: '.',
-    publicPath: '/public/dist/',
+    publicPath: '/public/',
     hot: true,
     noInfo: true,
     stats: { colors: true }

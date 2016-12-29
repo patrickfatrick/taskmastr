@@ -2,8 +2,8 @@
 import { assert } from 'chai'
 import 'isomorphic-fetch'
 import fetchMock from 'fetch-mock'
-import socket from '../../public/socket'
-import { createList, getList, removeList, updateList, inviteUser, removeUser, confirmUser } from '../../public/services/list-services'
+import socket from '../../src/socket'
+import { createList, getList, removeList, updateList, inviteUser, removeUser, confirmUser } from '../../src/services/list-services'
 
 describe('list-services', () => {
   it('createList invokes a callback on success', (done) => {

@@ -1,6 +1,6 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import ListDetails from '../../../../public/components/menu/menu-components/ListDetails.vue'
+import ListDetails from '../../../../src/components/menu/menu-components/ListDetails.vue'
 import mountVm from '../../../mount-vm'
 
 describe('ListDetailsVue', function () {

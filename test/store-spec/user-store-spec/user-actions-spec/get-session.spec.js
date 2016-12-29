@@ -2,7 +2,7 @@
 import chai from 'chai'
 import { testAction } from '../../test-action'
 import { mockUser } from '../../../user-mocks'
-const userActionsInjector = require('inject!../../../../public/store/user-store/user-actions')
+const userActionsInjector = require('inject!../../../../src/store/user-store/user-actions')
 
 chai.should()
 

@@ -1,6 +1,6 @@
 /* global it describe beforeEach afterEach */
 import { assert } from 'chai'
-import Items from '../../../../public/components/tasks/task-components/Items.vue'
+import Items from '../../../../src/components/tasks/task-components/Items.vue'
 import mountVm from '../../../mount-vm'
 
 describe('Items.vue', function () {

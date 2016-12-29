@@ -1,6 +1,6 @@
 /* global it describe sinon */
 import { assert } from 'chai'
-import ForgotPassword from '../../../../public/components/forms/form-components/ForgotPassword.vue'
+import ForgotPassword from '../../../../src/components/forms/form-components/ForgotPassword.vue'
 import mountVm from '../../../mount-vm'
 
 describe('ForgotPasswordVue', function () {

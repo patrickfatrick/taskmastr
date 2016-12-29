@@ -8,11 +8,11 @@ const fontAwesome = require('node-font-awesome')
 
 module.exports = {
   entry: [
-    './public/main.js'
+    './src/main.js'
   ],
   output: {
-    path: path.join(__dirname, '/public/dist/'),
-    publicPath: 'http://localhost:8888/public/dist/',
+    path: path.join(__dirname, '/public/'),
+    publicPath: 'http://localhost:8888/public/',
     filename: 'bundle.js'
   },
   module: {
@@ -60,13 +60,13 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      'Promise': 'imports?this=>global!exports?global.Promise!es6-promise'
+      'Promise': 'imports?this=>global!exports?global.Promise!es6-promise/auto'
     })
   ]
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.output.publicPath = '/public/dist/'
+  module.exports.output.publicPath = '/public/'
   module.exports.plugins.unshift(
     new webpack.DefinePlugin({
       'process.env': {

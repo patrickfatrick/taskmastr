@@ -1,6 +1,6 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
-import Datepicker from '../../../../public/components/tasks/task-components/Datepicker.vue'
+import Datepicker from '../../../../src/components/tasks/task-components/Datepicker.vue'
 import mountVm from '../../../mount-vm'
 
 describe('DatepickerVue', function () {

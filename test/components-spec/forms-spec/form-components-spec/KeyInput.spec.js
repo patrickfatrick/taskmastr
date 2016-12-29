@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import KeyInput from '../../../../public/components/forms/form-components/KeyInput.vue'
+import KeyInput from '../../../../src/components/forms/form-components/KeyInput.vue'
 import mountVm from '../../../mount-vm'
 
 describe('KeyInputVue', function () {

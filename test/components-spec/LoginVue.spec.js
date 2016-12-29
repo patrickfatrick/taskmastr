@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import LoginVue from '../../public/components/LoginVue.vue'
+import LoginVue from '../../src/components/LoginVue.vue'
 import mountVm from '../mount-vm'
 
 describe('LoginVue', function () {

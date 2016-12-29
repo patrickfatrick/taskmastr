@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import { unmountList } from '../../../../public/store/list-store/list-actions'
+import { unmountList } from '../../../../src/store/list-store/list-actions'
 
 chai.should()
 

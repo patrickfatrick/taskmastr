@@ -1,6 +1,6 @@
 /* global it describe */
 import { assert } from 'chai'
-import ResetConfirmInput from '../../../../public/components/forms/form-components/ResetConfirmInput.vue'
+import ResetConfirmInput from '../../../../src/components/forms/form-components/ResetConfirmInput.vue'
 import mountVm from '../../../mount-vm'
 
 describe('ResetConfirmInputVue', function () {

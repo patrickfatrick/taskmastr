@@ -1,7 +1,7 @@
 /* global it describe sinon beforeEach afterEach */
 import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
-import List from '../../../../public/components/menu/menu-components/List.vue'
+import List from '../../../../src/components/menu/menu-components/List.vue'
 import mountVm from '../../../mount-vm'
 import { dblclick, change } from '../../../browser-events'
 
