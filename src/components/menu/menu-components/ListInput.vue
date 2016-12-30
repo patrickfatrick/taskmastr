@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { hash } from 'harsh'
+import { hashish } from 'harsh'
 import gregorian from 'gregorian'
 import Mousetrap from 'mousetrap'
 import { mapState, mapActions } from 'vuex'
@@ -42,7 +42,7 @@ export default {
       this.setListAttempt(true)
       if (!this.isValid) return
       this.addList({
-        id: hash().hashes[0],
+        id: hashish(),
         list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
         current: false,

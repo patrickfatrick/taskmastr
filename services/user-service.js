@@ -1,7 +1,7 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
-const harsh = require('harsh')
+const hashish = require('harsh').hashish
 const r = require('../thinky').r
 const User = require('../models/User')
 
@@ -58,8 +58,8 @@ exports.setToken = function (user) {
   return User.get(user.username.toLowerCase())
   .update({
     dateModified: new Date().toISOString(),
-    resetToken: harsh.hash().hashes[0],
-    resetDate: Date.now() + 1000 * 60 * 60
+    resetToken: hashish(),
+    resetDate: Date.now() + 1060 * 60
   }).run()
   .then((result) => result)
   .catch((err) => {
