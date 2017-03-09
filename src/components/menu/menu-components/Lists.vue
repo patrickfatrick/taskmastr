@@ -8,7 +8,7 @@
       ref="dragula">
       <div 
         v-for="(list, index) in lists" 
-        :key="list.id" class="table-row">
+        :key="list._id" class="table-row">
         <list 
           :index="index"
           :list="list">

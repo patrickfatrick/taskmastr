@@ -19,9 +19,7 @@ export function login (username, key, rememberMe, cb) {
   })
   .then(status)
   .then((response) => response.json())
-  .then((response) => {
-    cb(null, response)
-  })
+  .then((user) => cb(null, user))
   .catch((err) => {
     if (err.response.status === 204) return cb('No user found. Please confirm your password.', err.response)
     if (err.response.status === 401) return cb('Invalid password.', err.response)
@@ -119,9 +117,7 @@ export function getSession (cb) {
   })
   .then(status)
   .then((response) => response.json())
-  .then((response) => {
-    return cb(null, response)
-  })
+  .then((user) => cb(null, user))
   .catch((err) => {
     if (err.response.status === 204) return cb('No session data found.', err.response)
     return cb(err, err.response)

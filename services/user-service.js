@@ -2,87 +2,87 @@
 
 const bcrypt = require('bcrypt')
 const hashish = require('harsh').hashish
-const r = require('../thinky').r
 const User = require('../models/User')
 
-exports.addUser = function (user) {
-  bcrypt.hash(user.key, 10)
-  .then((hash) => {
-    return {
-      username: user.username.toLowerCase(),
-      key: hash,
-      darkmode: user.darkmode,
-      dateCreated: new Date().toISOString()
-    }
-  })
-  .then((newUser) => User.insert(newUser, { returnChanges: true }).run())
-  .then((result) => result.changes[0]['new_val'])
-  .catch((err) => {
-    throw new Error(err)
-  })
+exports.addUser = async function (user) {
+  const hash = await bcrypt.hash(user.key, 10)
+  const result = await new User({
+    username: user.username.toLowerCase(),
+    key: hash,
+    darkmode: user.darkmode,
+    dateCreated: new Date().toISOString()
+  }).save()
+
+  return result
 }
 
-exports.findUser = function (username) {
-  return User.get(username.toLowerCase()).run()
-  .then((result) => {
-    return r.table('users').get(username.toLowerCase()).merge({
-      tasks: r.row('tasks').eqJoin('id', r.table('lists'), { ordered: true })
-        .pluck({ left: true, right: ['_deleting', 'dateCreated', 'dateModified', 'list', 'owner', 'users'] })
-        .zip()
-    }).run()
+exports.findUser = async function (username, fields = 'username') {
+  const result = await User.findOne({ username: username.toLowerCase() })
+  .select('username key token currentList darkmode tasks')
+  .populate({
+    path: 'tasks',
+    select: '_deleting dateCreated dateModified list owner users'
   })
-  .then((result) => result)
-  .catch((err) => {
-    if (err.name === 'DocumentNotFoundError') return null
-    throw new Error(err)
-  })
+  .exec()
+
+  return result
 }
 
-exports.updateUser = function (username, body) {
+exports.updateUser = async function (username, body) {
   body.dateModified = new Date().toISOString()
-  return User.get(username.toLowerCase()).update(body).run()
-  .then((result) => {
-    return r.table('users').get(username.toLowerCase()).merge({
-      tasks: r.row('tasks').eqJoin('id', r.table('lists'), { ordered: true })
-        .pluck({ left: true, right: ['_deleting', 'dateCreated', 'dateModified', 'list', 'owner', 'users'] })
-        .zip()
-    }).run()
+  const result = await User.findOneAndUpdate(
+    {
+      username: username.toLowerCase()
+    },
+    body,
+    {
+      new: true
+    }
+  )
+  .populate({
+    path: 'tasks',
+    select: '_deleting dateCreated dateModified list owner users'
   })
-  .then((result) => result)
-  .catch((err) => {
-    throw new Error(err)
-  })
+  .exec()
+
+  return result
 }
 
-exports.setToken = function (user) {
-  return User.get(user.username.toLowerCase())
-  .update({
-    dateModified: new Date().toISOString(),
-    resetToken: hashish(),
-    resetDate: Date.now() + 1060 * 60
-  }).run()
-  .then((result) => result)
-  .catch((err) => {
-    throw new Error(err)
-  })
+exports.setToken = async function (username) {
+  const result = await User.findOneAndUpdate(
+    {
+      username: username.toLowerCase() }, {
+      dateModified: new Date().toISOString(),
+      resetToken: hashish(),
+      resetDate: Date.now() + 1060 * 60
+    },
+    {
+      new: true
+    }
+  )
+  .exec()
+
+  return result
 }
 
-exports.resetPassword = function (user) {
+exports.resetPassword = async function (user) {
   if (Date.now() > user.resetDate) throw new Error('Expired token')
-  return bcrypt.hash(user.newKey, 10)
-  .then((hash) => {
-    return User.filter({ resetToken: user.token })
-    .update({
+
+  const hash = await bcrypt.hash(user.newKey, 10)
+  const result = User.findOneAndUpdate(
+    {
+      resetToken: user.token
+    }, 
+    {
       dateModified: new Date().toISOString(),
       key: hash,
       resetToken: null
-    }).run()
-  })
-  .then((result) => {
-    if (!result[0]) return null
-    return result[0]
-  })
-  .catch((err) => {
-    throw new Error(err)
-  })
+    }, 
+    {
+      new: true
+    }
+  )
+  .exec()
+
+  return result
 }

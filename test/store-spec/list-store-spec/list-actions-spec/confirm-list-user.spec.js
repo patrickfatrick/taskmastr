@@ -11,7 +11,7 @@ describe('confirmListUser', () => {
       username: 'username',
       tasks: [
         {
-          id: 'listid',
+          _id: 'listid',
           list: 'List 1'
         }
       ]
@@ -23,7 +23,8 @@ describe('confirmListUser', () => {
       '../../services/list-services': {
         confirmUser (user, listid, body, cb) {
           cb(null, {
-            id: 'listid',
+            _id: 'listid',
+            currentItem: 'itemid',
             list: 'List 1',
             dateCreated: 'somedate',
             owner: 'username',
@@ -39,16 +40,16 @@ describe('confirmListUser', () => {
     })
 
     const userList = {
-      id: 'listid',
+      _id: 'listid',
+      currentItem: 'itemid',
       list: 'List 1',
       dateCreated: 'somedate',
       owner: 'username',
       users: [],
-      current: true,
       _deleting: false
     }
 
-    testAction(listActions.confirmListUser, { id: 'listid', username: 'username' }, state, [
+    testAction(listActions.confirmListUser, { _id: 'listid', username: 'username' }, state, [
       { name: 'ADD_LIST', payload: userList }
     ], done)
   })
@@ -58,7 +59,7 @@ describe('confirmListUser', () => {
       '../../services/list-services': {
         confirmUser (user, listid, body, cb) {
           cb('Error!', {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             dateCreated: 'somedate',
             owner: 'username',
@@ -83,7 +84,8 @@ describe('confirmListUser', () => {
       '../../services/list-services': {
         confirmUser (user, listid, body, cb) {
           cb(null, {
-            id: 'listid',
+            _id: 'listid',
+            currentItem: 'itemid',
             list: 'List 1',
             dateCreated: 'somedate',
             owner: 'username',
@@ -99,16 +101,16 @@ describe('confirmListUser', () => {
     })
 
     const userList = {
-      id: 'listid',
+      _id: 'listid',
       list: 'List 1',
       dateCreated: 'somedate',
       owner: 'username',
       users: [],
-      current: true,
+      currentItem: 'itemid',
       _deleting: false
     }
 
-    testAction(listActions.confirmListUser, { id: 'listid', username: 'username' }, state, [
+    testAction(listActions.confirmListUser, { _id: 'listid', username: 'username' }, state, [
       { name: 'ADD_LIST', payload: userList },
       { name: 'REMOVE_LIST', payload: -1 }
     ], done)

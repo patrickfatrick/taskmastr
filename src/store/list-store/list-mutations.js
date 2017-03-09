@@ -28,11 +28,13 @@ export default {
     state.user.tasks.splice(newIndex, 0, spliced[0])
   },
   [SET_CURRENT_LIST] (state, list) {
-    _.set(_.find(state.user.tasks, {current: true}), 'current', false)
-    if (!list) return _.set(state, 'current', {})
-    const index = _.findIndex(state.user.tasks, {id: list.id})
-    _.set(state, `user.tasks[${index}].current`, true)
-    _.set(state, 'current', list)
+    if (!list) {
+      _.set(state, 'current', {})
+      _.set(state, 'currentList', '')
+    } else {
+      _.set(state, 'current', list)
+      _.set(state, 'currentList', list._id)
+    }
   },
   [SET_INVALID_LIST] (state, err) {
     _.set(state, 'invalidList', err)

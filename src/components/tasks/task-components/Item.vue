@@ -1,7 +1,7 @@
 <template>
   <div
     class="task table-row" 
-    :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}">
+    :class="{'deleting': task._deleting, 'complete': task.complete, 'active': isCurrent(task, currenttask)}">
     <div class="table-header">
       <input 
         class="check" 
@@ -53,6 +53,7 @@
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'
 import { mapGetters, mapActions } from 'vuex'
+import { isCurrent, findCurrentIndex, findIndexById } from '../../../helper-utilities/utils'
 
 export default {
   computed: {
@@ -62,24 +63,28 @@ export default {
       allTasks: 'getAllTasks'
     }),
     index () {
-      return _.findIndex(this.allTasks, { id: this.task.id })
+      return findIndexById(this.allTasks, this.task._id)
     }
   },
   props: {
-    task: Object
+    task: Object,
+    currenttask: String
   },
-  methods: mapActions([
-    'setCurrentTask',
-    'deleteTask',
-    'completeTask',
-    'sortTasks',
-    'toggleDetails'
-  ]),
+  methods: {
+    ... mapActions([
+      'setCurrentTask',
+      'deleteTask',
+      'completeTask',
+      'sortTasks',
+      'toggleDetails'
+    ]),
+    isCurrent
+  },
   mounted () {
     // Keyboard bindings
     Mousetrap.bind('ctrl+,', (e) => {
       if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.allTasks, { current: true })
+      let index = findCurrentIndex(this.allTasks, this.currenttask)
       index = (index === 0)
         ? this.allTasks.length - 1
         : index - 1
@@ -87,23 +92,23 @@ export default {
     })
     Mousetrap.bind('ctrl+.', (e) => {
       if (e.preventDefault) e.preventDefault()
-      let index = _.findIndex(this.allTasks, { current: true })
+      let index = findCurrentIndex(this.allTasks, this.currenttask)
       index = (index === this.allTasks.length - 1)
         ? 0
         : index + 1
       this.setCurrentTask(index)
     })
     Mousetrap.bind('ctrl+backspace', () => {
-      this.deleteTask(_.findIndex(this.allTasks, { current: true }))
+      this.deleteTask(findCurrentIndex(this.allTasks, this.currenttask))
     })
     Mousetrap.bind('ctrl+c', () => {
       const task = _.find(this.allTasks, { current: true })
-      const index = _.findIndex(this.allTasks, { id: task.id })
+      const index = _.findIndex(this.allTasks, { _id: task._id })
       this.completeTask({ index, bool: !task.complete })
     })
     Mousetrap.bind('ctrl+command+down', () => {
       const completeIndex = _.findIndex(this.allTasks, { complete: true })
-      const currentIndex = _.findIndex(this.allTasks, { current: true })
+      const currentIndex = findCurrentIndex(this.allTasks, this.currenttask)
 
       if (this.allTasks[currentIndex].complete) return
       if (completeIndex !== -1 && currentIndex === completeIndex - 1) return
@@ -113,7 +118,7 @@ export default {
     })
     Mousetrap.bind('ctrl+command+up', () => {
       const completeIndex = _.findIndex(this.allTasks, { complete: true })
-      const currentIndex = _.findIndex(this.allTasks, { current: true })
+      const currentIndex = findCurrentIndex(this.allTasks, this.currenttask)
 
       if (this.allTasks[currentIndex].complete) return
       if (completeIndex !== -1 && currentIndex === completeIndex) return

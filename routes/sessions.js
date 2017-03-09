@@ -1,23 +1,16 @@
 'use strict'
 
-const http = require('http')
+const errorHandler = require('../utils/error-handler').errorHandler
 
-const sessions = {
-  get: function * (next) {
+module.exports = {
+  get: function (ctx, next) {
     try {
-      const user = this.req.user
-      if (!user) return this.throw(204)
+      const user = ctx.req.user
+      if (!user) return ctx.throw(204)
       console.log(user.username + ' => Sending user... OK')
-      this.body = {
-        username: user.username,
-        darkmode: user.darkmode,
-        tasks: user.tasks || []
-      }
+      ctx.body = user
     } catch (e) {
-      this.status = e.status || 500
-      this.body = e.statusCode || http.STATUS_CODES[this.status]
+      errorHandler(ctx, e)
     }
   }
 }
-
-module.exports = sessions

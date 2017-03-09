@@ -1,12 +1,14 @@
 'use strict'
 
-const koa = require('koa')
+const Koa = require('koa')
+const convert = require('koa-convert')
 
 // Middleware and helpers
 const path = require('path')
 const compress = require('koa-compress')
 const session = require('koa-generic-session')
-const RethinkSession = require('koa-generic-session-rethinkdb')
+const mongoose = require('mongoose')
+const MongoStore = require('koa-generic-session-mongo')
 const serve = require('koa-static')
 const parse = require('koa-bodyparser')
 const views = require('koa-views')
@@ -30,37 +32,32 @@ const lists = require('./routes/lists')
 const items = require('./routes/items')
 const sessions = require('./routes/sessions')
 
-// Rethinkdb instance
-const r = require('./thinky').r
 
-const app = koa()
+const app = new Koa()
 
 auth()
 
-// Set up Rethinkdb session store
-const sessionStore = new RethinkSession({
-  connection: r,
-  db: config.rethinkSession.db,
-  table: config.rethinkSession.table
-})
-sessionStore.setup()
-
 // Logger
 app.use(logger())
+
+// Mongoose setup
+// Still uses mpromise by default, so manually set it to native Promise
+mongoose.Promise = global.Promise
+mongoose.connect(config.mongoose.url)
 
 // Compression
 app.use(compress(config.compress))
 
 // Sessions
 app.keys = ['suzy eats a suzy snack']
-app.use(session({
+app.use(convert(session({
   key: 'koa.sid',
   cookie: {
     maxAge: null,
     signed: false
   },
-  store: sessionStore
-}))
+  store: new MongoStore(config.session)
+})))
 
 // Bodyparser
 app.use(parse())
@@ -114,34 +111,15 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 // 404
-app.use(function * (next) {
+app.use(async function (next) {
   if (this.status === 404) {
     this.redirect('/404')
   }
-  yield next
+  await next
 })
 
-// Create session table, start up Koa when it's been made.
-r.table('sessions').indexWait('sid').run()
-.then(() => {
-  console.log('DB, tables, and index are available, starting koa...')
-  startKoa()
-})
-.catch(() => {
-  r.tableCreate('sessions').run()
-  .then(() => {
-    r.table('sessions').indexCreate('sid').run()
-    .then(() => {
-      console.log('DB, tables, and index are available, starting koa...')
-      startKoa()
-    })
-  })
-})
+// Attach socket.io instance to app
+io.attach(app)
 
-function startKoa () {
-  // Attach socket.io instance to app
-  io.attach(app)
-
-  app.listen(config.koa.port)
-  console.log('Listening on port ' + config.koa.port)
-}
+app.listen(config.koa.port)
+console.log('Listening on port ' + config.koa.port)

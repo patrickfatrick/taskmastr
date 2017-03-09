@@ -10,26 +10,27 @@ module.exports = function () {
     usernameField: 'username',
     passwordField: 'key',
     passReqToCallback: true
-  }, (req, username, key, next) => {
-    userService.findUser(username)
-    .then((user) => {
+  }, async (req, username, key, next) => {
+    try {
+      const user = await userService.findUser(username, 'username key tasks currentList darkmode')
+
       if (!user) {
         console.log(username + ' => No user named ' + username)
         return next(null, null)
       }
       console.log(user.username + ' => Found. Validating...')
-      return bcrypt.compare(key, user.key)
-      .then((same) => {
-        if (!same) {
-          console.log('Passwords don\'t match')
-          // console.log('user key: ' + user.key)
-          return next(null, 401)
-        }
-        console.log(username + ' => Validating... OK')
-        next(null, user)
-      })
-      .catch((err) => next(err))
-    })
+
+      const same = await bcrypt.compare(key, user.key)
+
+      if (!same) {
+        console.log('Passwords don\'t match')
+        return next(null, 401)
+      }
+      console.log(username + ' => Validating... OK')
+      next(null, user)
+    } catch (e) {
+      next(e)
+    }
   }))
 
   passport.serializeUser((user, next) => {

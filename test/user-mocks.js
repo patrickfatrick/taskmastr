@@ -51,5 +51,5 @@ export const mockUser = {
 export const newUser = {
   username: 'username',
   darkmode: true,
-  tasks: [defaultList]
+  tasks: [defaultList('username')]
 }

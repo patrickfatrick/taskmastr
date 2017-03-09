@@ -86,7 +86,7 @@ describe('LoginForm.vue', function () {
     const vm = mountVm(LoginForm, {
       auth: 'username@domain.com',
       current: {
-        id: 'listid'
+        _id: 'listid'
       },
       user: {
         username: 'username@domain.com',

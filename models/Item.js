@@ -1,26 +1,20 @@
-const thinky = require('../thinky')
-const type = thinky.type
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const Item = thinky.createModel('items', {
-  _deleting: type.boolean(),
-  _detailsToggled: type.boolean(),
-  _dueDateDifference: type.number(),
-  complete: type.boolean(),
-  completedBy: type.string(),
-  createdBy: type.string(),
-  current: type.boolean(),
-  dateCompleted: type.string(),
-  dateCreated: type.date().default(new Date().toISOString()),
-  dueDate: type.string(),
-  id: type.string(),
-  index: type.number(),
-  item: type.string(),
-  notes: type.string()
-})
-
-Item.ensureIndex('listId')
+const Item = mongoose.model('Item', new Schema({
+  _id: String,
+  _deleting: Boolean,
+  _detailsToggled: Boolean,
+  _dueDateDifference: Number,
+  complete: Boolean,
+  completedBy: String,
+  createdBy: String,
+  dateCompleted: Date,
+  dateCreated: { type: Date, default: new Date().toISOString() },
+  dateModified: { type: Date, default: new Date().toISOString() },
+  dueDate: Date,
+  item: String,
+  notes: String
+}))
 
 module.exports = Item
-
-const List = require('./List')
-Item.belongsTo(List, 'list', 'listId', 'id')

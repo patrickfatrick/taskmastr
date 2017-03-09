@@ -1,5 +1,5 @@
 /* global describe it */
-import chai from 'chai'
+import chai, { assert } from 'chai'
 import itemMutations from '../../../src/store/item-store/item-mutations'
 
 chai.should()
@@ -8,39 +8,38 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true
+            _id: 'itemid'
           },
           {
             item: 'Not current task',
-            current: false
+            _id: 'itemid2'
           }
         ]
       }
     }
 
-    itemMutations.SET_CURRENT_TASK(state, 1)
+    itemMutations.SET_CURRENT_TASK(state, 'itemid2')
 
-    state.current.items[0].current.should.be.false
-    state.current.items[1].current.should.be.true
+    assert.deepEqual(state.current.currentItem, state.current.items[1]._id)
   })
 
   it('ADD_TASK', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true
+            _id: 'itemid'
           },
           {
             item: 'Not current task',
-            current: false
+            _id: 'itemid2'
           }
         ]
       }
@@ -61,15 +60,15 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true
+            _id: 'itemid'
           },
           {
             item: 'Not current task',
-            current: false
+            _id: 'itemid2'
           }
         ]
       }
@@ -105,16 +104,16 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true,
+            _id: 'itemid',
             complete: false
           },
           {
             item: 'Not current task',
-            current: false,
+            _id: 'itemid2',
             complete: false
           }
         ]
@@ -134,17 +133,17 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true,
+            _id: 'itemid',
             complete: false,
             dateCompleted: ''
           },
           {
             item: 'Not current task',
-            current: false,
+            _id: 'itemid2',
             complete: false,
             dateCompleted: ''
           }
@@ -165,15 +164,15 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true
+            _id: 'itemid'
           },
           {
             item: 'Not current task',
-            current: false
+            _id: 'itemid2'
           }
         ]
       }
@@ -192,15 +191,15 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true
+            _id: 'itemid'
           },
           {
             item: 'Not current task',
-            current: false
+            _id: 'itemid2'
           }
         ]
       }
@@ -216,16 +215,16 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true,
+            _id: 'itemid',
             dueDate: null
           },
           {
             item: 'Not current task',
-            current: false,
+            _id: 'itemid2',
             dueDate: null
           }
         ]
@@ -245,17 +244,15 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        current: 'id1',
         items: [
           {
-            id: 'id1',
-            item: 'Current task',
-            current: true
+            _id: 'id1',
+            item: 'Current task'
           },
           {
-            id: 'id2',
-            item: 'Not current task',
-            current: false
+            _id: 'id2',
+            item: 'Not current task'
           }
         ]
       },
@@ -273,19 +270,19 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true
+            _id: 'itemid'
           },
           {
             item: 'Not current task',
-            current: false
+            _id: 'itemid2'
           },
           {
             item: 'New task',
-            current: false
+            _id: 'itemid3'
           }
         ]
       }
@@ -322,16 +319,16 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true,
+            _id: 'itemid',
             notes: ''
           },
           {
             item: 'Not current task',
-            current: false,
+            _id: 'itemid2',
             notes: ''
           }
         ]
@@ -347,17 +344,17 @@ describe('item mutations', () => {
     let state = {
       current: {
         list: 'Current list',
-        current: true,
+        currentItem: 'itemid',
         items: [
           {
             item: 'Current task',
-            current: true,
+            _id: 'itemid',
             dueDate: new Date() + (1000 * 60 * 60 * 24),
             _dueDateDifference: null
           },
           {
             item: 'Not current task',
-            current: false,
+            _id: 'itemid2',
             dueDate: new Date() - (1000 / 60 / 60 / 24),
             _dueDateDifference: null
           }

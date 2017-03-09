@@ -1,54 +1,46 @@
 'use strict'
 
-const http = require('http')
 const passport = require('koa-passport')
 const agenda = require('../services/agenda-service')
 const userService = require('../services/user-service')
 const config = require('../config')
+const errorHandler = require('../utils/error-handler').errorHandler
 
-const users = {
-  setCookieAge: function * (next) {
-    if (this.request.body.rememberMe) {
-      this.session.cookie.maxage = config.cookieMaxAge
+module.exports = {
+  setCookieAge: async function (ctx, next) {
+    if (ctx.request.body.rememberMe) {
+      ctx.session.cookie.maxage = config.cookieMaxAge
     }
-    yield next
+    await next()
   },
-  login: function * (next) {
-    const ctx = this
+  login: async function (ctx, next) {
     try {
-      yield passport.authenticate('local', function * (err, user, info) {
+      await passport.authenticate('local', async function (err, user, info, status) {
         if (err) throw err
         if (!user) ctx.throw(204, 'No user found.')
         if (user === 401) ctx.throw(401, 'Invalid password.')
-        yield ctx.login(user)
+        await ctx.login(user)
         console.log(user.username + ' => Sending user... OK')
-        ctx.body = {
-          username: user.username,
-          darkmode: user.darkmode,
-          tasks: user.tasks
-        }
-      }).call(this, next)
+        ctx.body = user
+      })(ctx, next)
     } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
+      errorHandler(ctx, e)
     }
   },
-  create: function * (next) {
-    const ctx = this
-    const user = this.request.body
+  create: async function (ctx, next) {
+    const user = ctx.request.body
     try {
-      const found = yield userService.findUser(user.username)
+      const found = await userService.findUser(user.username)
       if (found) {
         console.log(found.username + ' => Already a user')
         ctx.throw(400, 'User already exists')
       }
-      const result = yield userService.addUser(user)
+      const result = await userService.addUser(user)
       if (!result.username) ctx.throw(500, 'Something bad happened')
-      yield ctx.login(result)
+      await ctx.login(result)
       agenda.now('Welcome Email', {
         username: user.username,
-        host: ctx.request.origin
+        host: process.env.HOST || 'http://localhost:3000'
       })
       ctx.body = {
         username: result.username,
@@ -56,9 +48,7 @@ const users = {
         tasks: result.tasks
       }
     } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
+      errorHandler(ctx, e)
     }
   },
   update: function (payload) {
@@ -70,38 +60,34 @@ const users = {
       return result
     })
   },
-  forgot: function * (next) {
-    const ctx = this
-    const username = this.params.username
+  forgot: async function (ctx, next) {
+    const username = ctx.params.username
 
     try {
-      const user = yield userService.findUser(username)
-      if (!user) {
-        console.log('No user: ' + user.username)
+      const found = await userService.findUser(username)
+      if (!found) {
+        console.log('No user: ' + username)
         ctx.throw(401, 'No user found.')
       }
-      const result = yield userService.setToken(user)
-      if (!result.username) ctx.throw(500, 'Something bad happened.')
+      const result = await userService.setToken(found.username)
+      if (!result.username) ctx.throw(500, 'Something bad happened at setToken')
       agenda.now('Reset Email', {
         username: result.username,
         resetToken: result.resetToken,
-        host: ctx.request.origin
+        host: process.env.HOST || 'http://localhost:3000'
       })
-      this.body = {
+      ctx.body = {
         emailSent: true
       }
     } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
+      errorHandler(ctx, e)
     }
   },
-  reset: function * (next) {
-    const ctx = this
-    const token = this.request.body.token
-    const newKey = this.request.body.newKey
+  reset: async function (ctx, next) {
+    const token = ctx.request.body.token
+    const newKey = ctx.request.body.newKey
     try {
-      const result = yield userService.resetPassword({
+      const result = await userService.resetPassword({
         token: token,
         newKey: newKey
       })
@@ -111,16 +97,12 @@ const users = {
         username: result.username
       }
     } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
+      errorHandler(ctx, e)
     }
   },
-  logout: function * (next) {
-    this.logout()
-    this.session = null
-    this.redirect('/')
+  logout: async function (ctx, next) {
+    ctx.logout()
+    ctx.session = null
+    ctx.redirect('/')
   }
 }
-
-module.exports = users

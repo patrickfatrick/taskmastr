@@ -9,8 +9,9 @@
         ref="dragula">
         <item
           v-for="task in activeTasks"
-          :key="task.id" 
-          :task="task">
+          :key="task._id" 
+          :task="task"
+          :currenttask="currenttask">
         </item>
       </div>
       <div 
@@ -29,9 +30,12 @@
         v-show="!hideCompleteTasks">
         <item 
           v-for="task in completeTasks" 
-          :key="task.id" class="task table-row" 
+          :key="task._id"
+          class="task table-row" 
           :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" 
-          :task="task">
+          :task="task"
+          :currenttask="currenttask"
+          >
         </item>
       </div>
     </div>
@@ -69,6 +73,9 @@ export default {
   mixins: [
     dragulaMixin
   ],
+  props: {
+    currenttask: String
+  },
   methods: {
     ...mapActions([
       'sortTasks',

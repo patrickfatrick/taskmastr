@@ -113,7 +113,7 @@ export function getUserSession ({ commit }) {
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)
     commit('SET_TASKS', tasks)
-    commit('SET_CURRENT_LIST', _.find(tasks, { current: true }) || tasks[0])
+    commit('SET_CURRENT_LIST', _.find(tasks, { _id: response.currentList }) || tasks[0])
     commit('SET_AUTH', response.username)
     socket.emit('join', response.username)
     return response.username
@@ -131,7 +131,7 @@ export function loginUser ({ commit }, { username, key, rememberMe }) {
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)
     commit('SET_TASKS', tasks)
-    commit('SET_CURRENT_LIST', _.find(tasks, { current: true }) || tasks[0])
+    commit('SET_CURRENT_LIST', _.find(tasks, { _id: response.currentList }) || tasks[0])
     commit('SET_AUTH', response.username)
     socket.emit('join', response.username)
     return response.username

@@ -20,11 +20,11 @@ describe('addList', () => {
         username: 'username',
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
@@ -34,11 +34,11 @@ describe('addList', () => {
     }
 
     const newList = {
-      id: 'listid2',
+      _id: 'listid2',
       list: 'List 2',
       items: [
         {
-          id: 'itemid2',
+          _id: 'itemid2',
           item: 'Item 2'
         }
       ],
@@ -48,7 +48,7 @@ describe('addList', () => {
     }
 
     const userNewList = {
-      id: 'listid2',
+      _id: 'listid2',
       list: 'List 2',
       current: false,
       _deleting: false,
@@ -76,11 +76,11 @@ describe('addList', () => {
         username: 'username',
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
@@ -90,11 +90,11 @@ describe('addList', () => {
     }
 
     const newList = {
-      id: 'listid2',
+      _id: 'listid2',
       list: 'List 2',
       items: [
         {
-          id: 'itemid2',
+          _id: 'itemid2',
           item: 'Item 2'
         }
       ],
@@ -104,7 +104,7 @@ describe('addList', () => {
     }
 
     const userNewList = {
-      id: 'listid2',
+      _id: 'listid2',
       list: 'List 2',
       current: false,
       _deleting: false,

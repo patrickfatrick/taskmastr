@@ -9,7 +9,7 @@ describe('setTaskDueDate', () => {
   it('dispatches SET_TASK_DUE_DATE', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        updateItem (listid, itemid, index, item, username, cb) {
+        updateItem (listid, item, username, cb) {
           cb(null, { success: true })
         }
       }
@@ -40,7 +40,7 @@ describe('setTaskDueDate', () => {
   it('dispatches SET_TASK_DUE_DATE twice on error, as well as SET_DUE_DATE_DIFFERENCE', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        updateItem (listid, itemid, index, item, username, cb) {
+        updateItem (listid, item, username, cb) {
           cb('Error!', { status: 500 })
         }
       }

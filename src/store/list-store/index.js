@@ -1,4 +1,8 @@
 export default {
+  current: {
+    currentItem: '',
+    items: []
+  },
   menuToggled: false,
   listAttempt: false,
   newList: '',

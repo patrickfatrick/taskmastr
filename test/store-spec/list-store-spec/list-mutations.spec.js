@@ -1,41 +1,34 @@
 /* global describe it */
-import chai from 'chai'
+import chai, { assert } from 'chai'
 import listMutations from '../../../src/store/list-store/list-mutations'
 
 chai.should()
 describe('list mutations', () => {
   it('SET_CURRENT_LIST', () => {
     let state = {
+      currentList: 'list1',
       user: {
         tasks: [
           {
-            id: 'list1',
-            list: 'Current list',
-            current: true
+            _id: 'list1',
+            list: 'Current list'
           },
           {
-            id: 'list2',
-            list: 'Not current list',
-            current: false
+            _id: 'list2',
+            list: 'Not current list'
           }
         ]
       }
     }
-    const list = {
-      id: 'list2',
-      list: 'Not current list',
-      current: false
-    }
 
-    listMutations.SET_CURRENT_LIST(state, list)
+    listMutations.SET_CURRENT_LIST(state, state.user.tasks[1])
 
-    state.user.tasks[0].current.should.be.false
-    state.user.tasks[1].current.should.be.true
+    assert.deepEqual(state.currentList, state.user.tasks[1]._id)
 
     listMutations.SET_CURRENT_LIST(state, null)
 
-    state.user.tasks[0].current.should.be.false
-    state.user.tasks[1].current.should.be.false
+    assert.deepEqual(state.currentList, '')
+    assert.deepEqual(state.current, {})
   })
 
   it('SET_MENU_TOGGLED', () => {
@@ -50,22 +43,23 @@ describe('list mutations', () => {
 
   it('ADD_LIST', () => {
     let state = {
+      currentList: 'list1',
       user: {
         tasks: [
           {
-            list: 'Current list',
-            current: true
+            _id: 'list1',
+            list: 'Current list'
           },
           {
-            list: 'Not current list',
-            current: false
+            _id: 'list2',
+            list: 'Not current list'
           }
         ]
       }
     }
     let newList = {
-      list: 'New list',
-      current: false
+      _id: 'list3',
+      list: 'New list'
     }
 
     listMutations.ADD_LIST(state, newList)
@@ -77,15 +71,16 @@ describe('list mutations', () => {
 
   it('REMOVE_LIST', () => {
     let state = {
+      currentList: 'list1',
       user: {
         tasks: [
           {
-            list: 'Current list',
-            current: true
+            _id: 'list1',
+            list: 'Current list'
           },
           {
-            list: 'Not current list',
-            current: false
+            _id: 'list2',
+            list: 'Not current list'
           }
         ]
       }
@@ -109,16 +104,17 @@ describe('list mutations', () => {
 
   it('SET_LIST_DELETE', () => {
     let state = {
+      currentList: 'list1',
       user: {
         tasks: [
           {
+            _id: 'list1',
             list: 'Current list',
-            current: true,
             _deleting: false
           },
           {
+            _id: 'list2',
             list: 'Not current list',
-            current: false,
             _deleting: false
           }
         ]
@@ -136,21 +132,22 @@ describe('list mutations', () => {
 
   it('SORT_LISTS', () => {
     let state = {
+      currentList: 'list1',
       user: {
         tasks: [
           {
+            _id: 'list1',
             list: 'Current list',
-            current: true,
             _deleting: false
           },
           {
+            _id: 'list2',
             list: 'Not current list',
-            current: false,
             _deleting: false
           },
           {
+            _id: 'list3',
             list: 'New list',
-            current: false,
             _deleting: false
           }
         ]

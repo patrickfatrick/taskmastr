@@ -2,6 +2,7 @@ import _ from 'lodash'
 import gregorian from 'gregorian'
 import { updateList } from '../../services/list-services'
 import { createItem, updateItem, deleteItem } from '../../services/item-services'
+import { isCurrent, findIndexById } from '../../helper-utilities/utils'
 
 export function setNewTask ({ commit }, str) {
   commit('SET_NEW_TASK', str)
@@ -22,10 +23,10 @@ export function setTaskDelete ({ commit }, bool) {
 export function setCurrentTask ({ commit, state }, index) {
   const list = state.current
   const items = state.current.items
-  const oldIndex = _.findIndex(state.current.items, { current: true })
-  commit('SET_CURRENT_TASK', index)
-  return updateList(state.user, list.id, { items: items }, (err, res) => {
-    if (err) return commit('SET_CURRENT_TASK', oldIndex)
+  const oldId = list.currentItem
+  commit('SET_CURRENT_TASK', items[index]._id)
+  return updateList(state.user, list._id, { currentItem: items[index]._id }, (err, res) => {
+    if (err) return commit('SET_CURRENT_TASK', oldId)
     return res
   })
 }
@@ -36,13 +37,13 @@ export function toggleDetails ({ commit, state }, index) {
 }
 
 export function setTaskDueDate ({ commit, state }, { index, date }) {
-  const listID = state.current.id
+  const listID = state.current._id
   const item = state.current.items[index]
   const username = state.user.username
   const oldDate = item.dueDate
   const oldDueDateDifference = item._dueDateDifference
   commit('SET_TASK_DUE_DATE', { index, date })
-  return updateItem(listID, item.id, index, item, username, (err, res) => {
+  return updateItem(listID, item, username, (err, res) => {
     if (err) {
       commit('SET_TASK_DUE_DATE', { index, date: oldDate })
       commit('SET_DUE_DATE_DIFFERENCE', index, oldDueDateDifference)
@@ -53,38 +54,38 @@ export function setTaskDueDate ({ commit, state }, { index, date }) {
 }
 
 export function renameTask ({ commit, state }, { index, name }) {
-  const listID = state.current.id
+  const listID = state.current._id
   const item = state.current.items[index]
   const username = state.user.username
   const oldName = item.item
   commit('RENAME_TASK', { index, name })
-  return updateItem(listID, item.id, index, item, username, (err, res) => {
+  return updateItem(listID, item, username, (err, res) => {
     if (err) return commit('RENAME_TASK', { index, name: oldName })
     return res
   })
 }
 
 export function setTaskNotes ({ commit, state }, { index, notes }) {
-  const listID = state.current.id
+  const listID = state.current._id
   const item = state.current.items[index]
   const username = state.user.username
   const oldNotes = item.notes
   commit('SET_TASK_NOTES', { index, notes })
-  return updateItem(listID, item.id, index, item, username, (err, res) => {
+  return updateItem(listID, item, username, (err, res) => {
     if (err) return commit('SET_TASK_NOTES', { index, notes: oldNotes })
     return res
   })
 }
 export function addTask ({ commit, state }, task) {
   commit('ADD_TASK', task)
-  return createItem(state.current.id, task, state.user.username, (err, res) => {
+  return createItem(state.currentList, task, state.user.username, (err, res) => {
     if (err) return commit('REMOVE_TASK', 0)
     return res
   })
 }
 
 export function deleteTask ({ commit, state }, index) {
-  const listID = state.current.id
+  const listID = state.current._id
   const tasks = state.current.items
   const task = tasks[index]
   let timeoutID
@@ -92,40 +93,40 @@ export function deleteTask ({ commit, state }, index) {
     timeoutID = setTimeout(() => {
       // Get the next and previous lists after timeout,
       // in case indices change in the five-second window
-      const deleteTask = _.findIndex(tasks, { id: task.id })
+      const deleteTask = findIndexById(tasks, task._id)
       const prevTask = deleteTask - 1
       const nextTask = deleteTask + 1
       // Reassign current item
-      if (task.current) {
-        if (task.current && index === (tasks.length - 1)) {
-          commit('SET_CURRENT_TASK', prevTask)
+      if (isCurrent(task, state.current.currentItem)) {
+        if (index === (tasks.length - 1)) {
+          commit('SET_CURRENT_TASK', prevTask._id)
         } else {
-          commit('SET_CURRENT_TASK', nextTask)
+          commit('SET_CURRENT_TASK', nextTask._id)
         }
       }
       // Optimistically delete the item from the store before request is made
-      commit('UPDATE_DELETE_QUEUE', { id: task.id, val: null })
+      commit('UPDATE_DELETE_QUEUE', { id: task._id, val: null })
       commit('SET_TASK_DELETE', { index: deleteTask, bool: false })
       commit('REMOVE_TASK', deleteTask)
-      return deleteItem(listID, task.id, deleteTask, state.user.username, (err, response) => {
+      return deleteItem(listID, task._id, deleteTask, state.user.username, (err, response) => {
         // Revert the change if request fails
         if (err) commit('ADD_TASK', task)
       })
     }, 5000)
-    commit('UPDATE_DELETE_QUEUE', { id: task.id, val: timeoutID })
-    commit('SET_TASK_DELETE', { index: _.findIndex(tasks, { id: task.id }), bool: true })
+    commit('UPDATE_DELETE_QUEUE', { id: task._id, val: timeoutID })
+    commit('SET_TASK_DELETE', { index: findIndexById(tasks, task._id), bool: true })
   } else {
-    clearTimeout(state.deleteQueue[task.id])
-    commit('UPDATE_DELETE_QUEUE', { id: task.id, val: null })
-    commit('SET_TASK_DELETE', { index: _.findIndex(tasks, { id: task.id }), bool: false })
+    clearTimeout(state.deleteQueue[task._id])
+    commit('UPDATE_DELETE_QUEUE', { id: task._id, val: null })
+    commit('SET_TASK_DELETE', { index: findIndexById(tasks, task._id), bool: false })
   }
 }
 
 export function deleteAllCompleteTasks ({ commit, state, getters }) {
   getters.getCompleteTasks.forEach((task) => {
-    const index = _.findIndex(state.current.tasks, { id: task.id })
+    const index = findIndexById(state.current.items, task._id)
     commit('REMOVE_TASK', index)
-    return deleteItem(state.current.id, task.id, index, state.user.username, (err, response) => {
+    return deleteItem(state.current._id, task._id, index, state.user.username, (err, response) => {
       // Revert the change if request fails
       if (err) commit('ADD_TASK', task)
     })
@@ -151,7 +152,9 @@ export function completeTask ({ commit, state }, { index, bool }) {
 
   const list = state.current
   const items = state.current.items
-  return updateList(state.user, list.id, { items: items }, (err, res) => {
+  const item = items[newIndex]
+
+  return updateItem(list._id, item, state.user, (err, res) => {
     if (err) {
       commit('SET_TASK_COMPLETE', { index: newIndex, bool: !bool })
       commit('SET_DATE_COMPLETED', { index: newIndex, date: (!bool) ? gregorian.reform().to('iso') : null })
@@ -159,7 +162,11 @@ export function completeTask ({ commit, state }, { index, bool }) {
       commit('SORT_TASKS', { oldIndex: newIndex, newIndex: index })
       return
     }
-    return res
+
+    return updateList(state.user, list._id, { items: items }, (err, res) => {
+      if (err) return null
+      return res
+    })
   })
 }
 
@@ -168,7 +175,7 @@ export function sortTasks ({ commit, state }, { oldIndex, newIndex }) {
 
   const list = state.current
   const items = state.current.items
-  return updateList(state.user, list.id, { items: items }, (err, res) => {
+  return updateList(state.user, list._id, { items: items }, (err, res) => {
     if (err) return commit('SORT_TASKS', { oldIndex: newIndex, newIndex: oldIndex })
     return res
   })

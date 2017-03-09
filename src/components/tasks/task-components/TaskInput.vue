@@ -81,7 +81,7 @@ export default {
         dueDate = ''
       }
       this.addTask({
-        id: hashish(),
+        _id: hashish(),
         item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
         createdBy: this.user.username,
         current: !(_.find(this.current.items, {current: true})),

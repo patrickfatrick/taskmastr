@@ -66,7 +66,7 @@ export default {
       .then(() => {
         if (this.auth) {
           setTimeout(() => {
-            this.$router.push('/app/list/' + this.current.id)
+            this.$router.push('/app/list/' + this.current._id)
           }, 250)
         }
         if (this.create && !this.auth) {

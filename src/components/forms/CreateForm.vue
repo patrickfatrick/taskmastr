@@ -67,13 +67,14 @@ export default {
     ]),
     create (username, key, rememberMe) {
       if (!this.isValid) return
+      const list = defaultList(this.user.username)
       this.createUser({ username, key, rememberMe })
       .then(() => {
         if (this.auth) {
-          this.addList({...defaultList, owner: this.user.username, users: []})
-          this.setCurrentList(defaultList)
+          this.addList({...list, owner: this.user.username, users: []})
+          this.setCurrentList(list)
           setTimeout(() => {
-            this.$router.push('/app/list/' + defaultList.id)
+            this.$router.push('/app/list/' + list._id)
           }, 250)
         }
       })

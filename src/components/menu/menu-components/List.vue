@@ -1,31 +1,31 @@
 <template>
   <div
     class="list table-row"
-    :class="{'deleting': list._deleting, 'current': list.current}">
+    :class="{'deleting': list._deleting, 'current': list._id === currentList}">
     <div class="initial-view">
       <div
         class="task-cell table-data"
-        @dblclick="toggleDetails(list.id)">
+        @dblclick="toggleDetails(list._id)">
         <input
           class="rename"
           type="text"
           :value="list.list"
           @change="rename($event, index)"
-          :class="{'hidden': !(listDetailsToggled === list.id && list.owner === username)}">
+          :class="{'hidden': !(listDetailsToggled === list._id && list.owner === username)}">
         </input>
         <button 
-          :href="'#' + list.id" 
+          :href="'#' + list._id" 
           class="name" 
           :title="list.list"
-          :class="{'hidden': !(listDetailsToggled !== list.id || list.owner !== username)}"
-          @click.prevent="navigateToList(list.id)">{{list.list}}
+          :class="{'hidden': !(listDetailsToggled !== list._id || list.owner !== username)}"
+          @click.prevent="navigateToList(list._id)">{{list.list}}
         </button>
       </div>
       <div class="utils table-data">
         <button 
           class="rename-button"
           title="Rename list"
-          @click.prevent="toggleDetails(list.id)">
+          @click.prevent="toggleDetails(list._id)">
           <i class="fa fa-pencil-square"></i>
         </button>
         <button
@@ -56,11 +56,13 @@ import _ from 'lodash'
 import Mousetrap from 'mousetrap'
 import { mapState, mapActions } from 'vuex'
 import ListDetails from './ListDetails.vue'
+import { findCurrentIndex } from '../../../helper-utilities/utils'
 
 export default {
   computed: mapState({
     username: (state) => state.user.username,
     current: (state) => state.current,
+    currentList: (state) => state.currentList,
     lists: (state) => state.user.tasks,
     listDetailsToggled: (state) => state.listDetailsToggled
   }),
@@ -92,7 +94,7 @@ export default {
       this.deleteList({ index, delay: 5000, perm: true, cb: (id) => this.navigateToList(id) })
     },
     navigateToList (id) {
-      if (this.current.id !== id) this.unmountList(this.current.id)
+      if (this.current._id !== id) this.unmountList(this.current._id)
       this.$router.push('/app/list/' + id)
     },
     rename (e, index) {
@@ -113,33 +115,35 @@ export default {
     // Keyboard bindings
     Mousetrap.bind('alt+,', (e) => {
       if (e.preventDefault) e.preventDefault()
-      let index = (_.findIndex(this.lists, {current: true}) === 0)
+      const currentIndex = findCurrentIndex(this.lists, this.currentList)
+      const index = (currentIndex === 0)
         ? this.lists.length - 1
-        : _.findIndex(this.lists, 'current', true) - 1
-      this.navigateToList(this.lists[index].id)
+        : currentIndex - 1
+      this.navigateToList(this.lists[index]._id)
     })
     Mousetrap.bind('alt+.', (e) => {
       if (e.preventDefault) e.preventDefault()
-      let index = (_.findIndex(this.lists, {current: true}) === this.lists.length - 1)
+      const currentIndex = findCurrentIndex(this.lists, this.currentList)
+      const index = (currentIndex === this.lists.length - 1)
         ? 0
-        : _.findIndex(this.lists, 'current', true) + 1
-      this.navigateToList(this.lists[index].id)
+        : currentIndex + 1
+      this.navigateToList(this.lists[index]._id)
     })
     Mousetrap.bind('alt+backspace', () => {
-      this.removeList(_.findIndex(this.lists, {current: true}))
+      this.removeList(findCurrentIndex(this.lists, this.currentList))
     })
     Mousetrap.bind('alt+command+down', () => {
-      const currentIndex = _.findIndex(this.lists, {current: true})
+      const currentIndex = findCurrentIndex(this.lists, this.currentList)
       if (currentIndex === this.lists.length - 1) return
       this.sortLists({ oldIndex: currentIndex, newIndex: currentIndex + 1 })
     })
     Mousetrap.bind('alt+command+up', () => {
-      const currentIndex = _.findIndex(this.lists, {current: true})
+      const currentIndex = findCurrentIndex(this.lists, this.currentList)
       if (currentIndex === 0) return
       this.sortLists({ oldIndex: currentIndex, newIndex: currentIndex - 1 })
     })
     Mousetrap.bind('alt+d', () => {
-      this.toggleDetails(_.find(this.lists, {current: true}).id)
+      this.toggleDetails(_.find(this.lists, {current: true})._id)
     })
   }
 }

@@ -1,4 +1,5 @@
 const singleDay = 1000 * 60 * 60 * 24
+const mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr'
 
 module.exports = {
   static: {
@@ -14,13 +15,16 @@ module.exports = {
     authKey: process.env.RETHINKDB_AUTH || '',
     db: 'taskmastr'
   },
-  rethinkSession: {
-    db: 'taskmastr',
-    table: 'sessions'
+  mongoose: {
+    url: mongoUri
+  },
+  session: {
+    url: mongoUri,
+    collection: 'sessions'
   },
   agendaOptions: {
     db: {
-      address: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/rtr',
+      address: mongoUri,
       collection: 'agendaJobs'
     }
   },

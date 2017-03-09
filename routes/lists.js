@@ -1,17 +1,17 @@
 'use strict'
 
 const chalk = require('chalk')
-const http = require('http')
 const async = require('async')
 const userService = require('../services/user-service')
 const listService = require('../services/list-service')
+const itemService = require('../services/item-service')
 const agenda = require('../services/agenda-service')
+const errorHandler = require('../utils/error-handler').errorHandler
 
-const lists = {
-  get: function * (next) {
-    const ctx = this
+module.exports = {
+  get: async function (ctx, next) {
     try {
-      const result = yield listService.getList(ctx.params.listid)
+      const result = await listService.getList(ctx.params.listid)
       if (!result) ctx.throw(404, 'List not found')
       const inUserList = result.users.some((user) => {
         return user.username === ctx.req.user.username
@@ -19,101 +19,99 @@ const lists = {
       if (result.owner !== ctx.req.user.username && !inUserList) ctx.throw(403, 'Not cool, bro')
       ctx.body = result
     } catch (e) {
-      console.log(e)
-      this.status = e.status || 500
-      this.body = e.message || http.STATUS_CODES[this.status]
+      errorHandler(ctx, e)
     }
   },
-  create: function (payload) {
+  create: async function (payload) {
     const list = payload.list
     const user = payload.user
 
-    const listResult = listService.addList(list)
-    const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-    return Promise.all([listResult, userResult])
-    .then((results) => {
-      if (!results[0]) throw new Error('Something bad happened at addList')
-      if (!results[1]) throw new Error('Something bad happened at updateUser')
-      return results
+    const listResult = await listService.addList(list)
+    if (!listResult) throw new Error('Something bad happened at addList')
+    const userResult = await userService.updateUser(user.username, { tasks: user.tasks })
+    if (!userResult) throw new Error('Something bad happened at updateUser')
+    async.each(list.items, (item, cb) => {
+      itemService.addItem(item)
+      .then((result) => cb())
+    }, function (err) {
+      if (err) throw new Error(err)
+      console.log(`List items created in bulk ${chalk.gray(listResult._id)}`)
     })
-  },
-  delete: function (payload) {
-    const user = payload.user
-    const listResult = (payload.permanent) ? listService.deleteList(payload.listid) : { success: true }
-    const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-    return Promise.all([listResult, userResult])
-    .then((results) => {
-      if (!results[0]) throw new Error('List not found')
-      if (!results[1]) throw new Error('Something bad happened at updateUser')
 
-      if (!results[0].success) {
-        // Round up the ids of each item and cancel their agenda tasks
-        async.each(results[0].items, (v, cb) => {
+    return [listResult, userResult]
+  },
+  delete: async function (payload) {
+    const user = payload.user
+    const listResult = (payload.permanent) ? await listService.deleteList(payload.listid) : { success: true }
+    if (!listResult) throw new Error('List not found')
+    if (!listResult.success) {
+      // Round up the ids of each item and cancel their agenda tasks
+      async.each(listResult.items, (itemid, cb) => {
+        itemService.deleteItem(itemid)
+        .then((result) => {
           agenda.cancel({
-            'data.agendaID': v.id
+            'data.agendaID': itemid
           }, (err) => {
             if (err) throw new Error(err)
-            console.log(user.username + ' => Agenda removed: ' + v.id)
+            console.log(user.username + ' => Agenda removed: ' + itemid)
             cb()
           })
-        }, function (err) {
-          if (err) throw new Error(err)
-          console.log(`List agendas removed ${chalk.gray(results[0].id)}`)
         })
-      }
+      }, function (err) {
+        if (err) throw new Error(err)
+        console.log(`List items removed in bulk ${chalk.gray(listResult._id)}`)
+        console.log(`List agendas removed ${chalk.gray(listResult._id)}`)
+      })
+    }
+    const userResult = await userService.updateUser(user.username, { tasks: user.tasks })
+    if (!userResult) throw new Error('Something bad happened at updateUser')
 
-      return results
-    })
+    return [listResult, userResult]
   },
-  update: function (payload) {
+  update: async function (payload) {
     const user = payload.user
     const listid = payload.listid
     const listBody = payload.listBody
 
-    const listResult = listService.updateList(listid, listBody)
-    const userResult = userService.updateUser(user.username, { tasks: user.tasks })
-    return Promise.all([listResult, userResult])
-    .then((results) => {
-      if (!results[0]) throw new Error('Something bad happened at updateList')
-      if (!results[1]) throw new Error('Something bad happened at updateUser')
-      return results
-    })
+    const listResult = await listService.updateList(listid, listBody)
+    if (!listResult) throw new Error('Something bad happened at updateList')
+
+    const userResult = await userService.updateUser(user.username, { tasks: user.tasks })
+    if (!userResult) throw new Error('Something bad happened at updateUser')
+
+    return [listResult, userResult]
   },
-  invite: function (payload) {
+  invite: async function (payload) {
     const username = payload.username
     const users = payload.users
     const listid = payload.listid
-    return listService.updateList(listid, users)
-    .then((result) => {
-      if (!result) throw new Error('Something bad happened at updateList')
-      agenda.now('List Invite Email', {
-        username: username,
-        owner: result.owner,
-        list: result.list,
-        listid: listid,
-        host: (process.env.NODE_ENV === 'production') ? 'https://taskmastr.co' : 'http://localhost:3000'
-      })
-      return result
+
+    const result = await listService.updateList(listid, users)
+    if (!result) throw new Error('Something bad happened at updateList')
+    agenda.now('List Invite Email', {
+      username: username,
+      owner: result.owner,
+      list: result.list,
+      listid: listid,
+      host: process.env.HOST || 'http://localhost:3000'
     })
+
+    return result
   },
-  removeUser: function (payload) {
+  removeUser: async function (payload) {
     const users = payload.users
     const listid = payload.listid
-    return listService.updateList(listid, users)
-    .then((result) => {
-      if (!result) throw new Error('Something bad happened at updateList')
-      return result
-    })
+    const result = await listService.updateList(listid, users)
+    if (!result) throw new Error('Something bad happened at updateList')
+
+    return result
   },
-  confirmUser: function (payload) {
+  confirmUser: async function (payload) {
     const user = payload.listUser
     const listid = payload.listid
-    return listService.updateListAt(listid, user)
-    .then((result) => {
-      if (!result) throw new Error('Something bad happened at updateList')
-      return result
-    })
+    const result = await listService.updateListAt(listid, user)
+    if (!result) throw new Error('Something bad happened at updateList')
+
+    return result
   }
 }
-
-module.exports = lists

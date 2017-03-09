@@ -9,7 +9,7 @@ describe('setTaskNotes', () => {
   it('dispatches SET_TASK_NOTES', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        updateItem (listid, itemid, index, item, username, cb) {
+        updateItem (listid, item, username, cb) {
           cb(null, { success: true })
         }
       }
@@ -39,7 +39,7 @@ describe('setTaskNotes', () => {
   it('dispatches SET_TASK_NOTES twice on error', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        updateItem (listid, itemid, index, item, username, cb) {
+        updateItem (listid, item, username, cb) {
           cb('Error!', { status: 500 })
         }
       }

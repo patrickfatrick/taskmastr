@@ -30,23 +30,23 @@ describe('deleteList', () => {
         username: 'username',
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             _deleting: false,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
           },
           {
-            id: 'listid2',
+            _id: 'listid2',
             list: 'List 2',
             _deleting: false,
             items: [
               {
-                id: 'itemid2',
+                _id: 'itemid2',
                 item: 'Item 2'
               }
             ]
@@ -76,28 +76,29 @@ describe('deleteList', () => {
     })
 
     const state = {
+      currentList: 'listid',
       user: {
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
-            current: true,
+            currentItem: 'itemid',
             _deleting: false,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
           },
           {
-            id: 'listid2',
+            _id: 'listid2',
             list: 'List 2',
-            current: false,
+            currentItem: 'itemid2',
             _deleting: false,
             items: [
               {
-                id: 'itemid2',
+                _id: 'itemid2',
                 item: 'Item 2'
               }
             ]
@@ -127,28 +128,29 @@ describe('deleteList', () => {
     })
 
     const state = {
+      currentList: 'listid2',
       user: {
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
-            current: false,
+            currentItem: 'itemid',
             _deleting: false,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
           },
           {
-            id: 'listid2',
+            _id: 'listid2',
             list: 'List 2',
-            current: true,
+            currentItem: 'itemid2',
             _deleting: false,
             items: [
               {
-                id: 'itemid2',
+                _id: 'itemid2',
                 item: 'Item 2'
               }
             ]
@@ -181,13 +183,13 @@ describe('deleteList', () => {
       user: {
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             current: true,
             _deleting: false,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
@@ -210,28 +212,29 @@ describe('deleteList', () => {
     })
 
     const state = {
+      currentList: 'listid',
       user: {
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
-            current: true,
+            currentItem: 'itemid',
             _deleting: false,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
           },
           {
-            id: 'listid2',
+            _id: 'listid2',
             list: 'List 2',
-            current: false,
+            currentItem: 'itemid2',
             _deleting: false,
             items: [
               {
-                id: 'itemid2',
+                _id: 'itemid2',
                 item: 'Item 2'
               }
             ]
@@ -274,25 +277,25 @@ describe('deleteList', () => {
       user: {
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             current: false,
             _deleting: true,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
           },
           {
-            id: 'listid2',
+            _id: 'listid2',
             list: 'List 2',
             current: true,
             _deleting: false,
             items: [
               {
-                id: 'itemid2',
+                _id: 'itemid2',
                 item: 'Item 2'
               }
             ]
@@ -323,23 +326,23 @@ describe('deleteList', () => {
         username: 'username',
         tasks: [
           {
-            id: 'listid',
+            _id: 'listid',
             list: 'List 1',
             _deleting: false,
             items: [
               {
-                id: 'itemid',
+                _id: 'itemid',
                 item: 'Item 1'
               }
             ]
           },
           {
-            id: 'listid2',
+            _id: 'listid2',
             list: 'List 2',
             _deleting: false,
             items: [
               {
-                id: 'itemid2',
+                _id: 'itemid2',
                 item: 'Item 2'
               }
             ]

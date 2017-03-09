@@ -18,6 +18,11 @@ describe('completeTask', () => {
 
   it('dispatches SET_TASK_COMPLETE and SORT_TASKS with another complete', (done) => {
     const itemActions = itemActionsInjector({
+      '../../services/item-services': {
+        updateItem (listid, item, username, cb) {
+          cb(null, { success: true })
+        }
+      },
       '../../services/list-services': {
         updateList (username, listid, tasks, cb) {
           cb(null, { success: true })
@@ -64,6 +69,11 @@ describe('completeTask', () => {
 
   it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON on true without another complete', (done) => {
     const itemActions = itemActionsInjector({
+      '../../services/item-services': {
+        updateItem (listid, item, username, cb) {
+          cb(null, { success: true })
+        }
+      },
       '../../services/list-services': {
         updateList (username, listid, tasks, cb) {
           cb(null, { success: true })
@@ -105,6 +115,11 @@ describe('completeTask', () => {
 
   it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON on false', (done) => {
     const itemActions = itemActionsInjector({
+      '../../services/item-services': {
+        updateItem (listid, item, username, cb) {
+          cb(null, { success: true })
+        }
+      },
       '../../services/list-services': {
         updateList (username, listid, tasks, cb) {
           cb(null, { success: true })
@@ -145,6 +160,11 @@ describe('completeTask', () => {
 
   it('dispatches SET_TASK_COMPLETE, SORT_TASKS, SET_SAVE_BUTTON when after another complete', (done) => {
     const itemActions = itemActionsInjector({
+      '../../services/item-services': {
+        updateItem (listid, item, username, cb) {
+          cb(null, { success: true })
+        }
+      },
       '../../services/list-services': {
         updateList (username, listid, tasks, cb) {
           cb(null, { success: true })
@@ -185,6 +205,11 @@ describe('completeTask', () => {
 
   it('dispatches SET_TASK_COMPLETE, SORT_TASKS, etc., and undoes, on error', (done) => {
     const itemActions = itemActionsInjector({
+      '../../services/item-services': {
+        updateItem (listid, item, username, cb) {
+          cb('Error!', { status: 500 })
+        }
+      },
       '../../services/list-services': {
         updateList (username, listid, tasks, cb) {
           cb('Error!', { status: 500 })
@@ -235,6 +260,11 @@ describe('completeTask', () => {
 
   it('dispatches SET_TASK_COMPLETE, SORT_TASKS, etc., and undoes, on error (previously complete)', (done) => {
     const itemActions = itemActionsInjector({
+      '../../services/item-services': {
+        updateItem (listid, item, username, cb) {
+          cb('Error!', { status: 500 })
+        }
+      },
       '../../services/list-services': {
         updateList (username, listid, tasks, cb) {
           cb('Error!', { status: 500 })

@@ -9,7 +9,7 @@ describe('renameTask', () => {
   it('dispatches RENAME_TASK', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        updateItem (listid, itemid, index, item, username, cb) {
+        updateItem (listid, item, username, cb) {
           cb(null, { success: true })
         }
       }
@@ -38,7 +38,7 @@ describe('renameTask', () => {
   it('dispatches RENAME_TASK twice on error', (done) => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
-        updateItem (listid, itemid, index, item, username, cb) {
+        updateItem (listid, item, username, cb) {
           cb('Error!', { status: 500 })
         }
       }

@@ -30,17 +30,17 @@ describe('deleteTask', () => {
         username: 'username'
       },
       current: {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
         items: [
           {
-            id: 'itemid',
+            _id: 'itemid',
             item: 'Item 1',
             complete: false,
             _deleting: false
           },
           {
-            id: 'itemid2',
+            _id: 'itemid2',
             item: 'Item 2',
             complete: true,
             _deleting: false
@@ -74,21 +74,20 @@ describe('deleteTask', () => {
         username: 'username'
       },
       current: {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
+        currentItem: 'itemid',
         items: [
           {
-            id: 'itemid',
+            _id: 'itemid',
             item: 'Item 1',
             complete: false,
-            current: true,
             _deleting: false
           },
           {
-            id: 'itemid2',
+            _id: 'itemid2',
             item: 'Item 2',
             complete: true,
-            current: false,
             _deleting: false
           }
         ]
@@ -120,21 +119,20 @@ describe('deleteTask', () => {
         username: 'username'
       },
       current: {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
+        currentItem: 'itemid2',
         items: [
           {
-            id: 'itemid',
+            _id: 'itemid',
             item: 'Item 1',
             complete: false,
-            current: false,
             _deleting: false
           },
           {
-            id: 'itemid2',
+            _id: 'itemid2',
             item: 'Item 2',
             complete: true,
-            current: true,
             _deleting: false
           }
         ]
@@ -167,21 +165,20 @@ describe('deleteTask', () => {
         username: 'username'
       },
       current: {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
+        currentItem: 'itemid',
         items: [
           {
-            id: 'itemid',
+            _id: 'itemid',
             item: 'Item 1',
             complete: false,
-            current: true,
             _deleting: true
           },
           {
-            id: 'itemid2',
+            _id: 'itemid2',
             item: 'Item 2',
             complete: true,
-            current: false,
             _deleting: false
           }
         ]
@@ -211,17 +208,17 @@ describe('deleteTask', () => {
         username: 'username'
       },
       current: {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
         items: [
           {
-            id: 'itemid',
+            _id: 'itemid',
             item: 'Item 1',
             complete: false,
             _deleting: false
           },
           {
-            id: 'itemid2',
+            _id: 'itemid2',
             item: 'Item 2',
             complete: true,
             _deleting: false

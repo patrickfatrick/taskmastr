@@ -12,6 +12,7 @@ export default {
   auth: false,
   forgot: false,
   create: false,
+  currentList: '',
   reset: false,
   rememberMe: false,
   invalidKey: false,

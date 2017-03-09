@@ -3,7 +3,7 @@ import { assert } from 'chai'
 import Items from '../../../../src/components/tasks/task-components/Items.vue'
 import mountVm from '../../../mount-vm'
 
-describe('Items.vue', function () {
+describe('ItemsVue', function () {
   let items
 
   beforeEach(() => {

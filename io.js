@@ -54,17 +54,17 @@ io.on('update-user', (ctx, payload) => {
 })
 
 io.on('create-list', (ctx, payload) => {
-  logIt(true, ctx.event, { info: '/lists/' + payload.list.id, params: payload })
+  logIt(true, ctx.event, { info: '/lists/' + payload.list._id, params: payload })
   try {
     return lists.create(payload)
     .then((results) => {
-      logIt(false, ctx.event, { info: '/lists/' + payload.list.id })
+      logIt(false, ctx.event, { info: '/lists/' + payload.list._id })
       ctx.socket.socket.to(payload.listid).broadcast.emit('change', results[0])
       ctx.socket.socket.to(payload.user.username).broadcast.emit('updated', results[1])
       ctx.acknowledge(null, results[0])
     })
   } catch (err) {
-    logIt(false, ctx.event, { info: '/lists/' + payload.list.id, err })
+    logIt(false, ctx.event, { info: '/lists/' + payload.list._id, err })
     ctx.acknowledge(err, null)
   }
 })
@@ -133,16 +133,16 @@ io.on('update-item', (ctx, payload) => {
 })
 
 io.on('create-item', (ctx, payload) => {
-  logIt(true, ctx.event, { info: '/lists/' + payload.listid + '/items/' + payload.item.id, params: payload })
+  logIt(true, ctx.event, { info: '/lists/' + payload.listid + '/items/' + payload.item._id, params: payload })
   try {
     return items.create(payload)
     .then((result) => {
-      logIt(false, ctx.event, { info: '/lists/' + payload.listid + '/items/' + payload.item.id })
+      logIt(false, ctx.event, { info: '/lists/' + payload.listid + '/items/' + payload.item._id })
       ctx.socket.socket.to(payload.listid).broadcast.emit('change', result)
       ctx.acknowledge(null, result)
     })
   } catch (err) {
-    logIt(false, ctx.event, { info: '/lists/' + payload.listid + '/items/' + payload.item.id, err })
+    logIt(false, ctx.event, { info: '/lists/' + payload.listid + '/items/' + payload.item._id, err })
     ctx.acknowledge(err, null)
   }
 })
@@ -167,6 +167,7 @@ io.on('remove-user', (ctx, payload) => {
   try {
     return lists.removeUser(payload)
     .then((result) => {
+      console.log('RESULT', result)
       logIt(false, ctx.event, { info: '/lists/' + payload.listid + '/remove-user/' })
       io.broadcast('users-change', { list: result, removed: true })
       ctx.acknowledge(null, result)

@@ -47,7 +47,8 @@ describe('list-services', () => {
     fetchMock.mock('/lists/listid', {
       status: 200,
       body: {
-        list: 'List'
+        list: 'List',
+        items: []
       }
     })
 

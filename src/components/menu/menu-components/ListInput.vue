@@ -42,7 +42,7 @@ export default {
       this.setListAttempt(true)
       if (!this.isValid) return
       this.addList({
-        id: hashish(),
+        _id: hashish(),
         list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
         current: false,

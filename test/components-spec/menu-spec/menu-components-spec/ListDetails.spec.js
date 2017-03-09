@@ -9,7 +9,7 @@ describe('ListDetailsVue', function () {
 
   beforeEach(() => {
     list = {
-      id: 'listid',
+      _id: 'listid',
       owner: 'username',
       users: []
     }

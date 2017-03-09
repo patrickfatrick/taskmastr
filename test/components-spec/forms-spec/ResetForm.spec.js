@@ -79,7 +79,7 @@ describe('ResetForm.vue', function () {
         resetConfirmKey: 'password'
       },
       current: {
-        id: 'listid'
+        _id: 'listid'
       },
       resetToken: 'token'
     })
@@ -108,7 +108,7 @@ describe('ResetForm.vue', function () {
         resetConfirmKey: 'password'
       },
       current: {
-        id: 'listid'
+        _id: 'listid'
       },
       resetToken: ''
     })

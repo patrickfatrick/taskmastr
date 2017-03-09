@@ -31,7 +31,7 @@ export default {
       'setUsers'
     ]),
     navigateToList (id, newuser) {
-      if (this.current.id !== id) this.unmountList(this.current.id)
+      if (this.current._id !== id) this.unmountList(this.current._id)
       this.$router.push(`/app/list/${id}${(newuser) ? '?newuser=' + newuser : ''}`)
     }
   },
@@ -39,13 +39,13 @@ export default {
     this.$nextTick(() => {
       // Socket events
       socket.on('updated', (data) => {
-        const currentID = _.find(data.tasks, { current: true }).id
+        const currentID = _.find(data.tasks, { current: true })._id
         this.setTasks(data.tasks)
         if (this.user.darkmode !== data.darkmode) this.setDarkmode(data.darkmode)
-        if (this.current.id !== currentID) this.navigateToList(currentID)
+        if (this.current._id !== currentID) this.navigateToList(currentID)
       })
       socket.on('list-deleted', (data) => {
-        const listIndex = _.findIndex(this.user.tasks, { id: data.listid })
+        const listIndex = _.findIndex(this.user.tasks, { _id: data.listid })
         if ((data.username.trim() === this.user.username.trim() && listIndex !== -1) || data.permanent) {
           this.deleteList({
             index: listIndex,
@@ -61,7 +61,7 @@ export default {
         this.setDisconnect(true)
       })
       socket.on('users-change', (data) => {
-        const listIndex = _.findIndex(this.user.tasks, { id: data.list.id })
+        const listIndex = _.findIndex(this.user.tasks, { _id: data.list._id })
         const userIndex = data.list.users.indexOf(this.user.username)
         if (userIndex === -1 && data.list.owner.trim() !== this.user.username.trim() && listIndex !== -1 && data.removed) {
           this.deleteList({
@@ -84,7 +84,10 @@ export default {
         // Opt to route to the listid if provided
         if (this.auth && listID && newUser) return this.navigateToList(listID, newUser)
         if (this.auth && listID) return this.navigateToList(listID)
-        if (this.auth) this.navigateToList(this.current.id)
+        // Go to user's current list if no listid is provided in url
+        if (this.auth) return this.navigateToList(this.current._id)
+        // If no session found, route to login
+        this.$router.push('/login')
       })
     })
   }

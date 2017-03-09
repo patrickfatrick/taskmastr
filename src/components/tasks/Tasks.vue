@@ -12,7 +12,7 @@
         <task-input></task-input>
       </div>
       <menu-toggle></menu-toggle>
-      <items></items>
+      <items :currenttask="currentItem"></items>
       <div id="no-list" v-if="user.key || !current.items">
         <i id="loading" class="fa fa-cog fa-spin"></i>
         <div id="invalid-list" v-if="invalidList">{{ invalidList }}</div>
@@ -31,6 +31,7 @@ export default {
   computed: mapState({
     user: (state) => state.user,
     current: (state) => state.current,
+    currentItem: (state) => state.current.currentItem,
     invalidList: (state) => state.invalidList,
     disconnect: (state) => state.disconnect
   }),
@@ -49,7 +50,10 @@ export default {
     },
     routeWatcher () {
       if (this.$route.query.newuser) {
-        this.confirmListUser({ listid: this.$route.params.listid, username: this.$route.query.newuser.toLowerCase() })
+        this.confirmListUser({
+          listid: this.$route.params.listid,
+          username: this.$route.query.newuser.toLowerCase()
+        })
         this.$router.push('/app/list/' + this.$route.params.listid)
       }
       this.mountList(this.$route.params.listid)

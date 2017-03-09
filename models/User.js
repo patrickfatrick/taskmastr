@@ -1,29 +1,16 @@
-const thinky = require('../thinky')
-const type = thinky.type
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const User = thinky.createModel('users', {
-  darkmode: type.boolean(),
-  dateCreated: type.date(),
-  dateModified: type.date(),
-  id: type.string(),
-  key: type.string(),
-  resetDate: type.date(),
-  resetToken: type.string(),
-  tasks: [ type.object().schema({
-    id: type.string(),
-    current: type.boolean()
-  }).removeExtra() ],
-  username: type.string()
-}, {
-  pk: 'username'
-})
-
-User.ensureIndex('username')
-User.ensureIndex('dateCreated')
-User.ensureIndex('dateModified')
+const User = mongoose.model('User', new Schema({
+  currentList: { type: String, ref: 'List' },
+  darkmode: Boolean,
+  dateCreated: { type: Date, default: new Date().toISOString() },
+  dateModified: { type: Date, default: new Date().toISOString() },
+  key: String,
+  resetDate: Date,
+  resetToken: String,
+  tasks: [{ type: String, ref: 'List' }],
+  username: { type: String, index: { unique: true } }
+}))
 
 module.exports = User
-
-// Commenting this out for now
-// User.hasAndBelongsToMany(List, 'tasks', 'username', 'id')
-// // const List = require('./List')

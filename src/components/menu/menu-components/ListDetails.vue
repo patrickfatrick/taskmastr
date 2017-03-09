@@ -1,5 +1,5 @@
 <template>
-  <div class="list-details" :class="{ 'toggled': listDetailsToggled === list.id }">
+  <div class="list-details" :class="{ 'toggled': listDetailsToggled === list._id }">
     <div class="list-details-inner">
       <div class="list-created">
         <span class="list-label">Created on</span>
@@ -29,7 +29,7 @@
           </div>
           <div class="no-users" v-if="!list.users.length">It's just you in here!</div>
           <div class="new-user" v-if="list.owner === username">
-            <form :id="'new-user-form-' + list.id" @submit.prevent="addNewListUser(index)">
+            <form :id="'new-user-form-' + list._id" @submit.prevent="addNewListUser(index)">
               <input type="text" title="Invite new user" placeholder="Invite someone" class="new-user-input" :value="newUser" @input="changeNewUser($event.target.value)">
               <div class="new-user-button-container">
                 <button type="submit" title="Invite" class="new-user-button"><i class="fa fa-user-plus"></i></button>

@@ -12,13 +12,12 @@ describe('ListVue', function () {
   beforeEach(() => {
     lists = [
       {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
-        current: false,
         _deleting: true,
         items: [
           {
-            id: 'itemid',
+            _id: 'itemid',
             item: 'Item 1'
           }
         ],
@@ -26,13 +25,12 @@ describe('ListVue', function () {
         users: []
       },
       {
-        id: 'listid2',
+        _id: 'listid2',
         list: 'List 2',
-        current: true,
         _deleting: false,
         items: [
           {
-            id: 'itemid2',
+            _id: 'itemid2',
             item: 'Item 2'
           }
         ],
@@ -113,15 +111,21 @@ describe('ListVue', function () {
   })
 
   it('should respond to _deleting and current properties', () => {
-    const vm1 = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
-    const vm2 = mountVm(List, { user: { tasks: lists }, current: lists[1] }, { list: lists[1], index: 1 })
+    const vm1 = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
+    const vm2 = mountVm(List, {
+      user: {
+        tasks: lists
+      },
+      current: lists[1],
+      currentList: lists[1]._id
+    }, { list: lists[1], index: 1 })
 
     assert.isTrue(vm1.$el.classList.contains('deleting'))
     assert.isTrue(vm2.$el.classList.contains('current'))
   })
 
   it('should call navigateToList method on click', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'navigateToList')
 
     vm.$el.querySelector('.name').click()
@@ -131,7 +135,7 @@ describe('ListVue', function () {
   })
 
   it('should call toggleListDetails method on dblclick', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'toggleListDetails')
 
     vm.$el.querySelector('.task-cell').dispatchEvent(dblclick())
@@ -141,7 +145,7 @@ describe('ListVue', function () {
   })
 
   it('should reset toggleListDetails when called on current toggleListDetails index', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'toggleListDetails')
 
     vm.$el.querySelector('.task-cell').dispatchEvent(dblclick())
@@ -161,7 +165,7 @@ describe('ListVue', function () {
   })
 
   it('should call renameList on .rename change', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'renameList')
 
     vm.$el.querySelector('.rename').value = 'List 11'
@@ -172,7 +176,7 @@ describe('ListVue', function () {
   })
 
   it('should not call renameList if null', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'renameList')
 
     vm.$el.querySelector('.rename').value = ''
@@ -193,7 +197,7 @@ describe('ListVue', function () {
   })
 
   it('should call deleteList and navigateToList on removeList', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'deleteList').yieldsTo('cb', 'listid')
     sinon.stub(vm, 'navigateToList')
 
@@ -208,7 +212,7 @@ describe('ListVue', function () {
   })
 
   it('should call unmountList on navigateToList', () => {
-    const vm = mountVm(List, { current: lists[1] }, { list: lists[1], index: 1 })
+    const vm = mountVm(List, { current: lists[1], currentList: lists[1]._id }, { list: lists[1], index: 1 })
     sinon.stub(vm, 'unmountList')
     sinon.stub(vm.$router, 'push')
 
@@ -220,8 +224,8 @@ describe('ListVue', function () {
     vm.$router.push.restore()
   })
 
-  it('should not call unmountList on navigateToList if id === current.id', () => {
-    const vm = mountVm(List, { current: lists[1] }, { list: lists[1], index: 1 })
+  it('should not call unmountList on navigateToList if id === currentList', () => {
+    const vm = mountVm(List, { current: lists[1], currentList: lists[1]._id }, { list: lists[1], index: 1 })
     sinon.stub(vm, 'unmountList')
     sinon.stub(vm.$router, 'push')
 
@@ -234,7 +238,11 @@ describe('ListVue', function () {
   })
 
   it('should call navigateToList on alt+,', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[1],
+      currentList: lists[1]._id
+    }, { list: lists[1], index })
     sinon.stub(vm, 'navigateToList')
 
     Mousetrap.trigger('alt+,')
@@ -244,7 +252,11 @@ describe('ListVue', function () {
   })
 
   it('should call navigateToList on alt+.', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[1],
+      currentList: lists[1]._id
+    }, { list: lists[1], index })
     sinon.stub(vm, 'navigateToList')
 
     Mousetrap.trigger('alt+.')
@@ -254,7 +266,11 @@ describe('ListVue', function () {
   })
 
   it('should call removeList on alt+backspace', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[1],
+      currentList: lists[1]._id
+    }, { list: lists[1], index })
     sinon.stub(vm, 'removeList')
 
     Mousetrap.trigger('alt+backspace')
@@ -264,7 +280,11 @@ describe('ListVue', function () {
   })
 
   it('should call sortLists on alt+command+up', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[1] }, { list: lists[1], index: 1 })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[1],
+      currentList: lists[1]._id
+    }, { list: lists[1], index: 1 })
     sinon.stub(vm, 'sortLists')
 
     Mousetrap.trigger('alt+command+up')
@@ -276,9 +296,8 @@ describe('ListVue', function () {
   it('should not call sortLists on alt+command+up if first list', () => {
     lists = [
       {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
-        current: true,
         _deleting: true,
         items: [
           {
@@ -290,9 +309,8 @@ describe('ListVue', function () {
         users: []
       },
       {
-        id: 'listid2',
+        _id: 'listid2',
         list: 'List 2',
-        current: false,
         _deleting: false,
         items: [
           {
@@ -305,7 +323,11 @@ describe('ListVue', function () {
       }
     ]
 
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[0],
+      currentList: lists[0]._id
+    }, { list: lists[0], index })
     sinon.stub(vm, 'sortLists')
 
     Mousetrap.trigger('alt+command+up')
@@ -317,9 +339,8 @@ describe('ListVue', function () {
   it('should call sortLists on alt+command+down', () => {
     lists = [
       {
-        id: 'listid',
+        _id: 'listid',
         list: 'List 1',
-        current: true,
         _deleting: true,
         items: [
           {
@@ -331,9 +352,8 @@ describe('ListVue', function () {
         users: []
       },
       {
-        id: 'listid2',
+        _id: 'listid2',
         list: 'List 2',
-        current: false,
         _deleting: false,
         items: [
           {
@@ -346,7 +366,11 @@ describe('ListVue', function () {
       }
     ]
 
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[0],
+      currentList: lists[0]._id
+    }, { list: lists[0], index })
     sinon.stub(vm, 'sortLists')
 
     Mousetrap.trigger('alt+command+down')
@@ -356,7 +380,11 @@ describe('ListVue', function () {
   })
 
   it('should not call sortLists on alt+command+down if last list', () => {
-    const vm = mountVm(List, { user: { tasks: lists }, current: lists[0] }, { list: lists[0], index })
+    const vm = mountVm(List, {
+      user: { tasks: lists },
+      current: lists[1],
+      currentList: lists[1]._id
+    }, { list: lists[1], index })
     sinon.stub(vm, 'sortLists')
 
     Mousetrap.trigger('alt+command+down')

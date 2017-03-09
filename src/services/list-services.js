@@ -12,9 +12,7 @@ export function getList (id, cb) {
   })
   .then(status)
   .then((response) => response.json())
-  .then((response) => {
-    cb(null, response)
-  })
+  .then((list) => cb(null, list))
   .catch((err) => {
     if (err.response.status === 404) return cb('You\'re not viewing a list. Please click on one in the menu to the left.', err.response)
     if (err.response.status === 403) return cb('You\'re not authorized to view this list.', err.response)

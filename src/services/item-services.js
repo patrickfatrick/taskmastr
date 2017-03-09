@@ -9,9 +9,9 @@ export function createItem (listid, item, username, cb) {
   })
 }
 
-export function updateItem (listid, itemid, index, item, username, cb) {
+export function updateItem (listid, item, username, cb) {
   if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
-  socket.emit('update-item', { listid, itemid, index, item, username }, (err, response) => {
+  socket.emit('update-item', { listid, item }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
   })

@@ -11,18 +11,16 @@ describe('ItemVue', function () {
   beforeEach(() => {
     items = [
       {
-        id: 'itemid',
+        _id: 'itemid',
         item: 'Item 1',
-        current: false,
         complete: false,
         _deleting: true,
         _dueDateDifference: 1,
         _detailsToggled: false
       },
       {
-        id: 'itemid2',
+        _id: 'itemid2',
         item: 'Item 2',
-        current: true,
         complete: false,
         _deleting: false,
         _dueDateDifference: -1,
@@ -58,27 +56,24 @@ describe('ItemVue', function () {
   it('should respond to complete _deleting and current and _dueDateDifference properties', () => {
     items = [
       {
-        id: 'itemid',
+        _id: 'itemid',
         item: 'Item 1',
-        current: false,
         complete: false,
         _deleting: true,
         _dueDateDifference: 1,
         _detailsToggled: false
       },
       {
-        id: 'itemid2',
+        _id: 'itemid2',
         item: 'Item 2',
-        current: true,
         complete: false,
         _deleting: false,
         _dueDateDifference: -1,
         _detailsToggled: false
       },
       {
-        id: 'itemid3',
+        _id: 'itemid3',
         item: 'Item 3',
-        current: true,
         complete: true,
         _deleting: false,
         _dueDateDifference: null,
@@ -86,9 +81,9 @@ describe('ItemVue', function () {
       }
     ]
 
-    const vm1 = mountVm(Item, { current: { items } }, { task: items[0] })
-    const vm2 = mountVm(Item, { current: { items } }, { task: items[1] })
-    const vm3 = mountVm(Item, { current: { items } }, { task: items[2] })
+    const vm1 = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
+    const vm2 = mountVm(Item, { current: { items } }, { task: items[1], currenttask: items[1]._id })
+    const vm3 = mountVm(Item, { current: { items } }, { task: items[2], currenttask: items[1]._id })
     assert.isTrue(vm1.$el.classList.contains('deleting'))
     assert.isTrue(vm1.$el.querySelector('.details-button > i').classList.contains('fa-pencil-square'))
     assert.isTrue(vm2.$el.classList.contains('active'))
@@ -97,7 +92,7 @@ describe('ItemVue', function () {
   })
 
   it('should call setCurrentTask method on click', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items, currentItem: items[1]._id } }, { task: items[0] })
     sinon.stub(vm, 'setCurrentTask')
 
     vm.$el.querySelectorAll('.name')[0].click()
@@ -107,7 +102,7 @@ describe('ItemVue', function () {
   })
 
   it('should call toggleDetails on dblclick', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items, currentItem: items[1]._id } }, { task: items[0] })
     sinon.stub(vm, 'toggleDetails')
     vm.$el.querySelector('.name').dispatchEvent(dblclick())
 
@@ -116,7 +111,7 @@ describe('ItemVue', function () {
   })
 
   it('should call toggleDetails method on click', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items, currentItem: items[1]._id } }, { task: items[0] })
     sinon.stub(vm, 'toggleDetails')
 
     vm.$el.querySelectorAll('.details-button')[0].click()
@@ -126,7 +121,7 @@ describe('ItemVue', function () {
   })
 
   it('should call completeTask on click', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items, currentItem: items[1]._id } }, { task: items[0] })
     sinon.stub(vm, 'completeTask')
 
     vm.$el.querySelector('.complete').click()
@@ -136,7 +131,7 @@ describe('ItemVue', function () {
   })
 
   it('should call setCurrentTask on ctrl+,', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
     sinon.stub(vm, 'setCurrentTask')
 
     Mousetrap.trigger('ctrl+,')
@@ -146,7 +141,7 @@ describe('ItemVue', function () {
   })
 
   it('should call setCurrentTask on ctrl+.', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
     sinon.stub(vm, 'setCurrentTask')
 
     Mousetrap.trigger('ctrl+.')
@@ -156,7 +151,7 @@ describe('ItemVue', function () {
   })
 
   it('should call deleteTask on ctrl+backspace', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
     sinon.stub(vm, 'deleteTask')
 
     Mousetrap.trigger('ctrl+backspace')
@@ -166,7 +161,7 @@ describe('ItemVue', function () {
   })
 
   it('should call sortTasks on ctrl+command+up', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
     sinon.stub(vm, 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
@@ -178,20 +173,18 @@ describe('ItemVue', function () {
   it('should not call sortTasks on ctrl+command+up if first task', () => {
     items = [
       {
-        id: 'itemid',
+        _id: 'itemid',
         item: 'Item 1',
-        current: true,
         _deleting: true
       },
       {
-        id: 'itemid2',
+        _id: 'itemid2',
         item: 'Item 2',
-        current: false,
         _deleting: false
       }
     ]
 
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[0]._id })
     sinon.stub(vm, 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')
@@ -203,20 +196,18 @@ describe('ItemVue', function () {
   it('should call sortTasks on ctrl+command+down', () => {
     items = [
       {
-        id: 'itemid',
+        _id: 'itemid',
         item: 'Item 1',
-        current: true,
         _deleting: true
       },
       {
-        id: 'itemid2',
+        _id: 'itemid2',
         item: 'Item 2',
-        current: false,
         _deleting: false
       }
     ]
 
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[0]._id })
     sinon.stub(vm, 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
@@ -226,7 +217,7 @@ describe('ItemVue', function () {
   })
 
   it('should not call sortTasks on ctrl+command+down if last task', () => {
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
     sinon.stub(vm, 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
@@ -238,24 +229,22 @@ describe('ItemVue', function () {
   it('should handle moving non-complete to complete on sortTasks', () => {
     items = [
       {
-        id: 'itemid',
+        _id: 'itemid',
         item: 'Item 1',
-        current: true,
         complete: false,
         _deleting: true,
         _dueDateDifference: 1
       },
       {
-        id: 'itemid2',
+        _id: 'itemid2',
         item: 'Item 2',
-        current: false,
         complete: true,
         _deleting: false,
         _dueDateDifference: -1
       }
     ]
 
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[0]._id })
     sinon.stub(vm, 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+down')
@@ -267,24 +256,22 @@ describe('ItemVue', function () {
   it('should handle moving complete to non-complete on sortTasks', () => {
     items = [
       {
-        id: 'itemid',
+        _id: 'itemid',
         item: 'Item 1',
-        current: false,
         complete: false,
         _deleting: true,
         _dueDateDifference: 1
       },
       {
-        id: 'itemid2',
+        _id: 'itemid2',
         item: 'Item 2',
-        current: true,
         complete: true,
         _deleting: false,
         _dueDateDifference: -1
       }
     ]
 
-    const vm = mountVm(Item, { current: { items } }, { task: items[0] })
+    const vm = mountVm(Item, { current: { items } }, { task: items[0], currenttask: items[1]._id })
     sinon.stub(vm, 'sortTasks')
 
     Mousetrap.trigger('ctrl+command+up')

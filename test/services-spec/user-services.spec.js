@@ -10,7 +10,9 @@ describe('user-services', () => {
     fetchMock.mock('/users/login', {
       status: 200,
       body: {
-        username: 'username'
+        username: 'username',
+        tasks: [],
+        current: ''
       }
     })
 
@@ -225,7 +227,9 @@ describe('user-services', () => {
     fetchMock.mock('/sessions', {
       status: 200,
       body: {
-        username: 'username'
+        username: 'username',
+        tasks: [],
+        current: ''
       }
     })
 

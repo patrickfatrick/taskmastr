@@ -43,7 +43,7 @@ describe('item-services', () => {
   it('updateItem invokes a callback on success', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    updateItem('listid', 'itemid', 0, { item: 'Item' }, 'username', (err, response) => {
+    updateItem('listid', { item: 'Item' }, 'username', (err, response) => {
       assert.isTrue(socket.emit.calledWith('update-item'))
       assert.isNull(err)
       assert.deepEqual(response, 'ok')
@@ -55,7 +55,7 @@ describe('item-services', () => {
   it('updateItem throws on error', (done) => {
     sinon.stub(socket, 'emit').yields({ message: 'Error!' }, null)
 
-    updateItem('listid', 'itemid', 0, { item: 'Item' }, 'username', (err, response) => {
+    updateItem('listid', { item: 'Item' }, 'username', (err, response) => {
       assert.isTrue(socket.emit.calledWith('update-item'))
       assert.deepEqual(err.message, 'Error!')
       assert.deepEqual(response, 'Error!')
@@ -67,7 +67,7 @@ describe('item-services', () => {
   it('updateItem does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    updateItem('listid', 'itemid', 0, { item: 'Item' }, 'mrormrstestperson@taskmastr.co', (err, response) => {
+    updateItem('listid', { item: 'Item' }, 'mrormrstestperson@taskmastr.co', (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isNull(err)
       assert.isOk(response)
