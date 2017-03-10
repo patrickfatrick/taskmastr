@@ -13,9 +13,9 @@
             <p>Confirm your password to create a new account.</p>
           </div>
           <create-form></create-form>
+        </div>
       </div>
     </transition>
-    </div>
   </div>
 </template>
 

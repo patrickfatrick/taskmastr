@@ -10,14 +10,14 @@ body {
 #app-container {
 	@extend html;
 	color: $black;
-	@include transition(all 2s ease-out); 
-	@include background(linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight));
+	transition: all 2s ease-out; 
+	background: linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight);
 	background-position: bottom;
 	background-size: auto 500%;
 	text-align: center;
 	font-family: $cardo;
 	font-size: 1rem;
-	@include media(min-width $small) {
+	@media screen and (min-width: $small) {
 		font-size: 1.4rem;
 	}
 	#todo-line #create-todo {
@@ -91,7 +91,7 @@ input[type='password'] {
 	color: inherit;
 	font-size: 1.4rem;
 	line-height: 1.8rem;
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		font-size: 2rem;
 		line-height: 2.4rem;
 	}
@@ -140,7 +140,7 @@ a {
 	text-align: right;
 	margin-bottom: 1rem;
 	@include center;
-	@include media(min-width $small) {
+	@media screen and (min-width: $small) {
 		text-align: center;
 	}
 	.prompt {
@@ -150,21 +150,21 @@ a {
 		border-radius: 0;
 		border-bottom: 4px solid $slateGray;
 		background: transparent;
-		@include selection {
+		&::placeholder {
+			color: $slateGray;
+		}
+		&::selection {
 			background: $deepBlue;
 			color: $white;
 		}
-		@include transition(border-color 500ms ease-out);
+		transition: border-color 500ms ease-out;
 		&.ng-invalid.tried,
 		&.invalid {
 			border-color: $sunsetOrange !important;
-			@include animation(rubberBand 500ms);
+			animation: rubberBand 500ms;
 		}
 		&.disabled {
 			background-color: $azure;
-		}
-		@include placeholder {
-			color: $slateGray;
 		}
 		&:focus {
 			border-color: $deepBlue;

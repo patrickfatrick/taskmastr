@@ -2,7 +2,7 @@ import _ from 'lodash'
 import socket from '../../socket.js'
 import { updateUser } from '../../services/user-services'
 import { createList, getList, removeList, updateList, inviteUser, removeUser, confirmUser } from '../../services/list-services'
-import { isCurrent, findCurrent } from '../../helper-utilities/utils'
+import { isCurrent, findCurrent, findIndexById } from '../../helper-utilities/utils'
 
 export function setMenuToggled ({ commit }, bool) {
   commit('SET_MENU_TOGGLED', bool)
@@ -90,7 +90,7 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
       // in case indices change in the five-second window
       // Note: Switching to `state.user.tasks` in the timeout
       // Because the lists might have changed; reassign var `lists`?
-      const curIndex = _.findIndex(state.user.tasks, { _id: list._id })
+      const curIndex = findIndexById(state.user.tasks, list._id)
       const prevList = state.user.tasks[curIndex - 1]
       const nextList = state.user.tasks[curIndex + 1]
       // Stop procedure if it's the only list
@@ -102,7 +102,7 @@ export function deleteList ({ commit, state }, { index, delay, perm, cb }) {
       // Reassign current list
       let newCurrent
       if (isCurrent(list, state.currentList)) {
-        newCurrent = (list.current && curIndex === (state.user.tasks.length - 1))
+        newCurrent = (curIndex === (state.user.tasks.length - 1))
           ? prevList
           : nextList
         commit('SET_CURRENT_LIST', newCurrent)

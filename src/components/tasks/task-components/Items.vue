@@ -41,6 +41,7 @@
     </div>
     <item-details 
       v-for="(task, index) in allTasks" 
+      :key="task._id"
       :index="index" 
       :task="task">
     </item-details>

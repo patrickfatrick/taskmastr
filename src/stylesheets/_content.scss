@@ -1,10 +1,10 @@
 #content {
 	height: 100%;
-	@include transition(margin-left 200ms ease-out);
+	transition: margin-left 200ms ease-out;
 }
 
 #content.menued {
-	@include media(min-width $medlarge) {
+	@media screen and (min-width: $medlarge) {
 		margin-left: 250px;
 	}
 }
@@ -18,10 +18,10 @@
 	background-color: $sunsetOrange;
 	color: $white;
 	z-index: 3;
-	@include media(max-width $medium) {
+	@media screen and (max-width: $medium) {
 		bottom: 0;
 	}
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		top: 0;
 	}
 	button {
@@ -68,7 +68,7 @@
 	overflow: scroll;
 	@include center;
 	@include outer-container;
-	@include media(min-width $medlarge) {
+	@media screen and (min-width: $medlarge) {
 		position: relative;
 	}
 }
@@ -81,12 +81,12 @@
 	iframe {
 		width: 320px;
 		height: 180px;
-		@include media(min-width $small) {
+		@media screen and (min-width: $small) {
 			width: 384px;
 			height: 216px;
 		}
 
-		@include media(min-width $medium) {
+		@media screen and (min-width: $medium) {
 			width: 560px;
 			height: 315px;
 		}
@@ -104,20 +104,20 @@
 	background: $orchid;
 	z-index: 10000;
 	color: $white;
-	@include transition(all 200ms ease-out);
-	@include media(min-width $medium) {
+	transition: all 200ms ease-out;
+	@media screen and (min-width: $medium) {
 		padding: 20px 0 22px 0;
 		width: 3rem;
 		border-radius: 0 20px 20px 0;
 	}
-	@include media(min-width $medlarge) {
+	@media screen and (min-width: $medlarge) {
 		top: 6.2rem;
 	}
 }
 
 #icon-menu.toggled {
 	margin-left: 250px;
-	@include media(min-width $medlarge) {
+	@media screen and (min-width: $medlarge) {
 		left: 0;
 	}
 }
@@ -125,10 +125,10 @@
 .prompt-container {
 	@include outer-container;
 	@include fill-parent();
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		width: 700px;
 	}
-	@include media(min-width $large) {
+	@media screen and (min-width: $large) {
 		width: 800px;
 	}
 }
@@ -139,12 +139,12 @@
 	font-size: 2.2rem;
 	@include center;
 	@include span-columns(14 of 14);
-	@include media(min-width $medsmall) {
+	@media screen and (min-width: $medsmall) {
 		margin-bottom: 10px;
 		margin-top: 0;
 		font-size: 2.5rem;
 	}
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		@include span-columns(8 of 14);
 		@include shift(3 of 14);
 	}
@@ -154,13 +154,13 @@
 	margin-bottom: 1.5rem;
 	@include span-columns(12 of 14);
 	@include shift(2);
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		@include span-columns(12 of 14);
 		@include shift(1 of 14);
 	}
 	#create-todo {
 		@include span-columns(9 of 12)
-		@include media(min-width $medium) {
+		@media screen and (min-width: $medium) {
 			@include span-columns(11 of 12)
 		}
 	}
@@ -168,7 +168,7 @@
 		text-align: left;
 		@include omega();
 		@include span-columns(3 of 12);
-		@include media(min-width $medium) {
+		@media screen and (min-width: $medium) {
 			text-align: center;
 			@include span-columns(1 of 12);
 		}

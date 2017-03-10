@@ -71,7 +71,7 @@ export default {
     currenttask: String
   },
   methods: {
-    ... mapActions([
+    ...mapActions([
       'setCurrentTask',
       'deleteTask',
       'completeTask',

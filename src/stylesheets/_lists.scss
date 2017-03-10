@@ -1,5 +1,5 @@
 .table {
-  @include display(table);
+  display: table;
   margin-top: 1rem;
   text-align: left;
   word-wrap: break-word;
@@ -14,10 +14,10 @@
     &:last-child {
       margin-right: auto !important;
     }
-    @include media(min-width $medium) {
+    @media screen and (min-width: $medium) {
       width: 700px;
     }
-    @include media(min-width $large) {
+    @media screen and (min-width: $large) {
       width: 800px;
     }
   }
@@ -46,10 +46,10 @@
       max-height: 0;
       overflow: hidden;
       background-color: $orchid * 0.9;
-      @include transition(max-height 150ms ease-out);
+      transition: max-height 150ms ease-out;
       &.toggled {
         max-height: 1000px;
-        @include transition(max-height 250ms ease-in);
+        transition: max-height 250ms ease-in;
       }
     }
     .list-details-inner {
@@ -68,7 +68,7 @@
       background: transparent;
       border: none;
       border-bottom: 2px solid $oceanBlue;
-      @include selection(true) {
+      &::selection {
         background-color: $deepBlue;
         color: $white;
       }
@@ -124,7 +124,7 @@
         width: 2rem;
         border: 1px solid #bdbdbd;
         &:hover {
-          @include background(linear-gradient(($sunsetOrange * 0.9), $sunsetOrange));
+          background: linear-gradient(($sunsetOrange * 0.9), $sunsetOrange);
         }
         &:active {
           background: $sunsetOrange * 0.9;
@@ -137,7 +137,7 @@
       .new-user-input {
         border-bottom: 2px solid $oceanBlue;
         color: $white;
-        @include placeholder {
+        &::placeholder {
           color: $white * 0.9;
         }
         @include span-columns(17 of 21);
@@ -154,7 +154,7 @@
         border-radius: 4px;
         background-color: $astroTurf;
         &:hover {
-          @include background(linear-gradient(($astroTurf * 0.9), $astroTurf));
+          background: linear-gradient(($astroTurf * 0.9), $astroTurf);
         }
         &:active {
           background: $astroTurf * 0.9;
@@ -167,12 +167,12 @@
   }
   .table-row {
     @include row();
-    @include transition(unset);
+    transition: unset;
     i {
       margin-left: 0.1rem;
       margin-right: 0.1rem;
       font-size: 1.2rem;
-      @include media(min-width $small) {
+      @media screen and (min-width: $small) {
         font-size: inherit;
       }
     }
@@ -208,7 +208,7 @@
         color: $white !important;
       }
     }
-    @include media(min-width $medium) {
+    @media screen and (min-width: $medium) {
       &:hover:not(.complete):not(.active) {
         background-color: $deepBlue;
         color: $white;
@@ -227,10 +227,10 @@
   .table-data.task-cell {
     word-wrap: break-word;
     @include span-columns(15 of 21);
-    @include media(min-width $small) {
+    @media screen and (min-width: $small) {
       @include span-columns(16 of 21);
     }
-    @include media(min-width $medsmall) {
+    @media screen and (min-width: $medsmall) {
       @include span-columns(17 of 21);
     }
     button {
@@ -247,10 +247,10 @@
     text-align: center;
     @include omega();
     @include span-columns(4 of 21)
-    @include media(min-width $small) {
+    @media screen and (min-width: $small) {
       @include span-columns(3 of 21);
     }
-    @include media(min-width $medsmall) {
+    @media screen and (min-width: $medsmall) {
       @include span-columns(2 of 21);
     }
     .sort-button {

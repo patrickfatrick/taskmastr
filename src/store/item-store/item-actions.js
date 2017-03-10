@@ -99,9 +99,9 @@ export function deleteTask ({ commit, state }, index) {
       // Reassign current item
       if (isCurrent(task, state.current.currentItem)) {
         if (index === (tasks.length - 1)) {
-          commit('SET_CURRENT_TASK', prevTask._id)
+          commit('SET_CURRENT_TASK', tasks[prevTask]._id)
         } else {
-          commit('SET_CURRENT_TASK', nextTask._id)
+          commit('SET_CURRENT_TASK', tasks[nextTask]._id)
         }
       }
       // Optimistically delete the item from the store before request is made

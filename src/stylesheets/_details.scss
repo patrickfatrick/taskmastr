@@ -1,8 +1,8 @@
 .details-enter-active {
-  @include animation(bounceInDown 250ms);
+  animation: bounceInDown 250ms;
 }
 .details-leave-active {
-  @include animation(bounceOutUp 250ms);
+  animation: bounceOutUp 250ms;
 }
 .task-details {
   position: fixed;
@@ -21,21 +21,21 @@
   @include center;
   left: 0;
   right: 0;
-  @include media(min-width $medium) {
+  @media screen and (min-width: $medium) {
     width: 768px;
   }
-  @include media(min-height 600px) {
+  @media screen and (min-heigh:t 600px) {
     top: 3rem;
     min-height: 500px;
   }
-  @include media(min-height 700px) {
+  @media screen and (min-heigh:t 700px) {
     min-height: 600px;
   }
   .task-details-close {
     margin-top: 1rem;
     float: right;
     color: $gray;
-    @include media(min-width $medium) {
+    @media screen and (min-width: $medium) {
       margin-top: 0;
     }
   }
@@ -49,8 +49,8 @@
       border: none;
       background: transparent;
       border-bottom: 4px solid $slateGray;
-      @include transition(border-color 500ms ease-out);
-      @include selection {
+      transition: border-color 500ms ease-out;
+      &::selection {
         background: $deepBlue;
         color: $white;
       }
@@ -66,7 +66,7 @@
     @include row();
     .task-details-panel {
       @include fill-parent();
-      @include media(min-width $medium) {
+      @media screen and (min-width: $medium) {
         @include span-columns(4 of 12);
         @include omega(4n);
       }
@@ -101,7 +101,7 @@
   .remove-due-date {
     text-align: center;
     display: inline-block;
-    @include media(min-width $medium) {
+    @media screen and (min-width: $medium) {
       display: block;
     }
     .remove-due-date-button {
@@ -128,11 +128,11 @@
     font-family: $raleway;
     padding: 0.5rem;
     border: 2px solid $slateGray;
-    @include transition(border-color 500ms ease-out);
+    transition: border-color 500ms ease-out;
     &:focus {
       border-color: $deepBlue;
     }
-    @include media(min-height 700px) {
+    @media screen and (min-heigh:t 700px) {
       min-height: 375px;
     }
   }

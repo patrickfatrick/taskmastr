@@ -14,18 +14,18 @@
 	border-radius: 15px;
 	@include outer-container;
 	@include center;
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		width: 50%;
 		top: 10%;
 	}
 	&.modal-enter-active {
-		@include animation(bounceInDown 500ms);
+		animation: bounceInDown 500ms;
 	}
 	&.modal-leave-active {
-		@include animation(bounceOutUp 750ms);
+		animation: bounceOutUp 750ms;
 	}
 	&.invalid {
-		@include animation(rubberBand 500ms);
+		animation: rubberBand 500ms;
 	}
 	&.ng-scope {
 		display: block;
@@ -36,14 +36,14 @@
 		height: 80px;
 		font-family: $josefin;
 		@include border-top-radius(15px);
-		@include media(min-width $medium) {
+		@media screen and (min-width: $medium) {
 			height: 50px;
 		}
 		h1 {
 			font-size: 4rem;
 			text-transform: lowercase;
 			padding: 17px;
-			@include media(min-width $medium) {
+			@media screen and (min-width: $medium) {
 				font-size: 2.4rem;
 				padding: 10px;
 			}
@@ -54,13 +54,13 @@
 		.greeting {
 			margin-bottom: 1rem;
 			line-height: 1.4rem;
-			@include media(min-width $medium) {
+			@media screen and (min-width: $medium) {
 				line-height: 2rem;
 			}
 		}
 		form {
 			@include outer-container;
-			@include media(min-width $medium) {
+			@media screen and (min-width: $medium) {
 				margin-top: 2rem;
 			}
 			span {
@@ -71,7 +71,7 @@
 			}
 			.prompt-line {
 				@include span-columns(12 of 12);
-				@include media(min-width $medium) {
+				@media screen and (min-width: $medium) {
 					@include span-columns(8 of 12);
 					@include shift(2 of 12);
 				}
@@ -84,7 +84,7 @@
 			font-size: 0.8rem;
 			padding-left: 0.5rem;
 			@include span-columns(12 of 12);
-			@include media(min-width $medium) {
+			@media screen and (min-width: $medium) {
 				margin-top: 0.5rem;
 				@include span-columns(8 of 12);
 				@include shift(2 of 12);				
@@ -93,7 +93,7 @@
 		#remember, 
 		#forgot-password {
 			margin-top: 1rem;
-			@include media(min-width $medium) {
+			@media screen and (min-width: $medium) {
 				margin-top: 0.5rem;
 			}
 			button {
@@ -115,7 +115,7 @@
 			padding-top: 3px;
 			width: 60px;
 			@include center;
-			@include media(min-width $medium) {
+			@media screen and (min-width: $medium) {
 				width: 100px;
 			}
 		}
@@ -132,7 +132,7 @@
 			font-size: 1rem;
 			padding: 0.5rem;
 			border-radius: 4px;
-			@include transition(all 100ms ease-out);
+			transition: all 100ms ease-out;
 			&:hover,
 			&:focus {
 				color: $white;
@@ -141,7 +141,7 @@
 			&:active {
 				color: $white;
 				background-color: $deepBlue * 0.8;
-				@include transition(unset);
+				transition: unset;
 			}
 		}
 	}
@@ -154,10 +154,10 @@
 	z-index: 4;
 	position: fixed;
 	&.mask-enter-active {
-		@include animation(fadeIn 300ms);
+		animation: fadeIn 300ms;
 	}
 	&.mask-leave-active {
-		@include animation(fadeOut 750ms);
+		animation: fadeOut 750ms;
 	}
 }
 

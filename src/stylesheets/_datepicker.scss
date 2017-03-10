@@ -8,13 +8,13 @@
 	border-radius: 15px;
 	padding: 0.2em 0.2em 0;
 	@include center;
-	@include animation(bounceInDown 300ms);
+	animation: bounceInDown 300ms;
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
-	@include media(max-width $small) {
+	@media screen and (max-width: $small) {
 		width: 100%;
 		left: 0 !important;
 	}
-	@include media(min-width $medium) {
+	@media screen and (min-width: $medium) {
 		width: 400px;
 		left: 0 !important;
 		right: 0;

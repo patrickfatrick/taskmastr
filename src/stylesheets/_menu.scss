@@ -11,7 +11,7 @@
 	color: $white;
 	padding: 0 0 2rem 0;
 	overflow-y: scroll;
-	@include transition(all 200ms ease-out);
+	transition: all 200ms ease-out;
 	@include outer-container;
 }
 
@@ -31,7 +31,7 @@
 	font-size: 1.2rem;
 	margin-bottom: 1rem;
 	margin-top: 1rem;
-	@include media(min-width $medlarge) {
+	@media screen and (min-width: $medlarge) {
 		margin-bottom: 2rem;
 	}
 }
@@ -69,7 +69,7 @@
 	line-height: 2rem;
 	font-size: 1.4rem;
 	border-color: $dimGray * 1.8; 
-	@include placeholder {
+	&::placeholder {
 		color: $dimGray * 1.8;
 	}
 	&:focus {
@@ -90,7 +90,7 @@
   padding: 1rem;
   background: $orchid;
   left: -250px;
-  @include transition(all 200ms ease-out);
+  transition: all 200ms ease-out;
 }
 #logout {
 	margin-left: auto;
@@ -107,7 +107,7 @@
 	color: $white;
 	border: 1px solid #bdbdbd;
 	&:hover {
-		@include background(linear-gradient(($sunsetOrange * 0.9), $sunsetOrange));
+		background: linear-gradient(($sunsetOrange * 0.9), $sunsetOrange);
 	}
 	&:active {
 		background: $sunsetOrange * 0.9;

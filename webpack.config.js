@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
 const neat = require('node-neat')
+const bourbon = require('node-bourbon')
 const fontAwesome = require('node-font-awesome')
 
 module.exports = {
@@ -17,76 +18,92 @@ module.exports = {
     filename: 'javascripts/bundle.js'
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
+        enforce: 'pre',
         exclude: /node_modules/,
-        loader: 'standard'
-      }
-    ],
-    loaders: [
+        use: ['standard-loader']
+      },
       {
         test: /\.vue$/,
-        loader: 'vue'
+        use: [{
+          loader: 'vue-loader',
+          options: {
+            loaders: {
+              js: 'babel-loader!standard-loader'
+            }
+          }
+        }]
       },
       {
         test: /\.js$/,
         // excluding some local linked packages.
         // for normal use cases only node_modules is needed.
         exclude: /node_modules\/(?!gregorian|harsh)|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
-        loader: 'babel'
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'stage-2'],
+            plugins: ['transform-runtime']
+          }
+        }]
       },
       {
         test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/,
-        loader: 'file'
+        use: ['file-loader']
       }
     ]
   },
-  vue: {
-    loaders: {
-      js: 'babel!standard'
-    }
-  },
-  babel: {
-    presets: ['es2015', 'stage-2'],
-    plugins: ['transform-runtime']
-  },
-  sassLoader: {
-    includePaths: neat.with(fontAwesome.scssPath),
-    outputStyle: 'compressed'
-  }
+  plugins: [
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV'
+    ])
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.output.publicPath = '/public/'
-  module.exports.plugins = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
+  module.exports.plugins.push([
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+      sourceMap: true
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin('stylesheets/styles.css')
-  ]
-  module.exports.module.loaders.push({
+  ])
+  module.exports.module.rules.push({
     test: /\.scss$/,
-    loader: ExtractTextPlugin.extract('style', 'css?sourceMap!resolve-url!sass?sourceMap')
+    use: ExtractTextPlugin.extract({
+      use: [
+        { loader: 'css-loader' },
+        { loader: 'resolve-url-loader' },
+        {
+          loader: 'sass-loader',
+          options: {
+            includePaths: neat.with(fontAwesome.scssPath),
+            outputStyle: 'compressed'
+          }
+        }
+      ]
+    })
   })
 } else {
   module.exports.devtool = '#source-map'
   module.exports.entry.unshift('webpack/hot/dev-server')
   module.exports.plugins = [ new webpack.HotModuleReplacementPlugin() ]
-  module.exports.module.loaders.push({
+  module.exports.module.rules.push({
     test: /\.scss$/,
-    loader: 'style!css?sourceMap!resolve-url!sass?sourceMap'
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader', options: { sourceMap: true } },
+      { loader: 'resolve-url-loader' },
+      {
+        loader: 'sass-loader',
+        options: {
+          sourceMap: true,
+          includePaths: bourbon.with(neat.with(fontAwesome.scssPath)),
+          outputStyle: 'compressed'
+        }
+      }
+    ]
   })
 }
