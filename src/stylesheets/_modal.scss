@@ -122,10 +122,16 @@
 		#try-it {
 			font-family: $raleway;
 			font-size: 0.8rem;
-			display: inline-block;
-			position: absolute;
-			bottom: 2px;
-			margin-left: 1rem;
+			display: block;
+			text-align: center;
+			margin-top: 0.5rem;
+			@media screen and (min-width: $medlarge) {
+				display: inline-block;
+				position: absolute;
+				bottom: 2px;
+				margin-left: 1rem;
+				margin-top: 0;
+			}
 		}
 		#try-it-button {
 			text-transform: lowercase;
