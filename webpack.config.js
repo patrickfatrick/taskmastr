@@ -60,7 +60,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.output.publicPath = '/public/'
   module.exports.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true
+      sourceMap: false
     }),
     new ExtractTextPlugin('stylesheets/styles.css')
   )
@@ -68,7 +68,7 @@ if (process.env.NODE_ENV === 'production') {
     test: /\.scss$/,
     use: ExtractTextPlugin.extract({
       use: [
-        { loader: 'css-loader' },
+        { loader: 'css-loader', options: { sourceMap: true } },
         { loader: 'resolve-url-loader' },
         {
           loader: 'sass-loader',
