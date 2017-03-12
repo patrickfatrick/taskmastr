@@ -1,7 +1,7 @@
 /* global describe it sinon beforeEach afterEach */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import itemActionsInjector from 'inject!../../../../src/store/item-store/item-actions'
+import itemActionsInjector from 'inject-loader!../../../../src/store/item-store/item-actions'
 
 chai.should()
 
@@ -96,7 +96,7 @@ describe('deleteTask', () => {
     testAction(itemActions.deleteTask, 0, state, [
       { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: 7 } },
       { name: 'SET_TASK_DELETE', payload: { index: 0, bool: true } },
-      { name: 'SET_CURRENT_TASK', payload: 1 },
+      { name: 'SET_CURRENT_TASK', payload: 'itemid2' },
       { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid', val: null } },
       { name: 'SET_TASK_DELETE', payload: { index: 0, bool: false } },
       { name: 'REMOVE_TASK', payload: 0 }
@@ -142,7 +142,7 @@ describe('deleteTask', () => {
     testAction(itemActions.deleteTask, 1, state, [
       { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid2', val: 8 } },
       { name: 'SET_TASK_DELETE', payload: { index: 1, bool: true } },
-      { name: 'SET_CURRENT_TASK', payload: { index: 0 } },
+      { name: 'SET_CURRENT_TASK', payload: 'itemid' },
       { name: 'UPDATE_DELETE_QUEUE', payload: { id: 'itemid2', val: null } },
       { name: 'SET_TASK_DELETE', payload: { index: 1, bool: false } },
       { name: 'REMOVE_TASK', payload: 1 }

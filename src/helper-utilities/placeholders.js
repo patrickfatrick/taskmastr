@@ -1,7 +1,7 @@
 const year = new Date().getFullYear().toString()
 
 export default {
-  'placeholders': [
+  list: [
     'Remind me to eat lunch tomorrow',
     '/r Punch Bowl next Monday',
     '/y think of a New Year\'s Resolution',

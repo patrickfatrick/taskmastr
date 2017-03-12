@@ -45,7 +45,7 @@ export default {
         _id: hashish(),
         list: list.replace(/^\w/g, list.charAt(0).toUpperCase()),
         items: [],
-        current: false,
+        currentItem: '',
         owner: this.user.username,
         dateCreated: gregorian.reform(new Date()).to('iso'),
         users: [],

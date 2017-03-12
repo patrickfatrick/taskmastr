@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import itemActionsInjector from 'inject!../../../../src/store/item-store/item-actions'
+import itemActionsInjector from 'inject-loader!../../../../src/store/item-store/item-actions'
 
 chai.should()
 

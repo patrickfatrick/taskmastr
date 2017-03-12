@@ -1,6 +1,6 @@
 /* global describe it sinon beforeEach afterEach */
 import { assert } from 'chai'
-const userActionsInjector = require('inject!../../../../src/store/user-store/user-actions')
+const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
 
 describe('loginUser', () => {
   beforeEach(() => {

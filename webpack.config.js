@@ -23,7 +23,7 @@ module.exports = {
         test: /\.js$/,
         enforce: 'pre',
         exclude: /node_modules/,
-        use: ['standard-loader']
+        use: [ 'standard-loader' ]
       },
       {
         test: /\.vue$/,
@@ -41,17 +41,11 @@ module.exports = {
         // excluding some local linked packages.
         // for normal use cases only node_modules is needed.
         exclude: /node_modules\/(?!gregorian|harsh)|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['es2015', 'stage-2'],
-            plugins: ['transform-runtime']
-          }
-        }]
+        use: ['babel-loader']
       },
       {
         test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/,
-        use: ['file-loader']
+        use: [ 'file-loader' ]
       }
     ]
   },

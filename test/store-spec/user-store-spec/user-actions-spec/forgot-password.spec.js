@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-const userActionsInjector = require('inject!../../../../src/store/user-store/user-actions')
+const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
 
 chai.should()
 

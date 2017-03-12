@@ -1,10 +1,11 @@
 // Set Vue to silent to suppress warnings unless VUE_DEBUG
-var Vue = require('vue')
+import Vue from 'vue'
+Vue.config.productionTip = false
 Vue.config.silent = process.env.VUE_DEBUG !== true
 
 // require all test files using special Webpack feature
 // https://webpack.github.io/docs/context.html#require-context
-var testsContext = require.context('.', true, /\.spec$/)
+const testsContext = require.context('.', true, /\.spec$/)
 testsContext.keys().forEach(testsContext)
 
 // require store files

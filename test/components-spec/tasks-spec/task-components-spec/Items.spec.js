@@ -11,7 +11,6 @@ describe('ItemsVue', function () {
       {
         id: 'itemid',
         item: 'Item 1',
-        current: false,
         complete: false,
         _deleting: true,
         _dueDateDifference: 1,
@@ -20,7 +19,6 @@ describe('ItemsVue', function () {
       {
         id: 'itemid2',
         item: 'Item 2',
-        current: true,
         complete: false,
         _deleting: false,
         _dueDateDifference: -1,

@@ -1,8 +1,7 @@
 /* global describe it */
-import chai, { assert } from 'chai'
+import { assert } from 'chai'
 import itemMutations from '../../../src/store/item-store/item-mutations'
 
-chai.should()
 describe('item mutations', () => {
   it('SET_CURRENT_TASK', () => {
     let state = {
@@ -24,7 +23,7 @@ describe('item mutations', () => {
 
     itemMutations.SET_CURRENT_TASK(state, 'itemid2')
 
-    assert.deepEqual(state.current.currentItem, state.current.items[1]._id)
+    assert.strictEqual(state.current.currentItem, state.current.items[1]._id)
   })
 
   it('ADD_TASK', () => {
@@ -45,15 +44,15 @@ describe('item mutations', () => {
       }
     }
     let newTask = {
-      item: 'New task',
-      current: false
+      _id: 'itemid3',
+      item: 'New task'
     }
 
     itemMutations.ADD_TASK(state, newTask)
 
-    state.current.items[0].item.should.equal('New task')
-    state.current.items[1].item.should.equal('Current task')
-    state.current.items[2].item.should.equal('Not current task')
+    assert.strictEqual(state.current.items[0].item, 'New task')
+    assert.strictEqual(state.current.items[1].item, 'Current task')
+    assert.strictEqual(state.current.items[2].item, 'Not current task')
   })
 
   it('REMOVE_TASK', () => {
@@ -76,8 +75,8 @@ describe('item mutations', () => {
 
     itemMutations.REMOVE_TASK(state, 1)
 
-    state.current.items.length.should.equal(1)
-    state.current.items[0].item.should.equal('Current task')
+    assert.strictEqual(state.current.items.length, 1)
+    assert.strictEqual(state.current.items[0].item, 'Current task')
   })
 
   it('SET_NEW_TASK', () => {
@@ -87,7 +86,7 @@ describe('item mutations', () => {
 
     itemMutations.SET_NEW_TASK(state, '')
 
-    state.newTask.should.equal('')
+    assert.strictEqual(state.newTask, '')
   })
 
   it('SET_PLACEHOLDER', () => {
@@ -97,7 +96,7 @@ describe('item mutations', () => {
 
     itemMutations.SET_PLACEHOLDER(state, 'placeholder')
 
-    state.placeholder.should.equal('placeholder')
+    assert.strictEqual(state.placeholder, 'placeholder')
   })
 
   it('SET_TASK_COMPLETE', () => {
@@ -122,11 +121,11 @@ describe('item mutations', () => {
 
     itemMutations.SET_TASK_COMPLETE(state, { index: 1, bool: true })
 
-    state.current.items[1].complete.should.be.true
+    assert.isTrue(state.current.items[1].complete)
 
     itemMutations.SET_TASK_COMPLETE(state, { index: 1, bool: false })
 
-    state.current.items[1].complete.should.be.false
+    assert.isFalse(state.current.items[1].complete)
   })
 
   it('SET_DATE_COMPLETED', () => {
@@ -153,11 +152,11 @@ describe('item mutations', () => {
 
     itemMutations.SET_DATE_COMPLETED(state, { index: 1, date: 'date' })
 
-    state.current.items[1].dateCompleted.should.equal('date')
+    assert.strictEqual(state.current.items[1].dateCompleted, 'date')
 
     itemMutations.SET_DATE_COMPLETED(state, { index: 1, date: '' })
 
-    state.current.items[1].dateCompleted.should.equal('')
+    assert.strictEqual(state.current.items[1].dateCompleted, '')
   })
 
   it('SET_TASK_DELETE', () => {
@@ -180,11 +179,11 @@ describe('item mutations', () => {
 
     itemMutations.SET_TASK_DELETE(state, { index: 0, bool: true })
 
-    state.current.items[0]._deleting.should.be.true
+    assert.isTrue(state.current.items[0]._deleting)
 
     itemMutations.SET_TASK_DELETE(state, { index: 0, bool: false })
 
-    state.current.items[0]._deleting.should.be.false
+    assert.isFalse(state.current.items[0]._deleting)
   })
 
   it('RENAME_TASK', () => {
@@ -207,7 +206,7 @@ describe('item mutations', () => {
 
     itemMutations.RENAME_TASK(state, { index: 0, name: 'New current task' })
 
-    state.current.items[0].item.should.equal('New current task')
+    assert.strictEqual(state.current.items[0].item, 'New current task')
   })
 
   it('SET_TASK_DUE_DATE', () => {
@@ -233,11 +232,11 @@ describe('item mutations', () => {
 
     itemMutations.SET_TASK_DUE_DATE(state, { index: 0, date: today })
 
-    state.current.items[0].dueDate.should.equal(today)
+    assert.strictEqual(state.current.items[0].dueDate, today)
 
     itemMutations.SET_TASK_DUE_DATE(state, { index: 1, date: today })
 
-    state.current.items[0].dueDate.should.equal(today)
+    assert.strictEqual(state.current.items[0].dueDate, today)
   })
 
   it('UPDATE_DELETE_QUEUE', () => {
@@ -262,8 +261,8 @@ describe('item mutations', () => {
     itemMutations.UPDATE_DELETE_QUEUE(state, { id: 'id1', val: 1 })
     itemMutations.UPDATE_DELETE_QUEUE(state, { id: 'id2', val: 2 })
 
-    state.deleteQueue['id1'].should.equal(1)
-    state.deleteQueue['id2'].should.equal(2)
+    assert.strictEqual(state.deleteQueue['id1'], 1)
+    assert.strictEqual(state.deleteQueue['id2'], 2)
   })
 
   it('SORT_TASKS', () => {
@@ -290,15 +289,15 @@ describe('item mutations', () => {
 
     itemMutations.SORT_TASKS(state, { oldIndex: 2, newIndex: 0 })
 
-    state.current.items[0].item.should.equal('New task')
-    state.current.items[1].item.should.equal('Current task')
-    state.current.items[2].item.should.equal('Not current task')
+    assert.strictEqual(state.current.items[0].item, 'New task')
+    assert.strictEqual(state.current.items[1].item, 'Current task')
+    assert.strictEqual(state.current.items[2].item, 'Not current task')
 
     itemMutations.SORT_TASKS(state, { oldIndex: 1, newIndex: 2 })
 
-    state.current.items[0].item.should.equal('New task')
-    state.current.items[1].item.should.equal('Not current task')
-    state.current.items[2].item.should.equal('Current task')
+    assert.strictEqual(state.current.items[0].item, 'New task')
+    assert.strictEqual(state.current.items[1].item, 'Not current task')
+    assert.strictEqual(state.current.items[2].item, 'Current task')
   })
 
   it('TOGGLE_DETAILS', () => {
@@ -308,11 +307,11 @@ describe('item mutations', () => {
 
     itemMutations.TOGGLE_DETAILS(state, 0)
 
-    state.detailsToggled.should.equal(0)
+    assert.strictEqual(state.detailsToggled, 0)
 
     itemMutations.TOGGLE_DETAILS(state, 1)
 
-    state.detailsToggled.should.equal(1)
+    assert.strictEqual(state.detailsToggled, 1)
   })
 
   it('SET_TASK_NOTES', () => {
@@ -337,7 +336,7 @@ describe('item mutations', () => {
 
     itemMutations.SET_TASK_NOTES(state, { index: 0, notes: 'Some notes' })
 
-    state.current.items[0].notes.should.equal('Some notes')
+    assert.strictEqual(state.current.items[0].notes, 'Some notes')
   })
 
   it('SET_DUE_DATE_DIFFERENCE', () => {
@@ -364,10 +363,10 @@ describe('item mutations', () => {
 
     itemMutations.SET_DUE_DATE_DIFFERENCE(state, { index: 0, n: 1 })
 
-    state.current.items[0]._dueDateDifference.should.equal(1)
+    assert.strictEqual(state.current.items[0]._dueDateDifference, 1)
 
     itemMutations.SET_DUE_DATE_DIFFERENCE(state, { index: 1, n: -1 })
 
-    state.current.items[1]._dueDateDifference.should.equal(-1)
+    assert.strictEqual(state.current.items[1]._dueDateDifference, -1)
   })
 })

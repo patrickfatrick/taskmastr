@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import { hashish } from 'harsh'
 import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
@@ -24,6 +23,7 @@ export default {
     ...mapState({
       user: (state) => state.user,
       current: (state) => state.current,
+      currentItem: (state) => state.current.currentItem,
       newTask: (state) => state.newTask,
       taskAttempt: (state) => state.taskAttempt,
       placeholder: (state) => state.placeholder
@@ -45,7 +45,8 @@ export default {
       'setNewTask',
       'setPlaceholder',
       'setTaskAttempt',
-      'addTask'
+      'addTask',
+      'setCurrentTask'
     ]),
     addNewTask (task) {
       this.setTaskAttempt(true)
@@ -84,7 +85,6 @@ export default {
         _id: hashish(),
         item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
         createdBy: this.user.username,
-        current: !(_.find(this.current.items, {current: true})),
         complete: false,
         dateCreated: gregorian.reform(new Date()).to('iso'),
         dueDate: dueDate,
@@ -95,13 +95,14 @@ export default {
         _deleting: false,
         _detailsToggled: false
       })
+      if (!this.currentItem) this.setCurrentTask(0)
       this.setTaskAttempt(false)
       this.setNewTask('')
-      this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
+      this.setPlaceholder(placeholders.list[Math.floor(Math.random() * placeholders.list.length)])
     }
   },
   mounted () {
-    this.setPlaceholder(placeholders.placeholders[Math.floor(Math.random() * placeholders.placeholders.length)])
+    this.setPlaceholder(placeholders.list[Math.floor(Math.random() * placeholders.list.length)])
 
     // Keyboard bindings
     Mousetrap.bind('ctrl+f', (e) => {
