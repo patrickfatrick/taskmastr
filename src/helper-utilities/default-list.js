@@ -7,7 +7,7 @@ export default function (username) {
   return {
     _id: hashes.hashes[0],
     list: 'Your first list',
-    current: hashes.hashes[1],
+    currentItem: hashes.hashes[1],
     _deleting: false,
     items: [
       {
