@@ -14,7 +14,7 @@
   "scripts": {
     "start": "node ./app.js",
     "mongo": "mongod --dbpath ./data",
-    "dev": "NODE_ENV=development gulp",
+    "dev": "cross-env NODE_ENV=development gulp",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "cross-env NODE_ENV=test TZ=MST karma start",
     "deploy": "npm run build && git add . && git commit -m 'build' && git push github master"

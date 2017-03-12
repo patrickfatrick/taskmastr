@@ -84,7 +84,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   module.exports.devtool = '#source-map'
   module.exports.entry.unshift('webpack/hot/dev-server')
-  module.exports.plugins = [ new webpack.HotModuleReplacementPlugin() ]
+  module.exports.plugins.push(new webpack.HotModuleReplacementPlugin())
   module.exports.module.rules.push({
     test: /\.scss$/,
     use: [

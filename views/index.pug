@@ -3,8 +3,8 @@ extends layout
 block content
   app
   script(src="/javascripts/socket.io-client/dist/socket.io.min.js")
-  if env === 'development'
+  if env === 'production'
+    script(src="/javascripts/bundle.js")
+  else
     script(src="http://localhost:8888/webpack-dev-server.js")
     script(src="http://localhost:8888/public/javascripts/bundle.js")
-  else
-    script(src="/javascripts/bundle.js")

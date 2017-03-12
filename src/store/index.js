@@ -1,19 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createLogger from 'vuex/dist/logger'
 import mutations from './mutations'
 import state from './state'
 import actions from './actions'
 import getters from './getters'
-import createLogger from 'vuex/dist/logger'
+import { isProduction } from '../helper-utilities/utils'
 
 Vue.use(Vuex)
 
-const isNotProduction = process.env.NODE_ENV !== 'production'
 const plugins = []
-if (isNotProduction) plugins.push(createLogger())
+if (!isProduction()) plugins.push(createLogger())
 
 export default new Vuex.Store({
-  strict: isNotProduction,
+  strict: !isProduction(),
   plugins: plugins,
   state,
   mutations,
