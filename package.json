@@ -1,17 +1,14 @@
 {
   "name": "taskmastr",
-  "version": "9.0.1",
+  "version": "10.0",
   "engines": {
     "node": "7.6.0",
-    "npm": "4.4.1"
+    "yarn": "0.18.1"
   },
   "description": "A web task manager built with Node, Koa, Mongo, Vue",
   "homepage": "http://www.taskmastr.co",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
-  ],
-  "moduleType": [
-    "node"
   ],
   "private": true,
   "scripts": {
@@ -57,9 +54,7 @@
     "passport-local": "^1.0.0",
     "pikaday": "^1.4.0",
     "pug": "^2.0.0-beta11",
-    "rethinkdbdash": "^2.3.28",
     "socket.io": "^1.7.3",
-    "thinky": "^2.3.3",
     "vue": "^2.2.2",
     "vue-router": "^2.3.0",
     "vuex": "^2.2.1"
