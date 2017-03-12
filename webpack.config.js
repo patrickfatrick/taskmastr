@@ -58,12 +58,12 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.output.publicPath = '/public/'
-  module.exports.plugins.push([
+  module.exports.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true
     }),
     new ExtractTextPlugin('stylesheets/styles.css')
-  ])
+  )
   module.exports.module.rules.push({
     test: /\.scss$/,
     use: ExtractTextPlugin.extract({
@@ -73,6 +73,7 @@ if (process.env.NODE_ENV === 'production') {
         {
           loader: 'sass-loader',
           options: {
+            sourceMap: true,
             includePaths: neat.with(fontAwesome.scssPath),
             outputStyle: 'compressed'
           }
