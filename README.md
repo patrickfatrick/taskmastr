@@ -44,13 +44,25 @@ To install and run it locally:
 ```bash
 $ git clone git@github.com:patrickfatrick/taskmastr.git
 $ cd taskmastr
-$ npm install
-$ npm run dev
+$ yarn
+$ yarn run dev
 ```
 
-`$ npm run sync` will run it with browsersync at port 9000 which is helpful for editing .scss files. At some point I will wrap that up into Webpack but for now this works.
+Then navigate to localhost:3000. You'll need to have [yarn](yarnpkg.com) and [mongodb](mongodb.com) installed. You can also use NPM but I don't recommend it; Yarn is just better.
 
 # Changelog
+
+## New v10.0
+
+I guess I forgot to update the readme for previous releases. Whoops. Well to summarize releases 8.0 and 9.0: 
+
+8.0 was huge, introducing collaboration features and with that, sockets. You could, as a list owner, invite other users to your list, and once in both users could make changes to the items therein and immediately see the changes other users have made as they are making them. Only the list owner could change the collaborator list, or change the title of the list, or delete the list. This also encompassed migrating data to RethinkDB for most things (agenda notifications were the one table still persisted in Mongo). As it turned out I wasn't really using the cool streaming data features RethinkDB provides but either way ReQL has a nice syntax and it comes with a very nifty web management GUI. Fun stuff!
+
+v9.0 was a relatively small change as far as what users would see. The only visible change was the introduction of a "Remove all complete items" button inspired by one of my friends's work list which has about 5000 complete items just chilling in it. Hit the button and all of those will go away, and it also comes with a five-second undo. v9.0 was more about upgrading the entire front-end to Vue2.0 (along with the corresponding vuex and vue-router upgrades), not a small undertaking.
+
+Whew, with that out of the way, on to v10.0. This actually has 0 user-facing changes. Maybe some bug fixes, but that's it. The big change here was the re-migration BACK to Mongo. This isn't because I don't like RethinkDB or am concerned about its direction given the news that the company behind it is shutting down. This is entirely because of the fact I don't want to pay for a DigitalOcean droplet to host a RethinkDB database anymore. So now taskmastr is wholly *_free_* for me to host (thanks to the free plans at [Heroku](heroku.com) and [mLab](mlab.com)), which means there's no reason for me to ever take it offline. Some of the models have been rewritten in ways to work better with Mongoose, and for kicks I went ahead and made a new model and table for Items. So now my data has honestly become somewhat relational, so don't be surprised if I suddenly switch to Postgres. Just kidding, probably won't bother with that, ever.
+
+10.0 also sees an upgrade to webpack 2.0 which is exciting, I guess?
 
 ## New in v7.0
 

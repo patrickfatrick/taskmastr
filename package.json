@@ -2,8 +2,9 @@
   "name": "taskmastr",
   "version": "10.0.0",
   "engines": {
-    "node": "7.6.0",
-    "yarn": "0.18.1"
+    "mongodb": "3.4.2",
+    "node": "7.7.2",
+    "yarn": "0.21.3"
   },
   "description": "A web task manager built with Node, Koa, Mongo, Vue",
   "homepage": "http://www.taskmastr.co",
