@@ -1,5 +1,6 @@
 'use strict'
 
+const http = require('http')
 const Koa = require('koa')
 const convert = require('koa-convert')
 
@@ -31,7 +32,6 @@ const users = require('./routes/users')
 const lists = require('./routes/lists')
 const items = require('./routes/items')
 const sessions = require('./routes/sessions')
-
 
 const app = new Koa()
 
@@ -111,15 +111,16 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 // 404
-app.use(async function (next) {
-  if (this.status === 404) {
-    this.redirect('/404')
+app.use(async function (ctx, next) {
+  if (ctx.status === 404) {
+    ctx.redirect('/404')
   }
   await next
 })
 
 // Attach socket.io instance to app
-io.attach(app)
+const server = http.createServer(app.callback())
+io.attach(server)
 
-app.listen(config.koa.port)
+server.listen(config.koa.port)
 console.log('Listening on port ' + config.koa.port)
