@@ -10,7 +10,7 @@ describe('user mutations', () => {
 
     userMutations.SET_INIT(state, true)
 
-    assert.isTrue(state.init)
+    assert.deepEqual(state, { init: true })
   })
 
   it('SET_AUTH', () => {
@@ -18,9 +18,9 @@ describe('user mutations', () => {
       auth: false
     }
 
-    userMutations.SET_AUTH(state, 'patrick.fricano@icloud.com')
+    userMutations.SET_AUTH(state, 'username@email.com')
 
-    assert.strictEqual(state.auth, 'patrick.fricano@icloud.com')
+    assert.deepEqual(state, { auth: 'username@email.com' })
   })
 
   it('SET_FORGOT', () => {
@@ -30,11 +30,7 @@ describe('user mutations', () => {
 
     userMutations.SET_FORGOT(state, true)
 
-    assert.isTrue(state.forgot)
-
-    userMutations.SET_FORGOT(state, false)
-
-    assert.isFalse(state.forgot)
+    assert.deepEqual(state, { forgot: true })
   })
 
   it('SET_REMEMBER_ME', () => {
@@ -44,92 +40,60 @@ describe('user mutations', () => {
 
     userMutations.SET_REMEMBER_ME(state, true)
 
-    assert.isTrue(state.rememberMe)
-
-    userMutations.SET_REMEMBER_ME(state, false)
-
-    assert.isFalse(state.rememberMe)
+    assert.deepEqual(state, { rememberMe: true })
   })
 
   it('SET_USERNAME', () => {
     let state = {
       user: {
-        username: '',
-        key: '',
-        confirm: '',
-        darkmode: false
+        username: ''
       }
     }
 
     userMutations.SET_USERNAME(state, 'username')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', '')
-    assert.propertyVal(state.user, 'confirm', '')
-    assert.propertyVal(state.user, 'darkmode', false)
+    assert.deepEqual(state, { user: { username: 'username' } })
   })
 
   it('SET_KEY', () => {
     let state = {
       user: {
-        username: 'username',
-        key: '',
-        confirm: '',
-        darkmode: false
+        key: ''
       }
     }
 
     userMutations.SET_KEY(state, 'password')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', '')
-    assert.propertyVal(state.user, 'darkmode', false)
+    assert.deepEqual(state, { user: { key: 'password' } })
   })
 
   it('SET_CONFIRM', () => {
     let state = {
       user: {
-        username: 'username',
-        key: 'password',
-        confirm: '',
-        darkmode: false
+        confirm: ''
       }
     }
 
     userMutations.SET_CONFIRM(state, 'password')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', false)
+    assert.deepEqual(state, { user: { confirm: 'password' } })
   })
 
   it('SET_DARKMODE', () => {
     let state = {
       user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
         darkmode: false
       }
     }
 
     userMutations.SET_DARKMODE(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
+    assert.deepEqual(state, { user: { darkmode: true } })
   })
 
   it('SET_TASKS', () => {
     let state = {
       user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
         tasks: []
       }
     }
@@ -146,10 +110,6 @@ describe('user mutations', () => {
 
     userMutations.SET_TASKS(state, newTasks)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
     assert.strictEqual(state.user.tasks.length, 2)
     assert.strictEqual(state.user.tasks[0].list, 'Current list')
     assert.strictEqual(state.user.tasks[1].list, 'Not current list')
@@ -157,507 +117,150 @@ describe('user mutations', () => {
 
   it('SET_CREATE', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
+      user: {},
       create: false
     }
 
     userMutations.SET_CREATE(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
     assert.isTrue(state.create)
   })
 
   it('SET_INVALID_KEY', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
+      user: {},
       invalidKey: ''
     }
 
     userMutations.SET_INVALID_KEY(state, 'Invalid key')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
     assert.strictEqual(state.invalidKey, 'Invalid key')
   })
 
   it('SET_LOGIN_ATTEMPT', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
+      user: {},
       loginAttempt: false
     }
 
     userMutations.SET_LOGIN_ATTEMPT(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
     assert.isTrue(state.loginAttempt)
   })
 
   it('SET_FORGOT_ATTEMPT', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
+      user: {},
       forgotAttempt: false
     }
 
     userMutations.SET_FORGOT_ATTEMPT(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
     assert.isTrue(state.forgotAttempt)
   })
 
   it('SET_FORGOT_EMAIL', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true
+      user: {},
+      forgotEmail: false
     }
 
     userMutations.SET_FORGOT_EMAIL(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
     assert.isTrue(state.forgotEmail)
   })
 
   it('SET_FORGOT_FAIL', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
       forgotFail: false
     }
 
     userMutations.SET_FORGOT_FAIL(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.forgotFail)
+    assert.deepEqual(state, { forgotFail: true })
   })
 
   it('SET_CONFIRM_ATTEMPT', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
       confirmAttempt: false
     }
 
     userMutations.SET_CONFIRM_ATTEMPT(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
+    assert.deepEqual(state, { confirmAttempt: true })
   })
 
   it('SET_RESET', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
       reset: false
     }
 
     userMutations.SET_RESET(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
+    assert.deepEqual(state, { reset: true })
   })
 
   it('SET_RESET_KEY', () => {
     let state = {
       user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        resetKey: '',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: true
+        resetKey: ''
+      }
     }
 
     userMutations.SET_RESET_KEY(state, 'reset-key')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
-    assert.propertyVal(state.user, 'resetKey', 'reset-key')
+    assert.deepEqual(state, { user: { resetKey: 'reset-key' } })
   })
 
   it('SET_RESET_CONFIRM_KEY', () => {
     let state = {
       user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        resetKey: 'reset-key',
-        resetConfirmKey: '',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: true
+        resetConfirmKey: ''
+      }
     }
 
     userMutations.SET_RESET_CONFIRM_KEY(state, 'reset-key')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
-    assert.propertyVal(state.user, 'resetKey', 'reset-key')
-    assert.propertyVal(state.user, 'resetConfirmKey', 'reset-key')
-  })
-
-  it('SET_RESET', () => {
-    let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: false
-    }
-
-    userMutations.SET_RESET(state, true)
-
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
+    assert.deepEqual(state, { user: { resetConfirmKey: 'reset-key' } })
   })
 
   it('SET_RESET_ATTEMPT', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: true,
       resetAttempt: false
     }
 
     userMutations.SET_RESET_ATTEMPT(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
-    assert.isTrue(state.resetAttempt)
+    assert.deepEqual(state, { resetAttempt: true })
   })
 
   it('SET_RESET_TOKEN', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: true,
-      resetAttempt: true,
       resetToken: ''
     }
 
     userMutations.SET_RESET_TOKEN(state, 'token')
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    state.invalidKey.should.equal('Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
-    assert.isTrue(state.resetAttempt)
-    assert.strictEqual(state.resetToken, 'token')
+    assert.deepEqual(state, { resetToken: 'token' })
   })
 
   it('SET_RESET_FAIL', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: true,
-      resetAttempt: true,
-      resetToken: 'token',
       resetFail: false
     }
 
     userMutations.SET_RESET_FAIL(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
-    assert.isTrue(state.resetAttempt)
-    assert.strictEqual(state.resetToken, 'token')
-    assert.strictEqual(state.resetFail, true)
+    assert.deepEqual(state, { resetFail: true })
   })
 
-  it('SET_RESET_FAIL', () => {
+  it('SET_CREATE_FAIL', () => {
     let state = {
-      user: {
-        username: 'username',
-        key: 'password',
-        confirm: 'password',
-        darkmode: true,
-        tasks: []
-      },
-      forgot: true,
-      create: true,
-      invalidKey: 'Invalid key',
-      loginAttempt: true,
-      forgotAttempt: true,
-      forgotEmail: true,
-      confirmAttempt: true,
-      reset: true,
-      resetAttempt: true,
-      resetToken: 'token',
-      resetFail: true,
       createFail: false
     }
 
     userMutations.SET_CREATE_FAIL(state, true)
 
-    assert.propertyVal(state.user, 'username', 'username')
-    assert.propertyVal(state.user, 'key', 'password')
-    assert.propertyVal(state.user, 'confirm', 'password')
-    assert.propertyVal(state.user, 'darkmode', true)
-    assert.isTrue(state.forgot)
-    assert.isTrue(state.create)
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-    assert.isTrue(state.loginAttempt)
-    assert.isTrue(state.forgotAttempt)
-    assert.isTrue(state.forgotEmail)
-    assert.isTrue(state.confirmAttempt)
-    assert.isTrue(state.reset)
-    assert.isTrue(state.resetAttempt)
-    assert.strictEqual(state.resetToken, 'token')
-    assert.strictEqual(state.resetFail, true)
-    assert.strictEqual(state.createFail, true)
+    assert.deepEqual(state, { createFail: true })
   })
 })

@@ -50,6 +50,7 @@ describe('item mutations', () => {
 
     itemMutations.ADD_TASK(state, newTask)
 
+    assert.lengthOf(state.current.items, 3)
     assert.strictEqual(state.current.items[0].item, 'New task')
     assert.strictEqual(state.current.items[1].item, 'Current task')
     assert.strictEqual(state.current.items[2].item, 'Not current task')
@@ -75,18 +76,18 @@ describe('item mutations', () => {
 
     itemMutations.REMOVE_TASK(state, 1)
 
-    assert.strictEqual(state.current.items.length, 1)
+    assert.lengthOf(state.current.items, 1)
     assert.strictEqual(state.current.items[0].item, 'Current task')
   })
 
   it('SET_NEW_TASK', () => {
     let state = {
-      newTask: 'New task'
+      newTask: ''
     }
 
-    itemMutations.SET_NEW_TASK(state, '')
+    itemMutations.SET_NEW_TASK(state, 'New task')
 
-    assert.strictEqual(state.newTask, '')
+    assert.strictEqual(state.newTask, 'New task')
   })
 
   it('SET_PLACEHOLDER', () => {
