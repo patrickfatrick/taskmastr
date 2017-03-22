@@ -6,7 +6,7 @@ const userService = require('../services/user-service')
 const listService = require('../services/list-service')
 const itemService = require('../services/item-service')
 const agenda = require('../services/agenda-service')
-const errorHandler = require('../utils/error-handler').errorHandler
+const errorHandler = require('../utils/error-handler')
 
 module.exports = {
   get: async function (ctx, next) {

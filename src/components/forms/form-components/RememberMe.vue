@@ -23,6 +23,27 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/variables";
+  @import "../../../stylesheets/mixins";
+
+  #remember {
+    @include modal-small-text;
+    margin-top: 1rem;
+    @media screen and (min-width: $medium) {
+      margin-top: 0.5rem;
+    }
+    button {
+      margin-right: 1rem;
+      &:focus {
+        color: $deepBlue;
+      }
+    }
+  }
+</style>
+
 <script>
 import { mapState, mapActions } from 'vuex'
 

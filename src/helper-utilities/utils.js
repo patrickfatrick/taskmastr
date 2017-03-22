@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
-export function isProduction () {
-  return process.env.NODE_ENV === 'production'
+export function isDevelopment () {
+  return process.env.NODE_ENV === 'development'
 }
 
 export function isCurrent (thing, currentThing) {

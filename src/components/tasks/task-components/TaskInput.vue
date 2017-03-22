@@ -1,13 +1,66 @@
 <template>
-  <form id="todo-line" class="prompt-line" name="todoForm" novalidate @submit.prevent="addNewTask(newTask.trim())">
-    <input id="create-todo" class="prompt random-placeholder mousetrap" type="text" title="Task Input" :value="newTask" @change="setNewTask($event.target.value)" :class="{'invalid': !isValid && taskAttempt}" :placeholder="placeholder" ref="taskinput"></input>
+  <form 
+    id="todo-line"
+    class="prompt-line"
+    name="todoForm"
+    novalidate
+    @submit.prevent="addNewTask(newTask.trim())"
+  >
+    <input
+      id="create-todo"
+      class="prompt random-placeholder mousetrap"
+      type="text"
+      title="Task Input"
+      :value="newTask"
+      @change="setNewTask($event.target.value)"
+      :class="{'invalid': !isValid && taskAttempt}"
+      :placeholder="placeholder"
+      ref="taskinput"
+    />
     <div class="button-container">
-      <button id="task-button" class="submit" title="Create task" type="submit">
-        <i class="fa fa-arrow-down "></i>
+      <button
+        id="task-button"
+        class="submit"
+        title="Create task"
+        type="submit">
+        <i class="fa fa-arrow-down " />
       </button>
     </div>
   </form>
 </template>
+
+<style lang="scss">
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/variables";
+  @import "../../../stylesheets/mixins";
+
+  #todo-line {
+    @include prompt-line;
+    margin-bottom: 1.5rem;
+    @include span-columns(12 of 14);
+    @include shift(2);
+    @media screen and (min-width: $medium) {
+      @include span-columns(12 of 14);
+      @include shift(1 of 14);
+    }
+    #create-todo {
+      @include span-columns(9 of 12)
+      @media screen and (min-width: $medium) {
+        @include span-columns(11 of 12)
+      }
+    }
+    .button-container {
+      text-align: left;
+      @include omega();
+      @include span-columns(3 of 12);
+      @media screen and (min-width: $medium) {
+        text-align: center;
+        @include span-columns(1 of 12);
+      }
+    }
+  }
+</style>
 
 <script>
 import { hashish } from 'harsh'

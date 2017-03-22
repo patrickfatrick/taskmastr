@@ -18,6 +18,21 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/mixins";
+
+  #lists-list {
+    @include table;
+    margin-bottom: 5rem;
+    @include fill-parent();
+    .table-header {
+      display: none;
+    }
+  }
+</style>
+
 <script>
 import dragula from 'dragula'
 import { mapState, mapActions } from 'vuex'

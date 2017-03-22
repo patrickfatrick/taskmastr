@@ -48,6 +48,153 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/variables";
+  @import "../../../stylesheets/mixins";
+
+  .details-enter-active {
+    animation: bounceInDown 250ms;
+  }
+  .details-leave-active {
+    animation: bounceOutUp 250ms;
+  }
+  .task-details {
+    position: fixed;
+    background: $gray * 1.4;
+    color: $gray * 0.6;
+    padding: 0.5rem 0.7rem 3rem 0.7rem;
+    border: 1px solid $gray;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+    top: 0;
+    min-height: 100%;
+    z-index: 5;
+    overflow-y: scroll;
+    @include fill-parent();
+    @include outer-container;
+    @include center;
+    left: 0;
+    right: 0;
+    @media screen and (min-width: $medium) {
+      width: 768px;
+    }
+    @media screen and (min-height: 600px) {
+      top: 3rem;
+      min-height: 500px;
+    }
+    @media screen and (min-height: 700px) {
+      min-height: 600px;
+    }
+    .task-details-close {
+      margin-top: 1rem;
+      float: right;
+      color: $gray;
+      @media screen and (min-width: $medium) {
+        margin-top: 0;
+      }
+    }
+    .task-name-container {
+      padding: 0 2rem;
+      width: 100%;
+      margin-top: 1rem;
+      .task-name {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        border: none;
+        background: transparent;
+        border-bottom: 4px solid $slateGray;
+        transition: border-color 500ms ease-out;
+        &::selection {
+          background: $deepBlue;
+          color: $white;
+        }
+        &:focus {
+          border-color: $deepBlue !important;
+        }
+      }
+    }
+    .task-details-container {
+      padding: 1rem 2rem 0 2rem;
+      text-align: left;
+      line-height: 1.4rem;
+      @include row();
+      .task-details-panel {
+        @include fill-parent();
+        @media screen and (min-width: $medium) {
+          @include span-columns(4 of 12);
+          @include omega(4n);
+        }
+        .overdue {
+          color: $sunsetOrange;
+        }
+        .due-today {
+          color: $grassStain;
+        }
+      }
+    }
+    .task-label {
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+    }
+    .datepicker-input {
+      background: transparent;
+      color: transparent;
+      border: none;
+      box-shadow: none;
+      position: absolute;
+      top: -10000px;
+      visibility: hidden;
+    }
+    .datepicker-toggle {
+      font-size: 1.2rem;
+      color: $grassStain;
+      &.active {
+        color: $orchid;
+      }
+    }
+    .remove-due-date {
+      text-align: center;
+      display: inline-block;
+      @media screen and (min-width: $medium) {
+        display: block;
+      }
+      .remove-due-date-button {
+        font-family: $cardo;
+        font-size: 1.2rem;
+        padding: 2px 4px 2px 8px;
+        width: auto;
+        cursor: pointer;
+        text-transform: lowercase;
+        color: $sunsetOrange;
+        i {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    .task-notes {
+      width: 100%;
+      min-height: 300px;
+      height: auto;
+      outline: none;
+      resize: none;
+      background: transparent;
+      font-size: 1rem;
+      font-family: $raleway;
+      padding: 0.5rem;
+      border: 2px solid $slateGray;
+      transition: border-color 500ms ease-out;
+      &:focus {
+        border-color: $deepBlue;
+      }
+      @media screen and (min-heigh:t 700px) {
+        min-height: 375px;
+      }
+    }
+  }
+</style>
+
 <script>
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'

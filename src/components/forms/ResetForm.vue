@@ -11,6 +11,14 @@
   </form>
 </template>
 
+<style lang="scss" scoped>
+  @import "../../stylesheets/mixins";
+
+  .button {
+    @include button;
+  }
+</style>
+
 <script>
 import { mapState, mapActions } from 'vuex'
 import ResetKeyInput from './form-components/ResetKeyInput.vue'

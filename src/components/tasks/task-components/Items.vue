@@ -48,6 +48,56 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/variables";
+  @import "../../../stylesheets/mixins";
+  
+  #task-list {
+    @include table;
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 5rem;
+    // fixes for safari
+    float: none !important;
+    &:last-child {
+      margin-right: auto !important;
+    }
+    @include fill-parent();
+    @media screen and (min-width: $medium) {
+      width: 700px;
+    }
+    @media screen and (min-width: $large) {
+      width: 800px;
+    }
+  }
+
+  #clear-complete-button-container {
+    text-align: center;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    button {
+      text-transform: lowercase;
+      color: $white;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 0.3rem;
+      border-radius: 4px;
+      border: 1px solid $completeGray * 0.6;
+      &:active {
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      &.deleting {
+        background-color: $sunsetOrange * 0.8;
+      }
+      &:active.deleting {
+        background-color: $sunsetOrange * 0.6;
+      }
+    }
+  }
+</style>
+
 <script>
 import dragula from 'dragula'
 import { mapGetters, mapActions } from 'vuex'

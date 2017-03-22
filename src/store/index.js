@@ -5,15 +5,15 @@ import mutations from './mutations'
 import state from './state'
 import actions from './actions'
 import getters from './getters'
-import { isProduction } from '../helper-utilities/utils'
+import { isDevelopment } from '../helper-utilities/utils'
 
 Vue.use(Vuex)
 
 const plugins = []
-if (!isProduction()) plugins.push(createLogger())
+if (isDevelopment()) plugins.push(createLogger())
 
 export default new Vuex.Store({
-  strict: !isProduction(),
+  strict: isDevelopment(),
   plugins: plugins,
   state,
   mutations,

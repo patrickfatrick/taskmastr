@@ -4,7 +4,7 @@ const io = require('socket.io')()
 const users = require('./routes/users')
 const lists = require('./routes/lists')
 const items = require('./routes/items')
-const logSocketEvent = require('./utils/log-socket-event').logSocketEvent
+const logSocketEvent = require('./utils/log-socket-event')
 
 io.on('connection', (socket) => {
   logSocketEvent(true, 'connection', { info: socket.id })

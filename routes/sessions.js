@@ -1,6 +1,6 @@
 'use strict'
 
-const errorHandler = require('../utils/error-handler').errorHandler
+const errorHandler = require('../utils/error-handler')
 
 module.exports = {
   get: function (ctx, next) {

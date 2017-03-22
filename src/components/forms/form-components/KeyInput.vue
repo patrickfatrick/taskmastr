@@ -10,6 +10,16 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/mixins";
+
+  .error-text {
+    @include modal-small-text;
+  }
+</style>
+
 <script>
 import { mapState, mapActions } from 'vuex'
 

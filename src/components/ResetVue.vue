@@ -1,14 +1,23 @@
 <template>
   <div>
     <transition name="mask">
-      <div class="mask" v-if="!auth && init"></div>
+      <div
+        class="mask"
+        v-if="!auth && init"
+      />
     </transition>
     <transition name="modal">
-      <div id="key-modal" class="modal" v-if="!user.tasks.length && init">
+      <div
+        class="modal"
+        v-if="!user.tasks.length && init"
+      >
         <div class="modal-header">
           <h1 id="headline">Taskmastr</h1>
         </div>
-        <div id="key-ask" class="modal-body">
+        <div
+          id="key-ask"
+          class="modal-body"
+        >
           <div class="reset-greeting">
             <p>Go ahead and create your new password below</p>
           </div>
@@ -18,6 +27,18 @@
     </transition>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  @import "../stylesheets/mixins";
+
+  .modal {
+    @include modal;
+  }
+
+  .mask {
+    @include mask;
+  }
+</style>
 
 <script>
 import { mapState, mapActions } from 'vuex'

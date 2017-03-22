@@ -1,11 +1,63 @@
 <template>
-  <form id="list-line" class="prompt-line" name="listForm" novalidate v-on:submit.prevent="addNewList(newList.trim())">
-    <input id="create-list" class="prompt mousetrap" type="text" title="List Input" :value="newList" v-on:change="setNewList($event.target.value)" :class="{'invalid': !isValid && listAttempt}" placeholder="New List" ref="listinput"></input>
-    <button id="list-button" class="submit" title="Create task" type="submit">
-      <i class="fa fa-arrow-down"></i>
+  <form
+    id="list-line"
+    class="prompt-line"
+    name="listForm"
+    novalidate
+    v-on:submit.prevent="addNewList(newList.trim())"
+  >
+    <input
+      id="create-list"
+      class="prompt mousetrap"
+      type="text"
+      title="List Input"
+      :value="newList"
+      v-on:change="setNewList($event.target.value)"
+      :class="{'invalid': !isValid && listAttempt}"
+      placeholder="New List" ref="listinput"
+    />
+    <button
+      id="list-button"
+      class="submit"
+      title="Create task"
+      type="submit"
+    >
+      <i class="fa fa-arrow-down" />
     </button>
   </form>
 </template>
+
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/variables";
+  @import "../../../stylesheets/mixins";
+
+  #list-line {
+    @include prompt-line;
+    margin-bottom: 1.5rem;
+    @include span-columns(12 of 14);
+    @include shift(1 of 14)
+  }
+
+  #create-list {
+    width: 80%;
+    line-height: 2rem;
+    font-size: 1.4rem;
+    border-color: $dimGray * 1.8; 
+    &::placeholder {
+      color: $dimGray * 1.8;
+    }
+    &:focus {
+      border-color: $deepBlue;
+    }
+  }
+
+  #list-button {
+    background: $deepBlue;
+    @include button-effect($deepBlue, 3px, -3px);
+  }
+</style>
 
 <script>
 import { hashish } from 'harsh'

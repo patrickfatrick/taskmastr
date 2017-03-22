@@ -10,7 +10,8 @@ html
     link(rel="apple-touch-icon", href="../images/iphone-icon.png")
     link(rel="mask-icon", href="../images/pinned-icon.svg", color="#00B0FF")
     link(rel="icon", type="x-icon", href="../images/favicon.ico")
-    if env === 'production'
+    link(rel="stylesheet", href="/stylesheets/styles.css")
+    if env !== 'development'
       link(rel="stylesheet", href="/stylesheets/styles.css")
     script(src="https://use.fontawesome.com/28e16d26cd.js")
   body

@@ -13,6 +13,14 @@
   </form>
 </template>
 
+<style lang="scss" scoped>
+  @import "../../stylesheets/mixins";
+
+  .button {
+    @include button;
+  }
+</style>
+
 <script>
 import { mapState, mapActions } from 'vuex'
 import UsernameInput from './form-components/UsernameInput.vue'

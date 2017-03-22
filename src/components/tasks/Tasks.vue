@@ -1,11 +1,6 @@
 <template>
   <div id="content">
-    <div id="warning-banner" v-if="user.username === 'mrormrstestperson@taskmastr.co' || disconnect">
-      <div v-if="user.username === 'mrormrstestperson@taskmastr.co'">FYI: You're currently logged into the Try It account, and changes will not be saved.</div>
-      <div v-if="disconnect && (user.username !== 'mrormrstestperson@taskmastr.co')">
-        Socket connection broken. <button @click="refresh()">Refresh now</button>
-      </div>
-    </div>
+    <warning-banner></warning-banner>
     <div class="container">
       <div class="prompt-container">
         <div id="todo-prompt">What needs doing?</div>
@@ -21,33 +16,109 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../stylesheets/variables";
+  @import "../../stylesheets/mixins";
+
+  #content {
+    height: 100%;
+    transition: margin-left 200ms ease-out;
+  }
+
+  #content.menued {
+    @media screen and (min-width: $medlarge) {
+      margin-left: 250px;
+    }
+  }
+
+  .container {
+    @extend html;
+    position: initial;
+    padding-top: 10%;
+    overflow: scroll;
+    @include center;
+    @include outer-container;
+    @media screen and (min-width: $medlarge) {
+      position: relative;
+    }
+  }
+
+  .container#four-oh-four {
+    h1 {
+      padding-bottom: 0.6rem !important;
+      font-size: 2rem;
+    }
+    iframe {
+      width: 320px;
+      height: 180px;
+      @media screen and (min-width: $small) {
+        width: 384px;
+        height: 216px;
+      }
+
+      @media screen and (min-width: $medium) {
+        width: 560px;
+        height: 315px;
+      }
+    }
+  }
+
+  #todo-prompt {
+    margin-bottom: 15px;
+    margin-top: -5px;
+    font-size: 2.2rem;
+    @include center;
+    @include span-columns(14 of 14);
+    @media screen and (min-width: $medsmall) {
+      margin-bottom: 10px;
+      margin-top: 0;
+      font-size: 2.5rem;
+    }
+    @media screen and (min-width: $medium) {
+      @include span-columns(8 of 14);
+      @include shift(3 of 14);
+    }
+  }
+
+  .prompt-container {
+    @include outer-container;
+    @include fill-parent();
+    @media screen and (min-width: $medium) {
+      width: 700px;
+    }
+    @media screen and (min-width: $large) {
+      width: 800px;
+    }
+  }
+</style>
+
 <script>
 import { mapState, mapActions } from 'vuex'
 import MenuToggle from '../misc/MenuToggle.vue'
 import TaskInput from './task-components/TaskInput.vue'
 import Items from './task-components/Items.vue'
+import WarningBanner from '../misc/WarningBanner.vue'
 
 export default {
   computed: mapState({
     user: (state) => state.user,
     current: (state) => state.current,
     currentItem: (state) => state.current.currentItem,
-    invalidList: (state) => state.invalidList,
-    disconnect: (state) => state.disconnect
+    invalidList: (state) => state.invalidList
   }),
   components: {
     MenuToggle,
     TaskInput,
-    Items
+    Items,
+    WarningBanner
   },
   methods: {
     ...mapActions([
       'mountList',
       'confirmListUser'
     ]),
-    refresh () {
-      window.location.assign('/')
-    },
     routeWatcher () {
       if (this.$route.query.newuser) {
         this.confirmListUser({

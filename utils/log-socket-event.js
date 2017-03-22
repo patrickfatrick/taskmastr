@@ -1,6 +1,6 @@
 const chalk = require('chalk')
 
-exports.logSocketEvent = function (up, event, { info, err, params }) {
+module.exports = function logSocketEvent (up, event, { info, err, params }) {
   const base = chalk.magenta('[socket]')
   const eventLog = chalk.bold(event)
   const infoLog = chalk.gray(info)

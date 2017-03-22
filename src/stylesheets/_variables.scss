@@ -34,37 +34,3 @@ $medsmall: 650px;
 $medium: 768px;
 $medlarge: 1000px;
 $large: 1200px;
-
-/* ---------- Mixins ---------- */
-
-@mixin center {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-@mixin text-effect($color) {
-	text-shadow: 2px 2px 0 $color * 0.8;
-	&:hover {
-		top: 7px;
-		left: 14px;
-		text-shadow: 4px 4px 0 $color * 0.8;
-	}
-	&:active {
-		top: 0.6rem !important;
-		left: 1rem !important;
-		text-shadow: 2px 2px 0 $color * 0.8;
-	}
-}
-
-@mixin button-effect($color, $bottomHover, $bottomActive) {
-	box-shadow: 0 4px 0 $color * 0.8;
-	&:hover,
-	&:focus {
-		bottom: $bottomHover;
-		box-shadow: 0 (4px + $bottomHover) 0 $color * 0.8;
-	}
-	&:active {
-		bottom: $bottomActive;
-		box-shadow: none;
-	}
-}

@@ -8,6 +8,56 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "./stylesheets/variables";
+
+  #app-container {
+    width: 100%;
+    height: 100%;
+    color: $black;
+    transition: all 2s ease-out; 
+    background: linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight);
+    background-position: bottom;
+    background-size: auto 500%;
+    text-align: center;
+    font-family: $cardo;
+    font-size: 1rem;
+    @media screen and (min-width: $small) {
+      font-size: 1.4rem;
+    }
+    #todo-line #create-todo {
+      &:focus {
+        border-color: $sunray;
+      }
+    }
+    .table .table-row {
+      &.active {
+        background-color: $sunray;
+      }
+      &.active.complete {
+        background-color: $rust;
+      }
+    }
+    &.darkmode {
+      background-position: top;
+      color: $white;
+      #todo-line #create-todo {
+        &:focus {
+          border-color: $astroTurf;
+        }
+      }
+      .table .table-row {
+        &.active {
+          background-color: $astroTurf;
+        }
+        &.active.complete {
+          background-color: $grassStain;
+        }
+      }
+    }
+  }
+</style>
+
 <script>
 import _ from 'lodash'
 import socket from './socket'

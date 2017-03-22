@@ -51,6 +51,28 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  @import "bourbon";
+  @import "neat";
+  @import "../../../stylesheets/variables";
+
+  .table-row.current {
+    background: $deepBlue;
+  }
+  .table-row:hover:not(.current) {
+    background: inherit;
+  }
+  .initial-view {
+    @include row();
+    .table-data.task-cell {
+      @include span-columns(15 of 21);
+    }
+    .table-data.utils {
+      @include span-columns(6 of 21);
+    }
+  }
+</style>
+
 <script>
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'

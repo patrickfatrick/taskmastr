@@ -4,7 +4,7 @@ const passport = require('koa-passport')
 const agenda = require('../services/agenda-service')
 const userService = require('../services/user-service')
 const config = require('../config')
-const errorHandler = require('../utils/error-handler').errorHandler
+const errorHandler = require('../utils/error-handler')
 
 module.exports = {
   setCookieAge: async function (ctx, next) {
