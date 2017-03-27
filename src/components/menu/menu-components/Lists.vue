@@ -25,6 +25,7 @@
   @apply --table;
 
   margin-bottom: 5rem;
+  width: 100%;
 }
 </style>
 
