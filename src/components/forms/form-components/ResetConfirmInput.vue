@@ -22,8 +22,10 @@
 .prompt-line--confirm-line {
   @apply --promptLine;
 
-  lost-column: 8/12;
-  lost-offset: 2/12;
+  @media (--medium) {
+    lost-column: 8/12;
+    lost-offset: 2/12;
+  }
 }
 </style>
 

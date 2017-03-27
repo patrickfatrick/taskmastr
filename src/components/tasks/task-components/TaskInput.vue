@@ -36,8 +36,8 @@
   @apply --promptLine;
 
   margin-bottom: 1.5rem;
-  lost-column: 10/14;
-  lost-offset: 2/14;
+  lost-column: 13/14;
+  lost-offset: 1/14;
   lost-utility: clearfix;
 
   @media (--medium) {
@@ -46,7 +46,7 @@
   }
 
   & .prompt-line__prompt {
-    lost-column: 9/14;
+    lost-column: 11/14;
 
     &:not(.prompt-line__prompt--darkmode) {
       &:focus {
@@ -67,7 +67,7 @@
 
   & .prompt-line__button-container {
     text-align: left;
-    lost-column: 5/14;
+    lost-column: 3/14;
 
     @media (--medium) {
       text-align: center;

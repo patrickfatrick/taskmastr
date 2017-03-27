@@ -49,6 +49,11 @@
 
 .prompt-line--reset-key-line {
   @apply --promptLine;
+
+  @media (--medium) {
+    lost-column: 8/12;
+    lost-offset: 2/12;
+  }
 }
 </style>
 

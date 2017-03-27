@@ -31,7 +31,7 @@
     top: 0;
     position: fixed;
     background: var(--orchid);
-    z-index: 10000;
+    z-index: 4;
     left: -250px;
     visibility: hidden;
     color: var(--white);

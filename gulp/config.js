@@ -27,7 +27,6 @@ module.exports = {
     contentBase: '.',
     publicPath: '/public/',
     hot: true,
-    noInfo: true,
     stats: { colors: true }
   },
   socketIO: {

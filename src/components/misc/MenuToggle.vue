@@ -21,13 +21,13 @@
 .icon-menu {
   position: fixed;
   left: 0;
-  top: 5rem;
+  top: 1.8rem;
   width: 2.2rem;
   padding: 10px 0 12px;
   border-radius: 0 10px 10px 0;
   height: auto;
   background: var(--orchid);
-  z-index: 10000;
+  z-index: 4;
   color: var(--white);
   transition: all 200ms ease-out;
 

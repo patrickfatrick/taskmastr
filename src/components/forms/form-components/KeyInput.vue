@@ -31,18 +31,20 @@
 </template>
 
 <style lang="postcss" scoped>
-  @import "../../../stylesheets/variables";
+@import "../../../stylesheets/variables";
 
-  .error-text {
-    @apply --modalSmallText;
-  }
+.error-text {
+  @apply --modalSmallText;
+}
 
-  .prompt-line--key-line {
-    @apply --promptLine;
+.prompt-line--key-line {
+  @apply --promptLine;
 
+  @media (--medium) {
     lost-column: 8/12;
     lost-offset: 2/12;
   }
+}
 </style>
 
 <script>

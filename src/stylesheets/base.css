@@ -20,8 +20,8 @@ input[type='password'] {
   line-height: 1.8rem;
 
   @media (--medium) {
-    font-size: 2rem;
-    line-height: 2.4rem;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
   }
 }
 
@@ -128,12 +128,9 @@ a {
   border-radius: 15px;
   padding: 0.2em 0.2em 0;
   animation: bounceInDown 300ms;
+  width: 100%;
+  left: 0 !important;
   box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
-
-  @media (--small) {
-    width: 100%;
-    left: 0 !important;
-  }
 
   @media (--medium) {
     width: 400px;

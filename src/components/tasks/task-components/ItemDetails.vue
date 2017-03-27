@@ -155,7 +155,7 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
   top: 0;
   min-height: 100%;
-  z-index: 5;
+  z-index: 7;
   overflow-y: scroll;
   left: 0;
   right: 0;

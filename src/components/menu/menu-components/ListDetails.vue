@@ -173,7 +173,6 @@
   & .user-list__row__user-remove-button-container__button {
     color: var(--white);
     background-color: var(--sunsetOrange);
-    margin-left: 0.5rem;
     padding: 1px 2px 3px 1px;
     border-radius: 4px;
     width: 2rem;

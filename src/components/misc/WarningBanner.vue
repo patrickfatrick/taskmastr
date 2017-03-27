@@ -36,10 +36,7 @@
   background-color: var(--sunsetOrange);
   color: var(--white);
   z-index: 3;
-
-  @media (width < var(--medium)) {
-    bottom: 0;
-  }
+  bottom: 0;
 
   @media (--medium) {
     top: 0;
