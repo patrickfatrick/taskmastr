@@ -20,11 +20,10 @@ module.exports = merge(base, {
   module: {
     rules: [
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: ExtractTextPlugin.extract({
           use: [
-            { loader: 'css-loader', options: { sourceMap: true, minimize: true } },
-            'resolve-url-loader',
+            'css-loader?importLoaders=1&sourceMap=true&minimize=true',
             'postcss-loader'
           ]
         })
@@ -37,8 +36,7 @@ module.exports = merge(base, {
               js: 'babel-loader!standard-loader',
               scss: ExtractTextPlugin.extract({
                 use: [
-                  { loader: 'css-loader', options: { sourceMap: true, minimize: true } },
-                  'resolve-url-loader',
+                  'css-loader?importLoaders=1&sourceMap=true&minimize=true',
                   'postcss-loader'
                 ]
               })
