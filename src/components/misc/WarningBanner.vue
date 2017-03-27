@@ -36,10 +36,10 @@
   background-color: var(--sunsetOrange);
   color: var(--white);
   z-index: 3;
-  bottom: 0;
 
   @media (--medium) {
     top: 0;
+    bottom: auto;
   }
 
   & .warning-banner__refresh {
