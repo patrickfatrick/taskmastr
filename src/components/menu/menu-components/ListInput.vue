@@ -1,24 +1,21 @@
 <template>
   <form
-    id="list-line"
-    class="prompt-line"
+    class="prompt-line prompt-line--list-line"
     name="listForm"
     novalidate
     v-on:submit.prevent="addNewList(newList.trim())"
   >
     <input
-      id="create-list"
-      class="prompt mousetrap"
+      class="prompt-line__prompt mousetrap"
       type="text"
       title="List Input"
       :value="newList"
       v-on:change="setNewList($event.target.value)"
-      :class="{'invalid': !isValid && listAttempt}"
+      :class="{'prompt-line__prompt--invalid': !isValid && listAttempt}"
       placeholder="New List" ref="listinput"
     />
     <button
-      id="list-button"
-      class="submit"
+      class="prompt-line__submit"
       title="Create task"
       type="submit"
     >
@@ -27,36 +24,46 @@
   </form>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/variables";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  #list-line {
-    @include prompt-line;
-    margin-bottom: 1.5rem;
-    @include span-columns(12 of 14);
-    @include shift(1 of 14)
-  }
+.prompt-line--list-line {
+  @apply --promptLine;
 
-  #create-list {
+  margin-bottom: 1.5rem;
+  lost-column: 12/14;
+  lost-offset: 1/14;
+  lost-utility: clearfix;
+
+  & .prompt-line__prompt {
     width: 80%;
     line-height: 2rem;
     font-size: 1.4rem;
-    border-color: $dimGray * 1.8; 
+    border-color: color(var(--dimGray) lightness(80%));
+
     &::placeholder {
-      color: $dimGray * 1.8;
+      color: color(var(--dimGray) lightness(80%));
     }
+
     &:focus {
-      border-color: $deepBlue;
+      border-color: var(--deepBlue);
     }
   }
 
-  #list-button {
-    background: $deepBlue;
-    @include button-effect($deepBlue, 3px, -3px);
+  & .prompt-line__submit {
+    @apply --buttonEffectDeepBlue;
+
+    font-size: 1.8rem;
+    width: 2.4rem;
+    position: relative;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: var(--white);
+    background: var(--deepBlue);
+    border-radius: 50%;
+    padding: 1px 3px 3px 4px;
   }
+}
 </style>
 
 <script>

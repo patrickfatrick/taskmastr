@@ -1,14 +1,14 @@
 <template>
   <div 
-    id="lists-list" 
-    class="table" 
+    class="table table--lists-list" 
     v-show="lists">
     <div 
-      class="table-body"
+      class="table__table-body"
       ref="dragula">
       <div 
         v-for="(list, index) in lists" 
-        :key="list._id" class="table-row">
+        :key="list._id"
+      >
         <list 
           :index="index"
           :list="list">
@@ -18,19 +18,14 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  #lists-list {
-    @include table;
-    margin-bottom: 5rem;
-    @include fill-parent();
-    .table-header {
-      display: none;
-    }
-  }
+.table--lists-list {
+  @apply --table;
+
+  margin-bottom: 5rem;
+}
 </style>
 
 <script>

@@ -4,10 +4,6 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    './src/main.js'
-  ],
   output: {
     path: path.join(__dirname, '/public/'),
     publicPath: 'http://localhost:8888/public/',

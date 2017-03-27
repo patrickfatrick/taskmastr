@@ -29,7 +29,7 @@ describe('DarkmodeVue', function () {
     const vm = mountVm(Darkmode)
     sinon.stub(vm, 'setDarkmode')
 
-    vm.$el.querySelector('#dark-mode').click()
+    vm.$el.querySelector('.dark-mode').click()
 
     assert.isTrue(vm.setDarkmode.calledWith(true))
     vm.setDarkmode.restore()

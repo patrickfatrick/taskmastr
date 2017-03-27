@@ -21,11 +21,11 @@ describe('ResetConfirmInputVue', function () {
 
   it('should render with initial state', () => {
     const vm = mountVm(ResetConfirmInput)
-    assert.isFalse(vm.$el.querySelector('#reset-confirm').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 
   it('should respond to changes in the state', () => {
     const vm = mountVm(ResetConfirmInput, { resetAttempt: true }, { match: false })
-    assert.isTrue(vm.$el.querySelector('#reset-confirm').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 })

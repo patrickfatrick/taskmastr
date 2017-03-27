@@ -1,4 +1,5 @@
 /* global it describe sinon */
+
 import { assert } from 'chai'
 import Mousetrap from 'mousetrap'
 import MenuToggle from '../../../src/components/misc/MenuToggle.vue'

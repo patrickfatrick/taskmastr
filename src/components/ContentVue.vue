@@ -1,19 +1,27 @@
 <template>
-  <div
-    id="content-vue"
-    :class="$style.contentVue"
-  >
+  <div class="content">
     <menu-widget></menu-widget>
+    <warning-banner></warning-banner>
     <transition>
       <router-view></router-view>
     </transition>
   </div>
 </template>
 
-<style lang="scss" module>
-  .contentVue {
-    width: 100%;
+<style lang="postcss" scoped>
+  @import "../stylesheets/variables";
+
+  .content {
+    @apply --fill;
+
     height: 100%;
+    transition: margin-left 200ms ease-out;
+
+    &.menued {
+      @media (--medLarge) {
+        margin-left: 250px;
+      }
+    }
   }
 </style>
 
@@ -21,6 +29,7 @@
 import { mapState } from 'vuex'
 import Tasks from './tasks/Tasks.vue'
 import MenuWidget from './menu/Menu.vue'
+import WarningBanner from './misc/WarningBanner.vue'
 
 export default {
   computed: mapState({
@@ -28,7 +37,8 @@ export default {
   }),
   components: {
     MenuWidget,
-    Tasks
+    Tasks,
+    WarningBanner
   }
 }
 </script>

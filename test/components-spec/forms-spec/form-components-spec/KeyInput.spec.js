@@ -27,9 +27,9 @@ describe('KeyInputVue', function () {
   it('should render with initial state', () => {
     const vm = mountVm(KeyInput)
 
-    assert.isFalse(vm.$el.querySelector('#key').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
   })
 
   it('should respond to changes in the state (loginAttempt, invalidKey)', () => {
@@ -38,16 +38,16 @@ describe('KeyInputVue', function () {
       invalidKey: 'Invalid password'
     }, { required: true })
 
-    assert.isTrue(vm.$el.querySelector('#key').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
   })
 
   it('should respond to changes in the state (loginAttempt, require)', () => {
     const vm = mountVm(KeyInput, { loginAttempt: true }, { required: false })
 
-    assert.isTrue(vm.$el.querySelector('#key').classList.contains('invalid'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
   })
 })

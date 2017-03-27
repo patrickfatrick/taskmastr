@@ -38,15 +38,15 @@ describe('ForgotVue', function () {
     const vm = mountVm(ForgotVue, { forgot: true, init: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
-    assert.isNotNull(vm.$el.querySelector('#key-modal'))
-    assert.isNotNull(vm.$el.querySelector('#forgot-form'))
+    assert.isNotNull(vm.$el.querySelector('.modal'))
+    assert.isNotNull(vm.$el.querySelector('.forgot-form'))
   })
 
   it('should respond to changes in the state (init)', () => {
     const vm = mountVm(ForgotVue, { forgot: true, init: false })
 
     assert.isNull(vm.$el.querySelector('.mask'))
-    assert.isNull(vm.$el.querySelector('#key-modal'))
+    assert.isNull(vm.$el.querySelector('.modal'))
   })
 
   it('should respond to changes in the state (auth and user.tasks)', () => {
@@ -64,7 +64,7 @@ describe('ForgotVue', function () {
     })
 
     assert.isNull(vm.$el.querySelector('.mask'))
-    assert.isNull(vm.$el.querySelector('#key-modal'))
+    assert.isNull(vm.$el.querySelector('.modal'))
   })
 
   it('should call setForgot if !forgot', () => {

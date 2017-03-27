@@ -1,25 +1,52 @@
 <template>
-  <form id="create-form" name="createForm" action="/users/create" novalidate @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)">
-    <username-input :validate="validate.usernameEmail" :required="validate.usernameRequired"></username-input>
-    <key-input :required="validate.passwordRequired"></key-input>
-    <confirm-input :match="validate.confirmMatch"></confirm-input>
-    <remember-me></remember-me>
-    <forgot-password></forgot-password>
-    <div class="button-container">
-      <button id="confirm-button" class="submit button" type="submit" title="Submit" @click="setConfirmAttempt(true)">
+  <form
+    class="create-form"
+    name="createForm"
+    action="/users/create"
+    novalidate
+    @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)"
+  >
+    <username-input
+      :validate="validate.usernameEmail"
+      :required="validate.usernameRequired"
+    />
+    <key-input :required="validate.passwordRequired" />
+    <confirm-input :match="validate.confirmMatch" />
+    <remember-me />
+    <forgot-password />
+    <div class="create-form__button-container">
+      <button
+        class="create-form__button-container__submit submit button"
+        type="submit"
+        title="Submit"
+        @click="setConfirmAttempt(true)"
+      >
         Go
       </button>
-      <try-it></try-it>
+      <try-it />
     </div>
   </form>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../stylesheets/variables";
 
-  .button {
-    @include button;
+.modal__form__button-container {
+  lost-column: 12/12;
+  position: relative;
+}
+
+.create-form__button-container__submit {
+  @apply --buttonGo;
+
+  padding: 3px 3px 4px 5px;
+  margin-top: 2rem;
+  width: 60px;
+
+  @media (--medium) {
+    width: 100px;
   }
+}
 </style>
 
 <script>

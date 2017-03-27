@@ -1,5 +1,4 @@
 var dest = './public'
-var src = './src'
 
 module.exports = {
   nodemon: {
@@ -34,9 +33,5 @@ module.exports = {
   socketIO: {
     src: './node_modules/socket.io-client/**/*',
     dest: dest + '/javascripts/socket.io-client'
-  },
-  animate: {
-    src: 'node_modules/animatewithsass/**/*',
-    dest: src + '/stylesheets/animatewithsass'
   }
 }

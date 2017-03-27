@@ -73,13 +73,13 @@ describe('LoginForm.vue', function () {
   it('should render with initial state and component tree', () => {
     const vm = mountVm(LoginForm)
 
-    assert.strictEqual(vm.$el.getAttribute('id'), 'user-form')
-    assert.isNotNull(vm.$el.querySelector('#user-line'))
-    assert.isNotNull(vm.$el.querySelector('#key-line'))
-    assert.isNotNull(vm.$el.querySelector('#remember-me'))
-    assert.isNotNull(vm.$el.querySelector('#forgot-password'))
-    assert.isNotNull(vm.$el.querySelector('#key-button'))
-    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
+    assert.isTrue(vm.$el.classList.contains('login-form'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--user-line'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--key-line'))
+    assert.isNotNull(vm.$el.querySelector('.remember-me'))
+    assert.isNotNull(vm.$el.querySelector('.forgot-password'))
+    assert.isNotNull(vm.$el.querySelector('.login-form__button-container__submit'))
+    assert.isNotNull(vm.$el.querySelector('.try-it__button'))
   })
 
   it('should log in to app if isValid', () => {
@@ -201,7 +201,7 @@ describe('LoginForm.vue', function () {
     const vm = mountVm(LoginForm)
     sinon.stub(vm, 'setLoginAttempt')
 
-    vm.$el.querySelector('#key-button').click()
+    vm.$el.querySelector('.login-form__button-container__submit').click()
 
     assert.isTrue(vm.setLoginAttempt.calledWith(true))
     vm.setLoginAttempt.restore()

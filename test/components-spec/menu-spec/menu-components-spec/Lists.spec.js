@@ -87,12 +87,12 @@ describe('ListsVue', function () {
     lists = []
     const vm = mountVm(Lists, { user: { tasks: lists } })
 
-    assert.lengthOf(vm.$el.querySelector('.table-body').children, 0)
+    assert.lengthOf(vm.$el.querySelector('.table__table-body').children, 0)
   })
 
   it('should render rows with lists', () => {
     const vm = mountVm(Lists, { user: { tasks: lists } })
 
-    assert.lengthOf(vm.$el.querySelector('.table-body').children, 2)
+    assert.lengthOf(vm.$el.querySelector('.table__table-body').children, 2)
   })
 })

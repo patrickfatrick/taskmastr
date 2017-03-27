@@ -1,22 +1,47 @@
 <template>
   <div>
     <div class="error-text">
-      <span :class="{'hidden': required || !loginAttempt}">Password required</span>
-      <span :class="{'hidden': !invalidKey || !loginAttempt}">{{invalidKey}}</span>
+      <span
+        class="error-text__message"
+        v-show="loginAttempt && !required"
+      >
+        Password required
+      </span>
+      <span
+        class="error-text__message"
+        v-show="loginAttempt && invalidKey"
+      >
+        {{invalidKey}}
+      </span>
     </div>
-    <div id="key-line" class="prompt-line">
-      <input id="key" class="prompt" type="password" name="password" placeholder="Password" :value="user.key" @input="setKey($event.target.value)" :class="{'invalid': loginAttempt && (!required || invalidKey)}"></input>
+    <div
+      class="prompt-line--key-line"
+    >
+      <input
+        class="prompt-line__prompt"
+        type="password"
+        name="password"
+        placeholder="Password"
+        :value="user.key"
+        @input="setKey($event.target.value)"
+        :class="{'prompt-line__prompt--invalid': loginAttempt && (!required || invalidKey)}"
+      />
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+  @import "../../../stylesheets/variables";
 
   .error-text {
-    @include modal-small-text;
+    @apply --modalSmallText;
+  }
+
+  .prompt-line--key-line {
+    @apply --promptLine;
+
+    lost-column: 8/12;
+    lost-offset: 2/12;
   }
 </style>
 

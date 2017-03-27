@@ -1,8 +1,8 @@
 <template>
-  <span id="try-it">
+  <span class="try-it">
     Or&nbsp;
     <button 
-      id="try-it-button"
+      class="try-it__button"
       title="Try it"
       type="button"
       @click="loginTestUser(testUser, testKey, false)"
@@ -12,40 +12,44 @@
   </span>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../../stylesheets/variables";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  #try-it {
-    font-family: $raleway;
-    font-size: 0.8rem;
-    display: block;
-    text-align: center;
-    margin-top: 0.5rem;
-    @media screen and (min-width: $medlarge) {
-      display: inline-block;
-      position: absolute;
-      bottom: 2px;
-      margin-left: 1rem;
-      margin-top: 0;
-    }
+.try-it {
+  font-family: var(--raleway);
+  font-size: 0.8rem;
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+
+  @media (--medLarge) {
+    display: inline-block;
+    position: absolute;
+    bottom: 2px;
+    margin-left: 1rem;
+    margin-top: 0;
   }
-  #try-it-button {
+
+  & .try-it__button {
     text-transform: lowercase;
     font-size: 1rem;
     padding: 0.5rem;
     border-radius: 4px;
     transition: all 100ms ease-out;
+
     &:hover,
     &:focus {
-      color: $white;
-      background-color: $deepBlue;
+      color: var(--white);
+      background-color: var(--deepBlue);
     }
+
     &:active {
-      color: $white;
-      background-color: $deepBlue * 0.8;
+      color: var(--white);
+      background-color: color(var(--deepBlue) shade(20%));
       transition: unset;
     }
   }
+}
 </style>
 
 <script>

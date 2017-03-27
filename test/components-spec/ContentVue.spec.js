@@ -11,7 +11,7 @@ describe('ContentVue', function () {
 
   it('should render with initial state and component tree', () => {
     const vm = mountVm(ContentVue)
-    assert.strictEqual(vm.$el.getAttribute('id'), 'content-vue')
+    assert.isTrue(vm.$el.classList.contains('content'))
     assert.isNotNull(vm.$el.querySelector('#menu'))
   })
 })

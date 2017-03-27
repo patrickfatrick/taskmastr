@@ -46,14 +46,14 @@ describe('ListInputVue', function () {
 
   it('should render with initial state', () => {
     const vm = mountVm(ListInput)
-    assert.isFalse(vm.$el.querySelector('#create-list').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 
   it('should respond to changes in the state', () => {
     const vm = mountVm(ListInput, { listAttempt: true })
     vm.isValid = false
 
-    assert.isTrue(vm.$el.querySelector('#create-list').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 
   it('should call addList on form submit', () => {
@@ -61,7 +61,7 @@ describe('ListInputVue', function () {
     sinon.stub(vm, 'addList')
     vm.isValid = true
 
-    vm.$el.querySelector('#list-button').click()
+    vm.$el.querySelector('.prompt-line__submit').click()
     assert.isTrue(vm.addList.calledOnce)
 
     vm.addList.restore()
@@ -72,7 +72,7 @@ describe('ListInputVue', function () {
     sinon.stub(vm, 'addList')
     vm.isValid = false
 
-    vm.$el.querySelector('#list-button').click()
+    vm.$el.querySelector('.prompt-line__submit').click()
     assert.isFalse(vm.addList.calledOnce)
 
     vm.addList.restore()

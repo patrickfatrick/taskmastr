@@ -70,12 +70,12 @@ describe('ListDetailsVue', function () {
 
   it('should render with initial state', () => {
     const vm = mountVm(ListDetails, {}, { list, index })
-    assert.isFalse(vm.$el.classList.contains('toggled'))
+    assert.isFalse(vm.$el.classList.contains('list-details--toggled'))
   })
 
   it('should respond to changes in the state (listDetailsToggled)', () => {
     const vm = mountVm(ListDetails, { listDetailsToggled: 'listid' }, { list, index })
-    assert.isTrue(vm.$el.classList.contains('toggled'))
+    assert.isTrue(vm.$el.classList.contains('list-details--toggled'))
   })
 
   it('should respond to changes in the state (username === owner)', () => {
@@ -86,10 +86,10 @@ describe('ListDetailsVue', function () {
 
     const vm = mountVm(ListDetails, { user: { username: 'username' } }, { list, index })
 
-    assert.isFalse(vm.$el.classList.contains('toggled'))
-    assert.isAbove(vm.$el.querySelector('.list-owner').textContent.indexOf('You'), -1)
-    assert.isNotNull(vm.$el.querySelector('.user-remove-button'))
-    assert.isNotNull(vm.$el.querySelector('.new-user'))
+    assert.isFalse(vm.$el.classList.contains('list-details--toggled'))
+    assert.isAbove(vm.$el.querySelector('.user-list__owner').textContent.indexOf('You'), -1)
+    assert.isNotNull(vm.$el.querySelector('.user-list__row__user-remove-button-container__button'))
+    assert.isNotNull(vm.$el.querySelector('.user-list__row__new-user'))
   })
 
   it('should respond to changes in the state (username === user)', () => {
@@ -100,12 +100,12 @@ describe('ListDetailsVue', function () {
 
     const vm = mountVm(ListDetails, { user: { username: 'username' } }, { list, index })
 
-    assert.isFalse(vm.$el.classList.contains('toggled'))
-    assert.notInclude(vm.$el.querySelector('.list-owner').textContent, 'You')
-    assert.include(vm.$el.querySelector('.user-name').textContent, 'You')
-    assert.isFalse(vm.$el.querySelector('.user-name').classList.contains('pending'))
-    assert.isNotNull(vm.$el.querySelector('.user-remove-button'))
-    assert.isNull(vm.$el.querySelector('.new-user'))
+    assert.isFalse(vm.$el.classList.contains('list-details--toggled'))
+    assert.notInclude(vm.$el.querySelector('.user-list__owner').textContent, 'You')
+    assert.include(vm.$el.querySelector('.user-list__row__user-name').textContent, 'You')
+    assert.isFalse(vm.$el.querySelector('.user-list__row__user-name').classList.contains('pending'))
+    assert.isNotNull(vm.$el.querySelector('.user-list__row__user-remove-button-container__button'))
+    assert.isNull(vm.$el.querySelector('.user-list__row__new-user'))
   })
 
   it('should respond to changes in the state (status === pending)', () => {
@@ -116,12 +116,12 @@ describe('ListDetailsVue', function () {
 
     const vm = mountVm(ListDetails, { user: { username: 'notusername' } }, { list, index })
 
-    assert.isFalse(vm.$el.classList.contains('toggled'))
-    assert.notInclude(vm.$el.querySelector('.list-owner').textContent, 'You')
-    assert.include(vm.$el.querySelector('.user-name').textContent, 'username')
-    assert.isTrue(vm.$el.querySelector('.user-name').classList.contains('pending'))
-    assert.isNull(vm.$el.querySelector('.user-remove-button'))
-    assert.isNull(vm.$el.querySelector('.new-user'))
+    assert.isFalse(vm.$el.classList.contains('list-details--toggled'))
+    assert.notInclude(vm.$el.querySelector('.user-list__owner').textContent, 'You')
+    assert.include(vm.$el.querySelector('.user-list__row__user-name').textContent, 'username')
+    assert.isTrue(vm.$el.querySelector('.user-list__row__user-name').classList.contains('user-list__row__user-name--pending'))
+    assert.isNull(vm.$el.querySelector('.user-list__row__user-remove-button-container__button'))
+    assert.isNull(vm.$el.querySelector('.user-list__row__new-user'))
   })
 
   it('should reformat date on reformatDate', () => {
@@ -149,7 +149,7 @@ describe('ListDetailsVue', function () {
     sinon.stub(vm, 'addNewListUser')
 
     vm.changeNewUser('notusername@domain.com')
-    vm.$el.querySelector('.new-user-button').click()
+    vm.$el.querySelector('.user-list__row__new-user__button-container__button').click()
     assert.isTrue(vm.addNewListUser.calledWith(0))
 
     vm.addNewListUser.restore()
@@ -164,7 +164,7 @@ describe('ListDetailsVue', function () {
     const vm = mountVm(ListDetails, { user: { username: 'username' } }, { list, index })
     sinon.stub(vm, 'removeListUser')
 
-    vm.$el.querySelector('.user-remove-button').click()
+    vm.$el.querySelector('.user-list__row__user-remove-button-container__button').click()
     assert.isTrue(vm.removeListUser.calledWith({ index: 0, user: { username: 'notusername@domain.com', status: 'active' } }))
 
     vm.removeListUser.restore()

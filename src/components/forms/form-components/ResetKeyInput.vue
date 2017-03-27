@@ -1,25 +1,55 @@
 <template>
   <div>
     <div class="error-text">
-      <span :class="{'hidden': !(resetAttempt && !required)}">Password required</span>
-      <span :class="{'hidden': !(resetAttempt && !match && required)}">Passwords don't match</span>
-      <span :class="{'hidden': !(resetAttempt && resetFail)}">{{resetFail}}</span>
-      <span :class="{'hidden': !(!token)}">This doesn't appear to be a valid reset link. Please try again.</span>
+      <span
+        class="error-text__message"
+        v-show="resetAttempt && !required"
+      >
+        Password required
+      </span>
+      <span
+        class="error-text__message"
+        v-show="resetAttempt && required && !match"
+      >
+        Passwords don't match
+      </span>
+      <span
+        class="error-text__message"
+        v-show="resetAttempt && resetFail"
+      >
+        {{resetFail}}
+      </span>
+      <span
+        class="error-text__message"
+        v-show="!token"
+      >
+        This doesn't appear to be a valid reset link. Please try again.
+      </span>
     </div>
-    <div id="reset-key-line" class="prompt-line">
-      <input id="reset-key" class="prompt" type="password" name="resetKey" placeholder="Password" :value="user.resetKey" @input="setResetKey($event.target.value)" :class="{'invalid': resetAttempt && (!required || resetFail)}"></input>
+    <div class="prompt-line--reset-key-line">
+      <input
+        class="prompt-line__prompt"
+        type="password"
+        name="resetKey"
+        placeholder="Password"
+        :value="user.resetKey"
+        @input="setResetKey($event.target.value)"
+        :class="{'prompt-line__prompt--invalid': resetAttempt && (!required || resetFail)}"
+      />
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  .error-text {
-    @include modal-small-text;
-  }
+.error-text {
+  @apply --modalSmallText;
+}
+
+.prompt-line--reset-key-line {
+  @apply --promptLine;
+}
 </style>
 
 <script>

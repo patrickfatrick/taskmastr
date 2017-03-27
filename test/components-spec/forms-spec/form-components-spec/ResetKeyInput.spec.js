@@ -22,11 +22,11 @@ describe('ResetKeyInput.vue', function () {
   it('should render with initial state', () => {
     const vm = mountVm(ResetKeyInput, {}, { token: 'token' })
 
-    assert.isFalse(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
   })
 
   it('should respond to changes in the state (resetAttempt, resetFail)', () => {
@@ -39,11 +39,11 @@ describe('ResetKeyInput.vue', function () {
       token: 'token'
     })
 
-    assert.isTrue(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
   })
 
   it('should respond to changes in the state (resetAttempt, !require)', () => {
@@ -53,11 +53,11 @@ describe('ResetKeyInput.vue', function () {
       token: 'token'
     })
 
-    assert.isTrue(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
   })
 
   it('should respond to changes in the state (resetAttempt, !match)', () => {
@@ -67,11 +67,11 @@ describe('ResetKeyInput.vue', function () {
       token: 'token'
     })
 
-    assert.isFalse(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
   })
 
   it('should respond to changes in the state (resetAttempt, token)', () => {
@@ -81,10 +81,10 @@ describe('ResetKeyInput.vue', function () {
       token: false
     })
 
-    assert.isFalse(vm.$el.querySelector('#reset-key').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
   })
 })

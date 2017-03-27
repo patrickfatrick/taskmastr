@@ -1,7 +1,7 @@
 <template>
   <div
-    id="icon-menu"
-    :class="{'toggled': menuToggled}"
+    class="icon-menu"
+    :class="{'icon-menu--toggled': menuToggled}"
   >
     <button 
       title="Toggle menu"
@@ -15,37 +15,40 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../stylesheets/variables";
+<style lang="postcss" scoped>
+@import "../../stylesheets/variables";
 
-  #icon-menu {
-    position: fixed;
-    left: 0;
-    top: 5rem;
-    width: 2.2rem;
-    padding: 10px 0 12px 0;
-    border-radius: 0 10px 10px 0;
-    height: auto;
-    background: $orchid;
-    z-index: 10000;
-    color: $white;
-    transition: all 200ms ease-out;
-    @media screen and (min-width: $medium) {
-      padding: 20px 0 22px 0;
-      width: 3rem;
-      border-radius: 0 20px 20px 0;
-    }
-    @media screen and (min-width: $medlarge) {
-      top: 6.2rem;
-    }
+.icon-menu {
+  position: fixed;
+  left: 0;
+  top: 5rem;
+  width: 2.2rem;
+  padding: 10px 0 12px;
+  border-radius: 0 10px 10px 0;
+  height: auto;
+  background: var(--orchid);
+  z-index: 10000;
+  color: var(--white);
+  transition: all 200ms ease-out;
+
+  @media (--medium) {
+    padding: 20px 0 22px;
+    width: 3rem;
+    border-radius: 0 20px 20px 0;
   }
 
-  #icon-menu.toggled {
+  @media (--medLarge) {
+    top: 6.2rem;
+  }
+
+  &.icon-menu--toggled {
     margin-left: 250px;
-    @media screen and (min-width: $medlarge) {
+
+    @media (--medLarge) {
       left: 0;
     }
   }
+}
 </style>
 
 <script>

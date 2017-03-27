@@ -21,11 +21,11 @@ describe('ConfirmInputVue', function () {
 
   it('should render with initial state', () => {
     const vm = mountVm(ConfirmInput)
-    assert.isFalse(vm.$el.querySelector('#confirm').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 
   it('should respond to changes in the state', () => {
     const vm = mountVm(ConfirmInput, { confirmAttempt: true }, { match: false })
-    assert.isTrue(vm.$el.querySelector('#confirm').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 })

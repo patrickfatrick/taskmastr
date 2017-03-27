@@ -64,14 +64,14 @@ describe('TaskInputVue', function () {
   it('should render with initial state', () => {
     const vm = mountVm(TaskInput)
 
-    assert.isFalse(vm.$el.querySelector('#create-todo').classList.contains('invalid'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 
   it('should respond to changes in the state', () => {
     const vm = mountVm(TaskInput, { taskAttempt: true })
     vm.isValid = false
 
-    assert.isTrue(vm.$el.querySelector('#create-todo').classList.contains('invalid'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
   })
 
   it('should call addTask and setPlaceholder and setCurrentTask on form submit', () => {
@@ -82,7 +82,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.isTrue(vm.addTask.calledOnce)
     assert.isTrue(vm.setPlaceholder.calledOnce)
     assert.isTrue(vm.setCurrentTask.calledOnce)
@@ -102,7 +102,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.isTrue(vm.addTask.calledOnce)
     assert.isTrue(vm.setPlaceholder.calledOnce)
     assert.isFalse(vm.setCurrentTask.calledOnce)
@@ -122,7 +122,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.strictEqual(vm.addTask.args[0][0].item, 'New task')
     assert.strictEqual(vm.addTask.args[0][0].dueDate, '2016-01-01T13:00:00.000Z')
 
@@ -140,7 +140,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.strictEqual(vm.addTask.args[0][0].item, 'New task')
     assert.strictEqual(vm.addTask.args[0][0].dueDate, '2016-01-01T13:00:00.000Z')
 
@@ -158,7 +158,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.strictEqual(vm.addTask.args[0][0].item, 'New task')
     assert.strictEqual(vm.addTask.args[0][0].dueDate, '2016-01-01T13:00:00.000Z')
 
@@ -178,7 +178,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.strictEqual(vm.addTask.args[0][0].item, 'New task')
     assert.strictEqual(vm.addTask.args[0][0].dueDate, '2016-01-04T13:00:00.000Z')
 
@@ -197,7 +197,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setNewTask')
     clock.tick(86400000)
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.strictEqual(vm.addTask.args[0][0].item, 'New task')
     assert.strictEqual(vm.addTask.args[0][0].dueDate, '2016-02-01T13:00:00.000Z')
 
@@ -216,7 +216,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setNewTask')
     clock.tick(86400000)
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.strictEqual(vm.addTask.args[0][0].item, 'New task')
     assert.strictEqual(vm.addTask.args[0][0].dueDate, '2017-01-01T13:00:00.000Z')
 
@@ -234,7 +234,7 @@ describe('TaskInputVue', function () {
     sinon.stub(vm, 'setCurrentTask')
     sinon.stub(vm, 'setNewTask')
 
-    vm.$el.querySelector('#task-button').dispatchEvent(click())
+    vm.$el.querySelector('.prompt-line__submit').dispatchEvent(click())
     assert.isFalse(vm.addTask.calledOnce)
 
     vm.addTask.restore()

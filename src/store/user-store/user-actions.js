@@ -105,10 +105,7 @@ export function setDarkmode ({ commit, state }, bool) {
 export function getUserSession ({ commit }) {
   return getSession((err, response) => {
     if (err) return commit('SET_INIT', true)
-    /**
-     * Failsafes for IDs, set delete if it doesn't exist.
-     */
-    let tasks = (response.tasks) ? response.tasks : response.todos
+    let tasks = response.tasks
     commit('SET_USERNAME', response.username)
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)

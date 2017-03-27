@@ -1,24 +1,52 @@
 <template>
   <div>
     <div class="error-text">
-      <span v-show="loginAttempt && !user.confirm && !confirmAttempt">No user found. Please confirm your password.</span>
-      <span v-show="confirmAttempt && !user.confirm">Password confirmation required.</span>
-      <span v-show="!match && loginAttempt && user.confirm">Passwords don't match.</span>
+      <span
+        class="error-text__message"
+        v-show="loginAttempt && !user.confirm && !confirmAttempt"
+      >
+        No user found. Please confirm your password.
+      </span>
+      <span
+        class="error-text__message"
+        v-show="confirmAttempt && !user.confirm"
+      >
+        Password confirmation required.
+      </span>
+      <span
+        class="error-text__message"
+        v-show="!match && loginAttempt && user.confirm"
+      >
+        Passwords don't match.
+      </span>
     </div>
-    <div id="confirm-line" class="prompt-line">
-      <input id="confirm" class="prompt" type="password" name="password" placeholder="Password" :value="user.confirm" @input="setConfirm($event.target.value)" :class="{'invalid': confirmAttempt && !match}"></input>
+    <div class="prompt-line--confirm-line">
+      <input
+        class="prompt-line__prompt"
+        :class="{'prompt-line__prompt--invalid': confirmAttempt && !match}"
+        type="password"
+        name="password"
+        placeholder="Password"
+        :value="user.confirm"
+        @input="setConfirm($event.target.value)"
+      />
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  .error-text {
-    @include modal-small-text;
-  }
+.error-text {
+  @apply --modalSmallText;
+}
+
+.prompt-line--confirm-line {
+  @apply --promptLine;
+
+  lost-column: 8/12;
+  lost-offset: 2/12;
+}
 </style>
 
 <script>

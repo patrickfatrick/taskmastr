@@ -1,11 +1,25 @@
 <template>
-  <form id="user-form" name="userForm" action="/users/login" novalidate @submit.prevent="login(user.username.trim(), user.key, rememberMe)">
-    <username-input :validate="validate.usernameEmail" :required="validate.usernameRequired"></username-input>
-    <key-input :required="validate.passwordRequired"></key-input>
-    <remember-me></remember-me>
-    <forgot-password></forgot-password>
-    <div class="button-container">
-      <button id="key-button" class="submit button" type="submit" title="Submit" @click="setLoginAttempt(true)">
+  <form
+    class="login-form"
+    name="loginForm"
+    action="/users/login"
+    novalidate
+    @submit.prevent="login(user.username.trim(), user.key, rememberMe)"
+  >
+    <username-input
+      :validate="validate.usernameEmail"
+      :required="validate.usernameRequired"
+    />
+    <key-input :required="validate.passwordRequired" />
+    <remember-me />
+    <forgot-password />
+    <div class="login-form__button-container">
+      <button
+        class="login-form__button-container__submit submit button"
+        type="submit"
+        title="Submit"
+        @click="setLoginAttempt(true)"
+      >
         Go
       </button>
       <try-it></try-it>
@@ -13,12 +27,25 @@
   </form>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../stylesheets/variables";
 
-  .button {
-    @include button;
+.login-form__button-container {
+  lost-column: 12/12;
+  position: relative;
+}
+
+.login-form__button-container__submit {
+  @apply --buttonGo;
+
+  padding: 3px 3px 4px 5px;
+  margin-top: 2rem;
+  width: 60px;
+
+  @media (--medium) {
+    width: 100px;
   }
+}
 </style>
 
 <script>

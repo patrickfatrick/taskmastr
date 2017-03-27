@@ -1,46 +1,126 @@
 <template>
   <div>
     <transition name="mask">
-      <div class="mask" v-if="detailsToggled === index" @click="toggleDetails(index)"></div>
+      <div class="mask"
+        v-if="detailsToggled === index"
+        @click="toggleDetails(index)"
+      />
     </transition>
     <transition name="details">
-      <div class="task-details" v-if="detailsToggled === index" :class="{'toggled': detailsToggled === index}">
-        <button class="task-details-close" @click.prevent="toggleDetails(index)">
-          <i class="fa fa-times"></i>
+      <div
+        class="task-details"
+        v-if="detailsToggled === index"
+        :class="{'toggled': detailsToggled === index}"
+      >
+        <button
+          class="task-details__close"
+          @click.prevent="toggleDetails(index)"
+        >
+          <i class="fa fa-times" />
         </button>
-        <div class="task-name-container">
-          <input class="task-name mousetrap" type="text" :value="task.item" @change="rename($event, index)"></input>
+        <div class="task-details__task-name-container">
+          <input
+            class="task-details__task-name-container__task-name mousetrap"
+            type="text"
+            :value="task.item"
+            @change="rename($event, index)"
+          />
         </div>
-        <div class="task-details-container">
-          <div class="task-create task-details-panel">
-            <span class="task-label">Created on</span>{{reformatDate(task.dateCreated)}}<br>
-            <span class="task-label">by {{(task.createdBy === username) ? 'You' : task.createdBy}}</span>
+        <div class="task-details__task-info-container task-details__task-info-container--dates">
+          <div class="task-details-panel task-details__task-info-container__task-create">
+            <span class="task-details-panel__task-label">
+              Created on
+            </span>
+            {{reformatDate(task.dateCreated)}}
+            <br>
+            <span class="task-details-panel__task-label">
+              by {{(task.createdBy === username) ? 'You' : task.createdBy}}
+            </span>
           </div>
-          <div class="task-complete task-details-panel" :class="{'hidden': !task.dateCompleted}">
-            <span class="task-label">Completed on</span>{{reformatDate(task.dateCompleted)}}<br>
-            <span class="task-label">by {{(task.completedBy === username) ? 'You' : task.completedBy}}</span>
+          <div
+            class="task-details-panel task-details__task-info-container__task-complete"
+            v-show="task.dateCompleted"
+          >
+            <span class="task-details-panel__task-label">
+              Completed on
+            </span>
+            {{reformatDate(task.dateCompleted)}}
+            <br>
+            <span class="task-details-panel__task-label">
+              by {{(task.completedBy === username) ? 'You' : task.completedBy}}
+            </span>
           </div>
-          <div class="task-due task-details-panel" :class="{'hidden': !!task.complete}">
-            <span class="task-label" :class="{'hidden': !task.dueDate}">Due on</span>{{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
-            <span class="task-label" :class="{'hidden': task.dueDate}">Set a due date&nbsp;</span>
-            <datepicker :task="task" :index="index"></datepicker>
+          <div
+            class="task-details-panel task-details__task-info-container__task-due"
+            v-show="!task.complete"
+          >
+            <span
+              class="task-details-panel__task-label"
+              v-show="task.dueDate"
+            >
+              Due on
+            </span>
+            {{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
+            <span
+              class="task-details-panel__task-label"
+              v-show="!task.dueDate"
+            >
+              Set a due date&nbsp;
+            </span>
+            <datepicker
+              :task="task"
+              :index="index"
+            />
           </div>
-          <div class="task-details-panel" :class="{'hidden': !!task.complete}">
-            <div class="due-in" :class="{'hidden': !(task._dueDateDifference > 0)}">
-              <span :class="{'hidden': !(task._dueDateDifference > 1)}"><span class="task-label">which is</span>{{task._dueDateDifference}} days <span class="task-label">from now</span></span>
-              <span :class="{'hidden': !(task._dueDateDifference === 1)}"><span class="task-label">which is</span>tomorrow</span>
+          <div
+            class="task-details-panel task-details__task-info-container__human-readable"
+            v-show="!task.complete"
+          >
+            <div
+              class="human-readable__due-in"
+              v-show="task._dueDateDifference > 0"
+            >
+              <span v-show="task._dueDateDifference > 1">
+                <span class="task-details-panel__task-label">which is</span>
+                {{task._dueDateDifference}}&nbsp;days&nbsp;
+                <span class="task-details-panel__task-label">from now</span>
+              </span>
+              <span v-show="task._dueDateDifference === 1">
+                <span class="task-details-panel__task-label">which is</span>
+                tomorrow
+              </span>
             </div>
-            <div class="overdue" :class="{'hidden': !(task._dueDateDifference < 0)}">
-              <span :class="{'hidden': !(task._dueDateDifference < -1)}"><span class="task-label">which was</span>{{-task._dueDateDifference}} days <span class="task-label">ago</span></span>
-              <span :class="{'hidden': !(task._dueDateDifference === -1)}"><span class="task-label">which was</span>yesterday</span>
+            <div
+              class="human-readable__overdue"
+              v-show="task._dueDateDifference < 0"
+            >
+              <span v-show="task._dueDateDifference < -1">
+                <span class="task-details-panel__task-label">which was</span>
+                {{-task._dueDateDifference}}&nbsp;days&nbsp;
+                <span class="task-details-panel__task-label">ago</span>
+              </span>
+              <span v-show="task._dueDateDifference === -1">
+                <span class="task-details-panel__task-label">which was</span>
+                yesterday
+              </span>
             </div>
-            <div class="due-today" :class="{'hidden': !(task._dueDateDifference === 0)}"><span class="task-label">which is</span>today</div>
+            <div
+              class="human-readable__due-today"
+              v-show="task._dueDateDifference === 0"
+            >
+              <span class="task-details-panel__task-label">which is</span>
+              today
+            </div>
           </div>
         </div>
-        <div class="task-details-container">
+        <div class="task-details__task-info-container task-details__task-info-container--task-notes">
           <h2>Notes</h2>
-          <div class="task-notes-container">
-            <textarea class="task-notes mousetrap" :value="task.notes" @change="setTaskNotes({ index, notes: $event.target.value })"></textarea>
+          <div>
+            <textarea
+              class="task-notes-container__task-notes mousetrap"
+              :value="task.notes"
+              @change="setTaskNotes({ index, notes: $event.target.value })"
+            />
           </div>
         </div>
       </div>
@@ -48,151 +128,133 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/variables";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  .details-enter-active {
-    animation: bounceInDown 250ms;
+.mask {
+  @apply --mask;
+}
+
+.details-enter-active {
+  animation: bounceInDown 250ms;
+}
+
+.details-leave-active {
+  animation: bounceOutUp 250ms;
+}
+
+.task-details {
+  @apply --center;
+
+  position: fixed;
+  background: color(var(--gray) lightness(90%));
+  color: color(var(--gray) shade(40%));
+  padding: 0.5rem 0.7rem 3rem;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+  top: 0;
+  min-height: 100%;
+  z-index: 5;
+  overflow-y: scroll;
+  left: 0;
+  right: 0;
+
+  @media (--medium) {
+    width: 768px;
   }
-  .details-leave-active {
-    animation: bounceOutUp 250ms;
+
+  @media (height >= 600px) {
+    top: 3rem;
+    min-height: 500px;
   }
-  .task-details {
-    position: fixed;
-    background: $gray * 1.4;
-    color: $gray * 0.6;
-    padding: 0.5rem 0.7rem 3rem 0.7rem;
-    border: 1px solid $gray;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.30) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
-    top: 0;
-    min-height: 100%;
-    z-index: 5;
-    overflow-y: scroll;
-    @include fill-parent();
-    @include outer-container;
-    @include center;
-    left: 0;
-    right: 0;
-    @media screen and (min-width: $medium) {
-      width: 768px;
+
+  @media (height >= 700px) {
+    min-height: 600px;
+  }
+
+  & .task-details__close {
+    margin-top: 1rem;
+    float: right;
+    color: var(--gray);
+
+    @media (--medium) {
+      margin-top: 0;
     }
-    @media screen and (min-height: 600px) {
-      top: 3rem;
-      min-height: 500px;
-    }
-    @media screen and (min-height: 700px) {
-      min-height: 600px;
-    }
-    .task-details-close {
-      margin-top: 1rem;
-      float: right;
-      color: $gray;
-      @media screen and (min-width: $medium) {
-        margin-top: 0;
-      }
-    }
-    .task-name-container {
-      padding: 0 2rem;
+  }
+
+  & .task-details__task-name-container {
+    padding: 0 2rem;
+    width: 100%;
+    margin-top: 1rem;
+
+    & .task-details__task-name-container__task-name {
       width: 100%;
-      margin-top: 1rem;
-      .task-name {
-        width: 100%;
-        margin-bottom: 0.5rem;
-        border: none;
-        background: transparent;
-        border-bottom: 4px solid $slateGray;
-        transition: border-color 500ms ease-out;
-        &::selection {
-          background: $deepBlue;
-          color: $white;
-        }
-        &:focus {
-          border-color: $deepBlue !important;
-        }
-      }
-    }
-    .task-details-container {
-      padding: 1rem 2rem 0 2rem;
-      text-align: left;
-      line-height: 1.4rem;
-      @include row();
-      .task-details-panel {
-        @include fill-parent();
-        @media screen and (min-width: $medium) {
-          @include span-columns(4 of 12);
-          @include omega(4n);
-        }
-        .overdue {
-          color: $sunsetOrange;
-        }
-        .due-today {
-          color: $grassStain;
-        }
-      }
-    }
-    .task-label {
-      font-size: 0.8rem;
-      margin-right: 0.5rem;
-    }
-    .datepicker-input {
-      background: transparent;
-      color: transparent;
+      margin-bottom: 0.5rem;
       border: none;
-      box-shadow: none;
-      position: absolute;
-      top: -10000px;
-      visibility: hidden;
-    }
-    .datepicker-toggle {
-      font-size: 1.2rem;
-      color: $grassStain;
-      &.active {
-        color: $orchid;
-      }
-    }
-    .remove-due-date {
-      text-align: center;
-      display: inline-block;
-      @media screen and (min-width: $medium) {
-        display: block;
-      }
-      .remove-due-date-button {
-        font-family: $cardo;
-        font-size: 1.2rem;
-        padding: 2px 4px 2px 8px;
-        width: auto;
-        cursor: pointer;
-        text-transform: lowercase;
-        color: $sunsetOrange;
-        i {
-          margin-right: 0.5rem;
-        }
-      }
-    }
-    .task-notes {
-      width: 100%;
-      min-height: 300px;
-      height: auto;
-      outline: none;
-      resize: none;
       background: transparent;
-      font-size: 1rem;
-      font-family: $raleway;
-      padding: 0.5rem;
-      border: 2px solid $slateGray;
+      border-bottom: 4px solid var(--slateGray);
       transition: border-color 500ms ease-out;
+
       &:focus {
-        border-color: $deepBlue;
+        border-color: var(--deepBlue) !important;
       }
-      @media screen and (min-heigh:t 700px) {
-        min-height: 375px;
+
+      &::selection {
+        background: var(--deepBlue);
+        color: var(--white);
       }
     }
   }
+
+  & .task-details__task-info-container {
+    padding: 1rem 2rem 0;
+    text-align: left;
+    line-height: 1.4rem;
+    lost-utility: clearfix;
+
+    & .task-details-panel {
+      @media (--medium) {
+        lost-column: 4/12;
+      }
+
+      .human-readable__overdue {
+        color: var(--sunsetOrange);
+      }
+
+      .human-readable__due-today {
+        color: var(--grassStain);
+      }
+    }
+  }
+
+  & .task-details-panel__task-label {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+  }
+
+  & .task-notes-container__task-notes {
+    width: 100%;
+    min-height: 300px;
+    height: auto;
+    outline: none;
+    resize: none;
+    background: transparent;
+    font-size: 1rem;
+    font-family: var(--raleway);
+    padding: 0.5rem;
+    border: 2px solid var(--slateGray);
+    transition: border-color 500ms ease-out;
+
+    &:focus {
+      border-color: var(--deepBlue);
+    }
+
+    @media (height >= 700px) {
+      min-height: 375px;
+    }
+  }
+}
 </style>
 
 <script>

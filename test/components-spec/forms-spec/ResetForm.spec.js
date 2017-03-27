@@ -64,10 +64,10 @@ describe('ResetForm.vue', function () {
   it('should render with initial state and component tree', () => {
     const vm = mountVm(ResetForm)
 
-    assert.strictEqual(vm.$el.getAttribute('id'), 'reset-form')
-    assert.isNotNull(vm.$el.querySelector('#reset-key-line'))
-    assert.isNotNull(vm.$el.querySelector('#reset-confirm-line'))
-    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
+    assert.isTrue(vm.$el.classList.contains('reset-form'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--reset-key-line'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--reset-confirm-line'))
+    assert.isNotNull(vm.$el.querySelector('.try-it__button'))
   })
 
   it('should reset password and log in to app if isValid', () => {
@@ -218,7 +218,7 @@ describe('ResetForm.vue', function () {
     const vm = mountVm(ResetForm)
     sinon.stub(vm, 'setResetAttempt')
 
-    vm.$el.querySelector('#reset-button').click()
+    vm.$el.querySelector('.reset-form__button-container__submit').click()
 
     assert.isTrue(vm.setResetAttempt.calledWith(true))
     vm.setResetAttempt.restore()

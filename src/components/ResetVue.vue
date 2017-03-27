@@ -11,14 +11,11 @@
         class="modal"
         v-if="!user.tasks.length && init"
       >
-        <div class="modal-header">
-          <h1 id="headline">Taskmastr</h1>
+        <div class="modal__header">
+          <h1 class="modal__header__headline">Taskmastr</h1>
         </div>
-        <div
-          id="key-ask"
-          class="modal-body"
-        >
-          <div class="reset-greeting">
+        <div class="modal__body">
+          <div class="modal__body__greeting">
             <p>Go ahead and create your new password below</p>
           </div>
           <reset-form></reset-form>
@@ -28,16 +25,16 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../stylesheets/variables";
 
-  .modal {
-    @include modal;
-  }
+.modal {
+  @apply --modal;
+}
 
-  .mask {
-    @include mask;
-  }
+.mask {
+  @apply --mask;
+}
 </style>
 
 <script>

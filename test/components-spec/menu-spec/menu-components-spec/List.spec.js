@@ -120,8 +120,8 @@ describe('ListVue', function () {
       currentList: lists[1]._id
     }, { list: lists[1], index: 1 })
 
-    assert.isTrue(vm1.$el.classList.contains('deleting'))
-    assert.isTrue(vm2.$el.classList.contains('current'))
+    assert.isTrue(vm1.$el.classList.contains('table-row--deleting'))
+    assert.isTrue(vm2.$el.classList.contains('table-row--current'))
   })
 
   it('should call navigateToList method on click', () => {
@@ -138,7 +138,7 @@ describe('ListVue', function () {
     const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'toggleListDetails')
 
-    vm.$el.querySelector('.task-cell').dispatchEvent(dblclick())
+    vm.$el.querySelector('.table-row__table-data--task-cell').dispatchEvent(dblclick())
 
     assert.isTrue(vm.toggleListDetails.calledWith('listid'))
     vm.toggleListDetails.restore()
@@ -148,7 +148,7 @@ describe('ListVue', function () {
     const vm = mountVm(List, { user: { tasks: lists }, current: lists[0], currentList: lists[0]._id }, { list: lists[0], index })
     sinon.stub(vm, 'toggleListDetails')
 
-    vm.$el.querySelector('.task-cell').dispatchEvent(dblclick())
+    vm.$el.querySelector('.table-row__table-data--task-cell').dispatchEvent(dblclick())
 
     assert.isTrue(vm.toggleListDetails.calledWith('listid'))
 

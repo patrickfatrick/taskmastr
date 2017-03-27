@@ -1,0 +1,272 @@
+@import "variables";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  @apply --fill;
+}
+
+/* ---------- General ---------- */
+
+input[type='text'],
+input[type='password'] {
+  outline: none;
+  font-family: var(--raleway);
+  color: inherit;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+
+  @media (--medium) {
+    font-size: 2rem;
+    line-height: 2.4rem;
+  }
+}
+
+input[type='checkbox'] {
+  left: -10000px;
+  position: absolute;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+button {
+  border: none;
+  outline: none;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:focus,
+  &:visited,
+  &:active {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.hidden,
+[class$="--hidden"] {
+  display: none !important;
+}
+
+/* ---------- Dragula styles ---------- */
+
+.gu-draggable {
+  box-shadow: rgba(0, 0, 0, 0.3) 0 10px 30px, rgba(0, 0, 0, 0.22) 0 5px 10px;
+  opacity: 0.8;
+
+  &:not(.active) {
+    background-color: color(var(--deepBlue) shade(20%)) !important;
+    color: var(--white) !important;
+  }
+}
+
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+}
+
+.gu-hide {
+  display: none !important;
+}
+
+.gu-unselectable {
+  user-select: none !important;
+}
+
+.gu-transit {
+  opacity: 0.2;
+}
+
+/* ---------- Datepicker ---------- */
+
+.pika-prev {
+  float: left;
+  background-image: var(--arrowLeft);
+}
+
+.pika-next {
+  float: right;
+  background-image: var(--arrowRight);
+}
+
+.pika-single:not(.is-hidden) {
+  @apply --center;
+
+  z-index: 5 !important;
+  background: var(--white);
+  font-family: var(--raleway);
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-transform: lowercase;
+  border-radius: 15px;
+  padding: 0.2em 0.2em 0;
+  animation: bounceInDown 300ms;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+
+  @media (--small) {
+    width: 100%;
+    left: 0 !important;
+  }
+
+  @media (--medium) {
+    width: 400px;
+    left: 0 !important;
+    right: 0;
+  }
+
+  & .pika-title {
+    color: var(--white);
+    background: var(--orchid);
+    font-weight: normal;
+    border: none;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    & .pika-label {
+      display: inline-block;
+      position: relative;
+      z-index: 9999;
+      overflow: hidden;
+      margin: 0;
+      padding: 5px 3px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: bold;
+    }
+
+    & .pika-select {
+      cursor: pointer;
+      position: absolute;
+      z-index: 9998;
+      margin: 0;
+      left: 0;
+      top: 5px;
+      filter: alpha(opacity=0);
+      opacity: 0;
+    }
+  }
+
+  & .pika-prev,
+  & .pika-next {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    border: 0;
+    padding: 0;
+    width: 25px;
+    height: 32px;
+    text-indent: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 0 0.5rem;
+
+    &:hover {
+      background-color: transparent;
+      color: var(--deepBlue);
+      border: none;
+    }
+
+    & i {
+      font-size: 1.4rem;
+      padding-top: 0.3rem;
+    }
+  }
+
+  & .ui-datepicker-buttonpane {
+    border-bottom: 1px solid #e5e9ea !important;
+  }
+
+  & table {
+    margin: 1rem 2rem;
+
+    & th {
+      width: 1rem;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    & td {
+      padding: 0;
+
+      & button {
+        width: 3rem;
+        height: 1.5rem;
+        background: var(--white);
+        border: none;
+        outline: none;
+        text-transform: lowercase;
+        font-weight: normal;
+        color: var(--oceanBlue);
+        font-size: 1rem;
+        padding: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        &:hover {
+          background: var(--deepBlue) !important;
+          color: var(--white) !important;
+        }
+
+        &:focus {
+          background: var(--grassStain);
+          color: var(--white);
+        }
+      }
+
+      &.is-empty {
+        background: var(--white);
+      }
+    }
+
+    & .ui-datepicker-unselectable a {
+      color: var(--oceanBlue);
+      background: var(--white);
+    }
+
+    & .is-today button {
+      background: var(--astroTurf);
+      color: var(--black);
+    }
+
+    & .is-selected button {
+      color: var(--white);
+      background: var(--deepBlue);
+    }
+  }
+}
+
+.pika-single.is-hidden {
+  display: none;
+}

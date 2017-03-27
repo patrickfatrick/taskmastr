@@ -1,42 +1,41 @@
 <template>
   <div>
-    <div id="task-list"
-      class="table"
-      v-show='allTasks'>
+    <div
+      class="table table--item-list"
+      v-show='allTasks'
+    >
       <div
-        id="active-tasks"
-        class="table-body"
+        class="table__table-body table__table-body--active-tasks"
         ref="dragula">
         <item
           v-for="task in activeTasks"
           :key="task._id" 
           :task="task"
-          :currenttask="currenttask">
-        </item>
+          :currenttask="currentItem"
+          :darkmode="darkmode"
+        />
       </div>
       <div 
-        id="clear-complete-button-container"
+        class="table--task-list__clear-complete-button-container"
         v-if="completeTasks.length">
         <button 
-          id="clear-complete-button"
-          :class="{'deleting': deleteAllCompleteTasksTimeout}"
-          @click.prevent="setDeleteTimeout">
+          class="table--task-list__clear-complete-button-container__button"
+          :class="{'table--task-list__clear-complete-button-container__button--deleting': deleteAllCompleteTasksTimeout}"
+          @click.prevent="setDeleteTimeout"
+        >
           {{deleteAllCompleteTasksTimeout ? 'Undo' : 'Clear complete items'}}
         </button>
       </div>
       <div
-        id="complete-tasks"
-        class="table-body"
+        class="table__table-body table__table-body--complete-tasks"
         v-show="!hideCompleteTasks">
         <item 
           v-for="task in completeTasks" 
           :key="task._id"
-          class="task table-row" 
-          :class="{'deleting': task._deleting, 'complete': task.complete, 'active': task.current}" 
           :task="task"
-          :currenttask="currenttask"
-          >
-        </item>
+          :currenttask="currentItem"
+          :darkmode="darkmode"
+        />
       </div>
     </div>
     <item-details 
@@ -48,69 +47,80 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/variables";
-  @import "../../../stylesheets/mixins";
-  
-  #task-list {
-    @include table;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 5rem;
-    // fixes for safari
-    float: none !important;
-    &:last-child {
-      margin-right: auto !important;
-    }
-    @include fill-parent();
-    @media screen and (min-width: $medium) {
-      width: 700px;
-    }
-    @media screen and (min-width: $large) {
-      width: 800px;
-    }
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
+
+.table--item-list {
+  @apply --table;
+
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+
+  /* fixes for safari */
+  float: none !important;
+
+  &:last-child {
+    margin-right: auto !important;
   }
 
-  #clear-complete-button-container {
-    text-align: center;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
-    font-size: 1rem;
-    button {
-      text-transform: lowercase;
-      color: $white;
-      background-color: rgba(0, 0, 0, 0.2);
-      padding: 0.3rem;
-      border-radius: 4px;
-      border: 1px solid $completeGray * 0.6;
-      &:active {
-        background-color: rgba(0, 0, 0, 0.4);
-      }
-      &.deleting {
-        background-color: $sunsetOrange * 0.8;
-      }
-      &:active.deleting {
-        background-color: $sunsetOrange * 0.6;
-      }
+  @media (--medium) {
+    width: 700px;
+  }
+
+  @media (--large) {
+    width: 800px;
+  }
+}
+
+.table--task-list__clear-complete-button-container {
+  text-align: center;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+
+  & .table--task-list__clear-complete-button-container__button {
+    text-transform: lowercase;
+    color: var(--white);
+    background-color: color(var(--black) alpha(20%));
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: 1px solid color(var(--completeGray) shade(40%));
+
+    &:active {
+      background-color: color(var(--black) alpha(40%));
+    }
+
+    &.table--task-list__clear-complete-button-container__button--deleting {
+      background-color: color(var(--sunsetOrange) shade(20%));
+    }
+
+    &:active.table--task-list__clear-complete-button-container__button--deleting {
+      background-color: color(var(--sunsetOrange) shade(40%));
     }
   }
+}
 </style>
 
 <script>
 import dragula from 'dragula'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 import Item from './Item.vue'
 import ItemDetails from './ItemDetails.vue'
 import dragulaMixin from '../../mixins/dragula-mixin'
 
 export default {
-  computed: mapGetters({
-    activeTasks: 'getActiveTasks',
-    completeTasks: 'getCompleteTasks',
-    allTasks: 'getAllTasks'
-  }),
+  computed: {
+    ...mapGetters({
+      activeTasks: 'getActiveTasks',
+      completeTasks: 'getCompleteTasks',
+      allTasks: 'getAllTasks'
+    }),
+    ...mapState({
+      currentItem: (state) => state.current.currentItem,
+      darkmode: (state) => state.user.darkmode
+    })
+  },
   data () {
     return {
       deleteAllCompleteTasksTimeout: false,
@@ -124,9 +134,6 @@ export default {
   mixins: [
     dragulaMixin
   ],
-  props: {
-    currenttask: String
-  },
   methods: {
     ...mapActions([
       'sortTasks',

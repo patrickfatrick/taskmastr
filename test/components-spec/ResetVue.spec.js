@@ -33,15 +33,15 @@ describe('ResetVue', function () {
     const vm = mountVm(ResetVue, { init: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
-    assert.isNotNull(vm.$el.querySelector('#key-modal'))
-    assert.isNotNull(vm.$el.querySelector('#reset-form'))
+    assert.isNotNull(vm.$el.querySelector('.modal'))
+    assert.isNotNull(vm.$el.querySelector('.reset-form'))
   })
 
   it('should respond to changes in the state (init)', () => {
     const vm = mountVm(ResetVue)
 
     assert.isNull(vm.$el.querySelector('.mask'))
-    assert.isNull(vm.$el.querySelector('#key-modal'))
+    assert.isNull(vm.$el.querySelector('.modal'))
   })
 
   it('should respond to changes in the state (auth and user.tasks)', () => {
@@ -58,7 +58,7 @@ describe('ResetVue', function () {
     })
 
     assert.isNull(vm.$el.querySelector('.mask'))
-    assert.isNull(vm.$el.querySelector('#key-modal'))
+    assert.isNull(vm.$el.querySelector('.modal'))
   })
 
   it('should call setReset if path === "/reset"', () => {

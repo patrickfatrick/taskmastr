@@ -1,8 +1,7 @@
 <template>
-  <div id="forgot-password">
+  <div class="forgot-password">
     <input
-      id="forgot"
-      class="check"
+      class="forgot-password__checkbox"
       name="forgot"
       type="checkbox"
       tabindex="-1"
@@ -10,6 +9,7 @@
       @change.prevent="toggleForgot(!forgot)"
     />
     <button
+      class="forgot-password__button"
       title="Forgot Password"
       type="button"
       @click.prevent="toggleForgot(!forgot)"
@@ -23,22 +23,23 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
+<style lang="postcss" scoped>
   @import "../../../stylesheets/variables";
-  @import "../../../stylesheets/mixins";
   
-  #forgot-password {
-    @include modal-small-text;
+  .forgot-password {
+    @apply --modalSmallText;
+
     margin-top: 1rem;
-    @media screen and (min-width: $medium) {
+
+    @media (--medium) {
       margin-top: 0.5rem;
     }
-    button {
+
+    & .forgot-password__button {
       margin-right: 1rem;
+
       &:focus {
-        color: $deepBlue;
+        color: var(--deepBlue);
       }
     }
   }

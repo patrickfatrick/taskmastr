@@ -1,26 +1,60 @@
 <template>
   <div>
     <div class="error-text">
-      <span :class="{'hidden': !(!required && (loginAttempt || forgotAttempt))}">Email address required</span>
-      <span :class="{'hidden': !(!validate && required && (loginAttempt || forgotAttempt))}">Invalid email address</span>
-      <span :class="{'hidden': !($route.path === '/create' && confirmAttempt && createFail)}">{{createFail}}</span>
-      <span :class="{'hidden': !($route.path === '/forgot' && forgotAttempt && forgotFail && !forgotEmail)}">{{forgotFail}}</span>
-      <span :class="{'hidden': !($route.path === '/forgot' && forgotAttempt && forgotEmail && !forgotFail)}">Check your email for instructions on how to reset your password.</span>
+      <span
+        class="error-text__message"
+        v-show="(loginAttempt || forgotAttempt) && !required"
+      >
+        Email address required
+      </span>
+      <span
+        v-show="(loginAttempt || forgotAttempt) && required && !validate"
+      >
+        Invalid email address
+      </span>
+      <span
+        v-show="$route.path === '/create' && confirmAttempt && createFail"
+      >
+        {{createFail}}
+      </span>
+      <span
+        v-show="$route.path === '/forgot' && forgotAttempt && forgotFail && !forgotEmail"
+      >
+        {{forgotFail}}
+      </span>
+      <span
+        v-show="$route.path === '/forgot' && forgotAttempt && forgotEmail && !forgotFail"
+      >
+        Check your email for instructions on how to reset your password.
+      </span>
     </div>
-    <div id="user-line" class="prompt-line">
-      <input id="user" class="prompt" type="text" name="username" placeholder="Email" :value="user.username" @input="setUsername($event.target.value)" :class="{'invalid': (loginAttempt || forgotAttempt) && (!required || !validate || forgotFail)}"></input>
+    <div
+      class="prompt-line--user-line">
+      <input
+        class="prompt-line__prompt"
+        type="text"
+        name="username"
+        placeholder="Email"
+        :value="user.username" @input="setUsername($event.target.value)"
+        :class="{'prompt-line__prompt--invalid': (loginAttempt || forgotAttempt) && (!required || !validate || forgotFail)}"
+      />
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  .error-text {
-    @include modal-small-text;
-  }
+.error-text {
+  @apply --modalSmallText;
+}
+
+.prompt-line--user-line {
+  @apply --promptLine;
+
+  lost-column: 8/12;
+  lost-offset: 2/12;
+}
 </style>
 
 <script>

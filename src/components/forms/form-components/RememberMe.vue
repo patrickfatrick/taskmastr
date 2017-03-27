@@ -1,8 +1,7 @@
 <template>
-  <div id="remember">
+  <div class="remember-me">
     <input
-      id="remember-me"
-      class="check"
+      class="remember-me__checkbox"
       name="remember-me"
       type="checkbox"
       tabindex="-1"
@@ -10,6 +9,7 @@
       @change.prevent="setRememberMe(!rememberMe)"
     />
     <button
+      class="remember-me__button"
       title="Remember Me"
       type="button"
       @click.prevent="setRememberMe(!rememberMe)"
@@ -23,22 +23,23 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
+<style lang="postcss" scoped>
   @import "../../../stylesheets/variables";
-  @import "../../../stylesheets/mixins";
 
-  #remember {
-    @include modal-small-text;
+  .remember-me {
+    @apply --modalSmallText;
+
     margin-top: 1rem;
-    @media screen and (min-width: $medium) {
+
+    @media (--medium) {
       margin-top: 0.5rem;
     }
-    button {
+
+    & .remember-me__button {
       margin-right: 1rem;
+
       &:focus {
-        color: $deepBlue;
+        color: var(--deepBlue);
       }
     }
   }

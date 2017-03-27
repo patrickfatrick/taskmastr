@@ -1,9 +1,24 @@
 <template>
-  <form id="reset-form" name="resetForm" action="/users/reset" novalidate @submit.prevent="reset(resetToken, user.resetKey)">
-    <reset-key-input :required="validate.passwordRequired" :match="validate.confirmMatch" :token="validate.tokenRequired"></reset-key-input>
-    <reset-confirm-input :match="validate.confirmMatch"></reset-confirm-input>
-    <div class="button-container">
-      <button id="reset-button" class="submit button" type="submit" title="Submit" @click="setResetAttempt(true)">
+  <form
+    class="reset-form"
+    name="resetForm"
+    action="/users/reset"
+    novalidate
+    @submit.prevent="reset(resetToken, user.resetKey)"
+  >
+    <reset-key-input
+      :required="validate.passwordRequired"
+      :match="validate.confirmMatch"
+      :token="validate.tokenRequired"
+    />
+    <reset-confirm-input :match="validate.confirmMatch" />
+    <div class="reset-form__button-container">
+      <button
+        class="reset-form__button-container__submit submit button"
+        type="submit"
+        title="Submit"
+        @click="setResetAttempt(true)"
+      >
         Go
       </button>
       <try-it></try-it>
@@ -11,12 +26,17 @@
   </form>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../stylesheets/variables";
 
-  .button {
-    @include button;
-  }
+.reset-form__button-container {
+  lost-column: 12/12;
+  position: relative;
+}
+
+.reset-form__button-container__submit {
+  @apply --buttonGo;
+}
 </style>
 
 <script>

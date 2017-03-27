@@ -109,7 +109,7 @@ describe('ItemDetailsVue', function () {
     assert.strictEqual(vm.reformatDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
   })
 
-  it('should call renameTask on .task-name change', () => {
+  it('should call renameTask on task-name change', () => {
     items = [
       {
         id: 'itemid',
@@ -144,8 +144,8 @@ describe('ItemDetailsVue', function () {
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
     sinon.stub(vm, 'renameTask')
 
-    vm.$el.querySelector('.task-name').value = 'Task 11'
-    vm.$el.querySelector('.task-name').dispatchEvent(change())
+    vm.$el.querySelector('.task-details__task-name-container__task-name').value = 'Task 11'
+    vm.$el.querySelector('.task-details__task-name-container__task-name').dispatchEvent(change())
 
     assert.isTrue(vm.renameTask.calledWith({ index: 0, name: 'Task 11' }))
     vm.renameTask.restore()
@@ -186,8 +186,8 @@ describe('ItemDetailsVue', function () {
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
     sinon.stub(vm, 'renameTask')
 
-    vm.$el.querySelector('.task-name').value = ''
-    vm.$el.querySelector('.task-name').dispatchEvent(change())
+    vm.$el.querySelector('.task-details__task-name-container__task-name').value = ''
+    vm.$el.querySelector('.task-details__task-name-container__task-name').dispatchEvent(change())
 
     assert.isFalse(vm.renameTask.calledOnce)
     vm.renameTask.restore()
@@ -218,8 +218,8 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isTrue(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container__task-due').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container__task-due').children[1].style.display === 'none')
   })
 
   it('should not display dates or due date differences if task.dateCompleted', () => {
@@ -248,10 +248,10 @@ describe('ItemDetailsVue', function () {
     }
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-details-container').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.task-details-container').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.task-details-container').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.task-details-container').children[3].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container--dates').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container--dates').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container--dates').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container--dates').children[3].style.display === 'none')
   })
 
   it('should display dates and due date differences if !task.dateCompleted', () => {
@@ -281,10 +281,10 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-details-container').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.task-details-container').children[1].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.task-details-container').children[2].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.task-details-container').children[3].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container--dates').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container--dates').children[1].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container--dates').children[2].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container--dates').children[3].style.display === 'none')
   })
 
   it('should display dates if due date is tomorrow', () => {
@@ -312,14 +312,14 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
-    assert.include(vm.$el.querySelector('.task-due').textContent, 'Jan 2, 2016')
-    assert.isTrue(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.due-in').classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-in').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.due-in').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.overdue').classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-today').classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container__task-due').children[0].style.display === 'none')
+    assert.include(vm.$el.querySelector('.task-details__task-info-container__task-due').textContent, 'Jan 2, 2016')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container__task-due').children[1].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__due-in').style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-in').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__due-in').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__overdue').style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-today').style.display === 'none')
   })
 
   it('should display dates if due date is more than one day in the future', () => {
@@ -347,14 +347,14 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
-    assert.include(vm.$el.querySelector('.task-due').textContent, 'Jan 3, 2016')
-    assert.isTrue(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.due-in').classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.due-in').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-in').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.overdue').classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-today').classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container__task-due').children[0].style.display === 'none')
+    assert.include(vm.$el.querySelector('.task-details__task-info-container__task-due').textContent, 'Jan 3, 2016')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container__task-due').children[1].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__due-in').style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__due-in').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-in').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__overdue').style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-today').style.display === 'none')
   })
 
   it('should display dates if due date was yesterday', () => {
@@ -382,14 +382,14 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
-    assert.include(vm.$el.querySelector('.task-due').textContent, 'Dec 31, 2015')
-    assert.isTrue(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-in').classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.overdue').classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.overdue').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.overdue').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-today').classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container__task-due').children[0].style.display === 'none')
+    assert.include(vm.$el.querySelector('.task-details__task-info-container__task-due').textContent, 'Dec 31, 2015')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container__task-due').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-in').style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__overdue').style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__overdue').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__overdue').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-today').style.display === 'none')
   })
 
   it('should display dates if due date was more than one day in the past', () => {
@@ -417,14 +417,14 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
-    assert.include(vm.$el.querySelector('.task-due').textContent, 'Dec 30, 2015')
-    assert.isTrue(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-in').classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.overdue').classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.overdue').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.overdue').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-today').classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container__task-due').children[0].style.display === 'none')
+    assert.include(vm.$el.querySelector('.task-details__task-info-container__task-due').textContent, 'Dec 30, 2015')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container__task-due').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-in').style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__overdue').style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__overdue').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__overdue').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-today').style.display === 'none')
   })
 
   it('should display dates if due date is today', () => {
@@ -452,12 +452,12 @@ describe('ItemDetailsVue', function () {
 
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.task-due').children[0].classList.contains('hidden'))
-    assert.include(vm.$el.querySelector('.task-due').textContent, 'Jan 1, 2016')
-    assert.isTrue(vm.$el.querySelector('.task-due').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.due-in').classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.overdue').classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.due-today').classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.task-details__task-info-container__task-due').children[0].style.display === 'none')
+    assert.include(vm.$el.querySelector('.task-details__task-info-container__task-due').textContent, 'Jan 1, 2016')
+    assert.isTrue(vm.$el.querySelector('.task-details__task-info-container__task-due').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__due-in').style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.human-readable__overdue').style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.human-readable__due-today').style.display === 'none')
   })
 
   it('should not call renameTask if null', () => {
@@ -495,8 +495,8 @@ describe('ItemDetailsVue', function () {
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
     sinon.stub(vm, 'renameTask')
 
-    vm.$el.querySelectorAll('.task-name')[0].value = ''
-    vm.$el.querySelectorAll('.task-name')[0].dispatchEvent(change())
+    vm.$el.querySelectorAll('.task-details__task-name-container__task-name')[0].value = ''
+    vm.$el.querySelectorAll('.task-details__task-name-container__task-name')[0].dispatchEvent(change())
 
     assert.isFalse(vm.renameTask.calledOnce)
     vm.renameTask.restore()

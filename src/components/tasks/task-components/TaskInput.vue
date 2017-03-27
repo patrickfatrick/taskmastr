@@ -1,26 +1,26 @@
 <template>
   <form 
-    id="todo-line"
-    class="prompt-line"
-    name="todoForm"
+    class="prompt-line prompt-line--item-line"
+    name="itemForm"
     novalidate
     @submit.prevent="addNewTask(newTask.trim())"
   >
     <input
-      id="create-todo"
-      class="prompt random-placeholder mousetrap"
+      class="prompt-line__prompt random-placeholder mousetrap"
       type="text"
-      title="Task Input"
+      title="Item Input"
       :value="newTask"
       @change="setNewTask($event.target.value)"
-      :class="{'invalid': !isValid && taskAttempt}"
+      :class="{
+        'prompt-line__prompt--invalid': !isValid && taskAttempt,
+        'prompt-line__prompt--darkmode': darkmode
+      }"
       :placeholder="placeholder"
       ref="taskinput"
     />
-    <div class="button-container">
+    <div class="prompt-line__button-container">
       <button
-        id="task-button"
-        class="submit"
+        class="prompt-line__submit"
         title="Create task"
         type="submit">
         <i class="fa fa-arrow-down " />
@@ -29,37 +29,66 @@
   </form>
 </template>
 
-<style lang="scss">
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/variables";
-  @import "../../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  #todo-line {
-    @include prompt-line;
-    margin-bottom: 1.5rem;
-    @include span-columns(12 of 14);
-    @include shift(2);
-    @media screen and (min-width: $medium) {
-      @include span-columns(12 of 14);
-      @include shift(1 of 14);
-    }
-    #create-todo {
-      @include span-columns(9 of 12)
-      @media screen and (min-width: $medium) {
-        @include span-columns(11 of 12)
+.prompt-line--item-line {
+  @apply --promptLine;
+
+  margin-bottom: 1.5rem;
+  lost-column: 10/14;
+  lost-offset: 2/14;
+  lost-utility: clearfix;
+
+  @media (--medium) {
+    lost-column: 12/14;
+    lost-offset: 1/14;
+  }
+
+  & .prompt-line__prompt {
+    lost-column: 9/14;
+
+    &:not(.prompt-line__prompt--darkmode) {
+      &:focus {
+        border-color: var(--sunray);
       }
     }
-    .button-container {
-      text-align: left;
-      @include omega();
-      @include span-columns(3 of 12);
-      @media screen and (min-width: $medium) {
-        text-align: center;
-        @include span-columns(1 of 12);
+
+    &.prompt-line__prompt--darkmode {
+      &:focus {
+        border-color: var(--astroTurf);
       }
+    }
+
+    @media (--medium) {
+      lost-column: 11/12;
     }
   }
+
+  & .prompt-line__button-container {
+    text-align: left;
+    lost-column: 5/14;
+
+    @media (--medium) {
+      text-align: center;
+      lost-column: 1/12;
+    }
+  }
+
+  & .prompt-line__submit {
+    @apply --buttonEffectOrchid;
+
+    font-size: 1.8rem;
+    width: 2.4rem;
+    position: relative;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: var(--white);
+    background: var(--orchid);
+    border-radius: 50%;
+    padding: 1px 3px 3px 4px;
+  }
+}
 </style>
 
 <script>
@@ -79,7 +108,8 @@ export default {
       currentItem: (state) => state.current.currentItem,
       newTask: (state) => state.newTask,
       taskAttempt: (state) => state.taskAttempt,
-      placeholder: (state) => state.placeholder
+      placeholder: (state) => state.placeholder,
+      darkmode: (state) => state.user.darkmode
     }),
     validate () {
       return {

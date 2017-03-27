@@ -23,14 +23,14 @@ describe('CreateVue', function () {
     const vm = mountVm(CreateVue, { init: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
-    assert.isNotNull(vm.$el.querySelector('#key-modal'))
+    assert.isNotNull(vm.$el.querySelector('.modal'))
   })
 
   it('should respond to changes in the state (init)', () => {
     const vm = mountVm(CreateVue)
 
     assert.isNull(vm.$el.querySelector('.mask'))
-    assert.isNull(vm.$el.querySelector('#key-modal'))
+    assert.isNull(vm.$el.querySelector('.modal'))
   })
 
   it('should respond to changes in the state (auth and user.tasks)', () => {
@@ -47,6 +47,6 @@ describe('CreateVue', function () {
     })
 
     assert.isNull(vm.$el.querySelector('.mask'))
-    assert.isNull(vm.$el.querySelector('#key-modal'))
+    assert.isNull(vm.$el.querySelector('.modal'))
   })
 })

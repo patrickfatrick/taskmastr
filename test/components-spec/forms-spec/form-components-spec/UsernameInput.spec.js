@@ -42,12 +42,12 @@ describe('UsernameInputVue', function () {
   it('should render with initial state', () => {
     const vm = mountVm(UsernameInput)
 
-    assert.isFalse(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
   })
 
   it('should respond to changes in the state (loginAttempt, !require)', () => {
@@ -59,12 +59,12 @@ describe('UsernameInputVue', function () {
       validate: false
     })
 
-    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
@@ -79,12 +79,12 @@ describe('UsernameInputVue', function () {
       validate: false
     })
 
-    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isFalse(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
@@ -99,12 +99,12 @@ describe('UsernameInputVue', function () {
       validate: false
     })
 
-    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
 
     delete UsernameInput.computed.require
     delete UsernameInput.computed.validate
@@ -122,12 +122,12 @@ describe('UsernameInputVue', function () {
     vm.$router.push('/create')
     vm.$mount()
 
-    assert.isFalse(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
   })
 
   it('should respond to changes in the state (forgotAttempt, forgotFail)', () => {
@@ -143,12 +143,12 @@ describe('UsernameInputVue', function () {
     vm.$router.push('/forgot')
     vm.$mount()
 
-    assert.isTrue(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isTrue(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
   })
 
   it('should respond to changes in the state (forgotAttempt, forgotEmail)', () => {
@@ -164,11 +164,11 @@ describe('UsernameInputVue', function () {
     vm.$router.push('/forgot')
     vm.$mount()
 
-    assert.isFalse(vm.$el.querySelector('#user').classList.contains('invalid'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[0].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[1].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[2].classList.contains('hidden'))
-    assert.isTrue(vm.$el.querySelector('.error-text').children[3].classList.contains('hidden'))
-    assert.isFalse(vm.$el.querySelector('.error-text').children[4].classList.contains('hidden'))
+    assert.isFalse(vm.$el.querySelector('.prompt-line__prompt').classList.contains('prompt-line__prompt--invalid'))
+    assert.isTrue(vm.$el.querySelector('.error-text').children[0].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[1].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[2].style.display === 'none')
+    assert.isTrue(vm.$el.querySelector('.error-text').children[3].style.display === 'none')
+    assert.isFalse(vm.$el.querySelector('.error-text').children[4].style.display === 'none')
   })
 })

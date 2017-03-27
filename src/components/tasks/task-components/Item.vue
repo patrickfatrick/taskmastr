@@ -1,12 +1,18 @@
 <template>
   <div
-    class="task table-row" 
-    :class="{'deleting': task._deleting, 'complete': task.complete, 'active': isCurrent(task, currenttask)}">
-    <div class="table-header">
+    class="table-row table-row--item" 
+    :class="{
+      'table-row--deleting': task._deleting,
+      'table-row--complete': task.complete,
+      'table-row--active': isCurrent(task, currenttask),
+      'table-row--darkmode': darkmode
+    }"
+  >
+    <div class="table-row__table-header">
       <input 
-        class="check" 
         type="checkbox" 
-        :value="task.complete">
+        :value="task.complete"
+      >
       </input>
       <button 
         class="complete" 
@@ -14,18 +20,18 @@
         @click.prevent="completeTask({ index, bool: !task.complete })">
         <i 
           class="fa" 
-          :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}">
-        </i>
+          :class="{'fa-check-circle': task.complete, 'fa-circle-o': !task.complete}"
+        />
       </button>
     </div>
-    <div class="task-cell table-data">
+    <div class="table-row__table-data table-row__table-data--task-cell">
       <button 
         class="name" 
         :title="task.item" @click="setCurrentTask(index)" 
         @dblclick.prevent="toggleDetails(index)">{{task.item}}
       </button>
     </div>
-    <div class="utils table-data">
+    <div class="table-row__table-data table-row__table-data--utils">
       <button 
         class="details-button" 
         title="Toggle details pane" 
@@ -49,6 +55,34 @@
   </div>
 </template>
 
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
+
+.table-row--item {
+  @apply --tableRow;
+
+  &:not(.table-row--darkmode) {
+    &.table-row--active {
+      background-color: var(--sunray);
+    }
+
+    &.table-row--active.table-row--complete {
+      background-color: var(--rust);
+    }
+  }
+
+  &.table-row--darkmode {
+    &.table-row--active {
+      background-color: var(--astroTurf);
+    }
+
+    &.table-row--active.table-row--complete {
+      background-color: var(--grassStain);
+    }
+  }
+}
+</style>
+
 <script>
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'
@@ -68,7 +102,8 @@ export default {
   },
   props: {
     task: Object,
-    currenttask: String
+    currenttask: String,
+    darkmode: Boolean
   },
   methods: {
     ...mapActions([

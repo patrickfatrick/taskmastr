@@ -44,6 +44,7 @@ export function mountList ({ commit, state }, id) {
     socket.on('change', (data) => {
       commit('SET_CURRENT_LIST', data)
     })
+
     return updateUser(state.user.username, { currentList: state.currentList }, (err, res) => {
       if (err) return commit('SET_CURRENT_LIST', oldCurrent)
       return res
@@ -51,7 +52,7 @@ export function mountList ({ commit, state }, id) {
   })
 }
 
-export function unmountList ({ commit, state }, id) {
+export function unmountList ({ commit, state }, id, cb) {
   socket.emit('leave', id)
   commit('SET_CURRENT_LIST', null)
 }

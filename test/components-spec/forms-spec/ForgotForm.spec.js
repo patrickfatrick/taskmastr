@@ -32,12 +32,11 @@ describe('ForgotForm.vue', function () {
   it('should render with initial state and component tree', () => {
     const vm = mountVm(ForgotForm)
 
-    assert.strictEqual(vm.$el.getAttribute('id'), 'forgot-form')
-    assert.isNotNull(vm.$el.querySelector('#user-line'))
-    assert.isNotNull(vm.$el.querySelector('#forgot-password'))
-    assert.isNotNull(vm.$el.querySelector('#forgot-button'))
-    assert.isNotNull(vm.$el.querySelector('#forgot-button'))
-    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
+    assert.isTrue(vm.$el.classList.contains('forgot-form'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--user-line'))
+    assert.isNotNull(vm.$el.querySelector('.forgot-password'))
+    assert.isNotNull(vm.$el.querySelector('.forgot-form__button-container__submit'))
+    assert.isNotNull(vm.$el.querySelector('.try-it__button'))
   })
 
   it('should call forgotPassword if isValid', () => {
@@ -87,7 +86,7 @@ describe('ForgotForm.vue', function () {
     const vm = mountVm(ForgotForm)
     sinon.stub(vm, 'setForgotAttempt')
 
-    vm.$el.querySelector('#forgot-button').click()
+    vm.$el.querySelector('.forgot-form__button-container__submit').click()
 
     assert.isTrue(vm.setForgotAttempt.calledWith(true))
     vm.setForgotAttempt.restore()

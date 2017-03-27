@@ -10,14 +10,11 @@
       <div
         class="modal"
         v-if="!user.tasks.length && init">
-        <div class="modal-header">
-          <h1 id="headline">Taskmastr</h1>
+        <div class="modal__header">
+          <h1 class="modal__header__headline">Taskmastr</h1>
         </div>
-        <div
-          id="key-ask"
-          class="modal-body"
-        >
-          <div class="greeting">
+        <div class="modal__body">
+          <div class="modal__body__greeting">
             <p>Confirm your password to create a new account.</p>
           </div>
           <create-form></create-form>
@@ -27,15 +24,15 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "../stylesheets/mixins";
+<style lang="postcss" scoped>
+  @import "../stylesheets/variables";
 
   .modal {
-    @include modal;
+    @apply --modal;
   }
 
   .mask {
-    @include mask;
+    @apply --mask;
   }
 </style>
 

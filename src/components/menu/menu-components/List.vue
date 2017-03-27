@@ -1,10 +1,13 @@
 <template>
   <div
-    class="list table-row"
-    :class="{'deleting': list._deleting, 'current': list._id === currentList}">
-    <div class="initial-view">
+    class="table-row table-row--list"
+    :class="{
+      'table-row--deleting': list._deleting,
+      'table-row--current': list._id === currentList
+    }">
+    <div class="table-row__initial-view">
       <div
-        class="task-cell table-data"
+        class="table-row__table-data table-row__table-data--task-cell"
         @dblclick="toggleDetails(list._id)">
         <input
           class="rename"
@@ -21,7 +24,7 @@
           @click.prevent="navigateToList(list._id)">{{list.list}}
         </button>
       </div>
-      <div class="utils table-data">
+      <div class="table-row__table-data table-row__table-data--utils">
         <button 
           class="rename-button"
           title="Rename list"
@@ -46,31 +49,48 @@
     </div>
     <list-details
       :index="index"
-      :list="list">
+      :list="list"
+    >
     </list-details>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "bourbon";
-  @import "neat";
-  @import "../../../stylesheets/variables";
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
 
-  .table-row.current {
-    background: $deepBlue;
+.table-row--list {
+  @apply --tableRow;
+
+  &.table-row--current {
+    background: var(--deepBlue);
   }
-  .table-row:hover:not(.current) {
+
+  &:hover:not(.current) {
     background: inherit;
   }
-  .initial-view {
-    @include row();
-    .table-data.task-cell {
-      @include span-columns(15 of 21);
-    }
-    .table-data.utils {
-      @include span-columns(6 of 21);
-    }
+
+  & .table-row__table-header {
+    display: none;
   }
+
+  & .table-row__initial-view {
+    display: block;
+    lost-utility: clearfix;
+  }
+
+  & .table-row__table-data--task-cell {
+    lost-column: 15/21;
+  }
+
+  & .table-row__table-data--utils {
+    lost-column: 6/21;
+    text-align: center;
+  }
+
+  & .rename {
+    @apply --listDetailsInput;
+  }
+}
 </style>
 
 <script>

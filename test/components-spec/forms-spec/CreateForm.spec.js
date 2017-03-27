@@ -68,14 +68,14 @@ describe('CreateForm.vue', function () {
   it('should render with initial state and component tree', () => {
     const vm = mountVm(CreateForm)
 
-    assert.strictEqual(vm.$el.getAttribute('id'), 'create-form')
-    assert.isNotNull(vm.$el.querySelector('#user-line'))
-    assert.isNotNull(vm.$el.querySelector('#key-line'))
-    assert.isNotNull(vm.$el.querySelector('#confirm-line'))
-    assert.isNotNull(vm.$el.querySelector('#remember-me'))
-    assert.isNotNull(vm.$el.querySelector('#forgot-password'))
-    assert.isNotNull(vm.$el.querySelector('#confirm-button'))
-    assert.isNotNull(vm.$el.querySelector('#try-it-button'))
+    assert.isTrue(vm.$el.classList.contains('create-form'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--user-line'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--key-line'))
+    assert.isNotNull(vm.$el.querySelector('.prompt-line--confirm-line'))
+    assert.isNotNull(vm.$el.querySelector('.remember-me'))
+    assert.isNotNull(vm.$el.querySelector('.forgot-password'))
+    assert.isNotNull(vm.$el.querySelector('.create-form__button-container__submit'))
+    assert.isNotNull(vm.$el.querySelector('.try-it__button'))
   })
 
   it('should create user and log in to app if isValid', () => {
@@ -195,7 +195,7 @@ describe('CreateForm.vue', function () {
     const vm = mountVm(CreateForm)
     sinon.stub(vm, 'setConfirmAttempt')
 
-    vm.$el.querySelector('#confirm-button').click()
+    vm.$el.querySelector('.create-form__button-container__submit').click()
 
     assert.isTrue(vm.setConfirmAttempt.calledWith(true))
     vm.setConfirmAttempt.restore()

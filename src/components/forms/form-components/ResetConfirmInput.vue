@@ -1,8 +1,31 @@
 <template>
-  <div id="reset-confirm-line" class="prompt-line">
-    <input id="reset-confirm" class="prompt" type="password" name="resetConfirm" placeholder="Password" :value="user.resetConfirmKey" @input="setResetConfirmKey($event.target.value)" :class="{'invalid': resetAttempt && (!match || resetFail)}"></input>
+  <div class="prompt-line--reset-confirm-line">
+    <input
+      class="prompt-line__prompt"
+      type="password"
+      name="resetConfirm"
+      placeholder="Password"
+      :value="user.resetConfirmKey"
+      @input="setResetConfirmKey($event.target.value)"
+      :class="{'prompt-line__prompt--invalid': resetAttempt && (!match || resetFail)}"
+    />
   </div>
 </template>
+
+<style lang="postcss" scoped>
+@import "../../../stylesheets/variables";
+
+.prompt-line {
+  @apply --promptLine;
+}
+
+.prompt-line--confirm-line {
+  @apply --promptLine;
+
+  lost-column: 8/12;
+  lost-offset: 2/12;
+}
+</style>
 
 <script>
 import { mapState, mapActions } from 'vuex'

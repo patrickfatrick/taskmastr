@@ -1,4 +1,5 @@
 /* global it describe beforeEach afterEach */
+
 import { assert } from 'chai'
 import Items from '../../../../src/components/tasks/task-components/Items.vue'
 import mountVm from '../../../mount-vm'
@@ -90,12 +91,12 @@ describe('ItemsVue', function () {
     items = []
     const vm = mountVm(Items, { current: { items } })
 
-    assert.lengthOf(vm.$el.querySelector('.table-body').children, 0)
+    assert.lengthOf(vm.$el.querySelector('.table__table-body').children, 0)
   })
 
   it('should render rows with tasks', () => {
     const vm = mountVm(Items, { current: { items } })
 
-    assert.lengthOf(vm.$el.querySelector('.table-body').children, 2)
+    assert.lengthOf(vm.$el.querySelector('.table__table-body').children, 2)
   })
 })

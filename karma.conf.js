@@ -1,10 +1,6 @@
 'use strict'
 
-const webpackConfig = require('./webpack.config.js')
-delete webpackConfig.entry
-// delete webpackConfig.plugins
-
-webpackConfig.devtool = 'inline-source-map'
+const webpackConfig = require('./webpack.config.test.js')
 
 module.exports = function (karma) {
   karma.set({

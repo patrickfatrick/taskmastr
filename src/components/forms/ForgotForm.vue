@@ -1,22 +1,41 @@
 <template>
-  <form id="forgot-form" name="forgotForm" action="/users/forgot" novalidate @submit.prevent="forgot(user.username.trim())">
-    <username-input :validate="validate.usernameEmail" :required="validate.usernameRequired"></username-input>
-    <forgot-password></forgot-password>
-    <div class="button-container">
-      <button id="forgot-button" class="submit button" type="submit" title="Submit" @click="setForgotAttempt(true)">
+  <form
+    class="forgot-form"
+    name="forgotForm"
+    action="/users/forgot"
+    novalidate
+    @submit.prevent="forgot(user.username.trim())"
+  >
+    <username-input
+      :validate="validate.usernameEmail"
+      :required="validate.usernameRequired"
+    />
+    <forgot-password />
+    <div class="forgot-form__button-container">
+      <button
+        class="forgot-form__button-container__submit submit button"
+        type="submit"
+        title="Submit"
+        @click="setForgotAttempt(true)"
+      >
         Go
       </button>
-      <try-it></try-it>
+      <try-it />
     </div>
   </form>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../stylesheets/mixins";
+<style lang="postcss" scoped>
+@import "../../stylesheets/variables";
 
-  .button {
-    @include button;
-  }
+.forgot-form__button-container {
+  lost-column: 12/12;
+  position: relative;
+}
+
+.forgot-form__button-container__submit {
+  @apply --buttonGo;
+}
 </style>
 
 <script>

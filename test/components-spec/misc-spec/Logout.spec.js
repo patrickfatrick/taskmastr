@@ -27,7 +27,7 @@ describe('LogoutVue', function () {
     const vm = mountVm(Logout)
     sinon.stub(vm, 'logoutUser')
 
-    vm.$el.querySelector('#logout').click()
+    vm.$el.querySelector('.logout-container__logout').click()
 
     assert.isTrue(vm.logoutUser.calledOnce)
     vm.logoutUser.restore()

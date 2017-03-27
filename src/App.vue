@@ -1,5 +1,8 @@
 <template>
-  <div id="app-container" :class="{'darkmode': darkmode}">
+  <div
+    id="app-container"
+    :class="{'app-container--darkmode': darkmode}"
+  >
     <transition>
       <keep-alive>
         <router-view></router-view>
@@ -8,54 +11,30 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "./stylesheets/variables";
+<style lang="postcss" scoped>
+@import "./stylesheets/variables";
 
-  #app-container {
-    width: 100%;
-    height: 100%;
-    color: $black;
-    transition: all 2s ease-out; 
-    background: linear-gradient($nightDark, $nightLight, $orchid, $sunglow, $brightDark, $brightLight);
-    background-position: bottom;
-    background-size: auto 500%;
-    text-align: center;
-    font-family: $cardo;
-    font-size: 1rem;
-    @media screen and (min-width: $small) {
-      font-size: 1.4rem;
-    }
-    #todo-line #create-todo {
-      &:focus {
-        border-color: $sunray;
-      }
-    }
-    .table .table-row {
-      &.active {
-        background-color: $sunray;
-      }
-      &.active.complete {
-        background-color: $rust;
-      }
-    }
-    &.darkmode {
-      background-position: top;
-      color: $white;
-      #todo-line #create-todo {
-        &:focus {
-          border-color: $astroTurf;
-        }
-      }
-      .table .table-row {
-        &.active {
-          background-color: $astroTurf;
-        }
-        &.active.complete {
-          background-color: $grassStain;
-        }
-      }
-    }
+#app-container {
+  width: 100%;
+  height: 100%;
+  color: var(--black);
+  transition: all 2s ease-out;
+  background: linear-gradient(var(--nightDark), var(--nightLight), var(--orchid), var(--sunglow), var(--brightDark), var(--brightLight));
+  background-position: bottom;
+  background-size: auto 500%;
+  text-align: center;
+  font-family: var(--cardo);
+  font-size: 1rem;
+
+  &.app-container--darkmode {
+    background-position: top;
+    color: var(--white);
   }
+
+  @media (--small) {
+    font-size: 1.4rem;
+  }
+}
 </style>
 
 <script>
@@ -68,7 +47,8 @@ export default {
     user: (state) => state.user,
     auth: (state) => state.auth,
     darkmode: (state) => state.user.darkmode,
-    current: (state) => state.current
+    current: (state) => state.current,
+    currentList: (state) => state.currentList
   }),
   methods: {
     ...mapActions([
@@ -76,6 +56,7 @@ export default {
       'setDarkmode',
       'setTasks',
       'deleteList',
+      'mountList',
       'unmountList',
       'setDisconnect',
       'setUsers'
@@ -83,7 +64,20 @@ export default {
     navigateToList (id, newuser) {
       if (this.current._id !== id) this.unmountList(this.current._id)
       this.$router.push(`/app/list/${id}${(newuser) ? '?newuser=' + newuser : ''}`)
+    },
+    routeWatcher () {
+      if (this.$route.query.newuser) {
+        this.confirmListUser({
+          listid: this.$route.params.listid,
+          username: this.$route.query.newuser.toLowerCase()
+        })
+        this.$router.push('/app/list/' + this.$route.params.listid)
+      }
+      this.mountList(this.$route.params.listid)
     }
+  },
+  watch: {
+    '$route': 'routeWatcher'
   },
   mounted () {
     this.$nextTick(() => {
@@ -131,11 +125,16 @@ export default {
       const newUser = this.$route.query.newuser
       this.getUserSession()
       .then(() => {
+        // Set up the route watcher
+        this.routeWatcher()
+
         // Opt to route to the listid if provided
         if (this.auth && listID && newUser) return this.navigateToList(listID, newUser)
         if (this.auth && listID) return this.navigateToList(listID)
+
         // Go to user's current list if no listid is provided in url
         if (this.auth) return this.navigateToList(this.current._id)
+
         // If no session found, route to login
         this.$router.push('/login')
       })

@@ -85,10 +85,10 @@ describe('DatepickerVue', function () {
   it('should render with initial state', () => {
     const vm = mountVm(Datepicker, { current: { items } }, { task, index })
 
-    assert.isFalse(vm.$el.querySelector('.datepicker-toggle').classList.contains('active'))
+    assert.isFalse(vm.$el.querySelector('.datepicker__toggle').classList.contains('active'))
     assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-calendar-plus-o'))
     assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-calendar-check-o'))
-    assert.isNull(vm.$el.querySelector('.remove-due-date'))
+    assert.isNull(vm.$el.querySelector('.datepicker__remove-due-date'))
   })
 
   it('should respond to changes in state', () => {
@@ -118,10 +118,10 @@ describe('DatepickerVue', function () {
 
     const vm = mountVm(Datepicker, { current: { items } }, { task, index })
 
-    assert.isTrue(vm.$el.querySelector('.datepicker-toggle').classList.contains('active'))
+    assert.isTrue(vm.$el.querySelector('.datepicker__toggle').classList.contains('active'))
     assert.isFalse(vm.$el.querySelector('.fa').classList.contains('fa-calendar-plus-o'))
     assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-calendar-check-o'))
-    assert.isNotNull(vm.$el.querySelector('.remove-due-date'))
+    assert.isNotNull(vm.$el.querySelector('.datepicker__remove-due-date'))
   })
 
   it('should call setDueDate on reformatDate', () => {
@@ -184,7 +184,7 @@ describe('DatepickerVue', function () {
     vm.setDueDateDifference.restore()
   })
 
-  it('should call setDueDate on .remove-due-date click', () => {
+  it('should call setDueDate on .datepicker__remove-due-date click', () => {
     items = [
       {
         id: 'itemid',
@@ -212,7 +212,7 @@ describe('DatepickerVue', function () {
     const vm = mountVm(Datepicker, { current: { items } }, { task, index })
     sinon.stub(vm, 'setDueDate')
 
-    vm.$el.querySelector('.remove-due-date-button').click()
+    vm.$el.querySelector('.datepicker__remove-due-date__button').click()
 
     assert.isTrue(vm.setDueDate.calledWith(0, ''))
     vm.setDueDate.restore()

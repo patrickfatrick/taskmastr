@@ -1,11 +1,13 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const fontAwesome = require('node-font-awesome')
-const neat = require('node-neat')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const base = require('./webpack.config.base')
 
 module.exports = merge(base, {
+  entry: [
+    'babel-polyfill',
+    './src/main.js'
+  ],
   output: {
     publicPath: '/public/'
   },
@@ -23,14 +25,7 @@ module.exports = merge(base, {
           use: [
             { loader: 'css-loader', options: { sourceMap: true, minimize: true } },
             'resolve-url-loader',
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-                includePaths: neat.with(fontAwesome.scssPath),
-                outputStyle: 'compressed'
-              }
-            }
+            'postcss-loader'
           ]
         })
       }, {
@@ -44,14 +39,7 @@ module.exports = merge(base, {
                 use: [
                   { loader: 'css-loader', options: { sourceMap: true, minimize: true } },
                   'resolve-url-loader',
-                  {
-                    loader: 'sass-loader',
-                    options: {
-                      sourceMap: true,
-                      includePaths: neat.with(fontAwesome.scssPath),
-                      outputStyle: 'compressed'
-                    }
-                  }
+                  'postcss-loader'
                 ]
               })
             }

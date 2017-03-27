@@ -1,51 +1,63 @@
 <template>
   <div
-    id="warning-banner"
+    class="warning-banner"
     v-if="username === 'mrormrstestperson@taskmastr.co' || disconnect"
   >
     <div
-      v-if="username === 'mrormrstestperson@taskmastr.co'">
+      class="warning-banner__message warning-banner__message--try-it"
+      v-if="username === 'mrormrstestperson@taskmastr.co'"
+    >
       FYI: You're currently logged into the Try It account, and changes will not be saved.
     </div>
     <div
+      class="warning-banner__message warning-banner__message--disconnect"
       v-if="disconnect && (username !== 'mrormrstestperson@taskmastr.co')"
     >
       Socket connection broken.&nbsp;
-      <button @click="refresh()">Refresh now</button>
+      <button
+        class="warning-banner__refresh"
+        @click="refresh()"
+      >
+        Refresh now
+      </button>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @import "../../stylesheets/variables";
+<style lang="postcss" scoped>
+@import "../../stylesheets/variables";
 
-  #warning-banner {
-    width: 100%;
-    min-height: 3rem;
-    padding: 1rem;
-    position: fixed;
-    font-size: 1rem;
-    background-color: $sunsetOrange;
-    color: $white;
-    z-index: 3;
-    @media screen and (max-width: $medium) {
-      bottom: 0;
-    }
-    @media screen and (min-width: $medium) {
-      top: 0;
-    }
-    button {
-      text-transform: lowercase;
-      background-color: $sunsetOrange * 0.8;
-      padding: 0.3rem;
-      border-radius: 4px;
-      border: 1px solid $sunsetOrange * 0.6;
-      &:active {
-        background-color: $sunsetOrange * 0.6;
-        color: $white * 0.8;
-      }
+.warning-banner {
+  width: 100%;
+  min-height: 3rem;
+  padding: 1rem;
+  position: fixed;
+  font-size: 1rem;
+  background-color: var(--sunsetOrange);
+  color: var(--white);
+  z-index: 3;
+
+  @media (width < var(--medium)) {
+    bottom: 0;
+  }
+
+  @media (--medium) {
+    top: 0;
+  }
+
+  & .warning-banner__refresh {
+    text-transform: lowercase;
+    background-color: color(var(--sunsetOrange) shade(20%));
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: 1px solid color(var(--sunsetOrange) shade(40%));
+
+    &:active {
+      background-color: color(var(--sunsetOrange) shade(40%));
+      color: color(var(--white) shade(20%));
     }
   }
+}
 </style>
 
 <script>

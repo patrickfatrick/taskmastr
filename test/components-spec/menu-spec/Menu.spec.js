@@ -27,9 +27,9 @@ describe('MenuVue', function () {
     assert.isNotNull(vm.$el.querySelector('#wiki-container'))
     assert.isNotNull(vm.$el.querySelector('#repo-container'))
     assert.isNotNull(vm.$el.querySelector('#darkmode-container'))
-    assert.isNotNull(vm.$el.querySelector('#dark-mode'))
-    assert.isNotNull(vm.$el.querySelector('#lists-list'))
-    assert.isNotNull(vm.$el.querySelector('#logout-container'))
+    assert.isNotNull(vm.$el.querySelector('.dark-mode'))
+    assert.isNotNull(vm.$el.querySelector('.table--lists-list'))
+    assert.isNotNull(vm.$el.querySelector('.logout-container'))
     assert.isFalse(vm.$el.classList.contains('toggled'))
   })
 

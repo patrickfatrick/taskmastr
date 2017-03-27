@@ -48,7 +48,7 @@ describe('TryItVue', function () {
   it('should render with initial state', () => {
     const vm = mountVm(TryIt)
 
-    assert.strictEqual(vm.$el.querySelector('#try-it-button').textContent, 'Try it out')
+    assert.strictEqual(vm.$el.querySelector('.try-it__button').textContent.trim(), 'Try it out')
   })
 
   it('should log in to the test account on loginTestUser', () => {
@@ -70,7 +70,7 @@ describe('TryItVue', function () {
     promise.resolves('mrormrstestperson@taskmastr.co')
     sinon.stub(vm, 'loginTestUser')
 
-    vm.$el.querySelector('#try-it-button').click()
+    vm.$el.querySelector('.try-it__button').click()
     clock.tick(250)
 
     assert.isTrue(vm.loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false))
