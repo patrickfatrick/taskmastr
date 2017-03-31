@@ -36,6 +36,14 @@
 
 .reset-form__button-container__submit {
   @apply --buttonGo;
+
+  padding: 3px 3px 4px 5px;
+  margin-top: 2rem;
+  width: 60px;
+
+  @media (--medium) {
+    width: 100px;
+  }
 }
 </style>
 

@@ -31,7 +31,7 @@
 <style lang="postcss" scoped>
 @import "../../stylesheets/variables";
 
-.modal__form__button-container {
+.create-form__button-container {
   lost-column: 12/12;
   position: relative;
 }
