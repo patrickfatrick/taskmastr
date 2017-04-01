@@ -39,7 +39,7 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import LoginForm from './forms/LoginForm.vue'
 
 export default {
@@ -48,8 +48,14 @@ export default {
     initialized: (state) => state.initialized,
     authenticated: (state) => state.authenticated
   }),
+  methods: mapActions([
+    'setJumpto'
+  ]),
   components: {
     LoginForm
+  },
+  mounted () {
+    if (this.$route.query.jumpto) this.setJumpto(this.$route.query.jumpto)
   }
 }
 </script>

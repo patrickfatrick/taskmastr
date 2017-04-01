@@ -59,14 +59,14 @@ export default {
       'mountList',
       'unmountList',
       'setDisconnect',
-      'setUsers'
+      'setUsers',
+      'confirmListUser'
     ]),
     navigateToList (id, newuser) {
       if (this.current._id !== id) this.unmountList(this.current._id)
       this.$router.push(`/app/list/${id}${(newuser) ? '?newuser=' + newuser : ''}`)
     },
     routeWatcher () {
-      console.log(this.$route)
       if (this.$route.query.newuser) {
         this.confirmListUser({
           listid: this.$route.params.listid,

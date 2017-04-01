@@ -66,7 +66,8 @@ export default {
       reset: (state) => state.reset,
       forgot: (state) => state.forgot,
       create: (state) => state.create,
-      rememberMe: (state) => state.rememberMe
+      rememberMe: (state) => state.rememberMe,
+      jumpto: (state) => state.jumpto
     }),
     validate () {
       return {
@@ -93,7 +94,8 @@ export default {
       .then(() => {
         if (this.authenticated) {
           setTimeout(() => {
-            this.$router.push('/app/list/' + this.currentList)
+            console.log(this.jumpto)
+            this.$router.push(this.jumpto || '/app/list/' + this.currentList)
           }, 250)
         }
         if (this.create && !this.authenticated) {

@@ -106,6 +106,35 @@ describe('CreateForm.vue', function () {
     vm.setCurrentList.restore()
   })
 
+  it('should redirect to jumpto if provided', () => {
+    const vm = mountVm(CreateForm, {
+      authenticated: 'username@domain.com',
+      jumpto: '/link/to/something',
+      user: {
+        username: 'username@domain.com',
+        key: 'password',
+        confirm: 'password'
+      }
+    })
+    promise = sinon.stub(vm, 'createUser').returnsPromise()
+    promise.resolves('username@domain.com')
+    sinon.stub(vm, 'addList')
+    sinon.stub(vm, 'setCurrentList')
+    sinon.stub(vm.$router, 'push')
+
+    vm.create('username@domain.com', 'password', false)
+    clock.tick(250)
+
+    assert.isTrue(vm.createUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+    assert.isTrue(vm.addList.calledWithMatch({ list: 'Your first list' }))
+    assert.isTrue(vm.setCurrentList.calledOnce)
+    assert.isTrue(vm.$router.push.calledWith('/link/to/something'))
+
+    vm.$router.push.restore()
+    vm.addList.restore()
+    vm.setCurrentList.restore()
+  })
+
   it('should not create user or log in to app if !isValid', () => {
     const vm = mountVm(CreateForm)
     promise = sinon.stub(vm, 'createUser').returnsPromise()

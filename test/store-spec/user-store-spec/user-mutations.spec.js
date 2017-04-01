@@ -263,4 +263,24 @@ describe('user mutations', () => {
 
     assert.deepEqual(state, { createFail: true })
   })
+
+  it('SET_DISCONNECT', () => {
+    let state = {
+      disconnect: false
+    }
+
+    userMutations.SET_DISCONNECT(state, true)
+
+    assert.deepEqual(state, { disconnect: true })
+  })
+
+  it('SET_JUMPTO', () => {
+    let state = {
+      jumpto: ''
+    }
+
+    userMutations.SET_JUMPTO(state, 'link/to/something')
+
+    assert.deepEqual(state, { jumpto: 'link/to/something' })
+  })
 })

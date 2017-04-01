@@ -24,5 +24,7 @@ export default {
   confirmAttempt: false,
   resetToken: null,
   resetAttempt: false,
-  resetFail: ''
+  resetFail: '',
+  disconnect: false,
+  jumpto: ''
 }

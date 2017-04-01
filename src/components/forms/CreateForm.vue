@@ -68,7 +68,8 @@ export default {
       authenticated: (state) => state.authenticated,
       current: (state) => state.current,
       forgot: (state) => state.forgot,
-      rememberMe: (state) => state.rememberMe
+      rememberMe: (state) => state.rememberMe,
+      jumpto: (state) => state.jumpto
     }),
     validate () {
       return {
@@ -101,7 +102,7 @@ export default {
           this.addList({...list, owner: this.user.username, users: []})
           this.setCurrentList(list)
           setTimeout(() => {
-            this.$router.push('/app/list/' + list._id)
+            this.$router.push(this.jumpto || '/app/list/' + list._id)
           }, 250)
         }
       })

@@ -94,6 +94,10 @@ export function setDisconnect ({ commit }, bool) {
   commit('SET_DISCONNECT', bool)
 }
 
+export function setJumpto ({ commit }, location) {
+  commit('SET_JUMPTO', location)
+}
+
 export function setDarkmode ({ commit, state }, bool) {
   commit('SET_DARKMODE', bool)
   return updateUser(state.user.username, { darkmode: bool }, (err, res) => {

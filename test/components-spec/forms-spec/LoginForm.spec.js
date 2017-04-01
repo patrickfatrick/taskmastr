@@ -104,6 +104,29 @@ describe('LoginForm.vue', function () {
     vm.loginUser.restore()
   })
 
+  it('should redirect to jumpto if provided', () => {
+    const vm = mountVm(LoginForm, {
+      authenticated: true,
+      currentList: 'listid',
+      jumpto: '/link/to/something',
+      user: {
+        username: 'username@domain.com',
+        key: 'password'
+      }
+    })
+    promise = sinon.stub(vm, 'loginUser').returnsPromise()
+    promise.resolves('username@domain.com')
+    sinon.stub(vm.$router, 'push')
+
+    vm.login('username@domain.com', 'password', false)
+    clock.tick(250)
+
+    assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+    assert.isTrue(vm.$router.push.calledWith('/link/to/something'))
+    vm.$router.push.restore()
+    vm.loginUser.restore()
+  })
+
   it('should redirect to /create on !authenticated and create', () => {
     const vm = mountVm(LoginForm, {
       authenticated: false,
