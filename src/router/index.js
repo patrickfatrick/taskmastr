@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  if (!to.params.listid && store.state.authenticated) next({ name: 'App' })
+  if (!to.params.listid && store.state.authenticated) next({ name: 'Tasks' })
 
   next()
 })

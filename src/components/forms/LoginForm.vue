@@ -94,7 +94,6 @@ export default {
       .then(() => {
         if (this.authenticated) {
           setTimeout(() => {
-            console.log(this.jumpto)
             this.$router.push(this.jumpto || '/app/list/' + this.currentList)
           }, 250)
         }

@@ -2,29 +2,10 @@ export default {
   user: {
     username: '',
     key: '',
-    confirm: '',
+    confirmKey: '',
     resetKey: '',
     resetConfirmKey: '',
     darkmode: false,
     tasks: []
-  },
-  initialized: false,
-  authenticated: false,
-  forgot: false,
-  create: false,
-  currentList: '',
-  reset: false,
-  rememberMe: false,
-  invalidKey: false,
-  loginAttempt: false,
-  createFail: '',
-  forgotAttempt: false,
-  forgotEmail: false,
-  forgotFail: '',
-  confirmAttempt: false,
-  resetToken: null,
-  resetAttempt: false,
-  resetFail: '',
-  disconnect: false,
-  jumpto: ''
+  }
 }

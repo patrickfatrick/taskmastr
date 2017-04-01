@@ -84,7 +84,7 @@ describe('CreateForm.vue', function () {
       user: {
         username: 'username@domain.com',
         key: 'password',
-        confirm: 'password'
+        confirmKey: 'password'
       }
     })
     promise = sinon.stub(vm, 'createUser').returnsPromise()
@@ -113,7 +113,7 @@ describe('CreateForm.vue', function () {
       user: {
         username: 'username@domain.com',
         key: 'password',
-        confirm: 'password'
+        confirmKey: 'password'
       }
     })
     promise = sinon.stub(vm, 'createUser').returnsPromise()
@@ -154,7 +154,7 @@ describe('CreateForm.vue', function () {
     const vm = mountVm(CreateForm, { user: {
       username: '',
       key: 'password',
-      confirm: 'password'
+      confirmKey: 'password'
     } })
 
     assert.isFalse(vm.validate.usernameRequired)
@@ -168,7 +168,7 @@ describe('CreateForm.vue', function () {
     const vm = mountVm(CreateForm, { user: {
       username: 'username',
       key: 'password',
-      confirm: 'password'
+      confirmKey: 'password'
     } })
 
     assert.isTrue(vm.validate.usernameRequired)
@@ -182,7 +182,7 @@ describe('CreateForm.vue', function () {
     const vm = mountVm(CreateForm, { user: {
       username: 'username@domain.com',
       key: '',
-      confirm: ''
+      confirmKey: ''
     } })
 
     assert.isTrue(vm.validate.usernameRequired)
@@ -192,11 +192,11 @@ describe('CreateForm.vue', function () {
     assert.isFalse(vm.isValid)
   })
 
-  it('should validate user.confirm as matching user.key', () => {
+  it('should validate user.confirmKey as matching user.key', () => {
     const vm = mountVm(CreateForm, { user: {
       username: 'username@domain.com',
       key: 'password',
-      confirm: ''
+      confirmKey: ''
     } })
 
     assert.isTrue(vm.validate.usernameRequired)
@@ -210,7 +210,7 @@ describe('CreateForm.vue', function () {
     const vm = mountVm(CreateForm, { user: {
       username: 'username@domain.com',
       key: 'password',
-      confirm: 'password'
+      confirmKey: 'password'
     } })
 
     assert.isTrue(vm.validate.usernameRequired)

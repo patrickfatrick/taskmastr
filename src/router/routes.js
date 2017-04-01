@@ -8,7 +8,6 @@ import Tasks from '../components/tasks/Tasks.vue'
 export default [
   {
     path: '/app',
-    name: 'App',
     component: ContentVue,
     meta: { authenticate: true },
     children: [

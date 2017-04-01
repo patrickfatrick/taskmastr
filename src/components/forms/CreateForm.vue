@@ -76,7 +76,7 @@ export default {
         usernameEmail: emailRE.test(this.user.username.trim()),
         usernameRequired: !!this.user.username.trim(),
         passwordRequired: !!this.user.key.trim(),
-        confirmMatch: this.user.confirm.trim() === this.user.key.trim()
+        confirmMatch: this.user.confirmKey.trim() === this.user.key.trim()
       }
     },
     isValid () {

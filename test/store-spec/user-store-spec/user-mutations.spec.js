@@ -3,46 +3,6 @@ import { assert } from 'chai'
 import userMutations from '../../../src/store/user-store/user-mutations'
 
 describe('user mutations', () => {
-  it('SET_INITIALIZED', () => {
-    let state = {
-      initialized: false
-    }
-
-    userMutations.SET_INITIALIZED(state, true)
-
-    assert.deepEqual(state, { initialized: true })
-  })
-
-  it('SET_AUTHENTICATED', () => {
-    let state = {
-      authenticated: false
-    }
-
-    userMutations.SET_AUTHENTICATED(state, true)
-
-    assert.deepEqual(state, { authenticated: true })
-  })
-
-  it('SET_FORGOT', () => {
-    let state = {
-      forgot: false
-    }
-
-    userMutations.SET_FORGOT(state, true)
-
-    assert.deepEqual(state, { forgot: true })
-  })
-
-  it('SET_REMEMBER_ME', () => {
-    let state = {
-      rememberMe: false
-    }
-
-    userMutations.SET_REMEMBER_ME(state, true)
-
-    assert.deepEqual(state, { rememberMe: true })
-  })
-
   it('SET_USERNAME', () => {
     let state = {
       user: {
@@ -67,16 +27,16 @@ describe('user mutations', () => {
     assert.deepEqual(state, { user: { key: 'password' } })
   })
 
-  it('SET_CONFIRM', () => {
+  it('SET_CONFIRM_KEY', () => {
     let state = {
       user: {
-        confirm: ''
+        confirmKey: ''
       }
     }
 
-    userMutations.SET_CONFIRM(state, 'password')
+    userMutations.SET_CONFIRM_KEY(state, 'password')
 
-    assert.deepEqual(state, { user: { confirm: 'password' } })
+    assert.deepEqual(state, { user: { confirmKey: 'password' } })
   })
 
   it('SET_DARKMODE', () => {
@@ -115,91 +75,6 @@ describe('user mutations', () => {
     assert.strictEqual(state.user.tasks[1].list, 'Not current list')
   })
 
-  it('SET_CREATE', () => {
-    let state = {
-      user: {},
-      create: false
-    }
-
-    userMutations.SET_CREATE(state, true)
-
-    assert.isTrue(state.create)
-  })
-
-  it('SET_INVALID_KEY', () => {
-    let state = {
-      user: {},
-      invalidKey: ''
-    }
-
-    userMutations.SET_INVALID_KEY(state, 'Invalid key')
-
-    assert.strictEqual(state.invalidKey, 'Invalid key')
-  })
-
-  it('SET_LOGIN_ATTEMPT', () => {
-    let state = {
-      user: {},
-      loginAttempt: false
-    }
-
-    userMutations.SET_LOGIN_ATTEMPT(state, true)
-
-    assert.isTrue(state.loginAttempt)
-  })
-
-  it('SET_FORGOT_ATTEMPT', () => {
-    let state = {
-      user: {},
-      forgotAttempt: false
-    }
-
-    userMutations.SET_FORGOT_ATTEMPT(state, true)
-
-    assert.isTrue(state.forgotAttempt)
-  })
-
-  it('SET_FORGOT_EMAIL', () => {
-    let state = {
-      user: {},
-      forgotEmail: false
-    }
-
-    userMutations.SET_FORGOT_EMAIL(state, true)
-
-    assert.isTrue(state.forgotEmail)
-  })
-
-  it('SET_FORGOT_FAIL', () => {
-    let state = {
-      forgotFail: false
-    }
-
-    userMutations.SET_FORGOT_FAIL(state, true)
-
-    assert.deepEqual(state, { forgotFail: true })
-  })
-
-  it('SET_CONFIRM_ATTEMPT', () => {
-    let state = {
-      confirmAttempt: false
-    }
-
-    userMutations.SET_CONFIRM_ATTEMPT(state, true)
-
-    assert.deepEqual(state, { confirmAttempt: true })
-  })
-
-  it('SET_RESET', () => {
-    let state = {
-      reset: false
-    }
-
-    userMutations.SET_RESET(state, true)
-
-    assert.deepEqual(state, { reset: true })
-  })
-
   it('SET_RESET_KEY', () => {
     let state = {
       user: {
@@ -224,16 +99,6 @@ describe('user mutations', () => {
     assert.deepEqual(state, { user: { resetConfirmKey: 'reset-key' } })
   })
 
-  it('SET_RESET_ATTEMPT', () => {
-    let state = {
-      resetAttempt: false
-    }
-
-    userMutations.SET_RESET_ATTEMPT(state, true)
-
-    assert.deepEqual(state, { resetAttempt: true })
-  })
-
   it('SET_RESET_TOKEN', () => {
     let state = {
       resetToken: ''
@@ -242,45 +107,5 @@ describe('user mutations', () => {
     userMutations.SET_RESET_TOKEN(state, 'token')
 
     assert.deepEqual(state, { resetToken: 'token' })
-  })
-
-  it('SET_RESET_FAIL', () => {
-    let state = {
-      resetFail: false
-    }
-
-    userMutations.SET_RESET_FAIL(state, true)
-
-    assert.deepEqual(state, { resetFail: true })
-  })
-
-  it('SET_CREATE_FAIL', () => {
-    let state = {
-      createFail: false
-    }
-
-    userMutations.SET_CREATE_FAIL(state, true)
-
-    assert.deepEqual(state, { createFail: true })
-  })
-
-  it('SET_DISCONNECT', () => {
-    let state = {
-      disconnect: false
-    }
-
-    userMutations.SET_DISCONNECT(state, true)
-
-    assert.deepEqual(state, { disconnect: true })
-  })
-
-  it('SET_JUMPTO', () => {
-    let state = {
-      jumpto: ''
-    }
-
-    userMutations.SET_JUMPTO(state, 'link/to/something')
-
-    assert.deepEqual(state, { jumpto: 'link/to/something' })
   })
 })

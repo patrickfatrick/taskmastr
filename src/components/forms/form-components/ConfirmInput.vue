@@ -64,7 +64,7 @@ export default {
     match: Boolean
   },
   methods: mapActions([
-    'setConfirm'
+    'setConfirmKey'
   ])
 }
 </script>

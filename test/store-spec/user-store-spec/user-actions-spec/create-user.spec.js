@@ -19,7 +19,7 @@ describe('createUser', () => {
     testAction(userActions.createUser, { username: 'username', key: 'password', rememberMe: false }, {}, [
       { name: 'SET_USERNAME', payload: 'username' },
       { name: 'SET_KEY', payload: '' },
-      { name: 'SET_CONFIRM', payload: '' },
+      { name: 'SET_CONFIRM_KEY', payload: '' },
       { name: 'SET_DARKMODE', payload: true },
       { name: 'SET_AUTHENTICATED', payload: true }
     ], done)
