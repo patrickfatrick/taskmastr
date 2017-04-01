@@ -26,7 +26,7 @@
         :class="{'prompt-line__prompt--invalid': confirmAttempt && !match}"
         type="password"
         name="password"
-        placeholder="Password"
+        placeholder="Confirm Password"
         :value="user.confirm"
         @input="setConfirm($event.target.value)"
       />

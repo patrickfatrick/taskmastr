@@ -4,9 +4,9 @@ import ForgotVue from '../../src/components/ForgotVue.vue'
 import mountVm from '../mount-vm'
 
 describe('ForgotVue', function () {
-  it('should inherit the auth property from the state', () => {
+  it('should inherit the authenticated property from the state', () => {
     const vm = mountVm(ForgotVue)
-    assert.isFalse(vm.auth)
+    assert.isFalse(vm.authenticated)
   })
 
   it('should inherit the user property from the state', () => {
@@ -14,9 +14,9 @@ describe('ForgotVue', function () {
     assert.isObject(vm.user)
   })
 
-  it('should inherit the init property from the state', () => {
+  it('should inherit the initialized property from the state', () => {
     const vm = mountVm(ForgotVue)
-    assert.isFalse(vm.init)
+    assert.isFalse(vm.initialized)
   })
 
   it('should inherit the reset property from the state', () => {
@@ -35,25 +35,25 @@ describe('ForgotVue', function () {
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm(ForgotVue, { forgot: true, init: true })
+    const vm = mountVm(ForgotVue, { forgot: true, initialized: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
     assert.isNotNull(vm.$el.querySelector('.modal'))
     assert.isNotNull(vm.$el.querySelector('.forgot-form'))
   })
 
-  it('should respond to changes in the state (init)', () => {
-    const vm = mountVm(ForgotVue, { forgot: true, init: false })
+  it('should respond to changes in the state (initialized)', () => {
+    const vm = mountVm(ForgotVue, { forgot: true, initialized: false })
 
     assert.isNull(vm.$el.querySelector('.mask'))
     assert.isNull(vm.$el.querySelector('.modal'))
   })
 
-  it('should respond to changes in the state (auth and user.tasks)', () => {
+  it('should respond to changes in the state (authenticated and user.tasks)', () => {
     const vm = mountVm(ForgotVue, {
       forgot: true,
-      init: true,
-      auth: 'username@domain.com',
+      initialized: true,
+      authenticated: true,
       user: {
         tasks: [
           {

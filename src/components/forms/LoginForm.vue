@@ -37,14 +37,6 @@
 
 .login-form__button-container__submit {
   @apply --buttonGo;
-
-  padding: 3px 3px 4px 5px;
-  margin-top: 2rem;
-  width: 60px;
-
-  @media (--medium) {
-    width: 100px;
-  }
 }
 </style>
 
@@ -69,8 +61,8 @@ export default {
   computed: {
     ...mapState({
       user: (state) => state.user,
-      auth: (state) => state.auth,
-      current: (state) => state.current,
+      authenticated: (state) => state.authenticated,
+      currentList: (state) => state.currentList,
       reset: (state) => state.reset,
       forgot: (state) => state.forgot,
       create: (state) => state.create,
@@ -99,12 +91,12 @@ export default {
       if (!this.isValid) return
       this.loginUser({ username, key, rememberMe })
       .then(() => {
-        if (this.auth) {
+        if (this.authenticated) {
           setTimeout(() => {
-            this.$router.push('/app/list/' + this.current._id)
+            this.$router.push('/app/list/' + this.currentList)
           }, 250)
         }
-        if (this.create && !this.auth) {
+        if (this.create && !this.authenticated) {
           this.$router.push('/create')
         }
       })

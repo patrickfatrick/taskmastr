@@ -10,8 +10,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!to.params.listid && store.state.auth) return next({ path: '/app' })
-  if (to.meta.requiresAuth && !store.state.auth) return next({ path: '/login' })
+  if (to.matched.some(record => record.meta.authenticate)) {
+    if (!store.state.authenticated) next({ path: '/login' })
+  }
+
+  if (!to.params.listid && store.state.authenticated) next({ path: '/app' })
+
   next()
 })
 

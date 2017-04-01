@@ -9,7 +9,7 @@ export default [
   {
     path: '/app',
     component: ContentVue,
-    meta: { requiresAuth: true },
+    meta: { authenticate: true },
     children: [
       {
         path: 'list/:listid',
@@ -25,22 +25,26 @@ export default [
   {
     path: '/login',
     name: 'Login',
-    component: LoginVue
+    component: LoginVue,
+    meta: { authenticate: false }
   },
   {
     path: '/reset',
     name: 'Reset',
-    component: ResetVue
+    component: ResetVue,
+    meta: { authenticate: false }
   },
   {
     path: '/create',
     name: 'Create',
-    component: CreateVue
+    component: CreateVue,
+    meta: { authenticate: false }
   },
   {
     path: '/forgot',
     name: 'Forgot',
-    component: ForgotVue
+    component: ForgotVue,
+    meta: { authenticate: false }
   },
   {
     path: '*',

@@ -4,9 +4,9 @@ import CreateVue from '../../src/components/CreateVue.vue'
 import mountVm from '../mount-vm'
 
 describe('CreateVue', function () {
-  it('should inherit the auth property from the state', () => {
+  it('should inherit the authenticated property from the state', () => {
     const vm = mountVm(CreateVue)
-    assert.isFalse(vm.auth)
+    assert.isFalse(vm.authenticated)
   })
 
   it('should inherit the user property from the state', () => {
@@ -14,29 +14,29 @@ describe('CreateVue', function () {
     assert.isObject(vm.user)
   })
 
-  it('should inherit the init property from the state', () => {
+  it('should inherit the initialized property from the state', () => {
     const vm = mountVm(CreateVue)
-    assert.isFalse(vm.init)
+    assert.isFalse(vm.initialized)
   })
 
   it('should render with initial state and component tree', () => {
-    const vm = mountVm(CreateVue, { init: true })
+    const vm = mountVm(CreateVue, { initialized: true })
 
     assert.isNotNull(vm.$el.querySelector('.mask'))
     assert.isNotNull(vm.$el.querySelector('.modal'))
   })
 
-  it('should respond to changes in the state (init)', () => {
+  it('should respond to changes in the state (initialized)', () => {
     const vm = mountVm(CreateVue)
 
     assert.isNull(vm.$el.querySelector('.mask'))
     assert.isNull(vm.$el.querySelector('.modal'))
   })
 
-  it('should respond to changes in the state (auth and user.tasks)', () => {
+  it('should respond to changes in the state (authenticated and user.tasks)', () => {
     const vm = mountVm(CreateVue, {
-      init: true,
-      auth: 'username@domain.com',
+      initialized: true,
+      authenticated: true,
       user: {
         tasks: [
           {

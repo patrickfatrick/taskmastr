@@ -38,14 +38,6 @@
 
 .create-form__button-container__submit {
   @apply --buttonGo;
-
-  padding: 3px 3px 4px 5px;
-  margin-top: 2rem;
-  width: 60px;
-
-  @media (--medium) {
-    width: 100px;
-  }
 }
 </style>
 
@@ -73,7 +65,7 @@ export default {
   computed: {
     ...mapState({
       user: (state) => state.user,
-      auth: (state) => state.auth,
+      authenticated: (state) => state.authenticated,
       current: (state) => state.current,
       forgot: (state) => state.forgot,
       rememberMe: (state) => state.rememberMe
@@ -105,7 +97,7 @@ export default {
       const list = defaultList(this.user.username)
       this.createUser({ username, key, rememberMe })
       .then(() => {
-        if (this.auth) {
+        if (this.authenticated) {
           this.addList({...list, owner: this.user.username, users: []})
           this.setCurrentList(list)
           setTimeout(() => {

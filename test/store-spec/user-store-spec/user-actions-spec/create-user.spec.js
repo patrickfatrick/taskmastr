@@ -21,7 +21,7 @@ describe('createUser', () => {
       { name: 'SET_KEY', payload: '' },
       { name: 'SET_CONFIRM', payload: '' },
       { name: 'SET_DARKMODE', payload: true },
-      { name: 'SET_AUTH', payload: 'username' }
+      { name: 'SET_AUTHENTICATED', payload: true }
     ], done)
   })
 

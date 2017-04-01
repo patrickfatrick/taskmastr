@@ -120,13 +120,18 @@
     font-size: 2rem;
     text-transform: lowercase;
     position: relative;
-    width: 100px;
     height: 2.5rem;
-    padding: 0 4px 0 7px;
     cursor: pointer;
     border: 0;
     outline: 0;
     border-radius: 20px;
+    padding: 3px 3px 4px 5px;
+    margin-top: 2rem;
+    width: 60px;
+
+    @media (--medium) {
+      width: 100px;
+    }
   };
 
   --table: {

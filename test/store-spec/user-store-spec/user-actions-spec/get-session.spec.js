@@ -17,16 +17,17 @@ describe('getSession', () => {
     })
 
     testAction(userActions.getUserSession, null, {}, [
+      { name: 'SET_INITIALIZED', payload: true },
       { name: 'SET_USERNAME', payload: 'username' },
       { name: 'SET_KEY', payload: '' },
       { name: 'SET_DARKMODE', payload: true },
       { name: 'SET_TASKS', payload: mockUser.tasks },
       { name: 'SET_CURRENT_LIST', payload: mockUser.tasks[0] },
-      { name: 'SET_AUTH', payload: 'username' }
+      { name: 'SET_AUTHENTICATED', payload: true }
     ], done)
   })
 
-  it('dispatches SET_INIT on no user session', (done) => {
+  it('dispatches SET_INITIALIZED on no user session', (done) => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         getSession (cb) {
@@ -36,7 +37,7 @@ describe('getSession', () => {
     })
 
     testAction(userActions.getUserSession, null, {}, [
-      { name: 'SET_INIT', payload: true }
+      { name: 'SET_INITIALIZED', payload: true }
     ], done)
   })
 })

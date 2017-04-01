@@ -15,9 +15,9 @@ describe('LoginForm.vue', function () {
     clock.restore()
   })
 
-  it('should inherit the auth property from the state', () => {
+  it('should inherit the authenticated property from the state', () => {
     const vm = mountVm(LoginForm)
-    assert.isFalse(vm.auth)
+    assert.isFalse(vm.authenticated)
   })
 
   it('should inherit the user property from the state', () => {
@@ -25,9 +25,9 @@ describe('LoginForm.vue', function () {
     assert.isObject(vm.user)
   })
 
-  it('should inherit the current property from the state', () => {
+  it('should inherit the currentList property from the state', () => {
     const vm = mountVm(LoginForm)
-    assert.isObject(vm.current)
+    assert.strictEqual(vm.currentList, '')
   })
 
   it('should inherit the reset property from the state', () => {
@@ -84,10 +84,8 @@ describe('LoginForm.vue', function () {
 
   it('should log in to app if isValid', () => {
     const vm = mountVm(LoginForm, {
-      auth: 'username@domain.com',
-      current: {
-        _id: 'listid'
-      },
+      authenticated: true,
+      currentList: 'listid',
       user: {
         username: 'username@domain.com',
         key: 'password'
@@ -106,9 +104,9 @@ describe('LoginForm.vue', function () {
     vm.loginUser.restore()
   })
 
-  it('should redirect to /create on !auth and create', () => {
+  it('should redirect to /create on !authenticated and create', () => {
     const vm = mountVm(LoginForm, {
-      auth: false,
+      authenticated: false,
       create: true,
       user: {
         username: 'username@domain.com',
@@ -130,7 +128,7 @@ describe('LoginForm.vue', function () {
 
   it('should not log in to app on !isValid', () => {
     const vm = mountVm(LoginForm, {
-      auth: '',
+      authenticated: false,
       user: {
         username: 'username',
         key: 'password'

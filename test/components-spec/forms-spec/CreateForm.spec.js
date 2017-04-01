@@ -15,9 +15,9 @@ describe('CreateForm.vue', function () {
     clock.restore()
   })
 
-  it('should inherit the auth property from the state', () => {
+  it('should inherit the authenticated property from the state', () => {
     const vm = mountVm(CreateForm)
-    assert.isFalse(vm.auth)
+    assert.isFalse(vm.authenticated)
   })
 
   it('should inherit the user property from the state', () => {
@@ -80,7 +80,7 @@ describe('CreateForm.vue', function () {
 
   it('should create user and log in to app if isValid', () => {
     const vm = mountVm(CreateForm, {
-      auth: 'username@domain.com',
+      authenticated: 'username@domain.com',
       user: {
         username: 'username@domain.com',
         key: 'password',

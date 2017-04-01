@@ -1,5 +1,5 @@
-export const SET_INIT = 'SET_INIT'
-export const SET_AUTH = 'SET_AUTH'
+export const SET_INITIALIZED = 'SET_INITIALIZED'
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED'
 export const SET_USERNAME = 'SET_USERNAME'
 export const SET_KEY = 'SET_KEY'
 export const SET_CONFIRM = 'SET_CONFIRM'

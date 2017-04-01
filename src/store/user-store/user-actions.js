@@ -2,12 +2,12 @@ import _ from 'lodash'
 import socket from '../../socket.js'
 import { getSession, login, create, reset, forgot, logout, updateUser } from '../../services/user-services'
 
-export function setInit ({ commit }, bool) {
-  commit('SET_INIT', bool)
+export function setInitialized ({ commit }, bool) {
+  commit('SET_INITIALIZED', bool)
 }
 
-export function setAuth ({ commit }, bool) {
-  commit('SET_AUTH', bool)
+export function setAuthenticated ({ commit }, bool) {
+  commit('SET_AUTHENTICATED', bool)
 }
 
 export function setUsername ({ commit }, str) {
@@ -104,14 +104,15 @@ export function setDarkmode ({ commit, state }, bool) {
 
 export function getUserSession ({ commit }) {
   return getSession((err, response) => {
-    if (err) return commit('SET_INIT', true)
+    if (err) return commit('SET_INITIALIZED', true)
     let tasks = response.tasks
+    commit('SET_INITIALIZED', true)
     commit('SET_USERNAME', response.username)
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)
     commit('SET_TASKS', tasks)
     commit('SET_CURRENT_LIST', _.find(tasks, { _id: response.currentList }) || tasks[0])
-    commit('SET_AUTH', response.username)
+    commit('SET_AUTHENTICATED', true)
     socket.emit('join', response.username)
     return response.username
   })
@@ -123,13 +124,13 @@ export function loginUser ({ commit }, { username, key, rememberMe }) {
       if (response.status === 204) return commit('SET_CREATE', true)
       if (response.status === 401) return commit('SET_INVALID_KEY', err)
     }
-    let tasks = response.tasks || response.todos
+    let tasks = response.tasks
     commit('SET_USERNAME', response.username)
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)
     commit('SET_TASKS', tasks)
     commit('SET_CURRENT_LIST', _.find(tasks, { _id: response.currentList }) || tasks[0])
-    commit('SET_AUTH', response.username)
+    commit('SET_AUTHENTICATED', true)
     socket.emit('join', response.username)
     return response.username
   })
@@ -148,7 +149,7 @@ export function createUser ({ commit }, { username, key, rememberMe }) {
     commit('SET_KEY', '')
     commit('SET_CONFIRM', '')
     commit('SET_DARKMODE', response.darkmode)
-    commit('SET_AUTH', response.username)
+    commit('SET_AUTHENTICATED', true)
     socket.emit('join', response.username)
     return response.username
   })

@@ -8,8 +8,8 @@ export default {
     darkmode: false,
     tasks: []
   },
-  init: false,
-  auth: false,
+  initialized: false,
+  authenticated: false,
   forgot: false,
   create: false,
   currentList: '',

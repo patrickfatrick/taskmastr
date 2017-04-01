@@ -3,24 +3,24 @@ import { assert } from 'chai'
 import userMutations from '../../../src/store/user-store/user-mutations'
 
 describe('user mutations', () => {
-  it('SET_CURRENT_TASK', () => {
+  it('SET_INITIALIZED', () => {
     let state = {
-      init: false
+      initialized: false
     }
 
-    userMutations.SET_INIT(state, true)
+    userMutations.SET_INITIALIZED(state, true)
 
-    assert.deepEqual(state, { init: true })
+    assert.deepEqual(state, { initialized: true })
   })
 
-  it('SET_AUTH', () => {
+  it('SET_AUTHENTICATED', () => {
     let state = {
-      auth: false
+      authenticated: false
     }
 
-    userMutations.SET_AUTH(state, 'username@email.com')
+    userMutations.SET_AUTHENTICATED(state, true)
 
-    assert.deepEqual(state, { auth: 'username@email.com' })
+    assert.deepEqual(state, { authenticated: true })
   })
 
   it('SET_FORGOT', () => {

@@ -45,7 +45,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   computed: mapState({
     user: (state) => state.user,
-    auth: (state) => state.auth,
+    authenticated: (state) => state.authenticated,
     darkmode: (state) => state.user.darkmode,
     current: (state) => state.current,
     currentList: (state) => state.currentList
@@ -66,6 +66,7 @@ export default {
       this.$router.push(`/app/list/${id}${(newuser) ? '?newuser=' + newuser : ''}`)
     },
     routeWatcher () {
+      console.log(this.$route)
       if (this.$route.query.newuser) {
         this.confirmListUser({
           listid: this.$route.params.listid,
@@ -129,14 +130,14 @@ export default {
         this.routeWatcher()
 
         // Opt to route to the listid if provided
-        if (this.auth && listID && newUser) return this.navigateToList(listID, newUser)
-        if (this.auth && listID) return this.navigateToList(listID)
+        if (this.authenticated && listID && newUser) return this.navigateToList(listID, newUser)
+        if (this.authenticated && listID) return this.navigateToList(listID)
 
         // Go to user's current list if no listid is provided in url
-        if (this.auth) return this.navigateToList(this.current._id)
+        if (this.authenticated) return this.navigateToList(this.current._id)
 
         // If no session found, route to login
-        this.$router.push('/login')
+        // this.$router.push('/login')
       })
     })
   }

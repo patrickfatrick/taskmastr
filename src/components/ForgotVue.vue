@@ -3,13 +3,13 @@
     <transition name="mask">
       <div
         class="mask"
-        v-if="!auth && init"
+        v-if="!authenticated && initialized"
       />
     </transition>
     <transition name="modal">
       <div
         class="modal"
-        v-if="!user.tasks.length && init"
+        v-if="!user.tasks.length && initialized"
       >
         <div class="modal__header">
           <h1 class="modal__header__headline">Taskmastr</h1>
@@ -48,8 +48,8 @@ import ForgotForm from './forms/ForgotForm.vue'
 export default {
   computed: mapState({
     user: (state) => state.user,
-    init: (state) => state.init,
-    auth: (state) => state.auth,
+    initialized: (state) => state.initialized,
+    authenticated: (state) => state.authenticated,
     reset: (state) => state.reset,
     forgot: (state) => state.forgot
   }),

@@ -58,7 +58,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   computed: mapState({
     wiki: (state) => state.wiki,
-    auth: (state) => state.auth,
+    authenticated: (state) => state.authenticated,
     testUser: (state) => state.testUser,
     testKey: (state) => state.testKey,
     current: (state) => state.current
@@ -70,7 +70,7 @@ export default {
     loginTestUser (username, key, rememberMe) {
       this.loginUser({ username, key, rememberMe })
       .then(() => {
-        if (this.auth) {
+        if (this.authenticated) {
           setTimeout(() => {
             this.$router.push('/app/list/' + this.current._id)
           }, 250)

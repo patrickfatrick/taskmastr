@@ -16,9 +16,9 @@ describe('ResetForm.vue', function () {
     clock.restore()
   })
 
-  it('should inherit the auth property from the state', () => {
+  it('should inherit the authenticated property from the state', () => {
     const vm = mountVm(ResetForm)
-    assert.isFalse(vm.auth)
+    assert.isFalse(vm.authenticated)
   })
 
   it('should inherit the user property from the state', () => {
@@ -26,9 +26,9 @@ describe('ResetForm.vue', function () {
     assert.isObject(vm.user)
   })
 
-  it('should inherit the current property from the state', () => {
+  it('should inherit the currentList property from the state', () => {
     const vm = mountVm(ResetForm)
-    assert.isObject(vm.current)
+    assert.strictEqual(vm.currentList, '')
   })
 
   it('should inherit the resetToken property from the state', () => {
@@ -72,15 +72,13 @@ describe('ResetForm.vue', function () {
 
   it('should reset password and log in to app if isValid', () => {
     const vm = mountVm(ResetForm, {
-      auth: 'username@domain.com',
+      authenticated: true,
       user: {
         username: 'username@domain.com',
         resetKey: 'password',
         resetConfirmKey: 'password'
       },
-      current: {
-        _id: 'listid'
-      },
+      currentList: 'listid',
       resetToken: 'token'
     })
     promise = sinon.stub(vm, 'resetPassword').returnsPromise()
@@ -102,7 +100,7 @@ describe('ResetForm.vue', function () {
 
   it('should not reset password or log in to app if !isValid', () => {
     const vm = mountVm(ResetForm, {
-      auth: 'username@domain.com',
+      authenticated: true,
       user: {
         resetKey: 'password',
         resetConfirmKey: 'password'

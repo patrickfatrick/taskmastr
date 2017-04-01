@@ -26,15 +26,11 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
 import Tasks from './tasks/Tasks.vue'
 import MenuWidget from './menu/Menu.vue'
 import WarningBanner from './misc/WarningBanner.vue'
 
 export default {
-  computed: mapState({
-    auth: (state) => state.auth
-  }),
   components: {
     MenuWidget,
     Tasks,

@@ -30,9 +30,9 @@ describe('TryItVue', function () {
     assert.strictEqual(vm.wiki, '//patrickfatrick.gitbooks.io/taskmastr/content/')
   })
 
-  it('should inherit the auth property from the state', () => {
+  it('should inherit the authenticated property from the state', () => {
     const vm = mountVm(TryIt)
-    assert.isFalse(vm.auth)
+    assert.isFalse(vm.authenticated)
   })
 
   it('should inherit the current property from the state', () => {
@@ -52,7 +52,7 @@ describe('TryItVue', function () {
   })
 
   it('should log in to the test account on loginTestUser', () => {
-    const vm = mountVm(TryIt, { auth: 'mrormrstestperson@taskmastr.co' })
+    const vm = mountVm(TryIt, { authenticated: 'mrormrstestperson@taskmastr.co' })
     promise = sinon.stub(vm, 'loginUser').returnsPromise()
     promise.resolves('mrormrstestperson@taskmastr.co')
     sinon.stub(vm.$router, 'push')

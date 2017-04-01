@@ -4,7 +4,7 @@
       class="prompt-line__prompt"
       type="password"
       name="resetConfirm"
-      placeholder="Password"
+      placeholder="Confirm Password"
       :value="user.resetConfirmKey"
       @input="setResetConfirmKey($event.target.value)"
       :class="{'prompt-line__prompt--invalid': resetAttempt && (!match || resetFail)}"
@@ -19,7 +19,7 @@
   @apply --promptLine;
 }
 
-.prompt-line--confirm-line {
+.prompt-line--reset-confirm-line {
   @apply --promptLine;
 
   @media (--medium) {
