@@ -35,11 +35,11 @@ describe('DarkmodeVue', function () {
     vm.setDarkmode.restore()
   })
 
-  it('should call setDarkmode on command+m', () => {
+  it('should call setDarkmode on ctrl+m', () => {
     const vm = mountVm(Darkmode)
     sinon.stub(vm, 'setDarkmode')
 
-    Mousetrap.trigger('command+m')
+    Mousetrap.trigger('ctrl+m')
 
     assert.isTrue(vm.setDarkmode.calledWith(true))
     vm.setDarkmode.restore()

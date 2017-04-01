@@ -30,7 +30,7 @@ export default {
     'setDarkmode'
   ]),
   mounted () {
-    Mousetrap.bind('command+m', (e) => {
+    Mousetrap.bind('ctrl+m', (e) => {
       if (e.preventDefault) e.preventDefault()
       this.setDarkmode(!this.darkmode)
     })
