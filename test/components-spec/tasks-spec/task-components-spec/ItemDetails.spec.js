@@ -66,11 +66,6 @@ describe('ItemDetailsVue', function () {
     assert.isNull(vm.detailsToggled)
   })
 
-  it('should inherit a setTaskNotes action from the store', () => {
-    const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
-    assert.isFunction(vm.setTaskNotes)
-  })
-
   it('should inherit a toggleDetails action from the store', () => {
     const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
     assert.isFunction(vm.toggleDetails)

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans");
-@import url("https://fonts.googleapis.com/css?family=Cardo:400,400italic");
-@import url("https://fonts.googleapis.com/css?family=Raleway:400");
+@import url("https://fonts.googleapis.com/css?family=Cardo:400");
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700,700i");
+@import "marky-marked/dist/marky-marked.css";
 @import "animate.css";
 @import "reset";
 @import "variables";

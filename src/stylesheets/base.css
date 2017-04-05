@@ -267,3 +267,120 @@ a {
 .pika-single.is-hidden {
   display: none;
 }
+
+/* ---------- Marky Marked ---------- */
+
+.marky-editor {
+  width: 100%;
+  height: 10rem;
+  background: transparent;
+  min-height: 300px;
+
+  @media (height >= 600px) {
+    min-height: 350px;
+  }
+
+  @media (height >= 700px) {
+    min-height: 375px;
+  }
+
+  @media (height >= 800px) {
+    min-height: 450px;
+  }
+}
+
+.marky-toolbar {
+  & button {
+    background-color: color(var(--gray) lightness(90%));
+  }
+
+  & .dialog,
+  & .dialog .heading-button,
+  & input {
+    background-color: color(var(--gray) lightness(95%));
+  }
+}
+
+[id^="marky-mark-"].marky-expanded {
+  position: absolute;
+  background-color: color(var(--gray) lightness(90%));
+
+  @media (height >= 600px) {
+    min-height: 500px;
+  }
+
+  @media (height >= 700px) {
+    min-height: 600px;
+  }
+
+  @media (height >= 800px) {
+    min-height: 700px;
+  }
+}
+
+/* Not scoped because marky marked inserts HTML directly into the DOM */
+.task-notes-container__task-notes {
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6,
+  & p {
+    margin-bottom: 1rem;
+  }
+
+  & h1 {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  & h2 {
+    font-size: 1.4rem;
+  }
+
+  & h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  & h4 {
+    font-size: 1.2rem;
+  }
+
+  & h5 {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  & h6 {
+    font-size: 0.8rem;
+  }
+
+  & em {
+    font-style: italic;
+  }
+
+  & strong {
+    font-weight: bold;
+  }
+
+  & blockquote {
+    color: gray;
+    background-color: color(var(--gray) lightness(93%));
+    border-left: 5px solid gray;
+    padding-left: 10px;
+  }
+
+  & code {
+    font-family: monospace;
+    font-style: normal;
+    padding: 4px;
+    color: #c7254e;
+    background-color: #f9f2f4;
+  }
+
+  & a {
+    text-decoration: underline;
+  }
+}

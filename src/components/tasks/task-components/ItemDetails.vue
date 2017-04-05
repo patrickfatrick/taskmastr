@@ -1,130 +1,128 @@
 <template>
   <div>
     <transition name="mask">
-      <div class="mask"
-        v-if="detailsToggled === index"
+      <div 
+        class="mask"
         @click="toggleDetails(index)"
+        v-if="detailsToggled === index"
       />
     </transition>
-    <transition name="details">
-      <div
-        class="task-details"
-        v-if="detailsToggled === index"
-        :class="{'toggled': detailsToggled === index}"
-      >
-        <button
-          class="task-details__close"
-          @click.prevent="toggleDetails(index)"
+    <div class="task-details-container" v-show="detailsToggled === index">
+      <transition name="details">
+        <div
+          class="task-details"
+          :class="{'toggled': detailsToggled === index}"
+          v-if="detailsToggled === index"
         >
-          <i class="fa fa-times" />
-        </button>
-        <div class="task-details__task-name-container">
-          <input
-            class="task-details__task-name-container__task-name mousetrap"
-            type="text"
-            :value="task.item"
-            @change="rename($event, index)"
+          <button
+            class="task-details__close"
+            @click.prevent="toggleDetails(index)"
+          >
+            <i class="fa fa-times" />
+          </button>
+          <div class="task-details__task-name-container">
+            <input
+              class="task-details__task-name-container__task-name mousetrap"
+              type="text"
+              :value="task.item"
+              @change="rename($event, index)"
+            />
+          </div>
+          <div class="task-details__task-info-container task-details__task-info-container--dates">
+            <div class="task-details-panel task-details__task-info-container__task-create">
+              <span class="task-details-panel__task-label">
+                Created on
+              </span>
+              {{reformatDate(task.dateCreated)}}
+              <br>
+              <span class="task-details-panel__task-label">
+                by {{(task.createdBy === username) ? 'You' : task.createdBy}}
+              </span>
+            </div>
+            <div
+              class="task-details-panel task-details__task-info-container__task-complete"
+              v-show="task.dateCompleted"
+            >
+              <span class="task-details-panel__task-label">
+                Completed on
+              </span>
+              {{reformatDate(task.dateCompleted)}}
+              <br>
+              <span class="task-details-panel__task-label">
+                by {{(task.completedBy === username) ? 'You' : task.completedBy}}
+              </span>
+            </div>
+            <div
+              class="task-details-panel task-details__task-info-container__task-due"
+              v-show="!task.complete"
+            >
+              <span
+                class="task-details-panel__task-label"
+                v-show="task.dueDate"
+              >
+                Due on
+              </span>
+              {{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
+              <span
+                class="task-details-panel__task-label"
+                v-show="!task.dueDate"
+              >
+                Set a due date&nbsp;
+              </span>
+              <datepicker
+                :task="task"
+                :index="index"
+              />
+            </div>
+            <div
+              class="task-details-panel task-details__task-info-container__human-readable"
+              v-show="!task.complete"
+            >
+              <div
+                class="human-readable__due-in"
+                v-show="task._dueDateDifference > 0"
+              >
+                <span v-show="task._dueDateDifference > 1">
+                  <span class="task-details-panel__task-label">which is</span>
+                  {{task._dueDateDifference}}&nbsp;days&nbsp;
+                  <span class="task-details-panel__task-label">from now</span>
+                </span>
+                <span v-show="task._dueDateDifference === 1">
+                  <span class="task-details-panel__task-label">which is</span>
+                  tomorrow
+                </span>
+              </div>
+              <div
+                class="human-readable__overdue"
+                v-show="task._dueDateDifference < 0"
+              >
+                <span v-show="task._dueDateDifference < -1">
+                  <span class="task-details-panel__task-label">which was</span>
+                  {{-task._dueDateDifference}}&nbsp;days&nbsp;
+                  <span class="task-details-panel__task-label">ago</span>
+                </span>
+                <span v-show="task._dueDateDifference === -1">
+                  <span class="task-details-panel__task-label">which was</span>
+                  yesterday
+                </span>
+              </div>
+              <div
+                class="human-readable__due-today"
+                v-show="task._dueDateDifference === 0"
+              >
+                <span class="task-details-panel__task-label">which is</span>
+                today
+              </div>
+            </div>
+          </div>
+          <notes
+            :task="task"
+            :index="index"
+            :detailsToggled="detailsToggled"
           />
         </div>
-        <div class="task-details__task-info-container task-details__task-info-container--dates">
-          <div class="task-details-panel task-details__task-info-container__task-create">
-            <span class="task-details-panel__task-label">
-              Created on
-            </span>
-            {{reformatDate(task.dateCreated)}}
-            <br>
-            <span class="task-details-panel__task-label">
-              by {{(task.createdBy === username) ? 'You' : task.createdBy}}
-            </span>
-          </div>
-          <div
-            class="task-details-panel task-details__task-info-container__task-complete"
-            v-show="task.dateCompleted"
-          >
-            <span class="task-details-panel__task-label">
-              Completed on
-            </span>
-            {{reformatDate(task.dateCompleted)}}
-            <br>
-            <span class="task-details-panel__task-label">
-              by {{(task.completedBy === username) ? 'You' : task.completedBy}}
-            </span>
-          </div>
-          <div
-            class="task-details-panel task-details__task-info-container__task-due"
-            v-show="!task.complete"
-          >
-            <span
-              class="task-details-panel__task-label"
-              v-show="task.dueDate"
-            >
-              Due on
-            </span>
-            {{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
-            <span
-              class="task-details-panel__task-label"
-              v-show="!task.dueDate"
-            >
-              Set a due date&nbsp;
-            </span>
-            <datepicker
-              :task="task"
-              :index="index"
-            />
-          </div>
-          <div
-            class="task-details-panel task-details__task-info-container__human-readable"
-            v-show="!task.complete"
-          >
-            <div
-              class="human-readable__due-in"
-              v-show="task._dueDateDifference > 0"
-            >
-              <span v-show="task._dueDateDifference > 1">
-                <span class="task-details-panel__task-label">which is</span>
-                {{task._dueDateDifference}}&nbsp;days&nbsp;
-                <span class="task-details-panel__task-label">from now</span>
-              </span>
-              <span v-show="task._dueDateDifference === 1">
-                <span class="task-details-panel__task-label">which is</span>
-                tomorrow
-              </span>
-            </div>
-            <div
-              class="human-readable__overdue"
-              v-show="task._dueDateDifference < 0"
-            >
-              <span v-show="task._dueDateDifference < -1">
-                <span class="task-details-panel__task-label">which was</span>
-                {{-task._dueDateDifference}}&nbsp;days&nbsp;
-                <span class="task-details-panel__task-label">ago</span>
-              </span>
-              <span v-show="task._dueDateDifference === -1">
-                <span class="task-details-panel__task-label">which was</span>
-                yesterday
-              </span>
-            </div>
-            <div
-              class="human-readable__due-today"
-              v-show="task._dueDateDifference === 0"
-            >
-              <span class="task-details-panel__task-label">which is</span>
-              today
-            </div>
-          </div>
-        </div>
-        <div class="task-details__task-info-container task-details__task-info-container--task-notes">
-          <h2>Notes</h2>
-          <div>
-            <textarea
-              class="task-notes-container__task-notes mousetrap"
-              :value="task.notes"
-              @change="setTaskNotes({ index, notes: $event.target.value })"
-            />
-          </div>
-        </div>
-      </div>
-    </transition>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -133,6 +131,14 @@
 
 .mask {
   @apply --mask;
+}
+
+.task-details-container {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow-y: scroll;
 }
 
 .details-enter-active {
@@ -146,7 +152,7 @@
 .task-details {
   @apply --center;
 
-  position: fixed;
+  position: absolute;
   background: color(var(--gray) lightness(90%));
   color: color(var(--gray) shade(40%));
   padding: 0.5rem 0.7rem 3rem;
@@ -164,13 +170,14 @@
     width: 768px;
   }
 
-  @media (height >= 600px) {
+  @media (height >= 700px) {
     top: 3rem;
-    min-height: 500px;
+    min-height: 600px;
+    margin-bottom: 2rem;
   }
 
-  @media (height >= 700px) {
-    min-height: 600px;
+  @media (height >= 800px) {
+    min-height: 700px;
   }
 
   & .task-details__close {
@@ -232,28 +239,6 @@
     font-size: 0.8rem;
     margin-right: 0.5rem;
   }
-
-  & .task-notes-container__task-notes {
-    width: 100%;
-    min-height: 300px;
-    height: auto;
-    outline: none;
-    resize: none;
-    background: transparent;
-    font-size: 1rem;
-    font-family: var(--raleway);
-    padding: 0.5rem;
-    border: 2px solid var(--slateGray);
-    transition: border-color 500ms ease-out;
-
-    &:focus {
-      border-color: var(--deepBlue);
-    }
-
-    @media (height >= 700px) {
-      min-height: 375px;
-    }
-  }
 }
 </style>
 
@@ -263,6 +248,7 @@ import Mousetrap from 'mousetrap'
 import gregorian from 'gregorian'
 import { mapState, mapActions } from 'vuex'
 import Datepicker from './Datepicker.vue'
+import Notes from './Notes.vue'
 
 export default {
   computed: mapState({
@@ -271,7 +257,8 @@ export default {
     detailsToggled: (state) => state.detailsToggled
   }),
   components: {
-    Datepicker
+    Datepicker,
+    Notes
   },
   props: {
     index: Number,
@@ -279,7 +266,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setTaskNotes',
       'toggleDetails',
       'setDueDateDifference',
       'renameTask'
@@ -300,7 +286,7 @@ export default {
 
     // Keyboard bindings
     Mousetrap.bind('ctrl+d', () => {
-      this.toggleDetails(_.findIndex(this.tasks, {current: true}))
+      this.toggleDetails(_.findIndex(this.tasks, { current: true }))
     })
   }
 }

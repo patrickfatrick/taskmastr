@@ -56,6 +56,7 @@
   position: relative;
   margin-top: 1rem;
   margin-bottom: 5rem;
+  width: 100%;
 
   /* fixes for safari */
   float: none !important;

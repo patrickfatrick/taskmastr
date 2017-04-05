@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const base = require('./webpack.config.base')
 
@@ -12,13 +11,7 @@ module.exports = merge(base, {
           loader: 'vue-loader',
           options: {
             loaders: {
-              js: 'babel-loader!standard-loader',
-              postcss: [
-                'vue-style-loader',
-                'style-loader',
-                'css-loader?importLoaders=1',
-                'postcss-loader'
-              ]
+              js: 'babel-loader!standard-loader'
             }
           }
         }]

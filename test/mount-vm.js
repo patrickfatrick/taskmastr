@@ -6,11 +6,10 @@ import actions from '../src/store/actions'
 import getters from '../src/store/getters'
 import router from '../src/router'
 
-export default function (component, changes, propsData, data) {
+export default function (component, changes, propsData) {
   return new Vue(Vue.util.extend({
     router,
     propsData,
-    data,
     store: new Vuex.Store({
       state: {
         ...state,
