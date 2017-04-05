@@ -14,8 +14,12 @@ export function getList (id, cb) {
   .then((response) => response.json())
   .then((list) => cb(null, list))
   .catch((err) => {
-    if (err.response.status === 404) return cb('You\'re not viewing a list. Please click on one in the menu to the left.', err.response)
-    if (err.response.status === 403) return cb('You\'re not authorized to view this list.', err.response)
+    if (err.response.status === 404) {
+      return cb(new Error('You\'re not viewing a list. Please click on one in the menu to the left.'), err.response)
+    }
+    if (err.response.status === 403) {
+      return cb(new Error('You\'re not authorized to view this list.'), err.response)
+    }
     cb(err, err.response)
   })
 }

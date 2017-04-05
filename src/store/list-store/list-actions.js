@@ -37,7 +37,7 @@ export function renameList ({ commit, state }, { index, name }) {
 export function mountList ({ commit, state }, id) {
   const oldCurrent = findCurrent(state.user.tasks, state.currentList)
   return getList(id, (err, response) => {
-    if (err) return commit('SET_INVALID_LIST', err)
+    if (err) return commit('SET_INVALID_LIST', err.message)
     commit('SET_CURRENT_LIST', response)
     commit('SET_INVALID_LIST', false)
     socket.emit('join', id)

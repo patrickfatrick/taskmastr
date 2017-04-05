@@ -21,8 +21,12 @@ export function login (username, key, rememberMe, cb) {
   .then((response) => response.json())
   .then((user) => cb(null, user))
   .catch((err) => {
-    if (err.response.status === 204) return cb('No user found. Please confirm your password.', err.response)
-    if (err.response.status === 401) return cb('Invalid password.', err.response)
+    if (err.response.status === 204) {
+      return cb(new Error('No user found. Please confirm your password.'), err.response)
+    }
+    if (err.response.status === 401) {
+      return cb(new Error('Invalid password.'), err.response)
+    }
     cb(err, err.response)
   })
 }
@@ -50,7 +54,9 @@ export function create (username, key, rememberMe, cb) {
     cb(null, response)
   })
   .catch((err) => {
-    if (err.response.status === 400) return cb('User already exists', err.response)
+    if (err.response.status === 400) {
+      return cb(new Error('User already exists'), err.response)
+    }
     cb(err, err.response)
   })
 }
@@ -71,7 +77,9 @@ export function forgot (username, cb) {
     cb(null, response)
   })
   .catch((err) => {
-    if (err.response.status === 401) return cb('That username doesn\'t exist.', err.response)
+    if (err.response.status === 401) {
+      return cb(new Error('That username doesn\'t exist.'), err.response)
+    }
     cb(err, err.response)
   })
 }
@@ -95,7 +103,9 @@ export function reset (token, newKey, cb) {
     cb(null, response)
   })
   .catch((err) => {
-    if (err.response.status === 401) return cb('This reset link is no longer or never was valid. Please close this window and try again.', err.response)
+    if (err.response.status === 401) {
+      return cb(new Error('This reset link is no longer or never was valid. Please close this window and try again.'), err.response)
+    }
     cb(err, err.response)
   })
 }
@@ -119,7 +129,9 @@ export function getSession (cb) {
   .then((response) => response.json())
   .then((user) => cb(null, user))
   .catch((err) => {
-    if (err.response.status === 204) return cb('No session data found.', err.response)
+    if (err.response.status === 204) {
+      return cb(new Error('No session data found.'), err.response)
+    }
     return cb(err, err.response)
   })
 }
