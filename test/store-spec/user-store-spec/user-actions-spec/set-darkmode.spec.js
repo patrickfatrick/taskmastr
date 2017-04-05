@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
+import userActionsInjector from 'inject-loader!../../../../src/store/user-store/user-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -38,7 +38,7 @@ describe('setDarkmode', () => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         updateUser (username, body, cb) {
-          cb('Error!', { status: 500 })
+          cb(new Error('Error!'), { status: 500 })
         }
       }
     })

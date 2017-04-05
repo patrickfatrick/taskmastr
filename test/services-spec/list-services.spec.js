@@ -68,7 +68,7 @@ describe('list-services', () => {
 
     getList('listid', (err, response) => {
       assert.isTrue(fetchMock.called('/lists/listid'))
-      assert.deepEqual(err, 'You\'re not viewing a list. Please click on one in the menu to the left.')
+      assert.deepEqual(err.message, 'You\'re not viewing a list. Please click on one in the menu to the left.')
       assert.isNotOk(response.ok)
     })
     .then(() => {

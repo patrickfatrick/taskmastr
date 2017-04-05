@@ -1,7 +1,7 @@
 /* global describe it sinon beforeEach afterEach */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import listActionsInjector from 'inject-loader!../../../../src/store/list-store/list-actions'
+import listActionsInjector from 'inject-loader!../../../../src/store/list-store/list-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -316,7 +316,7 @@ describe('deleteList', () => {
     const listActions = listActionsInjector({
       '../../services/list-services': {
         removeList (id, user, perm, cb) {
-          cb('Error!', { status: 500 })
+          cb(new Error('Error!'), { status: 500 })
         }
       }
     })

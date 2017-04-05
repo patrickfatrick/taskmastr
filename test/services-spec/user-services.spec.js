@@ -33,7 +33,7 @@ describe('user-services', () => {
     login('username', 'password', false, (err, response) => {
       assert.isTrue(fetchMock.called('/users/login'))
       assert.isOk(response.ok)
-      assert.deepEqual(err, 'No user found. Please confirm your password.')
+      assert.strictEqual(err.message, 'No user found. Please confirm your password.')
     })
     .then(() => {
       fetchMock.restore()
@@ -47,7 +47,7 @@ describe('user-services', () => {
     login('username', 'password', false, (err, response) => {
       assert.isTrue(fetchMock.called('/users/login'))
       assert.notOk(response.ok)
-      assert.deepEqual(err, 'Invalid password.')
+      assert.strictEqual(err.message, 'Invalid password.')
     })
     .then(() => {
       fetchMock.restore()
@@ -94,7 +94,7 @@ describe('user-services', () => {
     create('username', 'password', false, (err, response) => {
       assert.isTrue(fetchMock.called('/users/create'))
       assert.notOk(response.ok)
-      assert.deepEqual(err, 'User already exists')
+      assert.strictEqual(err.message, 'User already exists')
     })
     .then(() => {
       fetchMock.restore()
@@ -141,7 +141,7 @@ describe('user-services', () => {
     forgot('username', (err, response) => {
       assert.isTrue(fetchMock.called('/users/username/forgot'))
       assert.notOk(response.ok)
-      assert.deepEqual(err, 'That username doesn\'t exist.')
+      assert.strictEqual(err.message, 'That username doesn\'t exist.')
     })
     .then(() => {
       fetchMock.restore()
@@ -188,7 +188,7 @@ describe('user-services', () => {
     reset('token', 'password', (err, response) => {
       assert.isTrue(fetchMock.called('/users/reset'))
       assert.notOk(response.ok)
-      assert.deepEqual(err, 'This reset link is no longer or never was valid. Please close this window and try again.')
+      assert.strictEqual(err.message, 'This reset link is no longer or never was valid. Please close this window and try again.')
     })
     .then(() => {
       fetchMock.restore()
@@ -250,7 +250,7 @@ describe('user-services', () => {
     getSession((err, response) => {
       assert.isTrue(fetchMock.called('/sessions'))
       assert.isOk(response.ok)
-      assert.deepEqual(err, 'No session data found.')
+      assert.strictEqual(err.message, 'No session data found.')
     })
     .then(() => {
       fetchMock.restore()
@@ -290,7 +290,7 @@ describe('user-services', () => {
     updateUser('username', { darkmode: true }, (err, response) => {
       assert.isTrue(socket.emit.calledWith('update-user'))
       assert.isNotNull(err)
-      assert.deepEqual(err.message, 'Error!')
+      assert.strictEqual(err.message, 'Error!')
       assert.deepEqual(response, 'Error!')
       socket.emit.restore()
       done()

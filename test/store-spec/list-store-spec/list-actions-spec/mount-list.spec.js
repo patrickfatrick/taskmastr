@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import listActionsInjector from 'inject-loader!../../../../src/store/list-store/list-actions'
+import listActionsInjector from 'inject-loader!../../../../src/store/list-store/list-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -70,12 +70,12 @@ describe('mountList', () => {
     const listActions = listActionsInjector({
       '../../services/user-services': {
         updateUser (username, body, cb) {
-          cb('Error!', { status: 500 })
+          cb(new Error('Error!'), { status: 500 })
         }
       },
       '../../services/list-services': {
         getList (id, cb) {
-          cb('Error!', { status: 404 })
+          cb(new Error('Error!'), { status: 404 })
         }
       }
     })
@@ -109,7 +109,7 @@ describe('mountList', () => {
     const listActions = listActionsInjector({
       '../../services/user-services': {
         updateUser (username, body, cb) {
-          cb('Error!', { status: 500 })
+          cb(new Error('Error!'), { status: 500 })
         }
       },
       '../../services/list-services': {

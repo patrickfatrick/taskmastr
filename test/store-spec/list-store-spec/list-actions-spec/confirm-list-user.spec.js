@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import listActionsInjector from 'inject-loader!../../../../src/store/list-store/list-actions'
+import listActionsInjector from 'inject-loader!../../../../src/store/list-store/list-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -58,7 +58,7 @@ describe('confirmListUser', () => {
     const listActions = listActionsInjector({
       '../../services/list-services': {
         confirmUser (user, listid, body, cb) {
-          cb('Error!', {
+          cb(new Error('Error!'), {
             _id: 'listid',
             list: 'List 1',
             dateCreated: 'somedate',
@@ -95,7 +95,7 @@ describe('confirmListUser', () => {
       },
       '../../services/user-services': {
         updateUser (username, body, cb) {
-          cb('Error!', { status: 500 })
+          cb(new Error('Error!'), { status: 500 })
         }
       }
     })

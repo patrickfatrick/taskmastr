@@ -2,7 +2,7 @@
 import chai from 'chai'
 import { testAction } from '../../test-action'
 import { mockUser } from '../../../user-mocks'
-const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
+import userActionsInjector from 'inject-loader!../../../../src/store/user-store/user-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -31,7 +31,7 @@ describe('getSession', () => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         getSession (cb) {
-          cb('Error', {status: 204})
+          cb(new Error('Error!'), {status: 204})
         }
       }
     })

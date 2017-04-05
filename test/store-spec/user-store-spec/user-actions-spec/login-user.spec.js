@@ -2,7 +2,7 @@
 import chai from 'chai'
 import {testAction} from '../../test-action'
 import {mockUser} from '../../../user-mocks'
-const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
+import userActionsInjector from 'inject-loader!../../../../src/store/user-store/user-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -30,7 +30,7 @@ describe('loginUser', () => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         login (username, key, rememberMe, cb) {
-          cb('Error', { status: 204 })
+          cb(new Error('Error!'), { status: 204 })
         }
       }
     })
@@ -44,13 +44,13 @@ describe('loginUser', () => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         login (username, key, rememberMe, cb) {
-          cb('Invalid key', {status: 401})
+          cb(new Error('Error!'), {status: 401})
         }
       }
     })
 
     testAction(userActions.loginUser, { username: 'username', key: 'password', rememberMe: false }, {}, [
-      { name: 'SET_INVALID_KEY', payload: 'Invalid key' }
+      { name: 'SET_INVALID_KEY', payload: 'Error!' }
     ], done)
   })
 })

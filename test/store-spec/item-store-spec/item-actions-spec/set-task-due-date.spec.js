@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import { testAction } from '../../test-action'
-import itemActionsInjector from 'inject-loader!../../../../src/store/item-store/item-actions'
+import itemActionsInjector from 'inject-loader!../../../../src/store/item-store/item-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -41,7 +41,7 @@ describe('setTaskDueDate', () => {
     const itemActions = itemActionsInjector({
       '../../services/item-services': {
         updateItem (listid, item, username, cb) {
-          cb('Error!', { status: 500 })
+          cb(new Error('Error!'), { status: 500 })
         }
       }
     })

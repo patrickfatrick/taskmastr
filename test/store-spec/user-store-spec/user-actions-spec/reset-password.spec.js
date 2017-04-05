@@ -1,7 +1,7 @@
 /* global describe it */
 import chai from 'chai'
 import {testAction} from '../../test-action'
-const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
+import userActionsInjector from 'inject-loader!../../../../src/store/user-store/user-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 chai.should()
 
@@ -24,13 +24,13 @@ describe('resetPassword', () => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         reset (token, newKey, cb) {
-          cb('Invalid link', {status: 401})
+          cb(new Error('Error!'), {status: 401})
         }
       }
     })
 
     testAction(userActions.resetPassword, { token: 'token', key: 'newKey' }, {}, [
-      {name: 'SET_RESET_FAIL', payload: 'Invalid link'}
+      {name: 'SET_RESET_FAIL', payload: 'Error!'}
     ], done)
   })
 })

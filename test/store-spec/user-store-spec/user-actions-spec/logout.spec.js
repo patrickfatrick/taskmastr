@@ -1,6 +1,6 @@
 /* global describe it sinon beforeEach afterEach */
 import { assert } from 'chai'
-const userActionsInjector = require('inject-loader!../../../../src/store/user-store/user-actions')
+import userActionsInjector from 'inject-loader!../../../../src/store/user-store/user-actions' // eslint-disable-line import/no-webpack-loader-syntax
 
 describe('loginUser', () => {
   beforeEach(() => {
