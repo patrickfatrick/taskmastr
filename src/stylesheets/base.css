@@ -119,7 +119,7 @@ a {
 .pika-single:not(.is-hidden) {
   @apply --center;
 
-  z-index: 5 !important;
+  z-index: 8 !important;
   background: var(--white);
   font-family: var(--raleway);
   font-size: 1rem;
