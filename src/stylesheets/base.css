@@ -326,9 +326,7 @@ a {
   & h4,
   & h5,
   & h6,
-  & p,
-  & ul,
-  & ol {
+  & p {
     margin-bottom: 1rem;
   }
 
@@ -384,13 +382,5 @@ a {
 
   & a {
     text-decoration: underline;
-  }
-
-  & ol {
-    list-style: decimal;
-  }
-
-  & ul {
-    list-style: disc;
   }
 }
