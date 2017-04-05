@@ -1,6 +1,6 @@
 <template>
   <div class="task-details__task-info-container task-details__task-info-container--task-notes">
-    <h2>Notes</h2>
+    <h2 class="task-notes-container__task-notes__heading">Notes</h2>
     <div>
       <div class="task-notes-container__button-container">
         <button
@@ -33,6 +33,10 @@
 <style lang="postcss" scoped>
 @import "../../../stylesheets/variables";
 
+.task-notes-container__task-notes__heading {
+  margin-bottom: 1rem;
+}
+
 .task-notes-container__button-container {
   position: relative;
   font-size: 1rem;
@@ -40,12 +44,11 @@
   & .task-notes-container__button-container__edit-button {
     position: absolute;
     right: 0;
-    top: -1.8rem;
+    top: -2.5rem;
   }
 }
 
 .task-notes-container__task-notes {
-  margin-top: 1rem;
   width: 100%;
   min-height: 300px;
   height: auto;
