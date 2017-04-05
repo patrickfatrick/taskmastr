@@ -1,6 +1,6 @@
 {
   "name": "taskmastr",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "engines": {
     "mongodb": "3.4.2",
     "node": "7.7.2",

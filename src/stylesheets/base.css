@@ -326,7 +326,9 @@ a {
   & h4,
   & h5,
   & h6,
-  & p {
+  & p,
+  & ul,
+  & ol {
     margin-bottom: 1rem;
   }
 
@@ -375,12 +377,20 @@ a {
   & code {
     font-family: monospace;
     font-style: normal;
-    padding: 4px;
+    padding: 4px 0;
     color: #c7254e;
     background-color: #f9f2f4;
   }
 
   & a {
     text-decoration: underline;
+  }
+
+  & ol {
+    list-style: decimal;
+  }
+
+  & ul {
+    list-style: disc;
   }
 }
