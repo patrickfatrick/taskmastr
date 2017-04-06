@@ -7,7 +7,10 @@
         v-if="detailsToggled === index"
       />
     </transition>
-    <div class="task-details-container" v-show="detailsToggled === index">
+    <div
+      class="task-details-container"
+      v-show="detailsToggled === index"
+    >
       <transition name="details">
         <div
           class="task-details"
