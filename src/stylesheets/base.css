@@ -370,6 +370,7 @@ a {
     background-color: color(var(--gray) lightness(93%));
     border-left: 5px solid gray;
     padding-left: 10px;
+    margin-left: 1rem;
   }
 
   & code {

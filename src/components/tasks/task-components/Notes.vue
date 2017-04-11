@@ -105,7 +105,7 @@ export default {
     // Initialize Marky Marked
     this.$nextTick(() => {
       this.marky = markymark([ this.$refs.markymark ])[0]
-      this.markyEditor = this.$refs.markymark.querySelector('.marky-editor')
+      this.markyEditor = this.marky.editor
       this.marky.on('markychange', (e) => {
         this.$refs.markyhtml.innerHTML = ''
         this.$refs.markyhtml.insertAdjacentHTML('afterbegin', this.marky.html)
