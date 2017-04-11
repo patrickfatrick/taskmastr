@@ -70,9 +70,8 @@
 </style>
 
 <script>
-/* global CustomEvent */
 import { mapActions } from 'vuex'
-import marky from 'marky-marked'
+import markymark from 'marky-marked'
 
 export default {
   data () {
@@ -104,17 +103,15 @@ export default {
   },
   mounted () {
     // Initialize Marky Marked
-    const markyupdate = new CustomEvent('markyupdate')
-
     this.$nextTick(() => {
-      this.marky = marky.mark([ this.$refs.markymark ])[0]
+      this.marky = markymark([ this.$refs.markymark ])[0]
       this.markyEditor = this.$refs.markymark.querySelector('.marky-editor')
-      this.markyEditor.addEventListener('markychange', (e) => {
+      this.marky.on('markychange', (e) => {
         this.$refs.markyhtml.innerHTML = ''
         this.$refs.markyhtml.insertAdjacentHTML('afterbegin', this.marky.html)
       })
       this.markyEditor.value = this.task.notes
-      this.markyEditor.dispatchEvent(markyupdate)
+      this.marky.emit('markyupdate')
     })
   },
   beforeDestroy () {
