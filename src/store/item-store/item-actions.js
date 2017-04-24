@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import gregorian from 'gregorian'
+import { reform, setLocal } from 'gregorian'
 import { updateList } from '../../services/list-services'
 import { createItem, updateItem, deleteItem } from '../../services/item-services'
-import { isCurrent, findIndexById } from '../../helper-utilities/utils'
+import { isCurrent, findIndexById, isOwner } from '../../helper-utilities/utils'
 
 export function setNewTask ({ commit }, str) {
   commit('SET_NEW_TASK', str)
@@ -24,9 +24,13 @@ export function setCurrentTask ({ commit, state }, index) {
   const list = state.current
   const items = state.current.items
   const oldId = list.currentItem
-  commit('SET_CURRENT_TASK', items[index]._id)
-  return updateList(state.user, list._id, { currentItem: items[index]._id }, (err, res) => {
-    if (err) return commit('SET_CURRENT_TASK', oldId)
+  const isUserOwner = isOwner(list, state.user.username)
+  const update = (isUserOwner)
+  ? { currentItem: items[index]._id }
+  : { ['users.' + list.users.findIndex((user) => user.username === state.user.username) + '.currentItem']: items[index]._id }
+  commit('SET_CURRENT_TASK', items[index]._id, isUserOwner)
+  return updateList(state.user, list._id, update, (err, res) => {
+    if (err) return commit('SET_CURRENT_TASK', oldId, isUserOwner)
     return res
   })
 }
@@ -135,7 +139,7 @@ export function deleteAllCompleteTasks ({ commit, state, getters }) {
 
 export function completeTask ({ commit, state }, { index, bool }) {
   const tasks = state.current.items
-  const dateCompleted = (bool) ? gregorian.reform().to('iso') : null
+  const dateCompleted = (bool) ? reform('iso')() : null
   const completedBy = (bool) ? state.user.username : null
   const n = (tasks[index].complete) ? 0 : -1
   const newIndex = (_.findIndex(tasks, {complete: true}) !== -1)
@@ -157,7 +161,7 @@ export function completeTask ({ commit, state }, { index, bool }) {
   return updateItem(list._id, item, state.user, (err, res) => {
     if (err) {
       commit('SET_TASK_COMPLETE', { index: newIndex, bool: !bool })
-      commit('SET_DATE_COMPLETED', { index: newIndex, date: (!bool) ? gregorian.reform().to('iso') : null })
+      commit('SET_DATE_COMPLETED', { index: newIndex, date: (!bool) ? reform('iso')() : null })
       commit('SET_COMPLETED_BY', { index: newIndex, username: (!bool) ? state.user.username : null })
       commit('SORT_TASKS', { oldIndex: newIndex, newIndex: index })
       return
@@ -186,7 +190,7 @@ export function setDueDateDifference ({ commit }, { index, dueDate }) {
     commit('SET_DUE_DATE_DIFFERENCE', { index, n: null })
     return
   }
-  const today = gregorian.reform(new Date()).set(6, 'h').recite()
+  const today = setLocal('h')(6)()
   dueDate = new Date(dueDate)
   let diff = Math.floor(Math.round((dueDate - today) / 1000 / 60 / 60 / 24))
   commit('SET_DUE_DATE_DIFFERENCE', { index, n: diff })

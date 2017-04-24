@@ -5,8 +5,6 @@ import mountVm from '../../mount-vm'
 
 describe('ResetForm.vue', function () {
   let clock
-  let promise
-  let promiseLogin
 
   beforeEach(() => {
     clock = sinon.useFakeTimers()
@@ -70,7 +68,7 @@ describe('ResetForm.vue', function () {
     assert.isNotNull(vm.$el.querySelector('.try-it__button'))
   })
 
-  it('should reset password and log in to app if isValid', () => {
+  it('should reset password and log in to app if isValid', (done) => {
     const vm = mountVm(ResetForm, {
       authenticated: true,
       user: {
@@ -81,21 +79,25 @@ describe('ResetForm.vue', function () {
       currentList: 'listid',
       resetToken: 'token'
     })
-    promise = sinon.stub(vm, 'resetPassword').returnsPromise()
-    promiseLogin = sinon.stub(vm, 'loginUser').returnsPromise()
-    promise.resolves('username@domain.com')
-    promiseLogin.resolves('username@domain.com')
+    const promise = sinon.stub(vm, 'resetPassword').resolves()
+    const loginPromise = sinon.stub(vm, 'loginUser').resolves()
     sinon.stub(vm.$router, 'push')
 
     vm.reset('token', 'password')
-    clock.tick(250)
 
-    assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
-    assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-    assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/listid/))
-    vm.$router.push.restore()
-    vm.resetPassword.restore()
-    vm.loginUser.restore()
+    promise()
+    .then(() => loginPromise())
+    .then(() => {
+      clock.tick(250)
+      assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
+      assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+      // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/listid/))
+
+      vm.$router.push.restore()
+      vm.resetPassword.restore()
+      vm.loginUser.restore()
+      done()
+    })
   })
 
   it('should not reset password or log in to app if !isValid', () => {
@@ -110,24 +112,23 @@ describe('ResetForm.vue', function () {
       },
       resetToken: ''
     })
-    promise = sinon.stub(vm, 'resetPassword').returnsPromise()
-    promiseLogin = sinon.stub(vm, 'loginUser').returnsPromise()
-    promise.resolves('username@domain.com')
-    promiseLogin.resolves('username@domain.com')
+    sinon.stub(vm, 'resetPassword')
+    sinon.stub(vm, 'loginUser')
     sinon.stub(vm.$router, 'push')
 
     vm.reset('token', 'password')
-    clock.tick(250)
 
+    clock.tick(250)
     assert.isFalse(vm.resetPassword.calledOnce)
     assert.isFalse(vm.loginUser.calledOnce)
     assert.isFalse(vm.$router.push.calledOnce)
+
     vm.$router.push.restore()
     vm.resetPassword.restore()
     vm.loginUser.restore()
   })
 
-  it('should not reset password or log in to app if invalid token', () => {
+  it('should not reset password or log in to app if invalid token', (done) => {
     const vm = mountVm(ResetForm, {
       user: {
         resetKey: 'password',
@@ -135,21 +136,24 @@ describe('ResetForm.vue', function () {
       },
       resetToken: 'token'
     })
-    promise = sinon.stub(vm, 'resetPassword').returnsPromise()
-    promiseLogin = sinon.stub(vm, 'loginUser').returnsPromise()
-    promise.resolves('')
-    promiseLogin.resolves('')
+    const promise = sinon.stub(vm, 'resetPassword').resolves()
+    sinon.stub(vm, 'loginUser')
     sinon.stub(vm.$router, 'push')
 
     vm.reset('token', 'password')
-    clock.tick(250)
 
-    assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
-    assert.isFalse(vm.loginUser.calledOnce)
-    assert.isFalse(vm.$router.push.calledOnce)
-    vm.$router.push.restore()
-    vm.resetPassword.restore()
-    vm.loginUser.restore()
+    promise()
+    .then(() => {
+      clock.tick(250)
+      assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
+      assert.isFalse(vm.loginUser.calledOnce)
+      assert.isFalse(vm.$router.push.calledOnce)
+
+      vm.$router.push.restore()
+      vm.resetPassword.restore()
+      vm.loginUser.restore()
+      done()
+    })
   })
 
   it('should validate user.resetKey as required', () => {

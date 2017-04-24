@@ -12,7 +12,8 @@ const List = mongoose.model('List', new Schema({
   owner: String,
   users: [{
     username: String,
-    status: String
+    status: String,
+    currentItem: { type: String, ref: 'Item' }
   }]
 }))
 

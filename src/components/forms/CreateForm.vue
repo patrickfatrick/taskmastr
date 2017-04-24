@@ -4,7 +4,7 @@
     name="createForm"
     action="/users/create"
     novalidate
-    @submit.prevent="create(user.username.trim(), user.confirm, rememberMe)"
+    @submit.prevent="create(user.username.trim(), user.confirmKey, rememberMe)"
   >
     <username-input
       :validate="validate.usernameEmail"
@@ -99,7 +99,7 @@ export default {
       this.createUser({ username, key, rememberMe })
       .then(() => {
         if (this.authenticated) {
-          this.addList({...list, owner: this.user.username, users: []})
+          this.addList(list)
           this.setCurrentList(list)
           setTimeout(() => {
             this.$router.push(this.jumpto || '/app/list/' + list._id)

@@ -109,6 +109,7 @@ import { mapGetters, mapState, mapActions } from 'vuex'
 import Item from './Item.vue'
 import ItemDetails from './ItemDetails.vue'
 import dragulaMixin from '../../mixins/dragula-mixin'
+import { isOwner } from '../../../helper-utilities/utils'
 
 export default {
   computed: {
@@ -118,7 +119,11 @@ export default {
       allTasks: 'getAllTasks'
     }),
     ...mapState({
-      currentItem: (state) => state.current.currentItem,
+      currentItem: (state) => {
+        return (isOwner(state.current, state.user.username))
+        ? state.current.currentItem
+        : state.current.users.find((user) => user.username === state.user.username).currentItem
+      },
       darkmode: (state) => state.user.darkmode
     })
   },

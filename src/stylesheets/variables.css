@@ -224,7 +224,7 @@
       word-wrap: break-word;
       lost-column: 15/21;
 
-      @media (--small) {
+      @media (--medSmall) {
         lost-column: 17/21;
       }
 
@@ -243,7 +243,7 @@
       text-align: center;
       lost-column: 4/21;
 
-      @media (--small) {
+      @media (--medSmall) {
         lost-column: 2/21;
         text-align: left;
       }

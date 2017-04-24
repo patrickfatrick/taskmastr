@@ -68,7 +68,7 @@
 
 <script>
 import { hashish } from 'harsh'
-import gregorian from 'gregorian'
+import { reform } from 'gregorian'
 import Mousetrap from 'mousetrap'
 import { mapState, mapActions } from 'vuex'
 
@@ -106,7 +106,7 @@ export default {
         items: [],
         currentItem: '',
         owner: this.user.username,
-        dateCreated: gregorian.reform(new Date()).to('iso'),
+        dateCreated: reform('iso')(),
         users: [],
         _deleting: false
       })

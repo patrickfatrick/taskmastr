@@ -3,11 +3,13 @@ import { assert } from 'chai'
 import itemMutations from '../../../src/store/item-store/item-mutations'
 
 describe('item mutations', () => {
-  it('SET_CURRENT_TASK', () => {
-    let state = {
+  it('SET_CURRENT_TASK (as owner)', () => {
+    const state = {
+      user: { username: 'username' },
       current: {
         list: 'Current list',
         currentItem: 'itemid',
+        owner: 'username',
         items: [
           {
             item: 'Current task',
@@ -17,17 +19,49 @@ describe('item mutations', () => {
             item: 'Not current task',
             _id: 'itemid2'
           }
+        ],
+        users: [
+          { username: 'username2', currentItem: 'itemid' }
         ]
       }
     }
 
-    itemMutations.SET_CURRENT_TASK(state, 'itemid2')
+    itemMutations.SET_CURRENT_TASK(state, 'itemid2', true)
 
-    assert.strictEqual(state.current.currentItem, state.current.items[1]._id)
+    assert.strictEqual(state.current.currentItem, 'itemid2')
+  })
+
+  it('SET_CURRENT_TASK (as not Owner)', () => {
+    const state = {
+      user: { username: 'username2' },
+      current: {
+        list: 'Current list',
+        currentItem: 'itemid',
+        owner: 'username',
+        items: [
+          {
+            item: 'Current task',
+            _id: 'itemid'
+          },
+          {
+            item: 'Not current task',
+            _id: 'itemid2'
+          }
+        ],
+        users: [
+          { username: 'username2', currentItem: 'itemid' }
+        ]
+      }
+    }
+
+    itemMutations.SET_CURRENT_TASK(state, 'itemid2', false)
+
+    assert.strictEqual(state.current.currentItem, 'itemid')
+    assert.strictEqual(state.current.users[0].currentItem, 'itemid2')
   })
 
   it('ADD_TASK', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -57,7 +91,7 @@ describe('item mutations', () => {
   })
 
   it('REMOVE_TASK', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -81,7 +115,7 @@ describe('item mutations', () => {
   })
 
   it('SET_NEW_TASK', () => {
-    let state = {
+    const state = {
       newTask: ''
     }
 
@@ -91,7 +125,7 @@ describe('item mutations', () => {
   })
 
   it('SET_PLACEHOLDER', () => {
-    let state = {
+    const state = {
       placeholder: ''
     }
 
@@ -101,7 +135,7 @@ describe('item mutations', () => {
   })
 
   it('SET_TASK_COMPLETE', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -130,7 +164,7 @@ describe('item mutations', () => {
   })
 
   it('SET_DATE_COMPLETED', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -161,7 +195,7 @@ describe('item mutations', () => {
   })
 
   it('SET_TASK_DELETE', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -188,7 +222,7 @@ describe('item mutations', () => {
   })
 
   it('RENAME_TASK', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -212,7 +246,7 @@ describe('item mutations', () => {
 
   it('SET_TASK_DUE_DATE', () => {
     const today = new Date()
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -241,7 +275,7 @@ describe('item mutations', () => {
   })
 
   it('UPDATE_DELETE_QUEUE', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         current: 'id1',
@@ -267,7 +301,7 @@ describe('item mutations', () => {
   })
 
   it('SORT_TASKS', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -302,7 +336,7 @@ describe('item mutations', () => {
   })
 
   it('TOGGLE_DETAILS', () => {
-    let state = {
+    const state = {
       detailsToggled: null
     }
 
@@ -316,7 +350,7 @@ describe('item mutations', () => {
   })
 
   it('SET_TASK_NOTES', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',
@@ -341,7 +375,7 @@ describe('item mutations', () => {
   })
 
   it('SET_DUE_DATE_DIFFERENCE', () => {
-    let state = {
+    const state = {
       current: {
         list: 'Current list',
         currentItem: 'itemid',

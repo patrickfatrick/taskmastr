@@ -36,7 +36,7 @@
               <span class="task-details-panel__task-label">
                 Created on
               </span>
-              {{reformatDate(task.dateCreated)}}
+              {{reformDate(task.dateCreated)}}
               <br>
               <span class="task-details-panel__task-label">
                 by {{(task.createdBy === username) ? 'You' : task.createdBy}}
@@ -49,7 +49,7 @@
               <span class="task-details-panel__task-label">
                 Completed on
               </span>
-              {{reformatDate(task.dateCompleted)}}
+              {{reformDate(task.dateCompleted)}}
               <br>
               <span class="task-details-panel__task-label">
                 by {{(task.completedBy === username) ? 'You' : task.completedBy}}
@@ -65,7 +65,7 @@
               >
                 Due on
               </span>
-              {{(task.dueDate) ? reformatDate(task.dueDate) + '&nbsp;' : ''}}
+              {{(task.dueDate) ? reformDate(task.dueDate) + '&nbsp;' : ''}}
               <span
                 class="task-details-panel__task-label"
                 v-show="!task.dueDate"
@@ -248,7 +248,7 @@
 <script>
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'
-import gregorian from 'gregorian'
+import { reform } from 'gregorian'
 import { mapState, mapActions } from 'vuex'
 import Datepicker from './Datepicker.vue'
 import Notes from './Notes.vue'
@@ -280,8 +280,8 @@ export default {
       }
       this.renameTask({ index, name: e.target.value.trim() })
     },
-    reformatDate (date) {
-      return gregorian.reform(date).to('M d, yyyy')
+    reformDate (date = null) {
+      return reform('n d, Y')(new Date(date))
     }
   },
   mounted () {

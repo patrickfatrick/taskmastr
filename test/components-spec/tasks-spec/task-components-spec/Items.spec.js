@@ -5,31 +5,37 @@ import Items from '../../../../src/components/tasks/task-components/Items.vue'
 import mountVm from '../../../mount-vm'
 
 describe('ItemsVue', function () {
-  let items
+  let state
 
   beforeEach(() => {
-    items = [
-      {
-        id: 'itemid',
-        item: 'Item 1',
-        complete: false,
-        _deleting: true,
-        _dueDateDifference: 1,
-        _detailsToggled: false
-      },
-      {
-        id: 'itemid2',
-        item: 'Item 2',
-        complete: false,
-        _deleting: false,
-        _dueDateDifference: -1,
-        _detailsToggled: false
+    state = {
+      user: { username: 'username' },
+      current: {
+        items: [
+          {
+            id: 'itemid',
+            item: 'Item 1',
+            complete: false,
+            _deleting: true,
+            _dueDateDifference: 1,
+            _detailsToggled: false
+          },
+          {
+            id: 'itemid2',
+            item: 'Item 2',
+            complete: false,
+            _deleting: false,
+            _dueDateDifference: -1,
+            _detailsToggled: false
+          }
+        ],
+        users: [ { username: 'username' } ]
       }
-    ]
+    }
   })
 
   afterEach(() => {
-    items = []
+    state = {}
   })
 
   it('should have a dragStart property', () => {
@@ -88,14 +94,14 @@ describe('ItemsVue', function () {
   })
 
   it('should render with initial state', () => {
-    items = []
-    const vm = mountVm(Items, { current: { items } })
+    state.current.items = []
+    const vm = mountVm(Items, state)
 
     assert.lengthOf(vm.$el.querySelector('.table__table-body').children, 0)
   })
 
   it('should render rows with tasks', () => {
-    const vm = mountVm(Items, { current: { items } })
+    const vm = mountVm(Items, state)
 
     assert.lengthOf(vm.$el.querySelector('.table__table-body').children, 2)
   })

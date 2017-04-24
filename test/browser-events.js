@@ -11,7 +11,3 @@ export function dblclick () {
 export function change () {
   return new CustomEvent('change')
 }
-
-export function markychange () {
-  return new CustomEvent('markychange')
-}

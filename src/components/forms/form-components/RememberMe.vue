@@ -1,6 +1,7 @@
 <template>
   <div class="remember-me">
     <input
+      id="remember-me"
       class="remember-me__checkbox"
       name="remember-me"
       type="checkbox"

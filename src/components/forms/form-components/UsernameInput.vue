@@ -35,7 +35,8 @@
         type="text"
         name="username"
         placeholder="Email"
-        :value="user.username" @input="setUsername($event.target.value)"
+        :value="user.username"
+        @input="setUsername($event.target.value)"
         :class="{'prompt-line__prompt--invalid': (loginAttempt || forgotAttempt) && (!required || !validate || forgotFail)}"
       />
     </div>

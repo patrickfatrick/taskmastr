@@ -94,8 +94,8 @@
 <script>
 import { hashish } from 'harsh'
 import Mousetrap from 'mousetrap'
-import gregorian from 'gregorian'
-import date from 'date.js'
+import { reform, setLocal, resetLocal, addTime } from 'gregorian'
+import datejs from 'date.js'
 import { mapState, mapActions } from 'vuex'
 import extractDate from '../../../helper-utilities/extract-date'
 import placeholders from '../../../helper-utilities/placeholders'
@@ -131,6 +131,11 @@ export default {
       'addTask',
       'setCurrentTask'
     ]),
+    setDateTo6am (date) {
+      return resetLocal('h')(
+        setLocal('h')(6)(date)
+      )
+    },
     addNewTask (task) {
       this.setTaskAttempt(true)
       if (!this.isValid) return
@@ -141,23 +146,39 @@ export default {
         task = task.substring(char, task.length)
         switch (shortcut) {
           case '/t':
-            dueDate = gregorian.reform(date('tomorrow')).set(6, 'h').restart('h').to('iso')
+            dueDate = reform('iso')(this.setDateTo6am(datejs('tomorrow')))
             task = extractDate(task).item
             break
           case '/w':
-            dueDate = gregorian.reform(date('next Monday')).set(6, 'h').restart('h').to('iso')
+            dueDate = reform('iso')(this.setDateTo6am(datejs('next Monday')))
             task = extractDate(task).item
             break
           case '/m':
-            dueDate = gregorian.reform().restart('m').add(1, 'm').set(6, 'h').restart('h').to('iso')
+            dueDate = reform('iso')(
+              this.setDateTo6am(
+                addTime('m')(1)(
+                  resetLocal('m')()
+                )
+              )
+            )
             task = extractDate(task).item
             break
           case '/y':
-            dueDate = gregorian.reform().restart('y').add(1, 'y').set(6, 'h').restart('h').to('iso')
+            dueDate = reform('iso')(
+              this.setDateTo6am(
+                addTime('y')(1)(
+                  resetLocal('y')()
+                )
+              )
+            )
             task = extractDate(task).item
             break
           default:
-            dueDate = gregorian.reform(extractDate(task).dueDate).restart('d').set(6, 'h').to('iso')
+            dueDate = reform('iso')(
+              this.setDateTo6am(
+                resetLocal('d')(extractDate(task).dueDate)
+              )
+            )
             task = extractDate(task).item
             break
         }
@@ -169,7 +190,7 @@ export default {
         item: task.replace(/^\w/g, task.charAt(0).toUpperCase()),
         createdBy: this.user.username,
         complete: false,
-        dateCreated: gregorian.reform(new Date()).to('iso'),
+        dateCreated: reform('iso')(),
         dueDate: dueDate,
         dateCompleted: '',
         completedBy: '',

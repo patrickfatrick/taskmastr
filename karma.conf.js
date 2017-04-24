@@ -10,7 +10,7 @@ module.exports = function (karma) {
       'public/javascripts/socket.io-client/dist/socket.io.js',
       'test/index.js'
     ],
-    frameworks: [ 'mocha', 'sinon-stub-promise', 'sinon', 'chai' ],
+    frameworks: [ 'mocha', 'sinon', 'chai' ],
     browsers: [ 'PhantomJS' ], // 'Chrome', 'Safari', 'Firefox', 'Opera'
     preprocessors: {
       'test/index.js': [ 'webpack', 'sourcemap' ]

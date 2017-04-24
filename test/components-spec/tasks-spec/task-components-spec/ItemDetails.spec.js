@@ -86,9 +86,9 @@ describe('ItemDetailsVue', function () {
     assert.isFunction(vm.rename)
   })
 
-  it('should have a reformatDate method', () => {
+  it('should have a reformDate method', () => {
     const vm = mountVm(ItemDetails, { current: { items } }, { task, index })
-    assert.isFunction(vm.reformatDate)
+    assert.isFunction(vm.reformDate)
   })
 
   it('should render with initial state', () => {
@@ -98,10 +98,10 @@ describe('ItemDetailsVue', function () {
     assert.isNull(vm.$el.querySelector('.task-details'))
   })
 
-  it('should reformat date on reformatDate', () => {
+  it('should reformat date on reformDate', () => {
     const vm = mountVm(ItemDetails, { detailsToggled: 0, current: { items } }, { task, index })
 
-    assert.strictEqual(vm.reformatDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
+    assert.strictEqual(vm.reformDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
   })
 
   it('should call renameTask on task-name change', () => {
@@ -225,7 +225,7 @@ describe('ItemDetailsVue', function () {
         current: true,
         complete: true,
         dueDate: null,
-        dateCompleted: 'date',
+        dateCompleted: '2017-04-11T00:00:00.000Z',
         _delete: false,
         _dueDateDifference: null
       }
@@ -237,7 +237,7 @@ describe('ItemDetailsVue', function () {
       current: true,
       complete: true,
       dueDate: null,
-      dateCompleted: 'date',
+      dateCompleted: '2017-04-11T00:00:00.000Z',
       _delete: true,
       _dueDateDifference: null
     }

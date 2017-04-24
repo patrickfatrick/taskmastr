@@ -6,11 +6,11 @@
     <div class="list-details__inner">
       <div class="list-details__inner__created">
         <span class="list-details__inner__label">Created on</span>
-        {{ reformatDate(list.dateCreated) }}
+        {{ reformDate(list.dateCreated) }}
       </div>
       <div class="list-details__inner__modified">
         <span class="list-details__inner__label">Last modified</span>
-        {{ reformatDate(list.dateModified) }}
+        {{ reformDate(list.dateModified) }}
       </div>
       <div class="list-details__inner__user-list">
         <div class="user-list__owner">
@@ -228,7 +228,7 @@
 </style>
 
 <script>
-import gregorian from 'gregorian'
+import { reform } from 'gregorian'
 import { mapState, mapActions } from 'vuex'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@"]+(\.[^<>()[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -269,8 +269,8 @@ export default {
     changeNewUser (val) {
       this.newUser = val
     },
-    reformatDate (date) {
-      return gregorian.reform(date).to('M d, yyyy')
+    reformDate (date = null) {
+      return reform('n d, Y')(new Date(date))
     },
     truncateUsername (username, length) {
       if (username.length > length) return `${username.substring(0, length)} ...`

@@ -58,9 +58,9 @@ describe('ListDetailsVue', function () {
     assert.isFunction(vm.removeListUser)
   })
 
-  it('should have a reformatDate method', () => {
+  it('should have a reformDate method', () => {
     const vm = mountVm(ListDetails, {}, { list, index })
-    assert.isFunction(vm.reformatDate)
+    assert.isFunction(vm.reformDate)
   })
 
   it('should have a truncateUsername method', () => {
@@ -124,9 +124,9 @@ describe('ListDetailsVue', function () {
     assert.isNull(vm.$el.querySelector('.user-list__row__new-user'))
   })
 
-  it('should reformat date on reformatDate', () => {
+  it('should reformat date on reformDate', () => {
     const vm = mountVm(ListDetails, {}, { list, index })
-    assert.strictEqual(vm.reformatDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
+    assert.strictEqual(vm.reformDate('2016-01-01T00:00:00.000Z'), 'Dec 31, 2015')
   })
 
   it('should truncate username on truncateUsername', () => {

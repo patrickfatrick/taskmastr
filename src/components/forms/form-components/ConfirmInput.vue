@@ -27,8 +27,8 @@
         type="password"
         name="password"
         placeholder="Confirm Password"
-        :value="user.confirm"
-        @input="setConfirm($event.target.value)"
+        :value="user.confirmKey"
+        @input="setConfirmKey($event.target.value)"
       />
     </div>
   </div>

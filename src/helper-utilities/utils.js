@@ -23,3 +23,7 @@ export function findById (things, id) {
 export function findIndexById (things, id) {
   return _.findIndex(things, { _id: id })
 }
+
+export function isOwner (list, username) {
+  return list.owner === username
+}

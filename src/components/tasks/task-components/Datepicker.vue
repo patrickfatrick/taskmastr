@@ -83,7 +83,7 @@
 
 <script>
 import Pikaday from 'pikaday'
-import gregorian from 'gregorian'
+import { reform, setLocal } from 'gregorian'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -105,7 +105,7 @@ export default {
       'setDueDateDifference'
     ]),
     reformatDate (date) {
-      this.setDueDate(this.index, gregorian.reform(date).to('iso'))
+      this.setDueDate(this.index, reform('iso')(date))
     },
     setDueDate (index, date) {
       this.setTaskDueDate({ index, date })
@@ -121,7 +121,7 @@ export default {
       trigger: this.$refs.pikatrigger,
       yearRange: 1,
       onSelect: function () {
-        this.setDueDate(this.index, gregorian.reform(this.picker._d).set(6, 'h').to('iso'))
+        this.setDueDate(this.index, reform('iso')(setLocal('h')(6)(this.picker._d)))
         this.setDueDateDifference({ index: this.index, dueDate: this.task.dueDate })
       }.bind(this)
     })

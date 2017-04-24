@@ -3,7 +3,7 @@
 import { assert } from 'chai'
 import Notes from '../../../../src/components/tasks/task-components/Notes.vue'
 import mountVm from '../../../mount-vm'
-import { click, markychange } from '../../../browser-events'
+import { click } from '../../../browser-events'
 
 describe('NotesVue', function () {
   let task
@@ -80,7 +80,7 @@ describe('NotesVue', function () {
 
   it('setEditorToggled should set editorToggled', () => {
     const vm = mountVm(Notes, null, { task, index, detailsToggled })
-    sinon.spy(vm, 'setTaskNotes')
+    sinon.stub(vm, 'setTaskNotes')
 
     vm.setEditorToggled()
 
@@ -88,8 +88,9 @@ describe('NotesVue', function () {
     vm.setTaskNotes.restore()
   })
 
-  it('setEditorToggled should call setTaskNotes', () => {
+  it('setEditorToggled should call setTaskNotes', (done) => {
     const vm = mountVm(Notes, null, { task, index, detailsToggled })
+    sinon.stub(vm, 'setTaskNotes')
     vm.editorToggled = true
 
     vm.$nextTick(() => {
@@ -98,32 +99,38 @@ describe('NotesVue', function () {
 
       assert.isFalse(vm.editorToggled)
       assert.isTrue(vm.setTaskNotes.calledWith({ index: 0, notes: 'test' }))
+
+      vm.setTaskNotes.restore()
+      done()
     })
   })
 
-  it('edit button should call setEditorToggled', () => {
+  it('edit button should call setEditorToggled', (done) => {
     const vm = mountVm(Notes, null, { task, index, detailsToggled })
-    sinon.spy(vm, 'setEditorToggled')
+    sinon.stub(vm, 'setEditorToggled')
     vm.editorToggled = true
 
     vm.$nextTick(() => {
-      vm.$el.querySelector('.task-notes-container__button-container__edit-button').dispatchEvent(click)
+      vm.$el.querySelector('.task-notes-container__button-container__edit-button').dispatchEvent(click())
 
       assert.isTrue(vm.setEditorToggled.calledOnce)
-    })
 
-    vm.setEditorToggled.restore()
+      vm.setEditorToggled.restore()
+      done()
+    })
   })
 
-  it('markychange should insert HTML into task notes', () => {
+  it('markychange should insert HTML into task notes', (done) => {
     const vm = mountVm(Notes, null, { task, index, detailsToggled })
     vm.editorToggled = true
 
     vm.$nextTick(() => {
       vm.marky.html = '<p>test</p>'
-      vm.$refs.markyEditor.dispatchEvent(markychange)
+      vm.marky.emit('markychange')
 
-      assert.strictEqual(vm.markyhtml.innerHTML, '<p>test</p>')
+      assert.strictEqual(vm.$refs.markyhtml.innerHTML, '<p>test</p>\n')
+
+      done()
     })
   })
 })

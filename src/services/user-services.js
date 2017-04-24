@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import gregorian from 'gregorian'
+import { reform } from 'gregorian'
 import socket from '../socket'
 import status from './status'
 
@@ -44,7 +44,7 @@ export function create (username, key, rememberMe, cb) {
       key: key,
       rememberMe: rememberMe,
       darkmode: true,
-      dateCreated: gregorian.reform(new Date()).to('iso'),
+      dateCreated: reform('iso')(),
       tasks: []
     })
   })

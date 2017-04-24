@@ -1,6 +1,7 @@
 <template>
   <div class="forgot-password">
     <input
+      id="forgot-password"
       class="forgot-password__checkbox"
       name="forgot"
       type="checkbox"
@@ -19,7 +20,7 @@
         :class="{'fa-check-square-o': forgot, 'fa-square-o': !forgot}"
       />
     </button>
-    <label for="forgot">Forgot your password?</label>
+    <label for="forgot-password">Forgot your password?</label>
   </div>
 </template>
 

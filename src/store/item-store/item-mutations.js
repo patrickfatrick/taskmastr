@@ -2,8 +2,12 @@ import _ from 'lodash'
 import {SET_CURRENT_TASK, ADD_TASK, REMOVE_TASK, SET_NEW_TASK, SET_PLACEHOLDER, SET_TASK_ATTEMPT, SET_TASK_COMPLETE, SET_COMPLETED_BY, SET_DATE_COMPLETED, SET_TASK_DELETE, RENAME_TASK, SET_TASK_DUE_DATE, UPDATE_DELETE_QUEUE, SORT_TASKS, TOGGLE_DETAILS, SET_TASK_NOTES, SET_DUE_DATE_DIFFERENCE} from '../mutation-types'
 
 export default {
-  [SET_CURRENT_TASK] (state, id) {
-    _.set(state, 'current.currentItem', id)
+  [SET_CURRENT_TASK] (state, id, isUserOwner) {
+    if (isUserOwner) {
+      _.set(state, 'current.currentItem', id)
+    } else {
+      _.set(state.current.users.find((user) => user.username === state.user.username), 'currentItem', id)
+    }
   },
   [ADD_TASK] (state, task) {
     state.current.items.unshift(task)
@@ -42,7 +46,7 @@ export default {
     _.set(state, 'deleteQueue[' + id + ']', val)
   },
   [SORT_TASKS] (state, { oldIndex, newIndex }) {
-    let spliced = state.current.items.splice(oldIndex, 1)
+    const spliced = state.current.items.splice(oldIndex, 1)
     state.current.items.splice(newIndex, 0, spliced[0])
   },
   [TOGGLE_DETAILS] (state, index) {
