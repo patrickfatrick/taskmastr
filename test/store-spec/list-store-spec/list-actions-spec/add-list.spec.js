@@ -43,6 +43,7 @@ describe('addList', () => {
         }
       ],
       dateCreated: 'somedate',
+      dateModified: 'somedate',
       owner: 'username',
       users: []
     }
@@ -53,6 +54,7 @@ describe('addList', () => {
       current: false,
       _deleting: false,
       dateCreated: 'somedate',
+      dateModified: 'somedate',
       owner: 'username',
       users: []
     }
@@ -99,6 +101,7 @@ describe('addList', () => {
         }
       ],
       dateCreated: 'somedate',
+      dateModified: 'somedate',
       owner: 'username',
       users: []
     }
@@ -109,6 +112,7 @@ describe('addList', () => {
       current: false,
       _deleting: false,
       dateCreated: 'somedate',
+      dateModified: 'somedate',
       owner: 'username',
       users: []
     }

@@ -68,9 +68,9 @@
 
 <script>
 import { hashish } from 'harsh'
-import { reform } from 'gregorian'
 import Mousetrap from 'mousetrap'
 import { mapState, mapActions } from 'vuex'
+import { reformISO } from '../../../helper-utilities/utils'
 
 export default {
   computed: {
@@ -106,7 +106,8 @@ export default {
         items: [],
         currentItem: '',
         owner: this.user.username,
-        dateCreated: reform('iso')(),
+        dateCreated: reformISO(),
+        dateModified: reformISO(),
         users: [],
         _deleting: false
       })

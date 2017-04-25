@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { setLocal, resetLocal, reform } from 'gregorian'
 
 export function isDevelopment () {
   return process.env.NODE_ENV === 'development'
@@ -27,3 +28,9 @@ export function findIndexById (things, id) {
 export function isOwner (list, username) {
   return list.owner === username
 }
+
+export const setDateTo6am = setLocal('h')(6)(resetLocal('h'))
+
+export const reformISO = reform('iso')
+
+export const reformPrettyDate = reform('n d, Y')

@@ -65,7 +65,7 @@
               >
                 Due on
               </span>
-              {{(task.dueDate) ? reformDate(task.dueDate) + '&nbsp;' : ''}}
+              {{(task.dueDate) && reformDate(task.dueDate) + '&nbsp;'}}
               <span
                 class="task-details-panel__task-label"
                 v-show="!task.dueDate"
@@ -248,10 +248,10 @@
 <script>
 import _ from 'lodash'
 import Mousetrap from 'mousetrap'
-import { reform } from 'gregorian'
 import { mapState, mapActions } from 'vuex'
 import Datepicker from './Datepicker.vue'
 import Notes from './Notes.vue'
+import { reformPrettyDate } from '../../../helper-utilities/utils'
 
 export default {
   computed: mapState({
@@ -281,7 +281,7 @@ export default {
       this.renameTask({ index, name: e.target.value.trim() })
     },
     reformDate (date = null) {
-      return reform('n d, Y')(new Date(date))
+      return reformPrettyDate(new Date(date))
     }
   },
   mounted () {

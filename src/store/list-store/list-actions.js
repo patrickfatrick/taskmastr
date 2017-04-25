@@ -62,6 +62,7 @@ export function addList ({ commit, state }, list) {
     _deleting: false,
     current: false,
     dateCreated: list.dateCreated,
+    dateModified: list.dateModified,
     _id: list._id,
     list: list.list,
     owner: state.user.username,

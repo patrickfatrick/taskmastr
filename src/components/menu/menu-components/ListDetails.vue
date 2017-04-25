@@ -228,8 +228,8 @@
 </style>
 
 <script>
-import { reform } from 'gregorian'
 import { mapState, mapActions } from 'vuex'
+import { reformPrettyDate } from '../../../helper-utilities/utils'
 
 const emailRE = /^(([^<>()[\]\\.,:\s@"]+(\.[^<>()[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -270,7 +270,7 @@ export default {
       this.newUser = val
     },
     reformDate (date = null) {
-      return reform('n d, Y')(new Date(date))
+      return reformPrettyDate(new Date(date))
     },
     truncateUsername (username, length) {
       if (username.length > length) return `${username.substring(0, length)} ...`
