@@ -5,7 +5,9 @@ export default {
     confirmKey: '',
     resetKey: '',
     resetConfirmKey: '',
-    darkmode: true,
+    darkmode: window.localStorage.hasOwnProperty('darkmode')
+    ? window.localStorage.getItem('darkmode') === 'true'
+    : true,
     tasks: []
   }
 }

@@ -32,6 +32,7 @@ export function setResetToken ({ commit }, str) {
 
 export function setDarkmode ({ commit, state }, bool) {
   commit('SET_DARKMODE', bool)
+  window.localStorage.setItem('darkmode', bool)
   return updateUser(state.user.username, { darkmode: bool }, (err, res) => {
     if (err) commit('SET_DARKMODE', !bool)
     return res
@@ -46,6 +47,7 @@ export function getUserSession ({ commit }) {
     commit('SET_USERNAME', response.username)
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)
+    window.localStorage.setItem('darkmode', response.darkmode)
     commit('SET_TASKS', tasks)
     commit('SET_CURRENT_LIST', _.find(tasks, { _id: response.currentList }) || tasks[0])
     commit('SET_AUTHENTICATED', true)
@@ -64,6 +66,7 @@ export function loginUser ({ commit }, { username, key, rememberMe }) {
     commit('SET_USERNAME', response.username)
     commit('SET_KEY', '')
     commit('SET_DARKMODE', response.darkmode)
+    window.localStorage.setItem('darkmode', response.darkmode)
     commit('SET_TASKS', tasks)
     commit('SET_CURRENT_LIST', _.find(tasks, { _id: response.currentList }) || tasks[0])
     commit('SET_AUTHENTICATED', true)
