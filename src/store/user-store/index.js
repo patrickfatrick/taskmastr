@@ -5,7 +5,7 @@ export default {
     confirmKey: '',
     resetKey: '',
     resetConfirmKey: '',
-    darkmode: false,
+    darkmode: true,
     tasks: []
   }
 }

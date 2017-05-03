@@ -72,11 +72,11 @@
     position: fixed;
 
     &.mask-enter-active {
-      animation: fadeIn 300ms;
+      animation: fadeIn 250ms;
     }
 
     &.mask-leave-active {
-      animation: fadeOut 750ms;
+      animation: fadeOut 250ms;
     }
   };
 
