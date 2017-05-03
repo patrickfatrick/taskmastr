@@ -28,9 +28,9 @@ export function setCurrentTask ({ commit, state }, index) {
   const update = (isUserOwner)
   ? { currentItem: items[index]._id }
   : { ['users.' + list.users.findIndex((user) => user.username === state.user.username) + '.currentItem']: items[index]._id }
-  commit('SET_CURRENT_TASK', items[index]._id, isUserOwner)
+  commit('SET_CURRENT_TASK', { id: items[index]._id, isUserOwner })
   return updateList(state.user, list._id, update, (err, res) => {
-    if (err) return commit('SET_CURRENT_TASK', oldId, isUserOwner)
+    if (err) return commit('SET_CURRENT_TASK', { id: oldId, isUserOwner })
     return res
   })
 }

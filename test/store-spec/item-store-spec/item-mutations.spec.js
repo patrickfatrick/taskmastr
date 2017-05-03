@@ -26,7 +26,7 @@ describe('item mutations', () => {
       }
     }
 
-    itemMutations.SET_CURRENT_TASK(state, 'itemid2', true)
+    itemMutations.SET_CURRENT_TASK(state, { id: 'itemid2', isUserOwner: true })
 
     assert.strictEqual(state.current.currentItem, 'itemid2')
   })
@@ -54,7 +54,7 @@ describe('item mutations', () => {
       }
     }
 
-    itemMutations.SET_CURRENT_TASK(state, 'itemid2', false)
+    itemMutations.SET_CURRENT_TASK(state, { id: 'itemid2', isUserOwner: false })
 
     assert.strictEqual(state.current.currentItem, 'itemid')
     assert.strictEqual(state.current.users[0].currentItem, 'itemid2')
