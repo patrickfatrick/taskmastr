@@ -7,7 +7,7 @@ import mountVm from '../../../mount-vm'
 describe('DarkmodeVue', function () {
   it('should inherit the darkmode property from the state', () => {
     const vm = mountVm(Darkmode)
-    assert.isFalse(vm.darkmode)
+    assert.isTrue(vm.darkmode)
   })
 
   it('should have a setDarkmode method', () => {
@@ -17,12 +17,12 @@ describe('DarkmodeVue', function () {
 
   it('should render with initial state', () => {
     const vm = mountVm(Darkmode)
-    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-moon-o'))
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-sun-o'))
   })
 
   it('should respond to changes in the state', () => {
-    const vm = mountVm(Darkmode, { user: { darkmode: true } })
-    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-sun-o'))
+    const vm = mountVm(Darkmode, { user: { darkmode: false } })
+    assert.isTrue(vm.$el.querySelector('.fa').classList.contains('fa-moon-o'))
   })
 
   it('should call setDarkmode on button click', () => {
@@ -31,7 +31,7 @@ describe('DarkmodeVue', function () {
 
     vm.$el.querySelector('.dark-mode').click()
 
-    assert.isTrue(vm.setDarkmode.calledWith(true))
+    assert.isTrue(vm.setDarkmode.calledWith(false))
     vm.setDarkmode.restore()
   })
 
@@ -41,7 +41,7 @@ describe('DarkmodeVue', function () {
 
     Mousetrap.trigger('ctrl+m')
 
-    assert.isTrue(vm.setDarkmode.calledWith(true))
+    assert.isTrue(vm.setDarkmode.calledWith(false))
     vm.setDarkmode.restore()
   })
 })
