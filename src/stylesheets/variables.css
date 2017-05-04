@@ -152,7 +152,7 @@
     lost-utility: clearfix;
 
     @media (--medium) {
-      &:hover:not(.complete):not(.active) {
+      &:hover:not(.table-row--complete):not(.table-row--active) {
         background-color: var(--deepBlue);
         color: var(--white);
       }
