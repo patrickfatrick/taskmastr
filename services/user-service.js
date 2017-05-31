@@ -50,8 +50,8 @@ exports.updateUser = async function (username, body) {
 
 exports.setToken = async function (username) {
   const result = await User.findOneAndUpdate(
+    { username: username.toLowerCase() },
     {
-      username: username.toLowerCase() }, {
       dateModified: new Date().toISOString(),
       resetToken: hashish(),
       resetDate: Date.now() + 1060 * 60
@@ -72,7 +72,7 @@ exports.resetPassword = async function (user) {
   const result = User.findOneAndUpdate(
     {
       resetToken: user.token
-    }, 
+    },
     {
       dateModified: new Date().toISOString(),
       key: hash,

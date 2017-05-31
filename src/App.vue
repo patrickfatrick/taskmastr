@@ -74,7 +74,7 @@ export default {
         })
         this.$router.push('/app/list/' + this.$route.params.listid)
       }
-      this.mountList(this.$route.params.listid)
+      if (this.$route.params.listid) this.mountList(this.$route.params.listid)
     }
   },
   watch: {

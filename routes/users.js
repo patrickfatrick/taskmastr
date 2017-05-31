@@ -17,8 +17,14 @@ module.exports = {
     try {
       await passport.authenticate('local', async function (err, user, info, status) {
         if (err) throw err
-        if (!user) ctx.throw(204, 'No user found.')
+
+        if (!user) {
+          ctx.status = 204
+          return
+        }
+
         if (user === 401) ctx.throw(401, 'Invalid password.')
+
         await ctx.login(user)
         console.log(user.username + ' => Sending user... OK')
         ctx.body = user
@@ -31,12 +37,9 @@ module.exports = {
     const user = ctx.request.body
     try {
       const found = await userService.findUser(user.username)
-      if (found) {
-        console.log(found.username + ' => Already a user')
-        ctx.throw(400, 'User already exists')
-      }
+      if (found) ctx.throw(400, 'User', found.username, 'already exists')
       const result = await userService.addUser(user)
-      if (!result.username) ctx.throw(500, 'Something bad happened')
+      if (!result.username) ctx.throw(500, 'Something bad happened at addUser')
       await ctx.login(result)
       agenda.now('Welcome Email', {
         username: user.username,
@@ -76,9 +79,7 @@ module.exports = {
         resetToken: result.resetToken,
         host: process.env.HOST || 'http://localhost:3000'
       })
-      ctx.body = {
-        emailSent: true
-      }
+      ctx.status = 200
     } catch (e) {
       errorHandler(ctx, e)
     }

@@ -44,11 +44,11 @@ io.on('connection', (socket) => {
     logSocketEvent(true, event, { info: '/lists/' + payload.list._id, params: payload })
     try {
       return lists.create(payload)
-      .then((results) => {
+      .then(({ listResult, userResult }) => {
         logSocketEvent(false, event, { info: '/lists/' + payload.list._id })
-        socket.to(payload.listid).broadcast.emit('change', results[0])
-        socket.to(payload.user.username).broadcast.emit('updated', results[1])
-        ack(null, results[0])
+        socket.to(payload.listid).broadcast.emit('change', listResult)
+        socket.to(payload.user.username).broadcast.emit('updated', userResult)
+        ack(null, listResult)
       })
     } catch (err) {
       logSocketEvent(false, event, { info: '/lists/' + payload.list._id, err })
@@ -61,11 +61,11 @@ io.on('connection', (socket) => {
     logSocketEvent(true, event, { info: '/lists/' + payload.listid, params: payload })
     try {
       return lists.update(payload)
-      .then((results) => {
+      .then(({ listResult, userResult }) => {
         logSocketEvent(false, event, { info: '/lists/' + payload.listid })
-        socket.to(payload.listid).broadcast.emit('change', results[0])
-        socket.to(payload.user.username).broadcast.emit('updated', results[1])
-        ack(null, results[0])
+        socket.to(payload.listid).broadcast.emit('change', listResult)
+        socket.to(payload.user.username).broadcast.emit('updated', userResult)
+        ack(null, listResult)
       })
     } catch (err) {
       logSocketEvent(false, event, { info: '/lists/' + payload.listid, err })
@@ -78,14 +78,14 @@ io.on('connection', (socket) => {
     logSocketEvent(true, event, { info: '/lists/' + payload.listid, params: payload })
     try {
       return lists.delete(payload)
-      .then((results) => {
+      .then(({ listResult, userResult }) => {
         logSocketEvent(false, event, { info: '/lists/' + payload.listid })
         socket.broadcast.emit('list-deleted', {
           listid: payload.listid,
-          username: results[1].username,
+          username: userResult.username,
           permanent: payload.permanent
         })
-        ack(null, results[0])
+        ack(null, listResult)
       })
     } catch (err) {
       logSocketEvent(false, event, { info: '/lists/' + payload.listid, err })

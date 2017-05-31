@@ -38,7 +38,7 @@ module.exports = {
       console.log(`List items created in bulk ${chalk.gray(listResult._id)}`)
     })
 
-    return [listResult, userResult]
+    return { listResult, userResult }
   },
   delete: async function (payload) {
     const user = payload.user
@@ -66,7 +66,7 @@ module.exports = {
     const userResult = await userService.updateUser(user.username, { tasks: user.tasks })
     if (!userResult) throw new Error('Something bad happened at updateUser')
 
-    return [listResult, userResult]
+    return { listResult, userResult }
   },
   update: async function (payload) {
     const user = payload.user
@@ -79,7 +79,7 @@ module.exports = {
     const userResult = await userService.updateUser(user.username, { tasks: user.tasks })
     if (!userResult) throw new Error('Something bad happened at updateUser')
 
-    return [listResult, userResult]
+    return { listResult, userResult }
   },
   invite: async function (payload) {
     const username = payload.username

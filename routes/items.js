@@ -13,6 +13,7 @@ module.exports = {
 
     const itemResult = await itemService.addItem(item)
     if (!itemResult) throw new Error('Something bad happened at addItem')
+
     const listResult = await itemService.addItemToList(listid, item._id)
     if (!listResult) throw new Error('Something bad happened at addItemToList')
 
@@ -38,6 +39,7 @@ module.exports = {
 
     const itemResult = await itemService.updateItem(item._id, item)
     if (!itemResult) throw new Error('Something bad happened at updateItem')
+
     const listResult = await listService.getList(listid)
     if (!listResult) throw new Error('Something bad happened at getList')
 
@@ -72,6 +74,7 @@ module.exports = {
 
     const itemResult = await itemService.deleteItem(itemid)
     if (!itemResult) throw new Error('Something bad happened at deleteItem')
+
     const listResult = await itemService.deleteItemFromList(listid, index)
     if (!listResult) throw new Error('Something bad happened at deleteItemFromList')
 

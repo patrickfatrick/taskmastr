@@ -6,7 +6,10 @@ module.exports = {
   get: function (ctx, next) {
     try {
       const user = ctx.req.user
-      if (!user) return ctx.throw(204)
+      if (!user) {
+        ctx.status = 204
+        return
+      }
       console.log(user.username + ' => Sending user... OK')
       ctx.body = user
     } catch (e) {

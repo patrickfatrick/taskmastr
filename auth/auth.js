@@ -15,18 +15,16 @@ module.exports = function () {
       const user = await userService.findUser(username, 'username key tasks currentList darkmode')
 
       if (!user) {
-        console.log(username + ' => No user named ' + username)
+        console.log(username, '=> No user named', username)
         return next(null, null)
       }
-      console.log(user.username + ' => Found. Validating...')
+
+      console.log(user.username, '=> Found. Validating...')
 
       const same = await bcrypt.compare(key, user.key)
+      if (!same) next(null, 401)
 
-      if (!same) {
-        console.log('Passwords don\'t match')
-        return next(null, 401)
-      }
-      console.log(username + ' => Validating... OK')
+      console.log(username, '=> Validating... OK')
       next(null, user)
     } catch (e) {
       next(e)
