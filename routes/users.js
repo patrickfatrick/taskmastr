@@ -54,14 +54,14 @@ module.exports = {
       errorHandler(ctx, e)
     }
   },
-  update: function (payload) {
+  update: async function (payload) {
     const username = payload.username
     const body = payload.body
-    return userService.updateUser(username, body)
-    .then((result) => {
-      if (!result) throw new Error('Something bad happened at updateUser')
-      return result
-    })
+
+    const result = await userService.updateUser(username, body)
+    if (!result) throw new Error('Something bad happened at updateUser')
+
+    return result
   },
   forgot: async function (ctx, next) {
     const username = ctx.params.username

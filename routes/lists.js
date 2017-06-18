@@ -30,6 +30,7 @@ module.exports = {
     if (!listResult) throw new Error('Something bad happened at addList')
     const userResult = await userService.updateUser(user.username, { tasks: user.tasks })
     if (!userResult) throw new Error('Something bad happened at updateUser')
+
     async.each(list.items, (item, cb) => {
       itemService.addItem(item)
       .then((result) => cb())

@@ -4,198 +4,212 @@ const io = require('socket.io')()
 const users = require('./routes/users')
 const lists = require('./routes/lists')
 const items = require('./routes/items')
-const logSocketEvent = require('./utils/log-socket-event')
+const socketLogger = require('./utils/socket-logger')
+const logSocketUp = socketLogger.logSocketUp
+const logSocketDown = socketLogger.logSocketDown
+const logSocketError = socketLogger.logSocketError
 
 io.on('connection', (socket) => {
-  logSocketEvent(true, 'connection', { info: socket.id })
+  logSocketUp('connection', socket.id)
 
   socket.on('disconnect', () => {
-    logSocketEvent(false, 'disconnect', { info: socket.id })
+    logSocketDown('disconnect', socket.id)
   })
 
   socket.on('join', (payload) => {
-    logSocketEvent(true, 'join', { info: payload })
+    logSocketUp('join', payload)
     socket.join(payload)
   })
 
   socket.on('leave', (payload) => {
-    logSocketEvent(false, 'leave', { info: payload, params: payload })
+    logSocketDown('leave', payload, payload)
     socket.leave(payload)
   })
 
   socket.on('update-user', (payload, ack) => {
-    const event = 'update-user'
-    logSocketEvent(true, event, { info: '/users/' + payload.username, params: payload })
-    try {
-      return users.update(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/users/' + payload.username })
-        socket.to(payload.username).broadcast.emit('updated', result)
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/users/' + payload.username, err })
+    const socketEvent = 'update-user'
+    const socketRoute = '/users/' + payload.username
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return users.update(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.to(payload.username).broadcast.emit('updated', result)
+      ack(null, result)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('create-list', (payload, ack) => {
-    const event = 'create-list'
-    logSocketEvent(true, event, { info: '/lists/' + payload.list._id, params: payload })
-    try {
-      return lists.create(payload)
-      .then(({ listResult, userResult }) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.list._id })
-        socket.to(payload.listid).broadcast.emit('change', listResult)
-        socket.to(payload.user.username).broadcast.emit('updated', userResult)
-        ack(null, listResult)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.list._id, err })
+    const socketEvent = 'create-list'
+    const socketRoute = '/lists'
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return lists.create(payload)
+    .then(({ listResult, userResult }) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, listResult)
+      socket.to(payload.listid).broadcast.emit('change', listResult)
+      socket.to(payload.user.username).broadcast.emit('updated', userResult)
+      ack(null, listResult)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('update-list', (payload, ack) => {
-    const event = 'update-list'
-    logSocketEvent(true, event, { info: '/lists/' + payload.listid, params: payload })
-    try {
-      return lists.update(payload)
-      .then(({ listResult, userResult }) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid })
-        socket.to(payload.listid).broadcast.emit('change', listResult)
-        socket.to(payload.user.username).broadcast.emit('updated', userResult)
-        ack(null, listResult)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid, err })
+    const socketEvent = 'update-list'
+    const socketRoute = '/lists/' + payload.listid
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return lists.update(payload)
+    .then(({ listResult, userResult }) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, listResult)
+      socket.to(payload.listid).broadcast.emit('change', listResult)
+      socket.to(payload.user.username).broadcast.emit('updated', userResult)
+      ack(null, listResult)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('delete-list', (payload, ack) => {
-    const event = 'delete-list'
-    logSocketEvent(true, event, { info: '/lists/' + payload.listid, params: payload })
-    try {
-      return lists.delete(payload)
-      .then(({ listResult, userResult }) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid })
-        socket.broadcast.emit('list-deleted', {
-          listid: payload.listid,
-          username: userResult.username,
-          permanent: payload.permanent
-        })
-        ack(null, listResult)
+    const socketEvent = 'delete-list'
+    const socketRoute = '/lists/' + payload.listid
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return lists.delete(payload)
+    .then(({ listResult, userResult }) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, socketRoute, listResult)
+      socket.broadcast.emit('list-deleted', {
+        listid: payload.listid,
+        username: userResult.username,
+        permanent: payload.permanent
       })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid, err })
+      ack(null, listResult)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('delete-item', (payload, ack) => {
-    const event = 'delete-item'
-    logSocketEvent(true, event, {
-      info: '/lists/' + payload.listid + '/items/' + payload.itemid,
-      params: payload
+    const socketEvent = 'delete-item'
+    const socketRoute = '/items/' + payload.itemid
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return items.delete(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.to(payload.listid).broadcast.emit('change', result)
+      ack(null, result)
     })
-    try {
-      return items.delete(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/items/' + payload.itemid })
-        socket.to(payload.listid).broadcast.emit('change', result)
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/items/' + payload.itemid, err })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('update-item', (payload, ack) => {
-    const event = 'update-item'
-    logSocketEvent(true, event, {
-      info: '/lists/' + payload.listid + '/items/' + payload.itemid,
-      params: payload
+    const socketEvent = 'update-item'
+    const socketRoute = '/items/' + payload.itemid
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return items.update(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.to(payload.listid).broadcast.emit('change', result)
+      ack(null, result)
     })
-    try {
-      return items.update(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/items/' + payload.itemid })
-        socket.to(payload.listid).broadcast.emit('change', result)
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/items/' + payload.itemid, err })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('create-item', (payload, ack) => {
-    const event = 'create-item'
-    logSocketEvent(true, event, {
-      info: '/lists/' + payload.listid + '/items/' + payload.item._id,
-      params: payload
+    const socketEvent = 'create-item'
+    const socketRoute = '/items'
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return items.create(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.to(payload.listid).broadcast.emit('change', result)
+      ack(null, result)
     })
-    try {
-      return items.create(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/items/' + payload.item._id })
-        socket.to(payload.listid).broadcast.emit('change', result)
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/items/' + payload.item._id, err })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('invite-user', (payload, ack) => {
-    const event = 'invite-user'
-    logSocketEvent(true, event, { info: '/lists/' + payload.listid + '/invite-user', params: payload })
-    try {
-      return lists.invite(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/invite-user' })
-        socket.broadcast.emit('users-change', { list: result })
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/invite-user', err })
+    const socketEvent = 'invite-user'
+    const socketRoute = '/lists/' + payload.listid + '/invite-user'
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return lists.invite(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.broadcast.emit('users-change', { list: result })
+      ack(null, result)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('remove-user', (payload, ack) => {
-    const event = 'remove-user'
-    logSocketEvent(true, event, { info: '/lists/' + payload.listid + '/remove-user/', params: payload })
-    try {
-      return lists.removeUser(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/remove-user/' })
-        socket.broadcast.emit('users-change', { list: result, removed: true })
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/remove-user/', err })
+    const socketEvent = 'remove-user'
+    const socketRoute = '/lists/' + payload.listid + '/remove-user'
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return lists.removeUser(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.broadcast.emit('users-change', { list: result, removed: true })
+      ack(null, result)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 
   socket.on('confirm-user', (payload, ack) => {
-    const event = 'confirm-user'
-    logSocketEvent(true, event, { info: '/lists/' + payload.listid + '/confirm-user/', params: payload })
-    try {
-      return lists.confirmUser(payload)
-      .then((result) => {
-        logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/confirm-user/' })
-        socket.broadcast.emit('users-change', { list: result })
-        ack(null, result)
-      })
-    } catch (err) {
-      logSocketEvent(false, event, { info: '/lists/' + payload.listid + '/confirm-user/', err })
+    const socketEvent = 'confirm-user'
+    const socketRoute = '/lists/' + payload.listid + '/confirm-user'
+    const startTime = Date.now()
+    logSocketUp(socketEvent, socketRoute, payload)
+
+    return lists.confirmUser(payload)
+    .then((result) => {
+      logSocketDown(socketEvent, socketRoute, Date.now() - startTime, result)
+      socket.broadcast.emit('users-change', { list: result })
+      ack(null, result)
+    })
+    .catch((err) => {
+      logSocketError(socketEvent, socketRoute, Date.now() - startTime, err)
       ack(err, null)
-    }
+    })
   })
 })
 
