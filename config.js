@@ -9,12 +9,6 @@ module.exports = {
   koa: {
     port: process.env.PORT || 3000
   },
-  rethinkdb: {
-    host: process.env.RETHINKDB_HOST || 'localhost',
-    port: 28015,
-    authKey: process.env.RETHINKDB_AUTH || '',
-    db: 'taskmastr'
-  },
   mongoose: {
     url: mongoUri
   },
@@ -30,10 +24,13 @@ module.exports = {
   },
   cookieMaxAge: singleDay * 30,
   compress: {
-    filter: function (content_type) {
-      return /text/i.test(content_type)
+    filter: function (contentType) {
+      return /text/i.test(contentType)
     },
     threshold: 2048,
     flush: require('zlib').Z_SYNC_FLUSH
+  },
+  slogger: {
+    minimal: process.env.QUIET
   }
 }

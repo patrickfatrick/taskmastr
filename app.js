@@ -3,6 +3,7 @@
 const http = require('http')
 const Koa = require('koa')
 const convert = require('koa-convert')
+const chalk = require('chalk')
 
 // Middleware and helpers
 const path = require('path')
@@ -14,10 +15,11 @@ const serve = require('koa-static')
 const parse = require('koa-bodyparser')
 const views = require('koa-views')
 const router = require('koa-router')()
-const logger = require('koa-logger')
 const favicon = require('koa-favicon')
 const passport = require('koa-passport')
+const createLogger = require('concurrency-logger').default
 const agenda = require('./services/agenda-service')
+const filterLog = require('./utils/filter-log')
 
 // Import configs and auth middleware
 const config = require('./config')
@@ -37,8 +39,21 @@ const app = new Koa()
 
 auth()
 
+// Bodyparser
+app.use(parse())
+
 // Logger
-app.use(logger())
+app.use(createLogger({
+  req: (ctx) => {
+    return chalk.gray(ctx.originalUrl) + ' ' +
+    (ctx.method === 'POST' && !process.env.QUIET ? filterLog(ctx.request.body) : '')
+  },
+  res: (ctx) => (
+    chalk.gray(ctx.originalUrl) + ' ' +
+    (ctx.response.header['content-length'] ? ctx.response.header['content-length'] + 'b ' : '') +
+    (ctx.method === 'POST' && !process.env.QUIET ? filterLog(ctx.body) : '')
+  )
+}))
 
 // Mongoose setup
 // Still uses mpromise by default, so manually set it to native Promise
@@ -58,9 +73,6 @@ app.use(convert(session({
   },
   store: new MongoStore(config.session)
 })))
-
-// Bodyparser
-app.use(parse())
 
 // Favicon
 app.use(favicon(path.join(__dirname, '/public/images/favicon.ico')))

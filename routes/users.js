@@ -15,19 +15,18 @@ module.exports = {
   },
   login: async function (ctx, next) {
     try {
-      await passport.authenticate('local', async function (err, user, info, status) {
+      await passport.authenticate('local', async function (err, result, info, status) {
         if (err) throw err
 
-        if (!user) {
-          ctx.status = 204
-          return
+        if (status === 403) {
+          ctx.throw(403, 'No user found with username ' + ctx.request.body.username)
         }
 
-        if (user === 401) ctx.throw(401, 'Invalid password.')
+        if (status === 401) ctx.throw(401, 'Invalid password.')
 
-        await ctx.login(user)
-        console.log(user.username + ' => Sending user... OK')
-        ctx.body = user
+        await ctx.login(result)
+        ctx.log(result.username, 'logged in successfully.')
+        ctx.body = result
       })(ctx, next)
     } catch (e) {
       errorHandler(ctx, e)
@@ -68,10 +67,8 @@ module.exports = {
 
     try {
       const found = await userService.findUser(username)
-      if (!found) {
-        console.log('No user: ' + username)
-        ctx.throw(401, 'No user found.')
-      }
+      if (!found) ctx.throw(401, 'No user found with username' + username)
+
       const result = await userService.setToken(found.username)
       if (!result.username) ctx.throw(500, 'Something bad happened at setToken')
       agenda.now('Reset Email', {
@@ -79,7 +76,6 @@ module.exports = {
         resetToken: result.resetToken,
         host: process.env.HOST || 'http://localhost:3000'
       })
-      ctx.status = 200
     } catch (e) {
       errorHandler(ctx, e)
     }
@@ -93,7 +89,7 @@ module.exports = {
         newKey: newKey
       })
       if (!result) ctx.throw(401, 'Invalid link')
-      console.log(result.username + ' => Password updated')
+      ctx.log(result.username, 'password updated successfully')
       ctx.body = {
         username: result.username
       }

@@ -59,7 +59,7 @@ export function getUserSession ({ commit }) {
 export function loginUser ({ commit }, { username, key, rememberMe }) {
   return login(username, key, rememberMe, (err, response) => {
     if (err) {
-      if (response.status === 204) return commit('SET_CREATE', true)
+      if (response.status === 403) return commit('SET_CREATE', true)
       if (response.status === 401) return commit('SET_INVALID_KEY', err.message)
     }
     let tasks = response.tasks

@@ -14,17 +14,11 @@ module.exports = function () {
     try {
       const user = await userService.findUser(username, 'username key tasks currentList darkmode')
 
-      if (!user) {
-        console.log(username, '=> No user named', username)
-        return next(null, null)
-      }
-
-      console.log(user.username, '=> Found. Validating...')
+      if (!user) return next(null, false, 403)
 
       const same = await bcrypt.compare(key, user.key)
-      if (!same) next(null, 401)
+      if (!same) return next(null, false, 401)
 
-      console.log(username, '=> Validating... OK')
       next(null, user)
     } catch (e) {
       next(e)
@@ -36,7 +30,7 @@ module.exports = function () {
   })
 
   passport.deserializeUser((username, next) => {
-    userService.findUser(username)
+    userService.findUser(username, 'username key tasks currentList darkmode')
     .then(function (user) {
       next(null, user)
     })

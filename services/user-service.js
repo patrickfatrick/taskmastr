@@ -11,14 +11,16 @@ exports.addUser = async function (user) {
     key: hash,
     darkmode: user.darkmode,
     dateCreated: new Date().toISOString()
-  }).save()
+  })
+  .select('username token currentList darkmode tasks')
+  .save()
 
   return result
 }
 
 exports.findUser = async function (username, fields = 'username') {
   const result = await User.findOne({ username: username.toLowerCase() })
-  .select('username key token currentList darkmode tasks')
+  .select(fields)
   .populate({
     path: 'tasks',
     select: '_deleting dateCreated dateModified list owner users'
@@ -31,14 +33,11 @@ exports.findUser = async function (username, fields = 'username') {
 exports.updateUser = async function (username, body) {
   body.dateModified = new Date().toISOString()
   const result = await User.findOneAndUpdate(
-    {
-      username: username.toLowerCase()
-    },
+    { username: username.toLowerCase() },
     body,
-    {
-      new: true
-    }
+    { new: true }
   )
+  .select('username token currentList darkmode tasks')
   .populate({
     path: 'tasks',
     select: '_deleting dateCreated dateModified list owner users'
@@ -56,10 +55,9 @@ exports.setToken = async function (username) {
       resetToken: hashish(),
       resetDate: Date.now() + 1060 * 60
     },
-    {
-      new: true
-    }
+    { new: true }
   )
+  .select('username token currentList darkmode tasks')
   .exec()
 
   return result
@@ -77,11 +75,10 @@ exports.resetPassword = async function (user) {
       dateModified: new Date().toISOString(),
       key: hash,
       resetToken: null
-    }, 
-    {
-      new: true
-    }
+    },
+    { new: true }
   )
+  .select('username token currentList darkmode tasks')
   .exec()
 
   return result

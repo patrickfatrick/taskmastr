@@ -10,7 +10,7 @@ module.exports = {
         ctx.status = 204
         return
       }
-      console.log(user.username + ' => Sending user... OK')
+      ctx.log(user.username, 'logged in successfully')
       ctx.body = user
     } catch (e) {
       errorHandler(ctx, e)

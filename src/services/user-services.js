@@ -21,7 +21,7 @@ export function login (username, key, rememberMe, cb) {
   .then((response) => response.json())
   .then((user) => cb(null, user))
   .catch((err) => {
-    if (err.response.status === 204) {
+    if (err.response.status === 403) {
       return cb(new Error('No user found. Please confirm your password.'), err.response)
     }
     if (err.response.status === 401) {

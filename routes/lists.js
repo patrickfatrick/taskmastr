@@ -12,11 +12,11 @@ module.exports = {
   get: async function (ctx, next) {
     try {
       const result = await listService.getList(ctx.params.listid)
-      if (!result) ctx.throw(404, 'List not found')
+      if (!result) ctx.throw(404, 'List not found with id ' + ctx.params.listid)
       const inUserList = result.users.some((user) => {
         return user.username === ctx.req.user.username
       })
-      if (result.owner !== ctx.req.user.username && !inUserList) ctx.throw(403, 'Not cool, bro')
+      if (result.owner !== ctx.req.user.username && !inUserList) ctx.throw(403)
       ctx.body = result
     } catch (e) {
       errorHandler(ctx, e)
