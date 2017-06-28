@@ -30,7 +30,7 @@ describe('loginUser', () => {
     const userActions = userActionsInjector({
       '../../services/user-services': {
         login (username, key, rememberMe, cb) {
-          cb(new Error('Error!'), { status: 204 })
+          cb(new Error('Error!'), { status: 403 })
         }
       }
     })

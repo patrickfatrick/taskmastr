@@ -27,12 +27,12 @@ describe('user-services', () => {
     })
   })
 
-  it('login throws an error on 204', (done) => {
-    fetchMock.mock('/users/login', 204)
+  it('login throws an error on 403', (done) => {
+    fetchMock.mock('/users/login', 403)
 
     login('username', 'password', false, (err, response) => {
       assert.isTrue(fetchMock.called('/users/login'))
-      assert.isOk(response.ok)
+      assert.notOk(response.ok)
       assert.strictEqual(err.message, 'No user found. Please confirm your password.')
     })
     .then(() => {
