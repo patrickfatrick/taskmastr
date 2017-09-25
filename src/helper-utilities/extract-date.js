@@ -15,8 +15,8 @@ export default function (string) {
   const item = string.slice(0, found).replace(/^\w/g, string.charAt(0).toUpperCase())
   const date = new Date(string.slice(found, string.length))
   const dueDate = (isDate(date))
-  ? setLocal('h')(0)(date)
-  : datejs(string.slice(found, string.length))
+    ? setLocal('h')(0)(date)
+    : datejs(string.slice(found, string.length))
 
   return {
     item: item.trim(),

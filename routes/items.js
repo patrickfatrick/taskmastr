@@ -87,5 +87,27 @@ module.exports = {
     })
 
     return listResult
+  },
+  deleteItems: async function (payload) {
+    const listid = payload.listid
+    const itemids = payload.itemids
+
+    const itemResult = await itemService.deleteItems(itemids)
+    if (!itemResult) throw new Error('Something bad happened at deleteItem')
+
+    const listResult = await itemService.deleteItemsFromList(listid, itemids)
+    if (!listResult) throw new Error('Something bad happened at deleteItemFromList')
+
+    itemids.forEach((itemid) => {
+      // Cancel agenda if it exists
+      agenda.cancel({
+        'data.agendaID': itemid
+      }, (err) => {
+        if (err) throw new Error(err)
+        console.log(`Agenda canceled ${chalk.gray(itemid)} `)
+      })
+    })
+
+    return listResult
   }
 }

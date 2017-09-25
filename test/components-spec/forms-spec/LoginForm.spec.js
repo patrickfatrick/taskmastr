@@ -96,15 +96,15 @@ describe('LoginForm.vue', function () {
     vm.login('username@domain.com', 'password', false)
 
     promise()
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-      // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/listid/))
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+        // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/listid/))
 
-      vm.$router.push.restore()
-      vm.loginUser.restore()
-      done()
-    })
+        vm.$router.push.restore()
+        vm.loginUser.restore()
+        done()
+      })
   })
 
   it('should redirect to jumpto if provided', (done) => {
@@ -123,15 +123,15 @@ describe('LoginForm.vue', function () {
     vm.login('username@domain.com', 'password', false)
 
     promise()
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-      // assert.isTrue(vm.$router.push.calledWith('/link/to/something'))
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+        // assert.isTrue(vm.$router.push.calledWith('/link/to/something'))
 
-      vm.$router.push.restore()
-      vm.loginUser.restore()
-      done()
-    })
+        vm.$router.push.restore()
+        vm.loginUser.restore()
+        done()
+      })
   })
 
   it('should redirect to /create on !authenticated and create', (done) => {
@@ -149,15 +149,15 @@ describe('LoginForm.vue', function () {
     vm.login('username@domain.com', 'password', false)
 
     promise()
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-      // assert.isTrue(vm.$router.push.calledWith('/create'))
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+        // assert.isTrue(vm.$router.push.calledWith('/create'))
 
-      vm.$router.push.restore()
-      vm.loginUser.restore()
-      done()
-    })
+        vm.$router.push.restore()
+        vm.loginUser.restore()
+        done()
+      })
   })
 
   it('should not log in to app on !isValid', () => {

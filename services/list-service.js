@@ -5,8 +5,8 @@ const List = require('../models/List')
 
 exports.getList = async function (id) {
   const result = await List.findOne({ _id: id })
-  .populate({ path: 'items' })
-  .exec()
+    .populate({ path: 'items' })
+    .exec()
 
   return result
 }
@@ -18,7 +18,7 @@ exports.addList = async function (list) {
 
 exports.deleteList = async function (id) {
   const result = await List.findOneAndRemove({ _id: id })
-  .exec()
+    .exec()
 
   return result
 }
@@ -26,21 +26,21 @@ exports.deleteList = async function (id) {
 exports.updateList = async function (id, body) {
   body.dateModified = new Date().toISOString()
   const result = await List.findOneAndUpdate({ _id: id }, body, { new: true })
-  .populate({ path: 'items' })
-  .exec()
+    .populate({ path: 'items' })
+    .exec()
 
   return result
 }
 
 exports.updateListAt = async function (id, user) {
   const list = await List.findOne({ _id: id })
-  .populate({ path: 'items' })
-  .exec()
+    .populate({ path: 'items' })
+    .exec()
 
   if (!list) return null
 
   const userIndex = _.findIndex(list.users, { username: user.username })
   list.users[userIndex] = user
 
-  return await list.save()
+  return list.save()
 }

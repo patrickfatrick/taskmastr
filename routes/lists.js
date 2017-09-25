@@ -33,7 +33,7 @@ module.exports = {
 
     async.each(list.items, (item, cb) => {
       itemService.addItem(item)
-      .then((result) => cb())
+        .then((result) => cb())
     }, function (err) {
       if (err) throw new Error(err)
       console.log(`List items created in bulk ${chalk.gray(listResult._id)}`)
@@ -49,15 +49,15 @@ module.exports = {
       // Round up the ids of each item and cancel their agenda tasks
       async.each(listResult.items, (itemid, cb) => {
         itemService.deleteItem(itemid)
-        .then((result) => {
-          agenda.cancel({
-            'data.agendaID': itemid
-          }, (err) => {
-            if (err) throw new Error(err)
-            console.log(user.username + ' => Agenda removed: ' + itemid)
-            cb()
+          .then((result) => {
+            agenda.cancel({
+              'data.agendaID': itemid
+            }, (err) => {
+              if (err) throw new Error(err)
+              console.log(user.username + ' => Agenda removed: ' + itemid)
+              cb()
+            })
           })
-        })
       }, function (err) {
         if (err) throw new Error(err)
         console.log(`List items removed in bulk ${chalk.gray(listResult._id)}`)

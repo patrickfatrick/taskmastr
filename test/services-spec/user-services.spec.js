@@ -21,10 +21,10 @@ describe('user-services', () => {
       assert.isNull(err)
       assert.deepEqual(response.username, 'username')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('login throws an error on 403', (done) => {
@@ -35,10 +35,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.strictEqual(err.message, 'No user found. Please confirm your password.')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('login throws an error on 401', (done) => {
@@ -49,10 +49,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.strictEqual(err.message, 'Invalid password.')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('login throws on error', (done) => {
@@ -63,10 +63,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.isNotNull(err)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('create invokes a callback on success', (done) => {
@@ -82,10 +82,10 @@ describe('user-services', () => {
       assert.isNull(err)
       assert.deepEqual(response.username, 'username')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('create throws an error on 400', (done) => {
@@ -96,10 +96,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.strictEqual(err.message, 'User already exists')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('create throws on error', (done) => {
@@ -110,10 +110,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.isNotNull(err)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('forgot invokes a callback on success', (done) => {
@@ -129,10 +129,10 @@ describe('user-services', () => {
       assert.isNull(err)
       assert.deepEqual(response.emailSent, true)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('forgot throws an error on 401', (done) => {
@@ -143,10 +143,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.strictEqual(err.message, 'That username doesn\'t exist.')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('forgot throws on error', (done) => {
@@ -157,10 +157,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.isNotNull(err)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('reset invokes a callback on success', (done) => {
@@ -176,10 +176,10 @@ describe('user-services', () => {
       assert.isNull(err)
       assert.deepEqual(response.username, 'username')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('reset throws an error on 401', (done) => {
@@ -190,10 +190,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.strictEqual(err.message, 'This reset link is no longer or never was valid. Please close this window and try again.')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('reset throws on error', (done) => {
@@ -204,10 +204,10 @@ describe('user-services', () => {
       assert.notOk(response.ok)
       assert.isNotNull(err)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('logout invokes a callback on success', (done) => {
@@ -217,10 +217,10 @@ describe('user-services', () => {
       assert.isTrue(fetchMock.called('/users/logout'))
       assert.isOk(response.ok)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('getSession invokes a callback on success', (done) => {
@@ -238,10 +238,10 @@ describe('user-services', () => {
       assert.isNull(err)
       assert.deepEqual(response.username, 'username')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('getSession throws an error on 204', (done) => {
@@ -252,10 +252,10 @@ describe('user-services', () => {
       assert.isOk(response.ok)
       assert.strictEqual(err.message, 'No session data found.')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('getSession throws on error', (done) => {
@@ -266,10 +266,10 @@ describe('user-services', () => {
       assert.isNotOk(response.ok)
       assert.isNotNull(err)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('updateUser invokes a callback on success', (done) => {

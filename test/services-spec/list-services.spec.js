@@ -57,10 +57,10 @@ describe('list-services', () => {
       assert.isNull(err)
       assert.deepEqual(response.list, 'List')
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('getList throws on 404', (done) => {
@@ -71,10 +71,10 @@ describe('list-services', () => {
       assert.deepEqual(err.message, 'You\'re not viewing a list. Please click on one in the menu to the left.')
       assert.isNotOk(response.ok)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('getList throws on error', (done) => {
@@ -85,10 +85,10 @@ describe('list-services', () => {
       assert.isNotNull(err)
       assert.isNotOk(response.ok)
     })
-    .then(() => {
-      fetchMock.restore()
-      done()
-    })
+      .then(() => {
+        fetchMock.restore()
+        done()
+      })
   })
 
   it('removeList invokes a callback on success', (done) => {

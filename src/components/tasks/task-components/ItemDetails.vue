@@ -3,7 +3,6 @@
     <transition name="mask">
       <div 
         class="mask"
-        @click="toggleDetails(index)"
         v-if="detailsToggled === index"
       />
     </transition>
@@ -140,8 +139,9 @@
   top: 0;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   overflow-y: scroll;
+  z-index: 6;
 }
 
 .details-enter-active {

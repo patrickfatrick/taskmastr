@@ -86,18 +86,18 @@ describe('ResetForm.vue', function () {
     vm.reset('token', 'password')
 
     promise()
-    .then(() => loginPromise())
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
-      assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-      // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/listid/))
+      .then(() => loginPromise())
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
+        assert.isTrue(vm.loginUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+        // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/listid/))
 
-      vm.$router.push.restore()
-      vm.resetPassword.restore()
-      vm.loginUser.restore()
-      done()
-    })
+        vm.$router.push.restore()
+        vm.resetPassword.restore()
+        vm.loginUser.restore()
+        done()
+      })
   })
 
   it('should not reset password or log in to app if !isValid', () => {
@@ -143,17 +143,17 @@ describe('ResetForm.vue', function () {
     vm.reset('token', 'password')
 
     promise()
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
-      assert.isFalse(vm.loginUser.calledOnce)
-      assert.isFalse(vm.$router.push.calledOnce)
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.resetPassword.calledWith({ token: 'token', key: 'password' }))
+        assert.isFalse(vm.loginUser.calledOnce)
+        assert.isFalse(vm.$router.push.calledOnce)
 
-      vm.$router.push.restore()
-      vm.resetPassword.restore()
-      vm.loginUser.restore()
-      done()
-    })
+        vm.$router.push.restore()
+        vm.resetPassword.restore()
+        vm.loginUser.restore()
+        done()
+      })
   })
 
   it('should validate user.resetKey as required', () => {

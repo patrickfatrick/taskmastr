@@ -17,18 +17,18 @@ export function login (username, key, rememberMe, cb) {
       rememberMe: rememberMe
     })
   })
-  .then(status)
-  .then((response) => response.json())
-  .then((user) => cb(null, user))
-  .catch((err) => {
-    if (err.response.status === 403) {
-      return cb(new Error('No user found. Please confirm your password.'), err.response)
-    }
-    if (err.response.status === 401) {
-      return cb(new Error('Invalid password.'), err.response)
-    }
-    cb(err, err.response)
-  })
+    .then(status)
+    .then((response) => response.json())
+    .then((user) => cb(null, user))
+    .catch((err) => {
+      if (err.response.status === 403) {
+        return cb(new Error('No user found. Please confirm your password.'), err.response)
+      }
+      if (err.response.status === 401) {
+        return cb(new Error('Invalid password.'), err.response)
+      }
+      cb(err, err.response)
+    })
 }
 
 export function create (username, key, rememberMe, cb) {
@@ -48,17 +48,17 @@ export function create (username, key, rememberMe, cb) {
       tasks: []
     })
   })
-  .then(status)
-  .then((response) => response.json())
-  .then((response) => {
-    cb(null, response)
-  })
-  .catch((err) => {
-    if (err.response.status === 400) {
-      return cb(new Error('User already exists'), err.response)
-    }
-    cb(err, err.response)
-  })
+    .then(status)
+    .then((response) => response.json())
+    .then((response) => {
+      cb(null, response)
+    })
+    .catch((err) => {
+      if (err.response.status === 400) {
+        return cb(new Error('User already exists'), err.response)
+      }
+      cb(err, err.response)
+    })
 }
 
 export function forgot (username, cb) {
@@ -71,17 +71,17 @@ export function forgot (username, cb) {
       'Content-Type': 'application/json'
     }
   })
-  .then(status)
-  .then((response) => response.json())
-  .then((response) => {
-    cb(null, response)
-  })
-  .catch((err) => {
-    if (err.response.status === 401) {
-      return cb(new Error('That username doesn\'t exist.'), err.response)
-    }
-    cb(err, err.response)
-  })
+    .then(status)
+    .then((response) => response.json())
+    .then((response) => {
+      cb(null, response)
+    })
+    .catch((err) => {
+      if (err.response.status === 401) {
+        return cb(new Error('That username doesn\'t exist.'), err.response)
+      }
+      cb(err, err.response)
+    })
 }
 
 export function reset (token, newKey, cb) {
@@ -97,17 +97,17 @@ export function reset (token, newKey, cb) {
       newKey: newKey
     })
   })
-  .then(status)
-  .then((response) => response.json())
-  .then((response) => {
-    cb(null, response)
-  })
-  .catch((err) => {
-    if (err.response.status === 401) {
-      return cb(new Error('This reset link is no longer or never was valid. Please close this window and try again.'), err.response)
-    }
-    cb(err, err.response)
-  })
+    .then(status)
+    .then((response) => response.json())
+    .then((response) => {
+      cb(null, response)
+    })
+    .catch((err) => {
+      if (err.response.status === 401) {
+        return cb(new Error('This reset link is no longer or never was valid. Please close this window and try again.'), err.response)
+      }
+      cb(err, err.response)
+    })
 }
 
 export function logout (cb) {
@@ -115,9 +115,9 @@ export function logout (cb) {
     method: 'get',
     credentials: 'same-origin'
   })
-  .then((response) => {
-    cb(response)
-  })
+    .then((response) => {
+      cb(response)
+    })
 }
 
 export function getSession (cb) {
@@ -125,15 +125,15 @@ export function getSession (cb) {
     method: 'get',
     credentials: 'same-origin'
   })
-  .then(status)
-  .then((response) => response.json())
-  .then((user) => cb(null, user))
-  .catch((err) => {
-    if (err.response.status === 204) {
-      return cb(new Error('No session data found.'), err.response)
-    }
-    return cb(err, err.response)
-  })
+    .then(status)
+    .then((response) => response.json())
+    .then((user) => cb(null, user))
+    .catch((err) => {
+      if (err.response.status === 204) {
+        return cb(new Error('No session data found.'), err.response)
+      }
+      return cb(err, err.response)
+    })
 }
 
 export function updateUser (username, body, cb) {

@@ -94,19 +94,19 @@ describe('CreateForm.vue', function () {
     vm.create('username@domain.com', 'password', false)
 
     promise()
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.createUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-      assert.isTrue(vm.addList.calledWithMatch({ list: 'Your first list' }))
-      assert.isTrue(vm.setCurrentList.calledWithMatch({ list: 'Your first list' }))
-      // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.createUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+        assert.isTrue(vm.addList.calledWithMatch({ list: 'Your first list' }))
+        assert.isTrue(vm.setCurrentList.calledWithMatch({ list: 'Your first list' }))
+        // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
 
-      vm.createUser.restore()
-      vm.$router.push.restore()
-      vm.addList.restore()
-      vm.setCurrentList.restore()
-      done()
-    })
+        vm.createUser.restore()
+        vm.$router.push.restore()
+        vm.addList.restore()
+        vm.setCurrentList.restore()
+        done()
+      })
   })
 
   it('should redirect to jumpto if provided', (done) => {
@@ -127,19 +127,19 @@ describe('CreateForm.vue', function () {
     vm.create('username@domain.com', 'password', false)
 
     promise()
-    .then(() => {
-      clock.tick(250)
-      assert.isTrue(vm.createUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
-      assert.isTrue(vm.addList.calledWithMatch({ list: 'Your first list' }))
-      assert.isTrue(vm.setCurrentList.calledWithMatch({ list: 'Your first list' }))
-      // assert.isTrue(vm.$router.push.calledWith('/link/to/something'))
+      .then(() => {
+        clock.tick(250)
+        assert.isTrue(vm.createUser.calledWith({ username: 'username@domain.com', key: 'password', rememberMe: false }))
+        assert.isTrue(vm.addList.calledWithMatch({ list: 'Your first list' }))
+        assert.isTrue(vm.setCurrentList.calledWithMatch({ list: 'Your first list' }))
+        // assert.isTrue(vm.$router.push.calledWith('/link/to/something'))
 
-      vm.createUser.restore()
-      vm.$router.push.restore()
-      vm.addList.restore()
-      vm.setCurrentList.restore()
-      done()
-    })
+        vm.createUser.restore()
+        vm.$router.push.restore()
+        vm.addList.restore()
+        vm.setCurrentList.restore()
+        done()
+      })
   })
 
   it('should not create user or log in to app if !isValid', () => {

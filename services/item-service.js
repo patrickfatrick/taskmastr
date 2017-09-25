@@ -13,9 +13,9 @@ exports.addItemToList = async function (listid, itemid) {
   await list.save()
 
   // Hacky, but we need to do another lookup to populate the newly made item
-  return await List.findOne({ _id: listid })
-  .populate({ path: 'items' })
-  .exec()
+  return List.findOne({ _id: listid })
+    .populate({ path: 'items' })
+    .exec()
 }
 
 exports.addItem = async function (item) {
@@ -25,6 +25,7 @@ exports.addItem = async function (item) {
 
 exports.deleteItemFromList = async function (listid, index) {
   const list = await List.findOne({ _id: listid })
+  console.log(list)
   if (!list) return null
 
   list.items.splice(index, 1)
@@ -32,16 +33,37 @@ exports.deleteItemFromList = async function (listid, index) {
 
   // Hacky, but we need to do another lookup to NOT populate the newly removed item
   await list.save()
-  return await List.findOne({ _id: listid })
-  .populate({ path: 'items' })
-  .exec()
+  return List.findOne({ _id: listid })
+    .populate({ path: 'items' })
+    .exec()
+}
+
+exports.deleteItemsFromList = async function (listid, itemids) {
+  const list = await List.findOne({ _id: listid })
+  if (!list) return null
+
+  list.items = list.items.filter((item) => !itemids.includes(item._id))
+  list.dateModified = new Date().toISOString()
+
+  // Hacky, but we need to do another lookup to NOT populate the newly removed item
+  await list.save()
+  return List.findOne({ _id: listid })
+    .populate({ path: 'items' })
+    .exec()
 }
 
 exports.deleteItem = async function (id) {
   const result = await Item.findOneAndRemove({ _id: id })
-  .exec()
+    .exec()
 
   return result
+}
+
+exports.deleteItems = async function (itemids) {
+  return itemids.map((itemid) => {
+    return Item.findOneAndRemove({ _id: itemid })
+      .exec()
+  })
 }
 
 exports.updateItem = async function (id, item) {

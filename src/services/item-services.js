@@ -24,3 +24,11 @@ export function deleteItem (listid, itemid, index, username, cb) {
     cb(null, response)
   })
 }
+
+export function deleteItems (listid, itemids, username, cb) {
+  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  socket.emit('delete-items', { listid, itemids }, (err, response) => {
+    if (err) return cb(err, err.message)
+    cb(null, response)
+  })
+}

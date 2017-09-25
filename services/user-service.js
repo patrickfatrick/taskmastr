@@ -12,20 +12,20 @@ exports.addUser = async function (user) {
     darkmode: user.darkmode,
     dateCreated: new Date().toISOString()
   })
-  .select('username token currentList darkmode tasks')
-  .save()
+    .select('username token currentList darkmode tasks')
+    .save()
 
   return result
 }
 
 exports.findUser = async function (username, fields = 'username') {
   const result = await User.findOne({ username: username.toLowerCase() })
-  .select(fields)
-  .populate({
-    path: 'tasks',
-    select: '_deleting dateCreated dateModified list owner users'
-  })
-  .exec()
+    .select(fields)
+    .populate({
+      path: 'tasks',
+      select: '_deleting dateCreated dateModified list owner users'
+    })
+    .exec()
 
   return result
 }
@@ -37,12 +37,12 @@ exports.updateUser = async function (username, body) {
     body,
     { new: true }
   )
-  .select('username token currentList darkmode tasks')
-  .populate({
-    path: 'tasks',
-    select: '_deleting dateCreated dateModified list owner users'
-  })
-  .exec()
+    .select('username token currentList darkmode tasks')
+    .populate({
+      path: 'tasks',
+      select: '_deleting dateCreated dateModified list owner users'
+    })
+    .exec()
 
   return result
 }
@@ -57,8 +57,8 @@ exports.setToken = async function (username) {
     },
     { new: true }
   )
-  .select('username token currentList darkmode tasks')
-  .exec()
+    .select('username token currentList darkmode tasks')
+    .exec()
 
   return result
 }
@@ -78,8 +78,8 @@ exports.resetPassword = async function (user) {
     },
     { new: true }
   )
-  .select('username token currentList darkmode tasks')
-  .exec()
+    .select('username token currentList darkmode tasks')
+    .exec()
 
   return result
 }

@@ -58,13 +58,13 @@ describe('TryItVue', function () {
     vm.loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false)
 
     promise()
-    .then(() => {
-      clock.tick(250)
+      .then(() => {
+        clock.tick(250)
 
-      // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
-      vm.$router.push.restore()
-      done()
-    })
+        // assert.isTrue(vm.$router.push.calledWithMatch(/\/app\/list\/[a-z0-9]+/))
+        vm.$router.push.restore()
+        done()
+      })
   })
 
   it('should call loginTestUser on button push', () => {

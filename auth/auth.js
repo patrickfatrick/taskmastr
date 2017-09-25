@@ -31,11 +31,11 @@ module.exports = function () {
 
   passport.deserializeUser((username, next) => {
     userService.findUser(username, 'username key tasks currentList darkmode')
-    .then(function (user) {
-      next(null, user)
-    })
-    .catch((err) => {
-      throw new Error(err)
-    })
+      .then(function (user) {
+        next(null, user)
+      })
+      .catch((err) => {
+        throw new Error(err)
+      })
   })
 }

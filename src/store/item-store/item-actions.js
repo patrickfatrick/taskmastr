@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { reform, setLocal } from 'gregorian'
 import { updateList } from '../../services/list-services'
-import { createItem, updateItem, deleteItem } from '../../services/item-services'
+import { createItem, updateItem, deleteItem, deleteItems } from '../../services/item-services'
 import { isCurrent, findIndexById, isOwner } from '../../helper-utilities/utils'
 
 export function setNewTask ({ commit }, str) {
@@ -26,8 +26,8 @@ export function setCurrentTask ({ commit, state }, index) {
   const oldId = list.currentItem
   const isUserOwner = isOwner(list, state.user.username)
   const update = (isUserOwner)
-  ? { currentItem: items[index]._id }
-  : { ['users.' + list.users.findIndex((user) => user.username === state.user.username) + '.currentItem']: items[index]._id }
+    ? { currentItem: items[index]._id }
+    : { ['users.' + list.users.findIndex((user) => user.username === state.user.username) + '.currentItem']: items[index]._id }
   commit('SET_CURRENT_TASK', { id: items[index]._id, isUserOwner })
   return updateList(state.user, list._id, update, (err, res) => {
     if (err) return commit('SET_CURRENT_TASK', { id: oldId, isUserOwner })
@@ -37,6 +37,7 @@ export function setCurrentTask ({ commit, state }, index) {
 
 export function toggleDetails ({ commit, state }, index) {
   if (state.detailsToggled === index) return commit('TOGGLE_DETAILS', null)
+  window.scroll(0, 0)
   commit('TOGGLE_DETAILS', index)
 }
 
@@ -127,13 +128,22 @@ export function deleteTask ({ commit, state }, index) {
 }
 
 export function deleteAllCompleteTasks ({ commit, state, getters }) {
+  const completeTasks = getters.getCompleteTasks
+
   getters.getCompleteTasks.forEach((task) => {
     const index = findIndexById(state.current.items, task._id)
     commit('REMOVE_TASK', index)
-    return deleteItem(state.current._id, task._id, index, state.user.username, (err, response) => {
-      // Revert the change if request fails
-      if (err) commit('ADD_TASK', task)
-    })
+  })
+
+  const itemids = completeTasks.map((task) => task._id)
+
+  return deleteItems(state.current._id, itemids, state.user.username, (err, response) => {
+    // Revert the change if request fails
+    if (err) {
+      getters.getCompleteTasks.forEach((task) => {
+        commit('ADD_TASK', task)
+      })
+    }
   })
 }
 
