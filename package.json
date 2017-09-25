@@ -12,7 +12,7 @@
   ],
   "private": true,
   "scripts": {
-    "start": "npm run dev",
+    "start": "node ./app.js",
     "mongo": "mongod --dbpath ./data",
     "dev": "cross-env FORCE_COLOR=0 NODE_ENV=development gulp",
     "quiet": "cross-env NODE_ENV=development QUIET=true gulp",
