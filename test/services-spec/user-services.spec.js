@@ -300,7 +300,7 @@ describe('user-services', () => {
   it('updateUser does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    updateUser('mrormrstestperson@taskmastr.co', { darkmode: true }, (err, response) => {
+    updateUser('do-not-reply@taskmastr.org', { darkmode: true }, (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)

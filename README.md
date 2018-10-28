@@ -2,13 +2,10 @@
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/taskmastr.svg?style=shield)](https://circleci.com/gh/patrickfatrick/taskmastr)
 [![codecov.io](https://codecov.io/github/patrickfatrick/taskmastr/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/taskmastr?branch=master)
-[![bitHound Score](https://www.bithound.io/github/patrickfatrick/taskmastr/badges/score.svg)](https://www.bithound.io/github/patrickfatrick/taskmastr)
-[![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/taskmastr/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/taskmastr/master/dependencies/npm)
-[![GNU GPL License][license-image]][license-url]
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-The server and front-end for [taskmastr.co](https://www.taskmastr.co) -- a web task manager built with Node, Koa, Mongo, Vue.
+The server and front-end for [taskmastr.org](https://taskmastr.org) -- a web task manager built with Node, Koa, Mongo, Vue.
 
 Please see [the wiki](https://patrickfatrick.gitbooks.io/taskmastr/content/) for information on how to use taskmastr.
 
@@ -53,9 +50,6 @@ Then navigate to localhost:3000. You'll need to have [yarn](yarnpkg.com) and [mo
 ## License
 
 taskmastr is distributable under the terms of the [GNU GPL v3](./LICENSE).
-
-[license-image]: https://img.shields.io/badge/license-GNU%20GPL%20version%203-blue.svg?style=flat-square)
-[license-url]: LICENSE
 
 ## Screenshots
 

@@ -25,7 +25,7 @@ export function getList (id, cb) {
 }
 
 export function createList (list, user, cb) {
-  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (user.username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
   socket.emit('create-list', { list, user }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
@@ -33,7 +33,7 @@ export function createList (list, user, cb) {
 }
 
 export function removeList (listid, user, permanent, cb) {
-  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (user.username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
   socket.emit('delete-list', { listid, user, permanent }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
@@ -41,7 +41,7 @@ export function removeList (listid, user, permanent, cb) {
 }
 
 export function updateList (user, listid, listBody, cb) {
-  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (user.username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
   socket.emit('update-list', { user, listid, listBody }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
@@ -49,7 +49,7 @@ export function updateList (user, listid, listBody, cb) {
 }
 
 export function inviteUser (user, listid, username, users, cb) {
-  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (user.username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
   socket.emit('invite-user', { listid, username, users }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
@@ -57,7 +57,7 @@ export function inviteUser (user, listid, username, users, cb) {
 }
 
 export function removeUser (user, listid, users, cb) {
-  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (user.username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
   socket.emit('remove-user', { listid, users }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)
@@ -65,7 +65,7 @@ export function removeUser (user, listid, users, cb) {
 }
 
 export function confirmUser (user, listid, listUser, cb) {
-  if (user.username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (user.username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
   socket.emit('confirm-user', { listid, listUser }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)

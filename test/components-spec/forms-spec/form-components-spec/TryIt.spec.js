@@ -16,7 +16,7 @@ describe('TryItVue', function () {
 
   it('should inherit the testUser property from the state', () => {
     const vm = mountVm(TryIt)
-    assert.strictEqual(vm.testUser, 'mrormrstestperson@taskmastr.co')
+    assert.strictEqual(vm.testUser, 'do-not-reply@taskmastr.org')
   })
 
   it('should inherit the testKey property from the state', () => {
@@ -51,11 +51,11 @@ describe('TryItVue', function () {
   })
 
   it('should log in to the test account on loginTestUser', (done) => {
-    const vm = mountVm(TryIt, { authenticated: 'mrormrstestperson@taskmastr.co' })
+    const vm = mountVm(TryIt, { authenticated: 'do-not-reply@taskmastr.org' })
     const promise = sinon.stub(vm, 'loginUser').resolves()
     sinon.stub(vm.$router, 'push')
 
-    vm.loginTestUser('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false)
+    vm.loginTestUser('do-not-reply@taskmastr.org', 'S41iVAtINGREsIdUE-278', false)
 
     promise()
       .then(() => {
@@ -69,13 +69,13 @@ describe('TryItVue', function () {
 
   it('should call loginTestUser on button push', () => {
     const vm = mountVm(TryIt)
-    sinon.stub(vm, 'loginUser').resolves('mrormrstestperson@taskmastr.co')
+    sinon.stub(vm, 'loginUser').resolves('do-not-reply@taskmastr.org')
     sinon.stub(vm, 'loginTestUser')
 
     vm.$el.querySelector('.try-it__button').click()
     clock.tick(250)
 
-    assert.isTrue(vm.loginTestUser.calledWith('mrormrstestperson@taskmastr.co', 'S41iVAtINGREsIdUE-278', false))
+    assert.isTrue(vm.loginTestUser.calledWith('do-not-reply@taskmastr.org', 'S41iVAtINGREsIdUE-278', false))
     vm.loginTestUser.restore()
   })
 })

@@ -21,9 +21,9 @@ agenda.define('Welcome Email', (job, done) => {
   const mailer = nodemailer.createTransport(sgTransport(options))
   const email = {
     to: data.username,
-    from: 'taskmastr <do-not-reply@taskmastr.co>',
+    from: 'taskmastr <do-not-reply@taskmastr.org>',
     subject: 'Greetings from taskmastr',
-    text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + data.host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.co or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the taskmastr wiki if you have\'nt already! https://patrickfatrick.gitbooks.io/taskmastr/content/\n'
+    text: 'Thanks for using taskmastr!\n\n' + 'We really hope you enjoy using it as much as we\'ve enjoyed making it. Here\'s a link to it in case you ever forget.\n\n' + data.host + '\n\n' + '\n\n' + 'If you ever have any questions please contact Patrick directly at patrick@taskmastr.org or tap him on the shoulder.\n\n' + 'Sincerely,\n\ntaskmastr\n\nP.S. Don\'t forget to check out the taskmastr wiki if you have\'nt already! https://patrickfatrick.gitbooks.io/taskmastr/content/\n'
   }
   mailer.sendMail(email, (err) => {
     if (err) return done(err)
@@ -42,7 +42,7 @@ agenda.define('Reset Email', (job, done) => {
   const mailer = nodemailer.createTransport(sgTransport(options))
   const email = {
     to: data.username,
-    from: 'taskmastr <do-not-reply@taskmastr.co>',
+    from: 'taskmastr <do-not-reply@taskmastr.org>',
     subject: 'taskmastr Password Reset',
     text: 'Hi there,\n\n' + 'You\'ve received this email because you or someone else requested to reset the password for your account.\n\n' + 'Please click on the following link to create a new password:\n\n' + data.host + '/#/reset?token=' + data.resetToken + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged. This link becomes invalid once you reset your password, or after one hour whichever comes first.\n\n' + 'Sincerely,\n\ntaskmastr\n'
   }
@@ -82,7 +82,7 @@ agenda.define('Notification Email', function (job, done) {
   const mailer = nodemailer.createTransport(sgTransport(options))
   const email = {
     to: data.username,
-    from: 'taskmastr <do-not-reply@taskmastr.co>',
+    from: 'taskmastr <do-not-reply@taskmastr.org>',
     subject: 'taskmastr Notification: "' + data.item + '"',
     text: 'Good morning!\n\n' + 'It is currently the morning of ' + monthArr[data.date.getMonth()] + ' ' + dateStr + ', and we just wanted to let you know that you have a task due today:\n\n "' + data.item + '"\n\n' + 'If you\'d like to check out your tasks please click this link! ' + data.host + '\n\n' + 'Sincerely,\n\ntaskmastr\n'
   }
@@ -104,7 +104,7 @@ agenda.define('List Invite Email', (job, done) => {
   const mailer = nodemailer.createTransport(sgTransport(options))
   const email = {
     to: data.username,
-    from: 'taskmastr <do-not-reply@taskmastr.co>',
+    from: 'taskmastr <do-not-reply@taskmastr.org>',
     subject: `taskmastr List Invitation: "${data.list}"`,
     text: `Hello!\n\nYou're receiving this email because you were invited to a taskmastr list called "${data.list}" by ${data.owner}.\n\nYou can ignore this invitation by simply discarding this email. If you'd like to join this list just click on the following link: ${data.host}/#/app/list/${data.listid}?newuser=${data.username}\n\nIf you're already a taskmastr user you may need to sign in, and if you are not already a user you can join through that link as well.\n\nSincerely,\n\ntaskmastr\n`
   }

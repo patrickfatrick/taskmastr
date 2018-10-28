@@ -27,4 +27,4 @@ deployment:
         -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}"
         -H "X-Auth-Key: ${CLOUDFLARE_AUTH}"
         -H "Content-Type: application/json"
-        --data '{"files":["https://www.taskmastr.co/javascripts/bundle.js","https://www.taskmastr.co/stylesheets/styles.css"]}'
+        --data '{"files":["https://www.taskmastr.org/javascripts/bundle.js","https://www.taskmastr.org/stylesheets/styles.css"]}'

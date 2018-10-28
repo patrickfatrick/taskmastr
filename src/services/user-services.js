@@ -62,7 +62,7 @@ export function create (username, key, rememberMe, cb) {
 }
 
 export function forgot (username, cb) {
-  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (username === 'do-not-reply@taskmastr.org') return cb(null, { success: true })
   return window.fetch(`/users/${username}/forgot`, {
     method: 'post',
     credentials: 'same-origin',
@@ -137,7 +137,7 @@ export function getSession (cb) {
 }
 
 export function updateUser (username, body, cb) {
-  if (username === 'mrormrstestperson@taskmastr.co') return cb(null, { success: true })
+  if (username === 'do-not-reply@taskmastr.org') return cb(null, { success: true })
   socket.emit('update-user', { username, body }, (err, response) => {
     if (err) return cb(err, err.message)
     cb(null, response)

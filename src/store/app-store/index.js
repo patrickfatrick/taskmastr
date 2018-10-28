@@ -1,7 +1,7 @@
 export default {
   wiki: '//patrickfatrick.gitbooks.io/taskmastr/content/',
   repo: '//github.com/patrickfatrick/taskmastr',
-  testUser: 'mrormrstestperson@taskmastr.co',
+  testUser: 'do-not-reply@taskmastr.org',
   testKey: 'S41iVAtINGREsIdUE-278',
   disconnect: false,
   deleteQueue: {},

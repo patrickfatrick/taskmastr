@@ -34,7 +34,7 @@ describe('list-services', () => {
   it('createList does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    createList({ list: 'List' }, { username: 'mrormrstestperson@taskmastr.co' }, (err, response) => {
+    createList({ list: 'List' }, { username: 'do-not-reply@taskmastr.org' }, (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)
@@ -118,7 +118,7 @@ describe('list-services', () => {
   it('removeList does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    removeList('listid', { username: 'mrormrstestperson@taskmastr.co' }, false, (err, response) => {
+    removeList('listid', { username: 'do-not-reply@taskmastr.org' }, false, (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)
@@ -154,7 +154,7 @@ describe('list-services', () => {
   it('updateList does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    updateList({ username: 'mrormrstestperson@taskmastr.co' }, 'listid', { current: true }, (err, response) => {
+    updateList({ username: 'do-not-reply@taskmastr.org' }, 'listid', { current: true }, (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)
@@ -190,7 +190,7 @@ describe('list-services', () => {
   it('inviteUser does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    inviteUser({ username: 'mrormrstestperson@taskmastr.co' }, 'listid', 'mrormrstestperson@taskmastr.co', [{ username: 'username' }], (err, response) => {
+    inviteUser({ username: 'do-not-reply@taskmastr.org' }, 'listid', 'do-not-reply@taskmastr.org', [{ username: 'username' }], (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)
@@ -226,7 +226,7 @@ describe('list-services', () => {
   it('removeUser does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    removeUser({ username: 'mrormrstestperson@taskmastr.co' }, 'listid', [{ username: 'username' }], (err, response) => {
+    removeUser({ username: 'do-not-reply@taskmastr.org' }, 'listid', [{ username: 'username' }], (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)
@@ -262,7 +262,7 @@ describe('list-services', () => {
   it('confirmUser does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    confirmUser({ username: 'mrormrstestperson@taskmastr.co' }, 'listid', { username: 'username' }, (err, response) => {
+    confirmUser({ username: 'do-not-reply@taskmastr.org' }, 'listid', { username: 'username' }, (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isOk(response)
       assert.isNull(err)
