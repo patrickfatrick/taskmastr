@@ -1,17 +1,17 @@
 <template>
   <div
     class="warning-banner"
-    v-if="username === 'do-not-reply@taskmastr.org' || disconnect"
+    v-if="username === 'taskmastr-testr@mailinator.com' || disconnect"
   >
     <div
       class="warning-banner__message warning-banner__message--try-it"
-      v-if="username === 'do-not-reply@taskmastr.org'"
+      v-if="username === 'taskmastr-testr@mailinator.com'"
     >
       FYI: You're currently logged into the Try It account, and changes will not be saved.
     </div>
     <div
       class="warning-banner__message warning-banner__message--disconnect"
-      v-if="disconnect && (username !== 'do-not-reply@taskmastr.org')"
+      v-if="disconnect && (username !== 'taskmastr-testr@mailinator.com')"
     >
       Socket connection broken.&nbsp;
       <button
