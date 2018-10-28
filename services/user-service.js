@@ -12,7 +12,6 @@ exports.addUser = async function (user) {
     darkmode: user.darkmode,
     dateCreated: new Date().toISOString()
   })
-    .select('username token currentList darkmode tasks')
     .save()
 
   return result
