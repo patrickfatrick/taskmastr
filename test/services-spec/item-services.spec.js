@@ -31,7 +31,7 @@ describe('item-services', () => {
   it('createItem does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    createItem('listid', { item: 'Item' }, 'do-not-reply@taskmastr.org', (err, response) => {
+    createItem('listid', { item: 'Item' }, 'taskmastr-testr@mailinator.com', (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isNull(err)
       assert.isOk(response)
@@ -67,7 +67,7 @@ describe('item-services', () => {
   it('updateItem does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    updateItem('listid', { item: 'Item' }, 'do-not-reply@taskmastr.org', (err, response) => {
+    updateItem('listid', { item: 'Item' }, 'taskmastr-testr@mailinator.com', (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isNull(err)
       assert.isOk(response)
@@ -103,7 +103,7 @@ describe('item-services', () => {
   it('deleteItem does nothing if test user', (done) => {
     sinon.stub(socket, 'emit').yields(null, 'ok')
 
-    deleteItem('listid', 'itemid', 0, 'do-not-reply@taskmastr.org', (err, response) => {
+    deleteItem('listid', 'itemid', 0, 'taskmastr-testr@mailinator.com', (err, response) => {
       assert.isFalse(socket.emit.called)
       assert.isNull(err)
       assert.isOk(response)

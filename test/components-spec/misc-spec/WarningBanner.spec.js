@@ -28,7 +28,7 @@ describe('WarningBannerVue', function () {
 
   it('should respond to changes in state (username)', () => {
     const vm = mountVm(WarningBanner, {
-      user: { username: 'do-not-reply@taskmastr.org' }
+      user: { username: 'taskmastr-testr@mailinator.com' }
     })
 
     assert.isNotNull(vm.$el.querySelector('.warning-banner__message'))
