@@ -6,7 +6,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["**/SnapshotTester.js", "**/*.test.js", "**/*.stories.js"]
+        "devDependencies": ["**/*.spec.js"]
       }
     ]
   }
