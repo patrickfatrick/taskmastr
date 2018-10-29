@@ -118,6 +118,7 @@ export default {
             }
           })
         }
+
         if (listIndex !== -1) this.setUsers({ index: listIndex, users: data.list.users })
       })
 

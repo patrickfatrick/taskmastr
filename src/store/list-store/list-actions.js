@@ -155,6 +155,24 @@ export function removeListUser ({ commit, state }, { index, user }) {
   commit('REMOVE_LIST_USER', { index, user })
   removeUser(state.user, list._id, { users: list.users }, (err, response) => {
     if (err) commit('ADD_LIST_USER', { index, user })
+    if (state.user.username === user.username) {
+      const curIndex = findIndexById(state.user.tasks, list._id)
+      const prevList = state.user.tasks[curIndex - 1]
+      const nextList = state.user.tasks[curIndex + 1]
+      let newCurrent
+      if (isCurrent(list, state.currentList)) {
+        newCurrent = (curIndex === (state.user.tasks.length - 1))
+          ? prevList
+          : nextList
+        commit('SET_CURRENT_LIST', newCurrent)
+      }
+
+      commit('REMOVE_LIST', _.findIndex(state.user.tasks, { _id: response._id }))
+      return updateUser(state.user.username, { tasks: state.user.tasks }, (err, res) => {
+        if (err) return commit('ADD_LIST', response)
+        return res
+      })
+    }
     return response
   })
 }
