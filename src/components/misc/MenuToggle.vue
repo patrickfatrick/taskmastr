@@ -21,10 +21,10 @@
 .icon-menu {
   position: fixed;
   left: 0;
-  top: 1.8rem;
+  top: 0;
   width: 2.2rem;
   padding: 10px 0 12px;
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0 10px;
   height: auto;
   background: var(--orchid);
   z-index: 4;
@@ -34,11 +34,7 @@
   @media (--medium) {
     padding: 20px 0 22px;
     width: 3rem;
-    border-radius: 0 20px 20px 0;
-  }
-
-  @media (--medLarge) {
-    top: 6.2rem;
+    border-radius: 0 0 20px;
   }
 
   &.icon-menu--toggled {
