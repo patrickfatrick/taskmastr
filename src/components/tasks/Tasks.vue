@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="prompt-container">
-      <div class="prompt-container__todo-prompt">What needs doing?</div>
+      <div class="prompt-container__todo-prompt">Taskmastr</div>
       <task-input />
     </div>
     <menu-toggle />
@@ -77,6 +77,7 @@
 
 .prompt-container__todo-prompt {
   @apply --center;
+  @apply --headline;
 
   margin-bottom: 15px;
   margin-top: -5px;

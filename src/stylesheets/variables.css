@@ -50,6 +50,12 @@
     margin-right: auto;
   };
 
+  --headline: {
+    font-family: var(--josefin);
+    font-size: 4rem;
+    text-transform: lowercase;
+  }
+
   --modalSmallText: {
     text-align: left;
     font-size: 0.8rem;
