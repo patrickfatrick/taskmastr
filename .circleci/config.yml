@@ -34,7 +34,7 @@ jobs:
           command: npm run build
       - run:
           name: Set git config
-          command: >
+          command: |
             git config credential.helper 'cache --timeout=120'
             git config user.email "patrick.fricano@icloud.com"
             git config user.name "CircleCi"
