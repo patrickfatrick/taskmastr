@@ -40,17 +40,17 @@ jobs:
             git config user.name "CircleCi"
       - run:
           name: Commit build
-          command: git commit --allow-empty -m "[skip ci] Build"
+          command: git commit --allow-empty -m "Build"
       - run:
           name: Push back to github
-          command: git push origin master
-  deploy_master:
+          command: git push origin staging --force
+  deploy_staging:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
       - run:
-          name: Deploy to Master
+          name: Deploy to Staging Environment
           command: >
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-staging.git master
   deploy_production:
@@ -59,7 +59,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy to Production
+          name: Deploy to Production Environment
           command: >
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-production.git master
       - run:
@@ -81,12 +81,12 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy_master:
+      - deploy_staging:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only: staging
       - deploy_production:
           requires:
             - test
