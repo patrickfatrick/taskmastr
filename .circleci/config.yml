@@ -14,7 +14,7 @@ jobs:
       - run: 
           name: Generate code coverage
           command: cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
-      - store_artefacts:
+      - store_artifacts:
           path: coverage
           prefix: coverage
   deploy_master:
