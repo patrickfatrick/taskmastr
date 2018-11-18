@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  install_deps:
+  test:
     docker:
       - image: circleci/node:8
     steps:
@@ -10,11 +10,6 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
-  test:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
       - run: 
           name: Run unit tests
           command: npm test
@@ -29,6 +24,11 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
+      - run: node -v
+      - run: npm -v
+      - run:
+          name: Install dependencies
+          command: npm install
       - run:
           name: Build production build
           command: npm run build
@@ -68,13 +68,9 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - install_deps
-      - test:
-          requires:
-            - install_deps
+      - test
       - build:
           requires:
-            - install_deps
             - test
           filters:
             branches:
