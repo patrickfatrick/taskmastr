@@ -43,7 +43,7 @@ jobs:
             --data '{"files":["https://taskmastr.org/javascripts/bundle.js","https://taskmastr.org/stylesheets/styles.css"]}'
 workflows:
   version: 2
-  test-and-deploy:
+  test_and_deploy:
     jobs:
       - test
       - deploy_master:
