@@ -67,13 +67,14 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
+      - install_deps
       - test:
           requires:
             - install_deps
       - build:
           requires:
-            - test
             - install_deps
+            - test
           filters:
             branches:
               only: master
