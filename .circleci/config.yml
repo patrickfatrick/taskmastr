@@ -1,11 +1,14 @@
 version: 2
 jobs:
   install_deps:
-    - run: node -v
-    - run: npm -v
-    - run:
-        name: Install dependencies
-        command: npm install
+    docker:
+      - image: circleci/node:8
+    steps:
+      - run: node -v
+      - run: npm -v
+      - run:
+          name: Install dependencies
+          command: npm install
   test:
     docker:
       - image: circleci/node:8
