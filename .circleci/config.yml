@@ -6,33 +6,33 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install dependencies
-        command: npm install
+          name: Install dependencies
+          command: npm install
       - run: 
-        name: Run unit tests
-        command: npm test
+          name: Run unit tests
+          command: npm test
       - run: 
-        name: Generate code coverage
-        command: cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
+          name: Generate code coverage
+          command: cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
       - store_artefacts:
-        path: coverage
-        prefix: coverage
+          path: coverage
+          prefix: coverage
   deploy_master:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
       - run:
-        name: Deploy to Master
-        command: git push git@heroku.com:taskmastr-staging.git master
+          name: Deploy to Master
+          command: git push git@heroku.com:taskmastr-staging.git master
   deploy_production:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
       - run:
-        name: Deploy to Production
-        command: git push git@heroku.com:taskmastr-production.git master
+          name: Deploy to Production
+          command: git push git@heroku.com:taskmastr-production.git master
       - run:
           name: Bust Cloudflare caches
           command: > 
@@ -46,3 +46,15 @@ workflows:
   test_and_deploy:
     jobs:
       - test
+      - deploy_master:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - deploy_production:
+          requires:
+            - test
+          filters:
+            branches:
+              only: production
