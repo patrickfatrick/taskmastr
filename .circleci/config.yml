@@ -52,7 +52,7 @@ jobs:
           name: Commit build and push back to github
           command: |
             git commit --allow-empty -m "[ci] build"
-            git push origin staging
+            git push origin staging --force
   deploy_staging:
     docker:
       - image: circleci/node:8
@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Deploy to Staging Environment
           command: >
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-staging.git master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-staging.git master --force
   deploy_production:
     docker:
       - image: circleci/node:8
@@ -70,7 +70,7 @@ jobs:
       - run:
           name: Deploy to Production Environment
           command: >
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-production.git master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-production.git master --force
       - run:
           name: Bust Cloudflare caches
           command: > 
