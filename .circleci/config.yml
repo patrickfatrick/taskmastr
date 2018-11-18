@@ -28,17 +28,17 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: node -v
-      - run: npm -v
-      - run:
-          name: Install dependencies
-          command: npm install
       - run:
           name: Checkout staging branch
           command: |
             git fetch
             git checkout staging
             git rebase master
+      - run: node -v
+      - run: npm -v
+      - run:
+          name: Install dependencies
+          command: npm install
       - run:
           name: Build production build
           command: npm run build
