@@ -5,8 +5,12 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: node -v
-      - run: npm -v
+      - run: 
+          name: Node version
+          command: node -v
+      - run: 
+          name: NPM version
+          command: npm -v
       - run:
           name: Install dependencies
           command: npm install
@@ -24,6 +28,18 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
+      - run:
+          name: Set git configs
+          command: |
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "patrick.fricano@icloud.com"
+            git config user.name "CircleCi"
+      - run:
+          name: Checkout staging branch
+          command: |
+            git fetch
+            git checkout staging
+            git rebase master
       - run: node -v
       - run: npm -v
       - run:
@@ -33,20 +49,10 @@ jobs:
           name: Build production build
           command: npm run build
       - run:
-          name: Set git config
+          name: Commit build and push back to github
           command: |
-            git config credential.helper 'cache --timeout=120'
-            git config user.email "patrick.fricano@icloud.com"
-            git config user.name "CircleCi"
-      - run:
-          name: Checkout staging branch
-          command: git checkout -b staging
-      - run:
-          name: Commit build
-          command: git commit --allow-empty -m "[ci] build"
-      - run:
-          name: Push back to github
-          command: git push origin staging --force
+            git commit --allow-empty -m "[ci] build"
+            git push origin staging --force
   deploy_staging:
     docker:
       - image: circleci/node:8
@@ -55,7 +61,7 @@ jobs:
       - run:
           name: Deploy to Staging Environment
           command: >
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-staging.git master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-staging.git master --force
   deploy_production:
     docker:
       - image: circleci/node:8
@@ -64,7 +70,7 @@ jobs:
       - run:
           name: Deploy to Production Environment
           command: >
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-production.git master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-production.git master --force
       - run:
           name: Bust Cloudflare caches
           command: > 
