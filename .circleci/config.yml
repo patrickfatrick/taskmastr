@@ -33,7 +33,7 @@ jobs:
           name: Build production build
           command: npm run build
       - run:
-          name: Set github vars
+          name: Set git config
           command: >
             git config credential.helper 'cache --timeout=120'
             git config user.email "patrick.fricano@icloud.com"
