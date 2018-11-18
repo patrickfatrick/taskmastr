@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: circleci/node:8
     steps:
+      - checkout
       - run: node -v
       - run: npm -v
       - run:
