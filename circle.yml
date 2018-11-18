@@ -1,30 +1,61 @@
-machine:
-  node:
-    version: 8
-dependencies:
-  pre:
-    - node --version
-    - npm --version
-test:
-  post:
-    - cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
-general:
-  artifacts:
-    - ./coverage
-deployment:
-  staging:
-    branch: master
-    commands:
-      - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-      - git push git@heroku.com:taskmastr-staging.git ${CIRCLE_SHA1}:refs/heads/master
-  production:
-    branch: production
-    commands:
-      - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-      - git push git@heroku.com:taskmastr-production.git ${CIRCLE_SHA1}:refs/heads/master
-      - > 
-        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE}/purge_cache"
-        -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}"
-        -H "X-Auth-Key: ${CLOUDFLARE_AUTH}"
-        -H "Content-Type: application/json"
-        --data '{"files":["https://taskmastr.org/javascripts/bundle.js","https://taskmastr.org/stylesheets/styles.css"]}'
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+        - name: Install dependencies
+        - command: npm install
+      - run: 
+        - name: Run unit tests
+        - command: npm test
+      - run: 
+        - name: Generate code coverage
+        - command: cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
+      - store_artefacts:
+        - path: coverage
+        - prefix: coverage
+  deploy-master:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+        - name: Deploy to Master
+        - command: git push git@heroku.com:taskmastr-staging.git master
+  deploy-production:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+        - name: Deploy to Production
+        - command: git push git@heroku.com:taskmastr-production.git master
+      - run:
+          name: Bust Cloudflare caches
+          command: 
+            - > 
+              curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE}/purge_cache"
+              -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}"
+              -H "X-Auth-Key: ${CLOUDFLARE_AUTH}"
+              -H "Content-Type: application/json"
+              --data '{"files":["https://taskmastr.org/javascripts/bundle.js","https://taskmastr.org/stylesheets/styles.css"]}'
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test
+      - deploy-master:
+        requires:
+          - test
+        filters:
+          branches:
+            only: master
+      - deploy-production:
+        requires:
+          - test
+        filters:
+          branches:
+            only: production
