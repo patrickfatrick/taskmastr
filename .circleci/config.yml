@@ -46,15 +46,3 @@ workflows:
   test_and_deploy:
     jobs:
       - test
-      - deploy_master:
-        requires:
-          - test
-        filters:
-          branches:
-            only: master
-      - deploy_production:
-        requires:
-          - test
-        filters:
-          branches:
-            only: production
