@@ -83,7 +83,7 @@ workflows:
               only: master
       - deploy_staging:
           requires:
-            - build
+            - test
           filters:
             branches:
               only: staging
