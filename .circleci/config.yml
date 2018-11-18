@@ -34,9 +34,6 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Build production build
-          command: npm run build
-      - run:
           name: Set git config
           command: |
             git config credential.helper 'cache --timeout=120'
@@ -44,13 +41,19 @@ jobs:
             git config user.name "CircleCi"
       - run:
           name: Checkout staging branch
-          command: git checkout -b staging
+          command: |
+            git fetch
+            git checkout staging
+            git rebase master
+      - run:
+          name: Build production build
+          command: npm run build
       - run:
           name: Commit build
           command: git commit --allow-empty -m "[ci] build"
       - run:
           name: Push back to github
-          command: git push origin staging --force
+          command: git push origin staging
   deploy_staging:
     docker:
       - image: circleci/node:8
