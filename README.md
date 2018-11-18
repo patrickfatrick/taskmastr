@@ -41,11 +41,30 @@ To install and run it locally:
 ```bash
 $ git clone git@github.com:patrickfatrick/taskmastr.git
 $ cd taskmastr
-$ yarn
-$ yarn run dev
+$ npm install
+$ npm run dev
 ```
 
-Then navigate to localhost:3000. You'll need to have [yarn](yarnpkg.com) and [mongodb](mongodb.com) installed. You can also use NPM but I don't recommend it; Yarn is just better.
+Then navigate to localhost:3000. You'll need to have [mongodb](mongodb.com) installed.
+
+## Development process
+
+taskmastr uses CircleCI for continuous integration/deployment.
+
+Push changes to master, watch the build at https://circleci.com/gh/patrickfatrick/workflows/taskmastr.
+
+This should automatically build and push changes to the staging environment at taskmastr-staging.herokuapp.com.
+
+If all looks good, fetch the staging branch, checkout the production branch and rebase it to staging, then push that to github. The same circleci workflow dashboard will show the production deploy. At this point changes should be on taskmastr.org.
+
+```bash
+$ git fetch
+$ git checkout staging
+$ git merge origin/staging
+$ git checkout production
+$ git rebase staging
+$ git push origin production
+```
 
 ## License
 
