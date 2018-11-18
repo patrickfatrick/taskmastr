@@ -39,8 +39,11 @@ jobs:
             git config user.email "patrick.fricano@icloud.com"
             git config user.name "CircleCi"
       - run:
+          name: Checkout staging branch
+          command: git checkout -b staging
+      - run:
           name: Commit build
-          command: git commit --allow-empty -m "[ci] Build"
+          command: git commit --allow-empty -m "[ci] build"
       - run:
           name: Push back to github
           command: git push origin staging --force
