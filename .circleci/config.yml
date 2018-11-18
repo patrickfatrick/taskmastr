@@ -35,13 +35,12 @@ jobs:
         - command: git push git@heroku.com:taskmastr-production.git master
       - run:
           name: Bust Cloudflare caches
-          command: 
-            - > 
-              curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE}/purge_cache"
-              -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}"
-              -H "X-Auth-Key: ${CLOUDFLARE_AUTH}"
-              -H "Content-Type: application/json"
-              --data '{"files":["https://taskmastr.org/javascripts/bundle.js","https://taskmastr.org/stylesheets/styles.css"]}'
+          command: > 
+            curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE}/purge_cache"
+            -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}"
+            -H "X-Auth-Key: ${CLOUDFLARE_AUTH}"
+            -H "Content-Type: application/json"
+            --data '{"files":["https://taskmastr.org/javascripts/bundle.js","https://taskmastr.org/stylesheets/styles.css"]}'
 workflows:
   version: 2
   test-and-deploy:
