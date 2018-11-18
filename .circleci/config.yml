@@ -40,7 +40,7 @@ jobs:
             git config user.name "CircleCi"
       - run:
           name: Commit build
-          command: git commit --allow-empty -m "Build"
+          command: git commit --allow-empty -m "[ci] Build"
       - run:
           name: Push back to github
           command: git push origin staging --force
