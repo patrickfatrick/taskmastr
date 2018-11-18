@@ -1,15 +1,16 @@
 version: 2
 jobs:
+  install_deps:
+    - run: node -v
+    - run: npm -v
+    - run:
+        name: Install dependencies
+        command: npm install
   test:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: node -v
-      - run: npm -v
-      - run:
-          name: Install dependencies
-          command: npm install
       - run: 
           name: Run unit tests
           command: npm test
@@ -29,7 +30,7 @@ jobs:
           command: npm run build
       - run:
           name: Commit build
-          command: git commit --allow-empty -m "(chore) Build"
+          command: git commit --allow-empty -m "[skip ci] Build"
       - run:
           name: Push back to github
           command: git push origin master
@@ -64,15 +65,17 @@ workflows:
   build_and_deploy:
     jobs:
       - test
+          requires:
+            - install_deps
       - build:
           requires:
             - test
+            - install_deps
           filters:
             branches:
               only: master
       - deploy_master:
           requires:
-            - test
             - build
           filters:
             branches:
