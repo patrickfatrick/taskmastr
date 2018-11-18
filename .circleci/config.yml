@@ -26,8 +26,8 @@ jobs:
       - checkout
       - run:
           name: Deploy to Master
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com:taskmastr-staging.git master
+          command: >
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-staging.git master
   deploy_production:
     docker:
       - image: circleci/node:8
@@ -35,8 +35,8 @@ jobs:
       - checkout
       - run:
           name: Deploy to Production
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com:taskmastr-production.git master
+          command: >
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/taskmastr-production.git master
       - run:
           name: Bust Cloudflare caches
           command: > 
