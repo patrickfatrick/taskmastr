@@ -31,7 +31,7 @@ module.exports = merge(base, {
           loader: 'vue-loader',
           options: {
             loaders: {
-              js: 'babel-loader!standard-loader',
+              js: 'babel-loader!eslint-loader',
               postcss: [
                 'vue-style-loader',
                 'style-loader',

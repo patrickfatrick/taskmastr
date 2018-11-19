@@ -168,7 +168,7 @@ export function completeTask ({ commit, state }, { index, bool }) {
   const items = state.current.items
   const item = items[newIndex]
 
-  return updateItem(list._id, item, state.user, (err, res) => {
+  return updateItem(list._id, item, state.user.username, (err, res) => {
     if (err) {
       commit('SET_TASK_COMPLETE', { index: newIndex, bool: !bool })
       commit('SET_DATE_COMPLETED', { index: newIndex, date: (!bool) ? reform('iso')() : null })

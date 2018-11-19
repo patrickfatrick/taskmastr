@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const StylelintPlugin = require('stylelint-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const base = require('./webpack.config.base')
 
@@ -14,6 +15,9 @@ module.exports = merge(base, {
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false
+    }),
+    new StylelintPlugin({
+      files: [ 'src/stylesheets/*.css', '**/*.vue' ]
     }),
     new ExtractTextPlugin('stylesheets/styles.css')
   ],
@@ -33,7 +37,7 @@ module.exports = merge(base, {
           loader: 'vue-loader',
           options: {
             loaders: {
-              js: 'babel-loader!standard-loader',
+              js: 'babel-loader!eslint-loader',
               scss: ExtractTextPlugin.extract({
                 use: [
                   'css-loader?importLoaders=1&sourceMap=true&minimize=true',

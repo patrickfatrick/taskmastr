@@ -91,16 +91,16 @@ export default {
     login (username, key, rememberMe) {
       if (!this.isValid) return
       this.loginUser({ username, key, rememberMe })
-      .then(() => {
-        if (this.authenticated) {
-          setTimeout(() => {
-            this.$router.push(this.jumpto || '/app/list/' + this.currentList)
-          }, 250)
-        }
-        if (this.create && !this.authenticated) {
-          this.$router.push('/create')
-        }
-      })
+        .then(() => {
+          if (this.authenticated) {
+            setTimeout(() => {
+              this.$router.push(this.jumpto || '/app/list/' + this.currentList)
+            }, 250)
+          }
+          if (this.create && !this.authenticated) {
+            this.$router.push('/create')
+          }
+        })
     }
   }
 }

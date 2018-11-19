@@ -47,15 +47,15 @@ $ npm run dev
 
 Then navigate to localhost:3000. You'll need to have [mongodb](mongodb.com) installed.
 
-## Development process
+## Deploy process
 
-taskmastr uses CircleCI for continuous integration/deployment.
+taskmastr is hosted on heroku. There are two environments, staging (taskmastr-staging.herokuapp.com) and production (taskmastr-production.herokuapp.com), and CircleCI for continuous integration/deployment.
 
 Push changes to master, watch the build at https://circleci.com/gh/patrickfatrick/workflows/taskmastr.
 
-This should automatically build and push changes to the staging environment at taskmastr-staging.herokuapp.com.
+If tests pass this should automatically build and push changes to the staging branch and environment.
 
-If all looks good, fetch the staging branch, checkout the production branch and rebase it to staging, then push that to github. The same circleci workflow dashboard will show the production deploy. At this point changes should be on taskmastr.org.
+If all looks good on staging, fetch the staging branch, checkout the production branch and rebase it to staging, then push that to github. The same CircleCI dashboard will show the production deploy. At this point changes should be on taskmastr.org.
 
 ```bash
 $ git fetch
