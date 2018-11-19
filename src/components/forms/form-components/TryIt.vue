@@ -69,13 +69,13 @@ export default {
     ]),
     loginTestUser (username, key, rememberMe) {
       this.loginUser({ username, key, rememberMe })
-      .then(() => {
-        if (this.authenticated) {
-          setTimeout(() => {
-            this.$router.push('/app/list/' + this.current._id)
-          }, 250)
-        }
-      })
+        .then(() => {
+          if (this.authenticated) {
+            setTimeout(() => {
+              this.$router.push('/app/list/' + this.current._id)
+            }, 250)
+          }
+        })
     }
   }
 }

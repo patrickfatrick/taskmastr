@@ -97,15 +97,15 @@ export default {
       if (!this.isValid) return
       const list = defaultList(this.user.username)
       this.createUser({ username, key, rememberMe })
-      .then(() => {
-        if (this.authenticated) {
-          this.addList(list)
-          this.setCurrentList(list)
-          setTimeout(() => {
-            this.$router.push(this.jumpto || '/app/list/' + list._id)
-          }, 250)
-        }
-      })
+        .then(() => {
+          if (this.authenticated) {
+            this.addList(list)
+            this.setCurrentList(list)
+            setTimeout(() => {
+              this.$router.push(this.jumpto || '/app/list/' + list._id)
+            }, 250)
+          }
+        })
     }
   }
 }

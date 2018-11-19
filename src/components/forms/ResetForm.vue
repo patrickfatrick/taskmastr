@@ -81,17 +81,17 @@ export default {
     reset (resetToken, resetKey) {
       if (!this.isValid) return
       this.resetPassword({ token: resetToken, key: resetKey })
-      .then(() => {
-        if (!this.user.username) return false
-        return this.loginUser({ username: this.user.username, key: resetKey, rememberMe: false })
-      })
-      .then(() => {
-        if (this.authenticated) {
-          setTimeout(() => {
-            this.$router.push('/app/list/' + this.currentList)
-          }, 250)
-        }
-      })
+        .then(() => {
+          if (!this.user.username) return false
+          return this.loginUser({ username: this.user.username, key: resetKey, rememberMe: false })
+        })
+        .then(() => {
+          if (this.authenticated) {
+            setTimeout(() => {
+              this.$router.push('/app/list/' + this.currentList)
+            }, 250)
+          }
+        })
     }
   }
 }

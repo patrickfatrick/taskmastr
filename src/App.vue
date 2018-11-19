@@ -126,20 +126,20 @@ export default {
       const listID = this.$route.params.listid
       const newUser = this.$route.query.newuser
       this.getUserSession()
-      .then(() => {
-        // Set up the route watcher
-        this.routeWatcher()
+        .then(() => {
+          // Set up the route watcher
+          this.routeWatcher()
 
-        // Opt to route to the listid if provided
-        if (this.authenticated && listID && newUser) return this.navigateToList(listID, newUser)
-        if (this.authenticated && listID) return this.navigateToList(listID)
+          // Opt to route to the listid if provided
+          if (this.authenticated && listID && newUser) return this.navigateToList(listID, newUser)
+          if (this.authenticated && listID) return this.navigateToList(listID)
 
-        // Go to user's current list if no listid is provided in url
-        if (this.authenticated) return this.navigateToList(this.current._id)
+          // Go to user's current list if no listid is provided in url
+          if (this.authenticated) return this.navigateToList(this.current._id)
 
-        // If no session found, route to login
-        // this.$router.push('/login')
-      })
+          // If no session found, route to login
+          // this.$router.push('/login')
+        })
     })
   }
 }

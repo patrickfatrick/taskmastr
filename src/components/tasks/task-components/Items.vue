@@ -121,8 +121,8 @@ export default {
     ...mapState({
       currentItem: (state) => {
         return (isOwner(state.current, state.user.username))
-        ? state.current.currentItem
-        : state.current.users.find((user) => user.username === state.user.username).currentItem
+          ? state.current.currentItem
+          : state.current.users.find((user) => user.username === state.user.username).currentItem
       },
       darkmode: (state) => state.user.darkmode
     })

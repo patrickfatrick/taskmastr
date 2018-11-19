@@ -15,7 +15,7 @@ export function updateItem (listid, item, username, cb) {
     if (err) return cb(err, err.message)
     cb(null, response)
   })
-}
+};
 
 export function deleteItem (listid, itemid, index, username, cb) {
   if (username === 'taskmastr-testr@mailinator.com') return cb(null, { success: true })
