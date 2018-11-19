@@ -51,6 +51,7 @@ jobs:
       - run:
           name: Commit build and push back to github
           command: |
+            git add public/*
             git commit --allow-empty -m "[ci] build"
             git push origin staging --force
   deploy_staging:
