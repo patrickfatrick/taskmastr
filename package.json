@@ -19,7 +19,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config ./webpack.config.production.js",
     "test": "cross-env NODE_ENV=test TZ=MST karma start",
     "code-fix": "esw --fix --cache -w io.js config.js app.js src test services routes models",
-    "e2e": "testcafe chrome testcafe/suites/**/*.js"
+    "e2e": "testcafe chrome:headless testcafe/suites/**/*.js"
   },
   "dependencies": {
     "agenda": "^0.9.1",
