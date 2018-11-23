@@ -19,6 +19,8 @@ jobs:
       - store_artifacts:
           path: coverage
           prefix: coverage
+      - store_test_results:
+          path: tmp/karma-results
   build:
     docker:
       - image: circleci/node:8
@@ -90,7 +92,7 @@ jobs:
           name: Testcafe
           command: npm run e2e
       - store_test_results:
-          path: testcafe/test-results
+          path: tmp/testcafe-results
 workflows:
   version: 2
   build_and_deploy:

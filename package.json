@@ -19,7 +19,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config ./webpack.config.production.js",
     "test": "cross-env NODE_ENV=test TZ=MST karma start",
     "code-fix": "esw --fix --cache -w io.js config.js app.js src test services routes models",
-    "e2e": "testcafe chrome:headless testcafe/suites/**/*.js -r xunit:testcafe/test-results/res.xml"
+    "e2e": "testcafe chrome:headless testcafe/suites/**/*.js -r spec,xunit:tmp/testcafe-results/res.xml"
   },
   "dependencies": {
     "agenda": "^0.9.1",
@@ -102,6 +102,7 @@
     "karma-chrome-launcher": "^2.1.1",
     "karma-coverage": "^1.1.2",
     "karma-firefox-launcher": "^1.0.1",
+    "karma-junit-reporter": "^1.2.0",
     "karma-mocha": "^1.1.1",
     "karma-opera-launcher": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.4",

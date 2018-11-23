@@ -19,7 +19,7 @@ module.exports = function (karma) {
     webpackMiddleware: {
       noInfo: true
     },
-    reporters: [ 'coverage', 'spec' ],
+    reporters: [ 'coverage', 'spec', 'junit' ],
     coverageReporter: {
       reporters: [
         {
@@ -30,6 +30,9 @@ module.exports = function (karma) {
           type: 'text'
         }
       ]
+    },
+    junitReporter: {
+      outputDir: 'tmp/karma-results'
     },
     port: 9876,
     logLevel: karma.LOG_INFO,
