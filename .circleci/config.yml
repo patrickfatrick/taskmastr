@@ -90,7 +90,7 @@ jobs:
           name: Testcafe
           command: npm run e2e
       - store_test_results:
-          path: /tmp/test-results
+          path: testcafe/test-results
 workflows:
   version: 2
   build_and_deploy:

@@ -7,3 +7,4 @@ coverage
 rethinkdb_data
 .vscode
 .eslintcache
+testcafe/test-results

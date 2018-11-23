@@ -19,7 +19,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config ./webpack.config.production.js",
     "test": "cross-env NODE_ENV=test TZ=MST karma start",
     "code-fix": "esw --fix --cache -w io.js config.js app.js src test services routes models",
-    "e2e": "testcafe chrome:headless testcafe/suites/**/*.js"
+    "e2e": "testcafe chrome:headless testcafe/suites/**/*.js -r xunit:testcafe/test-results/res.xml"
   },
   "dependencies": {
     "agenda": "^0.9.1",
@@ -123,6 +123,7 @@
     "stylelint-processor-html": "^1.0.0",
     "stylelint-webpack-plugin": "^0.7.0",
     "testcafe": "^0.23.2",
+    "testcafe-reporter-xunit": "^2.1.0",
     "vue-hot-reload-api": "^2.1.0",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^12.2.1",
