@@ -8,3 +8,4 @@ rethinkdb_data
 .vscode
 .eslintcache
 tmp
+*.sublime-*

@@ -13,12 +13,9 @@ module.exports = function () {
   }, async (req, username, key, next) => {
     try {
       const user = await userService.findUser(username, 'username key tasks currentList darkmode')
-
       if (!user) return next(null, false, 403)
-
       const same = await bcrypt.compare(key, user.key)
       if (!same) return next(null, false, 401)
-
       next(null, user)
     } catch (e) {
       next(e)
