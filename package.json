@@ -60,7 +60,7 @@
     "postcss-cssnext": "^2.10.0",
     "postcss-import": "^9.1.0",
     "postcss-url": "^6.0.4",
-    "pug": "^2.0.0-rc.2",
+    "pug": "^3.0.1",
     "slogged": "^1.0.3",
     "socket.io": "^2.1.1",
     "vue": "^2.3.4",
