@@ -53,7 +53,7 @@
     "marky-marked": "^4.0.1",
     "mongoose": "^4.10.6",
     "mousetrap": "^1.6.1",
-    "nodemailer": "^4.0.1",
+    "nodemailer": "^6.4.16",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "passport-local": "^1.0.0",
     "pikaday": "^1.6.1",
