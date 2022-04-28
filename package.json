@@ -24,7 +24,7 @@
   "dependencies": {
     "agenda": "^0.9.1",
     "animate.css": "^3.5.2",
-    "async": "^2.4.1",
+    "async": "^2.6.4",
     "babel-preset-latest": "^6.24.1",
     "bcrypt": "^4.0.1",
     "chalk": "^1.1.3",
